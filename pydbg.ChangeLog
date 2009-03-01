@@ -1,0 +1,232 @@
+2009-02-28 02:53  rocky.bernstein
+
+	* tracer/tracer.py: Leave a mark in the frame so clients like pydbg
+	  can know to omit listing this kind of frame
+
+2009-02-17 03:57  rocky.bernstein
+
+	* tracer/tracer.py: Show functions in little demo code.
+
+2009-01-17 10:10  rocky.bernstein
+
+	* tracer/tracer.py: Add a debug flag for showing all events that
+	  come through
+
+2009-01-14 03:11  rocky.bernstein
+
+	* __pkginfo__.py, tracer/COPYING, tracer/tracefilter.py,
+	  tracer/tracer.py: Add GPL stuff
+
+2009-01-14 03:11  rocky.bernstein
+
+	* COPYING, tracer/COPYING: Add GPL stuff
+
+2009-01-11 19:00  rocky.bernstein
+
+	* tracer/tracer.py: Add EVENT2SHORT.
+
+2009-01-11 19:00  rocky.bernstein
+
+	* __pkginfo__.py, setup.cfg, test/test-basic.py, tracer/tracer.py:
+	  trace.py: Add EVENT2SHORT. Others: administrivia
+
+2009-01-01 15:04  rocky.bernstein
+
+	* tracer/tracefilter.py: Bug in picking out f_code
+
+2009-01-01 08:08  rocky.bernstein
+
+	* test/Makefile, tracer/Makefile: Add Convenience Makefiles
+
+2009-01-01 08:05  rocky.bernstein
+
+	* tracer/tracer.py: Use get to shorten code.
+
+2008-12-31 02:51  rocky.bernstein
+
+	* __pkginfo__.py, tracer/tracer.py: Allow others to use
+	  check_events. Bump revision number.
+
+2008-12-28 16:21  rocky.bernstein
+
+	* test/test-basic.py: I figured out how to use AssertRaises
+
+2008-12-24 01:43  rocky.bernstein
+
+	* __pkginfo__.py: Get ready for another release
+
+2008-12-24 01:41  rocky.bernstein
+
+	* __pkginfo__.py, setup.py, tracer/tracer.py: zip installation is a
+	  mess. Avoid it.
+
+2008-12-22 05:19  rocky.bernstein
+
+	* test/test-remove.py: See above.
+
+2008-12-22 05:19  rocky.bernstein
+
+	* test/test-remove.py, tracer/tracer.py: Removing a non-existent
+	  hook should return none rather than raise an error.
+	  Add a small remove-hook unit test.
+
+2008-12-20 15:07  rocky.bernstein
+
+	* tracer/tracer.py: Use option-set improvement to DRY code a
+	  little: None == default options.
+
+2008-12-20 15:07  rocky.bernstein
+
+	* test/test-basic.py, tracer/tracer.py: Improvement to option_set:
+	  Allow an option set to None to mean the same as the default
+	  options.
+	  Previously it caused an error.
+
+2008-12-19 18:19  rocky.bernstein
+
+	* test/test-basic.py, tracer/tracer.py: Fix bug in handling
+	  method-based trace function. Add a test this time!
+
+2008-12-19 17:40  rocky.bernstein
+
+	* tracer/tracer.py: Allow method trace hooks as well as function
+	  trace hooks.
+
+2008-12-19 13:57  rocky.bernstein
+
+	* tracer/tracer.py: Save frame id's as ignore_frame objects rather
+	  than the full frame
+	  object to make GC happier.
+
+2008-12-19 13:57  rocky.bernstein
+
+	* test/test-basic.py, tracer/tracer.py: Change add-hook's
+	  "ignore_me" to the more general "backlevel".
+
+2008-12-19 05:06  rocky.bernstein
+
+	* setup.py, test/test-basic.py, tracer/.gitignore,
+	  tracer/tracer.py: More interfaces made public. More work to
+	  back-patch caller
+	  frames. Will probably simplify/generalize interface more as we
+	  use more.
+
+2008-12-19 05:06  rocky.bernstein
+
+	* tracer/.gitignore: More interfaces public. Allow more back
+	  tracking of frames. Probably
+	  interface will change a bit more based on use.
+
+2008-12-19 02:10  rocky.bernstein
+
+	* test/test-basic.py, tracer/tracer.py: Reinstate tracer test now
+	  that we have more control over ignoring
+	  frames.
+
+2008-12-19 00:22  rocky.bernstein
+
+	* src, tracer: src -> tracer rename
+
+2008-12-19 00:21  rocky.bernstein
+
+	* src, src/__init__.py, src/tracefilter.py, src/tracer.py:
+
+2008-12-18 22:53  rocky.bernstein
+
+	* __pkginfo__.py, setup.cfg, setup.py, test/test-basic.py,
+	  test/test-filter.py, tracer.py: Add filter package
+
+2008-12-18 05:00  rocky.bernstein
+
+	* test/test-basic.py, tracer.py: Reduce some of the tracer
+	  weirdness. Can now trace calling routine or not.
+	  Traces less often into the tracing routines.
+
+2008-12-17 14:00  rocky.bernstein
+
+	* .gitignore, tracer.py: Set hook in threading as well.
+
+2008-12-15 01:19  rocky.bernstein
+
+	* .gitignore, test/.gitignore: Administriva: Add some .gitignores.
+
+2008-12-10 15:48  rocky.bernstein
+
+	* setup.py: Syntax error
+
+2008-12-10 11:12  rocky.bernstein
+
+	* setup.cfg: Dist-related changes
+
+2008-12-10 11:00  rocky.bernstein
+
+	* __pkginfo__.py, setup.cfg: Add download_url to release.
+
+2008-12-01 12:07  rocky.bernstein
+
+	* setup.cfg, test/test-basic.py: Allow unit tests to have the
+	  execute bit set on. We can run these standalone.
+
+2008-11-30 17:58  rocky.bernstein
+
+	* ., .cvsignore, Makefile, __init__.py, __pkginfo__.py, setup.cfg,
+	  setup.py, svn2cl_usermap, test: Fix up setup.py.
+
+2008-11-27 14:35  rocky.bernstein
+
+	* Makefile, setup.cfg: Compatibility is a good thing for us
+	  old-timers
+
+2008-11-24 12:12  rocky.bernstein
+
+	* setup.py, test/test-basic.py: Small changes.
+
+2008-11-23 20:57  rocky.bernstein
+
+	* test/test-basic.py: More robust path expansion.
+
+2008-11-23 16:57  rocky.bernstein
+
+	* setup.py: Add missing module name.
+
+2008-11-23 15:52  rocky.bernstein
+
+	* test/test-basic.py, tracer.py: Add message strings on exceptions
+	  raised. Use superTuple instead of Bunch.
+	  Other stylistic things.
+
+2008-11-23 10:49  rocky.bernstein
+
+	* test/test-basic.py, tracer.py: Add filtering by event type. Clean
+	  up code a little too.
+
+2008-11-23 03:44  rocky.bernstein
+
+	* README.txt, dbgcore.py, setup.py, test/test-basic.py: Get unit
+	  test run via setup.py
+	  dbgcore.py moved into debugger project.
+
+2008-11-22 22:05  rocky.bernstein
+
+	* ., .cvsignore, setup.py, test/basic.py, test/test-basic.py: The
+	  most rudimentary setuptools setup.
+
+2008-11-22 14:46  rocky.bernstein
+
+	* test/basic.py, tracer.py: Start checking captured events. Align
+	  names according to "best practices".
+
+2008-11-21 15:17  rocky.bernstein
+
+	* .cvsignore, dbgcore.py, test, test/.cvsignore, test/basic.py,
+	  tracer.py: Centralized Trace management around sys.settrace. We
+	  allow several
+	  sets of trace events to get registered and unregistered and allow
+	  tracing
+	  to be turned on and off temporarily without losing the trace
+	  functions.
+
+2008-11-21 14:33  
+
+	* .: Initial directory structure.
+

@@ -18,7 +18,7 @@
 import types, StringIO
 
 from import_relative import *
-Mbase_io  = import_relative('base_io', top_name='pydbg')
+Mbase_io  = import_relative('base_io', top_name='pydbgr')
 
 class DebuggerUserOutput(Mbase_io.DebuggerOutputBase):
     """Debugger output shown directly to what we think of as end-user

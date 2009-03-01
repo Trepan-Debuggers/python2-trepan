@@ -1,11 +1,11 @@
 #!/usr/bin/env python
-'Unit test for pydbg.processor.subcmd'
+'Unit test for pydbgr.processor.subcmd'
 import inspect, os, sys, unittest
 from import_relative import *
 
-Msubcmd   = import_relative('processor.subcmd', '...pydbg')
-Mbase_cmd = import_relative('processor.command.base_cmd', '...pydbg')
-Mmock     = import_relative('processor.command.mock', '...pydbg')
+Msubcmd   = import_relative('processor.subcmd', '...pydbgr')
+Mbase_cmd = import_relative('processor.command.base_cmd', '...pydbgr')
+Mmock     = import_relative('processor.command.mock', '...pydbgr')
 
 class MyCommand(Mbase_cmd.DebuggerCommand):
     '''Doc string for testing'''

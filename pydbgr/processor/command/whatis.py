@@ -19,9 +19,9 @@ import inspect, sys, types
 from import_relative import import_relative
 
 # Our local modules
-Mbase_cmd = import_relative('base_cmd', top_name='pydbg')
-Mstack    = import_relative('stack', '...lib', 'pydbg')
-Mcmdfns   = import_relative('cmdfns', top_name='pydbg')
+Mbase_cmd = import_relative('base_cmd', top_name='pydbgr')
+Mstack    = import_relative('stack', '...lib', 'pydbgr')
+Mcmdfns   = import_relative('cmdfns', top_name='pydbgr')
 
 class WhatisCommand(Mbase_cmd.DebuggerCommand):
     '''whatis arg

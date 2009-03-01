@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-'Unit test for the debugger pydbg.frame'
+'Unit test for the debugger pydbgr.frame'
 import inspect, os, sys, unittest
 from import_relative import *
 
-Mclifns = import_relative('clifns', '...pydbg')
+Mclifns = import_relative('clifns', '...pydbgr')
 
 class TestAPIHelper(unittest.TestCase):
     

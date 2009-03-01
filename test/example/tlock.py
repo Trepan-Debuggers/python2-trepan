@@ -2,7 +2,7 @@
 import sys
 import time
 import thread
-# from pydbg.api import debug
+# from pydbgr.api import debug
 
 def myfunction(string,sleeptime,lock,*args):
     while 1:

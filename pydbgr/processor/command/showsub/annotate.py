@@ -19,10 +19,10 @@
 from import_relative import *
 
 # FIXME: Until import_relative is fixed up...
-import_relative('processor', '....', 'pydbg')
+import_relative('processor', '....', 'pydbgr')
 
 # Our local modules
-Mbase_subcmd  = import_relative('base_subcmd', '..', 'pydbg')
+Mbase_subcmd  = import_relative('base_subcmd', '..', 'pydbgr')
 
 class ShowAnnotate(Mbase_subcmd.DebuggerShowIntSubcommand):
     "Show GNU Emacs 'annotation' level"

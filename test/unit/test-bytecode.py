@@ -1,9 +1,9 @@
 #!/usr/bin/env python
-'Unit test for pydbg.code'
+'Unit test for pydbgr.code'
 import inspect, os, sys, unittest
 from import_relative import *
 
-Mcode = import_relative('lib.bytecode', '...pydbg')
+Mcode = import_relative('lib.bytecode', '...pydbgr')
 
 class TestByteCode(unittest.TestCase):
 

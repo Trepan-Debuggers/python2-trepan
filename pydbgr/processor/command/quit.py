@@ -19,8 +19,8 @@ import threading
 from import_relative import import_relative
 
 # Our local modules
-Mbase_cmd  = import_relative('base_cmd', top_name='pydbg')
-Mdebugger  = import_relative('debugger', '...', 'pydbg')
+Mbase_cmd  = import_relative('base_cmd', top_name='pydbgr')
+Mdebugger  = import_relative('debugger', '...', 'pydbgr')
 
 class QuitCommand(Mbase_cmd.DebuggerCommand):
     """quit - gently terminate the debugged program.  
@@ -28,7 +28,7 @@ class QuitCommand(Mbase_cmd.DebuggerCommand):
 The program being debugged is aborted via a DebuggerQuit
 exception. 
 
-When the debugger from the outside (e.g. via a 'pydbg' command), the
+When the debugger from the outside (e.g. via a 'pydbgr' command), the
 debugged program is contained inside a try block which handles the
 DebuggerQuit exception.  However if you called the debugger was
 started in the middle of a program, there might not be such an

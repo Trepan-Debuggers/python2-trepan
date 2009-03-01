@@ -20,10 +20,10 @@ import sys
 # Our local modules
 from import_relative import import_relative
 
-import_relative('lib', '...', 'pydbg')
-Mbase_cmd  = import_relative('base_cmd', top_name='pydbg')
-Mcmdfns    = import_relative('cmdfns', top_name='pydbg')
-Mmisc      = import_relative('misc', '...', 'pydbg')
+import_relative('lib', '...', 'pydbgr')
+Mbase_cmd  = import_relative('base_cmd', top_name='pydbgr')
+Mcmdfns    = import_relative('cmdfns', top_name='pydbgr')
+Mmisc      = import_relative('misc', '...', 'pydbgr')
 
 class PythonCommand(Mbase_cmd.DebuggerCommand):
     """python

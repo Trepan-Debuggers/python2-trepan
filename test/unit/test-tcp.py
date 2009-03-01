@@ -1,13 +1,13 @@
 #!/usr/bin/env python
-'Unit test for pydbg.io.tcp*'
+'Unit test for pydbgr.io.tcp*'
 import inspect, os, sys, unittest
 
 from import_relative import *
-import_relative('io', '...pydbg', 'pydbg')
-Mserver   = import_relative('io.tcpserver', '...pydbg', 'pydbg')
-Mclient   = import_relative('io.tcpclient', '...pydbg', 'pydbg')
-import_relative('interface', '...pydbg', 'pydbg')
-Mcomcodes = import_relative('interface.comcodes', '...pydbg', 'pydbg')
+import_relative('io', '...pydbgr', 'pydbgr')
+Mserver   = import_relative('io.tcpserver', '...pydbgr', 'pydbgr')
+Mclient   = import_relative('io.tcpclient', '...pydbgr', 'pydbgr')
+import_relative('interface', '...pydbgr', 'pydbgr')
+Mcomcodes = import_relative('interface.comcodes', '...pydbgr', 'pydbgr')
 
 class TestTCP(unittest.TestCase):
     """Tests TCPServer and TCPClient"""

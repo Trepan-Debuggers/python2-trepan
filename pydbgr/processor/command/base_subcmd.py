@@ -97,7 +97,7 @@ class DebuggerSubcommand():
     pass
 
 from import_relative import *
-Mcmdfns = import_relative('cmdfns', '.', 'pydbg')
+Mcmdfns = import_relative('cmdfns', '.', 'pydbgr')
 
 class DebuggerSetBoolSubcommand(DebuggerSubcommand):
     def run(self, args):

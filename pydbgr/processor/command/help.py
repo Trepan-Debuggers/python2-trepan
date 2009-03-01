@@ -20,11 +20,11 @@ import columnize
 # Our local modules
 from import_relative import import_relative
 
-import_relative('processor', '...', 'pydbg') 
+import_relative('processor', '...', 'pydbgr') 
 
-Mbase_cmd  = import_relative('base_cmd', top_name='pydbg')
-Mcmdproc   = import_relative('cmdproc', '..', 'pydbg')
-Mmisc      = import_relative('misc', '...', 'pydbg')
+Mbase_cmd  = import_relative('base_cmd', top_name='pydbgr')
+Mcmdproc   = import_relative('cmdproc', '..', 'pydbgr')
+Mmisc      = import_relative('misc', '...', 'pydbgr')
 
 categories = {
     'breakpoints' : 'Making the program stop at certain points',

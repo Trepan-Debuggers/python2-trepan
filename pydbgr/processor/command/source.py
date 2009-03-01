@@ -19,10 +19,10 @@ import os, sys
 from import_relative import import_relative
 
 # Our local modules
-Mbase_cmd = import_relative('base_cmd', top_name='pydbg')
-Mdebugger = import_relative('debugger', '...', 'pydbg')
-Mfile     = import_relative('file', '...lib', 'pydbg')
-Mscript   = import_relative('script', '...interface', 'pydbg')
+Mbase_cmd = import_relative('base_cmd', top_name='pydbgr')
+Mdebugger = import_relative('debugger', '...', 'pydbgr')
+Mfile     = import_relative('file', '...lib', 'pydbgr')
+Mscript   = import_relative('script', '...interface', 'pydbgr')
 
 class SourceCommand(Mbase_cmd.DebuggerCommand):
     """source [-v][-Y|-N][-c] FILE
@@ -32,7 +32,7 @@ class SourceCommand(Mbase_cmd.DebuggerCommand):
     it is executed.  Option -Y sets the default value in any
     confirmation command to be 'yes' and -N sets the default value to 'no'.
 
-    Note that the command startup file '.pydbgrc' is read
+    Note that the command startup file '.pydbgrrc' is read
     automatically via a source command the debugger is started.
     
     An error in any command terminates execution of the command

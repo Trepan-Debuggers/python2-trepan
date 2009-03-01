@@ -18,8 +18,8 @@
 
 # Our local modules
 from import_relative import import_relative
-Mbase_cmd  = import_relative('base_cmd', top_name='pydbg')
-Mprint     = import_relative('print', '...lib', 'pydbg')
+Mbase_cmd  = import_relative('base_cmd', top_name='pydbgr')
+Mprint     = import_relative('print', '...lib', 'pydbgr')
 
 class PrintCommand(Mbase_cmd.DebuggerCommand):
 

@@ -19,10 +19,10 @@
 import inspect
 from import_relative import *
 # Our local modules
-import_relative('processor', '....', 'pydbg')
-Mbase_subcmd  = import_relative('base_subcmd', '..', 'pydbg')
-Mcmdfns       = import_relative('cmdfns', '..', 'pydbg')
-Mcmdproc      = import_relative('cmdproc', '...', 'pydbg')
+import_relative('processor', '....', 'pydbgr')
+Mbase_subcmd  = import_relative('base_subcmd', '..', 'pydbgr')
+Mcmdfns       = import_relative('cmdfns', '..', 'pydbgr')
+Mcmdproc      = import_relative('cmdproc', '...', 'pydbgr')
 
 class SetCmdDbgPydb(Mbase_subcmd.DebuggerSetBoolSubcommand):
     """Set the ability to debug the debugger.

@@ -1,9 +1,9 @@
 #!/usr/bin/env python
-'Unit test for pydbg.processor.command.cmdfns'
+'Unit test for pydbgr.processor.command.cmdfns'
 import inspect, os, sys, unittest
 from import_relative import *
 
-Mdis = import_relative('processor.command.disassemble', '...pydbg')
+Mdis = import_relative('processor.command.disassemble', '...pydbgr')
 
 from cmdhelper import dbg_setup
 

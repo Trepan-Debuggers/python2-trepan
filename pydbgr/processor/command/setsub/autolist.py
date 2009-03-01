@@ -19,8 +19,8 @@
 from import_relative import import_relative
 # Our local modules
 # FIXME: Until import_relative is fixed up...
-Mbase_subcmd = import_relative('base_subcmd', '..', 'pydbg')
-Mcmdfns      = import_relative('cmdfns', '..', 'pydbg')
+Mbase_subcmd = import_relative('base_subcmd', '..', 'pydbgr')
+Mcmdfns      = import_relative('cmdfns', '..', 'pydbgr')
 
 class SetAutoList(Mbase_subcmd.DebuggerSetBoolSubcommand):
     """Run a 'list' command every time we enter the debugger.

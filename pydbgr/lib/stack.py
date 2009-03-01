@@ -17,8 +17,8 @@
 import types
 
 from import_relative import import_relative
-Mbytecode = import_relative('bytecode', top_name='pydbg')
-Mprint    = import_relative('print', top_name='pydbg')
+Mbytecode = import_relative('bytecode', top_name='pydbgr')
+Mprint    = import_relative('print', top_name='pydbgr')
 
 def count_frames(frame, count_start=0):
     "Return a count of number of frames"

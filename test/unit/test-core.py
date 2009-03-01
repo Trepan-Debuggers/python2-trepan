@@ -1,9 +1,9 @@
 #!/usr/bin/env python
-'Unit test for pydbg.processor.cmdproc'
+'Unit test for pydbgr.processor.cmdproc'
 import inspect, os, sys, unittest
 from import_relative import *
 
-Mcore = import_relative('lib.core', '...pydbg')
+Mcore = import_relative('lib.core', '...pydbgr')
 
 class MockProcessor():
     pass

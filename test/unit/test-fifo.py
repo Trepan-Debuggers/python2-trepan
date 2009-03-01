@@ -1,10 +1,10 @@
 #!/usr/bin/env python
-'Unit test for pydbg.io.tcp*'
+'Unit test for pydbgr.io.tcp*'
 import inspect, os, sys, unittest
 
 from import_relative import *
-Mserver = import_relative('io.fifoserver', '...pydbg')
-Mclient = import_relative('io.fifoclient', '...pydbg')
+Mserver = import_relative('io.fifoserver', '...pydbgr')
+Mclient = import_relative('io.fifoclient', '...pydbgr')
 
 class TestFIFO(unittest.TestCase):
     """Tests FIFOServer and FIFOClient"""

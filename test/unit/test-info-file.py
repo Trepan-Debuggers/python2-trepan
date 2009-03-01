@@ -1,12 +1,12 @@
 #!/usr/bin/env python
-'Unit test for pydbg.clifns'
+'Unit test for pydbgr.clifns'
 import inspect, os, sys, unittest
 from import_relative import *
 
-debugger  = import_relative('debugger', '...pydbg', 'pydbg')
-Minfo     = import_relative('pydbg.processor.command.info', '...')
-MinfoFile = import_relative('pydbg.processor.command.infosub.file', '...')
-Mdebugger = import_relative('debugger', '...pydbg')
+debugger  = import_relative('debugger', '...pydbgr', 'pydbgr')
+Minfo     = import_relative('pydbgr.processor.command.info', '...')
+MinfoFile = import_relative('pydbgr.processor.command.infosub.file', '...')
+Mdebugger = import_relative('debugger', '...pydbgr')
 
 from cmdhelper import dbg_setup
 

@@ -19,9 +19,9 @@ import inspect, sys, threading
 from import_relative import import_relative
 
 # Our local modules
-Mbase_cmd = import_relative('base_cmd', '.', 'pydbg')
-Mcmdproc  = import_relative('cmdproc', '..', 'pydbg')
-Mthread   = import_relative('thread', '...lib', 'pydbg')
+Mbase_cmd = import_relative('base_cmd', '.', 'pydbgr')
+Mcmdproc  = import_relative('cmdproc', '..', 'pydbgr')
+Mthread   = import_relative('thread', '...lib', 'pydbgr')
 
 class FrameCommand(Mbase_cmd.DebuggerCommand):
     """frame [thread-Name|thread-number] [frame-number]
@@ -70,7 +70,7 @@ See also 'up', 'down' 'where' and 'info thread'.
         '''
         thread = threading._active[thread_id]
         thread_name = thread.getName()
-        if (not self.settings['dbg_pydbg'] and
+        if (not self.settings['dbg_pydbgr'] and
             thread_name == Mthread.current_thread_name()):
             # The frame we came in on ('current_thread_name') is
             # the same as the one we want to switch to. In this case
@@ -180,7 +180,7 @@ See also 'up', 'down' 'where' and 'info thread'.
         return False
 
 if __name__ == '__main__':
-    Mdebugger    = import_relative('debugger', '...', 'pydbg')
+    Mdebugger    = import_relative('debugger', '...', 'pydbgr')
     d            = Mdebugger.Debugger()
     cp           = d.core.processor
     command = FrameCommand(cp)

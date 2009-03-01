@@ -17,8 +17,8 @@ import columnize, inspect, os, pyficache, sys
 
 from import_relative import *
 # Our local modules
-Mbase_subcmd  = import_relative('base_subcmd', '..', 'pydbg')
-Mmisc         = import_relative('misc', '....', 'pydbg')
+Mbase_subcmd  = import_relative('base_subcmd', '..', 'pydbgr')
+Mmisc         = import_relative('misc', '....', 'pydbgr')
 
 try:
     import coverage

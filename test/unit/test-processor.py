@@ -3,7 +3,7 @@
 import os, sys, types, unittest
 from import_relative import *
 
-Mcmdproc = import_relative('processor.cmdproc', '...pydbg')
+Mcmdproc = import_relative('processor.cmdproc', '...pydbgr')
 
 from cmdhelper import dbg_setup
 

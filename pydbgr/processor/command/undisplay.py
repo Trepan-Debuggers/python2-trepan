@@ -19,7 +19,7 @@
 # Our local modules
 from import_relative import import_relative
 
-Mbase_cmd  = import_relative('base_cmd', top_name='pydbg')
+Mbase_cmd  = import_relative('base_cmd', top_name='pydbgr')
 
 class UndisplayCommand(Mbase_cmd.DebuggerCommand):
     """display [format] EXP

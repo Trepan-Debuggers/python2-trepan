@@ -18,11 +18,11 @@ import atexit, os
 
 # Our local modules
 from import_relative import *
-Mbase_intf  = import_relative('base_intf', top_name='pydbg')
-Mtcpserver  = import_relative('tcpserver', '..io', 'pydbg')
-Mfifoserver = import_relative('fifoserver', '..io', 'pydbg')
-Mmisc       = import_relative('misc', '..', 'pydbg')
-Mcomcodes   = import_relative('comcodes', '.', 'pydbg')
+Mbase_intf  = import_relative('base_intf', top_name='pydbgr')
+Mtcpserver  = import_relative('tcpserver', '..io', 'pydbgr')
+Mfifoserver = import_relative('fifoserver', '..io', 'pydbgr')
+Mmisc       = import_relative('misc', '..', 'pydbgr')
+Mcomcodes   = import_relative('comcodes', '.', 'pydbgr')
 
 class ServerInterface(Mbase_intf.DebuggerInterface):
     """Interface for debugging a program but having user control

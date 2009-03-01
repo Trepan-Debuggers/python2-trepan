@@ -19,9 +19,9 @@
 import time
 # Our local modules
 from import_relative import *
-Mmisc = import_relative('misc', '.', 'pydbg')
-Mclient   = import_relative('client', '.interface', 'pydbg')
-Mcomcodes = import_relative('comcodes', '.interface', 'pydbg')
+Mmisc = import_relative('misc', '.', 'pydbgr')
+Mclient   = import_relative('client', '.interface', 'pydbgr')
+Mcomcodes = import_relative('comcodes', '.interface', 'pydbgr')
 
 #
 # Connects to a debugger in server mode
@@ -37,7 +37,7 @@ def start_client(connection_opts):
             control, remote_msg = intf.read_remote()
             # print 'c, r', control, remote_msg
             if Mcomcodes.PROMPT == control:
-                  msg = intf.read_command('(Pydbg*) ').strip()
+                  msg = intf.read_command('(Pydbgr*) ').strip()
                   intf.write_remote(Mcomcodes.PRINT, msg)
             elif control in [Mcomcodes.CONFIRM_TRUE, Mcomcodes.CONFIRM_FALSE]:
                   default = (Mcomcodes.CONFIRM_TRUE == control)

@@ -18,9 +18,9 @@
 
 # Our local modules
 from import_relative import import_relative
-Mbase_cmd  = import_relative('base_cmd', '.', 'pydbg')
-Mdebugger  = import_relative('debugger', '...', 'pydbg')
-Mpp        = import_relative('pp', '...lib', 'pydbg')
+Mbase_cmd  = import_relative('base_cmd', '.', 'pydbgr')
+Mdebugger  = import_relative('debugger', '...', 'pydbgr')
+Mpp        = import_relative('pp', '...lib', 'pydbgr')
 
 class PrettyPrintCommand(Mbase_cmd.DebuggerCommand):
 

@@ -1,9 +1,9 @@
 #!/usr/bin/env python
-'Unit test for pydbg.misc'
+'Unit test for pydbgr.misc'
 import inspect, os, sys, unittest
 from import_relative import *
 
-Mmisc = import_relative('misc', '...pydbg', 'pydbg')
+Mmisc = import_relative('misc', '...pydbgr', 'pydbgr')
 
 class TestMisc(unittest.TestCase):
 

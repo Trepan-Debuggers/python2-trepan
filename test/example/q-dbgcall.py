@@ -5,7 +5,7 @@ import thread
 import time
 from threading import *
 import Queue
-from pydbg.api import debug
+from pydbgr.api import debug
 
 class Producer(Thread):
 

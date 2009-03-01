@@ -1,9 +1,9 @@
 #!/usr/bin/env python
-'Unit test for pydbg.lib.print'
+'Unit test for pydbgr.lib.print'
 import inspect, os, sys, unittest
 from import_relative import *
 
-Mprint = import_relative('lib.print', '...pydbg')
+Mprint = import_relative('lib.print', '...pydbgr')
 
 class TestLibPrint(unittest.TestCase):
 

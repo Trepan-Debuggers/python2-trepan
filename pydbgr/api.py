@@ -34,8 +34,8 @@ if necessary, first.
 
 from import_relative import import_relative
 
-Mdebugger    = import_relative('debugger', top_name='pydbg')
-Mpost_mortem = import_relative('post_mortem', top_name='pydbg')
+Mdebugger    = import_relative('debugger', top_name='pydbgr')
+Mpost_mortem = import_relative('post_mortem', top_name='pydbgr')
 
 def debugger_on_post_mortem():
     '''Call debugger on an exeception that terminates a program'''
@@ -112,25 +112,25 @@ def debug(dbg_opts=None, start_opts=None):
 Enter the debugger. Use like this:
 
     ... # Some python code
-    import pydbg; pydbg.api.debug() # This also works well inside an `if' stmt
+    import pydbgr; pydbgr.api.debug() # This also works well inside an `if' stmt
     # Below is code you want to use the debugger to do things.
     ....  # more Python code
     # If you get to a place in the program where you aren't going 
     # want to debug any more, but want to remove debugger trace overhead:
-    pydbg.stop() 
+    pydbgr.stop() 
 
-Module variable pydbg.debugger.debugger_obj is used as the debugger
+Module variable pydbgr.debugger.debugger_obj is used as the debugger
 instance and it can be subsequenly used to change settings or alter
-behavior. It should be of type pydbg.Debugger. If not it will get
+behavior. It should be of type pydbgr.Debugger. If not it will get
 reset.
 
 If however you want your own separate debugger instance use
-pydbg.Debugger() to create an new Debugger instance.instead of the
-variable pydbg.debugger.debugger_obj.
+pydbgr.Debugger() to create an new Debugger instance.instead of the
+variable pydbgr.debugger.debugger_obj.
 
 `dbg_opts' is an optional "options" dictionary that gets fed
-pydbg.Debugger(); `start_opts' are the optional "options"
-dictionary that gets fed to pydbg.Debugger.core.start().
+pydbgr.Debugger(); `start_opts' are the optional "options"
+dictionary that gets fed to pydbgr.Debugger.core.start().
 """
     if Mdebugger.Debugger != type(Mdebugger.debugger_obj):
         Mdebugger.debugger_obj = Mdebugger.Debugger(dbg_opts)
@@ -156,7 +156,7 @@ if __name__=='__main__':
             print i
             pass
         return 3
-    Mdefault = import_relative('default', 'lib', 'pydbg')
+    Mdefault = import_relative('default', 'lib', 'pydbgr')
     settings = dict(Mdefault.DEBUGGER_SETTINGS)
     settings.update({'trace': True, 'printset': tracer.ALL_EVENTS})
     debug_opts={'step_ignore': -1, 'settings': settings}

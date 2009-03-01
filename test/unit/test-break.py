@@ -1,10 +1,10 @@
 #!/usr/bin/env python
-'Unit test for pydbg.processor.command.break'
+'Unit test for pydbgr.processor.command.break'
 import inspect, os, sys, unittest
 
 from import_relative import *
 
-Mbreak = import_relative('processor.command.break', '...pydbg')
+Mbreak = import_relative('processor.command.break', '...pydbgr')
 
 from cmdhelper import dbg_setup
 import signal
@@ -26,9 +26,9 @@ class TestBreakCommand(unittest.TestCase):
     
     def test_parse_break_cmd(self):
         import inspect, types
-        cmdproc         = import_relative('processor.cmdproc', '...pydbg', 
-                                          'pydbg')
-        debugger        = import_relative('debugger', '...pydbg', 'pydbg')
+        cmdproc         = import_relative('processor.cmdproc', '...pydbgr', 
+                                          'pydbgr')
+        debugger        = import_relative('debugger', '...pydbgr', 'pydbgr')
         d               = debugger.Debugger()
         cp              = d.core.processor
         cp.curframe     = inspect.currentframe()

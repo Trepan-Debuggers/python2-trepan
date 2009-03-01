@@ -19,12 +19,12 @@
 # Our local modules
 from import_relative import import_relative
 
-import_relative('lib', '...', 'pydbg')
-Mbase_cmd  = import_relative('base_cmd', top_name='pydbg')
-Mcmdfns    = import_relative('cmdfns', top_name='pydbg')
-Mfile      = import_relative('lib.file', '...', 'pydbg')
-Mmisc      = import_relative('misc', '...', 'pydbg')
-Mbreak     = import_relative('break', '.', 'pydbg')
+import_relative('lib', '...', 'pydbgr')
+Mbase_cmd  = import_relative('base_cmd', top_name='pydbgr')
+Mcmdfns    = import_relative('cmdfns', top_name='pydbgr')
+Mfile      = import_relative('file', '...lib', 'pydbgr')
+Mmisc      = import_relative('misc', '...', 'pydbgr')
+Mbreak     = import_relative('break', '.', 'pydbgr')
 
 class EnableCommand(Mbase_cmd.DebuggerCommand):
     """enable [display] bpnumber [bpnumber ...]

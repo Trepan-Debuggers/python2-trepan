@@ -7,6 +7,6 @@ def source_obj_check(source_filename, obj_filename):
     open('/tmp/f2', 'w').write(obj_dump)
     return source_dump == obj_dump
 
-print source_obj_check('/src/external-vcs/pydbg-svn/__pkginfo__.py', '__pkginfo__.pyc')
+print source_obj_check('/src/external-vcs/pydbgr-svn/__pkginfo__.py', '__pkginfo__.pyc')
 
 

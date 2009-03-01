@@ -19,9 +19,9 @@ import inspect
 from import_relative import import_relative
 
 # Our local modules
-Mbase_cmd  = import_relative('base_cmd', top_name='pydbg')
-Mcmdproc   = import_relative('cmdproc', '..', 'pydbg')
-Mcmdfns    = import_relative('cmdfns', top_name='pydbg')
+Mbase_cmd  = import_relative('base_cmd', top_name='pydbgr')
+Mcmdproc   = import_relative('cmdproc', '..', 'pydbgr')
+Mcmdfns    = import_relative('cmdfns', top_name='pydbgr')
 
 class JumpCommand(Mbase_cmd.DebuggerCommand):
 

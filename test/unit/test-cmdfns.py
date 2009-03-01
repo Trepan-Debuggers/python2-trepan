@@ -1,9 +1,9 @@
 #!/usr/bin/env python
-'Unit test for pydbg.processor.command.cmdfns'
+'Unit test for pydbgr.processor.command.cmdfns'
 import inspect, os, sys, unittest
 from import_relative import *
 
-Mcmdfns = import_relative('processor.command.cmdfns', '...pydbg')
+Mcmdfns = import_relative('processor.command.cmdfns', '...pydbgr')
 
 class TestCommandHelper(unittest.TestCase):
 

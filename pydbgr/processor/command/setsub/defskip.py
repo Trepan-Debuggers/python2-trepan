@@ -18,8 +18,8 @@
 
 from import_relative import *
 # Our local modules
-import_relative('processor', '....', 'pydbg')
-Mbase_subcmd = import_relative('base_subcmd', '..', 'pydbg')
+import_relative('processor', '....', 'pydbgr')
+Mbase_subcmd = import_relative('base_subcmd', '..', 'pydbgr')
 
 class SetDefSkip(Mbase_subcmd.DebuggerSetBoolSubcommand):
     """Set stopping before 'def' (method creation) statements.

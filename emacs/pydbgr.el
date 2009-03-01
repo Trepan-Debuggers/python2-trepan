@@ -17,11 +17,11 @@
 ;; Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 ;; Boston, MA 02111-1307, USA.
 ;; ======================================================================
-;; pydbg (Python extended debugger) functions
+;; pydbgr (Python extended debugger) functions
 
 (if (< emacs-major-version 22)
   (error
-   "This version of pydbg.el needs at least Emacs 22 or greater - you have version %d."
+   "This version of pydbgr.el needs at least Emacs 22 or greater - you have version %d."
    emacs-major-version))
 
 (require 'gud)
@@ -30,13 +30,13 @@
 ;; User-definable variables
 ;; vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 
-(defcustom gud-pydbg-command-name "pydbg --annotate=3"
+(defcustom gud-pydbgr-command-name "pydbgr --annotate=3"
   "File name for executing the Python debugger.
 This should be an executable on your path, or an absolute file name."
   :type 'string
   :group 'gud)
 
-(defcustom pydbg-temp-directory
+(defcustom pydbgr-temp-directory
   (let ((ok '(lambda (x)
 	       (and x
 		    (setq x (expand-file-name x)) ; always true
@@ -49,52 +49,52 @@ This should be an executable on your path, or an absolute file name."
 	(funcall ok "/var/tmp")
 	(funcall ok  ".")
 	(error
-	 "Couldn't find a usable temp directory -- set `pydbg-temp-directory'")))
+	 "Couldn't find a usable temp directory -- set `pydbgr-temp-directory'")))
   "*Directory used for temporary files created by a *Python* process.
 By default, the first directory from this list that exists and that you
 can write into: the value (if any) of the environment variable TMPDIR,
 /usr/tmp, /tmp, /var/tmp, or the current directory."
   :type 'string
-  :group 'pydbg)
+  :group 'pydbgr)
 
-(defgroup pydbgtrack nil
-  "Pydbg file tracking by watching the prompt."
-  :prefix "pydbg-pydbgtrack-"
+(defgroup pydbgrtrack nil
+  "Pydbgr file tracking by watching the prompt."
+  :prefix "pydbgr-pydbgrtrack-"
   :group 'shell)
 
-(defcustom pydbg-pydbgtrack-do-tracking-p nil
-  "*Controls whether the pydbgtrack feature is enabled or not.
-When non-nil, pydbgtrack is enabled in all comint-based buffers,
-e.g. shell buffers and the *Python* buffer.  When using pydbg to debug a
-Python program, pydbgtrack notices the pydbg prompt and displays the
+(defcustom pydbgr-pydbgrtrack-do-tracking-p nil
+  "*Controls whether the pydbgrtrack feature is enabled or not.
+When non-nil, pydbgrtrack is enabled in all comint-based buffers,
+e.g. shell buffers and the *Python* buffer.  When using pydbgr to debug a
+Python program, pydbgrtrack notices the pydbgr prompt and displays the
 source file and line that the program is stopped at, much the same way
 as gud-mode does for debugging C programs with gdb."
   :type 'boolean
-  :group 'pydbg)
-(make-variable-buffer-local 'pydbg-pydbgtrack-do-tracking-p)
+  :group 'pydbgr)
+(make-variable-buffer-local 'pydbgr-pydbgrtrack-do-tracking-p)
 
-(defcustom pydbg-many-windows nil
-  "*If non-nil, display secondary pydbg windows, in a layout similar to `gdba'.
-However only set to the multi-window display if the pydbg
+(defcustom pydbgr-many-windows nil
+  "*If non-nil, display secondary pydbgr windows, in a layout similar to `gdba'.
+However only set to the multi-window display if the pydbgr
 command invocation has an annotate options (\"--annotate 1\"."
   :type 'boolean
-  :group 'pydbg)
+  :group 'pydbgr)
 
-(defcustom pydbg-pydbgtrack-minor-mode-string " PYDBG"
-  "*String to use in the minor mode list when pydbgtrack is enabled."
+(defcustom pydbgr-pydbgrtrack-minor-mode-string " PYDBGR"
+  "*String to use in the minor mode list when pydbgrtrack is enabled."
   :type 'string
-  :group 'pydbg)
+  :group 'pydbgr)
 
 
 ;; ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ;; NO USER DEFINABLE VARIABLES BEYOND THIS POINT
 
-(defvar gud-pydbg-history nil
-  "History of argument lists passed to pydbg.")
+(defvar gud-pydbgr-history nil
+  "History of argument lists passed to pydbgr.")
 
-(defconst gud-pydbg-marker-regexp
+(defconst gud-pydbgr-marker-regexp
   "^(\\(\\(?:[a-zA-Z]:\\)?[-a-zA-Z0-9_/.\\\\ ]+\\):\\([0-9]+\\))"
-  "Regular expression used to find a file location given by pydbg.
+  "Regular expression used to find a file location given by pydbgr.
 
 Program-location lines look like this:
    (/usr/bin/zonetab2pot.py:15): <module>
@@ -104,22 +104,22 @@ and in tracebacks like this:
    (/usr/bin/zonetab2pot.py:15)
 ")
 
-(defconst gud-pydbg-marker-regexp-file-group 1
-  "Group position in gud-pydbg-marker-regexp that matches the file name.")
+(defconst gud-pydbgr-marker-regexp-file-group 1
+  "Group position in gud-pydbgr-marker-regexp that matches the file name.")
 
-(defconst gud-pydbg-marker-regexp-line-group 2
-  "Group position in gud-pydbg-marker-regexp that matches the line number.")
+(defconst gud-pydbgr-marker-regexp-line-group 2
+  "Group position in gud-pydbgr-marker-regexp that matches the line number.")
 
 ;;-----------------------------------------------------------------------------
 ;; ALB - annotations support
 ;;-----------------------------------------------------------------------------
 
-(defconst pydbg-annotation-start-regexp
+(defconst pydbgr-annotation-start-regexp
   "\\([a-z]+\\)\n")
-(defconst pydbg-annotation-end-regexp
+(defconst pydbgr-annotation-end-regexp
   "^\n")
 
-(defun gud-pydbg-massage-args (file args)
+(defun gud-pydbgr-massage-args (file args)
   args)
 
 ;; There's no guarantee that Emacs will hand the filter the entire
@@ -128,23 +128,23 @@ and in tracebacks like this:
 ;; receive a chunk of text which looks like it might contain the
 ;; beginning of a marker, we save it here between calls to the
 ;; filter.
-(defun gud-pydbg-marker-filter (string)
+(defun gud-pydbgr-marker-filter (string)
   ;;(message "GOT: %s" string)
   (setq gud-marker-acc (concat gud-marker-acc string))
   ;;(message "ACC: %s" gud-marker-acc)
   (let ((output "") s s2 (tmp ""))
 
     ;; ALB first we process the annotations (if any)
-    (while (setq s (string-match pydbg-annotation-start-regexp
+    (while (setq s (string-match pydbgr-annotation-start-regexp
                                  gud-marker-acc))
       (let ((name (substring gud-marker-acc (match-beginning 1) (match-end 1)))
             (end (match-end 0)))
-        (if (setq s2 (string-match pydbg-annotation-end-regexp
+        (if (setq s2 (string-match pydbgr-annotation-end-regexp
                                    gud-marker-acc end))
             ;; ok, annotation complete, process it and remove it
             (let ((contents (substring gud-marker-acc end s2))
                   (end2 (match-end 0)))
-              (pydbg-process-annotation name contents)
+              (pydbgr-process-annotation name contents)
               (setq gud-marker-acc
                     (concat (substring gud-marker-acc 0 s)
                             (substring gud-marker-acc end2))))
@@ -153,7 +153,7 @@ and in tracebacks like this:
           (setq tmp (substring gud-marker-acc s))
           (setq gud-marker-acc (substring gud-marker-acc 0 s)))))
     
-    (when (setq s (string-match pydbg-annotation-end-regexp gud-marker-acc))
+    (when (setq s (string-match pydbgr-annotation-end-regexp gud-marker-acc))
       ;; save the beginning of gud-marker-acc to tmp, remove it and restore it
       ;; after normal output has been processed
       (setq tmp (substring gud-marker-acc 0 s))
@@ -164,18 +164,18 @@ and in tracebacks like this:
     ;;   (/etc/init.d/ntp.init:16):
     ;; but we also allow DOS drive letters
     ;;   (d:/etc/init.d/ntp.init:16):
-    (while (string-match gud-pydbg-marker-regexp gud-marker-acc)
+    (while (string-match gud-pydbgr-marker-regexp gud-marker-acc)
       (setq
 
        ;; Extract the frame position from the marker.
        gud-last-frame
        (cons (substring gud-marker-acc 
-			(match-beginning gud-pydbg-marker-regexp-file-group) 
-			(match-end gud-pydbg-marker-regexp-file-group))
+			(match-beginning gud-pydbgr-marker-regexp-file-group) 
+			(match-end gud-pydbgr-marker-regexp-file-group))
 	     (string-to-number
 	      (substring gud-marker-acc
-			 (match-beginning gud-pydbg-marker-regexp-line-group)
-			 (match-end gud-pydbg-marker-regexp-line-group))))
+			 (match-beginning gud-pydbgr-marker-regexp-line-group)
+			 (match-end gud-pydbgr-marker-regexp-line-group))))
 
        ;; Append any text before the marker to the output we're going
        ;; to return - include the marker in this text.
@@ -205,7 +205,7 @@ and in tracebacks like this:
 
     output))
 
-(defun gud-pydbg-find-file (f)
+(defun gud-pydbgr-find-file (f)
   (find-file-noselect f 'nowarn))
 
 ; From Emacs 23
@@ -226,7 +226,7 @@ The SEPARATOR regexp defaults to \"\\s-+\"."
 						sep)))))))
 )
 
-(defun pydbg-get-script-name (args &optional annotate-p)
+(defun pydbgr-get-script-name (args &optional annotate-p)
   "Pick out the script name from the command line and return a
 list of that and whether the annotate option was set. Initially
 annotate should be set to nil."
@@ -234,39 +234,39 @@ annotate should be set to nil."
      (cond 
       ((not arg) (list nil annotate-p))
       ((string-match "^--annotate=[1-9]" arg)
-       (pydbg-get-script-name args t))
+       (pydbgr-get-script-name args t))
       ((member arg '("-t" "--target" "-o" "--output"
 		    "--execute" "-e" "--error" "--cd" "-x" "--command"))
        (if args 
-	   (pydbg-get-script-name (cdr args) annotate-p)
+	   (pydbgr-get-script-name (cdr args) annotate-p)
        ;else
 	 (list nil annotate-p)))
-      ((string-match "^-[a-zA-z]" arg) (pydbg-get-script-name args annotate-p))
-      ((string-match "^--[a-zA-z]+" arg) (pydbg-get-script-name args annotate-p))
-      ((string-match "^pydbg" arg) (pydbg-get-script-name args annotate-p))
+      ((string-match "^-[a-zA-z]" arg) (pydbgr-get-script-name args annotate-p))
+      ((string-match "^--[a-zA-z]+" arg) (pydbgr-get-script-name args annotate-p))
+      ((string-match "^pydbgr" arg) (pydbgr-get-script-name args annotate-p))
      ; found script name (or nil
       (t (list arg annotate-p)))))
 
 ;;;###autoload
-(defun pydbg (command-line)
-  "Run pydbg on program FILE in buffer *gud-cmd-FILE*.
+(defun pydbgr (command-line)
+  "Run pydbgr on program FILE in buffer *gud-cmd-FILE*.
 The directory containing FILE becomes the initial working directory
 and source-file directory for your debugger.
 
-The custom variable `gud-pydbg-command-name' sets the pattern used
-to invoke pydbg.
+The custom variable `gud-pydbgr-command-name' sets the pattern used
+to invoke pydbgr.
 
-If `pydbg-many-windows' is nil (the default value) then pydbg just
+If `pydbgr-many-windows' is nil (the default value) then pydbgr just
 starts with two windows: one displaying the GUD buffer and the
 other with the source file with the main routine of the inferior.
 
-If `pydbg-many-windows' is t, regardless of the value of the layout
+If `pydbgr-many-windows' is t, regardless of the value of the layout
 below will appear.
 
 +----------------------------------------------------------------------+
 |                               GDB Toolbar                            |
 +-----------------------------------+----------------------------------+
-| GUD buffer (I/O of pydbg)          | Locals buffer                    |
+| GUD buffer (I/O of pydbgr)          | Locals buffer                    |
 |                                   |                                  |
 |                                   |                                  |
 |                                   |                                  |
@@ -275,39 +275,39 @@ below will appear.
 |                                                                      |
 +-----------------------------------+----------------------------------+
 | Stack buffer                      | Breakpoints buffer               |
-| RET  pydbg-goto-stack-frame        | SPC    pydbg-toggle-breakpoint    |
-|                                   | RET    pydbg-goto-breakpoint      |
-|                                   | D      pydbg-delete-breakpoint    |
+| RET  pydbgr-goto-stack-frame        | SPC    pydbgr-toggle-breakpoint    |
+|                                   | RET    pydbgr-goto-breakpoint      |
+|                                   | D      pydbgr-delete-breakpoint    |
 +-----------------------------------+----------------------------------+
 "
   (interactive
-   (list (gud-query-cmdline 'pydbg)))
+   (list (gud-query-cmdline 'pydbgr)))
 
   ; Parse the command line and pick out the script name and whether --annotate
   ; has been set.
   (let* ((words (split-string-and-unquote command-line))
-	(script-name-annotate-p (pydbg-get-script-name 
-			       (gud-pydbg-massage-args "1" words) nil))
+	(script-name-annotate-p (pydbgr-get-script-name 
+			       (gud-pydbgr-massage-args "1" words) nil))
 	(target-name (file-name-nondirectory (car script-name-annotate-p)))
 	(annotate-p (cadr script-name-annotate-p))
-	(pydbg-buffer-name (format "*pydbg-cmd-%s*" target-name))
-	(pydbg-buffer (get-buffer pydbg-buffer-name))
+	(pydbgr-buffer-name (format "*pydbgr-cmd-%s*" target-name))
+	(pydbgr-buffer (get-buffer pydbgr-buffer-name))
 	)
 
-    ;; `gud-pydbg-massage-args' needs whole `command-line'.
+    ;; `gud-pydbgr-massage-args' needs whole `command-line'.
     ;; command-line is refered through dyanmic scope.
-    (gud-common-init command-line 'gud-pydbg-massage-args
-		     'gud-pydbg-marker-filter 'gud-pydbg-find-file)
+    (gud-common-init command-line 'gud-pydbgr-massage-args
+		     'gud-pydbgr-marker-filter 'gud-pydbgr-find-file)
     
-    ; gud-common-init sets the pydbg process buffer name incorrectly, because
+    ; gud-common-init sets the pydbgr process buffer name incorrectly, because
     ; it can't parse the command line properly to pick out the script name.
     ; So we'll do it here and rename that buffer. The buffer we want to rename
     ; happens to be the current buffer.
     (setq gud-target-name target-name)
-    (when pydbg-buffer (kill-buffer pydbg-buffer))
-    (rename-buffer pydbg-buffer-name)
+    (when pydbgr-buffer (kill-buffer pydbgr-buffer))
+    (rename-buffer pydbgr-buffer-name)
 
-    (set (make-local-variable 'gud-minor-mode) 'pydbg)
+    (set (make-local-variable 'gud-minor-mode) 'pydbgr)
 
     (gud-def gud-args   "info args" "a"
 	     "Show arguments of current stack.")
@@ -338,7 +338,7 @@ below will appear.
     (gud-def gud-where   "where"
 	     "T" "Show stack trace.")
     (local-set-key "\C-i" 'gud-gdb-complete-command)
-    (setq comint-prompt-regexp "^(+Pydbg[*]?)+ +")
+    (setq comint-prompt-regexp "^(+Pydbgr[*]?)+ +")
     (setq paragraph-start comint-prompt-regexp)
     
     ;; Update GUD menu bar
@@ -359,19 +359,19 @@ below will appear.
     (local-set-key [menu-bar debug up] '("Up Stack" . gud-up))
     (local-set-key [menu-bar debug down] '("Down Stack" . gud-down))
     
-    (setq comint-prompt-regexp "^(+Pydbg[*]?)+ +")
+    (setq comint-prompt-regexp "^(+Pydbgr[*]?)+ +")
     (setq paragraph-start comint-prompt-regexp)
     
 					; remove other py-pdbtrack if which gets in the way
     (remove-hook 'comint-output-filter-functions 'py-pdbtrack-track-stack-file)
     
     (setq paragraph-start comint-prompt-regexp)
-    (when (and annotate-p pydbg-many-windows) (pydbg-setup-windows))
+    (when (and annotate-p pydbgr-many-windows) (pydbgr-setup-windows))
     
-    (run-hooks 'pydbg-mode-hook)))
+    (run-hooks 'pydbgr-mode-hook)))
   
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; pydbgtrack --- tracking pydbg debugger in an Emacs shell window
+;;; pydbgrtrack --- tracking pydbgr debugger in an Emacs shell window
 ;;; Modified from  python-mode in particular the part:
 ;; pdbtrack support contributed by Ken Manheimer, April 2001.
 
@@ -383,95 +383,95 @@ below will appear.
 (require 'compile)
 (require 'shell)
 
-;; have to bind pydbg-file-queue before installing the kill-emacs-hook
-(defvar pydbg-file-queue nil
+;; have to bind pydbgr-file-queue before installing the kill-emacs-hook
+(defvar pydbgr-file-queue nil
   "Queue of Makefile temp files awaiting execution.
 Currently-active file is at the head of the list.")
 
-(defvar pydbg-pydbgtrack-is-tracking-p t)
+(defvar pydbgr-pydbgrtrack-is-tracking-p t)
 
 
 ;; Constants
 
-(defconst pydbg-position-re 
+(defconst pydbgr-position-re 
   "\\(^\\|\n\\)(\\(\\(?:[A-Za-z]:\\)?[^:]+\\):\\([0-9]*\\)).*\n"
-  "Regular expression for a pydbg position")
+  "Regular expression for a pydbgr position")
 
-(defconst pydbg-marker-regexp-file-group 2
-  "Group position in pydbg-postiion-re that matches the file name.")
+(defconst pydbgr-marker-regexp-file-group 2
+  "Group position in pydbgr-postiion-re that matches the file name.")
 
-(defconst pydbg-marker-regexp-line-group 3
-  "Group position in pydbg-position-re that matches the line number.")
+(defconst pydbgr-marker-regexp-line-group 3
+  "Group position in pydbgr-position-re that matches the line number.")
 
-(defconst pydbg-traceback-line-re
+(defconst pydbgr-traceback-line-re
   "^[ \t]+File \"\\([^\"]+\\)\", line \\([0-9]*\\),"
   "Regular expression that describes Python tracebacks.")
 
-(defconst pydbg-pydbgtrack-input-prompt "\n(+Pydbg[*]?)+ +"
-  "Regular expression pydbgtrack uses to recognize a pydbg prompt.")
+(defconst pydbgr-pydbgrtrack-input-prompt "\n(+Pydbgr[*]?)+ +"
+  "Regular expression pydbgrtrack uses to recognize a pydbgr prompt.")
 
-(defconst pydbg-pydbgtrack-track-range 10000
+(defconst pydbgr-pydbgrtrack-track-range 10000
   "Max number of characters from end of buffer to search for stack entry.")
 
 
-(defun pydbg-pydbgtrack-overlay-arrow (activation)
+(defun pydbgr-pydbgrtrack-overlay-arrow (activation)
   "Activate or de arrow at beginning-of-line in current buffer."
   ;; This was derived/simplified from edebug-overlay-arrow
   (cond (activation
 	 (setq overlay-arrow-position (make-marker))
 	 (setq overlay-arrow-string "=>")
 	 (set-marker overlay-arrow-position (point) (current-buffer))
-	 (setq pydbg-pydbgtrack-is-tracking-p t))
-	(pydbg-pydbgtrack-is-tracking-p
+	 (setq pydbgr-pydbgrtrack-is-tracking-p t))
+	(pydbgr-pydbgrtrack-is-tracking-p
 	 (setq overlay-arrow-position nil)
-	 (setq pydbg-pydbgtrack-is-tracking-p nil))
+	 (setq pydbgr-pydbgrtrack-is-tracking-p nil))
 	))
 
-(defun pydbg-pydbgtrack-track-stack-file (text)
-  "Show the file indicated by the pydbg stack entry line, in a separate window.
+(defun pydbgr-pydbgrtrack-track-stack-file (text)
+  "Show the file indicated by the pydbgr stack entry line, in a separate window.
 Activity is disabled if the buffer-local variable
-`pydbg-pydbgtrack-do-tracking-p' is nil.
+`pydbgr-pydbgrtrack-do-tracking-p' is nil.
 
-We depend on the pydbg input prompt matching `pydbg-pydbgtrack-input-prompt'
+We depend on the pydbgr input prompt matching `pydbgr-pydbgrtrack-input-prompt'
 at the beginning of the line.
 " 
   ;; Instead of trying to piece things together from partial text
   ;; (which can be almost useless depending on Emacs version), we
-  ;; monitor to the point where we have the next pydbg prompt, and then
+  ;; monitor to the point where we have the next pydbgr prompt, and then
   ;; check all text from comint-last-input-end to process-mark.
   ;;
   ;; Also, we're very conservative about clearing the overlay arrow,
   ;; to minimize residue.  This means, for instance, that executing
-  ;; other pydbg commands wipe out the highlight.  You can always do a
+  ;; other pydbgr commands wipe out the highlight.  You can always do a
   ;; 'where' (aka 'w') command to reveal the overlay arrow.
   (let* ((origbuf (current-buffer))
 	 (currproc (get-buffer-process origbuf)))
 
-    (if (not (and currproc pydbg-pydbgtrack-do-tracking-p))
-        (pydbg-pydbgtrack-overlay-arrow nil)
+    (if (not (and currproc pydbgr-pydbgrtrack-do-tracking-p))
+        (pydbgr-pydbgrtrack-overlay-arrow nil)
       ;else 
       (let* ((procmark (process-mark currproc))
 	     (block-start (max comint-last-input-end
-			       (- procmark pydbg-pydbgtrack-track-range)))
+			       (- procmark pydbgr-pydbgrtrack-track-range)))
              (block-str (buffer-substring block-start procmark))
              target target_fname target_lineno target_buffer)
 
-        (if (not (string-match (concat pydbg-pydbgtrack-input-prompt "$") block-str))
-            (pydbg-pydbgtrack-overlay-arrow nil)
+        (if (not (string-match (concat pydbgr-pydbgrtrack-input-prompt "$") block-str))
+            (pydbgr-pydbgrtrack-overlay-arrow nil)
 
-          (setq target (pydbg-pydbgtrack-get-source-buffer block-str))
+          (setq target (pydbgr-pydbgrtrack-get-source-buffer block-str))
 
           (if (stringp target)
-              (message "pydbgtrack: %s" target)
+              (message "pydbgrtrack: %s" target)
 	    ;else
-	    (gud-pydbg-marker-filter block-str)
+	    (gud-pydbgr-marker-filter block-str)
             (setq target_lineno (car target))
             (setq target_buffer (cadr target))
             (setq target_fname (buffer-file-name target_buffer))
             (switch-to-buffer-other-window target_buffer)
             (goto-line target_lineno)
-            (message "pydbgtrack: line %s, file %s" target_lineno target_fname)
-            (pydbg-pydbgtrack-overlay-arrow t)
+            (message "pydbgrtrack: line %s, file %s" target_lineno target_fname)
+            (pydbgr-pydbgrtrack-overlay-arrow t)
             (pop-to-buffer origbuf t)
 	    )
 
@@ -481,10 +481,10 @@ at the beginning of the line.
 		  (annotate-end (point-max)))
 	      (goto-char block-start)
 	      (while (re-search-forward
-		      pydbg-annotation-start-regexp annotate-end t)
+		      pydbgr-annotation-start-regexp annotate-end t)
 		(setq annotate-start (match-beginning 0))
 		(if (re-search-forward 
-		     pydbg-annotation-end-regexp annotate-end t)
+		     pydbgr-annotation-end-regexp annotate-end t)
 		    (delete-region annotate-start (point))
 		;else
 		  (forward-line)))
@@ -492,7 +492,7 @@ at the beginning of the line.
 	)))
   )
 
-(defun pydbg-pydbgtrack-get-source-buffer (block-str)
+(defun pydbgr-pydbgrtrack-get-source-buffer (block-str)
   "Return line number and buffer of code indicated by block-str's traceback 
 text.
 
@@ -505,13 +505,13 @@ having the named function.
 If we're unable find the source code we return a string describing the
 problem as best as we can determine."
 
-  (if (not (string-match pydbg-position-re block-str))
+  (if (not (string-match pydbgr-position-re block-str))
 
       "line number cue not found"
 
-    (let* ((filename (match-string pydbg-marker-regexp-file-group block-str))
+    (let* ((filename (match-string pydbgr-marker-regexp-file-group block-str))
            (lineno (string-to-number
-		    (match-string pydbg-marker-regexp-line-group block-str)))
+		    (match-string pydbgr-marker-regexp-line-group block-str)))
            funcbuffer)
 
       (cond ((file-exists-p filename)
@@ -530,71 +530,71 @@ problem as best as we can determine."
 
 
 
-;; pydbgtrack functions
-(defun pydbg-pydbgtrack-toggle-stack-tracking (arg)
+;; pydbgrtrack functions
+(defun pydbgr-pydbgrtrack-toggle-stack-tracking (arg)
   (interactive "P")
   (if (not (get-buffer-process (current-buffer)))
       (error "No process associated with buffer '%s'" (current-buffer)))
   ;; missing or 0 is toggle, >0 turn on, <0 turn off
   (if (or (not arg)
 	  (zerop (setq arg (prefix-numeric-value arg))))
-      (setq pydbg-pydbgtrack-do-tracking-p (not pydbg-pydbgtrack-do-tracking-p))
-    (setq pydbg-pydbgtrack-do-tracking-p (> arg 0)))
-  (message "%sabled pydbg's pydbgtrack"
-           (if pydbg-pydbgtrack-do-tracking-p "En" "Dis")))
+      (setq pydbgr-pydbgrtrack-do-tracking-p (not pydbgr-pydbgrtrack-do-tracking-p))
+    (setq pydbgr-pydbgrtrack-do-tracking-p (> arg 0)))
+  (message "%sabled pydbgr's pydbgrtrack"
+           (if pydbgr-pydbgrtrack-do-tracking-p "En" "Dis")))
 
-(defun turn-on-pydbgtrack ()
+(defun turn-on-pydbgrtrack ()
   (interactive)
-  (pydbg-pydbgtrack-toggle-stack-tracking 1)
-  (setq pydbg-pydbgtrack-is-tracking-p t)
-  (local-set-key "\C-cg" 'pydbg-goto-traceback-line)
-  (add-hook 'comint-output-filter-functions 'pydbg-pydbgtrack-track-stack-file)
+  (pydbgr-pydbgrtrack-toggle-stack-tracking 1)
+  (setq pydbgr-pydbgrtrack-is-tracking-p t)
+  (local-set-key "\C-cg" 'pydbgr-goto-traceback-line)
+  (add-hook 'comint-output-filter-functions 'pydbgr-pydbgrtrack-track-stack-file)
   ; remove other py-pdbtrack if which gets in the way
   (remove-hook 'comint-output-filter-functions 'py-pdbtrack-track-stack-file))
   (remove-hook 'comint-output-filter-functions 
 	       'py-rdebugtrack-track-stack-file)
 
 
-(defun turn-off-pydbgtrack ()
+(defun turn-off-pydbgrtrack ()
   (interactive)
-  (pydbg-pydbgtrack-toggle-stack-tracking 0)
-  (setq pydbg-pydbgtrack-is-tracking-p nil)
+  (pydbgr-pydbgrtrack-toggle-stack-tracking 0)
+  (setq pydbgr-pydbgrtrack-is-tracking-p nil)
   (remove-hook 'comint-output-filter-functions 
-	       'pydbg-pydbgtrack-track-stack-file) )
+	       'pydbgr-pydbgrtrack-track-stack-file) )
 
 ;; Add a designator to the minor mode strings if we are tracking
-(or (assq 'pydbg-pydbgtrack-minor-mode-string minor-mode-alist)
-    (push '(pydbg-pydbgtrack-is-tracking-p
-	    pydbg-pydbgtrack-minor-mode-string)
+(or (assq 'pydbgr-pydbgrtrack-minor-mode-string minor-mode-alist)
+    (push '(pydbgr-pydbgrtrack-is-tracking-p
+	    pydbgr-pydbgrtrack-minor-mode-string)
 	  minor-mode-alist)) 
-;; pydbgtrack
+;; pydbgrtrack
 
 
 ;;-----------------------------------------------------------------------------
 ;; ALB - annotations support
 ;;-----------------------------------------------------------------------------
 
-(defvar pydbg--annotation-setup-map
+(defvar pydbgr--annotation-setup-map
   (progn
     (define-hash-table-test 'str-hash 'string= 'sxhash)
     (let ((map (make-hash-table :test 'str-hash)))
-      (puthash "breakpoints" 'pydbg--setup-breakpoints-buffer map)
-      (puthash "stack" 'pydbg--setup-stack-buffer map)
-      (puthash "locals" 'pydbg--setup-locals-buffer map)
+      (puthash "breakpoints" 'pydbgr--setup-breakpoints-buffer map)
+      (puthash "stack" 'pydbgr--setup-stack-buffer map)
+      (puthash "locals" 'pydbgr--setup-locals-buffer map)
       map)))
 
-(defun pydbg-process-annotation (name contents)
-  (let ((buf (get-buffer-create (format "*pydbg-%s-%s*" name gud-target-name))))
+(defun pydbgr-process-annotation (name contents)
+  (let ((buf (get-buffer-create (format "*pydbgr-%s-%s*" name gud-target-name))))
     (with-current-buffer buf
       (setq buffer-read-only t)
       (let ((inhibit-read-only t)
-            (setup-func (gethash name pydbg--annotation-setup-map)))
+            (setup-func (gethash name pydbgr--annotation-setup-map)))
         (erase-buffer)
         (insert contents)
         (when setup-func (funcall setup-func buf))))))
 
-(defun pydbg-setup-windows ()
-  "Layout the window pattern for `pydbg-many-windows'. This was mostly copied
+(defun pydbgr-setup-windows ()
+  "Layout the window pattern for `pydbgr-many-windows'. This was mostly copied
 from `gdb-setup-windows', but simplified."
   (pop-to-buffer gud-comint-buffer)
   (let ((script-name gud-target-name))
@@ -605,7 +605,7 @@ from `gdb-setup-windows', but simplified."
     (other-window 1)
     (set-window-buffer 
      (selected-window) 
-     (get-buffer-create (format "*pydbg-locals-%s*" script-name)))
+     (get-buffer-create (format "*pydbgr-locals-%s*" script-name)))
     (other-window 1)
     (switch-to-buffer
      (if gud-last-last-frame
@@ -616,87 +616,87 @@ from `gdb-setup-windows', but simplified."
     (other-window 1)
     (set-window-buffer 
      (selected-window)
-     (get-buffer-create (format "*pydbg-stack-%s*" script-name)))
+     (get-buffer-create (format "*pydbgr-stack-%s*" script-name)))
     (split-window-horizontally)
     (other-window 1)
     (set-window-buffer 
       (selected-window) 
-      (get-buffer-create (format "*pydbg-breakpoints-%s*" script-name)))
+      (get-buffer-create (format "*pydbgr-breakpoints-%s*" script-name)))
      (other-window 1)
      (goto-char (point-max))))
     
-(defun pydbg-restore-windows ()
-  "Equivalent of `gdb-restore-windows' for pydbg."
+(defun pydbgr-restore-windows ()
+  "Equivalent of `gdb-restore-windows' for pydbgr."
   (interactive)
-  (when pydbg-many-windows
-    (pydbg-setup-windows)))
+  (when pydbgr-many-windows
+    (pydbgr-setup-windows)))
 
-(defun pydbg-set-windows (&optional name)
+(defun pydbgr-set-windows (&optional name)
   "Sets window used in multi-window frame and issues
-pydbg-restore-windows if pydbg-many-windows is set"
+pydbgr-restore-windows if pydbgr-many-windows is set"
   (interactive "sProgram name: ")
   (when name (setq gud-target-name name)
 	(setq gud-comint-buffer (current-buffer)))
   (when gud-last-frame (setq gud-last-last-frame gud-last-frame))
-  (when pydbg-many-windows
-    (pydbg-setup-windows)))
+  (when pydbgr-many-windows
+    (pydbgr-setup-windows)))
 
 ;; ALB fontification and keymaps for secondary buffers (breakpoints, stack)
 
 ;; -- breakpoints
 
-(defvar pydbg-breakpoints-mode-map
+(defvar pydbgr-breakpoints-mode-map
   (let ((map (make-sparse-keymap))
 	(menu (make-sparse-keymap "Breakpoints")))
-    (define-key menu [quit] '("Quit"   . pydbg-delete-frame-or-window))
-    (define-key menu [goto] '("Goto"   . pydbg-goto-breakpoint))
-    (define-key menu [delete] '("Delete" . pydbg-delete-breakpoint))
-    (define-key map [mouse-2] 'pydbg-goto-breakpoint-mouse)
-    (define-key map [? ] 'pydbg-toggle-breakpoint)
-    (define-key map [(control m)] 'pydbg-goto-breakpoint)
-    (define-key map [?d] 'pydbg-delete-breakpoint)
+    (define-key menu [quit] '("Quit"   . pydbgr-delete-frame-or-window))
+    (define-key menu [goto] '("Goto"   . pydbgr-goto-breakpoint))
+    (define-key menu [delete] '("Delete" . pydbgr-delete-breakpoint))
+    (define-key map [mouse-2] 'pydbgr-goto-breakpoint-mouse)
+    (define-key map [? ] 'pydbgr-toggle-breakpoint)
+    (define-key map [(control m)] 'pydbgr-goto-breakpoint)
+    (define-key map [?d] 'pydbgr-delete-breakpoint)
     map)
-  "Keymap to navigate/set/enable pydbg breakpoints.")
+  "Keymap to navigate/set/enable pydbgr breakpoints.")
 
-(defun pydbg-delete-frame-or-window ()
+(defun pydbgr-delete-frame-or-window ()
   "Delete frame if there is only one window.  Otherwise delete the window."
   (interactive)
   (if (one-window-p) (delete-frame)
     (delete-window)))
 
-(defun pydbg-breakpoints-mode ()
+(defun pydbgr-breakpoints-mode ()
   "Major mode for rdebug breakpoints.
 
-\\{pydbg-breakpoints-mode-map}"
+\\{pydbgr-breakpoints-mode-map}"
   (kill-all-local-variables)
-  (setq major-mode 'pydbg-breakpoints-mode)
-  (setq mode-name "PYDBG Breakpoints")
-  (use-local-map pydbg-breakpoints-mode-map)
+  (setq major-mode 'pydbgr-breakpoints-mode)
+  (setq mode-name "PYDBGR Breakpoints")
+  (use-local-map pydbgr-breakpoints-mode-map)
   (setq buffer-read-only t)
-  (run-mode-hooks 'pydbg-breakpoints-mode-hook)
+  (run-mode-hooks 'pydbgr-breakpoints-mode-hook)
  ;(if (eq (buffer-local-value 'gud-minor-mode gud-comint-buffer) 'gdba)
   ;    'gdb-invalidate-breakpoints
   ;  'gdbmi-invalidate-breakpoints)
 )
 
-(defconst pydbg--breakpoint-regexp
+(defconst pydbgr--breakpoint-regexp
   "^\\([0-9]+\\) +breakpoint +\\([a-z]+\\) +\\([a-z]+\\) +at +\\(.+\\):\\([0-9]+\\)$"
-  "Regexp to recognize breakpoint lines in pydbg breakpoints buffers.")
+  "Regexp to recognize breakpoint lines in pydbgr breakpoints buffers.")
 
-(defun pydbg--setup-breakpoints-buffer (buf)
+(defun pydbgr--setup-breakpoints-buffer (buf)
   "Detects breakpoint lines and sets up keymap and mouse navigation."
   (with-current-buffer buf
     (let ((inhibit-read-only t))
-      (pydbg-breakpoints-mode)
+      (pydbgr-breakpoints-mode)
       (goto-char (point-min))
       (while (not (eobp))
         (let ((b (point-at-bol)) 
 	      (e (point-at-eol)))
-          (when (string-match pydbg--breakpoint-regexp
+          (when (string-match pydbgr--breakpoint-regexp
                               (buffer-substring b e))
             (add-text-properties b e
                                  (list 'mouse-face 'highlight
-                                       'keymap pydbg-breakpoints-mode-map))
+                                       'keymap pydbgr-breakpoints-mode-map))
             (add-text-properties
              (+ b (match-beginning 1)) (+ b (match-end 1))
              (list 'face font-lock-constant-face
@@ -728,61 +728,61 @@ pydbg-restore-windows if pydbg-many-windows is set"
         (forward-line)
         (beginning-of-line))))))
 
-(defun pydbg-goto-breakpoint-mouse (event)
+(defun pydbgr-goto-breakpoint-mouse (event)
   "Displays the location in a source file of the selected breakpoint."
   (interactive "e")
   (with-current-buffer (window-buffer (posn-window (event-end event)))
-    (pydbg-goto-breakpoint (posn-point (event-end event)))))
+    (pydbgr-goto-breakpoint (posn-point (event-end event)))))
 
-(defun pydbg-goto-breakpoint (pt)
+(defun pydbgr-goto-breakpoint (pt)
   "Displays the location in a source file of the selected breakpoint."
   (interactive "d")
   (save-excursion
     (goto-char pt)
     (let ((s (buffer-substring (point-at-bol) (point-at-eol))))
-      (when (string-match pydbg--breakpoint-regexp s)
-        (pydbg-display-line
+      (when (string-match pydbgr--breakpoint-regexp s)
+        (pydbgr-display-line
          (substring s (match-beginning 4) (match-end 4))
          (string-to-number (substring s (match-beginning 5) (match-end 5))))
         ))))
 
-(defun pydbg-goto-traceback-line (pt)
+(defun pydbgr-goto-traceback-line (pt)
   "Displays the location in a source file of the Python traceback line."
   (interactive "d")
   (save-excursion
     (goto-char pt)
     (let ((s (buffer-substring (point-at-bol) (point-at-eol)))
 	  (gud-comint-buffer (current-buffer)))
-      (when (string-match pydbg-traceback-line-re s)
-        (pydbg-display-line
+      (when (string-match pydbgr-traceback-line-re s)
+        (pydbgr-display-line
          (substring s (match-beginning 1) (match-end 1))
          (string-to-number (substring s (match-beginning 2) (match-end 2))))
         ))))
 
-(defun pydbg-toggle-breakpoint (pt)
+(defun pydbgr-toggle-breakpoint (pt)
   "Toggles the breakpoint at PT in the breakpoints buffer."
   (interactive "d")
   (save-excursion
     (goto-char pt)
     (let ((s (buffer-substring (point-at-bol) (point-at-eol))))
-      (when (string-match pydbg--breakpoint-regexp s)
+      (when (string-match pydbgr--breakpoint-regexp s)
         (let* ((enabled
                 (string= (substring s (match-beginning 3) (match-end 3)) "y"))
                (cmd (if enabled "disable" "enable"))
                (bpnum (substring s (match-beginning 1) (match-end 1))))
           (gud-call (format "%s %s" cmd bpnum)))))))
 
-(defun pydbg-delete-breakpoint (pt)
+(defun pydbgr-delete-breakpoint (pt)
   "Deletes the breakpoint at PT in the breakpoints buffer."
   (interactive "d")
   (save-excursion
     (goto-char pt)
     (let ((s (buffer-substring (point-at-bol) (point-at-eol))))
-      (when (string-match pydbg--breakpoint-regexp s)
+      (when (string-match pydbgr--breakpoint-regexp s)
         (let ((bpnum (substring s (match-beginning 1) (match-end 1))))
           (gud-call (format "delete %s" bpnum)))))))
 
-(defun pydbg-display-line (file line &optional move-arrow)
+(defun pydbgr-display-line (file line &optional move-arrow)
   (let ((oldpos (and gud-overlay-arrow-position
                      (marker-position gud-overlay-arrow-position)))
         (oldbuf (and gud-overlay-arrow-position
@@ -795,44 +795,44 @@ pydbg-restore-windows if pydbg-many-windows is set"
 
 ;; -- stack
 
-(defvar pydbg-frames-mode-map
+(defvar pydbgr-frames-mode-map
   (let ((map (make-sparse-keymap)))
-    (define-key map [mouse-1] 'pydbg-goto-stack-frame-mouse)
-    (define-key map [mouse-2] 'pydbg-goto-stack-frame-mouse)
-    (define-key map [(control m)] 'pydbg-goto-stack-frame)
+    (define-key map [mouse-1] 'pydbgr-goto-stack-frame-mouse)
+    (define-key map [mouse-2] 'pydbgr-goto-stack-frame-mouse)
+    (define-key map [(control m)] 'pydbgr-goto-stack-frame)
     map)
-  "Keymap to navigate pydbg stack frames.")
+  "Keymap to navigate pydbgr stack frames.")
 
-(defun pydbg-frames-mode ()
-  "Major mode for pydbg frames.
+(defun pydbgr-frames-mode ()
+  "Major mode for pydbgr frames.
 
-\\{pydbg-frames-mode-map}"
+\\{pydbgr-frames-mode-map}"
   ; (kill-all-local-variables)
   (interactive "")
-  (setq major-mode 'pydbg-frames-mode)
-  (setq mode-name "PYDBG Stack Frames")
-  (use-local-map pydbg-frames-mode-map)
+  (setq major-mode 'pydbgr-frames-mode)
+  (setq mode-name "PYDBGR Stack Frames")
+  (use-local-map pydbgr-frames-mode-map)
   ; (set (make-local-variable 'font-lock-defaults)
   ;     '(gdb-locals-font-lock-keywords))
-  (run-mode-hooks 'pydbg-frames-mode-hook))
+  (run-mode-hooks 'pydbgr-frames-mode-hook))
 
-(defconst pydbg--stack-frame-regexp
+(defconst pydbgr--stack-frame-regexp
   "^\\(->\\|##\\|  \\) +\\([0-9]+\\) +\\([^ (]+\\).+$"
-  "Regexp to recognize stack frame lines in pydbg stack buffers.")
+  "Regexp to recognize stack frame lines in pydbgr stack buffers.")
 
-(defun pydbg--setup-stack-buffer (buf)
+(defun pydbgr--setup-stack-buffer (buf)
   "Detects stack frame lines and sets up mouse navigation."
   (with-current-buffer buf
     (let ((inhibit-read-only t)
 	  (current-frame-point nil) ; position in stack buffer of selected frame
 	  )
-      (pydbg-frames-mode)
+      (pydbgr-frames-mode)
       (goto-char (point-min))
       (while (not (eobp))
         (let* ((b (point-at-bol)) 
 	       (e (point-at-eol))
                (s (buffer-substring b e)))
-          (when (string-match pydbg--stack-frame-regexp s)
+          (when (string-match pydbgr--stack-frame-regexp s)
             (add-text-properties
              (+ b (match-beginning 3)) (+ b (match-end 3))
              (list 'face font-lock-function-name-face
@@ -847,7 +847,7 @@ pydbg-restore-windows if pydbg-many-windows is set"
 		(setq current-frame-point (point)))
             (add-text-properties b e
                                  (list 'mouse-face 'highlight
-                                       'keymap pydbg-frames-mode-map))))
+                                       'keymap pydbgr-frames-mode-map))))
 	;; remove initial ##  or ->
 	(beginning-of-line)
 	(delete-char 2)
@@ -857,51 +857,51 @@ pydbg-restore-windows if pydbg-many-windows is set"
       (when current-frame-point (goto-char current-frame-point))
       )))
 
-(defun pydbg-goto-stack-frame (pt)
-  "Show the pydbg stack frame correspoding at PT in the pydbg stack buffer."
+(defun pydbgr-goto-stack-frame (pt)
+  "Show the pydbgr stack frame correspoding at PT in the pydbgr stack buffer."
   (interactive "d")
   (save-excursion
     (goto-char pt)
     (let ((s (concat "##" (buffer-substring (point-at-bol) (point-at-eol)))))
-      (when (string-match pydbg--stack-frame-regexp s)
+      (when (string-match pydbgr--stack-frame-regexp s)
         (let ((frame (substring s (match-beginning 2) (match-end 2))))
           (gud-call (concat "frame " frame)))))))
 
-(defun pydbg-goto-stack-frame-mouse (event)
-  "Show the pydbg stack frame under the mouse in the pydbg stack buffer."
+(defun pydbgr-goto-stack-frame-mouse (event)
+  "Show the pydbgr stack frame under the mouse in the pydbgr stack buffer."
   (interactive "e")
   (with-current-buffer (window-buffer (posn-window (event-end event)))
-    (pydbg-goto-stack-frame (posn-point (event-end event)))))
+    (pydbgr-goto-stack-frame (posn-point (event-end event)))))
 
 ;; -- locals
 
-(defvar pydbg-locals-mode-map
+(defvar pydbgr-locals-mode-map
   (let ((map (make-sparse-keymap)))
     (suppress-keymap map)
-    (define-key map "\r" 'pydbg-edit-locals-value)
-    (define-key map "e" 'pydbg-edit-locals-value)
-    (define-key map [mouse-1] 'pydbg-edit-locals-value)
-    (define-key map [mouse-2] 'pydbg-edit-locals-value)
+    (define-key map "\r" 'pydbgr-edit-locals-value)
+    (define-key map "e" 'pydbgr-edit-locals-value)
+    (define-key map [mouse-1] 'pydbgr-edit-locals-value)
+    (define-key map [mouse-2] 'pydbgr-edit-locals-value)
     (define-key map "q" 'kill-this-buffer)
      map))
 
-(defun pydbg-locals-mode ()
-  "Major mode for pydbg locals.
+(defun pydbgr-locals-mode ()
+  "Major mode for pydbgr locals.
 
-\\{pydbg-locals-mode-map}"
+\\{pydbgr-locals-mode-map}"
   ; (kill-all-local-variables)
-  (setq major-mode 'pydbg-locals-mode)
-  (setq mode-name "PYDBG Locals")
+  (setq major-mode 'pydbgr-locals-mode)
+  (setq mode-name "PYDBGR Locals")
   (setq buffer-read-only t)
-  (use-local-map pydbg-locals-mode-map)
+  (use-local-map pydbgr-locals-mode-map)
   ; (set (make-local-variable 'font-lock-defaults)
   ;     '(gdb-locals-font-lock-keywords))
-  (run-mode-hooks 'pydbg-locals-mode-hook))
+  (run-mode-hooks 'pydbgr-locals-mode-hook))
 
-(defun pydbg--setup-locals-buffer (buf)
-  (with-current-buffer buf (pydbg-locals-mode)))
+(defun pydbgr--setup-locals-buffer (buf)
+  (with-current-buffer buf (pydbgr-locals-mode)))
 
-(defun pydbg-edit-locals-value (&optional event)
+(defun pydbgr-edit-locals-value (&optional event)
   "Assign a value to a variable displayed in the locals buffer."
   (interactive (list last-input-event))
   (save-excursion
@@ -911,15 +911,15 @@ pydbg-restore-windows if pydbg-many-windows is set"
 	   (value (read-string (format "New value (%s): " var))))
       (gud-call (format "! %s=%s" var value)))))
 
-(defadvice gud-reset (before pydbg-reset)
-  "pydbg cleanup - remove debugger's internal buffers (frame, breakpoints, 
+(defadvice gud-reset (before pydbgr-reset)
+  "pydbgr cleanup - remove debugger's internal buffers (frame, breakpoints, 
 etc.)."
   (dolist (buffer (buffer-list))
-    (when (string-match "\\*pydbg-[a-z]+\\*" (buffer-name buffer))
+    (when (string-match "\\*pydbgr-[a-z]+\\*" (buffer-name buffer))
       (let ((w (get-buffer-window buffer)))
         (when w (delete-window w)))
       (kill-buffer buffer))))
 
 (ad-activate 'gud-reset)
-(provide 'pydbg)
+(provide 'pydbgr)
 

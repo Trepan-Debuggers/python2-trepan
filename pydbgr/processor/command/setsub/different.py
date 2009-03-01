@@ -19,8 +19,8 @@
 from import_relative import *
 # Our local modules
 # FIXME: Until import_relative is fixed up...
-import_relative('processor', '....', 'pydbg')
-Mbase_subcmd = import_relative('base_subcmd', '..', 'pydbg')
+import_relative('processor', '....', 'pydbgr')
+Mbase_subcmd = import_relative('base_subcmd', '..', 'pydbgr')
 
 class SetDifferent(Mbase_subcmd.DebuggerSetBoolSubcommand):
     """ Set whether consecutive stops must be on different file/line

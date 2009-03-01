@@ -18,9 +18,9 @@
 import atexit, tempfile, os
 
 from import_relative import *
-Mbase_io = import_relative('base_io', top_name='pydbg')
-Mdefault = import_relative('default', '..lib', top_name='pydbg')
-Mmisc    = import_relative('misc', '..', 'pydbg')
+Mbase_io = import_relative('base_io', top_name='pydbgr')
+Mdefault = import_relative('default', '..lib', top_name='pydbgr')
+Mmisc    = import_relative('misc', '..', 'pydbgr')
 
 ## FIXME: Consider using Python's socketserver/SocketServer?
 class FIFOServer(Mbase_io.DebuggerInOutBase):
@@ -70,8 +70,8 @@ class FIFOServer(Mbase_io.DebuggerInOutBase):
 
         d              = tempfile.gettempdir()
         pid            = os.getpid()
-        self.out_name  = os.path.join(d, ('pydbg-%s.out' % pid))
-        self.in_name   = os.path.join(d, ('pydbg-%s.in' % pid))
+        self.out_name  = os.path.join(d, ('pydbgr-%s.out' % pid))
+        self.in_name   = os.path.join(d, ('pydbgr-%s.in' % pid))
         os.mkfifo(self.in_name)
         os.mkfifo(self.out_name)
         self.state     = 'active'

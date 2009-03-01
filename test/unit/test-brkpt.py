@@ -1,9 +1,9 @@
 #!/usr/bin/env python
-'Unit test for the debugger pydbgcore breakpoint'
+'Unit test for the debugger pydbgrcore breakpoint'
 import operator, os, sys, unittest
 from import_relative import *
 
-breakpoint = import_relative('lib.breakpoint', '...pydbg')
+breakpoint = import_relative('lib.breakpoint', '...pydbgr')
 
 class TestBreakpoint(unittest.TestCase):
     

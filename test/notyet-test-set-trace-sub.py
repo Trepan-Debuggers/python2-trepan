@@ -1,10 +1,10 @@
 #!/usr/bin/env python
-'Unit test for pydbg.processor.command.testsub.trace'
+'Unit test for pydbgr.processor.command.testsub.trace'
 import inspect, os, sys, unittest
 
 from import_relative import *
 
-top_builddir = os.path.join(os.path.pardir, os.path.pardir, 'pydbg')
+top_builddir = os.path.join(os.path.pardir, os.path.pardir, 'pydbgr')
 Mtrace = import_relative('processor.command.setsub.trace', 
                          top_builddir).command.setsub.trace
 

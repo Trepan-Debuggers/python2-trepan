@@ -17,7 +17,7 @@
 #    02110-1301 USA.
 
 from import_relative import import_relative
-base_submgr  = import_relative('base_submgr', top_name='pydbg')
+base_submgr  = import_relative('base_submgr', top_name='pydbgr')
 
 class SetCommand(base_submgr.SubcommandMgr):
     """Modifies parts of the debugger environment.

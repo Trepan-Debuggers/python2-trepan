@@ -17,7 +17,7 @@ import os, linecache
 
 # Our local modules
 from import_relative import *
-Mfile     = import_relative('file', '.lib', 'pydbg')
+Mfile     = import_relative('file', '.lib', 'pydbgr')
 
 # FIXME: do a better job of this. Live parsing? 
 def is_ok_line_for_breakpoint(filename, lineno, errmsg_fn):
@@ -89,6 +89,6 @@ if __name__=='__main__':
     print "\nCan stop at line 1: ", ok
     ok = is_ok_line_for_breakpoint(__file__, 2, sys.stdout.write)
     print "\nCan stop at line 2? ", ok
-    print path_expanduser_abs("./.pydbgrc")
-    print path_expanduser_abs("~/.pydbgrc")
+    print path_expanduser_abs("./.pydbgrrc")
+    print path_expanduser_abs("~/.pydbgrrc")
 

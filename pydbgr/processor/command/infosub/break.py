@@ -66,8 +66,8 @@ class InfoBreak(Mbase_subcmd.DebuggerSubcommand):
     pass
 
 if __name__ == '__main__':
-    Mdebugger = import_relative('debugger', '....', 'pydbg')
-    Minfo = import_relative('info', '..', 'pydbg')
+    Mdebugger = import_relative('debugger', '....', 'pydbgr')
+    Minfo = import_relative('info', '..', 'pydbgr')
     d = Mdebugger.Debugger()
     i = Minfo.InfoCommand(d.core.processor)
     sub = InfoBreak(i)

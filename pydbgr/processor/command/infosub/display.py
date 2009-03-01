@@ -16,8 +16,8 @@
 
 from import_relative import import_relative
 # Our local modules
-Mbase_subcmd  = import_relative('base_subcmd', '..', 'pydbg')
-Mpp           = import_relative('pp', '....lib', 'pydbg')
+Mbase_subcmd  = import_relative('base_subcmd', '..', 'pydbgr')
+Mpp           = import_relative('pp', '....lib', 'pydbgr')
 
 class InfoDisplay(Mbase_subcmd.DebuggerSubcommand):
     ''''Expressions to display when program stops'''

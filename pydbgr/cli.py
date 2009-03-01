@@ -23,14 +23,14 @@ import tracer
 
 # Our local modules
 from import_relative import *
-Mdebugger = import_relative('debugger', top_name='pydbg')
-Mclifns   = import_relative('clifns', top_name='pydbg')
-Mserver   = import_relative('server', '.interface', 'pydbg')
-Mfile     = import_relative('file', '.lib', 'pydbg')
-Mmisc     = import_relative('misc', '.', 'pydbg')
+Mdebugger = import_relative('debugger', top_name='pydbgr')
+Mclifns   = import_relative('clifns', top_name='pydbgr')
+Mserver   = import_relative('server', '.interface', 'pydbgr')
+Mfile     = import_relative('file', '.lib', 'pydbgr')
+Mmisc     = import_relative('misc', '.', 'pydbgr')
 
 # The name of the debugger we are currently going by.
-__title__ = 'pydbg'
+__title__ = 'pydbgr'
 
 __version__ = '0.1.0'
 
@@ -76,7 +76,7 @@ def process_options(debugger_name, pkg_version, option_list=None):
     optparser.add_option("--confirm", dest="confirm",
                          action="store_true", default=True,
                          help="Confirm potentially dangerous operations")
-    optparser.add_option("--dbg_pydbg", dest="dbg_pydbg",
+    optparser.add_option("--dbg_pydbgr", dest="dbg_pydbgr",
                          action="store_true", default=False, 
                          help="Debug the debugger")
     optparser.add_option("--different", dest="different",
@@ -125,7 +125,7 @@ def process_options(debugger_name, pkg_version, option_list=None):
                          help="Specify a target to connect to. Arguments" \
                          + " should be of form, 'protocol address'."),
 
-    # annotate option produces annotations, used in pydbg.el for a better emacs
+    # annotate option produces annotations, used in pydbgr.el for a better emacs
     # integration. Annotations are similar in purpose to those of GDB (see
     # that manual for a description), although the syntax is different.
     # they have the following format:
@@ -136,7 +136,7 @@ def process_options(debugger_name, pkg_version, option_list=None):
     #
     # where ^Z is the ctrl-Z character, and "annotname" is the name of the
     # annotation. A line with only two ^Z ends the annotation (no nesting
-    # allowed). See pydbg.el for the usage
+    # allowed). See pydbgr.el for the usage
     optparser.add_option("--annotate", default=0, type="int",
                          help="Use annotations to work inside emacs")
 
@@ -154,7 +154,7 @@ def process_options(debugger_name, pkg_version, option_list=None):
     # Handle debugger startup command files: --nx (-n) and --command.
     dbg_initfiles = []
     if not opts.noexecute:
-        # Read debugger startup file(s), e.g. $HOME/.pydbgrc and ./.pydbgrc
+        # Read debugger startup file(s), e.g. $HOME/.pydbgrrc and ./.pydbgrrc
         startup_file = ".%src" % debugger_name
         expanded_startup_file = Mclifns.path_expanduser_abs(startup_file)
         if 'HOME' in os.environ:
@@ -210,7 +210,7 @@ def _postprocess_options(dbg, opts):
         pass
 
     # Normally we want to set Mdebugger.debugger_obj so that one can
-    # put pydbg.debugger breakpoints in a program and not have more
+    # put pydbgr.debugger breakpoints in a program and not have more
     # than one debugger running. More than one debugger may confuse
     # users, e.g. set different might stop at the same line once for
     # each debugger.
@@ -309,7 +309,7 @@ def main(dbg=None):
             mainpyfile = mainpyfile_noopt
             pass
 
-        # Replace pydbg's dir with script's dir in front of
+        # Replace pydbgr's dir with script's dir in front of
         # module search path.
         sys.path[0] = dbg.main_dirname = os.path.dirname(mainpyfile)
 

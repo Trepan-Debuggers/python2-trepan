@@ -17,7 +17,7 @@
 #    02110-1301 USA.
 
 from import_relative import import_relative
-Mbase_submgr = import_relative('base_submgr', top_name='pydbg')
+Mbase_submgr = import_relative('base_submgr', top_name='pydbgr')
 
 class InfoCommand(Mbase_submgr.SubcommandMgr):
     """Generic command for showing things about the program being debugged. 

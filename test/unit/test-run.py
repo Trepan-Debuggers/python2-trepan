@@ -1,14 +1,14 @@
 #!/usr/bin/env python
-'Unit test for pydbg.processor.command.run'
+'Unit test for pydbgr.processor.command.run'
 import inspect, os, sys, unittest
 
 from import_relative import *
 
 # FIXME: until import_relative is fixed
-import_relative('pydbg', '...', 'pydbg')
+import_relative('pydbgr', '...', 'pydbgr')
 
-Mdebugger  = import_relative('debugger', '...pydbg', 'pydbg')
-Mrun       = import_relative('pydbg.processor.command.run', '...', 'pydbg')
+Mdebugger  = import_relative('debugger', '...pydbgr', 'pydbgr')
+Mrun       = import_relative('pydbgr.processor.command.run', '...', 'pydbgr')
 
 from cmdhelper import dbg_setup
 

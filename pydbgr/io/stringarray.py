@@ -16,7 +16,7 @@
 """Simulate I/O using lists of strings. """
 
 from import_relative import *
-Mbase_io = import_relative('base_io', top_name='pydbg')
+Mbase_io = import_relative('base_io', top_name='pydbgr')
 
 class StringArrayInput(Mbase_io.DebuggerInputBase):
     """Simulate I/O using an array of strings. Sort of like StringIO, but

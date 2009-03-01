@@ -1,10 +1,10 @@
 #!/usr/bin/env python
-'Unit test for pydbg.lib.file'
+'Unit test for pydbgr.lib.file'
 import os, stat, tempfile, unittest
 from import_relative import import_relative
 
-import_relative('lib', '...pydbg', 'pydbg')
-Mfile = import_relative('lib.file', '...pydbg', 'pydbg')
+import_relative('lib', '...pydbgr', 'pydbgr')
+Mfile = import_relative('lib.file', '...pydbgr', 'pydbgr')
 
 class TestLibFile(unittest.TestCase):
 

@@ -17,7 +17,7 @@
 #    02110-1301 USA.
 
 from import_relative import import_relative
-Mbase_subcmd  = import_relative('base_subcmd', '..', 'pydbg')
+Mbase_subcmd  = import_relative('base_subcmd', '..', 'pydbgr')
 
 class ShowBasename(Mbase_subcmd.DebuggerShowBoolSubcommand):
     """Show the basename portion only of filenames"""

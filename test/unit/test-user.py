@@ -1,9 +1,9 @@
 #!/usr/bin/env python
-'Unit test for pydbg.interface.user'
+'Unit test for pydbgr.interface.user'
 import inspect, os, sys, unittest
 
 from import_relative import *
-Muser = import_relative('interface.user', '...pydbg')
+Muser = import_relative('interface.user', '...pydbgr')
 
 from cmdhelper import dbg_setup
 

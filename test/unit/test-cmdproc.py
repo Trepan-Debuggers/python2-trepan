@@ -1,10 +1,10 @@
 #!/usr/bin/env python
-'Unit test for pydbg.processor.cmdproc'
+'Unit test for pydbgr.processor.cmdproc'
 import inspect, os, sys, unittest
 from import_relative import import_relative
 
-Mcmdproc = import_relative('processor.cmdproc', '...pydbg')
-Mmock    = import_relative('processor.command.mock', '...pydbg')
+Mcmdproc = import_relative('processor.cmdproc', '...pydbgr')
+Mmock    = import_relative('processor.command.mock', '...pydbgr')
 
 class TestCmdProc(unittest.TestCase):
 

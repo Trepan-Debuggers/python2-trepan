@@ -17,7 +17,7 @@
 #    02110-1301 USA.
 
 from import_relative import import_relative
-Mbase_subcmd  = import_relative('base_subcmd', '..', 'pydbg')
+Mbase_subcmd  = import_relative('base_subcmd', '..', 'pydbgr')
 
 class ShowDifferent(Mbase_subcmd.DebuggerShowBoolSubcommand):
     """Show consecutive stops on different file/line positions"""

@@ -31,7 +31,7 @@ def gcd(a,b):
     if a <= 0:
         return None
     if a == 1 or b-a == 0:
-        import pydbg.api; pydbg.api.debug()
+        import pydbgr.api; pydbgr.api.debug()
         return a
     return gcd(b-a, a)
 

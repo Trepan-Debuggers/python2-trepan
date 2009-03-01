@@ -18,8 +18,8 @@ import re
 from import_relative import import_relative
 
 # Our local modules
-Mbase_subcmd  = import_relative('base_subcmd', '..', 'pydbg')
-Mpp           = import_relative('pp', '....lib', 'pydbg')
+Mbase_subcmd  = import_relative('base_subcmd', '..', 'pydbgr')
+Mpp           = import_relative('pp', '....lib', 'pydbgr')
 
 # when the "with" statement is used we seem to get variables having names
 # _[1], _[2], etc.

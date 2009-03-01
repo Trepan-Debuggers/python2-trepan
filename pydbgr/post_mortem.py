@@ -19,7 +19,7 @@ import inspect, sys, re, traceback
 
 # Our local modules
 from import_relative import import_relative
-Mdebugger  = import_relative('debugger', '.', 'pydbg') 
+Mdebugger  = import_relative('debugger', '.', 'pydbgr') 
 
 def get_last_or_frame_exception():
 
@@ -44,7 +44,7 @@ def pm(frameno=1, dbg=None):
     what we want and frameno is the index location of where we want
     to start.
 
-    'dbg', is an optional pydbg.Debugger object.
+    'dbg', is an optional pydbgr.Debugger object.
     """
     post_mortem(get_last_or_frame_exception(), frameno, dbg=dbg)
     return

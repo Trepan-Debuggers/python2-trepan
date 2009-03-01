@@ -18,7 +18,7 @@
 import operator, os, sys, types, StringIO
 
 from import_relative import *
-Mbase_io = import_relative('base_io', top_name='pydbg')
+Mbase_io = import_relative('base_io', top_name='pydbgr')
 
 # Do we need this? 
 class ScriptInput(Mbase_io.DebuggerInputBase):

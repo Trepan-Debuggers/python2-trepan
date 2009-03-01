@@ -17,9 +17,9 @@ import re, sys, threading
 
 from import_relative import import_relative
 # Our local modules
-Mbase_subcmd  = import_relative('base_subcmd', '..', 'pydbg')
-Mstack        = import_relative('stack', '....lib', 'pydbg')
-Mthread       = import_relative('thread', '....lib', 'pydbg')
+Mbase_subcmd  = import_relative('base_subcmd', '..', 'pydbgr')
+Mstack        = import_relative('stack', '....lib', 'pydbgr')
+Mthread       = import_relative('thread', '....lib', 'pydbgr')
 
 # FIXME turn into yet another subcommand thingy.
 class InfoThread(Mbase_subcmd.DebuggerSubcommand):
@@ -32,7 +32,7 @@ terse listing, for each thread we give:
   - the class, thread name, and status as <Class(Thread-n, status)>
   - the top-most call-stack information for that thread. Generally
     the top-most calls into the debugger and dispatcher are omitted unless
-    set dbg_pydbg is True.
+    set dbg_pydbgr is True.
 
     If 'verbose' appended to the end of the command, then the entire
     stack trace is given for each frame.
@@ -53,7 +53,7 @@ To get the full stack trace for a specific thread pass in the thread name.
         """A mini stack trace routine for threads."""
         while f:
             if (not self.core.ignore_filter.is_included(f)
-                or self.settings['dbg_pydbg']):
+                or self.settings['dbg_pydbgr']):
                 s = Mstack.format_stack_entry(self, (f, f.f_lineno))
                 self.msg(" "*4 + s)
                 pass
@@ -149,7 +149,7 @@ To get the full stack trace for a specific thread pass in the thread name.
                 thread = threading._active[thread_id]
                 if thread.getName() == self.thread_name:
                     prefix='-> '
-                    if not self.settings['dbg_pydbg']:
+                    if not self.settings['dbg_pydbgr']:
                         frame = Mthread.find_debugged_frame(frame)
                         pass
                 else:

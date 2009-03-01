@@ -18,7 +18,7 @@
 from import_relative import import_relative
 
 # Our local modules
-Mbase_cmd  = import_relative('base_cmd', top_name='pydbg')
+Mbase_cmd  = import_relative('base_cmd', top_name='pydbgr')
 import signal
 
 class KillCommand(Mbase_cmd.DebuggerCommand):

@@ -17,7 +17,7 @@
 #    02110-1301 USA.
 
 from import_relative import import_relative
-Mbase_subcmd  = import_relative('base_subcmd', '..', 'pydbg')
+Mbase_subcmd  = import_relative('base_subcmd', '..', 'pydbgr')
 
 class ShowAutolist(Mbase_subcmd.DebuggerShowBoolSubcommand):
     """Run a 'list' command every time we enter the debugger"""

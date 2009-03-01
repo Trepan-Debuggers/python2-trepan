@@ -20,7 +20,7 @@
 
 from import_relative import *
 from tracer import EVENT2SHORT
-Mbase_proc = import_relative('base_proc', '.', 'pydbg')
+Mbase_proc = import_relative('base_proc', '.', 'pydbgr')
 
 def print_event(io, frame, event, arg):
     'A simple event processor that prints out events.'

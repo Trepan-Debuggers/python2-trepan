@@ -1,10 +1,10 @@
 #!/usr/bin/env python
-'Unit test for pydbg.lib.thread'
+'Unit test for pydbgr.lib.thread'
 import sys, thread, threading, unittest
 from import_relative import import_relative
 
-import_relative('lib', '...pydbg', 'pydbg')
-Mthread = import_relative('lib.thread', '...pydbg', 'pydbg')
+import_relative('lib', '...pydbgr', 'pydbgr')
+Mthread = import_relative('lib.thread', '...pydbgr', 'pydbgr')
 
 class BgThread(threading.Thread):
     def __init__(self, id_name_checker):

@@ -19,13 +19,13 @@ from repr import Repr
 from import_relative import import_relative, get_srcdir
 from tracer import EVENT2SHORT
 
-Mbase_proc = import_relative('base_proc', '.', 'pydbg')
-Mbytecode  = import_relative('lib.bytecode', '..', 'pydbg')
-Mdisplay   = import_relative('lib.display', '..', 'pydbg')
-Mmisc      = import_relative('misc', '..', 'pydbg')
-Mfile      = import_relative('lib.file', '..', 'pydbg')
-Mstack     = import_relative('lib.stack', '..', 'pydbg')
-Mthread    = import_relative('lib.thread', '..', 'pydbg')
+Mbase_proc = import_relative('base_proc', '.', 'pydbgr')
+Mbytecode  = import_relative('bytecode', '..lib', 'pydbgr')
+Mdisplay   = import_relative('display', '..lib', 'pydbgr')
+Mmisc      = import_relative('misc', '..', 'pydbgr')
+Mfile      = import_relative('file', '..lib', 'pydbgr')
+Mstack     = import_relative('stack', '..lib', 'pydbgr')
+Mthread    = import_relative('thread', '..lib', 'pydbgr')
 
 # arg_split culled from ipython's routine
 def arg_split(s,posix=False):
@@ -61,7 +61,7 @@ def get_stack(f, t, botframe, proc_obj=None):
     if proc_obj:
         dbg = proc_obj.debugger
         settings = proc_obj.debugger.settings
-        if not settings['dbg_pydbg']:
+        if not settings['dbg_pydbgr']:
             exclude_frame = lambda f: \
                 proc_obj.core.ignore_filter.is_included(f)
             pass
@@ -110,7 +110,7 @@ def print_source_line(msg_nocr, lineno, line, event_str=None):
     line in:
         (/tmp.py:2):  <module>
         L -- 2 import sys,os
-        (Pydbg)
+        (Pydbgr)
 
     We define this method
     specifically so it can be customized for such applications
@@ -179,7 +179,7 @@ def print_location(proc_obj):
 # Default settings for command processor method call
 DEFAULT_PROC_OPTS = {
     # A list of debugger initialization files to read on first command
-    # loop entry.  Often this something like [~/.pydbgrc] which the
+    # loop entry.  Often this something like [~/.pydbgrrc] which the
     # front-end sets. 
     'initfile_list' : []
 }
@@ -535,7 +535,7 @@ class CommandProcessor(Mbase_proc.Processor):
             last_cmd = self.cmd_queue[0].strip()
             del self.cmd_queue[0]
         else:
-            last_cmd = self.intf[-1].read_command('(Pydbg) ').strip()
+            last_cmd = self.intf[-1].read_command('(Pydbgr) ').strip()
             if '' == last_cmd and self.intf[-1].interactive: 
                 last_cmd = self.last_cmd
                 pass
@@ -586,7 +586,7 @@ class CommandProcessor(Mbase_proc.Processor):
         We return True if we should NOT enter the debugger-command
         loop."""
         self.forget()
-        if self.settings('dbg_pydbg'):
+        if self.settings('dbg_pydbgr'):
             self.frame = inspect.currentframe()
             pass
         if self.event in ['exception', 'c_exception']:

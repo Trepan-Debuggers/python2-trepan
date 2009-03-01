@@ -30,7 +30,7 @@ sys.path = sys_path_save
 
 # Our local modules
 from import_relative import import_relative
-Mbase_cmd  = import_relative('base_cmd', top_name='pydbg')
+Mbase_cmd  = import_relative('base_cmd', top_name='pydbgr')
 
 class PyDocCommand(Mbase_cmd.DebuggerCommand):
 

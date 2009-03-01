@@ -18,8 +18,8 @@
 import operator, os, sys, types, StringIO
 
 from import_relative import *
-Mbase_io  = import_relative('base_io', top_name='pydbg')
-Mmisc    = import_relative('misc', '..', 'pydbg')
+Mbase_io  = import_relative('base_io', top_name='pydbgr')
+Mmisc    = import_relative('misc', '..', 'pydbgr')
 
 def readline_importable():
     try:

@@ -20,7 +20,7 @@ import columnize
 from import_relative import import_relative
 
 # Our local modules
-Mbase_subcmd  = import_relative('base_subcmd', '..', 'pydbg')
+Mbase_subcmd  = import_relative('base_subcmd', '..', 'pydbgr')
 
 class ShowAliases(Mbase_subcmd.DebuggerShowIntSubcommand):
     '''show aliases [ALIAS ...| *]

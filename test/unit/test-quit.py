@@ -1,10 +1,10 @@
 #!/usr/bin/env python
-'Unit test for pydbg.processor.command.quit'
+'Unit test for pydbgr.processor.command.quit'
 import inspect, os, sys, unittest
 
 from import_relative import *
 
-Mquit = import_relative('processor.command.quit', '...pydbg')
+Mquit = import_relative('processor.command.quit', '...pydbgr')
 
 from cmdhelper import dbg_setup
 

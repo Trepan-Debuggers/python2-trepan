@@ -161,8 +161,8 @@ def disassemble_string(orig_msg, orig_msg_nocr, code, lasti=-1, cur_line=0,
 from import_relative import import_relative
 
 # Our local modules
-Mbase_cmd = import_relative('base_cmd', top_name='pydbg')
-Mcmdfns   = import_relative('cmdfns', top_name='pydbg')
+Mbase_cmd = import_relative('base_cmd', top_name='pydbgr')
+Mcmdfns   = import_relative('cmdfns', top_name='pydbgr')
 
 class DisassembleCommand(Mbase_cmd.DebuggerCommand):
 

@@ -20,9 +20,9 @@ from import_relative import *
 # Our local modules
 
 # FIXME: Until import_relative is fixed up...
-import_relative('processor', '....', 'pydbg')
+import_relative('processor', '....', 'pydbgr')
 
-Mbase_subcmd  = import_relative('base_subcmd', '..', 'pydbg')
+Mbase_subcmd  = import_relative('base_subcmd', '..', 'pydbgr')
 
 class ShowMaxArgStrSize(Mbase_subcmd.DebuggerShowIntSubcommand):
     "Show maximum string length to show in a parameter string"

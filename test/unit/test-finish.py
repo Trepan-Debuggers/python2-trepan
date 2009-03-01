@@ -1,9 +1,9 @@
 #!/usr/bin/env python
-'Unit test for pydbg.processor.command.step'
+'Unit test for pydbgr.processor.command.step'
 import inspect, os, sys, unittest
 
 from import_relative import *
-Mfinish = import_relative('processor.command.finish', '...pydbg')
+Mfinish = import_relative('processor.command.finish', '...pydbgr')
 
 from cmdhelper import dbg_setup
 

@@ -19,11 +19,11 @@ import atexit
 
 # Our local modules
 from import_relative import *
-Muser       = import_relative('user', top_name='pydbg')
-Mtcpclient  = import_relative('tcpclient', '..io', 'pydbg')
-Mfifoclient = import_relative('fifoclient', '..io', 'pydbg')
-Mcomcodes   = import_relative('comcodes', '.', 'pydbg')
-Mmisc       = import_relative('misc', '..', 'pydbg')
+Muser       = import_relative('user', top_name='pydbgr')
+Mtcpclient  = import_relative('tcpclient', '..io', 'pydbgr')
+Mfifoclient = import_relative('fifoclient', '..io', 'pydbgr')
+Mcomcodes   = import_relative('comcodes', '.', 'pydbgr')
+Mmisc       = import_relative('misc', '..', 'pydbgr')
 
 class ClientInterface(Muser.UserInterface):
     """Interface for a user which is attached to a debugged process

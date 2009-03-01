@@ -25,8 +25,8 @@ setup(
        description        = short_desc,
        entry_points = {
         'console_scripts': [
-            'pydbg  = pydbg.cli:main',
-            'pydbgc = pydbg.client:main',
+            'pydbgr  = pydbgr.cli:main',
+            'pydbgrc = pydbgr.client:main',
         ]},
        install_requires   = install_requires,
        license            = license,

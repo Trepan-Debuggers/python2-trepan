@@ -1,10 +1,10 @@
 #!/usr/bin/env python
-'Unit test for pydbg.processor.command.list'
+'Unit test for pydbgr.processor.command.list'
 import inspect, os, sys, unittest
 
 from import_relative import *
 
-Mlist = import_relative('processor.command.list', '...pydbg')
+Mlist = import_relative('processor.command.list', '...pydbgr')
 
 from cmdhelper import dbg_setup
 import signal
@@ -59,8 +59,8 @@ class TestListCommand(unittest.TestCase):
 
     def test_list_command(self):
         import inspect
-        cmdproc     = import_relative('processor.cmdproc', '...pydbg', 'pydbg')
-        debugger        = import_relative('debugger', '...pydbg', 'pydbg')
+        cmdproc     = import_relative('processor.cmdproc', '...pydbgr', 'pydbgr')
+        debugger        = import_relative('debugger', '...pydbgr', 'pydbgr')
         d               = debugger.Debugger()
         cp              = d.core.processor
         cp.curframe     = inspect.currentframe()

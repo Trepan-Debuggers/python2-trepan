@@ -20,10 +20,10 @@ from import_relative import *
 # Our local modules
 
 # FIXME: Until import_relative is fixed up...
-import_relative('processor', '....', 'pydbg')
+import_relative('processor', '....', 'pydbgr')
 
-Mbase_subcmd = import_relative('base_subcmd', '..', 'pydbg')
-Mcmdfns      = import_relative('cmdfns', '..', 'pydbg')
+Mbase_subcmd = import_relative('base_subcmd', '..', 'pydbgr')
+Mcmdfns      = import_relative('cmdfns', '..', 'pydbgr')
 
 class SetListSize(Mbase_subcmd.DebuggerSubcommand):
     "Set the number lines printed in a 'list' command by default"

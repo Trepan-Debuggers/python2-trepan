@@ -42,23 +42,23 @@ install_requires   = ['columnize', 'coverage', 'import_relative',
                       'pyficache', 'tracer']
 license            = 'GPL'
 mailing_list       = None
-modname            = 'pydbg'
+modname            = 'pydbgr'
 namespace_packages = [
-    'pydbg', 
-    'pydbg.interface',
-    'pydbg.io',
-    'pydbg.lib',
-    'pydbg.processor',
-    'pydbg.processor.command',
-    'pydbg.processor.command.infosub',
-    'pydbg.processor.command.setsub',
-    'pydbg.processor.command.showsub'
+    'pydbgr', 
+    'pydbgr.interface',
+    'pydbgr.io',
+    'pydbgr.lib',
+    'pydbgr.processor',
+    'pydbgr.processor.command',
+    'pydbgr.processor.command.infosub',
+    'pydbgr.processor.command.setsub',
+    'pydbgr.processor.command.showsub'
 ]
 packages           = namespace_packages
 py_modules         = None
 short_desc         = 'Modular Python Debugger'
 version            = '.'.join([str(num) for num in numversion])
-web                = 'http://code.google.com/p/pydbg/'
+web                = 'http://code.google.com/p/pydbgr/'
 
 # tracebacks in zip files are funky and not debuggable
 zip_safe = False 

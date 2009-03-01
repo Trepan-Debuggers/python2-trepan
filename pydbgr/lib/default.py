@@ -66,7 +66,7 @@ DEBUGGER_SETTINGS = {
     'confirm'       : True,
 
     # Debug the debugger?
-    'dbg_pydbg'     : False,
+    'dbg_pydbgr'     : False,
 
     # Don't stop at 'def' statements which add functions.
     'defskip'       : True,
@@ -89,7 +89,7 @@ DEBUGGER_SETTINGS = {
     # has an effect if trace is set True.
     'printset'      : tracer.ALL_EVENTS,  
 
-    # If this is set True, debugger startup file, e.g. .pydbgrc will
+    # If this is set True, debugger startup file, e.g. .pydbgrrc will
     # not be read/run.
     'nostartup'     : False,
 

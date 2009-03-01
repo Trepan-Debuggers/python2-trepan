@@ -1,19 +1,19 @@
 #!/usr/bin/env python
-'Unit test for pydbg.processor.command.help'
+'Unit test for pydbgr.processor.command.help'
 import inspect, os, sys, unittest, types
 
 from import_relative import *
 
 # FIXME: until import_relative is fixed
-import_relative('pydbg', '...', 'pydbg')
+import_relative('pydbgr', '...', 'pydbgr')
 
-Mhelp    = import_relative('processor.command.help', '...pydbg', 'pydbg')
-Mcmdproc = import_relative('processor.cmdproc', '...pydbg', 'pydbg')
+Mhelp    = import_relative('processor.command.help', '...pydbgr', 'pydbgr')
+Mcmdproc = import_relative('processor.cmdproc', '...pydbgr', 'pydbgr')
 
 from cmdhelper import dbg_setup
 import signal
 
-Mmock = import_relative('processor.command.mock', '...pydbg')
+Mmock = import_relative('processor.command.mock', '...pydbgr')
 
 class TestHelp(unittest.TestCase):
     """Tests HelpCommand class"""

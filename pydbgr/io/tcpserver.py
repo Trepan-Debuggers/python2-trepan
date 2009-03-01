@@ -18,10 +18,10 @@
 import socket
 
 from import_relative import *
-Mbase_io = import_relative('base_io', top_name='pydbg')
-Mdefault = import_relative('default', '..lib', top_name='pydbg')
-Mmisc    = import_relative('misc', '..', 'pydbg')
-Mtcpfns  = import_relative('tcpfns', '.', 'pydbg')
+Mbase_io = import_relative('base_io', top_name='pydbgr')
+Mdefault = import_relative('default', '..lib', top_name='pydbgr')
+Mmisc    = import_relative('misc', '..', 'pydbgr')
+Mtcpfns  = import_relative('tcpfns', '.', 'pydbgr')
 
 ## FIXME: Consider using Python's socketserver/SocketServer?
 class TCPServer(Mbase_io.DebuggerInOutBase):

@@ -20,7 +20,7 @@
 
 # Our local modules
 from import_relative import import_relative
-import_relative('processor', '..', 'pydbg')
+import_relative('processor', '..', 'pydbgr')
 Mstack     = import_relative('stack')
 
 def signature(frame):

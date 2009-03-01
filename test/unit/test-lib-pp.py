@@ -1,9 +1,9 @@
 #!/usr/bin/env python
-'Unit test for pydbg.lib.pp'
+'Unit test for pydbgr.lib.pp'
 import inspect, os, sys, unittest
 from import_relative import *
 
-Mpp = import_relative('lib.pp', '...pydbg')
+Mpp = import_relative('lib.pp', '...pydbgr')
 
 class TestLibPrint(unittest.TestCase):
 

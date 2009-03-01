@@ -18,10 +18,10 @@
 import socket, cPickle
 
 from import_relative import *
-Mbase_io = import_relative('base_io', top_name='pydbg')
-Mdefault = import_relative('default', '..lib', 'pydbg')
-Mmisc    = import_relative('misc', '..', 'pydbg')
-Mtcpfns  = import_relative('tcpfns', '.', 'pydbg')
+Mbase_io = import_relative('base_io', top_name='pydbgr')
+Mdefault = import_relative('default', '..lib', 'pydbgr')
+Mmisc    = import_relative('misc', '..', 'pydbgr')
+Mtcpfns  = import_relative('tcpfns', '.', 'pydbgr')
 
 class TCPClient(Mbase_io.DebuggerInOutBase):
     """Debugger Client Input/Output Socket."""

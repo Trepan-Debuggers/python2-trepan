@@ -18,10 +18,10 @@
 import tempfile, os
 
 from import_relative import *
-Mbase_io = import_relative('base_io', top_name='pydbg')
-Mdefault = import_relative('default', '..lib', 'pydbg')
-Mfile    = import_relative('file', '..lib', 'pydbg')
-Mmisc    = import_relative('misc', '..', 'pydbg')
+Mbase_io = import_relative('base_io', top_name='pydbgr')
+Mdefault = import_relative('default', '..lib', 'pydbgr')
+Mfile    = import_relative('file', '..lib', 'pydbgr')
+Mmisc    = import_relative('misc', '..', 'pydbgr')
 
 class FIFOClient(Mbase_io.DebuggerInOutBase):
     """Debugger Client Input/Output Socket."""
@@ -64,8 +64,8 @@ class FIFOClient(Mbase_io.DebuggerInOutBase):
 
        # Not in/out are reversed from server side
        d              = tempfile.gettempdir()
-       self.out_name  = os.path.join(d, ('pydbg-%s.in' % pid))
-       self.in_name   = os.path.join(d, ('pydbg-%s.out' % pid))
+       self.out_name  = os.path.join(d, ('pydbgr-%s.in' % pid))
+       self.in_name   = os.path.join(d, ('pydbgr-%s.out' % pid))
        is_readable = Mfile.readable(self.out_name)
        if not is_readable:
            if is_readable is None:

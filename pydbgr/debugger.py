@@ -37,14 +37,14 @@ import tracer, tracefilter
 from import_relative import import_relative
 
 # FIXME: Until import_relative is fixed up...
-import_relative('lib', '.', 'pydbg')
-Mcore = import_relative('core', '.lib', 'pydbg')
+import_relative('lib', '.', 'pydbgr')
+Mcore = import_relative('core', '.lib', 'pydbgr')
 
 # Default settings used here
-Mdefault  = import_relative('default', '.lib', 'pydbg') 
+Mdefault  = import_relative('default', '.lib', 'pydbgr') 
 
-Muser     = import_relative('user', '.interface', 'pydbg')
-Mmisc     = import_relative('misc', top_name='pydbg')
+Muser     = import_relative('user', '.interface', 'pydbgr')
+Mmisc     = import_relative('misc', top_name='pydbgr')
 
 __all__   = ['debug', 'run_call', 'run_eval', 'run_exec', 'stop',
              'Debugger', 'DebuggerQuit', 'DebuggerRestart']

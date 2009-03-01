@@ -1,10 +1,10 @@
 #!/usr/bin/env python
-'Unit test for pydbg.processor.command.kill'
+'Unit test for pydbgr.processor.command.kill'
 import inspect, os, sys, unittest
 
 from import_relative import *
 
-Mkill = import_relative('processor.command.kill', '...pydbg')
+Mkill = import_relative('processor.command.kill', '...pydbgr')
 
 from cmdhelper import dbg_setup
 import signal

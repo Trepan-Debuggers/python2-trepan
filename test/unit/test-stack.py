@@ -1,9 +1,9 @@
 #!/usr/bin/env python
-'Unit test for pydbg.frame'
+'Unit test for pydbgr.frame'
 import inspect, os, sys, unittest
 from import_relative import *
 
-Mstack = import_relative('lib.stack', '...pydbg')
+Mstack = import_relative('lib.stack', '...pydbgr')
 
 class TestStack(unittest.TestCase):
     

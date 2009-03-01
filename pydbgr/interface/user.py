@@ -19,15 +19,15 @@ import atexit
 
 # Our local modules
 from import_relative import *
-Mbase_intf = import_relative('base_intf', top_name='pydbg')
-Minput     = import_relative('input', '..io', 'pydbg')
-Moutput    = import_relative('output', '..io', 'pydbg')
+Mbase_intf = import_relative('base_intf', top_name='pydbgr')
+Minput     = import_relative('input', '..io', 'pydbgr')
+Moutput    = import_relative('output', '..io', 'pydbgr')
 
 class UserInterface(Mbase_intf.DebuggerInterface):
     """Interface when communicating with the user in the same
     process as the debugged program."""
 
-    FILE_HISTORY='.pydbg_hist'
+    FILE_HISTORY='.pydbgr_hist'
 
     def __init__(self, inp=None, out=None, opts=None):
         atexit.register(self.finalize)

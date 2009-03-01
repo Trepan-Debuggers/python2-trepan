@@ -20,11 +20,11 @@ import atexit, os
 from import_relative import import_relative
 
 # Our local modules
-Mdebugger  = import_relative('debugger', '...', 'pydbg')
-Mbase_cmd  = import_relative('base_cmd', top_name='pydbg')
-Mcomcodes  = import_relative('comcodes', '...interface', 'pydbg')
+Mdebugger  = import_relative('debugger', '...', 'pydbgr')
+Mbase_cmd  = import_relative('base_cmd', top_name='pydbgr')
+Mcomcodes  = import_relative('comcodes', '...interface', 'pydbgr')
 debugger   = import_relative('debugger', '...')
-Mmisc      = import_relative('misc', '...', 'pydbg')
+Mmisc      = import_relative('misc', '...', 'pydbgr')
 
 class RestartCommand(Mbase_cmd.DebuggerCommand):
     """restart - Restart debugger and program via an exec

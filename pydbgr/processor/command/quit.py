@@ -20,7 +20,7 @@ from import_relative import import_relative
 
 # Our local modules
 Mbase_cmd  = import_relative('base_cmd', top_name='pydbgr')
-Mdebugger  = import_relative('debugger', '...', 'pydbgr')
+Mexcept    = import_relative('except', '...', 'pydbgr')
 
 class QuitCommand(Mbase_cmd.DebuggerCommand):
     """quit - gently terminate the debugged program.  
@@ -56,7 +56,7 @@ program.
 
         self.debugger.core.stop()
         self.debugger.core.execution_status = 'Quit command'
-        raise Mdebugger.DebuggerQuit
+        raise Mexcept.DebuggerQuit
 
     def threaded_quit(self, arg):
         """ quit command when several threads are involved. """
@@ -80,11 +80,9 @@ if __name__ == '__main__':
     command = QuitCommand(cp)
     try: 
         command.run(['quit'])
-    except Mdebugger.DebuggerQuit:
+    except Mexcept.DebuggerQuit:
         print "A got 'quit' a exception. Ok, be that way - I'm going home."
         pass
-
-    import threading
 
     class MyThread(threading.Thread):
         def run(self):

@@ -165,6 +165,34 @@ Mbase_cmd = import_relative('base_cmd', top_name='pydbgr')
 Mcmdfns   = import_relative('cmdfns', top_name='pydbgr')
 
 class DisassembleCommand(Mbase_cmd.DebuggerCommand):
+    """disassemble [obj-or-class] [[+|-]start-line|. [[+|-]end-line|.]]
+    
+With no argument, disassemble the current frame.  With an integer
+start-line, the disassembly is narrowed to show lines starting
+at that line number or later; with an end-line number, disassembly
+stops when the next line would be greater than that or the end of the
+code is hit.
+
+If start-line or end-line is '.', '+', or '-', the current line number
+is used.  If instead it starts with a plus or minus prefix to a
+number, then the line number is relative to the current frame number.
+
+With a class, method, function, code or string argument disassemble
+that.
+
+Examples
+
+   disassemble    # Possibly lots of stuff dissassembled
+   disassemble .  # Disassemble lines starting at current stopping point.
+   disassemble +                  # Same as above
+   disassemble +0                 # Same as above
+   disassemble os.path            # Disassemble all of os.path
+   disassemble os.path.normcase   # Disaassemble just method os.path.normcase
+   disassemble -3  # Disassemble subtracting 3 from the current line number 
+   disassemble +3  # Disassemble adding 3 from the current line number 
+   disassemble 3   # Disassemble starting from line 3
+   disassemble 3 10  # Disassemble lines 3 to 10
+"""
 
     category      = 'data'
     min_args      = 0
@@ -174,23 +202,11 @@ class DisassembleCommand(Mbase_cmd.DebuggerCommand):
     short_help    = 'Disassemble Python bytecode'
 
     def run(self, args):
-        """disassemble [obj-or-class] [[+|-]start-line [[+|-]end-line]]
-
-With no argument, disassemble the current frame.  With a start-line
-integer, the disassembly is narrowed to show lines starting at that
-line number or later; with an end-line number, disassembly stops
-when the next line would be greater than that or the end of the code
-is hit. If start-line or end-line has a plus or minus prefix, then the
-line number is relative to the current frame number.
-
-With a class, method, function, code or string argument disassemble
-that."""
-
         start_line = end_line = None
         relative_pos = False
         try:
             if len(args) > 1:
-                if args[1] in ['+', '-']: 
+                if args[1] in ['+', '-', '.']: 
                     start_line = self.proc.curframe.f_lineno
                     relative_pos = True
                 else:
@@ -202,11 +218,10 @@ that."""
                     pass
 
                 if len(args) == 3:
-                    try:
-                        end_line = Mcmdfns.get_int(self.errmsg, args[2], 
-                                                   cmdname="disassemble")
-                    except ValueError:
-                        return False
+                    msg = ('end line should be an number, got %s.' 
+                           % args[2])
+                    end_line = self.proc.get_an_int(args[2], msg)
+                    if end_line is None: return False
                     pass
                 elif len(args) > 3:
                     self.errmsg("Expecting 1-2 line parameters, got %d" %
@@ -222,27 +237,44 @@ that."""
         except ValueError:
             try:
                 if len(args) > 2:
-                    try:
-                        start_line = Mcmdfns.get_int(self.errmsg, args[2],
-                                                     cmdname="disassemble")
+                    if args[2] in ['+', '-', '.']: 
+                        relative_pos = True
+                        start_line = self.proc.curframe.f_lineno
+                    else:
+                        msg = ('start line should be an number, got %s.' 
+                               % args[2])
+                        start_line = self.proc.get_an_int(args[2], msg)
+                        if start_line is None: return False
                         if args[2][0:1] in ['+', '-']: 
                             relative_pos = True
                             start_line += self.proc.curframe.f_lineno
                             pass
                         if len(args) == 4:
-                            end_line = self.get_int(self.errmsg, args[3],
-                                                    cmdname="disassemble")
+                            msg = ('end line should be an number, got %s.' 
+                                   % args[3])
+                            end_line = self.proc.get_an_int(args[3], msg)
+                            if end_line is None: return False
+                            pass
                         elif len(args) > 4:
                             self.errmsg("Expecting 0-3 parameters, got %d" %
                                         len(args)-1)
                             return False
-                    except ValueError:
-                        return False
+                        pass
                     pass
 
                 if hasattr(self.proc, 'curframe') and self.proc.curframe:
-                    obj=Mcmdfns.get_val(self.proc.curframe, self.errmsg, 
-                                        args[1])
+                    if args[1] in ['+', '-', '.']: 
+                        relative_pos = True
+                        start_line = self.proc.curframe.f_lineno
+                        obj = None
+                    else:
+                        try:
+                            obj=Mcmdfns.get_val(self.proc.curframe, 
+                                                self.errmsg, args[1])
+                        except:
+                            return
+                        pass
+                    pass
                 else:
                     obj=eval(args[1])
                     pass
@@ -289,14 +321,17 @@ if __name__ == '__main__':
     dis(cp.msg, cp.msg_nocr, cp.errmsg, cp)
     command = DisassembleCommand(cp)
     print '-' * 20
+    command.run(['dissassemble', 'cp.errmsg'])
+    print '-' * 20
     command.run(['disassemble'])
     print '-' * 20
     command.run(['disassemble', 'me'])
     print '-' * 20
     command.run(['disassemble', '+0', '2'])
     print '-' * 20
-    command.run(['disassemble', '+', '1'])
+    command.run(['disassemble', '+', '2-1'])
     print '-' * 20
     command.run(['disassemble', '-', '1'])
     print '-' * 20
+    command.run(['disassemble', '.'])
     pass

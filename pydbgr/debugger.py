@@ -36,9 +36,8 @@ import tracer, tracefilter
 # Our local modules
 from import_relative import import_relative
 
-# FIXME: Until import_relative is fixed up...
-import_relative('lib', '.', 'pydbgr')
-Mcore = import_relative('core', '.lib', 'pydbgr')
+Mcore   = import_relative('core', '.lib', 'pydbgr')
+Mexcept = import_relative('except', '.', 'pydbgr')
 
 # Default settings used here
 Mdefault  = import_relative('default', '.lib', 'pydbgr') 
@@ -46,14 +45,7 @@ Mdefault  = import_relative('default', '.lib', 'pydbgr')
 Muser     = import_relative('user', '.interface', 'pydbgr')
 Mmisc     = import_relative('misc', top_name='pydbgr')
 
-__all__   = ['debug', 'run_call', 'run_eval', 'run_exec', 'stop',
-             'Debugger', 'DebuggerQuit', 'DebuggerRestart']
-
-class DebuggerQuit(Exception):
-    """Exception to signal graceful debugger termination"""
-
-class DebuggerRestart(Exception):
-    """Exception to signal a (soft) program restart"""
+__all__   = ['debug', 'run_call', 'run_eval', 'run_exec', 'stop']
 
 debugger_obj = None
 
@@ -86,7 +78,7 @@ class Debugger():
         self.core.start(start_opts)
         try:
             exec cmd in globals_, locals_
-        except DebuggerQuit:
+        except Mexcept.DebuggerQuit:
             pass
         finally:
             self.core.stop()
@@ -103,7 +95,7 @@ class Debugger():
         self.core.start(opts=start_opts)
         try:
             res = func(*args, **kwds)
-        except DebuggerQuit:
+        except Mexcept.DebuggerQuit:
             pass
         finally:
             self.core.stop()
@@ -131,7 +123,7 @@ class Debugger():
         self.core.start(start_opts)
         try:
             retval = eval(expr, globals_, locals_)
-        except DebuggerQuit:
+        except Mexcept.DebuggerQuit:
             pass
         finally:
             self.core.stop()
@@ -173,12 +165,12 @@ class Debugger():
         try:
             execfile(self.mainpyfile, globals_, locals_)
             retval = True
-        except DebuggerQuit:
+        except Mexcept.DebuggerQuit:
             retval = False
             pass
-        except DebuggerRestart:
+        except Mexcept.DebuggerRestart:
             self.core.execution_status = 'Restart requested'
-            raise DebuggerRestart
+            raise Mexcept.DebuggerRestart
         finally:
             self.core.stop(options={'remove': True})
         return retval
@@ -312,10 +304,10 @@ if __name__=='__main__':
                 def square(x): return x*x
                 print 'calling: run_call(square,2)' 
                 d.run_call(square, 2)
-            except debugger.DebuggerQuit:
+            except Mexcept.DebuggerQuit:
                 print "That's all Folks!..."
                 break
-            except debugger.DebuggerRestart:
+            except Mexcept.DebuggerRestart:
                 print 'Restarting...'
                 pass
             pass

@@ -19,7 +19,7 @@ from import_relative import import_relative
 
 # Our local modules
 Mbase_cmd  = import_relative('base_cmd', top_name='pydbgr')
-Mdebugger  = import_relative('debugger', '...', 'pydbgr')
+Mexcept    = import_relative('except', '...', 'pydbgr')
 
 class RunCommand(Mbase_cmd.DebuggerCommand):
     """restart - Restart debugger and program via an exec
@@ -37,7 +37,7 @@ call. All state is lost, and new copy of the debugger is used."""
         if confirmed: 
             self.core.step_ignore = 0
             self.core.step_events = None
-            raise Mdebugger.DebuggerRestart
+            raise Mexcept.DebuggerRestart
         pass
     pass
 
@@ -47,7 +47,7 @@ if __name__ == '__main__':
     command = RunCommand(cp)
     try:
         command.run([])
-    except Mdebugger.DebuggerRestart:
+    except Mexcept.DebuggerRestart:
         print 'Got restart exception'
         pass
     pass

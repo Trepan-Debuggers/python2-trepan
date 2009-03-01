@@ -7,8 +7,8 @@ from import_relative import *
 # FIXME: until import_relative is fixed
 import_relative('pydbgr', '...', 'pydbgr')
 
-Mdebugger  = import_relative('debugger', '...pydbgr', 'pydbgr')
-Mrun       = import_relative('pydbgr.processor.command.run', '...', 'pydbgr')
+Mexcept  = import_relative('except', '...pydbgr', 'pydbgr')
+Mrun     = import_relative('pydbgr.processor.command.run', '...', 'pydbgr')
 
 from cmdhelper import dbg_setup
 
@@ -19,7 +19,7 @@ class TestRun(unittest.TestCase):
         """Test processor.command.run.RunCommand.run()"""
         d, cp = dbg_setup()
         command = Mrun.RunCommand(cp)
-        self.assertRaises(Mdebugger.DebuggerRestart, command.run, ['run'])
+        self.assertRaises(Mexcept.DebuggerRestart, command.run, ['run'])
         return
 
 if __name__ == '__main__':

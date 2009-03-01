@@ -29,8 +29,6 @@ import tracer
 
 # Our local modules
 from import_relative import import_relative
-import_relative('processor', '..', 'pydbgr')
-import_relative('lib', '..', 'pydbgr')
 breakpoint = import_relative('breakpoint')
 default    = import_relative('default')
 Mmisc      = import_relative('misc', '..', 'pydbgr')

@@ -16,14 +16,14 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ''' The big and hairy command-line interface to the debugger.
 '''
+import os, sys
 
 from optparse import OptionParser
-import traceback
-import tracer 
 
 # Our local modules
-from import_relative import *
+from import_relative import import_relative
 Mdebugger = import_relative('debugger', top_name='pydbgr')
+Mexcept   = import_relative('except', top_name='pydbgr')
 Mclifns   = import_relative('clifns', top_name='pydbgr')
 Mserver   = import_relative('server', '.interface', 'pydbgr')
 Mfile     = import_relative('file', '.lib', 'pydbgr')
@@ -165,10 +165,10 @@ def process_options(debugger_name, pkg_version, option_list=None):
                 dbg_initfiles.append(startup_home_file)
                 pass
             pass
-        if Mfile.readable(expanded_startup_file) and \
-                expanded_startup_file != expanded_startup_home:
-            dbg_initfiles.append(debugger_startup)
-            pass
+#         if Mfile.readable(expanded_startup_file) and \
+#                 expanded_startup_file != expanded_startup_home:
+#             dbg_initfiles.append(debugger_startup)
+#             pass
         pass
 
     # As per gdb, first we execute user initialization files and then
@@ -339,9 +339,9 @@ def main(dbg=None):
             dbg.core.execution_status = 'Terminated'
             dbg.intf[-1].msg("The program finished - quit or restart")
             dbg.core.processor.process_commands()
-        except Mdebugger.DebuggerQuit:
+        except Mexcept.DebuggerQuit:
             break
-        except Mdebugger.DebuggerRestart:
+        except Mexcept.DebuggerRestart:
             dbg.core.execution_status = 'Restart requested'
             if dbg.program_sys_argv:
                 sys.argv = list(dbg.program_sys_argv)

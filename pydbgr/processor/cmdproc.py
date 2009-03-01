@@ -13,7 +13,7 @@
 #
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import inspect, linecache, os, sys, shlex, types
+import inspect, linecache, os, sys, shlex, traceback, types
 from repr import Repr
 
 from import_relative import import_relative, get_srcdir
@@ -21,6 +21,7 @@ from tracer import EVENT2SHORT
 
 Mbase_proc = import_relative('base_proc', '.', 'pydbgr')
 Mbytecode  = import_relative('bytecode', '..lib', 'pydbgr')
+Mexcept    = import_relative('except', '..', 'pydbgr')
 Mdisplay   = import_relative('display', '..lib', 'pydbgr')
 Mmisc      = import_relative('misc', '..', 'pydbgr')
 Mfile      = import_relative('file', '..lib', 'pydbgr')
@@ -557,8 +558,17 @@ class CommandProcessor(Mbase_proc.Processor):
                     self.last_cmd = last_cmd
                     cmd_obj = self.name2cmd[cmd_name]
                     if self.ok_for_running(cmd_obj, cmd_name, len(args)-1):
-                        result = cmd_obj.run(args)
-                        if result: return result
+                        try: 
+                            result = cmd_obj.run(args)
+                            if result: return result
+                        except (Mexcept.DebuggerQuit, 
+                                Mexcept.DebuggerRestart):
+                            # Let these exceptions propagate through
+                            raise
+                        except:
+                            self.errmsg("INTERNAL ERROR: " + 
+                                        traceback.format_exc())
+                            pass
                         pass
                     pass
                 elif not self.settings('autoeval'):
@@ -737,8 +747,8 @@ if __name__=='__main__':
     print cmdproc.parse_position('/bin/bash:4')
 
     fn = cmdproc.name2cmd['quit']
-    print 'Removing non-existent quit hook: ', cmdproc.remove_preloop_hook(fn)
+    print 'Removing non-existing quit hook: ', cmdproc.remove_preloop_hook(fn)
     cmdproc.add_preloop_hook(fn)
     print cmdproc.preloop_hooks
-    print 'Removed existent quit hook: ', cmdproc.remove_preloop_hook(fn)
+    print 'Removed existing quit hook: ', cmdproc.remove_preloop_hook(fn)
     pass

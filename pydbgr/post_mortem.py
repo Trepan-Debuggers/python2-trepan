@@ -19,7 +19,8 @@ import inspect, sys, re, traceback
 
 # Our local modules
 from import_relative import import_relative
-Mdebugger  = import_relative('debugger', '.', 'pydbgr') 
+Mdebugger = import_relative('debugger', '.', 'pydbgr') 
+Mexcept   = import_relative('except', '.', 'pydbgr') 
 
 def get_last_or_frame_exception():
 
@@ -126,7 +127,7 @@ def post_mortem(exc=None, frameno=1, dbg=None):
         f = exc_tb.tb_frame
         if f and f.f_lineno != exc_tb.tb_lineno : f = f.f_back
         dbg.core.processor.event_processor(f, 'exception', exc)
-    except Mdebugger.DebuggerRestart:
+    except Mexcept.DebuggerRestart:
         while True:
             sys.argv = list(dbg._program_sys_argv)
             dbg.msg("Restarting %s with arguments:\n\t%s"
@@ -134,10 +135,10 @@ def post_mortem(exc=None, frameno=1, dbg=None):
                      " ".join(dbg._program_sys_argv[1:])))
             try:
                 dbg.run_script(dbg.mainpyfile)
-            except Mdebugger.DebuggerRestart:
+            except Mexcept.DebuggerRestart:
                 pass
             pass
-    except Mdebugger.DebuggerQuit:
+    except Mexcept.DebuggerQuit:
         pass
     return
 

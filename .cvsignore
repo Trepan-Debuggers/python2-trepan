@@ -1,3 +1,14 @@
+INSTALL
+Makefile.in
+README
+aclocal.m4
+autom4te.cache
 build
-pydbg.egg-info
+config.log
+config.status
+configure
 dist
+elisp-comp
+install-sh
+missing
+pydbgr.egg-info

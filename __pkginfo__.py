@@ -22,7 +22,6 @@
 # still is some.
 
 # Things that change more often go here.
-numversion  = (0, 1, 0)
 copyright   = '''Copyright (C) 2008, 2009 Rocky Bernstein <rocky@gnu.org>.'''
 classifiers =  ['Development Status :: 5 - Alpha',
                 'Environment :: Console',
@@ -57,7 +56,7 @@ namespace_packages = [
 packages           = namespace_packages
 py_modules         = None
 short_desc         = 'Modular Python Debugger'
-version            = '.'.join([str(num) for num in numversion])
+version            = open('VERSION').readline().rstrip('\n')
 web                = 'http://code.google.com/p/pydbgr/'
 
 # tracebacks in zip files are funky and not debuggable

@@ -1,4 +1,5 @@
 # Compatibility for us old-timers.
+SUBDIRS = emacs
 PHONY=check clean dist distclean test test-unit test-functional
 all: check
 
@@ -13,7 +14,8 @@ test-functional:
 
 clean: 
 	python ./setup.py $@
-dist: 
+
+dist-python: 
 	python ./setup.py sdist bdist
 
 # It is too much work to figure out how to add a new command to distutils

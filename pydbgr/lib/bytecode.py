@@ -62,8 +62,7 @@ def next_linestart(co, offset, count=1):
         pass
     return -1000
 
-# FIXME: break out into a code iterator.
-def stmt_contains_make_function(co, lineno):
+def stmt_contains_opcode(co, lineno, query_opcode):
     linestarts = dict(dis.findlinestarts(co))
     code = co.co_code
     found_start = False
@@ -77,20 +76,28 @@ def stmt_contains_make_function(co, lineno):
     for op, offset in next_opcode(code, offset):
         if -1000 == offset or linestarts.get(offset): return False
         opcode = opname[op]
-        # print opcode
-        if 'MAKE_FUNCTION' == opcode:
+        ##debug: print opcode
+        if query_opcode == opcode:
             return True
         pass
     return False
 
-# A pattern for a def header seems to be used a couple of times.
 _re_def_str = r'^\s*def\s'
 _re_def = re.compile(_re_def_str)
 def is_def_stmt(line, frame):
     """Return True if we are looking at a def statement"""
-    # Should really also check that operand is a code object
-    return _re_def.match(line) and op_at_frame(frame)=='LOAD_CONST' \
-        and stmt_contains_make_function(frame.f_code, frame.f_lineno)
+    # Should really also check that operand of 'LOAD_CONST' is a code object
+    return (_re_def.match(line) and op_at_frame(frame)=='LOAD_CONST'
+            and stmt_contains_opcode(frame.f_code, frame.f_lineno,
+                                          'MAKE_FUNCTION'))
+
+_re_class_str = r'^\s*class\s'
+_re_class = re.compile(_re_class_str)
+def is_class_def(line, frame):
+    """Return True if we are looking at a class definition statement"""
+    return (_re_class.match(line) 
+            and stmt_contains_opcode(frame.f_code, frame.f_lineno,
+                                     'BUILD_CLASS'))
 
 # Demo stuff above
 if __name__=='__main__':
@@ -100,8 +107,10 @@ if __name__=='__main__':
     frame = inspect.currentframe()
     co = frame.f_code
     lineno = frame.f_lineno
-    print 'contains MAKE_FUNCTION', stmt_contains_make_function(co, lineno-4)
-    print 'contains MAKE_FUNCTION', stmt_contains_make_function(co, lineno)
+    print 'contains MAKE_FUNCTION', stmt_contains_opcode(co, lineno-4, 
+                                                         'MAKE_FUNCTION')
+    print 'contains MAKE_FUNCTION', stmt_contains_opcode(co, lineno,
+                                                         'MAKE_FUNCTION')
 
     print "op at frame: ", op_at_frame(frame)
     print "op at frame, position 2", op_at_frame(frame, 2)
@@ -109,4 +118,13 @@ if __name__=='__main__':
     # Not a "def" statement because frame is wrong spot
     print is_def_stmt('def foo():', frame)
 
+    class Foo:
+        pass
+    lineno = frame.f_lineno
+    from pydbgr.api import debug; debug()
+    print 'contains BUILD_CLASS', stmt_contains_opcode(co, lineno-2,
+                                                       'BUILD_CLASS')
+    print 'contains BUILD_CLASS', stmt_contains_opcode(co, lineno,
+                                                       'BUILD_CLASS')
+    
     pass

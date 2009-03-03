@@ -286,11 +286,13 @@ class CommandProcessor(Mbase_proc.Processor):
         self.event     = event
         self.event_arg = event_arg
 
-        if self.settings('defskip'):
+        if self.settings('skip') is not None:
             filename = frame.f_code.co_filename
             lineno   = frame.f_lineno
             line     = linecache.getline(filename, lineno)
             if Mbytecode.is_def_stmt(line, frame):
+                return True
+            if Mbytecode.is_class_def(line, frame):
                 return True
             pass
         self.process_commands()

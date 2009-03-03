@@ -13,8 +13,10 @@ class TestByteCode(unittest.TestCase):
         frame = inspect.currentframe()
         co = frame.f_code
         lineno = frame.f_lineno
-        self.assertTrue(Mcode.stmt_contains_make_function(co, lineno-4))
-        self.assertFalse(Mcode.stmt_contains_make_function(co, lineno))
+        self.assertTrue(Mcode.stmt_contains_opcode(co, lineno-4, 
+                                                   'MAKE_FUNCTION'))
+        self.assertFalse(Mcode.stmt_contains_opcode(co, lineno,
+                                                    'MAKE_FUNCTION'))
         return
 
     def test_op_at_frame(self):

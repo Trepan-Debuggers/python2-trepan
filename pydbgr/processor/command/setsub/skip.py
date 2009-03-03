@@ -21,18 +21,22 @@ from import_relative import *
 import_relative('processor', '....', 'pydbgr')
 Mbase_subcmd = import_relative('base_subcmd', '..', 'pydbgr')
 
-class SetDefSkip(Mbase_subcmd.DebuggerSetBoolSubcommand):
-    """Set stopping before 'def' (method creation) statements.
+class SetSkip(Mbase_subcmd.DebuggerSetBoolSubcommand):
+    """Set stopping before 'def' or 'class' (function or class)
+    statements.
 
 Classes may have many methods and stand-alone programs may have many
-functions. Generally there isn't much value to stopping before adding
-a method or function to Python's symbol table. (More to the point, it
-can be an annoyance.) However if you do want this, e.g. you want to
-debug methods is over-writing one another, then set this 'off'."""
-    in_list    = True
-    min_abbrev = 4    # Min 'set defs'
-    short_help="Set stopping before 'def' (method creation) statements"
+functions. Often there isn't much value to stopping before defining a
+new function or class into Python's symbol table. (More to the point,
+it can be an annoyance.) However if you do want this, for example
+perhaps you want to debug methods is over-writing one another, then
+set this 'off'."""
 
+    in_list    = True
+    min_abbrev = 2    # Min 'set sk'
+    short_help="Set stopping before 'def' or 'class' statements"
+
+    # FIXME allow individual setting for class and skip.
     pass
 
 

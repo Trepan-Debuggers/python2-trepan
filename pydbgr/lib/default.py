@@ -68,9 +68,6 @@ DEBUGGER_SETTINGS = {
     # Debug the debugger?
     'dbg_pydbgr'     : False,
 
-    # Don't stop at 'def' statements which add functions.
-    'defskip'       : True,
-
     # When True, consecutive stops must be on different
     # file/line positions.
     'different'     : True,
@@ -92,6 +89,9 @@ DEBUGGER_SETTINGS = {
     # If this is set True, debugger startup file, e.g. .pydbgrrc will
     # not be read/run.
     'nostartup'     : False,
+
+    # Stop at 'def' and 'class' statements?
+    'skip'       : True,
 
     # print trace output?
     'trace'         : False,

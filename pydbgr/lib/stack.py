@@ -103,11 +103,6 @@ def format_stack_entry(dbg_obj, frame_lineno, lprefix=': ',
 def frame2file(core_obj, frame):
     return core_obj.filename(core_obj.canonic_filename(frame))
 
-import re
-# A pattern for a def header seems to be used a couple of times.
-_re_def_str = r'^\s*def\s'
-_re_def = re.compile(_re_def_str)
-
 def is_exec_stmt(frame):
     """Return True if we are looking at an exec statement"""
     return hasattr(frame, 'f_back') and frame.f_back is not None and \

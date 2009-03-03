@@ -454,7 +454,7 @@ class CommandProcessor(Mbase_proc.Processor):
             pass
         try:
             val = int(eval(arg, g, l)) 
-        except (SyntaxError, NameError, ValueError):
+        except (SyntaxError, NameError, ValueError, TypeError):
             return None
         return val
 
@@ -564,7 +564,7 @@ class CommandProcessor(Mbase_proc.Processor):
                             result = cmd_obj.run(args)
                             if result: return result
                         except (Mexcept.DebuggerQuit, 
-                                Mexcept.DebuggerRestart):
+                                Mexcept.DebuggerRestart, SystemExit):
                             # Let these exceptions propagate through
                             raise
                         except:

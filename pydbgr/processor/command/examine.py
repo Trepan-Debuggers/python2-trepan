@@ -22,6 +22,21 @@ Mbase_cmd  = import_relative('base_cmd')
 Mprint     = import_relative('lib.print', '...')
 
 class ExamineCommand(Mbase_cmd.DebuggerCommand):
+    """examine expr1 [expr2 ...]
+
+Examine value, type and object attributes of an expression. 
+
+In contrast to normal Python expressions, expressions should not have
+blanks which would cause shlex to see them as different tokens.
+
+Examples:
+  examine x+1   # ok
+  examine x + 1 # not ok
+
+See also 'print', 'pp', and 'whatis'.
+
+"""
+        
 
     category     = 'data'
     min_args      = 1
@@ -31,10 +46,6 @@ class ExamineCommand(Mbase_cmd.DebuggerCommand):
     short_help    = "Examine value, type and object attributes of an expression"
 
     def run(self, args):
-        """examine expr1 [expr2 ...]
-
-        Examine value, type and object attributes of an expression."""
-        
         for arg in args[1:]:
             s = Mprint.print_obj(arg, self.proc.curframe)
             self.msg(s)

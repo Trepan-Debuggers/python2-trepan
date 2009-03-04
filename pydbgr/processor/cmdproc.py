@@ -39,10 +39,11 @@ def arg_split(s,posix=False):
     in inputs are respected. 
     """
     
+    args_list = [[]]
     lex = shlex.shlex(s, posix=posix)
+
     lex.whitespace_split = True
     args = list(lex)
-    args_list = [[]]
     for arg in args:
         if ';;' == arg: 
             args_list.append([])
@@ -553,7 +554,12 @@ class CommandProcessor(Mbase_proc.Processor):
             return False
         if last_cmd[0] == '#':
             return False
-        args_list = arg_split(last_cmd)
+        try:
+            args_list = arg_split(last_cmd)
+        except:
+            self.errmsg("bad parse %s"< sys.exc_info()[0])
+            return False
+
         for args in args_list:
             if len(args):
                 cmd_name = resolve_name(self, args[0])

@@ -175,7 +175,6 @@ def process_options(debugger_name, pkg_version, option_list=None):
         os.chdir(opts.cd)
         pass
 
-    # FIXME: shouldn't this feed into debugger creation options?
     if opts.output:
         try: 
             dbg_opts['output'] = Moutput.DebuggerUserOutput(opts.output)

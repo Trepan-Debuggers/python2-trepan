@@ -278,6 +278,7 @@ class CommandProcessor(Mbase_proc.Processor):
         # the conditions under which the below test is true.
         if filename == '<string>' and self.debugger.mainpyfile:
             filename = self.debugger.mainpyfile
+            pass
         return filename
 
     def event_processor(self, frame, event, event_arg):

@@ -43,7 +43,7 @@ class DebuggerUserOutput(Mbase_io.DebuggerOutputBase):
            output == sys.stdout:
             pass
         elif isinstance(output, types.StringType):
-            output = open(input_location, 'w')
+            output = open(output, 'w')
         else:
             raise IOError, ("Invalid output type (%s) for %s" % (type(output), 
                                                                  output))

@@ -22,18 +22,6 @@ from import_relative import *
 from tracer import EVENT2SHORT
 Mbase_proc = import_relative('base_proc', '.', 'pydbgr')
 
-def print_event(io, frame, event, arg):
-    'A simple event processor that prints out events.'
-    lineno = frame.f_lineno
-    filename = frame.f_code.co_filename
-    io.write("%s - %s:%d" % (event, filename, lineno))
-    if arg is not None: 
-        io.writeline(', %s ' % repr(arg))
-    else:
-        io.writeline('')
-        pass
-    return print_event
-
 class PrintProcessor(Mbase_proc.Processor):
     """ A processor that just prints out events as we see them. This is suitable for example
     for line/call tracing. We assume that the caller is going to filter out which events it
@@ -45,5 +33,16 @@ class PrintProcessor(Mbase_proc.Processor):
 
     def event_processor(self, frame, event, arg):
         'A simple event processor that prints out events.'
-        return print_event(self.debugger.intf[-1].output, frame, event, arg)
+        out = self.debugger.intf[-1].output
+        lineno = frame.f_lineno
+        filename = self.core.canonic_filename(frame)
+        filename = self.core.filename(filename)
+        out.write("%s - %s:%d" % (event, filename, lineno))
+        if arg is not None: 
+            out.writeline(', %s ' % repr(arg))
+        else:
+            out.writeline('')
+            pass
+        return self.event_processor
+
     pass

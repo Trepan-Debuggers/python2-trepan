@@ -25,6 +25,7 @@ from import_relative import import_relative
 Mdebugger = import_relative('debugger', top_name='pydbgr')
 Mexcept   = import_relative('except', top_name='pydbgr')
 Mclifns   = import_relative('clifns', top_name='pydbgr')
+Moutput   = import_relative('output', '.io', 'pydbgr')
 Mserver   = import_relative('server', '.interface', 'pydbgr')
 Mfile     = import_relative('file', '.lib', 'pydbgr')
 Mmisc     = import_relative('misc', '.', 'pydbgr')
@@ -98,10 +99,6 @@ def process_options(debugger_name, pkg_version, option_list=None):
                          action="store_true", default=False, 
                          help="Don't execute commands found in any " +
                          "initialization files")
-#     optparser.add_option("-o", "--output", dest="output", metavar='FILE',
-#                          action="store", type='string',
-#                          help="Write debugger's output (stdout) "
-#                          + "to FILE")
     optparser.add_option("-o", "--output", dest="output", metavar='FILE',
                          action="store", type='string',
                          help="Write debugger's output (stdout) "
@@ -110,11 +107,6 @@ def process_options(debugger_name, pkg_version, option_list=None):
 #                          action="store", type='int',
 #                          help="Write debugger's output (stdout) "
 #                          + "to FILE")
-#     optparser.add_option("--server", dest="server",
-#                          default='TCP', 
-#                          help="Out-of-process server connection mode (" 
-#                          + ', '.join(repr(s) for s in serverChoices)
-#                          + ') [default: None]')
     optparser.add_option("--server", dest="server",
                          action='store_true',
                          help="Out-of-process server connection mode")
@@ -183,6 +175,21 @@ def process_options(debugger_name, pkg_version, option_list=None):
         os.chdir(opts.cd)
         pass
 
+    # FIXME: shouldn't this feed into debugger creation options?
+    if opts.output:
+        try: 
+            dbg_opts['output'] = Moutput.DebuggerUserOutput(opts.output)
+        except IOError, (errno, strerror):
+            print "I/O in opening debugger output file %s" % opts.output
+            print "error(%s): %s" % (errno, strerror)
+        except:
+            print "Unexpected error in opening debugger output file %s" % \
+                  opts.output
+            print sys.exc_info()[0]
+            sys.exit(2)
+            pass
+        pass
+
     if opts.server:
         intf = Mserver.ServerInterface()
         dbg_opts['interface'] = intf
@@ -217,22 +224,6 @@ def _postprocess_options(dbg, opts):
     if not opts.private:
         Mdebugger.debugger_obj = dbg
         pass
-
-    # FIXME: shouldn't this feed into debugger creation options?
-#     if opts.output:
-#         try: 
-#             dbg.stdout = open(opts.output, 'w')
-
-#         except IOError, (errno, strerror):
-#             print "I/O in opening debugger output file %s" % opts.output
-#             print "error(%s): %s" % (errno, strerror)
-#         except ValueError:
-#             print "Could not convert data to an integer."
-#         except:
-#             print "Unexpected error in opening debugger output file %s" % \
-#                   opts.output
-#             print sys.exc_info()[0]
-#             sys.exit(2)
 
 #     if opts.errors:
 #         try: 

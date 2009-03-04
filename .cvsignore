@@ -1,4 +1,5 @@
 INSTALL
+Makefile
 Makefile.in
 README
 aclocal.m4

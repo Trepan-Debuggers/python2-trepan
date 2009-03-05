@@ -240,9 +240,18 @@ class SignalManager:
         if signame not in self.siglist:
             try_signame = 'SIG'+signame
             if try_signame not in self.siglist:
-                self.dbgr.intf[-1].msg("%s is not a signal name I know about."
-                                       % signame)
-                return
+                try:
+                    num = int(signame)
+                    try_signame = lookup_signame(num)
+                    if try_signame is None:
+                        self.dbgr.intf[-1].msg(("%d is not a signal number" +
+                                                " I know about.")  % num)
+                        return
+                except:
+                    self.dbgr.intf[-1].msg(("%s is not a signal name I " +
+                                            "know about.") % signame)
+                    return
+                pass
             signame = try_signame
             pass
         self.dbgr.intf[-1].msg(self.header)

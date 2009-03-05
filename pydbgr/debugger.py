@@ -44,6 +44,7 @@ Mdefault  = import_relative('default', '.lib', 'pydbgr')
 
 Muser     = import_relative('user', '.interface', 'pydbgr')
 Mmisc     = import_relative('misc', top_name='pydbgr')
+Msig      = import_relative('sighandler', '.lib', 'pydbgr')
 
 __all__   = ['debug', 'run_call', 'run_eval', 'run_exec', 'stop']
 
@@ -262,6 +263,9 @@ class Debugger():
             self.program_sys_argv = list(sys.argv)
         else:
             self.program_sys_argv = None
+            pass
+
+        self.sigmgr = Msig.SignalManager(self)
 
         # Were we requested to activate immediately? 
         if get_option('activate'): 

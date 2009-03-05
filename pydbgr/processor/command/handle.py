@@ -44,11 +44,8 @@ recognized actions include "stop", "nostop", "print", "noprint",
     short_help    = "Specify how to handle a signal"
     
     def run(self, args):
-        if self.debugger.sigmgr.action(' '.join(args[1:])):
-            self.debugger.sigmgr.info_signal(['signal', args[1]])
-            pass
+        self.debugger.sigmgr.action(' '.join(args[1:]))
         return 
-
     pass
 
 if __name__ == '__main__':

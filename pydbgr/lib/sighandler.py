@@ -241,7 +241,7 @@ class SignalManager:
             try_signame = 'SIG'+signame
             if try_signame not in self.siglist:
                 try:
-                    num = int(signame)
+                    num = abs(int(signame))
                     try_signame = lookup_signame(num)
                     if try_signame is None:
                         self.dbgr.intf[-1].msg(("%d is not a signal number" +

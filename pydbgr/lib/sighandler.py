@@ -35,6 +35,7 @@ def lookup_signame(num):
     """Find the corresponding signal name for 'num'. Return None
     if 'num' is invalid."""
     signames = signal.__dict__
+    num = abs(num)
     if num not in signames.values(): return None
     for signame in signames.keys():
         if signames[signame] == num: return signame
@@ -54,6 +55,27 @@ def lookup_signum(name):
             return getattr(signal, uname)
         return None
     return # Not reached
+
+def canonic_signame(name_num):
+    """Return a signal name for a signal name or signal
+    number.  Return None is name_num is an int but not a valid signal
+    number and False if name_num is a not number. If name_num is a
+    signal name or signal number, the canonic if name is returned."""
+    signum = lookup_signum(name_num)
+    if signum is None:
+        # Maybe signame is a number?
+        try:
+            num = int(name_num)
+            signame = lookup_signame(num)
+            if signame is None:
+                return None
+        except:
+            return False
+        return signame
+    
+    signame = name_num.upper()
+    if not signame.startswith('SIG'): return 'SIG'+signame
+    return signame
 
 fatal_signals = ['SIGKILL', 'SIGSTOP']
 
@@ -126,13 +148,14 @@ class SignalManager:
         self.sigs    = {}
         self.siglist = [] # List of signals. Dunno why signal doesn't provide.
     
-        # set up signal handling for these known signals
+        # Ignore up signal handling initially for these known signals.
         if ignore_list is None:
             ignore_list = ['SIGALRM',    'SIGCHLD',  'SIGURG',
                            'SIGIO',      'SIGCLD',
                            'SIGVTALRM'   'SIGPROF',  'SIGWINCH',  'SIGPOLL',
                            'SIGWAITING', 'SIGLWP',   'SIGCANCEL', 'SIGTRAP',
                            'SIGTERM',    'SIGQUIT',  'SIGILL']
+        self.ignore_list = ignore_list
 
         self.info_fmt='%-14s%-4s\t%-4s\t%-5s\t%-4s\t%s'
         self.header  = self.info_fmt % ('Signal', 'Stop', 'Print',
@@ -159,8 +182,9 @@ class SignalManager:
 
     def check_and_adjust_sighandler(self, signame, sigs):
         """Check to see if a single signal handler that we are interested in
-        has changed or has not been set initially. On return signame
-        should have our signal handler."""
+        has changed or has not been set initially. On return self.sigs[signame]
+        should have our signal handler. True is returned if the same or adjusted,
+        False or None if error or not found."""
         signum = lookup_signum(signame)
         try:
             old_handler = signal.getsignal(signum)
@@ -170,7 +194,7 @@ class SignalManager:
             if signame in self.sigs:
                 sigs.pop(signame)
                 pass
-            return True
+            return None
         if old_handler != self.sigs[signame].handle:
             if old_handler not in [signal.SIG_IGN, signal.SIG_DFL]:
                 # save the program's signal handler
@@ -193,6 +217,18 @@ class SignalManager:
                 break
             pass
         return
+
+    def is_name_or_number(self, name_num):
+        signame = canonic_signame(name_num)
+        if signame is None:
+            self.dbgr.intf[-1].errmsg(("%s is not a signal number" +
+                                       " I know about.")  % name_num)
+            return False
+        elif False == signame:
+            self.dbgr.intf[-1].errmsg(("%s is not a signal name I " +
+                                       "know about.") % name_num)
+            return False
+        return signame
 
     def print_info_signal_entry(self, signame):
         """Print status for a single signal name (signame)"""
@@ -220,7 +256,7 @@ class SignalManager:
 
     def info_signal(self, args):
         """Print information about a signal"""
-        if len(args) == 0: return
+        if len(args) == 0: return None
         signame = args[0]
         if signame in ['handle', 'signal']:
             # This has come from dbgr's info command
@@ -230,33 +266,16 @@ class SignalManager:
                 self.dbgr.intf[-1].msg("")
                 for signame in self.siglist:
                     self.print_info_signal_entry(signame)
-                return
+                return True
             else:
                 signame = args[1]
                 pass
             pass
 
-        signame=signame.upper()
-        if signame not in self.siglist:
-            try_signame = 'SIG'+signame
-            if try_signame not in self.siglist:
-                try:
-                    num = abs(int(signame))
-                    try_signame = lookup_signame(num)
-                    if try_signame is None:
-                        self.dbgr.intf[-1].msg(("%d is not a signal number" +
-                                                " I know about.")  % num)
-                        return
-                except:
-                    self.dbgr.intf[-1].msg(("%s is not a signal name I " +
-                                            "know about.") % signame)
-                    return
-                pass
-            signame = try_signame
-            pass
+        signame = self.is_name_or_number(signame)
         self.dbgr.intf[-1].msg(self.header)
         self.print_info_signal_entry(signame)
-        return
+        return True
 
     def action(self, arg):
         """Delegate the actions specified in 'arg' to another
@@ -264,21 +283,32 @@ class SignalManager:
         """
         if not arg:
             self.info_signal(['handle'])
-            return
+            return True
         args = arg.split()
         signame = args[0]
-        if not self.sigs.has_key(signame):
-            signame = "SIG"+signame
-            if not self.sigs.has_key(signame):
-                return
-            pass
+        signame = self.is_name_or_number(args[0])
+        if not signame: return
+
         if len(args) == 1:
             self.info_signal([signame])
-            return
+            return True
         # We can display information about 'fatal' signals, but not
         # change their actions.
         if signame in fatal_signals:
-            return
+            return None
+
+        if signame not in self.sigs.keys():
+            if signame in self.ignore_list:
+                self.sigs[signame] = self.SigHandler(signame,
+                                                     self.dbgr.intf[-1].msg,
+                                                     self.stop_next,
+                                                     print_stack=False,
+                                                     pass_along=False)
+            else:
+                self.dbgr.intf[-1].errmsg('sighandler action: internal error')
+                return None
+            pass
+
 
         # multiple commands might be specified, i.e. 'nopass nostop'
         for attr in args[1:]:
@@ -299,8 +329,7 @@ class SignalManager:
                 self.dbgr.intf[-1].errmsg('Invalid arguments')
                 pass
             pass
-        self.check_and_adjust_sighandler(signame, self.sigs)
-        return
+        return self.check_and_adjust_sighandler(signame, self.sigs)
 
     def handle_print_stack(self, signame, print_stack):
         """Set whether we stop or not when this signal is caught.
@@ -421,6 +450,9 @@ class SignalManager:
 
 # When invoked as main program, do some basic tests of a couple of functions
 if __name__=='__main__':
+    for b in (True, False,):
+        print 'YN of %s is %s' % (repr(b), YN(b))
+        pass
     for signum in range(signal.NSIG):
         signame = lookup_signame(signum)
         if signame is not None:
@@ -428,6 +460,18 @@ if __name__=='__main__':
             # Try without the SIG prefix
             assert(signum == lookup_signum(signame[3:]))
             pass
+        pass
+
+    for i in (15, -15, 300):
+        print 'lookup_signame(%d): %s' % (i, lookup_signame(i))
+        pass
+    
+    for i in ('term', 'TERM', 'NotThere'):
+        print 'lookup_signum(%s): %s' % (i, repr(lookup_signum(i)))
+        pass
+    
+    for i in ('15', '-15', 'term', 'sigterm', 'TERM', '300', 'bogus'):
+        print 'canonic_signame(%s): %s' % (i, canonic_signame(i))
         pass
     
     from import_relative import import_relative

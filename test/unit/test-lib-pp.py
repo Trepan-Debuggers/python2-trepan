@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 'Unit test for pydbgr.lib.pp'
 import inspect, os, sys, unittest
-from import_relative import *
+from import_relative import import_relative
 
 Mpp = import_relative('lib.pp', '...pydbgr')
 

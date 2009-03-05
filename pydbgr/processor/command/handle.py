@@ -40,19 +40,22 @@ recognized actions include "stop", "nostop", "print", "noprint",
     min_args      = 1
     max_args      = None
     name_aliases = ('handle',)
-    need_stack    = True
+    need_stack    = False
     short_help    = "Specify how to handle a signal"
     
     def run(self, args):
-        self.debugger.sigmgr.action(' '.join(args[1:]))
+        if self.debugger.sigmgr.action(' '.join(args[1:])):
+            self.debugger.sigmgr.info_signal(['signal', args[1]])
+            pass
         return 
 
     pass
 
 if __name__ == '__main__':
-    mock = import_relative('mock')
-    d, cp = mock.dbg_setup()
-    command = HandleCommand(cp)
+    Mdebugger = import_relative('debugger', '...')
+    d = Mdebugger.Debugger()
+    command = HandleCommand(d.core.processor)
+    command.run(['handle', 'term', 'stop'])
     pass
 
 

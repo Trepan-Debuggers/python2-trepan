@@ -16,7 +16,6 @@ class TestCommandHelper(unittest.TestCase):
         return
 
     def test_get_an_int(self):
-        """Test processor.command.cmdfns.get_int()"""
         self.assertEqual(0, Mcmdfns.get_an_int(self.errmsg, '0', 'foo', 0))
         self.assertEqual(0, len(self.errors))
         self.assertEqual(6, Mcmdfns.get_an_int(self.errmsg, '6*1', 'foo', 5))
@@ -30,7 +29,6 @@ class TestCommandHelper(unittest.TestCase):
         return
 
     def test_get_int(self):
-        """Test processor.command.cmdfns.get_int()"""
         self.assertEqual(1, Mcmdfns.get_int(self.errmsg, '1', 5))
         self.assertEqual(3, Mcmdfns.get_int(self.errmsg, '1+2', 5))
         self.assertEqual(5, Mcmdfns.get_int(self.errmsg, None, 5))
@@ -40,7 +38,6 @@ class TestCommandHelper(unittest.TestCase):
         return
 
     def test_get_pos_int(self):
-        """Test processor.command.cmdfns.get_pos_int()"""
         self.assertEqual(2, Mcmdfns.get_pos_int(self.errmsg, '2', 0, 5))
         self.assertEqual(6, Mcmdfns.get_pos_int(self.errmsg, '2*3', 0, 5))
         self.assertEqual(5, Mcmdfns.get_pos_int(self.errmsg, None, 0, 5))
@@ -51,7 +48,6 @@ class TestCommandHelper(unittest.TestCase):
         return
 
     def test_get_onoff(self):
-        """Test processor.command.cmdfns.fns.get_onoff()"""
         for arg in ('1', 'on',):
             self.assertEqual(True, Mcmdfns.get_onoff(self.errmsg, arg))
             pass

@@ -36,7 +36,6 @@ def lookup_signame(num):
     if 'num' is invalid."""
     signames = signal.__dict__
     num = abs(num)
-    if num not in signames.values(): return None
     for signame in signames.keys():
         if signames[signame] == num: return signame
         pass

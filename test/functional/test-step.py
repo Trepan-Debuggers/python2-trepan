@@ -1,7 +1,7 @@
 #!/usr/bin/env python
-import os, sys, unittest
+import unittest
 import tracer
-from fn_helper import *
+from fn_helper import strarray_setup, compare_output
 
 class TestStep(unittest.TestCase):
     def test_step_same_level(self):
@@ -74,18 +74,18 @@ class TestStep(unittest.TestCase):
         ##############################
         x = 5
         try:
-            def foo():
+            def foo1():
                 y = 2
                 raise Exception
                 return
-            foo()
+            foo1()
         except:
             pass
         z = 1
         ##############################
         d.core.stop(options={'remove': True})
         out = ['-- x = 5',
-               '-> def foo():',
+               '-> def foo1():',
                '!! raise Exception']
         compare_output(self, out, d, cmds)
 
@@ -97,18 +97,18 @@ class TestStep(unittest.TestCase):
         ##############################
         x = 5
         try:
-            def foo():
+            def foo2():
                 y = 2
                 raise Exception
                 return
-            foo()
+            foo2()
         except:
             pass
         z = 1
         ##############################
         d.core.stop(options={'remove': True})
         out = ['-- x = 5',
-               '-> def foo():',
+               '-> def foo2():',
                '!! raise Exception']
         compare_output(self, out, d, cmds)
 
@@ -183,9 +183,4 @@ class TestStep(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-
-
-
-
-
-
+    pass

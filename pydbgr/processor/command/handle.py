@@ -27,7 +27,7 @@ class HandleCommand(Mbase_cmd.DebuggerCommand):
 Specify how to handle a signal SIG. SIG can be a signal name like
 SIGINT or a signal number like 2. The absolute value is used for
 numbers so -9 is the same as 9 (SIGKILL). When signal names are used,
-you can drop off the leading "SIG" if you want. Also capitalzation is
+you can drop off the leading "SIG" if you want. Also letter case is
 not important either.
 
 Arguments are signals and actions to apply to those signals.

@@ -10,7 +10,8 @@ def signal_handler(num, f):
     f.close()
     sys.exit(0)
 
-signal.signal(signal.SIGUSR1, signal_handler)
+# FIXME make debugger oblivious to this:
+# signal.signal(signal.SIGUSR1, signal_handler)
 
 if len(sys.argv) > 1 and sys.argv[1] == 'signal':
     os.kill(os.getpid(), signal.SIGUSR1)

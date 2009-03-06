@@ -22,9 +22,15 @@ Mbase_cmd  = import_relative('base_cmd')
 Msig       = import_relative('sighandler', '...lib', 'pydbgr')
 
 class HandleCommand(Mbase_cmd.DebuggerCommand):
-    """Specify how to handle a signal.
-    
-Args are signals and actions to apply to those signals.
+    """handle [SIG [action1 action2 ...]]
+
+Specify how to handle a signal SIG. SIG can be a signal name like
+SIGINT or a signal number like 2. The absolute value is used for
+numbers so -9 is the same as 9 (SIGKILL). When signal names are used,
+you can drop off the leading "SIG" if you want. Also capitalzation is
+not important either.
+
+Arguments are signals and actions to apply to those signals.
 recognized actions include "stop", "nostop", "print", "noprint",
 "pass", "nopass", "ignore", or "noignore".
 
@@ -34,6 +40,16 @@ recognized actions include "stop", "nostop", "print", "noprint",
 - Pass means let program see this signal; otherwise program doesn't know.
 - Ignore is a synonym for nopass and noignore is a synonym for pass.
 - Pass and Stop may not be combined. (This is different from gdb)
+
+Without any action names the current settings are shown.
+
+Examples:
+  handle INT         # Show current settings of SIGINT
+  handle SIGINT      # same as above
+  handle int         # same as above
+  handle 2           # Probably the same as above
+  handle -2          # the same as above
+  handle INT nostop  # Don't stop in the debugger on SIGINT
 """
 
     category     = 'running'
@@ -44,7 +60,11 @@ recognized actions include "stop", "nostop", "print", "noprint",
     short_help    = "Specify how to handle a signal"
     
     def run(self, args):
-        self.debugger.sigmgr.action(' '.join(args[1:]))
+        if (self.debugger.sigmgr.action(' '.join(args[1:]))
+            and len(args) > 2):
+            # Show results of recent change
+            self.debugger.sigmgr.info_signal([args[1]])
+            pass
         return 
     pass
 
@@ -52,6 +72,7 @@ if __name__ == '__main__':
     Mdebugger = import_relative('debugger', '...')
     d = Mdebugger.Debugger()
     command = HandleCommand(d.core.processor)
+    command.run(['handle', 'USR1'])
     command.run(['handle', 'term', 'stop'])
     pass
 

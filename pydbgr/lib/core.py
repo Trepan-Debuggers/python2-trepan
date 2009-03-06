@@ -43,7 +43,8 @@ class DebuggerCore():
         'processor'   : None,
 
         # How many step events to skip before
-        # entering event processor?
+        # entering event processor? Zero (0) means stop at the next one.
+        # A negative number indicates no eventual stopping.
         'step_ignore' : 0,
         'ignore_filter': None # But see debugger.py
         }
@@ -363,6 +364,15 @@ class DebuggerCore():
             pass
         return False
     
+    def set_next(self, frame, step_ignore=0, step_events=None):
+        "Sets to stop on the next event that happens in frame 'frame'."
+        self.step_events      = None # Consider all events
+        self.stop_level       = Mstack.count_frames(frame)
+        self.last_frame       = frame
+        self.stop_on_finish   = False
+        self.step_ignore      = step_ignore
+        return
+
     def trace_dispatch(self, frame, event, arg):
         '''A trace event occurred. Filter or pass the information to a
         specialized event processor. Note that there may be more filtering

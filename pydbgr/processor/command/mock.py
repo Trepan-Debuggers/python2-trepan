@@ -87,6 +87,8 @@ class MockDebuggerCore():
         self.last_filename  = None
         self.different_line = None
         return
+    def set_next(self, frame, step_events=None):
+        pass
     def stop(self): pass
     def canonic(self, filename):
         return filename

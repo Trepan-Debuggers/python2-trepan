@@ -169,11 +169,10 @@ class SignalManager:
             if signame.startswith('SIG') and '_' not in signame:
                 self.siglist.append(signame)
                 if signame not in fatal_signals + ignore_list:
-                    self.sigs[signame] = self.SigHandler(signame,
-                                                         default_print,
-                                                         self.stop_next,
-                                                         print_stack=False,
-                                                         pass_along=False)
+                    self.sigs[signame] = (
+                        self.SigHandler(signame, None, None,
+                                        print_stack=False,
+                                        pass_along=False))
                     pass
                 pass
             pass
@@ -343,7 +342,7 @@ class SignalManager:
         If 'set_stop' is True your program will stop when this signal
         happens."""
         if set_stop:
-            self.sigs[signame].stop_method = self.stop_next
+            self.sigs[signame].stop_method = self.dbgr.core.set_next
             # stop keyword implies print AND nopass
             self.sigs[signame].print_method = self.dbgr.intf[-1].msg
             self.sigs[signame].pass_along   = False
@@ -375,15 +374,9 @@ class SignalManager:
         if set_print:
             self.sigs[signame].print_method = self.dbgr.intf[-1].msg
         else:
-            # noprint implies nostop
             self.sigs[signame].print_method = None
-            self.sigs[signame].stop_method  = None
             pass
         return set_print
-
-    def stop_next(self):
-        self.dbgr.core.step_ignore = 0
-        return
 
     ## SigHandler is a class private to SignalManager
     class SigHandler:

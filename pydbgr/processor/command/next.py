@@ -48,23 +48,20 @@ the debugger setting 'different-line' determines this behavior.
 """
 
         if len(args) <= 1:
-            self.core.step_ignore = 0
+            step_ignore = 0
         else:
             try:
                 # 0 means stop now or step 1, so we subtract 1.
-                self.core.step_ignore = \
-                    cmdfns.get_pos_int(self.errmsg, args[1], default=1,
-                                       cmdname='step') - 1
+                step_ignore = cmdfns.get_pos_int(self.errmsg, args[1], 
+                                                 default=1,
+                                                 cmdname='step') - 1
             except ValueError:
                 return False
             pass
         self.core.different_line   = \
             cmdfns.want_different_line(args[0], 
                                        self.debugger.settings['different'])
-        self.core.step_events      = None # Consider all events
-        self.core.stop_level       = Mstack.count_frames(self.proc.frame)
-        self.core.last_frame       = self.proc.frame
-        self.core.stop_on_finish   = False
+        self.core.set_next(self.proc.frame, step_ignore)
         self.proc.continue_running = True # Break out of command read loop
         return True
     pass

@@ -3,8 +3,8 @@
 a program that installs a signal handler and sends it a signal.
 """
 import sys, os, signal, time
+from pydbgr.api import debug; debug()
 def signal_handler(num, f):
-    # from pydbgr.api import debug; debug()
     print 'signal %d received' % num
     return
 

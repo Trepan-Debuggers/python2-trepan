@@ -169,16 +169,39 @@ class SignalManager:
             # Look for a signal name on this os.
             if signame.startswith('SIG') and '_' not in signame:
                 self.siglist.append(signame)
-                if signame not in fatal_signals + ignore_list:
-                    self.sigs[signame] = (
-                        self.SigHandler(signame, None, None,
-                                        print_stack=False,
-                                        pass_along=False))
-                    pass
-                pass
+                self.initialize_handler(signame)
             pass
         self.action('SIGINT stop print nostack nopass')
         return
+
+    def initialize_handler(self, signame):
+        if signame in fatal_signals: return False
+        signum = lookup_signum(signame)
+        if signum is None: return False
+        
+        try:
+            old_handler = signal.getsignal(signum)
+        except ValueError:
+            # On some OS's (Redhat 8), SIGNUM's are listed (like
+            # SIGRTMAX) that getsignal can't handle.
+            old_handler = None
+            if signame in self.sigs:
+                self.sigs.pop(signame)
+                pass
+
+        if signame in self.ignore_list:
+            self.sigs[signame] = self.SigHandler(signame, signum, old_handler,
+                                                 None, None,
+                                                 print_stack=False,
+                                                 pass_along=True)
+        else:
+            self.sigs[signame] = self.SigHandler(signame, signum, old_handler,
+                                                 self.dbgr.intf[-1].msg,
+                                                 None,
+                                                 print_stack=False,
+                                                 pass_along=False)
+            pass
+        return True
 
     def set_signal_replacement(self, signum, handle):
         '''A replacement for signal.signal which chains the signal behind
@@ -193,8 +216,6 @@ class SignalManager:
             return True
         return False
             
-            
-
     def check_and_adjust_sighandler(self, signame, sigs):
         """Check to see if a single signal handler that we are interested in
         has changed or has not been set initially. On return self.sigs[signame]
@@ -217,8 +238,8 @@ class SignalManager:
                 pass
             # set/restore _our_ signal handler
             try:
-                signal.signal(signum, self.sigs[signame].handle)
-#               self._orig_set_signal(signum, self.sigs[signame].handle)
+#                signal.signal(signum, self.sigs[signame].handle)
+               self._orig_set_signal(signum, self.sigs[signame].handle)
             except ValueError:
                 # Probably not in main thread
                 return False
@@ -314,17 +335,8 @@ class SignalManager:
             return None
 
         if signame not in self.sigs.keys():
-            if signame in self.ignore_list:
-                self.sigs[signame] = self.SigHandler(signame,
-                                                     self.dbgr.intf[-1].msg,
-                                                     self.dbgr.core.set_next,
-                                                     print_stack=False,
-                                                     pass_along=False)
-            else:
-                self.dbgr.intf[-1].errmsg('sighandler action: internal error')
-                return None
+            if not initialize_handler(signame): return None
             pass
-
 
         # multiple commands might be specified, i.e. 'nopass nostop'
         for attr in args[1:]:
@@ -409,24 +421,16 @@ class SignalManager:
            stop routine to call to invoke debugger when stopping
            pass_along: True is signal is to be passed to user's handler
         """
-        def __init__(self, signame, print_method, stop_method,
+        def __init__(self, signame, signum, old_handler,
+                     print_method, stop_method,
                      print_stack=False, pass_along=True):
 
-            self.signum = lookup_signum(signame)
-            if not self.signum: return
-
-            try:
-                self.old_handler  = signal.getsignal(self.signum)
-            except ValueError:
-                # On some OS's (Redhat 8), SIGNUM's are listed (like
-                # SIGRTMAX) that getsignal can't handle.
-                if signame in self.sigs:
-                    self.sigs.pop(signame)
-                    pass
+            self.old_handler  = old_handler
             self.pass_along   = pass_along
             self.print_method = print_method
-            self.signame      = signame
             self.print_stack  = print_stack
+            self.signame      = signame
+            self.signum       = signum
             self.stop_method  = stop_method
             return
 

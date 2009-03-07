@@ -32,6 +32,7 @@ if necessary, first.
 # functions below.  (It also doesn't work once we add the exception handling
 # we see below. So for now, we'll live with the code duplication.
 
+import inspect, sys
 from import_relative import import_relative
 
 Mdebugger    = import_relative('debugger', top_name='pydbgr')
@@ -39,7 +40,8 @@ Mpost_mortem = import_relative('post_mortem', top_name='pydbgr')
 
 def debugger_on_post_mortem():
     '''Call debugger on an exeception that terminates a program'''
-    return sys.excepthook(Mpost_mortem.post_mortem_excepthook)
+    sys.excepthook = Mpost_mortem.post_mortem_excepthook
+    return
 
 def run_eval(expression, debug_opts=None, start_opts=None, globals_=None, 
              locals_=None):
@@ -107,7 +109,7 @@ def run_exec(statement, debug_opts=None, start_opts=None, globals_=None,
         pass
     return
 
-def debug(dbg_opts=None, start_opts=None):
+def debug(dbg_opts=None, start_opts=None, post_mortem=True):
     """ 
 Enter the debugger. Use like this:
 
@@ -136,10 +138,16 @@ dictionary that gets fed to pydbgr.Debugger.core.start().
         Mdebugger.debugger_obj = Mdebugger.Debugger(dbg_opts)
         Mdebugger.debugger_obj.core.add_ignore(debug, stop)
         pass
-    if not Mdebugger.debugger_obj.core.is_started():
-        Mdebugger.debugger_obj.core.start(start_opts)
+    core = Mdebugger.debugger_obj.core
+    frame = inspect.currentframe()
+    core.set_next(inspect.currentframe())
+    if not core.is_started():
+        core.start(start_opts)
         pass
-    Mdebugger.debugger_obj.core.step_ignore = 0;
+    if post_mortem:
+        debugger_on_post_mortem()
+        pass
+    core.step_ignore = 0;
     return 
 
 def stop(opts=None):

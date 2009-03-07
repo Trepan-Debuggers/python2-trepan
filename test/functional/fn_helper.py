@@ -17,7 +17,7 @@ def strarray_setup(debugger_cmds):
     return d
 
 import re
-pydbgr_prompt = re.compile(r'^.. \d+.*\n\(Pydbgr\) ')
+pydbgr_prompt = re.compile(r'^.. \d+.*\n\(Pydbgr(:.+)?\) ')
 pydbgr_loc    = re.compile(r'^\(.+:\d+\): ')
 def filter_line_cmd(a):
     '''Return output with source lines prompt and command removed'''

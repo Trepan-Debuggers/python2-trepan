@@ -33,7 +33,7 @@ try:
     Run ipython as a command subshell. You need to have ipython installed
     for this command to work. If no ipython options are
     given the following options are passed: 
-      -noconfirm_exit -prompt_in1 'Pydb In [\#]: '
+      -noconfirm_exit -prompt_in1 'Pydbgr In [\#]: '
     """
 
         category      = 'support'
@@ -48,7 +48,7 @@ try:
             if len(args) > 1:
                 argv = args[1:]
             else:
-                argv = ['-noconfirm_exit','-prompt_in1', 'Pydb In [\\#]: ']
+                argv = ['-noconfirm_exit','-prompt_in1', 'Pydbgr In [\\#]: ']
                 pass
 
             if self.proc.curframe and self.proc.curframe.f_locals:

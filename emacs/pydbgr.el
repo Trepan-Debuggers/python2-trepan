@@ -338,7 +338,7 @@ below will appear.
     (gud-def gud-where   "where"
 	     "T" "Show stack trace.")
     (local-set-key "\C-i" 'gud-gdb-complete-command)
-    (setq comint-prompt-regexp "^(+Pydbgr[*]?)+ +")
+    (setq comint-prompt-regexp "^(+Pydbgr\*(:.+\)?)+ +")
     (setq paragraph-start comint-prompt-regexp)
     
     ;; Update GUD menu bar

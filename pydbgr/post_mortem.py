@@ -23,7 +23,6 @@ Mdebugger = import_relative('debugger', '.', 'pydbgr')
 Mexcept   = import_relative('except', '.', 'pydbgr') 
 
 def get_last_or_frame_exception():
-
     """Intended to be used going into post mortem routines.  If
     sys.last_traceback is set, we will return that and assume that
     this is what post-mortem will want. If sys.last_traceback has not
@@ -50,9 +49,15 @@ def pm(frameno=1, dbg=None):
     post_mortem(get_last_or_frame_exception(), frameno, dbg=dbg)
     return
 
-def post_mortem_excepthook(kind, value, traceback):
-    print "Uncaught exception. Entering post mortem debugging"
-    post_mortem((kind, value, traceback))
+def post_mortem_excepthook(exc_type, exc_value, exc_tb):
+    if exc_type == Mexcept.DebuggerQuit: return
+    if exc_type == Mexcept.DebuggerRestart: 
+        print "Restart not done yet - entering post mortem debugging"
+    else:
+        traceback.print_exception(exc_type, exc_value, exc_tb)
+        print "Uncaught exception. Entering post mortem debugging"
+        pass
+    post_mortem((exc_type, exc_value, exc_tb))
     print "Post mortem debugger finished."
     return
 
@@ -98,7 +103,8 @@ def post_mortem(exc=None, frameno=1, dbg=None):
     # been set.
     while exc_tb.tb_next is not None:
         filename = exc_tb.tb_frame.f_code.co_filename
-        if 0 == len(dbg.mainpyfile) and not re_bogus_file.match(filename):
+        if (dbg.mainpyfile and 0 == len(dbg.mainpyfile) 
+            and not re_bogus_file.match(filename)):
             dbg.mainpyfile = filename
         exc_tb = exc_tb.tb_next
     dbg.core.processor.curframe = exc_tb.tb_frame
@@ -126,7 +132,7 @@ def post_mortem(exc=None, frameno=1, dbg=None):
         # not always equal to t.tb_lineno, I don't know.
         f = exc_tb.tb_frame
         if f and f.f_lineno != exc_tb.tb_lineno : f = f.f_back
-        dbg.core.processor.event_processor(f, 'exception', exc)
+        dbg.core.processor.event_processor(f, 'exception', exc, 'Pydbgr:pm')
     except Mexcept.DebuggerRestart:
         while True:
             sys.argv = list(dbg._program_sys_argv)
@@ -143,13 +149,19 @@ def post_mortem(exc=None, frameno=1, dbg=None):
     return
 
 def uncaught_exception(dbg):
-    traceback.print_exc()
-    print "Uncaught exception. Entering post mortem debugging"
     exc = sys.exc_info()
     exc_type, exc_value, exc_tb = exc
+    if exc_type == Mexcept.DebuggerQuit: return
+    if exc_type == mexcept.DebuggerRestart: 
+        print "restart not done yet - entering post mortem debugging"
+    else:
+        traceback.print_exception(exc_type, exc_value, exc_tb)
+        print "uncaught exception. entering post mortem debugging"
+        pass
     dbg.core.execution_status = ('Terminated with unhandled exception %s'
                                  % exc_type)
-    dbg.core.processor.event_processor(exc_tb.tb_frame, 'exception', exc)
+    dbg.core.processor.event_processor(exc_tb.tb_frame, 'exception', exc,
+                                       'Pydbgr:pm')
     print "Post mortem debugger finished."
     return
 

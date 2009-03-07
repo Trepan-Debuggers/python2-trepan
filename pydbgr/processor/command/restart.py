@@ -47,7 +47,10 @@ class RestartCommand(Mbase_cmd.DebuggerCommand):
                                              self.settings['width']))
                 # Run atexit finalize routines. This seems to be Kosher:
                 # http://mail.python.org/pipermail/python-dev/2009-February/085791.html
-                atexit._run_exitfuncs()
+                try:
+                    atexit._run_exitfuncs()
+                except:
+                    pass
                 os.execvp(sys_argv[0], sys_argv)
                 pass
             pass

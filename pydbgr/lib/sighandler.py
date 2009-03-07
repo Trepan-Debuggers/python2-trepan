@@ -40,7 +40,7 @@ def lookup_signame(num):
         if signames[signame] == num: return signame
         pass
     # Something went wrong. Should have returned above
-    return
+    return None
 
 def lookup_signum(name):
     """Find the corresponding signal number for 'name'. Return None
@@ -147,7 +147,7 @@ class SignalManager:
         self.sigs    = {}
         self.siglist = [] # List of signals. Dunno why signal doesn't provide.
     
-        # Ignore up signal handling initially for these known signals.
+        # Ignore signal handling initially for these known signals.
         if ignore_list is None:
             ignore_list = ['SIGALRM',    'SIGCHLD',  'SIGURG',
                            'SIGIO',      'SIGCLD',
@@ -155,6 +155,8 @@ class SignalManager:
                            'SIGWAITING', 'SIGLWP',   'SIGCANCEL', 'SIGTRAP',
                            'SIGTERM',    'SIGQUIT',  'SIGILL']
         self.ignore_list = ignore_list
+        self._orig_set_signal  = signal.signal
+        # signal.signal = self.set_signal_replacement
 
         self.info_fmt='%-14s%-4s\t%-4s\t%-5s\t%-4s\t%s'
         self.header  = self.info_fmt % ('Signal', 'Stop', 'Print',
@@ -177,6 +179,21 @@ class SignalManager:
             pass
         self.action('SIGINT stop print nostack nopass')
         return
+
+    def set_signal_replacement(self, signum, handle):
+        '''A replacement for signal.signal which chains the signal behind
+        the debugger's handler'''
+        signame = lookup_signame(signum)
+        if signame is None:
+            self.dbgr.intf[-1].errmsg(("%s is not a signal number" +
+                                       " I know about.")  % signum)
+            return False
+        if self.check_and_adjust_sighandler(signame, self.sigs):
+            self.sigs[signame].old_handler = handle
+            return True
+        return False
+            
+            
 
     def check_and_adjust_sighandler(self, signame, sigs):
         """Check to see if a single signal handler that we are interested in
@@ -201,6 +218,7 @@ class SignalManager:
             # set/restore _our_ signal handler
             try:
                 signal.signal(signum, self.sigs[signame].handle)
+#               self._orig_set_signal(signum, self.sigs[signame].handle)
             except ValueError:
                 # Probably not in main thread
                 return False
@@ -247,8 +265,8 @@ class SignalManager:
                                (signame, 
                                 YN(sig_obj.stop_method  is not None),
                                 YN(sig_obj.print_method is not None),
-                                YN(sig_obj.pass_along),
                                 YN(sig_obj.print_stack),
+                                YN(sig_obj.pass_along),
                                 description))
         return
 
@@ -299,7 +317,7 @@ class SignalManager:
             if signame in self.ignore_list:
                 self.sigs[signame] = self.SigHandler(signame,
                                                      self.dbgr.intf[-1].msg,
-                                                     self.stop_next,
+                                                     self.dbgr.core.set_next,
                                                      print_stack=False,
                                                      pass_along=False)
             else:

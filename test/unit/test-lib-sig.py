@@ -12,7 +12,20 @@ class TestLibSigHandle(unittest.TestCase):
             self.assertEqual(expect, Msig.YN(b))
             pass
         return
-    
+
+    def test_canonic_signame(self):
+        for expect, name_num in (('SIGTERM',  '15'), 
+                                 ('SIGTERM', '-15'), 
+                                 ('SIGTERM', 'term'), 
+                                 ('SIGTERM', 'sigterm'),
+                                 ('SIGTERM', 'TERM'), 
+                                 (None, '300'),
+                                 (False, 'bogus')):
+            self.assertEqual(expect, Msig.canonic_signame(name_num),
+                             'name_num: %s' % name_num)
+            pass
+        pass
+
     def test_lookup_signame(self):
         for expect, num in (('SIGTERM', 15), ('SIGTERM', -15), 
                           (None, 300)):
@@ -37,20 +50,6 @@ class TestLibSigHandle(unittest.TestCase):
                 pass
             pass
         return
-
-    def test_canonic_signame(self):
-        for expect, name_num in (('SIGTERM',  '15'), 
-                                 ('SIGTERM', '-15'), 
-                                 ('SIGTERM', 'term'), 
-                                 ('SIGTERM', 'sigterm'),
-                                 ('SIGTERM', 'TERM'), 
-                                 (None, '300'),
-                                 (False, 'bogus')):
-            self.assertEqual(expect, Msig.canonic_signame(name_num),
-                             'name_num: %s' % name_num)
-            pass
-        pass
-
     
     pass
 

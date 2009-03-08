@@ -191,12 +191,14 @@ class SignalManager:
                 pass
 
         if signame in self.ignore_list:
-            self.sigs[signame] = SigHandler(signame, signum, old_handler,
+            self.sigs[signame] = SigHandler(self.dbgr, signame, signum, 
+                                            old_handler,
                                             None, None,
                                             print_stack=False,
                                             pass_along=True)
         else:
-            self.sigs[signame] = SigHandler(signame, signum, old_handler,
+            self.sigs[signame] = SigHandler(self.dbgr, signame, signum, 
+                                            old_handler,
                                             self.dbgr.intf[-1].msg,
                                             self.dbgr.core.set_next,
                                             print_stack=False,
@@ -425,10 +427,11 @@ class SigHandler:
        stop routine to call to invoke debugger when stopping
        pass_along: True is signal is to be passed to user's handler
     """
-    def __init__(self, signame, signum, old_handler,
+    def __init__(self, dbgr, signame, signum, old_handler,
                  print_method, stop_method,
                  print_stack=False, pass_along=True):
 
+        self.dbgr         = dbgr
         self.old_handler  = old_handler
         self.pass_along   = pass_along
         self.print_method = print_method

@@ -1,20 +1,18 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009 Rocky Bernstein
+#  Copyright (C) 2009 Rocky Bernstein
 #
-#    This program is free software; you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation; either version 2 of the License, or
-#    (at your option) any later version.
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
 #
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
-#    along with this program; if not, write to the Free Software
-#    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
-#    02110-1301 USA.
+#  You should have received a copy of the GNU General Public License
+#  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from import_relative import import_relative
 
 # Our local modules
@@ -23,6 +21,15 @@ Mstack    = import_relative('stack', '...lib', 'pydbgr')
 Mcmdfns   = import_relative('cmdfns', top_name='pydbgr')
 
 class WhereCommand(Mbase_cmd.DebuggerCommand):
+    """where [count]
+
+Print a stack trace, with the most recent frame at the top.  With a
+positive number, print at most many entries.  An arrow indicates the
+'current frame'. The current frame determines the context used for
+many debugger commands such as expression evaluation or source-line
+listing.
+"""
+
 
     category      = 'stack'
     min_args      = 0
@@ -32,14 +39,6 @@ class WhereCommand(Mbase_cmd.DebuggerCommand):
     short_help   = 'Print backtrace of stack frames'
 
     def run(self, args):
-        """where [count]
-
-Print a stack trace, with the most recent frame at the top.  With a
-positive number, print at most many entries.  An arrow indicates the
-'current frame'. The current frame determines the context used for 
-many debugger commands such as expression evaluation or source-line listing.
-"""
-
         if len(args) > 1:
             try:
                 count = Mcmdfns.get_pos_int(self.errmsg, args[1], default=None, 

@@ -176,6 +176,10 @@ class Debugger():
             self.core.stop(options={'remove': True})
         return retval
 
+    def restart_argv(self):
+        '''Return an array that would be execv'd to restart the program'''
+        return self.orig_sys_argv or self.program_sys_argv
+
     # Note: has to come after functions listed in ignore_filter.
     DEFAULT_INIT_OPTS = {
         # What routines will we not trace into? 

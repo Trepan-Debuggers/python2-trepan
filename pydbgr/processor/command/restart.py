@@ -38,9 +38,8 @@ class RestartCommand(Mbase_cmd.DebuggerCommand):
     short_help    = '(Hard) restart of program via execv()'
 
     def run(self, args):
-        sys_argv = self.debugger.orig_sys_argv or \
-            self.debugger.program_sys_argv
-        if sys_argv:
+        sys_argv = self.debugger.restart_argv()
+        if sys_argv and len(sys_argv) > 0:
             confirmed = self.confirm('Restart (execv)', False)
             if confirmed: 
                 self.msg(Mmisc.wrapped_lines("Re exec'ing:", repr(sys_argv),

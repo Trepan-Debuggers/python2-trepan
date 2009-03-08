@@ -111,6 +111,7 @@ class MockDebugger():
         self.program_sys_argv = None
         return
     def stop(self): pass
+    def restart_argv(self): return []
     pass
 
 def dbg_setup(d = None):

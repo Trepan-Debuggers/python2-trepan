@@ -15,7 +15,7 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # Post-Mortem interface
 
-import inspect, sys, re, traceback
+import inspect, os, sys, re, traceback
 
 # Our local modules
 from import_relative import import_relative
@@ -52,13 +52,20 @@ def pm(frameno=1, dbg=None):
 def post_mortem_excepthook(exc_type, exc_value, exc_tb):
     if exc_type == Mexcept.DebuggerQuit: return
     if exc_type == Mexcept.DebuggerRestart: 
-        print "Restart not done yet - entering post mortem debugging"
+        if ( exc_value and exc_value.sys_argv and 
+             len(exc_value.sys_argv) > 0 ):
+            print ("No restart handler - trying restart via execv(%s)" % 
+                   repr(exc_value.sys_argv))
+            os.execvp(exc_value.sys_argv[0], exc_value.sys_argv)
+        else:
+            print "No restart handler, no params registered"
+            print "Entering post-mortem debugger..."
     else:
         traceback.print_exception(exc_type, exc_value, exc_tb)
-        print "Uncaught exception. Entering post mortem debugging"
+        print "Uncaught exception. Entering post-mortem debugger..."
         pass
     post_mortem((exc_type, exc_value, exc_tb))
-    print "Post mortem debugger finished."
+    print "Post-mortem debugger finished."
     return
 
 def post_mortem(exc=None, frameno=1, dbg=None):

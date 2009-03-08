@@ -37,7 +37,7 @@ call. All state is lost, and new copy of the debugger is used."""
         if confirmed: 
             self.core.step_ignore = 0
             self.core.step_events = None
-            raise Mexcept.DebuggerRestart
+            raise Mexcept.DebuggerRestart(self.core.debugger.restart_argv())
         pass
     pass
 
@@ -48,7 +48,8 @@ if __name__ == '__main__':
     try:
         command.run([])
     except Mexcept.DebuggerRestart:
-        print 'Got restart exception'
+        import sys
+        print 'Got restart exception: parms ', sys.exc_value.sys_argv
         pass
     pass
 

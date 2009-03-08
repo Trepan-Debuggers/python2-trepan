@@ -17,7 +17,7 @@
 #    02110-1301 USA.
 
 import inspect
-from import_relative import *
+from import_relative import import_relative
 # Our local modules
 import_relative('processor', '....', 'pydbgr')
 Mbase_subcmd  = import_relative('base_subcmd', '..', 'pydbgr')
@@ -32,16 +32,20 @@ internals.
 """
 
     in_list    = True
-    min_abbrev = 4    # Need at least "set pydb"
+    min_abbrev = 3    # Need at least "set dbg"
     short_help = "Set debugging the debugger"
 
     def run(self, args):
         Mcmdfns.run_set_bool(self, args)
         if self.debugger.settings[self.name]:
+            # Put a stack frame in the list of frames so we have
+            # something to inspect.
             frame = inspect.currentframe()
             self.proc.stack, self.proc.curindex = \
                 Mcmdproc.get_stack(frame, None, self.proc)
             self.proc.curframe = self.proc.stack[self.proc.curindex][0]
+            # Remove ignored debugger functions.
+            self.core.ignore_filter = None
             pass
         return
     pass

@@ -143,7 +143,8 @@ class SignalManager:
     handler.
     """
     def __init__(self, dbgr, ignore_list=None, default_print=True):
-        self.dbgr = dbgr
+        self.dbgr    = dbgr
+        dbgr.core.add_ignore(SigHandler.handle)
         self.sigs    = {}
         self.siglist = [] # List of signals. Dunno why signal doesn't provide.
     
@@ -156,7 +157,7 @@ class SignalManager:
                            'SIGTERM',    'SIGQUIT',  'SIGILL']
         self.ignore_list = ignore_list
         self._orig_set_signal  = signal.signal
-        # signal.signal = self.set_signal_replacement
+        signal.signal = self.set_signal_replacement
 
         self.info_fmt='%-14s%-4s\t%-4s\t%-5s\t%-4s\t%s'
         self.header  = self.info_fmt % ('Signal', 'Stop', 'Print',
@@ -190,16 +191,16 @@ class SignalManager:
                 pass
 
         if signame in self.ignore_list:
-            self.sigs[signame] = self.SigHandler(signame, signum, old_handler,
-                                                 None, None,
-                                                 print_stack=False,
-                                                 pass_along=True)
+            self.sigs[signame] = SigHandler(signame, signum, old_handler,
+                                            None, None,
+                                            print_stack=False,
+                                            pass_along=True)
         else:
-            self.sigs[signame] = self.SigHandler(signame, signum, old_handler,
-                                                 self.dbgr.intf[-1].msg,
-                                                 None,
-                                                 print_stack=False,
-                                                 pass_along=False)
+            self.sigs[signame] = SigHandler(signame, signum, old_handler,
+                                            self.dbgr.intf[-1].msg,
+                                            self.dbgr.core.set_next,
+                                            print_stack=False,
+                                            pass_along=False)
             pass
         return True
 
@@ -213,6 +214,9 @@ class SignalManager:
             return False
         if self.check_and_adjust_sighandler(signame, self.sigs):
             self.sigs[signame].old_handler = handle
+            # Since the intent is to set a handler, we should pass this
+            # signal on to the handler
+            self.sigs[signame].pass_along = True
             return True
         return False
             
@@ -406,60 +410,63 @@ class SignalManager:
             self.sigs[signame].print_method = None
             pass
         return set_print
+    pass
 
-    ## SigHandler is a class private to SignalManager
-    class SigHandler:
-        """Store information about what we do when we handle a signal,
+class SigHandler:
+    """Store information about what we do when we handle a signal,
 
-        - Do we print/not print when signal is caught
-        - Do we pass/not pass the signal to the program
-        - Do we stop/not stop when signal is caught
+    - Do we print/not print when signal is caught
+    - Do we pass/not pass the signal to the program
+    - Do we stop/not stop when signal is caught
 
-        Parameters:
-           signame : name of signal (e.g. SIGUSR1 or USR1)
-           print_method routine to use for "print"
-           stop routine to call to invoke debugger when stopping
-           pass_along: True is signal is to be passed to user's handler
-        """
-        def __init__(self, signame, signum, old_handler,
-                     print_method, stop_method,
-                     print_stack=False, pass_along=True):
+    Parameters:
+       signame : name of signal (e.g. SIGUSR1 or USR1)
+       print_method routine to use for "print"
+       stop routine to call to invoke debugger when stopping
+       pass_along: True is signal is to be passed to user's handler
+    """
+    def __init__(self, signame, signum, old_handler,
+                 print_method, stop_method,
+                 print_stack=False, pass_along=True):
 
-            self.old_handler  = old_handler
-            self.pass_along   = pass_along
-            self.print_method = print_method
-            self.print_stack  = print_stack
-            self.signame      = signame
-            self.signum       = signum
-            self.stop_method  = stop_method
-            return
+        self.old_handler  = old_handler
+        self.pass_along   = pass_along
+        self.print_method = print_method
+        self.print_stack  = print_stack
+        self.signame      = signame
+        self.signum       = signum
+        self.stop_method  = stop_method
+        return
 
-        def handle(self, signum, frame):
-            """This method is called when a signal is received."""
-            if self.print_method:
-                self.print_method('\nProgram received signal %s'
-                                  % self.signame)
-            if self.print_stack:
-                import traceback
-                strings = traceback.format_stack(frame)
-                for s in strings:
-                    if s[-1] == '\n': s = s[0:-1]
-                    self.print_method(s)
-            if self.pass_along:
-                # pass the signal to the program 
-                if self.old_handler:
-                    self.old_handler(signum, frame)
-            if self.stop_method is not None:
-                ## FIXME not sure if this is really right
-                if frame.f_trace is None:
-                    import dbgr
-                    dbgr.debugger()
-                else:
-                    self.stop_method(frame)
-                    pass
+    def handle(self, signum, frame):
+        """This method is called when a signal is received."""
+        if self.print_method:
+            self.print_method('\nProgram received signal %s.'
+                              % self.signame)
+        if self.print_stack:
+            import traceback
+            strings = traceback.format_stack(frame)
+            for s in strings:
+                if s[-1] == '\n': s = s[0:-1]
+                self.print_method(s)
                 pass
-            return
-        pass
+            pass
+        if self.stop_method is not None:
+            ## FIXME not sure if this is really right
+            if frame.f_trace is None:
+                import dbgr
+                dbgr.debugger()
+            else:
+                self.stop_method(frame)
+                pass
+            pass
+        if self.pass_along:
+            # pass the signal to the program 
+            if self.old_handler:
+                self.old_handler(signum, frame)
+                pass
+            pass
+        return
     pass
 
 # When invoked as main program, do some basic tests of a couple of functions

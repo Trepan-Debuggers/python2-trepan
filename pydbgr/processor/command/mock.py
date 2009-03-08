@@ -20,7 +20,7 @@ how the command works.'''
 
 import os, sys
 from import_relative import import_relative
-default   = import_relative('lib.default', '...', 'pydbgr') # Default settings
+default   = import_relative('default', '...lib', 'pydbgr') # Default settings
 
 class MockIO():
     def readline(self, prompt='', add_to_history=False):

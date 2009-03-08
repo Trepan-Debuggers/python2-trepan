@@ -19,27 +19,25 @@ import inspect
 from import_relative import import_relative
 
 # Our local modules
-Mbase_cmd  = import_relative('base_cmd')
-Mcmdproc   = import_relative('cmdproc', '..')
-Mcmdfns    = import_relative('cmdfns')
-Mbytecode  = import_relative('bytecode', '...lib')
+Mbase_cmd  = import_relative('base_cmd', top_name='pydbgr')
+Mcmdproc   = import_relative('cmdproc', '..', 'pydbgr')
+Mbytecode  = import_relative('bytecode', '...lib', 'pydbgr')
 
 class SkipCommand(Mbase_cmd.DebuggerCommand):
+    """skip [count]
+    
+Set the next line that will be executed. The line must be within the
+stopped or bottom-most execution frame."""
 
     category      = 'running'
     execution_set = ['Running']
     min_args      = 0
     max_args      = 1
     name_aliases  = ('skip', 'sk',)
-    need_stack    = False
+    need_stack    = True
     short_help    = 'Skip lines to be executed'
 
     def run(self, args):
-        """skip [count]
-
-        Set the next line that will be executed. The line must be within
-        the stopped or bottom-most execution frame frame."""
-
         if not self.core.is_running(): return False
 
         if self.proc.curindex + 1 != len(self.proc.stack):
@@ -51,11 +49,10 @@ class SkipCommand(Mbase_cmd.DebuggerCommand):
             return False
         
         if len(args) == 1:
-            count = 1;
+            count = 1
         else:
-            count = Mcmdfns.get_an_int(self.errmsg, args[1],
-                                       "skip: expecting a number, got %s." %
-                                       args[1])
+            msg   = "skip: expecting a number, got %s." % args[1]
+            count = self.proc.get_an_int(args[1], msg)
             pass
         co = self.proc.curframe.f_code
         offset = self.proc.curframe.f_lasti

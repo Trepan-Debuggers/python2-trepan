@@ -60,6 +60,8 @@ See also "show trace".
                 continue
             if arg in tracer.ALL_EVENTS:
                 eventset += [arg]
+            elif 'all' == arg:
+                eventset += tracer.ALL_EVENTS
             elif on_off is not None:
                 self.errmsg('set trace: Duplicate on/off value %s ignored.' 
                             % arg)

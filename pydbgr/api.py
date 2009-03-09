@@ -109,17 +109,31 @@ def run_exec(statement, debug_opts=None, start_opts=None, globals_=None,
         pass
     return
 
-def debug(dbg_opts=None, start_opts=None, post_mortem=True):
+def debug(dbg_opts=None, start_opts=None, post_mortem=True,
+          steps=1):
     """ 
 Enter the debugger. Use like this:
 
-    ... # Some python code
-    import pydbgr; pydbgr.api.debug() # This also works well inside an `if' stmt
+    ... # Possibly some Python code
+    import pydbgr.api # Needed only once
+    ... # Possibly some more Python code
+    pydbgr.api.debug() # You can wrap inside conditional logic too
+    pass  # Stop will be here.
     # Below is code you want to use the debugger to do things.
     ....  # more Python code
     # If you get to a place in the program where you aren't going 
     # want to debug any more, but want to remove debugger trace overhead:
-    pydbgr.stop() 
+    pydbgr.api.stop() 
+
+In situations where you want an immediate stop in the "debug" call
+rather than the statement following it ("pass" above), add parameter
+steps=0 to debug() like this:
+
+    import pydbgr  # Needed only once
+    # ... as before
+    pydbgr.api.debug(steps=0)
+    # ... as before
+
 
 Module variable pydbgr.debugger.debugger_obj is used as the debugger
 instance and it can be subsequenly used to change settings or alter
@@ -133,21 +147,33 @@ variable pydbgr.debugger.debugger_obj.
 `dbg_opts' is an optional "options" dictionary that gets fed
 pydbgr.Debugger(); `start_opts' are the optional "options"
 dictionary that gets fed to pydbgr.Debugger.core.start().
+
+Parameter "steps" specifies how many line events to ignore after the
+debug() call. 0 means don't even wait for the debug() call to finish.
 """
     if Mdebugger.Debugger != type(Mdebugger.debugger_obj):
         Mdebugger.debugger_obj = Mdebugger.Debugger(dbg_opts)
         Mdebugger.debugger_obj.core.add_ignore(debug, stop)
         pass
     core = Mdebugger.debugger_obj.core
-    frame = inspect.currentframe()
-    core.set_next(inspect.currentframe())
+    frame = sys._getframe(0)
+    core.set_next(frame)
     if not core.is_started():
         core.start(start_opts)
         pass
     if post_mortem:
         debugger_on_post_mortem()
         pass
-    core.step_ignore = 0;
+    if 0 == steps:
+        frame                   = sys._getframe(1)
+        core.stop_reason        = 'at a debug() call'
+        old_trace_hook_suspend  = core.trace_hook_suspend
+        core.trace_hook_suspend = True
+        core.processor.event_processor(frame, 'line', None)
+        core.trace_hook_suspend = old_trace_hook_suspend
+    else:
+        core.step_ignore = steps-1;
+        pass
     return 
 
 def stop(opts=None):

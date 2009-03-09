@@ -14,7 +14,8 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from import_relative import *
+import sys
+from import_relative import import_relative
 # Our local modules
 # FIXME: Until import_relative is fixed up...
 import_relative('processor', '....', 'pydbgr')
@@ -38,7 +39,7 @@ class InfoProgram(Mbase_subcmd.DebuggerSubcommand):
                 part1 = 'Program is stopped'
                 pass
             if self.proc.event:
-                msg = 'via event: "%s".' % self.proc.event
+                msg = 'via a %s event.' % self.proc.event
             else:
                 msg = '.'
             self.msg(Mmisc.wrapped_lines(part1, msg,
@@ -48,6 +49,15 @@ class InfoProgram(Mbase_subcmd.DebuggerSubcommand):
                 part1 = 'Return value is'
                 self.msg(Mmisc.wrapped_lines(part1, self.proc._saferepr(val),
                                              self.settings['width']))
+                pass
+            elif self.proc.event == 'exception': 
+                exc_type, exc_value, exc_tb = self.proc.event_arg
+                self.msg('Exception type: %s' % 
+                         self.proc._saferepr(exc_type))
+                if exc_value:
+                    self.msg('Exception value: %s' %
+                             self.proc._saferepr(exc_value))
+                    pass
                 pass
             self.msg('It stopped %s.' % self.core.stop_reason)
             if self.proc.event in ['signal', 'exception', 'c_exception']: 

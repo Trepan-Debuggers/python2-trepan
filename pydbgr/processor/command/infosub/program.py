@@ -50,6 +50,9 @@ class InfoProgram(Mbase_subcmd.DebuggerSubcommand):
                                              self.settings['width']))
                 pass
             self.msg('It stopped %s.' % self.core.stop_reason)
+            if self.proc.event in ['signal', 'exception', 'c_exception']: 
+                self.msg('Note: we are stopped *after* running the line shown.')
+                pass
         else:
             if mainfile:
                 part1 = "Python program '%s'" % mainfile

@@ -34,6 +34,10 @@ def filter_line_cmd(a):
     a2 = [re.sub(r'\n\(Pydbgr\) .*', '', s) for s in a1]
     return a2
 
+def get_lineno():
+    '''Return the caller's line number'''
+    caller = sys._getframe(1)
+    return caller.f_lineno
 
 def compare_output(obj, right, d, debugger_cmds):
     got = filter_line_cmd(d.intf[-1].output.output)
@@ -57,3 +61,7 @@ def compare_output(obj, right, d, debugger_cmds):
     obj.assertEqual(right, got)
     return
 
+# Demo it
+if __name__=='__main__':
+    print get_lineno()
+    pass

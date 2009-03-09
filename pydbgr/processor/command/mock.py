@@ -59,11 +59,12 @@ class MockProcessor():
         self.core     = core
         self.debugger = core.debugger
         self.continue_running = False
-        self.curframe = None
-        self.frame    = None
-        self.intf     = core.debugger.intf
-        self.last_cmd = None
-        self.stack    = []
+        self.curframe    = None
+        self.event2short = {}
+        self.frame       = None
+        self.intf        = core.debugger.intf
+        self.last_cmd    = None
+        self.stack       = []
         return
 
     def undefined_cmd(self, cmd):

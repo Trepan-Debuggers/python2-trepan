@@ -394,7 +394,7 @@ class DebuggerCore():
             # This will disallow a command like "jump" from working properly,
             # which will give a cryptic the message on setting f_lineno:
             #   f_lineno can only be set by a trace function
-            if self.ignore_filter.is_included(frame):
+            if self.ignore_filter and self.ignore_filter.is_included(frame):
                 return True
 
             if self.debugger.settings['trace']:

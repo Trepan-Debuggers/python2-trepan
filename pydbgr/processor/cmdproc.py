@@ -171,7 +171,7 @@ def print_location(proc_obj):
         if line and len(line.strip()) != 0:
             if proc_obj.event:
                 print_source_line(intf_obj.msg_nocr, lineno, line, 
-                                  EVENT2SHORT[proc_obj.event])
+                                  proc_obj.event2short[proc_obj.event])
             pass
         if '<string>' != filename:
             break
@@ -193,6 +193,9 @@ class CommandProcessor(Mbase_proc.Processor):
             Mmisc.option_set(opts, key, DEFAULT_PROC_OPTS)
         Mbase_proc.Processor.__init__(self, core_obj)
         
+        self.event2short    = dict(EVENT2SHORT)
+        self.event2short['signal'] = '?!'
+
         self.cmd_instances  = self._populate_commands()
         self.cmd_queue      = [] # Queued debugger commands
         self.display_mgr    = Mdisplay.DisplayMgr()

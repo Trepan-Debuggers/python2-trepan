@@ -9,10 +9,11 @@ def signal_handler(num, f):
     return
 
 signal.signal(signal.SIGUSR1, signal_handler)
+sleepy_time = 4
 print "pid %d" % os.getpid()
-print "Waiting in time.sleep(10) for signal USR1." 
+print "Waiting in time.sleep(%d) for signal USR1."  % sleepy_time
 while True:
-    time.sleep(10)
+    time.sleep(sleepy_time)
     os.kill(os.getpid(), signal.SIGUSR1)
     pass
 pass

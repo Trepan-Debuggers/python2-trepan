@@ -144,7 +144,7 @@ class SignalManager:
     """
     def __init__(self, dbgr, ignore_list=None, default_print=True):
         self.dbgr    = dbgr
-        dbgr.core.add_ignore(SigHandler.handle)
+        # dbgr.core.add_ignore(SigHandler.handle)
         self.sigs    = {}
         self.siglist = [] # List of signals. Dunno why signal doesn't provide.
     
@@ -193,14 +193,14 @@ class SignalManager:
         if signame in self.ignore_list:
             self.sigs[signame] = SigHandler(self.dbgr, signame, signum, 
                                             old_handler,
-                                            None, None,
+                                            None, False,
                                             print_stack=False,
                                             pass_along=True)
         else:
             self.sigs[signame] = SigHandler(self.dbgr, signame, signum, 
                                             old_handler,
                                             self.dbgr.intf[-1].msg,
-                                            self.dbgr.core.set_next,
+                                            True,
                                             print_stack=False,
                                             pass_along=False)
             pass
@@ -214,11 +214,11 @@ class SignalManager:
             self.dbgr.intf[-1].errmsg(("%s is not a signal number" +
                                        " I know about.")  % signum)
             return False
+        # Since the intent is to set a handler, we should pass this
+        # signal on to the handler
+        self.sigs[signame].pass_along = True
         if self.check_and_adjust_sighandler(signame, self.sigs):
             self.sigs[signame].old_handler = handle
-            # Since the intent is to set a handler, we should pass this
-            # signal on to the handler
-            self.sigs[signame].pass_along = True
             return True
         return False
             
@@ -290,7 +290,7 @@ class SignalManager:
         sig_obj = self.sigs[signame]
         self.dbgr.intf[-1].msg(self.info_fmt % 
                                (signame, 
-                                YN(sig_obj.stop_method  is not None),
+                                YN(sig_obj.b_stop),
                                 YN(sig_obj.print_method is not None),
                                 YN(sig_obj.print_stack),
                                 YN(sig_obj.pass_along),
@@ -357,6 +357,8 @@ class SignalManager:
                 self.handle_print(signame, on)
             elif 'pass'.startswith(attr):
                 self.handle_pass(signame, on)
+            elif 'ignore'.startswith(attr):
+                self.handle_ignore(signame, on)
             elif 'stack'.startswith(attr):
                 self.handle_print_stack(signame, on)
             else:
@@ -377,12 +379,12 @@ class SignalManager:
         If 'set_stop' is True your program will stop when this signal
         happens."""
         if set_stop:
-            self.sigs[signame].stop_method = self.dbgr.core.set_next
+            self.sigs[signame].b_stop       = True
             # stop keyword implies print AND nopass
             self.sigs[signame].print_method = self.dbgr.intf[-1].msg
             self.sigs[signame].pass_along   = False
         else:
-            self.sigs[signame].stop_method  = None
+            self.sigs[signame].b_stop       = False
             pass
         return set_stop
 
@@ -394,7 +396,7 @@ class SignalManager:
         self.sigs[signame].pass_along = set_pass
         if set_pass:
             # Pass implies nostop
-            self.sigs[signame].stop_method = None
+            self.sigs[signame].b_stop = False
             pass
         return set_pass
 
@@ -428,7 +430,7 @@ class SigHandler:
        pass_along: True is signal is to be passed to user's handler
     """
     def __init__(self, dbgr, signame, signum, old_handler,
-                 print_method, stop_method,
+                 print_method, b_stop,
                  print_stack=False, pass_along=True):
 
         self.dbgr         = dbgr
@@ -438,7 +440,7 @@ class SigHandler:
         self.print_stack  = print_stack
         self.signame      = signame
         self.signum       = signum
-        self.stop_method  = stop_method
+        self.b_stop       = b_stop
         return
 
     def handle(self, signum, frame):
@@ -454,14 +456,14 @@ class SigHandler:
                 self.print_method(s)
                 pass
             pass
-        if self.stop_method is not None:
-            ## FIXME not sure if this is really right
-            if frame.f_trace is None:
-                import dbgr
-                dbgr.debugger()
-            else:
-                self.stop_method(frame)
-                pass
+        if self.b_stop:
+            core = self.dbgr.core
+            old_trace_hook_suspend = core.trace_hook_suspend
+            core.trace_hook_suspend = True
+            core.stop_reason = ('intercepting signal %s (%d)' % 
+                                (self.signame, signum))
+            core.processor.event_processor(frame, 'signal', signum)
+            core.trace_hook_suspend = old_trace_hook_suspend
             pass
         if self.pass_along:
             # pass the signal to the program 

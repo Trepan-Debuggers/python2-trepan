@@ -97,8 +97,12 @@ def process_options(debugger_name, pkg_version, option_list=None):
                          help="Don't register this as a global debugger")
 
     optparser.add_option("--post-mortem", dest="post_mortem",
-                         action='store_false', default=True,
+                         action='store_true', default=True,
                          help="Enter debugger on an uncaught (fatal) exception")
+
+    optparser.add_option("--no-post-mortem", dest="post_mortem",
+                         action='store_false', default=True,
+                         help="Don't enter debugger on an uncaught (fatal) exception")
 
     optparser.add_option("-n", "--nx", dest="noexecute",
                          action="store_true", default=False, 

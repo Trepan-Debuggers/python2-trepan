@@ -9,6 +9,7 @@ of parameters.
 
 """
 import sys
+import pydbgr.api; 
 
 def check_args():
     if len(sys.argv) != 3:
@@ -29,9 +30,10 @@ def gcd(a,b):
        (a, b) = (b, a)
        
     if a <= 0:
+        pydbgr.api.debug(steps=0)
         return None
     if a == 1 or b-a == 0:
-        import pydbgr.api; pydbgr.api.debug()
+        pydbgr.api.debug()
         return a
     return gcd(b-a, a)
 

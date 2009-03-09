@@ -22,9 +22,10 @@ from optparse import OptionParser
 
 # Our local modules
 from import_relative import import_relative
+Mapi      = import_relative('api', top_name='pydbgr')
+Mclifns   = import_relative('clifns', top_name='pydbgr')
 Mdebugger = import_relative('debugger', top_name='pydbgr')
 Mexcept   = import_relative('except', top_name='pydbgr')
-Mclifns   = import_relative('clifns', top_name='pydbgr')
 Moutput   = import_relative('output', '.io', 'pydbgr')
 Mserver   = import_relative('server', '.interface', 'pydbgr')
 Mfile     = import_relative('file', '.lib', 'pydbgr')
@@ -94,6 +95,10 @@ def process_options(debugger_name, pkg_version, option_list=None):
     optparser.add_option("--private", dest="private",
                          action='store_true', default=False,
                          help="Don't register this as a global debugger")
+
+    optparser.add_option("--post-mortem", dest="post_mortem",
+                         action='store_false', default=True,
+                         help="Enter debugger on an uncaught (fatal) exception")
 
     optparser.add_option("-n", "--nx", dest="noexecute",
                          action="store_true", default=False, 
@@ -241,11 +246,9 @@ def _postprocess_options(dbg, opts):
 #     if opts.execute:
 #         dbg.cmdqueue = list(opts.execute.split(';;'))
 
-#     if opts.sigcheck:
-#         dbg.cmdqueue.insert(0, "set sigcheck on")
-#     else:
-#         dbg.cmdqueue.insert(0, "set sigcheck off")
-
+    if opts.post_mortem:
+        Mapi.debugger_on_post_mortem()
+        pass
     
     return 
 

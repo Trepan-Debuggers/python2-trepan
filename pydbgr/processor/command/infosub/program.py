@@ -71,10 +71,8 @@ class InfoProgram(Mbase_subcmd.DebuggerSubcommand):
                                              self.settings['width']))
             else:
                 self.msg('No Python program is currently running.')
-                msg = ''
                 pass
-            msg += self.core.execution_status
-            self.msg(msg)
+            self.msg(self.core.execution_status)
             pass
         return False
     pass

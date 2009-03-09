@@ -206,6 +206,7 @@ class CommandProcessor(Mbase_proc.Processor):
         self.postcmd_hooks  = []
 
         self._populate_cmd_lists()
+        self.prompt_str     = '(Pydbgr) '
 
         # Stop only if line/file is different from last time
         self.different_line = None
@@ -285,7 +286,7 @@ class CommandProcessor(Mbase_proc.Processor):
             pass
         return filename
 
-    def event_processor(self, frame, event, event_arg):
+    def event_processor(self, frame, event, event_arg, prompt='Pydbgr'):
         'command event processor: reading a commands do something with them.'
         self.frame     = frame
         self.event     = event
@@ -300,6 +301,7 @@ class CommandProcessor(Mbase_proc.Processor):
             if Mbytecode.is_class_def(line, frame):
                 return True
             pass
+        self.prompt_str = '(%s) ' % prompt
         self.process_commands()
         return True
 
@@ -543,7 +545,7 @@ class CommandProcessor(Mbase_proc.Processor):
             last_cmd = self.cmd_queue[0].strip()
             del self.cmd_queue[0]
         else:
-            last_cmd = self.intf[-1].read_command('(Pydbgr) ').strip()
+            last_cmd = self.intf[-1].read_command(self.prompt_str).strip()
             if '' == last_cmd and self.intf[-1].interactive: 
                 last_cmd = self.last_cmd
                 pass

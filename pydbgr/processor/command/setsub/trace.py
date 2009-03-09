@@ -23,20 +23,24 @@ short_help   = "Set execution tracing, delay and event set."
 
 class SetTrace(base_subcmd.DebuggerSubcommand):
 
-    """Set trace {on|off} [EVENT...]
+    """Set trace [on|off] [EVENT...]
 
 Turns line tracing on or off and/or the event mask to filter shown
 events. "all" can be used as an abbreviation for listing all event
 names. See the "step" command for a list of event names.
 
+Changing trace event filters works independently of turning on or off
+tracing-event printing.
+
 Examples: 
-  set trace on   # Turn on event tracing
-  set trace      # Same as above
-  set trace off  # Turn off event tracing 
-  set trace line # Set trace filter for line events only
-                 # on/off status doesn't change
-  set trace call return on # Trace calls and returns only
-  set trace all  # set trace filter to all events
+  set trace on     # Turn on event tracing. Trace filters are unchanged.
+  set trace        # Same as above.
+  set trace off    # Turn off event tracing. Trace filters are unchanged.
+  set trace line   # Set trace filter for line events only. On/off status 
+                   # doesn't change.
+  set trace call return on # Trace calls and returns only; turn on tracing.
+  set trace all    # Set trace filter to all events. On/off status unchanged.
+  set trace all on # Set trace filter to all events; turn on tracing.
 
 See also "show trace".
 """

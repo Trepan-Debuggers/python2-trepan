@@ -525,9 +525,10 @@ class CommandProcessor(Mbase_proc.Processor):
         '''
         if hasattr(cmd_obj, 'execution_set'):
             if not (self.core.execution_status in cmd_obj.execution_set):
-                self.errmsg(("Command '%s' is not available for " + 
-                                  'execution status: %s.') % 
-                                 (name, self.core.execution_status))
+                part1 = ("Command '%s' is not available for execution status:" 
+                         % name)
+                self.errmsg(Mmisc.wrapped_lines(part1, self.core.execution_status,
+                                                self.debugger.settings['width']))
                 return False
             pass
         if self.frame is None and cmd_obj.need_stack:

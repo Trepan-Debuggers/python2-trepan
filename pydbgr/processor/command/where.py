@@ -40,12 +40,9 @@ listing.
 
     def run(self, args):
         if len(args) > 1:
-            try:
-                count = Mcmdfns.get_pos_int(self.errmsg, args[1], default=None, 
-                                            cmdname="where")
-            except ValueError:
-                return False
-            pass
+            count = self.proc.get_pos_int(args[1], default=0, cmdname="where")
+            if count is None: return False
+            elif 0 == count: count = None
         else:
             count = None
             pass

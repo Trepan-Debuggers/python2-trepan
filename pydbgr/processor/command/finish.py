@@ -1,20 +1,18 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009 Rocky Bernstein
+#  Copyright (C) 2009 Rocky Bernstein
 #
-#    This program is free software; you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation; either version 2 of the License, or
-#    (at your option) any later version.
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
 #
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
-#    along with this program; if not, write to the Free Software
-#    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
-#    02110-1301 USA.
+#  You should have received a copy of the GNU General Public License
+#  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import sys
 from import_relative import import_relative
 
@@ -24,6 +22,20 @@ Mstack    = import_relative('stack', '...lib', 'pydbgr')
 Mcmdfns   = import_relative('cmdfns', top_name='pydbgr')
 
 class FinishCommand(Mbase_cmd.DebuggerCommand):
+    """finish [levels]
+
+Continue execution until leaving the current function. When `level' is
+specified, that many frame levels need to be popped. Note that 'yield'
+and exceptions raised my reduce the number of stack frames. Also, if a
+thread is switched, we stop ignoring levels.
+
+See the break command if you want to stop at a particular point in a
+program."""
+
+    # FIXME: add finish [levels|fn]
+    # If fn is given, that's a short-hand way of looking up how many levels
+    # until that frame. However the same provisions regarding stopping,
+    # exceptions, 'yield'ing and so on still apply.
 
     category      = 'running'
     execution_set = ['Running']
@@ -34,31 +46,13 @@ class FinishCommand(Mbase_cmd.DebuggerCommand):
     short_help   = 'Execute until selected stack frame returns'
 
     def run(self, args):
-        """finish [levels|fn]
-
-Continue execution until leaving the current function. When `level' is
-specified, that many frame levels need to be popped. Note that 'yield'
-and exceptions raised my reduce the number of stack frames. Also, if a
-thread is switched, we stop ignoring levels.
-
-If fn is given, that's a short-hand way of looking up how many levels
-until that frame. However the same provisions regarding stopping,
-exceptions, 'yeild'ing and so on still apply.
-
-See the break command if you want to stop at a particular point in a
-program."""
-
         if self.proc.stack is None: return False
         if len(args) <= 1:
             levels = 1
         else:
             max_levels = len(self.proc.stack)
-            try:
-                levels = Mcmdfns.get_pos_int(self.errmsg, args[1], default=1,
-                                             at_most = max_levels, 
-                                             cmdname='finish')
-            except ValueError:
-                return False
+            levels = self.proc.get_pos_int(args[1], default=1, cmdname='finish')
+            if levels is None: return False
             pass
 
         self.core.step_events      = ['return']

@@ -50,13 +50,11 @@ the debugger setting 'different-line' determines this behavior.
         if len(args) <= 1:
             step_ignore = 0
         else:
-            try:
-                # 0 means stop now or step 1, so we subtract 1.
-                step_ignore = cmdfns.get_pos_int(self.errmsg, args[1], 
-                                                 default=1,
-                                                 cmdname='step') - 1
-            except ValueError:
-                return False
+            step_ignore = self.proc.get_pos_int(args[1], default=1,
+                                                cmdname='next')
+            if step_ignore is None: return False
+            # 0 means stop now or step 1, so we subtract 1.
+            step_ignore -= 1
             pass
         self.core.different_line   = \
             cmdfns.want_different_line(args[0], 

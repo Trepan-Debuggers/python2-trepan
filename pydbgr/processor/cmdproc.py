@@ -465,6 +465,46 @@ class CommandProcessor(Mbase_proc.Processor):
             return None
         return val
 
+    def get_pos_int(self, arg, min_value=0, default=1, cmdname=None,
+                    at_most=None):
+        """Like cmdfns.get_pos_int(), but if there's a stack frame use that
+        in evaluation."""
+        if arg is None: return default
+        default = self.get_int_noerr(arg)
+        if default is None:
+            if cmdname:
+                self.errmsg(("Command '%s' expects a positive integer; "
+                             + "got: %s.") % (cmdname, str(arg)))
+            else:
+                self.errmsg(('Expecting a positive integer, '
+                               + "got: %s") % str(arg))
+                pass
+            return None
+            pass
+        if default < min_value:
+            if cmdname:
+                self.errmsg(("Command '%s' expects a positive " +
+                             'integer at least %d; got: %d.') 
+                            % (cmdname, min_value, default))
+            else: 
+                self.errmsg(("Expecting a positive " +
+                             'integer at least %d; got: %d')
+                            % (min_value, default))
+                pass
+            return None
+        elif at_most and default > at_most:
+            if cmdname:
+                self.errmsg(("Command '%s' expects a positive " +
+                             'integer at most %d; got: %d.') 
+                            % (cmdname, min_value, default))
+            else: 
+                self.errmsg(("Expecting a positive " +
+                             'integer at most %d; got: %d')
+                            % (min_value, default))
+                pass
+            pass
+        return default
+
     def getval(self, arg):
         try:
             return eval(arg, self.curframe.f_globals,

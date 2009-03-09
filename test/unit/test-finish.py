@@ -14,8 +14,7 @@ class TestFinishCommand(unittest.TestCase):
         """Test processor.command.finish.FinishCommand.run()"""
         d, cp = dbg_setup()
         command = Mfinish.FinishCommand(cp)
-        for c in ((['finish', 'wrong', 'number', 'of', 'args'], False),
-                  (['finish', '5'], False,),
+        for c in ((['finish', '5'], True,),
                   (['finish', '0*5+1'], True)):
             command.continue_running = False
             command.proc.stack = [(sys._getframe(0), 14,)]

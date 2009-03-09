@@ -66,6 +66,9 @@ class MockProcessor():
         self.last_cmd    = None
         self.stack       = []
         return
+    def get_pos_int(self, arg, min_value=0, default=1, cmdname=None,
+                    at_most=None):
+        return None
 
     def undefined_cmd(self, cmd):
         self.intf[-1].errmsg('Undefined mock command: "%s' % cmd)

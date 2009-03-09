@@ -43,7 +43,7 @@ class TestCommandHelper(unittest.TestCase):
         self.assertEqual(5, Mcmdfns.get_pos_int(self.errmsg, None, 0, 5))
         self.assertRaises(ValueError, Mcmdfns.get_pos_int, 
                           *(self.errmsg, 'Foo', 5,))
-        self.assertRaises(ValueError, Mcmdfns.get_pos_int, 
+        self.assertRaises(ZeroDivisionError, Mcmdfns.get_pos_int, 
                           *(self.errmsg, '1', 2, 5,))
         return
 

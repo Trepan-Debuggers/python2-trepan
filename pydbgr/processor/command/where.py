@@ -40,7 +40,7 @@ listing.
 
     def run(self, args):
         if len(args) > 1:
-            count = self.proc.get_pos_int(args[1], default=0, cmdname="where")
+            count = self.proc.get_int(args[1], default=0, cmdname="where")
             if count is None: return False
             elif 0 == count: count = None
         else:

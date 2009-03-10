@@ -465,8 +465,8 @@ class CommandProcessor(Mbase_proc.Processor):
             return None
         return val
 
-    def get_pos_int(self, arg, min_value=0, default=1, cmdname=None,
-                    at_most=None):
+    def get_int(self, arg, min_value=0, default=1, cmdname=None,
+                at_most=None):
         """Like cmdfns.get_pos_int(), but if there's a stack frame use that
         in evaluation."""
         if arg is None: return default

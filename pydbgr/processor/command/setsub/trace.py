@@ -16,67 +16,22 @@
 
 import tracer
 from import_relative import *
-base_subcmd  = import_relative('base_subcmd', '..')
-cmdfns       = import_relative('cmdfns', '..')
-short_help   = "Set execution tracing, delay and event set."
+Mbase_subcmd  = import_relative('base_subcmd', '..', 'pydbgr')
 
 
-class SetTrace(base_subcmd.DebuggerSubcommand):
+class SetTrace(Mbase_subcmd.DebuggerSetBoolSubcommand):
 
-    """Set trace [on|off] [EVENT...]
+    """Set trace [on|off]
 
-Turns line tracing on or off and/or the event mask to filter shown
-events. "all" can be used as an abbreviation for listing all event
-names. See the "step" command for a list of event names.
+Turns event tracing on or off.
 
-Changing trace event filters works independently of turning on or off
-tracing-event printing.
-
-Examples: 
-  set trace on     # Turn on event tracing. Trace filters are unchanged.
-  set trace        # Same as above.
-  set trace off    # Turn off event tracing. Trace filters are unchanged.
-  set trace line   # Set trace filter for line events only. On/off status 
-                   # doesn't change.
-  set trace call return on # Trace calls and returns only; turn on tracing.
-  set trace all    # Set trace filter to all events. On/off status unchanged.
-  set trace all on # Set trace filter to all events; turn on tracing.
-
-See also "show trace".
+See also "set traceset","set trace", and "show trace".
 """
 
+    short_help = "Set execution tracing, delay and event set."
     in_list    = True
-    min_abbrev = 2  # Must use at least "set tr"
-    short_help = "Set execution tracing and trace filter"
-
-    def run(self, args):
-        if 0 == len(args): args = ['on']
-        valid_args = tracer.ALL_EVENT_NAMES + ('on', 'off', 'all')
-        on_off = None
-        eventset = []
-        for arg in args:
-            if arg not in valid_args:
-                self.errmsg('set trace: Invalid argument %s ignored.' % arg)
-                continue
-            if arg in tracer.ALL_EVENTS:
-                eventset += [arg]
-            elif 'all' == arg:
-                eventset += tracer.ALL_EVENTS
-            elif on_off is not None:
-                self.errmsg('set trace: Duplicate on/off value %s ignored.' 
-                            % arg)
-            else:
-                on_off = arg
-                pass
-            pass
-        if [] != eventset:
-            self.debugger.settings['printset'] = frozenset(eventset)
-            pass
-        if on_off is not None:
-            cmdfns.run_set_bool(self, [on_off])
-            pass
-        return
-
+    min_abbrev = 5  # Must use at least "set trace"
+    short_help = "Set execution tracing"
     pass
 
 if __name__ == '__main__':
@@ -86,10 +41,8 @@ if __name__ == '__main__':
     s = Mset.SetCommand(cp)
     sub = SetTrace(s)
     sub.name = 'trace'
-    for args in (['on'], ['off'], ['line'], ['bogus'],
-                ['on', 'call', 'return']):
+    for args in (['on'], ['off']):
         sub.run(args)
-        print d.settings['printset']
         print d.settings['trace']
         pass
     pass

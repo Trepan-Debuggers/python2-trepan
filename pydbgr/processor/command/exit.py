@@ -1,27 +1,31 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009 Rocky Bernstein
+#  Copyright (C) 2009 Rocky Bernstein
 #
-#    This program is free software; you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation; either version 2 of the License, or
-#    (at your option) any later version.
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
 #
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
-#    along with this program; if not, write to the Free Software
-#    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
-#    02110-1301 USA.
+#  You should have received a copy of the GNU General Public License
+#  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from import_relative import import_relative
 
 # Our local modules
 Mbase_cmd  = import_relative('base_cmd', top_name='pydbgr')
-Mcmdfns   = import_relative('cmdfns', top_name='pydbgr')
+Mcmdfns    = import_relative('cmdfns', top_name='pydbgr')
 
 class ExitCommand(Mbase_cmd.DebuggerCommand):
+    """exit [exitcode] - hard exit of the debugged program.  
+
+The program being debugged is exited via sys.exit(). If a return code
+is given that is the return code passed to sys.exit() - presumably the
+return code that will be passed back to the OS."""
+
 
     category      = 'support'
     min_args      = 0
@@ -31,26 +35,17 @@ class ExitCommand(Mbase_cmd.DebuggerCommand):
     short_help    = 'Exit program via sys.exit()'
 
     def run(self, args):
-        """exit [exitcode] - hard exit of the debugged program.  
-
-The program being debugged is exited via sys.exit(). If a return code
-is given that is the return code passed to sys.exit() - presumably the
-return code that will be passed back to the OS."""
-
         self.core.stop()
         self.core.execution_status = 'Exit command'
         if len(args) <= 1:
-            exitcode = 0
+            exit_code = 0
         else:
-            try:
-                exitcode = Mcmdfns.get_pos_int(self.errmsg, args[1], default=0,
-                                               cmdname='exit')
-            except ValueError:
-                return False
+            exit_code = self.proc.get_int(args[1], default=0, cmdname='exit')
+            if exit_code is None: return False
             pass
         # FIXME: allow setting a return code.
         import sys
-        sys.exit(exitcode)
+        sys.exit(exit_code)
         # Not reached
         return True
 

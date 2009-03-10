@@ -18,8 +18,8 @@ from import_relative import import_relative
 
 # Our local modules
 Mbase_cmd  = import_relative('base_cmd', top_name='pydbgr')
-Mstack    = import_relative('stack', '...lib', 'pydbgr')
-Mcmdfns   = import_relative('cmdfns', top_name='pydbgr')
+Mstack     = import_relative('stack', '...lib', 'pydbgr')
+Mcmdfns    = import_relative('cmdfns', top_name='pydbgr')
 
 class FinishCommand(Mbase_cmd.DebuggerCommand):
     """finish [levels]
@@ -51,7 +51,7 @@ program."""
             levels = 1
         else:
             max_levels = len(self.proc.stack)
-            levels = self.proc.get_pos_int(args[1], default=1, cmdname='finish')
+            levels = self.proc.get_int(args[1], default=1, cmdname='finish')
             if levels is None: return False
             pass
 

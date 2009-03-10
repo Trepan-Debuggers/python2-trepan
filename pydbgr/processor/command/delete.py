@@ -48,12 +48,9 @@ number.."""
             return
 
         for arg in args[1:]:
-            try:
-                i = self.get_pos_int(self.errmsg, arg, min_value=1, 
-                                     default=None,
-                                     cmdname='delete')
-            except ValueError:
-                continue
+            i = self.proc.get_int(arg, min_value=1, default=None,
+                                  cmdname='delete')
+            if i is None: continue
 
             success, msg = self.core.bpmgr.delete_breakpoint_by_number(i)
             if not success:

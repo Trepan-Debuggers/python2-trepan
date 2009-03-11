@@ -32,12 +32,12 @@ class FIFOServer(Mbase_io.DebuggerInOutBase):
                                                   self.DEFAULT_INIT_OPTS)
         atexit.register(self.close)
         self.flush_after_write = True
-        self.lineedit = False # Our name for GNU readline capability
-        self.in_name  = None  # String: input file name
-        self.input    = None  # File Descriptor
-        self.out_name = None  # String: output file name
-        self.output   = None  # String: output file name
-        self.state    = 'disconnected'
+        self.line_edit = False # Our name for GNU readline capability
+        self.in_name   = None  # String: input file name
+        self.input     = None  # File Descriptor
+        self.out_name  = None  # String: output file name
+        self.output    = None  # String: output file name
+        self.state     = 'disconnected'
         if get_option('open'):
             self.open(opts)
             pass

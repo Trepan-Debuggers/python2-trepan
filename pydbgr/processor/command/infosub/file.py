@@ -13,18 +13,12 @@
 #
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import columnize, inspect, os, pyficache, sys
+import columnize, inspect, pyficache, sys
 
-from import_relative import *
+from import_relative import import_relative
 # Our local modules
 Mbase_subcmd  = import_relative('base_subcmd', '..', 'pydbgr')
 Mmisc         = import_relative('misc', '....', 'pydbgr')
-
-try:
-    import coverage
-except:
-    coverage = None
-    pass
 
 class InfoFile(Mbase_subcmd.DebuggerSubcommand):
     '''info file [filename [all | lines | sha1 | size]]

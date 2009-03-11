@@ -1,21 +1,19 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009 Rocky Bernstein
+#  Copyright (C) 2009 Rocky Bernstein
 #
-#    This program is free software; you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation; either version 2 of the License, or
-#    (at your option) any later version.
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
 #
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
-#    along with this program; if not, write to the Free Software
-#    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
-#    02110-1301 USA.
-import sys
+#  You should have received a copy of the GNU General Public License
+#  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+import code, sys
 
 # Our local modules
 from import_relative import import_relative
@@ -28,7 +26,7 @@ Mmisc      = import_relative('misc', '...', 'pydbgr')
 class PythonCommand(Mbase_cmd.DebuggerCommand):
     """python
 
-Run python as a command subshell.
+Run Python as a command subshell.
 """
 
     category      = 'support'
@@ -40,43 +38,104 @@ Run python as a command subshell.
 
     def run(self, args):
         # See if python's code module is around
-        try:
-            from code import interact
-        except ImportError:
-            self.msg("python code doesn't seem to be importable.")
-            return
 
-#         # Python does it's own history thing.
-#         # Make sure it doesn't damage ours.
-#         if hasattr(self, 'readline') and self.readline:
+        # Python does it's own history thing.
+        # Make sure it doesn't damage ours.
+        have_line_edit = self.debugger.intf[-1].input.line_edit
+        if have_line_edit:
+            # FIXME: complete
+            pass 
 #             try:
 #                 self.debugger.write_history_file()
 #             except IOError:
 #                 pass
 
-        local = None
+        my_locals  = None
+        my_globals = None
         if self.proc.curframe:
+            my_globals = self.proc.curframe.f_globals
             if self.proc.curframe.f_locals:
-                local = dict(self.proc.curframe.f_locals)
-                local.update(self.proc.curframe.f_globals)
-            else:
-                local = self.proc.curframe.f_globals
+                my_locals = self.proc.curframe.f_locals
+                pass
             pass
 
-        if local:
-            interact(banner='Pydb python shell (with locals)', local=local)
+        if my_locals:
+            interact(banner='Pydbgr python shell (with locals)', 
+                     my_locals=my_locals, my_globals=my_globals)
         else:
-            interact(banner='Pydb python shell')
+            interact(banner='Pydbgr python shell')
             pass
 
-#         # restore our history if we can do so.
-#         if hasattr(self, 'readline') and self.readline and self.histfile is not none:
+        # restore our history if we can do so.
+        if have_line_edit:
+            # FIXME: complete
+            pass
 #             try:
 #                 self.readline.read_history_file(self.histfile)
 #             except ioerror:
 #                 pass
 #             return
         return
+    pass
+
+
+# Monkey-patched from code.py
+# FIXME: get changes into Python.
+def interact(banner=None, readfunc=None, my_locals=None, my_globals=None):
+    """Almost a copy of code.interact
+    Closely emulate the interactive Python interpreter.
+
+    This is a backwards compatible interface to the InteractiveConsole
+    class.  When readfunc is not specified, it attempts to import the
+    readline module to enable GNU readline if it is available.
+
+    Arguments (all optional, all default to None):
+
+    banner -- passed to InteractiveConsole.interact()
+    readfunc -- if not None, replaces InteractiveConsole.raw_input()
+    local -- passed to InteractiveInterpreter.__init__()
+
+    """
+    console = code.InteractiveConsole(my_locals, filename='<pydbgr>')
+    console.runcode = lambda code_obj: runcode(console, code_obj)
+    setattr(console, 'globals', my_globals)
+    if readfunc is not None:
+        console.raw_input = readfunc
+    else:
+        try:
+            import readline
+        except ImportError:
+            pass
+    console.interact(banner)
+    pass
+
+# Also monkey-patched from code.py
+# FIXME: get changes into Python.
+def runcode(obj, code_obj):
+    """Execute a code object.
+    
+    When an exception occurs, self.showtraceback() is called to
+    display a traceback.  All exceptions are caught except
+    SystemExit, which is reraised.
+    
+    A note about KeyboardInterrupt: this exception may occur
+    elsewhere in this code, and may not always be caught.  The
+    caller should be prepared to deal with it.
+    
+    """
+    try:
+        exec code_obj in obj.locals, obj.globals
+    except SystemExit:
+        raise
+    except:
+        obj.showtraceback()
+    else:
+        if code.softspace(sys.stdout, 0):
+            print
+            pass
+        pass
+    return
+
 
 if __name__ == '__main__':
     Mdebugger = import_relative('debugger', '...')

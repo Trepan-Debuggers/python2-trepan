@@ -34,7 +34,7 @@ class FIFOClient(Mbase_io.DebuggerInOutBase):
         self.flush_after_write = True
         self.input  = None
         self.output = None
-        self.lineedit = False # Our name for GNU readline capability
+        self.line_edit = False # Our name for GNU readline capability
         self.state    = 'disconnected'
         open_pid = get_option('open')
         if open_pid:

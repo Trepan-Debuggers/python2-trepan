@@ -19,7 +19,7 @@
 # configuration stuff in the middle of a function call in setup.py,
 # which for example requires commas in between parameters, is a little
 # less elegant than having it here with reduced code, albeit there
-# still is some.
+# still is some room for improvement.
 
 # Things that change more often go here.
 copyright   = '''Copyright (C) 2008, 2009 Rocky Bernstein <rocky@gnu.org>.'''
@@ -37,8 +37,10 @@ classifiers =  ['Development Status :: 5 - Alpha',
 author             = "Rocky Bernstein"
 author_email       = "rocky@gnu.org"
 ftp_url            = None
-install_requires   = ['columnize', 'coverage', 'import_relative', 
-                      'pyficache', 'tracer']
+install_requires   = ['columnize >= 0.3.2', 
+                      'import_relative >= 0.1.0',
+                      'pyficache >= 0.1.0',  # or 0.1.1?
+                      'tracer >= 0.2.2']
 license            = 'GPL'
 mailing_list       = None
 modname            = 'pydbgr'

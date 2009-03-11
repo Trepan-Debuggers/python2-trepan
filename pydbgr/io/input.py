@@ -35,8 +35,8 @@ class DebuggerUserInput(Mbase_io.DebuggerInputBase):
     interative terminal, but it might be file input."""
 
     def __init__(self, inp=None, opts=None):
-        self.input    = inp or sys.stdin
-        self.lineedit = None # Our name for GNU readline capability
+        self.input     = inp or sys.stdin
+        self.line_edit = None # Our name for GNU readline capability
         self.open(self.input, opts)
         return
 
@@ -77,8 +77,8 @@ class DebuggerUserInput(Mbase_io.DebuggerInputBase):
         else:
             raise IOError, ("Invalid input type (%s) for %s" % (type(inp), 
                                                                 inp))
-        self.input    = inp
-        self.lineedit = get_option('try_readline') and readline_importable()
+        self.input     = inp
+        self.line_edit = get_option('try_readline') and readline_importable()
         return
 
     def readline(self, use_raw=None):

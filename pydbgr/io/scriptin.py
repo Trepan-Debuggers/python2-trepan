@@ -26,9 +26,9 @@ class ScriptInput(Mbase_io.DebuggerInputBase):
 
     def __init__(self, inp, opts=None):
 
-        self.input    = None
-        self.lineedit = False # Our name for GNU readline capability
-        self.name     = None
+        self.input     = None
+        self.line_edit = False # Our name for GNU readline capability
+        self.name      = None
         self.open(inp, opts)
         return
 

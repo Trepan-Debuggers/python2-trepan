@@ -59,11 +59,13 @@ try:
 
             # IPython does it's own history thing.
             # Make sure it doesn't damage ours.
-#             if self.readline:
-#                 try:
-#                     self.write_history_file()
-#                 except IOError:
-#                     pass
+            have_line_edit = self.debugger.intf[-1].input.line_edit
+            if have_line_edit:
+                try:
+                    self.proc.write_history_file()
+                except IOError:
+                    pass
+                pass
 
             if user_ns:
                 ipshell = IPython.Shell.IPShellEmbed(argv=argv, user_ns=user_ns)

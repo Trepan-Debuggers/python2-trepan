@@ -72,6 +72,12 @@ DEBUGGER_SETTINGS = {
     # file/line positions.
     'different'     : True,
 
+    # Save debugger history?
+    'hist_save'     : False,
+
+    # Where do we save the history?
+    'histfile'     : None,
+
     # Show function calls/returns?
     'fntrace'       : False,
 

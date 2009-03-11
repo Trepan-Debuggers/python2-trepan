@@ -43,12 +43,11 @@ Run Python as a command subshell.
         # Make sure it doesn't damage ours.
         have_line_edit = self.debugger.intf[-1].input.line_edit
         if have_line_edit:
-            # FIXME: complete
-            pass 
-#             try:
-#                 self.debugger.write_history_file()
-#             except IOError:
-#                 pass
+            try:
+                self.proc.write_history_file()
+            except IOError:
+                pass
+            pass
 
         my_locals  = None
         my_globals = None
@@ -68,7 +67,6 @@ Run Python as a command subshell.
 
         # restore our history if we can do so.
         if have_line_edit:
-            # FIXME: complete
             pass
 #             try:
 #                 self.readline.read_history_file(self.histfile)

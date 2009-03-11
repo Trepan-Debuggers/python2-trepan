@@ -695,6 +695,21 @@ class CommandProcessor(Mbase_proc.Processor):
         self.errmsg('Undefined command: "%s". Try "help".' % cmd)
         return
 
+    def write_history_file(self):
+        """Write the command history file -- possibly."""
+        settings = self.debugger.settings
+        if settings['hist_save']:
+            try:
+                import readline
+                try:
+                    readline.write_history_file(settings['histfile'])
+                except IOError:
+                    pass
+            except ImportError:
+                pass
+            pass
+        return
+
     def _populate_commands(self):
         """ Create an instance of each of the debugger
         commands. Commands are found by importing files in the

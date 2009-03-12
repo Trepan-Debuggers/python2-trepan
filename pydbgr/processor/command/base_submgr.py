@@ -58,7 +58,7 @@ class SubcommandMgr(base_cmd.DebuggerCommand):
 
         # Iniitialization
         cmd_instances     = []
-        module_dir        = name + 'sub'
+        module_dir        = name + '_subcmd'
         class_prefix      = string.capitalize(name) # e.g. Info, Set, or Show
         mod               = import_relative(module_dir)
         eval_cmd_template = 'command_mod.%s(self)'

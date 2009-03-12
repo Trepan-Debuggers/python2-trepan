@@ -732,7 +732,7 @@ class CommandProcessor(Mbase_proc.Processor):
         srcdir = get_srcdir()
         sys.path.insert(0, srcdir)
         for mod_name in command.__modules__:
-            if mod_name in ('showsub', 'infosub', 'setsub'):
+            if mod_name in ('info_sub', 'set_sub', 'show_sub',):
                 pass
             import_name = "command." + mod_name
             command_mod = getattr(__import__(import_name), mod_name)

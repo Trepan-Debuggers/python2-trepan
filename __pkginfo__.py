@@ -51,9 +51,10 @@ namespace_packages = [
     'pydbgr.lib',
     'pydbgr.processor',
     'pydbgr.processor.command',
-    'pydbgr.processor.command.infosub',
-    'pydbgr.processor.command.setsub',
-    'pydbgr.processor.command.showsub'
+    'pydbgr.processor.command.ipython_magic',
+    'pydbgr.processor.command.info_subcmd',
+    'pydbgr.processor.command.set_subcmd',
+    'pydbgr.processor.command.show_subcmd'
 ]
 packages           = namespace_packages
 py_modules         = None

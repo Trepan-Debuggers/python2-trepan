@@ -27,6 +27,8 @@ Mmisc      = import_relative('misc', '...', 'pydbgr')
 
 try:
     import IPython
+    ip = IPython.ipapi.get()
+
     class IPythonCommand(Mbase_cmd.DebuggerCommand):
         """ipython [-d] [ipython-arg1 ipython-arg2 ...]
 

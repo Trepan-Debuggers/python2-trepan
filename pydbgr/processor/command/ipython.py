@@ -34,8 +34,7 @@ try:
 Run IPython as a command subshell. You need to have ipython installed
 for this command to work. If no IPython options are given, the
 following options are passed: 
-   -noconfirm_exit -prompt_in1 'Pydbgr In
-[\#]: '
+   -noconfirm_exit -prompt_in1 'Pydbgr In [\#]: '
 
 If -d is passed you can access debugger state via local variable "debugger".
 Debugger commands like are installed as IPython magic commands, e.g.

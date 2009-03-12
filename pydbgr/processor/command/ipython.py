@@ -112,7 +112,7 @@ ip.expose_magic("%s", ipy_%s)"""
 
             ipshell()
 #             # Restore our history if we can do so.
-#             if self.readline and self.histfile is not None:
+#             if have_line_edit and self.histfile is not None:
 #                 try:
 #                     self.readline.read_history_file(self.histfile)
 #                 except IOError:

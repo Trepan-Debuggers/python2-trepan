@@ -109,7 +109,12 @@ if __name__ == '__main__':
     command.proc.frame = sys._getframe()
     command.proc.setup()
     if len(sys.argv) > 1:
-        print "Type IPython commands and exit to quit"
-        print command.run(['ipython'])
+        print "Type IPython commands; exit() or EOF (Ctrl-D) quits."
+        if sys.argv[1] == '-d':
+            argv  = sys.argv[1:]
+        else:
+            argv  = sys.argv[2:]
+            pass
+        print command.run(['ipython'] + argv)
         pass
     pass

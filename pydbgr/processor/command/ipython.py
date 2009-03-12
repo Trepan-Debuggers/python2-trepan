@@ -28,25 +28,32 @@ Mmisc      = import_relative('misc', '...', 'pydbgr')
 try:
     import IPython
     class IPythonCommand(Mbase_cmd.DebuggerCommand):
-        """ipython
+        """ipython [-d] [ipython-arg1 ipython-arg2 ...]
 
-    Run ipython as a command subshell. You need to have ipython installed
-    for this command to work. If no ipython options are
-    given the following options are passed: 
-      -noconfirm_exit -prompt_in1 'Pydbgr In [\#]: '
-    """
+Run ipython as a command subshell. You need to have ipython installed
+for this command to work. If no IPython options are given the
+following options are passed: 
+   -noconfirm_exit -prompt_in1 'Pydbgr In
+[\#]: '
 
+If -d is passed you can access debugger state via local variable "debugger".
+"""
         category      = 'support'
         min_args      = 0
-        max_args      = 0
+        max_args      = None
         name_aliases  = ('ipython', 'ipy')
         need_stack    = False
-        short_help    = 'Run ipython as a command subshell'
+        short_help    = 'Run IPython as a command subshell'
 
         def run(self, args):
 
+            debug = False
             if len(args) > 1:
-                argv = args[1:]
+                if args[1] == '-d':
+                    debug = True
+                    argv  = args[2:]
+                else:
+                    argv  = args[1:]
             else:
                 argv = ['-noconfirm_exit','-prompt_in1', 'Pydbgr In [\\#]: ']
                 pass
@@ -56,10 +63,6 @@ try:
             else:
                 user_ns = {}
                 pass
-
-            # Give ipython and the user a way to get access to the debugger
-            # setattr(ipshell, 'debugger', self.debugger)
-            user_ns['debugger'] = self.debugger
 
             # IPython does it's own history thing.
             # Make sure it doesn't damage ours.
@@ -71,12 +74,15 @@ try:
                     pass
                 pass
 
-            if user_ns:
+            if len(user_ns):
                 ipshell = IPython.Shell.IPShellEmbed(argv=argv, user_ns=user_ns)
             else:
                 ipshell = IPython.Shell.IPShellEmbed(argv=argv)
                 pass
 
+            # Give ipython and the user a way to get access to the debugger
+            setattr(ipshell, 'debugger', self.debugger)
+            if debug: user_ns['debugger'] = self.debugger
 
             if hasattr(ipshell.IP, "magic_pydbgr"):
                 # We get an infinite loop when doing recursive edits

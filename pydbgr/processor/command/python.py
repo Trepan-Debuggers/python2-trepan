@@ -24,17 +24,19 @@ Mcmdfns    = import_relative('cmdfns', top_name='pydbgr')
 Mmisc      = import_relative('misc', '...', 'pydbgr')
 
 class PythonCommand(Mbase_cmd.DebuggerCommand):
-    """python
+    """python [-d]
 
 Run Python as a command subshell.
+
+If -d is passed you can access debugger state via local variable "debugger".
 """
 
     category      = 'support'
     min_args      = 0
-    max_args      = 0
+    max_args      = 1
     name_aliases  = ('python', 'py')
     need_stack    = False
-    short_help    = 'Run python as a command subshell'
+    short_help    = 'Run Python as a command subshell'
 
     def run(self, args):
         # See if python's code module is around
@@ -49,6 +51,8 @@ Run Python as a command subshell.
                 pass
             pass
 
+        debug = len(args) > 1 and args[1] == '-d'
+
         my_locals  = {}
         my_globals = None
         if self.proc.curframe:
@@ -59,9 +63,9 @@ Run Python as a command subshell.
             pass
 
         # Give python and the user a way to get access to the debugger.
-        my_locals['debugger'] = self.debugger
+        if debug: my_locals['debugger'] = self.debugger
 
-        if my_locals:
+        if len(my_locals):
             interact(banner='Pydbgr python shell (with locals)', 
                      my_locals=my_locals, my_globals=my_globals)
         else:
@@ -145,7 +149,12 @@ if __name__ == '__main__':
     command.proc.frame = sys._getframe()
     command.proc.setup()
     if len(sys.argv) > 1:
-        print "Type Python commands and exit to quit"
-        print command.run(['python'])
+        print "Type Python commands and exit to quit."
+        print sys.argv[1]
+        if sys.argv[1] == '-d':
+            print command.run(['python', '-d'])
+        else:
+            print command.run(['python'])
+            pass
         pass
     pass

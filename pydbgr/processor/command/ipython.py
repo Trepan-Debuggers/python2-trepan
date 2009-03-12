@@ -15,19 +15,18 @@
 #    along with this program; if not, write to the Free Software
 #    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 #    02110-1301 USA.
-import inspect, os, pyficache, sys, threading
+import sys
 
 # Our local modules
-from import_relative import *
+from import_relative import import_relative
 
 import_relative('lib', '...', 'pydbgr')
 Mbase_cmd  = import_relative('base_cmd', top_name='pydbgr')
-Mcmdfns    = import_relative('cmdfns', top_name='pydbgr')
 Mmisc      = import_relative('misc', '...', 'pydbgr')
 
 try:
     import IPython
-    ip = IPython.ipapi.get()
+    from IPython.genutils import arg_split
 
     class IPythonCommand(Mbase_cmd.DebuggerCommand):
         """ipython [-d] [ipython-arg1 ipython-arg2 ...]
@@ -90,6 +89,21 @@ If -d is passed you can access debugger state via local variable "debugger".
                 # We get an infinite loop when doing recursive edits
                 self.msg("Removing magic %pydbgr")
                 delattr(ipshell.IP, "magic_pydbgr")
+                pass
+
+            # FIXME: generalize to use commands in the ipython_magic directory.
+            # For now set up a single magic 
+            ip = IPython.ipapi.get()
+
+            def ipy_list(self, args):
+                argv = arg_split(args)
+                proc = ipshell.debugger.core.processor
+                list_cmd = proc.name2cmd['list']
+                list_cmd.run(['list'] + argv)
+                return
+
+            ip.expose_magic("l", ipy_list)
+
             ipshell()
 #             # Restore our history if we can do so.
 #             if self.readline and self.histfile is not None:

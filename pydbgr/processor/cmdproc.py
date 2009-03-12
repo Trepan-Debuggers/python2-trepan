@@ -727,11 +727,11 @@ class CommandProcessor(Mbase_proc.Processor):
         DebuggerCommand class instances form set of possible debugger
         commands."""
         cmd_instances = []
-        command = import_relative('command')
+        Mcommand = import_relative('command')
         eval_cmd_template = 'command_mod.%s(self)'
         srcdir = get_srcdir()
         sys.path.insert(0, srcdir)
-        for mod_name in command.__modules__:
+        for mod_name in Mcommand.__modules__:
             if mod_name in ('info_sub', 'set_sub', 'show_sub',):
                 pass
             import_name = "command." + mod_name

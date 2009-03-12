@@ -96,18 +96,22 @@ Debugger commands like are installed as IPython magic commands, e.g.
             # FIXME: generalize to use commands in the ipython_magic directory.
             # For now set up a single magic 
             ip = IPython.ipapi.get()
-            template="""
+            magic_fn_template="""
 def ipy_%s(self, args):
    argv = arg_split(args)
    proc = ipshell.debugger.core.processor
    cmd = proc.name2cmd['%s']
    cmd.run(['%s'] + argv)
    return
-ip.expose_magic("%s", ipy_%s)"""
-            for name in self.proc.name2cmd.keys():
-                tup = (name,) * 5
-                cmd = (template % tup)
+"""
+            expose_magic_template = 'ip.expose_magic("%s", ipy_%s)'
+            for cmd_instance in self.proc.cmd_instances:
+                name = cmd_instance.name_aliases[0]
+                cmd = magic_fn_template % ((name,) * 3)
                 exec cmd
+                for alias in cmd_instance.name_aliases:
+                    cmd = expose_magic_template % (alias, name)
+                    exec cmd
                 pass
 
             ipshell()

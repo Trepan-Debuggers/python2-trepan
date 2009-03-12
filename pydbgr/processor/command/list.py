@@ -28,7 +28,6 @@ Mfile     = import_relative('file', '...lib', 'pydbgr')
 class ListCommand(Mbase_cmd.DebuggerCommand):
     """list [MODULE] [FIRST [NUM]]
 list LOCATION [NUM]
-list -
 
 List source code. 
 
@@ -47,6 +46,8 @@ A LOCATION is a either
   - a module, e.g. os or os.path
   - a filename, colon, and a number, e.g. foo.py:5,  
   - or a module name and a number, e.g,. os.path:5.  
+  - a '.' for the current line number
+  - a '-' for the lines before the current linenumber
 
 If the location form is used with a subsequent parameter, the
 parameter is the starting line number and LISTSIZE lines are
@@ -68,6 +69,8 @@ list os.path 5 6  # list lines 5 and 6 of os.path
 list os.path 5 2  # Same as above, since 2 < 5.
 list foo.py:5 2   # List two lines starting from line 5 of foo.py
 list os.path.join # List lines around the os.join.path function.
+list .            # List lines centered from where we currently are stopped
+list -            # List lines previous to those just shown
 
 LISTSIZE is the current debugger listsize setting. Use 'set listize'
 or 'show listsize' to see or set the value.
@@ -106,6 +109,8 @@ or 'show listsize' to see or set the value.
         if len(args) > 0:
             if args[0] == '-':
                 first = max(1, self.proc.list_lineno - 2*listsize - 1)
+            elif args[0] == '.':
+                first = max(1, inspect.getlineno(curframe) - listsize/2)
             else:
                 (modfunc, filename, first) = self.proc.parse_position(args[0])
                 if first == None and modfunc == None:
@@ -219,7 +224,10 @@ if __name__ == '__main__':
     print '--' * 10
     command.run(['list'])
     print '--' * 10
+    command.run(['list', '.'])
+    print '--' * 10
     command.run(['list', '10'])
+    print '--' * 10
     command.run(['list', '1000'])
     def foo():
         return 'bar'

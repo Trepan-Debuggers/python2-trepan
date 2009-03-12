@@ -31,13 +31,15 @@ try:
     class IPythonCommand(Mbase_cmd.DebuggerCommand):
         """ipython [-d] [ipython-arg1 ipython-arg2 ...]
 
-Run ipython as a command subshell. You need to have ipython installed
-for this command to work. If no IPython options are given the
+Run IPython as a command subshell. You need to have ipython installed
+for this command to work. If no IPython options are given, the
 following options are passed: 
    -noconfirm_exit -prompt_in1 'Pydbgr In
 [\#]: '
 
 If -d is passed you can access debugger state via local variable "debugger".
+Debugger commands like are installed as IPython magic commands, e.g.
+%list, %up, %where.
 """
         category      = 'support'
         min_args      = 0
@@ -75,6 +77,7 @@ If -d is passed you can access debugger state via local variable "debugger".
                     pass
                 pass
 
+            global ipshell
             if len(user_ns):
                 ipshell = IPython.Shell.IPShellEmbed(argv=argv, user_ns=user_ns)
             else:
@@ -94,15 +97,19 @@ If -d is passed you can access debugger state via local variable "debugger".
             # FIXME: generalize to use commands in the ipython_magic directory.
             # For now set up a single magic 
             ip = IPython.ipapi.get()
-
-            def ipy_list(self, args):
-                argv = arg_split(args)
-                proc = ipshell.debugger.core.processor
-                list_cmd = proc.name2cmd['list']
-                list_cmd.run(['list'] + argv)
-                return
-
-            ip.expose_magic("l", ipy_list)
+            template="""
+def ipy_%s(self, args):
+   argv = arg_split(args)
+   proc = ipshell.debugger.core.processor
+   cmd = proc.name2cmd['%s']
+   cmd.run(['%s'] + argv)
+   return
+ip.expose_magic("%s", ipy_%s)"""
+            for name in self.proc.name2cmd.keys():
+                tup = (name,) * 5
+                cmd = (template % tup)
+                exec cmd
+                pass
 
             ipshell()
 #             # Restore our history if we can do so.

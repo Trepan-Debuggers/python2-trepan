@@ -256,14 +256,14 @@ def _postprocess_options(dbg, opts):
     
     return 
 
-def main(dbg=None):
+def main(dbg=None, sys_argv=list(sys.argv)):
     """Routine which gets run if we were invoked directly"""
     global __title__
 
     # Save the original just for use in the restart that works via exec.
-    orig_sys_argv = list(sys.argv)   
+    sys_argv = list(sys.argv)   
     opts, dbg_opts  = process_options(__title__, __version__)
-    dbg_opts['orig_sys_argv'] = orig_sys_argv
+    dbg_opts['orig_sys_argv'] = sys_argv
 
     if dbg is None:
         dbg = Mdebugger.Debugger(dbg_opts)
@@ -354,7 +354,7 @@ def main(dbg=None):
         pass
 
     # Restore old sys.argv
-    sys.argv = orig_sys_argv
+    sys.argv = sys_argv
     return
 
 # When invoked as main program, invoke the debugger on a script

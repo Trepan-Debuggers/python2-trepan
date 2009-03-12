@@ -54,8 +54,12 @@ try:
             if self.proc.curframe and self.proc.curframe.f_locals:
                 user_ns = self.proc.curframe.f_locals
             else:
-                user_ns = None
+                user_ns = {}
                 pass
+
+            # Give ipython and the user a way to get access to the debugger
+            # setattr(ipshell, 'debugger', self.debugger)
+            user_ns['debugger'] = self.debugger
 
             # IPython does it's own history thing.
             # Make sure it doesn't damage ours.
@@ -71,11 +75,13 @@ try:
                 ipshell = IPython.Shell.IPShellEmbed(argv=argv, user_ns=user_ns)
             else:
                 ipshell = IPython.Shell.IPShellEmbed(argv=argv)
+                pass
 
-            if hasattr(ipshell.IP, "magic_pydb"):
+
+            if hasattr(ipshell.IP, "magic_pydbgr"):
                 # We get an infinite loop when doing recursive edits
-                self.msg("Removing magic %pydb")
-                delattr(ipshell.IP, "magic_pydb")
+                self.msg("Removing magic %pydbgr")
+                delattr(ipshell.IP, "magic_pydbgr")
             ipshell()
 #             # Restore our history if we can do so.
 #             if self.readline and self.histfile is not None:

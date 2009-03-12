@@ -49,7 +49,7 @@ Run Python as a command subshell.
                 pass
             pass
 
-        my_locals  = None
+        my_locals  = {}
         my_globals = None
         if self.proc.curframe:
             my_globals = self.proc.curframe.f_globals
@@ -57,6 +57,9 @@ Run Python as a command subshell.
                 my_locals = self.proc.curframe.f_locals
                 pass
             pass
+
+        # Give python and the user a way to get access to the debugger.
+        my_locals['debugger'] = self.debugger
 
         if my_locals:
             interact(banner='Pydbgr python shell (with locals)', 

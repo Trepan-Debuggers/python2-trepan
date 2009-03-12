@@ -86,7 +86,7 @@ See also 'up', 'down' 'where' and 'info thread'.
         self.stack, self.curindex = Mcmdproc.get_stack(frame, None,
                                                        self.proc)
         self.proc.stack, self.proc.curindex = self.stack, self.curindex
-        self.proc.thread_name = thread
+        self.proc.frame_thread_name = thread_name
         return 
 
 

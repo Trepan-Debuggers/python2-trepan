@@ -67,42 +67,6 @@ def get_onoff(errmsg, arg, default=None, print_error=True):
         errmsg("Expecting 'on', 1, 'off', or 0. Got: %s." % str(arg))
     raise ValueError
 
-def get_pos_int(errmsg, arg, min_value=0, default=1, cmdname=None,
-                at_most = None):
-    """If no argument use the default. If arg is a an integer between
-    least min_value and at_most, use that. Otherwise report an error."""
-    if arg is None: return default
-    try: 
-        # eval() is used so we will allow arithmetic expressions,
-        # variables etc.
-        default = get_int(errmsg, arg, default, cmdname)
-        if default < min_value:
-            if cmdname:
-                errmsg(("Command '%s' expects an " +
-                        'integer at least %d; got: %d.') 
-                       % (cmdname, min_value, default))
-            else: 
-                errmsg(("Expecting an " +
-                        'integer at least %d; got: %d')
-                       % (min_value, default))
-                pass
-                # Really should use something custom? 
-            raise ZeroDivisionError
-        elif at_most and default > at_most:
-            if cmdname:
-                errmsg(("Command '%s' expects a positive " +
-                        'integer at most %d; got: %d.') 
-                       % (cmdname, min_value, default))
-            else: 
-                errmsg(("Expecting a positive " +
-                        'integer at most %d; got: %d')
-                       % (min_value, default))
-                pass
-            raise ZeroDivisionError
-    except ValueError:
-        raise ValueError
-    return default
-
 def get_val(curframe, errmsg, arg):
     try:
         return eval(arg, curframe.f_globals,

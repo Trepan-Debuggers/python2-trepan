@@ -49,9 +49,9 @@ class JumpCommand(Mbase_cmd.DebuggerCommand):
             self.errmsg("Sigh - operation can't be done here.")
             return False
 
-        lineno = Mcmdfns.get_an_int(self.errmsg, args[1],
-                                    "jump: a line number is required, got %s." %
-                                    args[1])
+        lineno = self.proc.get_an_int(args[1],
+                                      ("jump: a line number is required, " +
+                                       "got %s.") % args[1])
         if lineno is None: return False
         try:
             # Set to change position, update our copy of the stack,

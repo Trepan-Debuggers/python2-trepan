@@ -220,17 +220,17 @@ class CommandProcessor(Mbase_proc.Processor):
 
         # Create a custom safe Repr instance and increase its maxstring.
         # The default of 30 truncates error messages too easily.
-        self._repr = Repr()
-        self._repr.maxstring = 100
-        self._repr.maxother  = 60
-        self._repr.maxset    = 10
-        self._repr.maxfrozen = 10
-        self._repr.array     = 10
-        self._saferepr       = self._repr.repr
-        self.stack           = []
-        self.thread_name     = Mthread.current_thread_name()
-
-        initfile_list = get_option('initfile_list')
+        self._repr             = Repr()
+        self._repr.maxstring   = 100
+        self._repr.maxother    = 60
+        self._repr.maxset      = 10
+        self._repr.maxfrozen   = 10
+        self._repr.array       = 10
+        self._saferepr         = self._repr.repr
+        self.stack             = []
+        self.thread_name       = None
+        self.frame_thread_name = None
+        initfile_list          = get_option('initfile_list')
         for init_cmdfile in initfile_list:
             self.queue_startfile(init_cmdfile)
         return
@@ -301,6 +301,11 @@ class CommandProcessor(Mbase_proc.Processor):
             if Mbytecode.is_class_def(line, frame):
                 return True
             pass
+        self.thread_name = Mthread.current_thread_name()
+        self.frame_thread_name = self.thread_name
+        if self.thread_name != 'MainThread':
+            prompt += ':' + self.thread_name
+            pass
         self.prompt_str = '(%s) ' % prompt
         self.process_commands()
         return True
@@ -311,6 +316,7 @@ class CommandProcessor(Mbase_proc.Processor):
         self.curindex    = 0
         self.curframe    = None
         self.thread_name = None
+        self.frame_thread_name = None
         return
 
     def eval(self, arg):
@@ -467,40 +473,41 @@ class CommandProcessor(Mbase_proc.Processor):
 
     def get_int(self, arg, min_value=0, default=1, cmdname=None,
                 at_most=None):
-        """Like cmdfns.get_pos_int(), but if there's a stack frame use that
-        in evaluation."""
+        """If no argument use the default. If arg is a an integer between
+        least min_value and at_most, use that. Otherwise report an error.
+        If there's a stack frame use that in evaluation."""
+
         if arg is None: return default
         default = self.get_int_noerr(arg)
         if default is None:
             if cmdname:
-                self.errmsg(("Command '%s' expects a positive integer; "
+                self.errmsg(("Command '%s' expects an integer; "
                              + "got: %s.") % (cmdname, str(arg)))
             else:
-                self.errmsg(('Expecting a positive integer, '
-                               + "got: %s") % str(arg))
+                self.errmsg('Expecting a positive integer, got: %s'
+                            % str(arg))
                 pass
             return None
             pass
         if default < min_value:
             if cmdname:
-                self.errmsg(("Command '%s' expects a positive " +
-                             'integer at least %d; got: %d.') 
+                self.errmsg(("Command '%s' expects an integer at least" +
+                             ' %d; got: %d.') 
                             % (cmdname, min_value, default))
             else: 
-                self.errmsg(("Expecting a positive " +
-                             'integer at least %d; got: %d')
+                self.errmsg(("Expecting a positive integer at least" +
+                             ' %d; got: %d')
                             % (min_value, default))
                 pass
             return None
         elif at_most and default > at_most:
             if cmdname:
-                self.errmsg(("Command '%s' expects a positive " +
-                             'integer at most %d; got: %d.') 
-                            % (cmdname, min_value, default))
+                self.errmsg(("Command '%s' expects an integer at most" +
+                             ' %d; got: %d.') 
+                            % (cmdname, at_most, default))
             else: 
-                self.errmsg(("Expecting a positive " +
-                             'integer at most %d; got: %d')
-                            % (min_value, default))
+                self.errmsg(("Expecting an integer at most %d; got: %d")
+                            % (at_most, default))
                 pass
             pass
         return default

@@ -37,16 +37,6 @@ class TestCommandHelper(unittest.TestCase):
                           *(self.errmsg, 'Foo', 5,))
         return
 
-    def test_get_pos_int(self):
-        self.assertEqual(2, Mcmdfns.get_pos_int(self.errmsg, '2', 0, 5))
-        self.assertEqual(6, Mcmdfns.get_pos_int(self.errmsg, '2*3', 0, 5))
-        self.assertEqual(5, Mcmdfns.get_pos_int(self.errmsg, None, 0, 5))
-        self.assertRaises(ValueError, Mcmdfns.get_pos_int, 
-                          *(self.errmsg, 'Foo', 5,))
-        self.assertRaises(ZeroDivisionError, Mcmdfns.get_pos_int, 
-                          *(self.errmsg, '1', 2, 5,))
-        return
-
     def test_get_onoff(self):
         for arg in ('1', 'on',):
             self.assertEqual(True, Mcmdfns.get_onoff(self.errmsg, arg))

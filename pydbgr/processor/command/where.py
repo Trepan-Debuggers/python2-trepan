@@ -24,10 +24,17 @@ class WhereCommand(Mbase_cmd.DebuggerCommand):
     """where [count]
 
 Print a stack trace, with the most recent frame at the top.  With a
-positive number, print at most many entries.  An arrow indicates the
-'current frame'. The current frame determines the context used for
-many debugger commands such as expression evaluation or source-line
-listing.
+positive number, print at most many entries.  With a negative number
+print the top entries minus that number.
+
+An arrow indicates the 'current frame'. The current frame determines
+the context used for many debugger commands such as expression
+evaluation or source-line listing.
+
+Examples:
+   where    # Print a full stack trace
+   where 2  # Print only the top two entries
+   where -1 # Print a stack trace except the initial (least recent) call.
 """
 
 
@@ -40,8 +47,18 @@ listing.
 
     def run(self, args):
         if len(args) > 1:
-            count = self.proc.get_int(args[1], default=0, cmdname="where")
+            at_most = len(self.proc.stack)
+            if at_most == 0:
+                self.errmsg("Stack is empty.")
+                return False
+            min_value = - at_most + 1
+            count = self.proc.get_int(args[1], min_value = min_value,
+                                      cmdname = 'where',
+                                      default=0, at_most = at_most)
             if count is None: return False
+            if count < 0:
+                count =  at_most - count
+                pass
             elif 0 == count: count = None
         else:
             count = None
@@ -85,6 +102,15 @@ if __name__ == '__main__':
         return
     cp.forget()
     command.run(['where'])
+    print '-' * 10
     ignore_me(cp, command, 1)
+    command.run(['where', '1'])
+    print '-' * 10
+    command.run(['where', '-1'])
+    print '-' * 10
+    command.run(['where', '3'])
+    print '-' * 10
+    command.run(['where', '-2'])
+    print '-' * 10
     pass
 

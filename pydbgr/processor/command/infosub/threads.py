@@ -23,7 +23,7 @@ Mthread       = import_relative('thread', '....lib', 'pydbgr')
 
 # FIXME turn into yet another subcommand thingy.
 class InfoThread(Mbase_subcmd.DebuggerSubcommand):
-    """info thread [thread-name|thread-number] [terse|verbose]
+    """info threads [thread-name|thread-number] [terse|verbose]
     List all currently-known thread name(s).
     
 If no thread name is given, we list info for all threads. Unless a
@@ -81,10 +81,13 @@ To get the full stack trace for a specific thread pass in the thread name.
         return
                 
     def info_thread_line(self, thread_name, name2id):
-        if thread_name == self.thread_name:
-            prefix='-> '
+        if thread_name == self.proc.frame_thread_name:
+            prefix = '-> '
+        elif thread_name == self.proc.thread_name:
+            prefix = '=> '
         else:
-            prefix='   '
+            prefix = '   '
+            pass
 
         self.msg("%s%s: %d" % (prefix, thread_name,
                                name2id[thread_name]))
@@ -147,13 +150,18 @@ To get the full stack trace for a specific thread pass in the thread name.
             # Print location where thread was created and line number
             if thread_id in threading._active:
                 thread = threading._active[thread_id]
-                if thread.getName() == self.thread_name:
-                    prefix='-> '
+                thread_name = thread.getName()
+                if thread_name == self.proc.frame_thread_name:
+                    prefix = '-> '
                     if not self.settings['dbg_pydbgr']:
                         frame = Mthread.find_debugged_frame(frame)
                         pass
+                    pass
+                elif thread_name == self.proc.thread_name:
+                    prefix = '=> '
                 else:
                     prefix='   '
+                    pass
                 s += "%s%s" % (prefix, str(thread))
                 if all_verbose:
                     s += ": %d" % thread_id

@@ -1,31 +1,30 @@
 # -*- coding: utf-8 -*-
 #   Copyright (C) 2009 Rocky Bernstein
 #
-#    This program is free software; you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation; either version 2 of the License, or
-#    (at your option) any later version.
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
 #
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
-#    along with this program; if not, write to the Free Software
-#    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
-#    02110-1301 USA.
-import sys
-
-# Our local modules
-from import_relative import import_relative, get_srcdir
-
-import_relative('lib', '...', 'pydbgr')
-Mbase_cmd  = import_relative('base_cmd', top_name='pydbgr')
-Mmisc      = import_relative('misc', '...', 'pydbgr')
-
+#   You should have received a copy of the GNU General Public License
+#   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 try:
     import IPython
+
+    import sys
+
+    # Our local modules
+    from import_relative import import_relative, get_srcdir
+
+    import_relative('lib', '...', 'pydbgr')
+    Mbase_cmd  = import_relative('base_cmd', top_name='pydbgr')
+    Mmisc      = import_relative('misc', '...', 'pydbgr')
+
     from IPython.genutils import arg_split
 
     class IPythonCommand(Mbase_cmd.DebuggerCommand):
@@ -91,7 +90,7 @@ Debugger commands like are installed as IPython magic commands, e.g.
                 pass
 
             # add IPython "magic" commands for all debugger comamnds and
-            # aliases.  no doubt, this probably could be done in a
+            # aliases.  No doubt, this probably could be done in a
             # better way without "exec".  (Someone just needs to suggest
             # a way...)
             ip = IPython.ipapi.get()
@@ -100,7 +99,8 @@ def ipy_%s(self, args):
    argv = arg_split(args)
    proc = ipshell.debugger.core.processor
    cmd = proc.name2cmd['%s']
-   cmd.run(['%s'] + argv)
+   leave = cmd.run(['%s'] + argv)
+   if leave: self.shell.exit()
    return
 """
             expose_magic_template = 'ip.expose_magic("%s", ipy_%s)'
@@ -111,6 +111,7 @@ def ipy_%s(self, args):
                     exec expose_magic_template % (alias, name)
                 pass
 
+# We don't have any of these yet. When we do we can uncomment...
 #             # Add more IPython magic commands using files in the
 #             # ipython_magic subdirectory.  This also gives us a way to
 #             # overwrite the default magics created above.
@@ -136,7 +137,7 @@ def ipy_%s(self, args):
 #                 except IOError:
 #                     pass
 #                 return False
-            return False
+            return self.proc.continue_running
         pass
     pass
 except ImportError:

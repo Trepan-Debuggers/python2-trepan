@@ -54,6 +54,9 @@ DEBUGGER_SETTINGS = {
     # Run 'list' command every time we enter the debugger?
     'autolist'      : False,
 
+    # Enter ipython every time we enter the debugger?
+    'autoipython'   : False,
+
     # Show basename only on filename output? 
     # This opiton is useful in integration testing and 
     # possibly to prepare example output for publication

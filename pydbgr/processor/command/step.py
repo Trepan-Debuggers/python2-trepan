@@ -122,16 +122,16 @@ if __name__ == '__main__':
               ['step', '1+2'],
               ['s', 'foo']):
         d.core.step_ignore = 0
-        cmd.continue_running = False
+        cmd.proc.continue_running = False
         result = cmd.run(c)
         print 'Execute result: %s' % result
-        print 'step_ignore %d, continue_running: %s' % (d.core.step_ignore,
-                                                        cmd.continue_running,)
+        print 'step_ignore %s' % repr(d.core.step_ignore)
+        print 'continue_running: %s' % cmd.proc.continue_running
         pass
     for c in (['s'], ['step+'], ['s-'], ['s!'], ['s>'], ['s<']): 
         d.core.step_ignore = 0
         cmd.continue_running = False
         result = cmd.run(c)
-        print cmd.core.different_line
+        print 'different line %s:' % c[0], cmd.core.different_line
         pass
     pass

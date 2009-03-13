@@ -17,22 +17,14 @@
 from import_relative import import_relative
 # Our local modules
 
-Mbase_subcmd = import_relative('base_subcmd', '..', 'pydbgr')
-Mcmdfns      = import_relative('cmdfns', '..', 'pydbgr')
+# FIXME: Until import_relative is fixed up...
+import_relative('processor', '....', 'pydbgr')
 
-class SetAnnotate(Mbase_subcmd.DebuggerSubcommand):
-    """Set GNU Emacs 'annotation' level.
-"""
-    
-    in_list    = True
-    min_abbrev = 2 # Need at least "set an"
-    short_help =  "Set GNU Emacs 'annotation' level"
+Mbase_subcmd  = import_relative('base_subcmd', '..')
 
-    def run(self, args):
-        Mcmdfns.run_set_int(self, ' '.join(args),
-           "The 'annotation' command requires an annotation level.", 
-                            0, 3)
-        return
+class ShowSkip(Mbase_subcmd.DebuggerShowBoolSubcommand):
+    """Show step over lines which define functions and classes"""
+    min_abbrev = len('sk') 
     pass
 
 

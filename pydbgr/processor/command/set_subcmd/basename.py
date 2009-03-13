@@ -27,7 +27,7 @@ examples where you don't want to hide specific filesystem and
 installation information."""
 
     in_list    = True
-    min_abbrev = 2 # Need at least "set ba"
+    min_abbrev = len('ba')
     short_help = 'Set short filenames (the basename) in debug output'
     pass
 

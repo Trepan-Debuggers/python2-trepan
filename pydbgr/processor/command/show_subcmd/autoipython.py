@@ -14,25 +14,17 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from import_relative import import_relative
-# Our local modules
+try:
+    import IPython
 
-Mbase_subcmd = import_relative('base_subcmd', '..', 'pydbgr')
-Mcmdfns      = import_relative('cmdfns', '..', 'pydbgr')
+    from import_relative import import_relative
+    Mbase_subcmd  = import_relative('base_subcmd', '..', 'pydbgr')
 
-class SetAnnotate(Mbase_subcmd.DebuggerSubcommand):
-    """Set GNU Emacs 'annotation' level.
-"""
-    
-    in_list    = True
-    min_abbrev = 2 # Need at least "set an"
-    short_help =  "Set GNU Emacs 'annotation' level"
-
-    def run(self, args):
-        Mcmdfns.run_set_int(self, ' '.join(args),
-           "The 'annotation' command requires an annotation level.", 
-                            0, 3)
-        return
+    class ShowAutoPython(Mbase_subcmd.DebuggerShowBoolSubcommand):
+        """Show automatic IPython when we enter the debugger."""
+        min_abbrev = len('autoipy')
+        pass
+except ImportError:
     pass
 
 

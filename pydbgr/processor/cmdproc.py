@@ -89,9 +89,9 @@ def get_stack(f, t, botframe, proc_obj=None):
 def run_hooks(obj, hooks, *args):
     """Run each function in `hooks' with args"""
     for hook in hooks:
-        hook(obj, *args)
+        if hook(obj, *args): return True
         pass
-    return True
+    return False
 
 def resolve_name(obj, command_name):
     if command_name not in obj.name2cmd:
@@ -558,9 +558,9 @@ class CommandProcessor(Mbase_proc.Processor):
         """Handle debugger commands."""
         self.setup()
         print_location(self)
-        run_hooks(self, self.preloop_hooks)
+        leave_loop = run_hooks(self, self.preloop_hooks)
         self.continue_running = False
-        while True:
+        while not leave_loop:
             try:
                 run_hooks(self, self.precmd_hooks)
                 # bdb had a True return to leave loop.

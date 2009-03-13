@@ -118,7 +118,8 @@ class DebuggerShowIntSubcommand(DebuggerSubcommand):
 
 class DebuggerShowBoolSubcommand(DebuggerSubcommand):
     def run(self, args):
-        Mcmdfns.run_show_bool(self, self.__doc__[5:].capitalize())
+        doc = self.__doc__[5:].capitalize().split('\n')[0].rstrip('.')
+        Mcmdfns.run_show_bool(self, doc)
         return
 
 if __name__ == '__main__':

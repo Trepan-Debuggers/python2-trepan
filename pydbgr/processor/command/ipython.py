@@ -111,17 +111,19 @@ def ipy_%s(self, args):
                     exec expose_magic_template % (alias, name)
                 pass
 
-            # Add more IPython magic commands using files in the
-            # ipython_magic subdirectory.  This also gives us a way to
-            # overwrite the default magics created above.
-            srcdir = get_srcdir()
-            sys.path.insert(0, srcdir)
-            Mcommand = import_relative('ipython_magic')
-            for mod_name in Mcommand.__modules__:
-                import_name = "ipython_magic." + mod_name
-                command_mod = getattr(__import__(import_name), mod_name)
-                pass
-            sys.path.remove(srcdir)
+#             # Add more IPython magic commands using files in the
+#             # ipython_magic subdirectory.  This also gives us a way to
+#             # overwrite the default magics created above.
+#             srcdir = get_srcdir()
+#             sys.path.insert(0, srcdir)
+#             Mcommand = import_relative('ipython_magic')
+#             for mod_name in Mcommand.__modules__:
+#                 import_name = "ipython_magic." + mod_name
+#                 command_mod = getattr(__import__(import_name), mod_name)
+#                 fn = getattr(command_mod, 'ipy_%s' % mod_name)
+#                 ip.expose_magic(mod_name, fn)
+#                 pass
+#             sys.path.remove(srcdir)
         
             # And just when you thought we've forgotten about running
             # the shell...

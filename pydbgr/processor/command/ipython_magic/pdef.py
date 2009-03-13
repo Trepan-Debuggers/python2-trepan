@@ -1,4 +1,3 @@
-import IPython
 # from IPython.genutils import arg_split
 def ipy_pdef(obj, args):
     """The debugger interface to magic_pdef"""
@@ -7,9 +6,10 @@ def ipy_pdef(obj, args):
     proc = debugger.core.processor
     namespaces = [('Locals', proc.curframe.f_locals),
                   ('Globals', proc.curframe.f_globals)]
-    __IPYTHON__.magic_pdef("pdef %s" % args, namespaces=namespaces)
+    __IPYTHON__.magic_pdef("pdef %s" % args, namespaces)
     return
 
+import IPython
 if __name__ == '__main__':
     ipshell = IPython.Shell.IPShellEmbed()
     pass

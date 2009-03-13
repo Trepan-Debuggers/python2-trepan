@@ -7,7 +7,7 @@ def ipy_pdoc(obj, args):
     proc = debugger.core.processor
     namespaces = [('Locals', proc.curframe.f_locals),
                   ('Globals', proc.curframe.f_globals)]
-    __IPYTHON__.magic_pdoc("pdoc %s" % args, namespaces=namespaces)
+    __IPYTHON__.magic_pdoc("pdoc %s" % args, namespaces)
     return
 
 if __name__ == '__main__':

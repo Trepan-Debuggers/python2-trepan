@@ -18,7 +18,7 @@
 import sys
 
 # Our local modules
-from import_relative import import_relative
+from import_relative import import_relative, get_srcdir
 
 import_relative('lib', '...', 'pydbgr')
 Mbase_cmd  = import_relative('base_cmd', top_name='pydbgr')
@@ -76,25 +76,24 @@ Debugger commands like are installed as IPython magic commands, e.g.
                     pass
                 pass
 
+            if debug: user_ns['debugger'] = self.debugger
             global ipshell
-            if len(user_ns):
-                ipshell = IPython.Shell.IPShellEmbed(argv=argv, user_ns=user_ns)
-            else:
-                ipshell = IPython.Shell.IPShellEmbed(argv=argv)
-                pass
+            ipshell = IPython.Shell.IPShellEmbed(argv=argv, user_ns=user_ns)
+            user_ns['ipshell'] = ipshell
 
             # Give ipython and the user a way to get access to the debugger
             setattr(ipshell, 'debugger', self.debugger)
-            if debug: user_ns['debugger'] = self.debugger
 
             if hasattr(ipshell.IP, "magic_pydbgr"):
                 # We get an infinite loop when doing recursive edits
-                self.msg("Removing magic %pydbgr")
-                delattr(ipshell.IP, "magic_pydbgr")
+                self.msg("removing magic %pydbgr")
+                delattr(ipshell.ip, "magic_pydbgr")
                 pass
 
-            # FIXME: generalize to use commands in the ipython_magic directory.
-            # For now set up a single magic 
+            # add IPython "magic" commands for all debugger comamnds and
+            # aliases.  no doubt, this probably could be done in a
+            # better way without "exec".  (Someone just needs to suggest
+            # a way...)
             ip = IPython.ipapi.get()
             magic_fn_template="""
 def ipy_%s(self, args):
@@ -107,14 +106,27 @@ def ipy_%s(self, args):
             expose_magic_template = 'ip.expose_magic("%s", ipy_%s)'
             for cmd_instance in self.proc.cmd_instances:
                 name = cmd_instance.name_aliases[0]
-                cmd = magic_fn_template % ((name,) * 3)
-                exec cmd
+                exec magic_fn_template % ((name,) * 3)
                 for alias in cmd_instance.name_aliases:
-                    cmd = expose_magic_template % (alias, name)
-                    exec cmd
+                    exec expose_magic_template % (alias, name)
                 pass
 
+            # Add more IPython magic commands using files in the
+            # ipython_magic subdirectory.  This also gives us a way to
+            # overwrite the default magics created above.
+            srcdir = get_srcdir()
+            sys.path.insert(0, srcdir)
+            Mcommand = import_relative('ipython_magic')
+            for mod_name in Mcommand.__modules__:
+                import_name = "ipython_magic." + mod_name
+                command_mod = getattr(__import__(import_name), mod_name)
+                pass
+            sys.path.remove(srcdir)
+        
+            # And just when you thought we've forgotten about running
+            # the shell...
             ipshell()
+
 #             # Restore our history if we can do so.
 #             if have_line_edit and self.histfile is not None:
 #                 try:

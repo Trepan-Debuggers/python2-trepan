@@ -32,12 +32,11 @@ Arguments are signals and actions to apply to those signals.
 recognized actions include "stop", "nostop", "print", "noprint",
 "pass", "nopass", "ignore", or "noignore".
 
-- Stop means reenter debugger if this signal happens (implies print and
-  nopass).
-- Print means print a message if this signal happens.
-- Pass means let program see this signal; otherwise program doesn't know.
-- Ignore is a synonym for nopass and noignore is a synonym for pass.
-- Pass and Stop may not be combined. (This is different from gdb)
+- "Stop" means reenter debugger if this signal happens (implies "print" and
+  "nopass").
+- "Print" means print a message if this signal happens.
+- "Pass" means let program see this signal; otherwise the program see it.
+- "Ignore" is a synonym for "nopass"; "noignore" is a synonym for "pass".
 
 Without any action names the current settings are shown.
 

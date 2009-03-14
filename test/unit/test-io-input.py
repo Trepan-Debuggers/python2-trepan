@@ -5,15 +5,14 @@ import operator, os, sys, unittest
 from import_relative import *
 
 Minput = import_relative('io.input', '...pydbgr')
-from pydbgr.io.input  import DebuggerUserInput
 
 class TestDebuggerInput(unittest.TestCase):
     
     def test_DebuggerInput(self):
-        inp = DebuggerUserInput('test-io-input.py')
+        inp = Minput.DebuggerUserInput('cmdhelper.py')
         self.assertTrue(inp, 'Should have gotten a DebuggerInput object back')
         line = inp.readline()
-        self.assertEqual('#!/usr/bin/env python', line)
+        self.assertEqual('# -*- coding: utf-8 -*-', line)
         inp.close()
         # Should be okay
         inp.close() 

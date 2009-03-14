@@ -159,8 +159,11 @@ def uncaught_exception(dbg):
     exc = sys.exc_info()
     exc_type, exc_value, exc_tb = exc
     if exc_type == Mexcept.DebuggerQuit: return
-    if exc_type == mexcept.DebuggerRestart: 
+    if exc_type == Mexcept.DebuggerRestart: 
         print "restart not done yet - entering post mortem debugging"
+    elif exc_tb is None:
+        print "You don't seem to have an exception traceback, yet."
+        return
     else:
         traceback.print_exception(exc_type, exc_value, exc_tb)
         print "uncaught exception. entering post mortem debugging"

@@ -14,25 +14,30 @@
 #
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
-''' The big and hairy command-line interface to the debugger.
+''' The hairy command-line interface to the debugger.
 '''
 import os, sys
+
+package='pydbgr'
+if not package in sys.modules:
+    __import__('pkg_resources').declare_namespace(package)
+    pass
 
 from optparse import OptionParser
 
 # Our local modules
 from import_relative import import_relative
-Mapi      = import_relative('api', top_name='pydbgr')
-Mclifns   = import_relative('clifns', top_name='pydbgr')
-Mdebugger = import_relative('debugger', top_name='pydbgr')
-Mexcept   = import_relative('except', top_name='pydbgr')
-Moutput   = import_relative('output', '.io', 'pydbgr')
-Mserver   = import_relative('server', '.interface', 'pydbgr')
-Mfile     = import_relative('file', '.lib', 'pydbgr')
-Mmisc     = import_relative('misc', '.', 'pydbgr')
+Mapi      = import_relative('api', top_name=package)
+Mclifns   = import_relative('clifns', top_name=package)
+Mdebugger = import_relative('debugger', top_name=package)
+Mexcept   = import_relative('except', top_name=package)
+Moutput   = import_relative('output', '.io', package)
+Mserver   = import_relative('server', '.interface', package)
+Mfile     = import_relative('file', '.lib', package)
+Mmisc     = import_relative('misc', '.', package)
 
 # The name of the debugger we are currently going by.
-__title__ = 'pydbgr'
+__title__ = package
 
 __version__ = '0.1.0'
 
@@ -360,3 +365,4 @@ def main(dbg=None, sys_argv=list(sys.argv)):
 # When invoked as main program, invoke the debugger on a script
 if __name__=='__main__':
     main()
+    pass

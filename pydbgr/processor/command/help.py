@@ -115,7 +115,9 @@ See also 'examine' an 'whatis'.
         """List all commands arranged in an aligned columns"""
         commands = self.proc.name2cmd.keys()
         commands.sort()
-        self.msg(columnize.columnize(commands, lineprefix='    '))
+        width = self.debugger.settings['width']
+        self.msg(columnize.columnize(commands, displaywidth=width,
+                                     lineprefix='    '))
         return
 
     def list_categories(self):
@@ -144,7 +146,9 @@ Type "help" followed by command name for full documentation.
             self.msg("Commands in class %s:" % category)
             cmds = [cmd for cmd in names if category == n2cmd[cmd].category]
             cmds.sort()
-            self.msg(columnize.columnize(cmds, lineprefix='    '))
+            width = self.debugger.settings['width']
+            self.msg(columnize.columnize(commands, displaywidth=width,
+                                     lineprefix='    '))
             return
         
         self.msg("%s." % categories[category])

@@ -166,6 +166,8 @@ class Debugger():
         try:
             execfile(self.mainpyfile, globals_, locals_)
             retval = True
+        except IOError:
+            print sys.exc_info()[1]
         except Mexcept.DebuggerQuit:
             retval = False
             pass

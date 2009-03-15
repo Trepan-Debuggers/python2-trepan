@@ -32,6 +32,6 @@ install:
 	python ./setup.py install
 
 ChangeLog:
-	svn2cl --authors=svn2cl_usermap http://pytracer.googlecode.com/svn/trunk -o $@
+	svn2cl --authors=svn2cl_usermap http://pydbgr.googlecode.com/svn/trunk -o $@
 
 .PHONY: $(PHONY)

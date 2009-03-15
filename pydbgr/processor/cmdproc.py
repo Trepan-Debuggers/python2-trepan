@@ -735,7 +735,12 @@ class CommandProcessor(Mbase_proc.Processor):
             if mod_name in ('info_sub', 'set_sub', 'show_sub',):
                 pass
             import_name = "command." + mod_name
-            command_mod = getattr(__import__(import_name), mod_name)
+            try:
+                command_mod = getattr(__import__(import_name), mod_name)
+            except:
+                print ('Error importing %s: %s' % (mod_name, sys.exc_info()[0]))
+                continue
+                
             classnames = [ tup[0] for tup in 
                            inspect.getmembers(command_mod, inspect.isclass)
                            if ('DebuggerCommand' != tup[0] and 
@@ -746,6 +751,8 @@ class CommandProcessor(Mbase_proc.Processor):
                     instance = eval(eval_cmd)
                     cmd_instances.append(instance)
                 except:
+                    print ('Error loading %s from %s: %s' %
+                           (classname, mod_name, sys.exc_info()[0]))
                     pass
                 pass
             pass

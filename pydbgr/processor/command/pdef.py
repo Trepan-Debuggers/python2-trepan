@@ -14,63 +14,62 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# Credit: code inspired from code of the same name in ipython.
+
+import inspect, types
+
 # Our local modules
 from import_relative import import_relative
 Mbase_cmd  = import_relative('base_cmd', top_name='pydbgr')
 Mprint     = import_relative('print', '...lib', 'pydbgr')
 
-class PrintCommand(Mbase_cmd.DebuggerCommand):
-    """p expression
+class PrintDefCommand(Mbase_cmd.DebuggerCommand):
+    """Print the definition header for a callable object.
+    
+    If the object is a class, print the constructor information."""
 
-Print the value of the expression. Variables accessible are those of the
-environment of the selected stack frame, plus globals. 
-
-The expression may be preceded with /FMT where FMT is one of the
-format letters 'c', 'x', 'o', 'f', or 's' for chr, hex, oct, 
-float or str respectively.
-
-If the length output string large, the first part of the value is
-shown and ... indicates it has been truncated
-
-See also `pp' and `examine' for commands which do more in the way of
-formatting.
-"""
     category     = 'data'
     min_args      = 1
-    max_args      = None
-    name_aliases = ('p',)
+    max_args      = 1
+    name_aliases = ('pdef',)
     need_stack    = True
-    short_help    = 'Print value of expression EXP'
+    short_help    = 'Print the definition header for a callable object'
 
     def run(self, args):
-        if len(args) > 2 and '/' == args[1][0]:
-            fmt = args[1]
-            del args[1]
-        else:
-            fmt = None
-            pass
-        arg = ' '.join(args[1:])
+        if len(args) != 2: return
+        obj_name = args[1]
         try:
-            val = self.proc.eval(arg)
-            if fmt:
-                val = Mprint.printf(val, fmt)
-                pass
-            self.msg(self.proc._saferepr(val))
+            obj = self.proc.eval(obj_name)
         except:
+            return
+        if not callable(obj):
+            self.errmsg('Object %s is not callable.' % obj_name)
+            return
+
+        if inspect.isclass(obj):
+            self.msg('Class constructor information:')
+            obj = obj.__init__
+        elif type(obj) is types.InstanceType:
+            obj = obj.__call__
             pass
 
+        output = Mprint.print_argspec(obj, obj_name)
+        if output is None:
+            self.errmsg('No definition header found for %s' % obj_name)
+        else:
+            self.msg(output)
+            pass
+        return
+        
 if __name__ == '__main__':
-    import inspect
     cmdproc     = import_relative('cmdproc', '..')
     debugger    = import_relative('debugger', '...')
     d           = debugger.Debugger()
     cp          = d.core.processor
     cp.curframe = inspect.currentframe()
-    command = PrintCommand(cp)
-    me = 10
-    command.run(['print', 'me'])
-    command.run(['print', '/x', 'me'])
-    command.run(['print', '/o', 'me'])
+    command = PrintDefCommand(cp)
+    command.run(['pdef', 'import_relative'])
+    command.run(['pdef', 'PrintDefCommand'])
     pass
 
 

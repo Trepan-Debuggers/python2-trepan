@@ -1,10 +1,16 @@
-2009-03-15 06:09  rocky.bernstein
+2009-03-15 06:12  rocky@gnu.org
+
+	* ChangeLog, Makefile.am, configure.ac,
+	  pydbgr/processor/command/show_subcmd/args.py: Add "show args"
+	  command
+
+2009-03-15 06:09  rocky@gnu.org
 
 	* Makefile.am, ipython, ipython/ipy_pydbgr.py, pydbgr/__init__.py,
 	  pydbgr/cli.py, pydbgr/processor/command/show_subcmd/listsize.py:
 	  Start dealing with running pydbgr from ipython. More bugs found
 
-2009-03-15 04:01  rocky.bernstein
+2009-03-15 04:01  rocky@gnu.org
 
 	* pydbgr/cli.py, pydbgr/debugger.py, pydbgr/except.py,
 	  pydbgr/exception.py, pydbgr/lib/bytecode.py, pydbgr/lib/stack.py,
@@ -14,13 +20,13 @@
 	  test/unit/test-run.py: A pox on Python lame import system that
 	  doesn't allow you to have a file called except.py
 
-2009-03-15 01:40  rocky.bernstein
+2009-03-15 01:40  rocky@gnu.org
 
 	* pydbgr/lib/print.py, pydbgr/processor/command/display.py,
 	  pydbgr/processor/command/pydocX.py: Show function signature in
 	  "examine" when appropriate
 
-2009-03-15 00:43  rocky.bernstein
+2009-03-15 00:43  rocky@gnu.org
 
 	* pydbgr/lib/print.py, pydbgr/processor/cmdproc.py,
 	  pydbgr/processor/command/p.py, pydbgr/processor/command/pdef.py,
@@ -31,37 +37,37 @@
 	  Print command-processor load errors. pydoc name import conflict
 	  woes.
 
-2009-03-14 18:18  rocky.bernstein
+2009-03-14 18:18  rocky@gnu.org
 
 	* pydbgr/debugger.py: Give message on IOError when loading debugged
 	  program
 
-2009-03-14 11:06  rocky.bernstein
+2009-03-14 11:06  rocky@gnu.org
 
 	* pydbgr/post_mortem.py: Some post-mortem bugs
 
-2009-03-14 09:45  rocky.bernstein
+2009-03-14 09:45  rocky@gnu.org
 
 	* README.txt: Revise for release.
 
-2009-03-14 08:43  rocky.bernstein
+2009-03-14 08:43  rocky@gnu.org
 
 	* pydbgr/cli.py: Silence Python 2.6
 
-2009-03-14 03:17  rocky.bernstein
+2009-03-14 03:17  rocky@gnu.org
 
 	* pydbgr/processor/command/help.py: Respect the width setting.
 
-2009-03-14 02:33  rocky.bernstein
+2009-03-14 02:33  rocky@gnu.org
 
 	* pydbgr/io/fifoserver.py, test/unit/test-fifo.py,
 	  test/unit/test-io-input.py: Changes to work on M$
 
-2009-03-13 09:55  rocky.bernstein
+2009-03-13 09:55  rocky@gnu.org
 
 	* pydbgr/processor/command/handle.py: Small doc change.
 
-2009-03-13 09:49  rocky.bernstein
+2009-03-13 09:49  rocky@gnu.org
 
 	* pydbgr/lib/default.py, pydbgr/processor/cmdproc.py,
 	  pydbgr/processor/command/base_subcmd.py,
@@ -87,13 +93,13 @@
 	  continue commands work. Some show doc helpstring improvements.
 	  defskip -> skip.
 
-2009-03-13 03:21  rocky.bernstein
+2009-03-13 03:21  rocky@gnu.org
 
 	* pydbgr/processor/command/ipython.py,
 	  pydbgr/processor/command/ipython_magic/pdef.py,
 	  pydbgr/processor/command/ipython_magic/pdoc.py: Revert code
 
-2009-03-13 03:01  rocky.bernstein
+2009-03-13 03:01  rocky@gnu.org
 
 	* pydbgr/processor/command/ipython.py,
 	  pydbgr/processor/command/ipython_magic/__init__.py,
@@ -103,30 +109,30 @@
 	  pdef, pdoc, and pinfo commands as an example of how to write more
 	  custome commands. There's probably a better way to do it though
 
-2009-03-12 23:45  rocky.bernstein
+2009-03-12 23:45  rocky@gnu.org
 
 	* pydbgr/processor/command/ipython.py: Magic for debugger aliases
 	  as well as commands
 
-2009-03-12 19:00  rocky.bernstein
+2009-03-12 19:00  rocky@gnu.org
 
 	* pydbgr/processor/command/ipython.py: Another really small thing
 
-2009-03-12 18:57  rocky.bernstein
+2009-03-12 18:57  rocky@gnu.org
 
 	* pydbgr/processor/command/ipython.py: Small doc fix
 
-2009-03-12 18:55  rocky.bernstein
+2009-03-12 18:55  rocky@gnu.org
 
 	* pydbgr/processor/command/ipython.py: Install all debugger
 	  commands as ipython "magic" commands
 
-2009-03-12 12:20  rocky.bernstein
+2009-03-12 12:20  rocky@gnu.org
 
 	* pydbgr/processor/cmdproc.py, pydbgr/processor/command/ipython.py:
 	  Add my first ipython magic command in a sort of hacky way
 
-2009-03-12 11:42  rocky.bernstein
+2009-03-12 11:42  rocky@gnu.org
 
 	* __pkginfo__.py, pydbgr/processor/cmdproc.py,
 	  pydbgr/processor/command/base_submgr.py,
@@ -142,30 +148,30 @@
 	  pydbgr/processor/command/showsub, test/unit/test-info-file.py:
 	  Rename xsub x_subcmd. Start ipython magic
 
-2009-03-12 11:13  rocky.bernstein
+2009-03-12 11:13  rocky@gnu.org
 
 	* pydbgr/processor/command/ipython.py: One more small change for
 	  ipython demo code
 
-2009-03-12 11:00  rocky.bernstein
+2009-03-12 11:00  rocky@gnu.org
 
 	* pydbgr/processor/command/ipython.py,
 	  pydbgr/processor/command/python.py: Add local debugger variable
 	  in "python" and "ipython" commands only as an option
 
-2009-03-12 03:40  rocky.bernstein
+2009-03-12 03:40  rocky@gnu.org
 
 	* pydbgr/cli.py, pydbgr/processor/command/ipython.py,
 	  pydbgr/processor/command/python.py: Give access to the debugger
 	  internals in "ipython" and "python" commands. Possibly a slightly
 	  more flexible cli.main() routine
 
-2009-03-12 01:26  rocky.bernstein
+2009-03-12 01:26  rocky@gnu.org
 
 	* pydbgr/processor/command/list.py: Allow "." in list command to
 	  refer to the current line
 
-2009-03-12 01:20  rocky.bernstein
+2009-03-12 01:20  rocky@gnu.org
 
 	* pydbgr/processor/cmdproc.py, pydbgr/processor/command/cmdfns.py,
 	  pydbgr/processor/command/frame.py,
@@ -177,14 +183,14 @@
 	  stopped thread distinct from 'frame' set frame in 'info threads.
 	  Remove cmdfns.get_pos_int
 
-2009-03-11 09:56  rocky.bernstein
+2009-03-11 09:56  rocky@gnu.org
 
 	* pydbgr/lib/default.py, pydbgr/processor/cmdproc.py,
 	  pydbgr/processor/command/ipython.py,
 	  pydbgr/processor/command/python.py: Move towards adding history
 	  saving/reading
 
-2009-03-11 01:42  rocky.bernstein
+2009-03-11 01:42  rocky@gnu.org
 
 	* __pkginfo__.py, pydbgr/io/fifoclient.py, pydbgr/io/fifoserver.py,
 	  pydbgr/io/input.py, pydbgr/io/scriptin.py,
@@ -193,7 +199,7 @@
 	  separate locals and globals properly. Add version numbers of
 	  required packages
 
-2009-03-10 01:53  rocky.bernstein
+2009-03-10 01:53  rocky@gnu.org
 
 	* pydbgr/processor/cmdproc.py, pydbgr/processor/command/delete.py,
 	  pydbgr/processor/command/exit.py,
@@ -207,20 +213,20 @@
 	  and use this in more commands.
 	  Split off "set traceset" from "set trace".
 
-2009-03-09 19:04  rocky.bernstein
+2009-03-09 19:04  rocky@gnu.org
 
 	* pydbgr/processor/command/setsub/trace.py,
 	  pydbgr/processor/command/showsub/trace.py: trace doc fixes
 
-2009-03-09 18:57  rocky.bernstein
+2009-03-09 18:57  rocky@gnu.org
 
 	* pydbgr/processor/command/setsub/trace.py: trace doc fix
 
-2009-03-09 18:48  rocky.bernstein
+2009-03-09 18:48  rocky@gnu.org
 
 	* pydbgr/processor/cmdproc.py: Wrap another error message
 
-2009-03-09 18:38  rocky.bernstein
+2009-03-09 18:38  rocky@gnu.org
 
 	* pydbgr/processor/cmdproc.py, pydbgr/processor/command/cmdfns.py,
 	  pydbgr/processor/command/finish.py,
@@ -232,27 +238,27 @@
 	  to be renamed to get_int_range). Some small bugs discovered and
 	  fixed in the various routines.
 
-2009-03-09 13:50  rocky.bernstein
+2009-03-09 13:50  rocky@gnu.org
 
 	* pydbgr/cli.py: Add no-post-mortem option
 
-2009-03-09 12:15  rocky.bernstein
+2009-03-09 12:15  rocky@gnu.org
 
 	* pydbgr/cli.py, pydbgr/processor/cmdproc.py,
 	  pydbgr/processor/command/infosub/program.py: Add --post-mortem
 	  option to cli.py. Enter post-mortem by default
 
-2009-03-09 11:45  rocky.bernstein
+2009-03-09 11:45  rocky@gnu.org
 
 	* pydbgr/api.py, pydbgr/processor/command/infosub/program.py: Add
 	  an immediate debug stop via "pydbgr.api.debug(steps=0)"
 
-2009-03-09 11:45  rocky.bernstein
+2009-03-09 11:45  rocky@gnu.org
 
 	* test/example/gcd-dbgcall.py: Add an immediate debug stop via
 	  "pydbgr.api.debug(steps=0)"
 
-2009-03-09 04:09  rocky.bernstein
+2009-03-09 04:09  rocky@gnu.org
 
 	* pydbgr/lib/core.py, pydbgr/lib/sighandler.py,
 	  pydbgr/processor/cmdproc.py,
@@ -264,7 +270,7 @@
 	  debugger immediately rather than set up a "next event". "info
 	  program" adjusted too.
 
-2009-03-08 22:13  rocky.bernstein
+2009-03-08 22:13  rocky@gnu.org
 
 	* pydbgr/lib/sighandler.py, pydbgr/processor/command/base_cmd.py,
 	  pydbgr/processor/command/break.py,
@@ -283,7 +289,7 @@
 	  pydbgr/processor/command/where.py: Use GPL v3 over v2+.
 	  sighandler.py: start moving towards stopping after signal event.
 
-2009-03-08 22:02  rocky.bernstein
+2009-03-08 22:02  rocky@gnu.org
 
 	* pydbgr/processor/command/mock.py,
 	  pydbgr/processor/command/skip.py, test/unit/test-disassemble.py:
@@ -291,7 +297,7 @@
 	  corrections.
 	  Make a little more amenable to Python 2.6.
 
-2009-03-08 05:39  rocky.bernstein
+2009-03-08 05:39  rocky@gnu.org
 
 	* pydbgr/lib/sighandler.py,
 	  pydbgr/processor/command/setsub/dbg_pydbg.py,
@@ -302,7 +308,7 @@
 	  dbg_pdybg -> dbg_pydbgr. When debugging the debugger turn off all
 	  debugger "ignore" routines.
 
-2009-03-08 04:27  rocky.bernstein
+2009-03-08 04:27  rocky@gnu.org
 
 	* pydbgr/debugger.py, pydbgr/except.py, pydbgr/post_mortem.py,
 	  pydbgr/processor/command/mock.py,
@@ -315,7 +321,7 @@
 	  exception so we can use it in an execv-style restart if we need
 	  to.
 
-2009-03-07 17:22  rocky.bernstein
+2009-03-07 17:22  rocky@gnu.org
 
 	* emacs/pydbgr.el, pydbgr/api.py, pydbgr/post_mortem.py,
 	  pydbgr/processor/command/infosub/program.py,
@@ -327,32 +333,32 @@
 	  Allow Quit
 	  to work when not started initially from the debugger.
 
-2009-03-07 11:40  rocky.bernstein
+2009-03-07 11:40  rocky@gnu.org
 
 	* pydbgr/lib/sighandler.py, test/example/sigtest.py: More signal
 	  handling cleanup. There are still bugs lurking.
 
-2009-03-07 04:21  rocky.bernstein
+2009-03-07 04:21  rocky@gnu.org
 
 	* pydbgr/lib/sighandler.py, test/example/sigtest.py,
 	  test/unit/test-lib-sig.py: More sighandling bugs. Match the way
 	  pydb works a little closer
 
-2009-03-06 20:43  rocky.bernstein
+2009-03-06 20:43  rocky@gnu.org
 
 	* pydbgr/processor/command/handle.py, test/functional/test-sig.py:
 	  Second signal-handling test. Fix "help handle" spelling mistake.
 
-2009-03-06 20:22  rocky.bernstein
+2009-03-06 20:22  rocky@gnu.org
 
 	* test/functional/test-sig.py, test/functional/test-step.py: First
 	  signal handling test
 
-2009-03-06 03:38  rocky.bernstein
+2009-03-06 03:38  rocky@gnu.org
 
 	* pydbgr/lib/sighandler.py: Minor change.
 
-2009-03-06 03:20  rocky.bernstein
+2009-03-06 03:20  rocky@gnu.org
 
 	* pydbgr/lib/core.py, pydbgr/lib/sighandler.py,
 	  pydbgr/processor/command/handle.py,
@@ -363,13 +369,13 @@
 	  Add core.set_next(). Initial signal handling output now reflects
 	  the current situation.
 
-2009-03-05 16:12  rocky.bernstein
+2009-03-05 16:12  rocky@gnu.org
 
 	* pydbgr/lib/sighandler.py, pydbgr/processor/command/handle.py,
 	  test/example/sigtest.py: Towards getting signal handling
 	  *working*.
 
-2009-03-05 10:42  rocky.bernstein
+2009-03-05 10:42  rocky@gnu.org
 
 	* pydbgr/lib/sighandler.py, pydbgr/processor/command/handle.py,
 	  test/unit/test-cmdfns.py, test/unit/test-lib-pp.py,
@@ -377,11 +383,11 @@
 	  sighandler code. Allow us to set actions for signals that are
 	  initally ignored
 
-2009-03-05 02:55  rocky.bernstein
+2009-03-05 02:55  rocky@gnu.org
 
 	* pydbgr/lib/sighandler.py: One more wafer-thin change...
 
-2009-03-05 02:48  rocky.bernstein
+2009-03-05 02:48  rocky@gnu.org
 
 	* pydbgr/debugger.py, pydbgr/lib/sighandler.py,
 	  pydbgr/processor/command/examine.py,
@@ -389,21 +395,21 @@
 	  pydbgr/processor/command/infosub/signals.py: More work towards
 	  getting the "handle" and "info signals" commands working.
 
-2009-03-04 15:11  rocky.bernstein
+2009-03-04 15:11  rocky@gnu.org
 
 	* pydbgr/processor/cmdproc.py, pydbgr/processor/command/examine.py:
 	  Error handling for shlex errors. Revise "examine" documentation.
 
-2009-03-04 09:34  rocky.bernstein
+2009-03-04 09:34  rocky@gnu.org
 
 	* ., .cvsignore, pydbgr/lib/bytecode.py, pydbgr/lib/sighandler.py:
 	  Start porting signal handling library routine from pydb
 
-2009-03-04 08:17  rocky.bernstein
+2009-03-04 08:17  rocky@gnu.org
 
 	* test/data/Makefile: Administrivia: add boilerplate Makefile.
 
-2009-03-04 08:17  rocky.bernstein
+2009-03-04 08:17  rocky@gnu.org
 
 	* Makefile.am, pydbgr/cli.py,
 	  pydbgr/processor/command/showsub/trace.py,
@@ -415,7 +421,7 @@
 	  First integration test! Fix bug in setting script interface
 	  output in "source" command.
 
-2009-03-04 03:05  rocky.bernstein
+2009-03-04 03:05  rocky@gnu.org
 
 	* pydbgr/cli.py, pydbgr/io/output.py, pydbgr/processor/cmdproc.py,
 	  pydbgr/processor/command/base_subcmd.py,
@@ -427,7 +433,7 @@
 	  middle of sourcing a script file. Fix bug in opening interface
 	  output when given as a string file name.
 
-2009-03-03 12:06  rocky.bernstein
+2009-03-03 12:06  rocky@gnu.org
 
 	* pydbgr/lib/bytecode.py, pydbgr/lib/disassemble.py,
 	  pydbgr/processor/cmdproc.py,
@@ -435,7 +441,7 @@
 	  disassembly routines. disassembly evaluation deals with numbers
 	  better and is a little more modular, although still ugly.
 
-2009-03-03 04:53  rocky.bernstein
+2009-03-03 04:53  rocky@gnu.org
 
 	* pydbgr/lib/bytecode.py, pydbgr/lib/default.py,
 	  pydbgr/lib/stack.py, pydbgr/processor/cmdproc.py,
@@ -444,7 +450,7 @@
 	  test/unit/test-bytecode.py: Generalize "set skip" to include
 	  "class" definitions. More customization may be desired.
 
-2009-03-02 11:07  rocky.bernstein
+2009-03-02 11:07  rocky@gnu.org
 
 	* ., .cvsignore, AUTHORS, Makefile, Makefile.am, NEWS, VERSION,
 	  __pkginfo__.py, autogen.sh, configure.ac, emacs,
@@ -452,7 +458,7 @@
 	  emacs/test-pydbgr.el, test/functional: Administrivia: add emacs
 	  testing/installation into the fold
 
-2009-03-01 15:24  rocky.bernstein
+2009-03-01 15:24  rocky@gnu.org
 
 	* pydbgr/__init__.py, pydbgr/cli.py, pydbgr/debugger.py,
 	  pydbgr/except.py, pydbgr/lib/core.py, pydbgr/post_mortem.py,
@@ -465,12 +471,12 @@
 	  imports. Document 'disassemble' better and allow '.' and integer
 	  evaluations for numbers
 
-2009-03-01 12:43  rocky.bernstein
+2009-03-01 12:43  rocky@gnu.org
 
 	* pydbg.ChangeLog, svn-commit.tmp, svn2cl_usermap,
 	  test/notyet-test-set-trace-sub.py: Administrivia
 
-2009-03-01 12:34  rocky.bernstein
+2009-03-01 12:34  rocky@gnu.org
 
 	* __pkginfo__.py, emacs/pydbg-test.el, emacs/pydbg.el,
 	  emacs/pydbgr-test.el, emacs/pydbgr.el, pydbgr/api.py,
@@ -574,12 +580,12 @@
 	  test/unit/test-user.py: pydbg->pydbgr rename: regression tests
 	  now work again.
 
-2009-03-01 11:56  rocky.bernstein
+2009-03-01 11:56  rocky@gnu.org
 
 	* pydbg, pydbgr, test/functional/UNKNOWN.egg-info, tmp: pydbg ->
 	  pydbgr rename. Part 1
 
-2009-03-01 11:52  rocky.bernstein
+2009-03-01 11:52  rocky@gnu.org
 
 	* .cvsignore, .gitignore, CHANGES.txt, COPYING, Makefile,
 	  README.txt, __pkginfo__.py, emacs, emacs/.gitignore,

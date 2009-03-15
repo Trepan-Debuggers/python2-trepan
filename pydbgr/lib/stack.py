@@ -14,7 +14,7 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """ Functions for working with Python frames"""
-import types
+import re, types
 
 from import_relative import import_relative
 Mbytecode = import_relative('bytecode', top_name='pydbgr')
@@ -30,6 +30,8 @@ def count_frames(frame, count_start=0):
 
 import repr as Mrepr
 import inspect
+
+_re_pseudo_file = re.compile(r'^<.+>')
 
 def format_stack_entry(dbg_obj, frame_lineno, lprefix=': ',
                        include_location=True):
@@ -75,10 +77,11 @@ def format_stack_entry(dbg_obj, frame_lineno, lprefix=': ',
         s += Mrepr.repr(rv)
         pass
 
-    add_quotes_around_file = True
     if include_location:
+        is_pseudo_file = _re_pseudo_file.match(filename)
+        add_quotes_around_file = not is_pseudo_file
         if is_module:
-            if not is_exec_stmt(frame):
+            if not is_exec_stmt(frame) and not is_pseudo_file:
                 s += ' file'
         elif s == '?()':
             if is_exec_stmt(frame):
@@ -89,12 +92,13 @@ def format_stack_entry(dbg_obj, frame_lineno, lprefix=': ',
                     add_quotes_around_file = False
                     pass
                 pass
-            else:
+            elif not is_pseudo_file:
                 s = 'in file'
                 pass
             pass
-        else:
+        elif not is_pseudo_file:
             s += ' called from file'
+            pass
 
         if add_quotes_around_file: filename = "'%s'" % filename
         s += " %s at line %r" % (filename, lineno)

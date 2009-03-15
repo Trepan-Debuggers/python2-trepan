@@ -37,7 +37,7 @@ import tracer, tracefilter
 from import_relative import import_relative
 
 Mcore   = import_relative('core', '.lib', 'pydbgr')
-Mexcept = import_relative('except', '.', 'pydbgr')
+Mexcept = import_relative('exception', '.', 'pydbgr')
 
 # Default settings used here
 Mdefault  = import_relative('default', '.lib', 'pydbgr') 

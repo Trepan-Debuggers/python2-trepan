@@ -21,7 +21,7 @@ from tracer import EVENT2SHORT
 
 Mbase_proc = import_relative('base_proc', '.', 'pydbgr')
 Mbytecode  = import_relative('bytecode', '..lib', 'pydbgr')
-Mexcept    = import_relative('except', '..', 'pydbgr')
+Mexcept    = import_relative('exception', '..', 'pydbgr')
 Mdisplay   = import_relative('display', '..lib', 'pydbgr')
 Mmisc      = import_relative('misc', '..', 'pydbgr')
 Mfile      = import_relative('file', '..lib', 'pydbgr')

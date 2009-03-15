@@ -30,7 +30,7 @@ from import_relative import import_relative
 Mapi      = import_relative('api', top_name=package)
 Mclifns   = import_relative('clifns', top_name=package)
 Mdebugger = import_relative('debugger', top_name=package)
-Mexcept   = import_relative('except', top_name=package)
+Mexcept   = import_relative('exception', top_name=package)
 Moutput   = import_relative('output', '.io', package)
 Mserver   = import_relative('server', '.interface', package)
 Mfile     = import_relative('file', '.lib', package)

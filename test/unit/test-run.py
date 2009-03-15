@@ -7,7 +7,7 @@ from import_relative import *
 # FIXME: until import_relative is fixed
 import_relative('pydbgr', '...', 'pydbgr')
 
-Mexcept  = import_relative('except', '...pydbgr', 'pydbgr')
+Mexcept  = import_relative('exception', '...pydbgr', 'pydbgr')
 Mrun     = import_relative('pydbgr.processor.command.run', '...', 'pydbgr')
 
 from cmdhelper import dbg_setup

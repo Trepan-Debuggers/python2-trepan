@@ -19,7 +19,7 @@ from import_relative import import_relative
 
 # Our local modules
 Mbase_cmd  = import_relative('base_cmd', top_name='pydbgr')
-Mexcept    = import_relative('except', '...', 'pydbgr')
+Mexcept    = import_relative('exception', '...', 'pydbgr')
 
 class RunCommand(Mbase_cmd.DebuggerCommand):
     """restart - Restart debugger and program via an exec

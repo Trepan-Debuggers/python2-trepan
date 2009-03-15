@@ -20,7 +20,7 @@ import inspect, os, sys, re, traceback
 # Our local modules
 from import_relative import import_relative
 Mdebugger = import_relative('debugger', '.', 'pydbgr') 
-Mexcept   = import_relative('except', '.', 'pydbgr') 
+Mexcept   = import_relative('exception', '.', 'pydbgr') 
 
 def get_last_or_frame_exception():
     """Intended to be used going into post mortem routines.  If

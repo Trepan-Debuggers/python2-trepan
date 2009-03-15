@@ -1,9 +1,9 @@
 #!/usr/bin/env python
-'Unit test for pydbgr.except'
+'Unit test for pydbgr.exception'
 import unittest
 from import_relative import import_relative
 
-Mexcept = import_relative('except', '...pydbgr')
+Mexcept = import_relative('exception', '...pydbgr')
 
 class TestDeguggerExcept(unittest.TestCase):
 

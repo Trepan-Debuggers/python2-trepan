@@ -41,12 +41,12 @@ __title__ = package
 
 __version__ = '0.1.0'
 
-def process_options(debugger_name, pkg_version, option_list=None):
+def process_options(debugger_name, pkg_version, sys_argv, option_list=None):
     """Handle debugger options. Set `option_list' if you are writing
     another main program and want to extend the existing set of debugger
     options.
 
-    The options dicionary from opt_parser is return. Global sys.argv is
+    The options dicionary from opt_parser is return. sys_argv is
     also updated."""
     usage_str="""%prog [debugger-options] [python-script [script-options...]]
 
@@ -136,7 +136,7 @@ def process_options(debugger_name, pkg_version, option_list=None):
     # that manual for a description), although the syntax is different.
     # they have the following format:
     #
-    # ^Z^Zannotname
+    # ^Z^Zannotation-name
     # <arbitrary text>
     # ^Z^Z
     #
@@ -154,7 +154,10 @@ def process_options(debugger_name, pkg_version, option_list=None):
 
     optparser.disable_interspersed_args()
 
-    (opts, sys.argv) = optparser.parse_args()
+    # FIXME: We should be able to pass in sys_argv to parse_args but
+    # that doesn't work.
+    sys.argv = list(sys_argv)
+    (opts, sys_argv) = optparser.parse_args()
     dbg_opts = {}
 
     # Handle debugger startup command files: --nx (-n) and --command.
@@ -213,7 +216,7 @@ def process_options(debugger_name, pkg_version, option_list=None):
             pass
         pass
         
-    return opts, dbg_opts
+    return opts, dbg_opts, sys_argv
 
 def _postprocess_options(dbg, opts):
     ''' Handle options (`opts') that feed into the debugger (`dbg')'''
@@ -266,8 +269,9 @@ def main(dbg=None, sys_argv=list(sys.argv)):
     global __title__
 
     # Save the original just for use in the restart that works via exec.
-    sys_argv = list(sys.argv)   
-    opts, dbg_opts  = process_options(__title__, __version__)
+    orig_sys_argv = list(sys.argv)
+    opts, dbg_opts, sys_argv  = process_options(__title__, __version__, 
+                                                sys_argv)
     dbg_opts['orig_sys_argv'] = sys_argv
 
     if dbg is None:
@@ -280,13 +284,13 @@ def main(dbg=None, sys_argv=list(sys.argv)):
     # options that belong to this debugger. The original options to
     # invoke the debugger and script are in global sys_argv
 
-    if len(sys.argv) == 0:
+    if len(sys_argv) == 0:
         # No program given to debug. Set to go into a command loop
         # anyway
         mainpyfile = None
 
     else:
-        mainpyfile = sys.argv[0] # Get script filename.
+        mainpyfile = sys_argv[0] # Get script filename.
         if not os.path.isfile(mainpyfile):
             mainpyfile=Mclifns.whence_file(mainpyfile)
             is_readable = Mfile.readable(mainpyfile)
@@ -359,7 +363,7 @@ def main(dbg=None, sys_argv=list(sys.argv)):
         pass
 
     # Restore old sys.argv
-    sys.argv = sys_argv
+    sys.argv = orig_sys_argv
     return
 
 # When invoked as main program, invoke the debugger on a script

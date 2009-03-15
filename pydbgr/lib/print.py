@@ -44,9 +44,9 @@ def print_obj(arg, frame, format=None, short=False):
         if not frame:
             # ?? Should we have set up a dummy globals
             # to have persistence? 
-            val = eval(arg, None, None)
+            obj = eval(arg, None, None)
         else:
-            val = eval(arg, frame.f_globals, frame.f_locals)
+            obj = eval(arg, frame.f_globals, frame.f_locals)
             pass
     except:
         return 'No symbol "' + arg + '" in current context.'
@@ -54,16 +54,29 @@ def print_obj(arg, frame, format=None, short=False):
     what = arg
     if format:
         what = format + ' ' + arg
-        val = printf(val, format)
-    s = '%s = %s' % (what, val)
+        obj = printf(obj, format)
+    s = '%s = %s' % (what, obj)
     if not short:
-        s += '\ntype = %s' % type(val)
+        s += '\ntype = %s' % type(obj)
+        if callable(obj):
+            argspec = print_argspec(obj, arg)
+            if argspec: 
+                s += ':\n\t'
+                if inspect.isclass(obj):
+                    s += 'Class constructor information:\n\t'
+                    obj = obj.__init__
+                elif type(obj) is types.InstanceType:
+                    obj = obj.__call__
+                    pass
+                s+= argspec
+            pass
+
         # Try to list the members of a class.
         # Not sure if this is correct or the
         # best way to do.
-        s = print_dict(s, val, "object variables")
-        if hasattr(val, "__class__"):
-            s = print_dict(s, val.__class__, "class variables")
+        s = print_dict(s, obj, "object variables")
+        if hasattr(obj, "__class__"):
+            s = print_dict(s, obj.__class__, "class variables")
     return s
 
 pconvert = {'c':chr, 'x': hex, 'o': oct, 'f': float, 's': str}
@@ -97,6 +110,15 @@ def printf(val, fmt):
 
 if __name__ == '__main__':
     print print_dict('', globals(), 'my globals')
+    print '-' * 40
+    print print_obj('print_obj', None)
+    print '-' * 30
+    print print_obj('Exception', None)
+    print '-' * 30
+    class Foo():
+        def __init__(self, bar=None): pass
+        pass
+    print print_obj('Foo.__init__', None)
     assert printf(31, "/o") == '037'
     assert printf(31, "/t") == '00011111'
     assert printf(33, "/c") == '!'

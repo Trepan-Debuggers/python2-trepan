@@ -24,7 +24,6 @@ realpath = lambda p: os.path.realpath(os.path.normcase(os.path.dirname(
 my_dir = realpath(__file__)
 sys.path = [p for p in sys.path if p != '' and realpath(p) != my_dir]
 Mpydoc = __import__('pydoc')
-print Mpydoc.__file__
 sys.path = sys_path_save
 
 # Our local modules

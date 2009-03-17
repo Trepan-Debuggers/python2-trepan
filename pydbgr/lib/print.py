@@ -115,10 +115,13 @@ if __name__ == '__main__':
     print '-' * 30
     print print_obj('Exception', None)
     print '-' * 30
+    print print_argspec('Exception', None)
     class Foo():
         def __init__(self, bar=None): pass
         pass
     print print_obj('Foo.__init__', None)
+    print '-' * 30
+    print print_argspec(Foo.__init__, '__init__')
     assert printf(31, "/o") == '037'
     assert printf(31, "/t") == '00011111'
     assert printf(33, "/c") == '!'

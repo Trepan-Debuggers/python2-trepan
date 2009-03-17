@@ -24,9 +24,12 @@ Mbase_cmd  = import_relative('base_cmd', top_name='pydbgr')
 Mprint     = import_relative('print', '...lib', 'pydbgr')
 
 class PrintDefCommand(Mbase_cmd.DebuggerCommand):
-    """Print the definition header for a callable object.
-    
-    If the object is a class, print the constructor information."""
+    """pdef obj
+
+Print the definition header for a callable object.
+If the object is a class, print the constructor information.
+
+See also pydoc."""
 
     category     = 'data'
     min_args      = 1

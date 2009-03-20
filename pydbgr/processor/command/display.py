@@ -49,16 +49,6 @@ class DisplayCommand(Mbase_cmd.DebuggerCommand):
         return
 
     def run(self, args):
-        """display [format] EXP
-
-        Print value of expression EXP each time the program stops.
-        /FMT may be used before EXP and may be one of 'c' for char,
-        'x' for hex, 'o' for octal, 'f' for float or 's' for string.
-
-        With no argument, display all currently requested auto-display
-        expressions.  Use "undisplay" to cancel display requests previously
-        made."""
-
         if len(args) == 1:
             # Display anything active
             self.run_eval_display(self)

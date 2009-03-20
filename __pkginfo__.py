@@ -23,7 +23,7 @@
 
 # Things that change more often go here.
 copyright   = '''Copyright (C) 2008, 2009 Rocky Bernstein <rocky@gnu.org>.'''
-classifiers =  ['Development Status :: 5 - Alpha',
+classifiers =  ['Development Status :: 4 - Beta',
                 'Environment :: Console',
                 'Intended Audience :: Developers',
                 'License :: OSI Approved :: GNU General Public License (GPL)',

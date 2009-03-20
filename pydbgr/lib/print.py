@@ -77,6 +77,7 @@ def print_obj(arg, frame, format=None, short=False):
         s = print_dict(s, obj, "object variables")
         if hasattr(obj, "__class__"):
             s = print_dict(s, obj.__class__, "class variables")
+            pass
     return s
 
 pconvert = {'c':chr, 'x': hex, 'o': oct, 'f': float, 's': str}

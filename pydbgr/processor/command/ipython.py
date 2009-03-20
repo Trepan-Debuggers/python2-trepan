@@ -137,7 +137,7 @@ def ipy_%s(self, args):
 #                 except IOError:
 #                     pass
 #                 return False
-            return self.proc.continue_running
+            return self.continue_running
         pass
     pass
 except ImportError:

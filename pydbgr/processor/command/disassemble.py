@@ -20,9 +20,10 @@ from import_relative import import_relative
 Mbase_cmd = import_relative('base_cmd', top_name='pydbgr')
 Mcmdfns   = import_relative('cmdfns', top_name='pydbgr')
 Mdis      = import_relative('disassemble', '...lib', 'pydbgr')
+Mfile     = import_relative('file', '...lib', 'pydbgr')
 
 class DisassembleCommand(Mbase_cmd.DebuggerCommand):
-    """disassemble [obj-or-class] [[+|-]start-line|. [[+|-]end-line|.]]
+    """disassemble [thing] [[+|-]start-line|. [[+|-]end-line|.]]
     
 With no argument, disassemble the current frame.  With an integer
 start-line, the disassembly is narrowed to show lines starting
@@ -34,8 +35,8 @@ If start-line or end-line is '.', '+', or '-', the current line number
 is used.  If instead it starts with a plus or minus prefix to a
 number, then the line number is relative to the current frame number.
 
-With a class, method, function, code or string argument disassemble
-that.
+With a class, method, function, pyc-file, code or string argument
+disassemble that.
 
 Examples
 
@@ -47,8 +48,9 @@ Examples
    disassemble os.path.normcase   # Disaassemble just method os.path.normcase
    disassemble -3  # Disassemble subtracting 3 from the current line number 
    disassemble +3  # Disassemble adding 3 from the current line number 
-   disassemble 3   # Disassemble starting from line 3
-   disassemble 3 10  # Disassemble lines 3 to 10
+   disassemble 3                  # Disassemble starting from line 3
+   disassemble 3 10               # Disassemble lines 3 to 10
+   disassemble myprog.pyc         # Disassemble file myprog.pyc
 """
 
     category      = 'data'
@@ -72,20 +74,25 @@ Examples
 
     def run(self, args):
         start_line = end_line = None
-        if not self.proc.curframe:
-            self.errmsg("No frame selected.")
-            return
         relative_pos = False
         if len(args) > 1:
             start_line, relative_pos = self.parse_arg(args[1])
             if start_line is None:
                 # First argument should be an evaluatable object
-                try:
-                    obj=self.proc.eval(args[1])
-                except:
-                    self.errmsg(("Object '%s' is not something we can"
-                                 + " disassemble.") % args[1])
-                    return 
+                # or a filename 
+                if args[1].endswith('.pyc') and Mfile.readable(args[1]):
+                    magic, moddate, modtime, obj = Mdis.pyc2code(args[1])
+                elif not self.proc.curframe:
+                        self.errmsg("No frame selected.")
+                        return
+                else:
+                    try:
+                        obj=self.proc.eval(args[1])
+                    except:
+                        self.errmsg(("Object '%s' is not something we can"
+                                     + " disassemble.") % args[1])
+                        return 
+                    pass
                 if len(args) > 2:
                     start_line, relative_pos = self.parse_arg(args[2])
                     if start_line is None:
@@ -104,16 +111,17 @@ Examples
                                     len(args)-1)
                         return
                     pass
-                
-                try:
-                    obj=Mcmdfns.get_val(self.proc.curframe, 
-                                        self.errmsg, args[1])
-                except:
-                    return
-                pass
+                else:
+                    try:
+                        obj=Mcmdfns.get_val(self.proc.curframe, 
+                                            self.errmsg, args[1])
+                    except:
+                        return
+                    pass
                 Mdis.dis(self.msg, self.msg_nocr, self.errmsg, obj, 
                          start_line=start_line, end_line=end_line, 
                          relative_pos=relative_pos)
+                return False
             else:
                 if len(args) == 3:
                     end_line, not_used = self.parse_arg(args[2])
@@ -128,6 +136,10 @@ Examples
                     return False
                 pass
             pass
+        elif not self.proc.curframe:
+            self.errmsg("No frame selected.")
+            return
+
         Mdis.dis(self.msg, self.msg_nocr, self.errmsg, 
                  self.proc.curframe, 
                  start_line=start_line, end_line=end_line, 
@@ -156,4 +168,7 @@ if __name__ == '__main__':
     command.run(['disassemble', '-', '1'])
     print prefix + '.'
     command.run(['disassemble', '.'])
+    print prefix + 'disassemble.pyc 30 70'
+    from pydbgr.api import debug; debug()
+    command.run(['disassemble', './disassemble.pyc', '10', '100'])
     pass

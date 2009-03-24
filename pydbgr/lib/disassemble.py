@@ -14,7 +14,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''Disassembly Routines'''
 
-import sys, types
+import inspect, sys, types
 from dis import distb, findlabels, findlinestarts
 from opcode import cmp_op, hasconst, hascompare, hasfree, hasname, hasjrel, \
     haslocal, opname, EXTENDED_ARG, HAVE_ARGUMENT
@@ -42,6 +42,8 @@ def dis(msg, msg_nocr, errmsg, x=None, start_line=-1, end_line=None,
     elif hasattr(x, 'f_code'):
         msg("Disassembly of %s: " % x)
         x = x.f_code
+        pass
+    elif inspect.iscode(x):
         pass
     if hasattr(x, '__dict__'):
         items = x.__dict__.items()
@@ -158,9 +160,21 @@ def disassemble_string(orig_msg, orig_msg_nocr, code, lasti=-1, cur_line=0,
         msg("")
     return
 
+import marshal, struct, time
+# Inspired by show_file from:
+# http://nedbatchelder.com/blog/200804/the_structure_of_pyc_files.html
+def pyc2code(fname):
+    '''Return a code object from a Python compiled file'''
+    f = open(fname, "rb")
+    magic = f.read(4)
+    moddate = f.read(4)
+    modtime = time.localtime(struct.unpack('L', moddate)[0])
+    code = marshal.load(f)
+    f.close()
+    return magic, moddate, modtime, code
+
 # Demo it
 if __name__ == '__main__':
-    import inspect
     def msg(msg_str):
         print msg_str
         return
@@ -175,5 +189,11 @@ if __name__ == '__main__':
         start_line=10, end_line=40)
     print '-' * 40
     dis(msg, msg_nocr, errmsg, disassemble)
+    print '-' * 40
+    from import_relative import get_srcdir
+    import os
+    f = os.path.join(get_srcdir(), 'disassemble.pyc')
+    magic, moddate, modtime, co = pyc2code(f)
+    disassemble(msg, msg_nocr, co, -1, 1, 70)
     pass
 

@@ -192,8 +192,7 @@ if __name__ == '__main__':
     print '-' * 40
     from import_relative import get_srcdir
     import os
-    f = os.path.join(get_srcdir(), 'disassemble.pyc')
-    magic, moddate, modtime, co = pyc2code(f)
+    magic, moddate, modtime, co = pyc2code(sys.modules['os.path'].__file__)
     disassemble(msg, msg_nocr, co, -1, 1, 70)
     pass
 

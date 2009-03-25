@@ -190,9 +190,7 @@ if __name__ == '__main__':
     print '-' * 40
     dis(msg, msg_nocr, errmsg, disassemble)
     print '-' * 40
-    from import_relative import get_srcdir
-    import os
-    magic, moddate, modtime, co = pyc2code(sys.modules['os.path'].__file__)
+    magic, moddate, modtime, co = pyc2code(sys.modules['types'].__file__)
     disassemble(msg, msg_nocr, co, -1, 1, 70)
     pass
 

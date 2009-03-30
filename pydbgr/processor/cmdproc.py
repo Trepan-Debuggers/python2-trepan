@@ -244,9 +244,6 @@ class CommandProcessor(Mbase_proc.Processor):
         """Adjust stack frame by pos positions. If absolute_pos then
         pos is an absolute number. Otherwise it is a relative number.
 
-        If self.gdb_dialect is True, the 0 position is the newest
-        entry and doesn't match Python's indexing. Otherwise it does.
-
         A negative number indexes from the other end."""
         if not self.curframe:
             self.errmsg("No stack.")

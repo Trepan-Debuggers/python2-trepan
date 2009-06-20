@@ -154,10 +154,7 @@ def process_options(debugger_name, pkg_version, sys_argv, option_list=None):
 
     optparser.disable_interspersed_args()
 
-    # FIXME: We should be able to pass in sys_argv to parse_args but
-    # that doesn't work.
-    sys.argv = list(sys_argv)
-    (opts, sys_argv) = optparser.parse_args()
+    (opts, sys.argv) = optparser.parse_args()
     dbg_opts = {}
 
     # Handle debugger startup command files: --nx (-n) and --command.
@@ -216,7 +213,7 @@ def process_options(debugger_name, pkg_version, sys_argv, option_list=None):
             pass
         pass
         
-    return opts, dbg_opts, sys_argv
+    return opts, dbg_opts, sys.argv
 
 def _postprocess_options(dbg, opts):
     ''' Handle options (`opts') that feed into the debugger (`dbg')'''

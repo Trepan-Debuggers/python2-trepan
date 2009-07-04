@@ -1,3 +1,52 @@
+2009-06-20 23:40  rocky@gnu.org
+
+	* pydbgr/cli.py: sys.argv not set correctly for debugged program.
+	  Issue #1
+
+2009-03-30 01:21  rocky@gnu.org
+
+	* pydbgr/processor/cmdproc.py: We don't do non-gdb-style stack
+	  listing anymore.
+
+2009-03-25 19:47  rocky@gnu.org
+
+	* pydbgr/lib/disassemble.py: Minor change
+
+2009-03-25 19:45  rocky@gnu.org
+
+	* pydbgr/lib/disassemble.py: Minor change
+
+2009-03-24 03:39  rocky@gnu.org
+
+	* pydbgr/lib/disassemble.py,
+	  pydbgr/processor/command/disassemble.py: Allow disassembly of
+	  compiled python files (.pyc)
+
+2009-03-20 01:35  rocky@gnu.org
+
+	* pydbgr/processor/command/display.py: Remove duplicate docstring
+
+2009-03-20 01:31  rocky@gnu.org
+
+	* __pkginfo__.py, pydbgr/lib/print.py,
+	  pydbgr/processor/command/ipython.py: Minor change
+
+2009-03-17 21:37  rocky@gnu.org
+
+	* pydbgr/processor/command/pdef.py: Update pdef docstring
+
+2009-03-17 21:09  rocky@gnu.org
+
+	* pydbgr/lib/print.py: Small demo addition
+
+2009-03-15 06:27  rocky@gnu.org
+
+	* NEWS: Update NEWS for release
+
+2009-03-15 06:13  rocky@gnu.org
+
+	* ChangeLog, svn2cl_usermap: Get ready for release
+
 2009-03-15 06:12  rocky@gnu.org
 
 	* ChangeLog, Makefile.am, configure.ac,

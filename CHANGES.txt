@@ -1,0 +1,9 @@
+0.1.1 07-04-09 - 
+- sys.argv had not been set correctly for debugged program. (Issue #1)
+- Allow disassembly of compiled python files (.pyc)
+
+0.1.0 03-15-09 - Ron Frankel Release
+
+- Initial release
+
+

@@ -1,4 +1,4 @@
-AC_INIT(pydbgr-extra, 0.1.0,)
+AC_INIT(pydbgr-extra, 0.1.1,)
 AC_CONFIG_SRCDIR(emacs/pydbgr.el)
 AM_INIT_AUTOMAKE
 

@@ -36,7 +36,7 @@ being debugged. """
             os.chdir(args[1])
             self.msg('Working directory %s.' % os.getcwd())
         except OSError:
-            self.msg('cd: %s.' % sys.exc_info()[1])
+            self.errmsg('cd: %s.' % sys.exc_info()[1])
             pass
         return
     pass

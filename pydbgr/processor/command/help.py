@@ -29,6 +29,7 @@ Mmisc      = import_relative('misc', '...', 'pydbgr')
 categories = {
     'breakpoints' : 'Making the program stop at certain points',
     'data'        : 'Examining data',
+    'files'       : 'Specifying and examining files',
     'running'     : 'Running the program', 
     'status'      : 'Status inquiries',
     'support'     : 'Support facilities',

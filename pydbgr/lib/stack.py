@@ -21,7 +21,7 @@ Mbytecode = import_relative('bytecode', top_name='pydbgr')
 Mprint    = import_relative('print', top_name='pydbgr')
 
 def count_frames(frame, count_start=0):
-    "Return a count of number of frames"
+    "Return a count of the number of frames"
     count = -count_start
     while frame: 
         count += 1

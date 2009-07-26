@@ -80,7 +80,7 @@ See also 'examine' and 'whatis'.
                 self.columnize_all_commands()
                 return
             elif args[1] in categories.keys():
-                self.show_category(args[1:])
+                self.show_category(category, args[2:])
                 return
 
             command_name = Mcmdproc.resolve_name(self.proc, args[1])
@@ -138,12 +138,11 @@ Type "help" followed by command name for full documentation.
         self.msg(final_msg)
         return
 
-    def show_category(self, args):
+    def show_category(self, category, args):
         """Show short help for all commands in `category'."""
-        category = args[0]
         n2cmd = self.proc.name2cmd
         names = n2cmd.keys()
-        if len(args) == 2 and args[1] == '*':
+        if len(args) == 1 and args[1] == '*':
             self.msg("Commands in class %s:" % category)
             cmds = [cmd for cmd in names if category == n2cmd[cmd].category]
             cmds.sort()

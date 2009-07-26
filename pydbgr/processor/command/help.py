@@ -148,8 +148,8 @@ Type "help" followed by command name for full documentation.
             cmds = [cmd for cmd in names if category == n2cmd[cmd].category]
             cmds.sort()
             width = self.debugger.settings['width']
-            self.msg(columnize.columnize(commands, displaywidth=width,
-                                     lineprefix='    '))
+            self.msg(columnize.columnize(cmds, displaywidth=width,
+                                         lineprefix='    '))
             return
         
         self.msg("%s." % categories[category])

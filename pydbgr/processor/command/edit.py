@@ -19,10 +19,11 @@ import_relative('lib', '...', 'pydbgr')
 Mbase_cmd  = import_relative('base_cmd', top_name='pydbgr')
 
 class EditCommand(Mbase_cmd.DebuggerCommand):
-    """cd DIRECTORY
+    """edit [POSITION]
     
-Set working directory to DIRECTORY for debugger and program
-being debugged. """
+Edit specified file or module.
+With no argument, edits file containing most recent line listed.
+"""
 
     category      = 'files'
     min_args      = 0

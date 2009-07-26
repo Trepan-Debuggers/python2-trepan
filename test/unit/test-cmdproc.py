@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 'Unit test for pydbgr.processor.cmdproc'
-import inspect, os, sys, unittest
+import inspect, os, sys, types, unittest
 from import_relative import import_relative
 
 Mcmdproc = import_relative('processor.cmdproc', '...pydbgr')
@@ -44,14 +44,34 @@ class TestCmdProc(unittest.TestCase):
         return
 
     def test_class_vars(self):
+        '''See that each command has required attributes defined.  Possibly in
+        a strongly-typed language we wouldn't need to do much of this.'''
+
         for cmd in self.cp.name2cmd.values():
-            for attr in ['category', 'min_args', 'max_args', 'name_aliases',
-                         'need_stack', 'short_help']:
-                name = cmd.__class__
+
+            name = cmd.__class__
+            for attr in ['min_args', 'max_args', 'name_aliases', 'need_stack']:
                 self.assertTrue(hasattr(cmd, attr),
                                 '%s command should have a %s attribute' %
                                 (name, attr))
                 pass
+
+            for attr in ['category', 'short_help']:
+                self.assertTrue(hasattr(cmd, attr),
+                                '%s command should have a %s attribute' %
+                                (name, attr))
+                value = getattr(cmd, attr)
+                self.assertEqual(types.StringType, type(value),
+                                '%s command %s attribute should be a string' %
+                                (name, attr))
+                pass
+
+            self.assertEqual(types.TupleType, type(cmd.name_aliases))
+            for value in cmd.name_aliases:
+                self.assertEqual(types.StringType, type(value),
+                                '%s command name_aliases should be strings' %
+                                name)
+
             if cmd.min_args is not None:
                 if cmd.max_args is not None:
                     self.assertTrue(cmd.min_args <= cmd.max_args,

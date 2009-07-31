@@ -19,6 +19,7 @@ from repr import Repr
 from import_relative import import_relative, get_srcdir
 from tracer import EVENT2SHORT
 
+import_relative('lib', '..', 'pydbgr')
 Mbase_proc = import_relative('base_proc', '.', 'pydbgr')
 Mbytecode  = import_relative('bytecode', '..lib', 'pydbgr')
 Mexcept    = import_relative('exception', '..', 'pydbgr')
@@ -430,8 +431,7 @@ class CommandProcessor(Mbase_proc.Processor):
             pass
         return (modfunc, self.core.canonic(filename), lineno)
     
-    def get_an_int(self, arg, msg_on_error, min_value=None, max_value=None, 
-                   cmdname=None):
+    def get_an_int(self, arg, msg_on_error, min_value=None, max_value=None):
         """Like cmdfns.get_an_int(), but if there's a stack frame use that
         in evaluation."""
         ret_value = self.get_int_noerr(arg)

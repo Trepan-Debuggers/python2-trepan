@@ -20,8 +20,8 @@ import atexit
 # Our local modules
 from import_relative import *
 Mbase_intf = import_relative('base_intf', top_name='pydbgr')
-Minput     = import_relative('input', '..io', 'pydbgr')
-Moutput    = import_relative('output', '..io', 'pydbgr')
+Minput     = import_relative('dbg_input', '..io', 'pydbgr')
+Moutput    = import_relative('dbg_output', '..io', 'pydbgr')
 
 class UserInterface(Mbase_intf.DebuggerInterface):
     """Interface when communicating with the user in the same

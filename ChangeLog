@@ -1,3 +1,60 @@
+2009-07-31 09:33  rocky@gnu.org
+
+	* pydbgr/interface/user.py, pydbgr/processor/cmdproc.py,
+	  test/unit/test-io-input.py: Change places where I forgot to
+	  rename {input,output} to dbg_{input,output}
+	  Remove cmdname from get_an_int - it's not used.
+
+2009-07-26 20:52  rocky@gnu.org
+
+	* pydbgr/io/dbg_input.py, pydbgr/io/dbg_output.py,
+	  pydbgr/io/input.py, pydbgr/io/output.py: input -> dbg_input,
+	  output -> dbg_output. I think input and output are
+	  reserved words.
+
+2009-07-26 09:31  rocky@gnu.org
+
+	* pydbgr/processor/command/help.py: A minor neatify.
+
+2009-07-26 08:31  rocky@gnu.org
+
+	* test/unit/test-cmdproc.py: More stringent command class attribute
+	  checking.
+
+2009-07-26 08:11  rocky@gnu.org
+
+	* pydbgr/processor/command/edit.py,
+	  pydbgr/processor/command/help.py: A couple of typos, one variable
+	  name, one docstring.
+
+2009-07-26 06:33  rocky@gnu.org
+
+	* pydbgr/processor/command/help.py: Doc string typo.
+
+2009-07-18 21:54  rocky@gnu.org
+
+	* pydbgr/lib/stack.py: Doc typo.
+
+2009-07-05 16:04  rocky@gnu.org
+
+	* pydbgr/processor/command/cd.py, pydbgr/processor/command/edit.py:
+	  Add edit command. Change msg to errmsg in cd command.
+
+2009-07-05 12:03  rocky@gnu.org
+
+	* VERSION, pydbgr/processor/command/cd.py,
+	  pydbgr/processor/command/help.py: Add gdb-like cd command. Add
+	  "help files". We're In 0.1.2svn now.
+
+2009-07-04 05:29  rocky@gnu.org
+
+	* configure.ac: Update for 0.1.1 release
+
+2009-07-04 05:03  rocky@gnu.org
+
+	* CHANGES.txt, ChangeLog, NEWS, VERSION: Get ready for 0.1.1
+	  release.
+
 2009-06-20 23:40  rocky@gnu.org
 
 	* pydbgr/cli.py: sys.argv not set correctly for debugged program.

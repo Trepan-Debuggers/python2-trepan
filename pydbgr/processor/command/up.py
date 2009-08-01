@@ -28,13 +28,15 @@ class UpCommand(Mbase_cmd.DebuggerCommand):
     max_args      = 1
     name_aliases  = ('up','u')
     need_stack    = True
-    short_help    = 'Select stack frame to a more recent selected frame'
+    short_help    = 'Move stack frame to a more recent selected frame'
 
 
     def run(self, args):
         """up [count]
         Move the current frame one level up in the stack trace
-        (to an older frame)."""
+        (to an older frame).
+
+        See also 'down' and 'frame'."""
 
         if not self.proc.stack:
             self.errmsg("Program has no stack frame set.")
@@ -48,6 +50,7 @@ class UpCommand(Mbase_cmd.DebuggerCommand):
                                         ("The 'up' command argument must eval to an" +
                                          " integer. Got: %s") % count_str,
                                         -i_stack, i_stack-1 )
+            if count is None: return
             pass
 
         self.proc.adjust_frame(pos=-count, absolute_pos=False)

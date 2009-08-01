@@ -28,17 +28,15 @@ class DownCommand(Mbase_cmd.DebuggerCommand):
     max_args      = 1
     name_aliases  = ('down','d')
     need_stack    = True
-    short_help    = 'Select stack frame to the caller of the last-selected frame'
+    short_help    = 'Move frame in the direction of the caller of the last-selected frame'
 
     def run(self, args):
         """d(own) [count]
 
         Move the current frame one level down in the stack trace
-        (to a newer frame).
+        (to a newer frame). 0 is the most recent frame.
 
-        If using gdb dialect up matches the gdb: 0 is the most recent
-        frame.  Otherwise we match Python's stack: 0 is the oldest
-        frame.  """
+        See also 'up' and 'frame'."""
 
         if not self.proc.stack:
             self.errmsg("Program has no stack frame set.")
@@ -49,9 +47,10 @@ class DownCommand(Mbase_cmd.DebuggerCommand):
             i_stack = len(self.proc.stack)
             count_str = args[1]
             count = Mcmdfns.get_an_int( self.errmsg, count_str,
-                                        ("The 'up' command argument must eval to an" +
+                                        ("The 'down' command argument must eval to an" +
                                          " integer. Got: %s") % count_str,
                                         -i_stack, i_stack-1 )
+            if count is None: return
             pass
 
         self.proc.adjust_frame(pos=count, absolute_pos=False)

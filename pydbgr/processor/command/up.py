@@ -32,11 +32,12 @@ class UpCommand(Mbase_cmd.DebuggerCommand):
 
 
     def run(self, args):
-        """up [count]
-        Move the current frame one level up in the stack trace
-        (to an older frame).
+        """u(p) [count]
 
-        See also 'down' and 'frame'."""
+Move the current frame up in the stack trace (to a newer frame). 0 is
+the most recent frame. If no count is given, move up 1.
+
+See also 'down' and 'frame'."""
 
         if not self.proc.stack:
             self.errmsg("Program has no stack frame set.")
@@ -83,5 +84,3 @@ if __name__ == '__main__':
     cp.forget()
     nest_me(cp, command, 1)
     pass
-
-

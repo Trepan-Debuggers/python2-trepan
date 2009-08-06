@@ -15,8 +15,8 @@
 #    along with this program; if not, write to the Free Software
 #    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 #    02110-1301 USA.
-''' Not a command. A stub class used by command in their 'main' for demonstrating
-how the command works.'''
+''' Not a command. A stub class used by a command in its 'main' for
+demonstrating how the command works.'''
 
 import os, sys
 from import_relative import import_relative

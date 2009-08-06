@@ -15,7 +15,7 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """A base class for debugger commands.
 
-This file is the one module in this directory that isn't a real command
+This file is a module in this directory that isn't a real command
 and commands.py needs to take care to avoid instantiating this class
 and storing it as a list of known debugger commands.
 """

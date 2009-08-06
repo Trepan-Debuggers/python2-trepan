@@ -41,12 +41,12 @@ class SubcommandMgr(base_cmd.DebuggerCommand):
 
         self.cmds = subcmd.Subcmd(name, self)
         self.name = name
-        self._populate_subcommands(name)
+        self._load_debugger_subcommands(name)
         self.proc = proc
 
         return
 
-    def _populate_subcommands(self, name):
+    def _load_debugger_subcommands(self, name):
         """ Create an instance of each of the debugger
         subcommands. Commands are found by importing files in the
         directory 'name' + 'sub'. Some files are excluded via an array set

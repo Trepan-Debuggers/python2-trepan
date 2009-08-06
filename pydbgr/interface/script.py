@@ -20,7 +20,7 @@ import atexit
 from import_relative import *
 Mbase_intf = import_relative('base_intf', top_name='pydbgr')
 Mscriptin  = import_relative('scriptin', '..io', 'pydbgr')
-Moutput    = import_relative('output', '..io', 'pydbgr')
+Moutput    = import_relative('dbg_output', '..io', 'pydbgr')
 Mmisc      = import_relative('misc', '..', 'pydbgr')
 
 class ScriptInterface(Mbase_intf.DebuggerInterface):

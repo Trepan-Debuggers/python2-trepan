@@ -23,7 +23,7 @@ class SetCommand(base_submgr.SubcommandMgr):
 You can give unique prefix of the name of a subcommand to get
 information about just that subcommand.
 
-Type "set" for a list of 'set" subcommands and what they do.
+Type "set" for a list of "set" subcommands and what they do.
 Type "help set *" for just the list of "set" subcommands.
 """
 

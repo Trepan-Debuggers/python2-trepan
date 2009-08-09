@@ -26,5 +26,5 @@ Mbase_subcmd  = import_relative('base_subcmd', '..')
 
 class ShowAutoEval(Mbase_subcmd.DebuggerShowBoolSubcommand):
     "Show Python evaluation of unrecognized debugger commands"
-    min_abbrev = 5    # Need at least "show autoe"
+    min_abbrev = len('autoe')
     pass

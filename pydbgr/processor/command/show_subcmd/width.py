@@ -25,7 +25,7 @@ import_relative('processor', '....', 'pydbgr')
 Mbase_subcmd  = import_relative('base_subcmd', '..', 'pydbgr')
 Mcmdfns       = import_relative('cmdfns', '..', 'pydbgr')
 class ShowWidth(Mbase_subcmd.DebuggerSubcommand):
-    "Show the number of characters debugger thinks are in a line"
+    "Show the number of characters the debugger thinks are in a line"
 
     min_abbrev = 2 # Need at least "show wi"
 

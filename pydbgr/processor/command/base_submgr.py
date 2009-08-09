@@ -125,9 +125,8 @@ class SubcommandMgr(base_cmd.DebuggerCommand):
         subcmd_name = args[2]
 
         if '*' == subcmd_name:
-            self.msg("List of subcommands of command '%s':" % self.name)
+            self.msg("List of subcommands for command '%s':" % self.name)
             self.msg(columnize.columnize(self.cmds.list(), lineprefix='    '))
-            self.cmds.list()
             return
 
         # "help cmd subcmd". Give help specific for that subcommand.

@@ -26,10 +26,10 @@ Mbase_subcmd = import_relative('base_subcmd', '..', 'pydbgr')
 Mcmdfns      = import_relative('cmdfns', '..', 'pydbgr')
 
 class SetWidth(Mbase_subcmd.DebuggerSubcommand):
-    """Set number of characters gdb thinks are in a line"""
+    """Set number of characters the debugger thinks are in a line"""
     
     in_list    = True
-    min_abbrev = 3 # Need at least "set wid"
+    min_abbrev = len('wid')
     short_help = __doc__
     
     def run(self, args):

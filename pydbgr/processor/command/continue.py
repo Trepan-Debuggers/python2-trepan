@@ -13,9 +13,9 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+import os
 from import_relative import import_relative
 
-# Our local modules
 import_relative('lib', '...', 'pydbgr')
 Mbase_cmd  = import_relative('base_cmd', top_name='pydbgr')
 Mfile      = import_relative('file', '...lib', 'pydbgr')
@@ -32,10 +32,11 @@ If a line position is given, a temporary breakpoint is set at that
 position before continuing."""
 
     category      = 'running'
+    aliases       = ('c',)
     execution_set = ['Running']
     min_args      = 0
     max_args      = None
-    name_aliases  = ('continue', 'c',)
+    name          = os.path.basename(__file__).split('.')[0]
     need_stack    = True
     short_help    = 'Continue execution of debugged program'
 

@@ -14,7 +14,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Our local modules
+import os
 from import_relative import import_relative
 
 import_relative('lib', '...', 'pydbgr')
@@ -36,10 +36,11 @@ Examples:
    condition 5          # Remove above condition
 """
 
+    aliases       = ('cond',)
     category      = 'breakpoints'
     min_args      = 1
     max_args      = 2
-    name_aliases  = ('condition', 'cond')
+    name          = os.path.basename(__file__).split('.')[0]
     need_stack    = False
     short_help    = 'Specify breakpoint number N to break only if COND is True'
 

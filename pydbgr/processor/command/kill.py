@@ -15,6 +15,8 @@
 #    along with this program; if not, write to the Free Software
 #    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 #    02110-1301 USA.
+
+import os
 from import_relative import import_relative
 
 # Our local modules
@@ -26,7 +28,7 @@ class KillCommand(Mbase_cmd.DebuggerCommand):
     category      = 'running'
     min_args      = 0
     max_args      = 1
-    name_aliases  = ('kill',)
+    name          = os.path.basename(__file__).split('.')[0]
     need_stack    = False
     short_help    = 'Send this process a POSIX signal ("9" for "kill -9")'
 

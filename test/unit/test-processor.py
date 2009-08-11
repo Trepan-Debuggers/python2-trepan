@@ -16,15 +16,16 @@ class TestProcesor(unittest.TestCase):
         """ Test that we are creating instances for all of classes of files
         in the command directory ."""
         for i in self.cp.cmd_instances:
-            self.assertEqual(types.TupleType, type(i.name_aliases), 
-                             "not tuple %s." % repr(i.name_aliases))
-            self.assertNotEqual(0, i.name_aliases, 
-                                "tuple not be empty %s" % repr(i.name_aliases))
-            self.assertEqual([],
-                             [item for item in i.name_aliases 
-                              if types.StringType != type(item)],
-                             "elements of tuple should be strings %s" % 
-                             repr(i.name_aliases))
+            if hasattr(i, 'aliases'):
+                self.assertEqual(types.TupleType, type(i.aliases), 
+                                 "not tuple %s." % repr(i.aliases))
+                
+                self.assertEqual([],
+                                 [item for item in i.aliases 
+                                  if types.StringType != type(item)],
+                                 "elements of tuple should be strings %s" % 
+                                 repr(i.aliases))
+                pass
             pass
         return
 

@@ -16,7 +16,7 @@
 #    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 #    02110-1301 USA.
 
-# Our local modules
+import os
 from import_relative import import_relative
 
 Mbase_cmd  = import_relative('base_cmd', top_name='pydbgr')
@@ -32,10 +32,11 @@ class UndisplayCommand(Mbase_cmd.DebuggerCommand):
     expressions.  Use "undisplay" to cancel display requests previously
     made."""
     
+    aliases       = ('und',)
     category      = 'data'
     min_args      = 1
     max_args      = None
-    name_aliases  = ('undisplay', 'und')
+    name          = os.path.basename(__file__).split('.')[0]
     need_stack    = False
     short_help    = 'Cancel some expressions to be displayed when program stops'
 

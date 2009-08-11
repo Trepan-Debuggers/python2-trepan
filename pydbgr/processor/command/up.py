@@ -15,6 +15,7 @@
 #    along with this program; if not, write to the Free Software
 #    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 #    02110-1301 USA.
+import os
 from import_relative import import_relative
 
 # Our local modules
@@ -23,10 +24,11 @@ Mcmdfns   = import_relative('cmdfns', '.', 'pydbgr')
 
 class UpCommand(Mbase_cmd.DebuggerCommand):
 
+    aliases       = ('u',)
     category      = 'stack'
     min_args      = 0
     max_args      = 1
-    name_aliases  = ('up','u')
+    name          = os.path.basename(__file__).split('.')[0]
     need_stack    = True
     short_help    = 'Move stack frame to a more recent selected frame'
 

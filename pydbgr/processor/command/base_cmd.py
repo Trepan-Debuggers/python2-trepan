@@ -44,7 +44,8 @@ class DebuggerCommand():
         self.settings = self.debugger.settings
         return
 
-    name_aliases = ('YourCommandName', 'alias1', 'alias2..',)
+    aliases = ('alias1', 'alias2..',)
+    name    = 'YourCommandName'
 
     def confirm(self, msg, default=False):
         """ Convenience short-hand for self.debugger.intf[-1].confirm """
@@ -78,10 +79,10 @@ class DebuggerCommand():
     pass
 
 if __name__ == '__main__':
-    import os, sys
-    from import_relative import *
+    from import_relative import import_relative
     mock = import_relative('mock')
     d, cp = mock.dbg_setup()
     dd = DebuggerCommand(cp)
     dd.msg("hi")
     dd.errmsg("Don't do that")
+    pass

@@ -13,7 +13,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import code, sys
+import code, os, sys
 
 # Our local modules
 from import_relative import import_relative
@@ -31,10 +31,11 @@ Run Python as a command subshell.
 If -d is passed you can access debugger state via local variable "debugger".
 """
 
+    aliases      = ('py',)
     category      = 'support'
     min_args      = 0
     max_args      = 1
-    name_aliases  = ('python', 'py')
+    name          = os.path.basename(__file__).split('.')[0]
     need_stack    = False
     short_help    = 'Run Python as a command subshell'
 

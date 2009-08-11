@@ -14,6 +14,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import os
 from import_relative import import_relative
 
 # Our local modules
@@ -53,10 +54,11 @@ Examples
    disassemble myprog.pyc         # Disassemble file myprog.pyc
 """
 
+    aliases       = ('disas',) # Note: we will have disable
     category      = 'data'
     min_args      = 0
     max_args      = 2
-    name_aliases  = ('disassemble','disas') # Note: we will have disable
+    name          = os.path.basename(__file__).split('.')[0]
     need_stack    = True
     short_help    = 'Disassemble Python bytecode'
 

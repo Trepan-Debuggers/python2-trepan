@@ -25,7 +25,7 @@ class SubcommandMgr(base_cmd.DebuggerCommand):
     category      = 'status'
     min_args      = 0
     max_args      = None
-    name_aliases  = None # ('???','?')  # Need to define this!
+    name          = '???' # Need to define this!
     need_stack    = False
 
     def __init__(self, proc, name=None):
@@ -153,7 +153,7 @@ class SubcommandMgr(base_cmd.DebuggerCommand):
             # like "show", "info" or "set". Generally this means list
             # all of the subcommands.
             self.msg("List of %s commands (with minimum abbreviation in "
-                     "parenthesis):" % self.name_aliases[0])
+                     "parenthesis):" % self.name)
             for subcmd_name in self.cmds.list():
                 # Some commands have lots of output.
                 # they are excluded here because 'in_list' is false.
@@ -174,7 +174,7 @@ class SubcommandMgr(base_cmd.DebuggerCommand):
 
     def summary_help(self, subcmd_name, subcmd):
         return self.msg('%s (%d) %-11s -- %s' %
-                        (self.name_aliases[0], subcmd.min_abbrev,
+                        (self.name, subcmd.min_abbrev,
                          subcmd_name, subcmd.short_help))
     pass
 

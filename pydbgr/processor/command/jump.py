@@ -15,7 +15,7 @@
 #    along with this program; if not, write to the Free Software
 #    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 #    02110-1301 USA.
-import inspect
+import inspect, os
 from import_relative import import_relative
 
 # Our local modules
@@ -25,11 +25,12 @@ Mcmdfns    = import_relative('cmdfns', top_name='pydbgr')
 
 class JumpCommand(Mbase_cmd.DebuggerCommand):
 
+    aliases       = ('j',)
     category      = 'running'
     execution_set = ['Running']
     min_args      = 1
     max_args      = 1
-    name_aliases  = ('jump', 'j',)
+    name          = os.path.basename(__file__).split('.')[0]
     need_stack    = False
     short_help    = 'Set the next line to be executed'
 

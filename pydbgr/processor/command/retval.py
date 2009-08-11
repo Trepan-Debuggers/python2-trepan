@@ -13,7 +13,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import sys
+import os, sys
 
 # Our local modules
 from import_relative import import_relative
@@ -32,10 +32,11 @@ Show the value that is to be returned from a function.  This command
 is useful after a 'finish' command or stepping just after a 'return'
 statement."""
 
+    aliases       = ('rv',)
     category      = 'data'
     min_args      = 0
     max_args      = 0
-    name_aliases  = ('retval', 'rv')
+    name          = os.path.basename(__file__).split('.')[0]
     need_stack    = True
     short_help    = 'Show function return value'
 

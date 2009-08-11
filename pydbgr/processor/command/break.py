@@ -13,7 +13,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import inspect, pyficache
+import inspect, os, pyficache
 
 # Our local modules
 from import_relative import import_relative
@@ -119,10 +119,11 @@ Examples:
    break myfile:45    # Same as above.
 """
 
+    aliases       = ('b',)
     category      = 'breakpoints'
     min_args      = 0
     max_args      = None
-    name_aliases  = ('break', 'b',)
+    name          = os.path.basename(__file__).split('.')[0]
     need_stack    = True
     short_help    = 'Set breakpoint at specified line or function'
 

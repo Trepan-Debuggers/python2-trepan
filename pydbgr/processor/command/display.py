@@ -14,7 +14,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Our local modules
+import os
 from import_relative import import_relative
 
 Mbase_cmd  = import_relative('base_cmd', top_name='pydbgr')
@@ -39,7 +39,7 @@ class DisplayCommand(Mbase_cmd.DebuggerCommand):
     category      = 'data'
     min_args      = 0
     max_args      = None
-    name_aliases  = ('display',)
+    name          = os.path.basename(__file__).split('.')[0]
     need_stack    = False
     short_help    = 'Display expressions when entering debugger'
 

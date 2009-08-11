@@ -24,10 +24,11 @@ class CDCommand(Mbase_cmd.DebuggerCommand):
 Set working directory to DIRECTORY for debugger and program
 being debugged. """
 
+    aliases       = ('chdir',)
     category      = 'files'
     min_args      = 1
     max_args      = 1
-    name_aliases  = ('cd', 'chdir')
+    name          = os.path.basename(__file__).split('.')[0]
     need_stack    = False
     short_help    = 'Set working directory to DIR for debugger and program being debugged'
 

@@ -14,7 +14,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Our local modules
+import os
 from import_relative import import_relative
 Mbase_cmd  = import_relative('base_cmd')
 Msig       = import_relative('sighandler', '...lib', 'pydbgr')
@@ -52,7 +52,7 @@ Examples:
     category     = 'running'
     min_args      = 1
     max_args      = None
-    name_aliases = ('handle',)
+    name          = os.path.basename(__file__).split('.')[0]
     need_stack    = False
     short_help    = "Specify how to handle a signal"
     

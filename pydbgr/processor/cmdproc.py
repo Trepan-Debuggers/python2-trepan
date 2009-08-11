@@ -764,10 +764,11 @@ class CommandProcessor(Mbase_proc.Processor):
         self.category = {}
 #         self.short_help = {}
         for cmd_instance in self.cmd_instances:
-            name_aliases = cmd_instance.name_aliases
-            cmd_name = name_aliases[0]
+            if not hasattr(cmd_instance, 'aliases'): continue 
+            alias_names = cmd_instance.aliases
+            cmd_name = cmd_instance.name
             self.name2cmd[cmd_name] = cmd_instance
-            for alias_name in name_aliases[1:]:
+            for alias_name in alias_names:
                 self.alias2name[alias_name] = cmd_name
                 pass
             cat  = getattr(cmd_instance, 'category')
@@ -827,7 +828,9 @@ if __name__=='__main__':
     print cmdproc.parse_position('/bin/bash')
     print cmdproc.parse_position('/bin/bash:4')
 
+    print cmdproc.name2cmd
     fn = cmdproc.name2cmd['quit']
+    
     print 'Removing non-existing quit hook: ', cmdproc.remove_preloop_hook(fn)
     cmdproc.add_preloop_hook(fn)
     print cmdproc.preloop_hooks

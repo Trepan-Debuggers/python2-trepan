@@ -15,7 +15,7 @@
 #    along with this program; if not, write to the Free Software
 #    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 #    02110-1301 USA.
-import inspect, sys, types
+import inspect, os, sys, types
 from import_relative import import_relative
 
 # Our local modules
@@ -29,7 +29,7 @@ class WhatisCommand(Mbase_cmd.DebuggerCommand):
     category      = 'data'
     min_args      = 0
     max_args      = None
-    name_aliases  = ('whatis',)
+    name          = os.path.basename(__file__).split('.')[0]
     need_stack    = True
     short_help   = 'Print data type of expression EXP'
 

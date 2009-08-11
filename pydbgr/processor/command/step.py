@@ -13,6 +13,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+import os
 from import_relative import import_relative
 import tracer
 
@@ -22,12 +23,13 @@ cmdfns     = import_relative('cmdfns')
 
 class StepCommand(Mbase_cmd.DebuggerCommand):
 
+    aliases       = ('step+', 'step-', 'step>', 'step<', 'step!',
+                     's', 's+', 's-', 's<', 's>', 's!')
     category      = 'running'
     min_args      = 0
     max_args      = None
     execution_set = ['Running']
-    name_aliases  = ('step', 'step+', 'step-', 'step>', 'step<', 'step!',
-                     's', 's+', 's-', 's<', 's>', 's!')
+    name          = os.path.basename(__file__).split('.')[0]
     need_stack    = True
     short_help    = 'Step program (possibly entering called functions)'
 

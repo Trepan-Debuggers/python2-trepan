@@ -16,6 +16,7 @@
 #    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 #    02110-1301 USA.
 
+import os
 from import_relative import import_relative
 Mbase_submgr = import_relative('base_submgr', top_name='pydbgr')
 
@@ -29,10 +30,11 @@ Type "info" for a list of "info" subcommands and what they do.
 Type "help info *" for just a list of "info" subcommands.
 """
 
+    aliases       = ('i',)
     category      = 'status'
     min_args      = 0
     max_args      = None
-    name_aliases  = ('info','i')
+    name          = os.path.basename(__file__).split('.')[0]
     need_stack    = False
     short_help    = 'Information about debugged program and its environment'
 

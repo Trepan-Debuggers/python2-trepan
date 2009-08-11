@@ -30,7 +30,7 @@ class RestartCommand(Mbase_cmd.DebuggerCommand):
     category      = 'support'
     min_args      = 0
     max_args      = 0
-    name_aliases  = ('restart', )
+    name          = os.path.basename(__file__).split('.')[0]
     need_stack    = False
     short_help    = '(Hard) restart of program via execv()'
 

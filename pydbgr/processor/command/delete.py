@@ -14,7 +14,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Our local modules
+import os
 from import_relative import import_relative
 
 import_relative('lib', '...', 'pydbgr')
@@ -37,7 +37,7 @@ number.."""
     category      = 'breakpoints'
     min_args      = 0
     max_args      = None
-    name_aliases  = ('delete',)
+    name          = os.path.basename(__file__).split('.')[0]
     need_stack    = False
     short_help    = 'Delete some breakpoints or auto-display expressions'
 

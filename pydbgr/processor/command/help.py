@@ -15,7 +15,7 @@
 #    along with this program; if not, write to the Free Software
 #    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 #    02110-1301 USA.
-import columnize
+import columnize, os
 
 # Our local modules
 from import_relative import import_relative
@@ -38,10 +38,11 @@ categories = {
 
 class HelpCommand(Mbase_cmd.DebuggerCommand):
 
+    aliases       = ('?',)
     category      = 'support'
     min_args      = 0
     max_args      = None
-    name_aliases  = ('help', '?',)
+    name          = os.path.basename(__file__).split('.')[0]
     need_stack    = False
     short_help    = 'Print commands or give help for command(s)'
 

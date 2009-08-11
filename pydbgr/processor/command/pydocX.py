@@ -44,7 +44,7 @@ source file to document. If name is 'keywords', 'topics', or
     category     = 'data'
     min_args      = 1
     max_args      = None
-    name_aliases = ('pydoc',)
+    name          = os.path.basename(__file__).split('.')[0]
     need_stack    = False
     short_help    = 'Run pydoc' 
 

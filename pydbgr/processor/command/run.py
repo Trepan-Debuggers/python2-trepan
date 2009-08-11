@@ -15,6 +15,7 @@
 #    along with this program; if not, write to the Free Software
 #    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 #    02110-1301 USA.
+import os
 from import_relative import import_relative
 
 # Our local modules
@@ -25,10 +26,11 @@ class RunCommand(Mbase_cmd.DebuggerCommand):
     """restart - Restart debugger and program via an exec
 call. All state is lost, and new copy of the debugger is used."""
 
+    aliases       = ('R',)
     category      = 'support'
     min_args      = 0
     max_args      = 0
-    name_aliases  = ('run', 'R',)
+    name          = os.path.basename(__file__).split('.')[0]
     need_stack    = False
     short_help    = '(Soft) restart program via a DebuggerRestart exception'
 

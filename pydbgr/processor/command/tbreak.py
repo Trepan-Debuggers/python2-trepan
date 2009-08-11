@@ -15,7 +15,7 @@
 #    along with this program; if not, write to the Free Software
 #    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 #    02110-1301 USA.
-import sys
+import os, sys
 
 # Our local modules
 from import_relative import import_relative
@@ -52,7 +52,7 @@ Examples:
     category      = 'breakpoints'
     min_args      = 0
     max_args      = None
-    name_aliases  = ('tbreak',)
+    name          = os.path.basename(__file__).split('.')[0]
     need_stack    = True
     short_help    = 'Set temporary breakpoint at specified line or function'
 

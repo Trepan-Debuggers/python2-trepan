@@ -16,7 +16,7 @@
 
 # Credit: code inspired from code of the same name in ipython.
 
-import inspect, types
+import inspect, os, types
 
 # Our local modules
 from import_relative import import_relative
@@ -34,7 +34,7 @@ See also pydoc."""
     category     = 'data'
     min_args      = 1
     max_args      = 1
-    name_aliases = ('pdef',)
+    name          = os.path.basename(__file__).split('.')[0]
     need_stack    = True
     short_help    = 'Print the definition header for a callable object'
 

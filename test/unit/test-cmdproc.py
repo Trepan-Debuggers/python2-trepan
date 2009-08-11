@@ -50,7 +50,8 @@ class TestCmdProc(unittest.TestCase):
         for cmd in self.cp.name2cmd.values():
 
             name = cmd.__class__
-            for attr in ['min_args', 'max_args', 'name_aliases', 'need_stack']:
+            for attr in ['aliases', 'min_args', 'max_args', 'name', 
+                         'need_stack']:
                 self.assertTrue(hasattr(cmd, attr),
                                 '%s command should have a %s attribute' %
                                 (name, attr))
@@ -66,11 +67,14 @@ class TestCmdProc(unittest.TestCase):
                                 (name, attr))
                 pass
 
-            self.assertEqual(types.TupleType, type(cmd.name_aliases))
-            for value in cmd.name_aliases:
+            self.assertEqual(types.StringType, type(cmd.name))
+            self.assertEqual(types.TupleType, type(cmd.aliases),
+                             '%s aliases should be a tuple type' % 
+                             repr(cmd.aliases))
+            for value in cmd.aliases:
                 self.assertEqual(types.StringType, type(value),
-                                '%s command name_aliases should be strings' %
-                                name)
+                                '%s command aliases should be strings' %
+                                 name)
 
             if cmd.min_args is not None:
                 if cmd.max_args is not None:

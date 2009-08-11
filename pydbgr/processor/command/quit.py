@@ -11,7 +11,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import threading
+import os, threading
 from import_relative import import_relative
 
 # Our local modules
@@ -40,10 +40,11 @@ Also, see 'run' and 'restart' for ways to restart the debugged
 program.
 """
 
+    aliases       = ('q',)
     category      = 'support'
     min_args      = 0
     max_args      = 0
-    name_aliases  = ('quit', 'q',)
+    name          = os.path.basename(__file__).split('.')[0]
     need_stack    = False
     short_help    = 'Termintate the program - gently'
 

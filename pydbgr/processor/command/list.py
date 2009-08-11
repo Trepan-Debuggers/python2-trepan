@@ -76,10 +76,11 @@ LISTSIZE is the current debugger listsize setting. Use 'set listize'
 or 'show listsize' to see or set the value.
 """
 
+    aliases       = ('l',)
     category      = 'files'
     min_args      = 0
     max_args      = 3
-    name_aliases  = ('list', 'l',)
+    name          = os.path.basename(__file__).split('.')[0]
     need_stack    = False
     short_help    = 'List source code'
 

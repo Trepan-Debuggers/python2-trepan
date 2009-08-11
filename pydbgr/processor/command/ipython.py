@@ -16,7 +16,7 @@
 try:
     import IPython
 
-    import sys
+    import os, sys
 
     # Our local modules
     from import_relative import import_relative, get_srcdir
@@ -39,10 +39,11 @@ If -d is passed you can access debugger state via local variable "debugger".
 Debugger commands like are installed as IPython magic commands, e.g.
 %list, %up, %where.
 """
+        aliases       = ('ipy',)
         category      = 'support'
         min_args      = 0
         max_args      = None
-        name_aliases  = ('ipython', 'ipy')
+        name          = os.path.basename(__file__).split('.')[0]
         need_stack    = False
         short_help    = 'Run IPython as a command subshell'
 
@@ -105,9 +106,9 @@ def ipy_%s(self, args):
 """
             expose_magic_template = 'ip.expose_magic("%s", ipy_%s)'
             for cmd_instance in self.proc.cmd_instances:
-                name = cmd_instance.name_aliases[0]
+                name = cmd_instance.name
                 exec magic_fn_template % ((name,) * 3)
-                for alias in cmd_instance.name_aliases:
+                for alias in cmd_instance.aliases:
                     exec expose_magic_template % (alias, name)
                 pass
 

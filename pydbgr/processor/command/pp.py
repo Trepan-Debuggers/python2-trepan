@@ -14,7 +14,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Our local modules
+import os
 from import_relative import import_relative
 Mbase_cmd  = import_relative('base_cmd', '.', 'pydbgr')
 Mdebugger  = import_relative('debugger', '...', 'pydbgr')
@@ -35,7 +35,7 @@ formatting.
     category     = 'data'
     min_args      = 1
     max_args      = None
-    name_aliases = ('pp',)
+    name          = os.path.basename(__file__).split('.')[0]
     need_stack    = True
     short_help    = 'Pretty print value of expression EXP'
 

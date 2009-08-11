@@ -13,7 +13,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import inspect
+import inspect, os
 from import_relative import import_relative
 
 # Our local modules
@@ -27,11 +27,12 @@ class SkipCommand(Mbase_cmd.DebuggerCommand):
 Set the next line that will be executed. The line must be within the
 stopped or bottom-most execution frame."""
 
+    aliases       = ('sk',)
     category      = 'running'
     execution_set = ['Running']
     min_args      = 0
     max_args      = 1
-    name_aliases  = ('skip', 'sk',)
+    name          = os.path.basename(__file__).split('.')[0]
     need_stack    = True
     short_help    = 'Skip lines to be executed'
 

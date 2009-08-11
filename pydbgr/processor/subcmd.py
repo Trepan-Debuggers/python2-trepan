@@ -126,7 +126,7 @@ if __name__ == '__main__':
         category = 'data'
         min_args = 0
         max_args = 5
-        name_aliases = ('test',)
+        name = 'test'
 
         def __init__(self):
             self.name  = 'test'

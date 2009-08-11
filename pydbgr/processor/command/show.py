@@ -16,6 +16,7 @@
 #    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 #    02110-1301 USA.
 
+import os
 from import_relative import import_relative
 Mbase_submgr = import_relative('base_submgr')
 
@@ -31,7 +32,7 @@ Type "help show *" for just a list of "show" subcommands.
     category      = 'status'
     min_args      = 0
     max_args      = None
-    name_aliases  = ('show',)
+    name          = os.path.basename(__file__).split('.')[0]
     need_stack    = False
     short_help    = 'Show parts of the debugger environment'
 

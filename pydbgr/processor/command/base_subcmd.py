@@ -83,8 +83,8 @@ class DebuggerSubcommand():
         """ Convenience short-hand for self.debugger.intf[-1].msg_nocr """
         return(self.debugger.intf[-1].msg_nocr(msg))
 
-    name_aliases = ('YourCommandName', 'alias1', 'alias2..',)
-
+    aliases = ('alias1', 'alias2..',)
+    name    = 'YourCommandName'
         
     def run(self):
         """ The method that implements the debugger command.

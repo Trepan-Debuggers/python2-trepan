@@ -13,6 +13,8 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+import os
 from import_relative import import_relative
 
 # Our local modules
@@ -22,11 +24,12 @@ Mstack     = import_relative('stack', '...lib')
 
 class NextCommand(base_cmd.DebuggerCommand):
 
+    aliases       = ('next+', 'next-', 'n', 'n-', 'n+')
     category      = 'running'
     execution_set = ['Running']
     min_args      = 0
     max_args      = 1
-    name_aliases  = ('next', 'next+', 'next-', 'n', 'n-', 'n+')
+    name          = os.path.basename(__file__).split('.')[0]
     need_stack    = True
     short_help    = 'Step program without entering called functions'
 

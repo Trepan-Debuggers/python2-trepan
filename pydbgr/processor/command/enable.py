@@ -16,7 +16,7 @@
 #    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 #    02110-1301 USA.
 
-# Our local modules
+import os
 from import_relative import import_relative
 
 import_relative('lib', '...', 'pydbgr')
@@ -33,10 +33,11 @@ Enables the breakpoints given as a space separated list of breakpoint
 numbers. See also 'info break' to get a list.
 """
 
+    aliases       = ('en',)
     category      = 'breakpoints'
     min_args      = 0
     max_args      = None
-    name_aliases  = ('enable', 'en')
+    name          = os.path.basename(__file__).split('.')[0]
     need_stack    = False
     short_help    = 'Enable some breakpoints'
 

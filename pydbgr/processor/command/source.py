@@ -39,7 +39,7 @@ class SourceCommand(Mbase_cmd.DebuggerCommand):
     category      = 'support'
     min_args      = 1
     max_args      = None
-    name_aliases  = ('source',)
+    name          = os.path.basename(__file__).split('.')[0]
     need_stack    = True
     short_help    = "Read and run debugger commands from a file"
 

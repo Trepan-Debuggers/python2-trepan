@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 'Unit test for pydbgr.interface.user'
-import inspect, os, sys, unittest
+import unittest
 
 from import_relative import *
 Muser = import_relative('interface.user', '...pydbgr')

@@ -56,7 +56,7 @@ class ScriptInterface(Mbase_intf.DebuggerInterface):
 
     # Could look also look for interactive input and
     # use that. For now, though we'll simplify.
-    def confirm(self, prompt, default=False):
+    def confirm(self, prompt, default):
         """ Called when a dangerous action is about to be done, to make
         sure it's okay. """
         return self.default_confirm

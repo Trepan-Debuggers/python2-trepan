@@ -16,7 +16,6 @@ the program and the outside portion which could be
         self.input = None
         self.output = None
         self.interactive = False 
-        raise NotImplementedError, NotImplementedMessage
         return
 
     def close(self):
@@ -24,7 +23,7 @@ the program and the outside portion which could be
         raise NotImplementedError, NotImplementedMessage
         return
 
-    def confirm(self, prompt, default=False):
+    def confirm(self, prompt, default):
         """ Called when a dangerous action is about to be done to make sure
         it's okay. `prompt' is printed; user response is returned."""
         raise NotImplementedError, NotImplementedMessage

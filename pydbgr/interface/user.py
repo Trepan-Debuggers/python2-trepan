@@ -42,7 +42,7 @@ class UserInterface(Mbase_intf.DebuggerInterface):
         self.output.close()
         return
 
-    def confirm(self, prompt, default=False):
+    def confirm(self, prompt, default):
         """ Called when a dangerous action is about to be done, to make
         sure it's okay. Expect a yes/no answer to `prompt' which is printed,
         suffixed with a question mark and the default value.  The user
@@ -105,7 +105,7 @@ if __name__=='__main__':
         else:
             print "You typed: ", line
             pass
-        line = intf.confirm("Are you sure")
+        line = intf.confirm("Are you sure", False)
         print "You typed: ", line
         line = intf.confirm("Are you not sure", True)
         print "You typed: ", line

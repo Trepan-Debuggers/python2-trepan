@@ -33,7 +33,7 @@ class MockUserInterface():
         self.io = MockIO()
         return
 
-    def confirm(self, msg, default=True):
+    def confirm(self, msg, default):
         print '** %s' % msg
         # Ignore the default.
         return True

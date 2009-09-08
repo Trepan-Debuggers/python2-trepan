@@ -19,11 +19,11 @@ class TestInterfaceUser(unittest.TestCase):
         u = Muser.UserInterface()
         for s in ['y', 'Y', 'Yes', '  YES  ']: 
             u.input.readline = lambda: self.readline(s)
-            self.assertTrue(u.confirm('Testing'))
+            self.assertTrue(u.confirm('Testing', True))
             pass
         for s in ['n', 'N', 'No', '  NO  ']: 
             u.input.readline = lambda: self.readline(s)
-            self.assertFalse(u.confirm('Testing'))
+            self.assertFalse(u.confirm('Testing', True))
             pass
         # FIXME: Add checking default values. Checking looping 
         # values

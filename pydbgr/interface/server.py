@@ -58,7 +58,7 @@ class ServerInterface(Mbase_intf.DebuggerInterface):
             self.inout.close()
         return
  
-    def confirm(self, prompt, default=False):
+    def confirm(self, prompt, default):
         """ Called when a dangerous action is about to be done to make sure
         it's okay. `prompt' is printed; user response is returned."""
         while True:

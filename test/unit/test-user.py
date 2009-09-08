@@ -8,7 +8,7 @@ Muser = import_relative('interface.user', '...pydbgr')
 from cmdhelper import dbg_setup
 
 class TestInterfaceUser(unittest.TestCase):
-    """Tests StepCommand class"""
+    """Tests UserInterface class"""
 
     def readline(self, answer):
         return answer

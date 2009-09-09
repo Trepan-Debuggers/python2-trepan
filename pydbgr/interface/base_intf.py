@@ -13,8 +13,8 @@ the program and the outside portion which could be
     """
 
     def __init__(self, inp=None, out=None):
-        self.input = None
-        self.output = None
+        self.input  = inp or sys.stdin
+        self.output = out or sys.stdout
         self.interactive = False 
         return
 
@@ -40,7 +40,11 @@ the program and the outside portion which could be
         """ used to write to a debugger that is connected to this
         server; `str' written will have a newline added to it
         """
-        self.output.writeline(msg)
+        if hasattr(self.output, 'writeline'):
+            self.output.writeline(msg)
+        elif hasattr(self.output, 'writelines'):
+            self.output.writelines(msg + "\n")
+            pass
         return
 
     def msg_nocr(self, msg):

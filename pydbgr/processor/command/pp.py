@@ -36,7 +36,7 @@ formatting.
     min_args      = 1
     max_args      = None
     name          = os.path.basename(__file__).split('.')[0]
-    need_stack    = True
+    need_stack    = False
     short_help    = 'Pretty print value of expression EXP'
 
     def run(self, args):

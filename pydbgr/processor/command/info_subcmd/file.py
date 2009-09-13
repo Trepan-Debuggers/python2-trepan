@@ -27,13 +27,13 @@ Show information about the current file. If no filename is given and
 the program is running then the current file associated with the
 current stack entry is used. Sub options which can be shown about a file are:
 
-line -- Line numbers where there are statement boundaries. 
-        These lines can be used in breakpoint commands.
-sha1 -- A SHA1 hash of the source text. This may be useful in comparing
-        source code.
-size -- The number of lines in the file.
+lines -- Line numbers where there are statement boundaries. 
+         These lines can be used in breakpoint commands.
+sha1  -- A SHA1 hash of the source text. This may be useful in comparing
+         source code.
+size  -- The number of lines in the file.
 
-all  -- All of the above information.
+all   -- All of the above information.
 '''
 
     min_abbrev = 2
@@ -80,7 +80,10 @@ all  -- All of the above information.
         for arg in args[1:]:
             processed_arg = False
             if arg in ['all', 'size']:
-                self.msg("File has %d lines." % pyficache.size(canonic_name))
+                if pyficache.size(canonic_name):
+                    self.msg("File has %d lines." % 
+                             pyficache.size(canonic_name))
+                    pass
                 processed_arg = True
                 pass
             if arg in ['all', 'sha1']:

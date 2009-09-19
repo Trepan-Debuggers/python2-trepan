@@ -18,6 +18,7 @@ import atexit
 
 # Our local modules
 from import_relative import *
+import_relative('io', '..', 'pydbgr')
 Mbase_intf = import_relative('base_intf', top_name='pydbgr')
 Mscriptin  = import_relative('scriptin', '..io', 'pydbgr')
 Moutput    = import_relative('dbg_output', '..io', 'pydbgr')
@@ -89,7 +90,7 @@ class ScriptInterface(Mbase_intf.DebuggerInterface):
         '''Script interface to read a command. `prompt' is a parameter for 
         compatibilty and is ignored.'''
         self.input_lineno += 1
-        line = self.input.readline()
+        line = self.readline()
         if self.verbose:
             location = "%s line %s" % (self.script_name, self.input_lineno)
             self.msg('+ %s: %s' % (location, line))
@@ -102,7 +103,6 @@ class ScriptInterface(Mbase_intf.DebuggerInterface):
         '''Script interface to read a line. `prompt' is a parameter for 
         compatibilty and is ignored.'''
         return self.input.readline()
-        return line
 
 # Demo
 if __name__=='__main__':

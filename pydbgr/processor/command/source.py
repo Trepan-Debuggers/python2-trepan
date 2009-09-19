@@ -30,7 +30,7 @@ class SourceCommand(Mbase_cmd.DebuggerCommand):
     it is executed.  Option -Y sets the default value in any
     confirmation command to be 'yes' and -N sets the default value to 'no'.
 
-    Note that the command startup file '.pydbgrrc' is read
+    Note that the command startup file '.pydbgrc' is read
     automatically via a source command the debugger is started.
     
     An error in any command terminates execution of the command

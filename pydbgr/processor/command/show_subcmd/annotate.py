@@ -26,6 +26,5 @@ Mbase_subcmd  = import_relative('base_subcmd', '..', 'pydbgr')
 
 class ShowAnnotate(Mbase_subcmd.DebuggerShowIntSubcommand):
     "Show GNU Emacs 'annotation' level"
-    min_abbrev = 2 # Need at least "show an"
-    short_help = "GNU Emacs 'annotation' level"
+    min_abbrev = len('an') # Need at least "show an"
     pass

@@ -25,8 +25,7 @@ Mbase_subcmd = import_relative('base_subcmd', '..', 'pydbgr')
 class SetFlush(Mbase_subcmd.DebuggerSetBoolSubcommand):
     """Set flushing output after each write"""
     in_list    = True
-    min_abbrev = 3 # Need at least "set flu"
-    short_help = "Set flushing output after each write"
+    min_abbrev = len('flu') # Need at least "set flu"
     pass
 
 

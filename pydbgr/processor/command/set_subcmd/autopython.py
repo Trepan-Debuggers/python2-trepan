@@ -16,21 +16,34 @@
 
 from import_relative import import_relative
 # Our local modules
-
+import_relative('processor', '....', 'pydbgr')
 Mbase_subcmd = import_relative('base_subcmd', '..', 'pydbgr')
 Mcmdfns      = import_relative('cmdfns', '..', 'pydbgr')
+Mcmdproc     = import_relative('cmdproc', '...', 'pydbgr')
 
-class SetAnnotate(Mbase_subcmd.DebuggerSubcommand):
-    """Set GNU Emacs 'annotation' level."""
+class SetAutoPython(Mbase_subcmd.DebuggerSetBoolSubcommand):
+    """Go into Python on debugger entry."""
     
     in_list    = True
-    min_abbrev = len('an') # Need at least "set an"
+    min_abbrev = len('autopy') # Need at least "set autopy"
+
+    python_cmd = None
     
     def run(self, args):
-        Mcmdfns.run_set_int(self, ' '.join(args),
-                            "The 'annotation' command requires an annotation level.", 
-                            0, 3)
+        Mcmdfns.run_set_bool(self, args)
+        if self.settings['autopython']:
+            if self.python_cmd == None:
+                self.python_cmd = self.proc.name2cmd['python'].run
+                pass
+            self.proc.add_preloop_hook(self.run_python, -1)
+        else:
+            self.proc.remove_preloop_hook(self.run_python)
+            pass
         return
+
+    def run_python(self, args):
+        leave_loop = self.python_cmd(['python'])
+        if not leave_loop: Mcmdproc.print_location(self.proc)
+        return leave_loop
+
     pass
-
-

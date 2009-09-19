@@ -22,7 +22,6 @@ Mbase_subcmd  = import_relative('base_subcmd', '..', 'pydbgr')
 class ShowArgs(Mbase_subcmd.DebuggerSubcommand):
     """Show argument list to give debugged program when it is started."""
     min_abbrev = len('arg')
-    short_help = "Show argument list to give debugged program"
 
     def run(self, args):
         self.msg("Argument list to give program being debugged " +

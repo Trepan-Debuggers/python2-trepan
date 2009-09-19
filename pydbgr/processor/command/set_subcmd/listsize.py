@@ -29,8 +29,7 @@ class SetListSize(Mbase_subcmd.DebuggerSubcommand):
     "Set the number lines printed in a 'list' command by default"
     
     in_list    = True
-    min_abbrev = 3 # Need at least "set lis"
-    short_help =  "Set number of lines printed by 'list' by default"
+    min_abbrev = len('lis') # Need at least "set lis"
 
     def run(self, args):
         Mcmdfns.run_set_int(self, ' '.join(args),

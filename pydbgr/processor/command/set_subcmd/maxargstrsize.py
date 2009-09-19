@@ -29,8 +29,7 @@ class SetMaxArgStrSize(Mbase_subcmd.DebuggerSubcommand):
     "Set maximum string length to show in a parameter string"
     
     in_list    = True
-    min_abbrev = 3 # Need at least "set lis"
-    short_help = __doc__
+    min_abbrev = len('lis') # Need at least "set lis"
 
     def run(self, args):
         Mcmdfns.run_set_int(self, ' '.join(args),

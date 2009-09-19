@@ -19,7 +19,7 @@ from import_relative import import_relative
 Mbase_subcmd = import_relative('base_subcmd', '..', 'pydbgr')
 
 class SetAutoEval(Mbase_subcmd.DebuggerSetBoolSubcommand):
-    """Evaluate unrecognized commands.
+    """Evaluate unrecognized debugger commands.
 
 Often inside the debugger, one would like to be able to run arbitrary
 Python commands without having to preface Python expressions with "print" or
@@ -52,7 +52,6 @@ problem. Another possibility is to go into a real Python shell via the
 
     in_list    = True
     min_abbrev = len('autoe')
-    short_help = "Evaluate unrecognized debugger commands"
     pass
 
 

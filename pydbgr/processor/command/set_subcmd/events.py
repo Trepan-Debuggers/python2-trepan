@@ -17,13 +17,12 @@
 import tracer
 from import_relative import import_relative
 Mbase_subcmd  = import_relative('base_subcmd', '..', 'pydbgr')
-cmdfns       = import_relative('cmdfns', '..', 'pydbgr')
-short_help   = "Set execution tracing event set."
+cmdfns        = import_relative('cmdfns', '..', 'pydbgr')
 
 
-class SetTraceSet(Mbase_subcmd.DebuggerSubcommand):
+class SetEvents(Mbase_subcmd.DebuggerSubcommand):
 
-    """Set traceset [EVENT...]
+    """Set events [EVENT...]
 
 Sets Turns line tracing on or off and/or the event mask to filter shown
 events. "all" can be used as an abbreviation for listing all event
@@ -33,23 +32,23 @@ Changing trace event filters works independently of turning on or off
 tracing-event printing.
 
 Examples: 
-  set traceset line        # Set trace filter for line events only. 
-  set traceset call return # Trace calls and returns only
-  set traceset all         # Set trace filter to all events.
+  set events line        # Set trace filter for line events only. 
+  set events call return # Trace calls and returns only
+  set events all         # Set trace filter to all events.
 
-See also "set trace","show trace", and "show traceset".
+See also "set trace","show trace", and "show events".
 """
 
     in_list    = True
-    min_abbrev = 6  # Must use at least "set traces"
-    short_help = "Set execution trace filter"
+    min_abbrev = len('ev') 
+    short_help = "Set execution-tracing event set"
 
     def run(self, args):
         valid_args = tracer.ALL_EVENT_NAMES + ('all',)
         eventset = []
         for arg in args:
             if arg not in valid_args:
-                self.errmsg('set trace: Invalid argument %s ignored.' % arg)
+                self.errmsg('set events: Invalid argument %s ignored.' % arg)
                 continue
             if arg in tracer.ALL_EVENTS:
                 eventset += [arg]
@@ -68,8 +67,8 @@ if __name__ == '__main__':
     Mset = import_relative('set', '..')
     d, cp = mock.dbg_setup()
     s = Mset.SetCommand(cp)
-    sub = SetTraceSet(s)
-    sub.name = 'traceset'
+    sub = SetEvents(s)
+    sub.name = 'events'
     for args in (['line'], ['bogus'],
                 ['call', 'return']):
         sub.run(args)

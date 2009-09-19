@@ -51,6 +51,10 @@ class DebuggerSubcommand():
         self.debugger = cmd.debugger
         self.settings = cmd.debugger.settings
 
+        if not hasattr(self, 'short_help'): 
+            self.short_help = self.__doc__.split("\n")[0]
+            pass
+
         # By default the name of the subcommand will be the name of the
         # last part of module (e.g. "args" in "infos.args" or "basename"
         # in "shows.basename"). However it *is* possible for one to change

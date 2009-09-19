@@ -23,8 +23,7 @@ import_relative('processor', '....', 'pydbgr')
 Mbase_subcmd = import_relative('base_subcmd', '..', 'pydbgr')
 
 class SetDifferent(Mbase_subcmd.DebuggerSetBoolSubcommand):
-    """ Set whether consecutive stops must be on different file/line
-positions.
+    """Set consecutive stops must be on different file/line positions.
 
 By default, the debugger traces all events possible including line,
 exceptions, call and return events. Just this alone may mean that for
@@ -45,8 +44,7 @@ suffixes if you wan to override this setting on a per-command basis.
 See also 'set trace' to change what events you want to filter.
 """
     in_list    = True
-    min_abbrev = 3    # Min is "set dif"
-    short_help = "Set consecutive stops on different file/line positions"
+    min_abbrev = len('dif')    # Min is "set dif"
     pass
 
 

@@ -15,22 +15,9 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from import_relative import import_relative
-# Our local modules
+Mbase_subcmd  = import_relative('base_subcmd', '..', 'pydbgr')
 
-Mbase_subcmd = import_relative('base_subcmd', '..', 'pydbgr')
-Mcmdfns      = import_relative('cmdfns', '..', 'pydbgr')
-
-class SetAnnotate(Mbase_subcmd.DebuggerSubcommand):
-    """Set GNU Emacs 'annotation' level."""
-    
-    in_list    = True
-    min_abbrev = len('an') # Need at least "set an"
-    
-    def run(self, args):
-        Mcmdfns.run_set_int(self, ' '.join(args),
-                            "The 'annotation' command requires an annotation level.", 
-                            0, 3)
-        return
+class ShowAutoPython(Mbase_subcmd.DebuggerShowBoolSubcommand):
+    """Show automatic Python when we enter the debugger."""
+    min_abbrev = len('autopy')
     pass
-
-

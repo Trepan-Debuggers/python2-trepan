@@ -25,12 +25,11 @@ class SetTrace(Mbase_subcmd.DebuggerSetBoolSubcommand):
 
 Turns event tracing on or off.
 
-See also "set traceset","set trace", and "show trace".
+See also "set events","set trace", and "show trace".
 """
 
-    short_help = "Set execution tracing, delay and event set."
     in_list    = True
-    min_abbrev = 5  # Must use at least "set trace"
+    min_abbrev = len('trace')  # Must use at least "set trace"
     short_help = "Set execution tracing"
     pass
 

@@ -19,7 +19,7 @@ from import_relative import import_relative
 Mbase_subcmd = import_relative('base_subcmd', '..', 'pydbgr')
 
 class SetBasename(Mbase_subcmd.DebuggerSetBoolSubcommand):
-    """'Set short filenames (the basename) in debug output.
+    """Set short filenames (the basename) in debug output.
 
 Setting this causes the debugger output to give just the basename for
 filenames. This is useful in debugger testing or possibly showing
@@ -28,7 +28,6 @@ installation information."""
 
     in_list    = True
     min_abbrev = len('ba')
-    short_help = 'Set short filenames (the basename) in debug output'
     pass
 
 

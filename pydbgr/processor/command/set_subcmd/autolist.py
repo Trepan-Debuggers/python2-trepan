@@ -20,12 +20,10 @@ Mbase_subcmd = import_relative('base_subcmd', '..', 'pydbgr')
 Mcmdfns      = import_relative('cmdfns', '..', 'pydbgr')
 
 class SetAutoList(Mbase_subcmd.DebuggerSetBoolSubcommand):
-    """Run a 'list' command every time we enter the debugger.
-    """
+    """Run a 'list' command every time we enter the debugger."""
 
     in_list    = True
     min_abbrev = len('autol')
-    short_help = "Execute 'list' command on every stop"
 
     list_cmd = None
 

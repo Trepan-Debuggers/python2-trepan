@@ -22,13 +22,13 @@ try:
     import_relative('processor', '....', 'pydbgr')
     Mbase_subcmd = import_relative('base_subcmd', '..', 'pydbgr')
     Mcmdfns      = import_relative('cmdfns', '..', 'pydbgr')
+    Mcmdproc     = import_relative('cmdproc', '...', 'pydbgr')
     
     class SetAutoIPython(Mbase_subcmd.DebuggerSetBoolSubcommand):
         """Go into IPython on debugger entry."""
 
         in_list    = True
-        min_abbrev = 7 # Need at least "set autoipy"
-        short_help = "Go into IPython on debugger entry."
+        min_abbrev = len('autoipy') # Need at least "set autoipy"
 
         ipython_cmd = None
     
@@ -45,7 +45,9 @@ try:
             return
 
         def run_ipython(self, args):
-            return self.ipython_cmd(['ipython'])
+            leave_loop = self.ipython_cmd(['ipython'])
+            if not leave_loop: Mcmdproc.print_location(self.proc)
+            return leave_loop
 
         pass
 except ImportError:

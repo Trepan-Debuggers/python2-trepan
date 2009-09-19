@@ -30,8 +30,7 @@ internals.
 """
 
     in_list    = True
-    min_abbrev = 3    # Need at least "set dbg"
-    short_help = "Set debugging the debugger"
+    min_abbrev = len('dbg')    # Need at least "set dbg"
 
     def run(self, args):
         Mcmdfns.run_set_bool(self, args)

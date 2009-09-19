@@ -20,12 +20,21 @@ from import_relative import *
 # Our local modules
 base_subcmd  = import_relative('base_subcmd', os.path.pardir)
 cmdfns       = import_relative('cmdfns', os.path.pardir)
-class ShowTraceSet(base_subcmd.DebuggerSubcommand):
+class ShowEvents(base_subcmd.DebuggerSubcommand):
     '''Show trace events we may stop on.'''
     min_abbrev = 2
     run_cmd    = False
 
     run = cmdfns.run_show_val
-    short_help = "Show trace events we may stop on"
+    pass
 
+if __name__ == '__main__':
+    mock = import_relative('mock', '..')
+    Mshow = import_relative('show', '..')
+    Mdebugger = import_relative('debugger', '....')
+    d = Mdebugger.Debugger()
+    d, cp = mock.dbg_setup(d)
+    i = Mshow.ShowCommand(cp)
+    sub = ShowEvents(i)
+    sub.run([])
     pass

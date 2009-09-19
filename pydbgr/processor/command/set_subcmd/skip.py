@@ -22,8 +22,7 @@ import_relative('processor', '....', 'pydbgr')
 Mbase_subcmd = import_relative('base_subcmd', '..', 'pydbgr')
 
 class SetSkip(Mbase_subcmd.DebuggerSetBoolSubcommand):
-    """Set stopping before 'def' or 'class' (function or class)
-    statements.
+    """Set stopping before 'def' or 'class' (function or class) statements.
 
 Classes may have many methods and stand-alone programs may have many
 functions. Often there isn't much value to stopping before defining a
@@ -33,8 +32,7 @@ perhaps you want to debug methods is over-writing one another, then
 set this 'off'."""
 
     in_list    = True
-    min_abbrev = 2    # Min 'set sk'
-    short_help="Set stopping before 'def' or 'class' statements"
+    min_abbrev = len('sk')    # Min 'set sk'
 
     # FIXME allow individual setting for class and skip.
     pass

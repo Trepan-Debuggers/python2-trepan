@@ -557,6 +557,7 @@ class CommandProcessor(Mbase_proc.Processor):
         print_location(self)
         leave_loop = run_hooks(self, self.preloop_hooks)
         self.continue_running = False
+
         while not leave_loop:
             try:
                 run_hooks(self, self.precmd_hooks)

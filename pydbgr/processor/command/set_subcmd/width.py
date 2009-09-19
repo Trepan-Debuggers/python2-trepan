@@ -30,7 +30,6 @@ class SetWidth(Mbase_subcmd.DebuggerSubcommand):
     
     in_list    = True
     min_abbrev = len('wid')
-    short_help = __doc__
     
     def run(self, args):
         Mcmdfns.run_set_int(self, ' '.join(args),

@@ -73,7 +73,7 @@ See also 'examine' and 'whatis'.
         # It does not make much sense to repeat the last help
         # command. Also, given that 'help' uses PAGER, the you may
         # enter an extra CR which would rerun the (long) help command.
-        self.proc.last_cmd='' 
+        self.proc.last_command='' 
         
         if len(args) > 1:
             if args[1] == '*':

@@ -194,17 +194,18 @@ class CommandProcessor(Mbase_proc.Processor):
             Mmisc.option_set(opts, key, DEFAULT_PROC_OPTS)
         Mbase_proc.Processor.__init__(self, core_obj)
         
-        self.event2short    = dict(EVENT2SHORT)
+        self.continue_running = False  # True if we should leave command loop
+        self.event2short      = dict(EVENT2SHORT)
         self.event2short['signal'] = '?!'
 
-        self.cmd_instances  = self._populate_commands()
-        self.cmd_queue      = [] # Queued debugger commands
-        self.display_mgr    = Mdisplay.DisplayMgr()
-        self.intf           = core_obj.debugger.intf
-        self.last_cmd       = ''  # Initially a no-op
-        self.precmd_hooks   = []
-        self.preloop_hooks  = []
-        self.postcmd_hooks  = []
+        self.cmd_instances    = self._populate_commands()
+        self.cmd_queue        = []     # Queued debugger commands
+        self.display_mgr      = Mdisplay.DisplayMgr()
+        self.intf             = core_obj.debugger.intf
+        self.last_command     = None   # Initially a no-op
+        self.precmd_hooks     = []
+        self.preloop_hooks    = []
+        self.postcmd_hooks    = []
 
         self._populate_cmd_lists()
         self.prompt_str     = '(Pydbgr) '
@@ -575,10 +576,10 @@ class CommandProcessor(Mbase_proc.Processor):
                 # thing?  investigate and fix.
                 if len(self.debugger.intf) > 1:
                     del self.debugger.intf[-1]
-                    self.last_cmd=''
+                    self.last_command = ''
                 else:
                     if self.debugger.intf[-1].output:
-                        self.debugger.intf[-1].output.writeline("Leaving")
+                        self.debugger.intf[-1].output.writeline('Leaving')
                         pass
                     break
                 pass
@@ -588,25 +589,25 @@ class CommandProcessor(Mbase_proc.Processor):
     def process_command(self):
         # process command
         if len(self.cmd_queue) > 0:
-            last_cmd = self.cmd_queue[0].strip()
+            last_command = self.cmd_queue[0].strip()
             del self.cmd_queue[0]
         else:
-            last_cmd = self.intf[-1].read_command(self.prompt_str).strip()
-            if '' == last_cmd and self.intf[-1].interactive: 
-                last_cmd = self.last_cmd
+            last_command = self.intf[-1].read_command(self.prompt_str).strip()
+            if '' == last_command and self.intf[-1].interactive: 
+                last_command = self.last_command
                 pass
             pass
         # Look for comments
-        if '' == last_cmd:
+        if '' == last_command:
             if self.intf[-1].interactive:
                 self.errmsg("No previous command registered, " + 
                             "so this is a no-op.")
                 pass
             return False
-        if last_cmd[0] == '#':
+        if last_command[0] == '#':
             return False
         try:
-            args_list = arg_split(last_cmd)
+            args_list = arg_split(last_command)
         except:
             self.errmsg("bad parse %s"< sys.exc_info()[0])
             return False
@@ -615,7 +616,7 @@ class CommandProcessor(Mbase_proc.Processor):
             if len(args):
                 cmd_name = resolve_name(self, args[0])
                 if cmd_name:
-                    self.last_cmd = last_cmd
+                    self.last_command = last_command
                     cmd_obj = self.name2cmd[cmd_name]
                     if self.ok_for_running(cmd_obj, cmd_name, len(args)-1):
                         try: 
@@ -632,9 +633,9 @@ class CommandProcessor(Mbase_proc.Processor):
                         pass
                     pass
                 elif not self.settings('autoeval'):
-                    self.undefined_cmd(last_cmd)
+                    self.undefined_cmd(last_command)
                 else:
-                    self.exec_line(last_cmd)
+                    self.exec_line(last_command)
                     pass
                 pass
             pass

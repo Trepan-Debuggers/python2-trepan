@@ -115,13 +115,14 @@ class StringArrayOutput(Mbase_io.DebuggerOutputBase):
 # Demo
 if __name__=='__main__':
     inp= StringArrayInput(['Now is the time', 'for all good men'])
-    line = inp.readline("Type some characters: ")
+    line = inp.readline()
     print line
-    line = inp.readline("Type more characters: ")
+    line = inp.readline()
     print line
     try:
-        line = inp.readline("Shouldn't be able to get more: ")        
+        line = inp.readline()
     except EOFError:
+        print 'EOF hit on read'
         pass
     out = StringArrayOutput()
     print(out.output)

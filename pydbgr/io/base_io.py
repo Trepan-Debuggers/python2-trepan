@@ -60,7 +60,7 @@ class DebuggerInputBase(object):
 
     pass
     
-# FIXME: In 2.6 we can really use an Absctract Class (ABC). But for now,
+# FIXME: In 2.6 we can really use an Abstract Class (ABC). But for now,
 # we want 2.5.x compatibility.
 class DebuggerOutputBase(object):
     """ This is an abstract class that specifies debugger output. """

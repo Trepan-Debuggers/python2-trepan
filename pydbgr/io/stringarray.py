@@ -15,7 +15,8 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Simulate I/O using lists of strings. """
 
-from import_relative import *
+import types
+from import_relative import import_relative
 Mbase_io = import_relative('base_io', top_name='pydbgr')
 
 class StringArrayInput(Mbase_io.DebuggerInputBase):
@@ -38,8 +39,7 @@ class StringArrayInput(Mbase_io.DebuggerInputBase):
         if isinstance(inp, types.ListType):
             self.input = inp
         else:
-            raise IOError, ("Invalid input type (%s) for %s" % (type(input), 
-                                                                input))
+            raise IOError, ("Invalid input type (%s) for %s" % (type(inp), inp))
         return
 
     def readline(self, use_raw=None):

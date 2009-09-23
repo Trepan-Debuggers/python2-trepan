@@ -62,7 +62,7 @@ class SourceCommand(Mbase_cmd.DebuggerCommand):
                         % filename)
             return False
 
-        # Push a new intf.
+        # Push a new interface.
         script_intf = Mscript.ScriptInterface(expanded_file, opts=opts,
                                               out=self.debugger.intf[-1].output)
         self.debugger.intf.append(script_intf)

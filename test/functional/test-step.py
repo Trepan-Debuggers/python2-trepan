@@ -66,7 +66,7 @@ class TestStep(unittest.TestCase):
                '!! z = 1/0']
         compare_output(self, out, d, cmds)
 
-        # Test "step" will sets of events. Part 1
+        # Test "step" with sets of events. Part 1
         cmds = ['step call exception',
                 'step call exception', 'continue']
         d = strarray_setup(cmds)

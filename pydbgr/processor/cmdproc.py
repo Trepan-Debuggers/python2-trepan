@@ -388,7 +388,7 @@ class CommandProcessor(Mbase_proc.Processor):
         Return what we've found. None can be returned as a value in
         the triple.
         """
-        modfunc, filename = (None, None)
+        modfunc, filename, lineno = (None, None, None)
         if self.curframe:
             g = self.curframe.f_globals
             l = self.curframe.f_locals

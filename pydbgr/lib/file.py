@@ -66,7 +66,7 @@ def lookupmodule(name):
     return (None, None)
 
 def parse_position(errmsg, arg):
-    """parse_position(obj, arg)->(fn, name, lineno)
+    """parse_position(errmsg, arg)->(fn, name, lineno)
     
     Parse arg as [filename|module:]lineno
     Make sure it works for C:\foo\bar.py:12
@@ -85,7 +85,7 @@ def parse_position(errmsg, arg):
         try:
             lineno = int(arg)
         except TypeError:
-            errmsg("Bad lineno: %s", str(arg))
+            errmsg("Bad line number: %s", str(arg))
             return (None, filename, None)
         return (None, filename, lineno)
     return (None, None, None)
@@ -107,3 +107,4 @@ if __name__=='__main__':
     print 'file_pyc2py("foo.pyc"):',  file_pyc2py("foo.pyc")
     print file_pyc2py("stays-the-same.py")
     print file_pyc2py("stays-the-same-without-suffix")
+    pass

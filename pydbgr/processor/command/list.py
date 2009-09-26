@@ -148,6 +148,7 @@ or 'show listsize' to see or set the value.
                     self.errmsg(('At most 2 parameters allowed when no module' +
                                  ' name is found/given. Saw: %d parameters') 
                                 % len(args))
+                    return (None, None, None)
                 else:
                     self.errmsg(('At most 3 parameters allowed when a module' +
                                  ' name is given. Saw: %d parameters') % 

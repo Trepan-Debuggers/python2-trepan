@@ -380,8 +380,9 @@ class CommandProcessor(Mbase_proc.Processor):
 
         return mf, filename, lineno
 
-    def parse_position_one_arg(self, arg, old_mod=None, obj_errmsg=True):
-        """parse_position_one_arg(self,arg)->(module/function, file, lineno)
+    def parse_position_one_arg(self, arg, old_mod=None, show_errmsg=True):
+        """parse_position_one_arg(self, arg, show_errmsg) -> 
+              (module/function, file, lineno)
         
         See if arg is a line number, function name, or module name.
         Return what we've found. None can be returned as a value in
@@ -421,13 +422,13 @@ class CommandProcessor(Mbase_proc.Processor):
                     modfunc = modfunc.im_func
                     pass
                 else:
-                    if obj_errmsg: self.errmsg(msg)
+                    if show_errmsg: self.errmsg(msg)
                     return(None, None, None)
                 code     = modfunc.func_code
                 lineno   = code.co_firstlineno
                 filename = code.co_filename
             except:
-                self.errmsg(msg)
+                if show_errmsg: self.errmsg(msg)
                 return (None, None, None)
             pass
         return (modfunc, self.core.canonic(filename), lineno)
@@ -826,7 +827,7 @@ if __name__=='__main__':
     print cmdproc.parse_position_one_arg('4+1')
     print cmdproc.parse_position_one_arg('os.path')
     print cmdproc.parse_position_one_arg('os.path.join')
-    print cmdproc.parse_position_one_arg('/bin/bash', obj_errmsg=False)
+    print cmdproc.parse_position_one_arg('/bin/bash', show_errmsg=False)
     print cmdproc.parse_position('/bin/bash')
     print cmdproc.parse_position('/bin/bash:4')
 

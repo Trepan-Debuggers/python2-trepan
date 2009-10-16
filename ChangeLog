@@ -1,3 +1,224 @@
+2009-10-16 01:56  rocky@gnu.org
+
+	* pydbgr/api.py, test/unit/test-help.py: api.py: debug() change
+	  parameter "step" to "step_ignore". Thanks to Yaroslav Halchenko
+	  for reporting the problem' .
+	  test-help.py: test_help_categories() add tests for recent bugs
+
+2009-10-16 01:38  rocky@gnu.org
+
+	* pydbgr/processor/command/help.py: Fix bug in listing command
+	  categories with *. Thanks to Yaroslav Halchenko for reporting the
+	  problem
+
+2009-10-16 01:32  rocky@gnu.org
+
+	* pydbgr/processor/command/help.py, test/unit/test-help.py: Fix bug
+	  in listing command categories. Thanks to Yaroslav Halchenko for
+	  reporting the problem
+
+2009-09-26 13:04  rocky@gnu.org
+
+	* pydbgr/processor/cmdproc.py: Defensive programming
+
+2009-09-26 12:47  rocky@gnu.org
+
+	* pydbgr/processor/cmdproc.py: Improve selection of parameter name
+	  and use it more.
+
+2009-09-26 12:00  rocky@gnu.org
+
+	* pydbgr/lib/file.py: Some small typos
+
+2009-09-26 03:27  rocky@gnu.org
+
+	* pydbgr/processor/command/list.py: Add list error return.
+
+2009-09-25 20:15  rocky@gnu.org
+
+	* test/functional/test-step.py: Comment typo
+
+2009-09-23 02:39  rocky@gnu.org
+
+	* pydbgr/io/stringarray.py: Was using incorrorrect readline in
+	  standalone code. Harmless, but wrong
+
+2009-09-23 02:05  rocky@gnu.org
+
+	* pydbgr/io/base_io.py, pydbgr/io/stringarray.py,
+	  pydbgr/processor/command/source.py: Variable name typo bug. And
+	  make pyflakes friendly too.
+
+2009-09-22 14:11  rocky@gnu.org
+
+	* pydbgr/processor/cmdproc.py, pydbgr/processor/command/help.py,
+	  pydbgr/processor/command/mock.py: In slightly better alignment
+	  with rbdbgr
+
+2009-09-19 15:36  rocky@gnu.org
+
+	* pydbgr/processor/command/source.py: Doc typo
+
+2009-09-19 15:11  rocky@gnu.org
+
+	* pydbgr/lib/default.py, pydbgr/processor/cmdproc.py,
+	  pydbgr/processor/command/base_subcmd.py,
+	  pydbgr/processor/command/mock.py,
+	  pydbgr/processor/command/set_subcmd/annotate.py,
+	  pydbgr/processor/command/set_subcmd/autoeval.py,
+	  pydbgr/processor/command/set_subcmd/autoipython.py,
+	  pydbgr/processor/command/set_subcmd/autolist.py,
+	  pydbgr/processor/command/set_subcmd/autopython.py,
+	  pydbgr/processor/command/set_subcmd/basename.py,
+	  pydbgr/processor/command/set_subcmd/cmdtrace.py,
+	  pydbgr/processor/command/set_subcmd/dbg_pydbgr.py,
+	  pydbgr/processor/command/set_subcmd/different.py,
+	  pydbgr/processor/command/set_subcmd/events.py,
+	  pydbgr/processor/command/set_subcmd/flush.py,
+	  pydbgr/processor/command/set_subcmd/listsize.py,
+	  pydbgr/processor/command/set_subcmd/maxargstrsize.py,
+	  pydbgr/processor/command/set_subcmd/skip.py,
+	  pydbgr/processor/command/set_subcmd/trace.py,
+	  pydbgr/processor/command/set_subcmd/traceset.py,
+	  pydbgr/processor/command/set_subcmd/width.py,
+	  pydbgr/processor/command/show_subcmd/annotate.py,
+	  pydbgr/processor/command/show_subcmd/args.py,
+	  pydbgr/processor/command/show_subcmd/autopython.py,
+	  pydbgr/processor/command/show_subcmd/events.py,
+	  pydbgr/processor/command/show_subcmd/traceset.py: Add autopython
+	  command. Show location when coming out of python or
+	  ipython and not leaving debugger command loop.
+	  
+	  set traceset -> set events
+	  
+	  DRY code with respect to not having to specify short_help when
+	  it's
+	  the same as the first line of help.
+	  
+	  Set abbrev lengths in a more expressive (less error prone) way.
+	  
+	  mock.rb: program_sys_argv is now set to the right type
+
+2009-09-19 12:29  rocky@gnu.org
+
+	* pydbgr/interface/script.py: Small changes which put code more in
+	  sync with rbdbgr.
+
+2009-09-13 22:49  rocky@gnu.org
+
+	* pydbgr/processor/command/info_subcmd/file.py,
+	  pydbgr/processor/command/pp.py: file.py: more defensive
+	  programming. Minor doc string correction
+	  pp.py: We don't need a stack to run this.
+
+2009-09-09 00:18  rocky@gnu.org
+
+	* pydbgr/interface/base_intf.py: Make DebuggerInterface out
+	  parameter compatible with using File output
+
+2009-09-08 13:50  rocky@gnu.org
+
+	* test/unit/test-user.py: Small doc change
+
+2009-09-08 13:47  rocky@gnu.org
+
+	* test/unit/test-user.py: Remove unused imports (found via
+	  pyflakes)
+
+2009-09-08 13:29  rocky@gnu.org
+
+	* pydbgr/interface/base_intf.py, pydbgr/interface/script.py,
+	  pydbgr/interface/server.py, pydbgr/interface/user.py,
+	  pydbgr/processor/command/mock.py, test/unit/test-user.py: Make
+	  the caller of confirm more explicit by changing the confirm
+	  "default" parameter from optional to manditory. Allow
+	  base_intf.__init__ to be used by default.
+	  
+	  These changes track what's going on in rbdbgr.
+
+2009-08-11 00:46  rocky@gnu.org
+
+	* pydbgr/processor/cmdproc.py,
+	  pydbgr/processor/command/base_cmd.py,
+	  pydbgr/processor/command/base_subcmd.py,
+	  pydbgr/processor/command/base_submgr.py,
+	  pydbgr/processor/command/break.py,
+	  pydbgr/processor/command/cd.py,
+	  pydbgr/processor/command/condition.py,
+	  pydbgr/processor/command/continue.py,
+	  pydbgr/processor/command/delete.py,
+	  pydbgr/processor/command/disable.py,
+	  pydbgr/processor/command/disassemble.py,
+	  pydbgr/processor/command/display.py,
+	  pydbgr/processor/command/down.py,
+	  pydbgr/processor/command/edit.py,
+	  pydbgr/processor/command/enable.py,
+	  pydbgr/processor/command/examine.py,
+	  pydbgr/processor/command/exit.py,
+	  pydbgr/processor/command/finish.py,
+	  pydbgr/processor/command/frame.py,
+	  pydbgr/processor/command/handle.py,
+	  pydbgr/processor/command/help.py,
+	  pydbgr/processor/command/info.py,
+	  pydbgr/processor/command/ipython.py,
+	  pydbgr/processor/command/jump.py,
+	  pydbgr/processor/command/kill.py,
+	  pydbgr/processor/command/list.py,
+	  pydbgr/processor/command/next.py, pydbgr/processor/command/p.py,
+	  pydbgr/processor/command/pdef.py, pydbgr/processor/command/pp.py,
+	  pydbgr/processor/command/pydocX.py,
+	  pydbgr/processor/command/python.py,
+	  pydbgr/processor/command/quit.py,
+	  pydbgr/processor/command/restart.py,
+	  pydbgr/processor/command/retval.py,
+	  pydbgr/processor/command/run.py, pydbgr/processor/command/set.py,
+	  pydbgr/processor/command/show.py,
+	  pydbgr/processor/command/skip.py,
+	  pydbgr/processor/command/source.py,
+	  pydbgr/processor/command/step.py,
+	  pydbgr/processor/command/tbreak.py,
+	  pydbgr/processor/command/undisplay.py,
+	  pydbgr/processor/command/up.py,
+	  pydbgr/processor/command/whatis.py,
+	  pydbgr/processor/command/where.py, pydbgr/processor/subcmd.py,
+	  test/unit/test-cmdproc.py, test/unit/test-processor.py: Separate
+	  name_aliases into name string attribute and aliases tuple. Is
+	  cleaner and stays in sync with rbdbgr
+
+2009-08-09 13:27  rocky@gnu.org
+
+	* pydbgr/processor/command/base_submgr.py,
+	  pydbgr/processor/command/set.py,
+	  pydbgr/processor/command/set_subcmd/width.py,
+	  pydbgr/processor/command/show_subcmd/autoeval.py,
+	  pydbgr/processor/command/show_subcmd/width.py: Minor
+	  regularization changes to sync with rbdbgr
+
+2009-08-06 23:32  rocky@gnu.org
+
+	* pydbgr/processor/command/base_submgr.py: Regularize file
+	  directory import load method name. Keeps in sync with rbdbgr too.
+
+2009-08-06 16:55  rocky@gnu.org
+
+	* pydbgr/cli.py, pydbgr/interface/script.py: output -> dbg_output
+
+2009-08-06 08:58  rocky@gnu.org
+
+	* pydbgr/processor/command/base_subcmd.py,
+	  pydbgr/processor/command/mock.py: Doc changes
+
+2009-08-04 05:18  rocky@gnu.org
+
+	* pydbgr/processor/command/down.py, pydbgr/processor/command/up.py:
+	  up/down (help) docstring corrections
+
+2009-08-01 11:05  rocky@gnu.org
+
+	* ChangeLog, pydbgr/processor/command/down.py,
+	  pydbgr/processor/command/up.py: Do not run up/down command if
+	  there is an argument error
+
 2009-07-31 09:33  rocky@gnu.org
 
 	* pydbgr/interface/user.py, pydbgr/processor/cmdproc.py,

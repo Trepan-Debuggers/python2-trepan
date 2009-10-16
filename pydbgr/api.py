@@ -129,20 +129,41 @@ In situations where you want an immediate stop in the "debug" call
 rather than the statement following it ("pass" above), add parameter
 step_ignore=0 to debug() like this:
 
-    import pydbgr  # Needed only once
+    import pydbgr.api  # Needed only once
     # ... as before
     pydbgr.api.debug(step_ignore=0)
     # ... as before
 
 
-Module variable pydbgr.debugger.debugger_obj is used as the debugger
-instance and it can be subsequenly used to change settings or alter
-behavior. It should be of type pydbgr.Debugger. If not it will get
-reset.
+Module variable debugger_obj from module pydbgr.debugger is used as
+the debugger instance variable; it can be subsequenly used to change
+settings or alter behavior. It should be of type Debugger (found in
+module pydbgr). If not, it will get changed to that type.
 
-If however you want your own separate debugger instance use
-pydbgr.Debugger() to create an new Debugger instance.instead of the
-variable pydbgr.debugger.debugger_obj.
+   Example:
+   $ python
+   >>> from pydbgr.debugger import debugger_obj
+   >>> type(debugger_obj)
+   <type 'NoneType'>
+   >>>  import pydbgr.api 
+   >>>  pydbgr.api.debug()
+   ...
+   (Pydbgr) c
+   >>> from pydbgr.debugger import debugger_obj
+   >>> debugger_obj
+   <pydbgr.debugger.Debugger instance at 0x7fbcacd514d0>
+   >>>
+
+If however you want your own separate debugger instance, you can
+create it from the debugger class Debugger() from module
+pydbgr.debugger.
+
+Example:
+  $ python
+  >>> from pydbgr.debugger import Debugger
+  >>> dbgr = Debugger()  # Add options as desired
+  >>> dbgr
+  <pydbgr.debugger.Debugger instance at 0x2e25320>
 
 `dbg_opts' is an optional "options" dictionary that gets fed
 pydbgr.Debugger(); `start_opts' are the optional "options"

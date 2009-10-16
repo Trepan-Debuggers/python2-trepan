@@ -118,8 +118,8 @@ See also 'examine' and 'whatis'.
         commands = self.proc.name2cmd.keys()
         commands.sort()
         width = self.debugger.settings['width']
-        self.msg(columnize.columnize(commands, displaywidth=width,
-                                     lineprefix='    '))
+        self.msg_nocr(columnize.columnize(commands, displaywidth=width,
+                                          lineprefix='    '))
         return
 
     def list_categories(self):
@@ -143,13 +143,13 @@ Type "help" followed by command name for full documentation.
         """Show short help for all commands in `category'."""
         n2cmd = self.proc.name2cmd
         names = n2cmd.keys()
-        if len(args) == 1 and args[1] == '*':
+        if len(args) == 1 and args[0] == '*':
             self.msg("Commands in class %s:" % category)
             cmds = [cmd for cmd in names if category == n2cmd[cmd].category]
             cmds.sort()
             width = self.debugger.settings['width']
-            self.msg(columnize.columnize(cmds, displaywidth=width,
-                                         lineprefix='    '))
+            self.msg_nocr(columnize.columnize(cmds, displaywidth=width,
+                                              lineprefix='    '))
             return
         
         self.msg("%s." % categories[category])

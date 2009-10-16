@@ -48,6 +48,16 @@ class TestHelp(unittest.TestCase):
         self.assertEqual(0, len(self.errors), 'Should not get errors')
         return
 
+    def test_help_categories(self):
+        """Test we can run 'help *cmd* for each category"""
+
+        for name in Mhelp.categories.keys():
+            self.cmd.run(['help', name])
+            pass
+        self.assertTrue(len(self.msgs) > 0, 'Should get help output')
+        self.assertEqual(0, len(self.errors), 'Should not get errors')
+        return
+
     def test_short_help(self):
         """Test each command has some sort of short help"""
         for cmd in self.cp.name2cmd.values():

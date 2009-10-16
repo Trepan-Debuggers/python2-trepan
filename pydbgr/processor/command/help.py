@@ -81,7 +81,7 @@ See also 'examine' and 'whatis'.
                 self.columnize_all_commands()
                 return
             elif args[1] in categories.keys():
-                self.show_category(category, args[2:])
+                self.show_category(args[1], args[2:])
                 return
 
             command_name = Mcmdproc.resolve_name(self.proc, args[1])

@@ -110,7 +110,7 @@ def run_exec(statement, debug_opts=None, start_opts=None, globals_=None,
     return
 
 def debug(dbg_opts=None, start_opts=None, post_mortem=True,
-          steps=1):
+          step_ignore=1):
     """ 
 Enter the debugger. Use like this:
 
@@ -127,11 +127,11 @@ Enter the debugger. Use like this:
 
 In situations where you want an immediate stop in the "debug" call
 rather than the statement following it ("pass" above), add parameter
-steps=0 to debug() like this:
+step_ignore=0 to debug() like this:
 
     import pydbgr  # Needed only once
     # ... as before
-    pydbgr.api.debug(steps=0)
+    pydbgr.api.debug(step_ignore=0)
     # ... as before
 
 
@@ -148,7 +148,7 @@ variable pydbgr.debugger.debugger_obj.
 pydbgr.Debugger(); `start_opts' are the optional "options"
 dictionary that gets fed to pydbgr.Debugger.core.start().
 
-Parameter "steps" specifies how many line events to ignore after the
+Parameter "step_ignore" specifies how many line events to ignore after the
 debug() call. 0 means don't even wait for the debug() call to finish.
 """
     if Mdebugger.Debugger != type(Mdebugger.debugger_obj):
@@ -164,7 +164,7 @@ debug() call. 0 means don't even wait for the debug() call to finish.
     if post_mortem:
         debugger_on_post_mortem()
         pass
-    if 0 == steps:
+    if 0 == step_ignore:
         frame                   = sys._getframe(1)
         core.stop_reason        = 'at a debug() call'
         old_trace_hook_suspend  = core.trace_hook_suspend
@@ -172,7 +172,7 @@ debug() call. 0 means don't even wait for the debug() call to finish.
         core.processor.event_processor(frame, 'line', None)
         core.trace_hook_suspend = old_trace_hook_suspend
     else:
-        core.step_ignore = steps-1;
+        core.step_ignore = step_ignore-1;
         pass
     return 
 

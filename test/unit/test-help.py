@@ -56,6 +56,13 @@ class TestHelp(unittest.TestCase):
             pass
         self.assertTrue(len(self.msgs) > 0, 'Should get help output')
         self.assertEqual(0, len(self.errors), 'Should not get errors')
+
+        for name in Mhelp.categories.keys():
+            self.cmd.run(['help', name, '*'])
+            pass
+        self.assertTrue(len(self.msgs) > 0, 'Should get help output')
+        self.assertEqual(0, len(self.errors), 'Should not get errors')
+
         return
 
     def test_short_help(self):

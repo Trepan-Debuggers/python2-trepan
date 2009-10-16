@@ -32,7 +32,7 @@ return code that will be passed back to the OS."""
     min_args      = 0
     max_args      = 1
     name          = os.path.basename(__file__).split('.')[0]
-    need_stack    = True
+    need_stack    = False
     short_help    = 'Exit program via sys.exit()'
 
     def run(self, args):

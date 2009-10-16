@@ -25,7 +25,7 @@ Mbase_subcmd  = import_relative('base_subcmd', '..', 'pydbgr')
 class ShowTrace(Mbase_subcmd.DebuggerShowBoolSubcommand):
     """Show event tracing.
 
-See also 'show traceset' and 'set trace'."""
+See also 'set events'."""
 
     min_abbrev = 2 # Need at least "show tr"
 

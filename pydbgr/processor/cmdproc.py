@@ -555,8 +555,10 @@ class CommandProcessor(Mbase_proc.Processor):
 
     def process_commands(self):
         """Handle debugger commands."""
-        self.setup()
-        print_location(self)
+        if self.core.execution_status != 'No program':
+            self.setup()
+            print_location(self)
+            pass
         leave_loop = run_hooks(self, self.preloop_hooks)
         self.continue_running = False
 

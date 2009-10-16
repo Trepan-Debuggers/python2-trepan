@@ -74,11 +74,17 @@ DEBUGGER_SETTINGS = {
     'confirm'       : True,
 
     # Debug the debugger?
-    'dbg_pydbgr'     : False,
+    'dbg_pydbgr'    : False,
 
     # When True, consecutive stops must be on different
     # file/line positions.
     'different'     : True,
+
+    # events is a set of events to process line-, call-, or return-like
+    # tracing. See tracer.ALL_EVENT_NAMES and ALL_EVENTS
+    # Note this is independent of printset which just prints the event.
+    # This set controls entering the debugger command processor.
+    'events'        : tracer.ALL_EVENTS,  
 
     # Save debugger history?
     'hist_save'     : False,
@@ -105,16 +111,10 @@ DEBUGGER_SETTINGS = {
     'nostartup'     : False,
 
     # Stop at 'def' and 'class' statements?
-    'skip'       : True,
+    'skip'          : True,
 
     # print trace output?
     'trace'         : False,
-
-    # traceset is a set of events to process line-, call-, or return-like
-    # tracing. See tracer.ALL_EVENT_NAMES and ALL_EVENTS
-    # Note this is independent of printset which just prints the event.
-    # This set controls entering the debugger command processor.
-    'traceset'      : tracer.ALL_EVENTS,  
 
     # The target maximum print length. Used for example in listing
     # arrays which are columnized.

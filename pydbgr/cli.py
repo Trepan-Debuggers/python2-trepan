@@ -320,10 +320,10 @@ def main(dbg=None, sys_argv=list(sys.argv)):
     # the loop exits for some reason.
     dbg.sig_received = False
 
-    if not mainpyfile:
-        print('For now, you need to specify a Python script name!')
-        sys.exit(2)
-        pass
+    # if not mainpyfile:
+    #     print('For now, you need to specify a Python script name!')
+    #     sys.exit(2)
+    #     pass
 
     while True:
 
@@ -335,8 +335,8 @@ def main(dbg=None, sys_argv=list(sys.argv)):
                 normal_termination = dbg.run_script(mainpyfile)
                 if not normal_termination: break
             else:
-                # dbg._wait_for_mainpyfile = True
-                # dbg.processor.process_commands(None)
+                dbg.core.execution_status = 'No program'
+                dbg.core.processor.process_commands()
                 pass
 
             dbg.core.execution_status = 'Terminated'

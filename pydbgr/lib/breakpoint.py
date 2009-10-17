@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Breakpoints as might be used in a debugger.
+"""Breakpoints as used in a debugger.
 
 This code is a rewrite of the stock python bdb.Breakpoint"""
 

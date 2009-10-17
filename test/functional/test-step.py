@@ -134,7 +134,7 @@ class TestStep(unittest.TestCase):
              tracer.ALL_EVENTS),
             ):
             d = strarray_setup(cmds)
-            d.settings['traceset'] = eventset
+            d.settings['events'] = eventset
             d.core.start()
             ##############################
             x = sqr(4)

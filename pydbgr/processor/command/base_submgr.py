@@ -15,7 +15,7 @@
 #    along with this program; if not, write to the Free Software
 #    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 #    02110-1301 USA.
-import columnize, inspect, os, string, sys
+import inspect, os, string, sys
 from import_relative import *
 base_cmd  = import_relative('base_cmd')
 subcmd    = import_relative('subcmd', os.path.pardir)
@@ -126,7 +126,7 @@ class SubcommandMgr(base_cmd.DebuggerCommand):
 
         if '*' == subcmd_name:
             self.msg("List of subcommands for command '%s':" % self.name)
-            self.msg(columnize.columnize(self.cmds.list(), lineprefix='    '))
+            self.msg(self.columnize_commands(self.cmds.list()))
             return
 
         # "help cmd subcmd". Give help specific for that subcommand.
@@ -142,7 +142,16 @@ class SubcommandMgr(base_cmd.DebuggerCommand):
                                           self.name)
                 pass
         else:
-            self.undefined_subcmd(self.name, subcmd_name)
+            cmds = [cmd for cmd in self.cmds.list()
+                    if re.match('^' + subcmd_name, cmd) ]
+            if cmds == []:
+                self.errmsg("No %s subcommands found matching /^%s/. Try \"help\"." %
+                            (self.name, subcmd_name,))
+            else:
+                self.msg("Subcommand(s) of \"%s\" matching /^%s/:" %
+                         (self.name, subcmd_name,))
+                self.msg_nocr(self.columnize_commands(cmds))
+                pass
             pass
         return
 

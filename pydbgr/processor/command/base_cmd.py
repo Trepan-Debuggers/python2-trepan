@@ -22,6 +22,8 @@ and storing it as a list of known debugger commands.
 
 NotImplementedMessage = "This method must be overriden in a subclass"
 
+import columnize
+
 class DebuggerCommand():
     """Base Class for Debugger commands. We pull in some helper
     functions for command from module cmdfns."""
@@ -46,6 +48,13 @@ class DebuggerCommand():
 
     aliases = ('alias1', 'alias2..',)
     name    = 'YourCommandName'
+
+    def columnize_commands(self, commands):
+        """List commands arranged in an aligned columns"""
+        commands.sort()
+        width = self.debugger.settings['width']
+        return columnize.columnize(commands, displaywidth=width, 
+                                   lineprefix='    ')
 
     def confirm(self, msg, default=False):
         """ Convenience short-hand for self.debugger.intf[-1].confirm """

@@ -15,7 +15,7 @@
 #    along with this program; if not, write to the Free Software
 #    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 #    02110-1301 USA.
-import columnize, os
+import os, re
 
 # Our local modules
 from import_relative import import_relative
@@ -76,15 +76,16 @@ See also 'examine' and 'whatis'.
         self.proc.last_command='' 
         
         if len(args) > 1:
-            if args[1] == '*':
+            cmd_name = args[1]
+            if cmd_name == '*':
                 self.msg("List of all debugger commands:")
-                self.columnize_all_commands()
+                self.msg_nocr(self.columnize_commands(self.proc.name2cmd.keys()))
                 return
-            elif args[1] in categories.keys():
-                self.show_category(args[1], args[2:])
+            elif cmd_name in categories.keys():
+                self.show_category(cmd_name, args[2:])
                 return
 
-            command_name = Mcmdproc.resolve_name(self.proc, args[1])
+            command_name = Mcmdproc.resolve_name(self.proc, cmd_name)
             if command_name:
                 instance = self.proc.name2cmd[command_name]
                 if hasattr(instance, 'help'):
@@ -103,24 +104,21 @@ See also 'examine' and 'whatis'.
                         pass
                     pass
             else:
-                self.errmsg('Undefined command: "%s".  Try "help".' % 
-                            args[1])
-                pass
+                cmds = [cmd for cmd in self.proc.name2cmd.keys()
+                        if re.match('^' + cmd_name, cmd) ]
+                if cmds is None:
+                    self.errmsg("No commands found matching /^%s/. Try \"help\"." 
+                                % cmd_name)
+                else:
+                    self.msg("Command names matching /^%s/:" % cmd_name)
+                    self.msg_nocr(self.columnize_commands(cmds))
+                    pass
             return
         else:
             self.list_categories()
             pass
 
         return False
-
-    def columnize_all_commands(self):
-        """List all commands arranged in an aligned columns"""
-        commands = self.proc.name2cmd.keys()
-        commands.sort()
-        width = self.debugger.settings['width']
-        self.msg_nocr(columnize.columnize(commands, displaywidth=width,
-                                          lineprefix='    '))
-        return
 
     def list_categories(self):
         """List the command categories and a short description of each."""
@@ -133,6 +131,7 @@ See also 'examine' and 'whatis'.
         final_msg = """
 Type "help" followed by a class name for a list of commands in that class.
 Type "help *" for the list of all commands.
+Type "help REGEXP" for the list of commands matching /^#{REGEXP}/
 Type "help CLASS *" for the list of all commands in class CLASS.
 Type "help" followed by command name for full documentation.
 """
@@ -147,9 +146,7 @@ Type "help" followed by command name for full documentation.
             self.msg("Commands in class %s:" % category)
             cmds = [cmd for cmd in names if category == n2cmd[cmd].category]
             cmds.sort()
-            width = self.debugger.settings['width']
-            self.msg_nocr(columnize.columnize(cmds, displaywidth=width,
-                                              lineprefix='    '))
+            self.msg_nocr(self.columnize_commands(cmds))
             return
         
         self.msg("%s." % categories[category])
@@ -175,6 +172,10 @@ if __name__ == '__main__':
     command.run(['help', 'quit'])
     print '-' * 20
     command.run(['help', 'stack'])
+    print '-' * 20
     command.run(['help', 'breakpoints'])
+    print '-' * 20
     command.run(['help', 'breakpoints', '*'])
+    print '-' * 20
+    command.run(['help', 'c.*'])
     pass

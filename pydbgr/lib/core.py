@@ -404,7 +404,7 @@ class DebuggerCore():
                     pass
                 pass
 
-            trace_event_set = self.debugger.settings['traceset']
+            trace_event_set = self.debugger.settings['events']
             if trace_event_set is None or event not in trace_event_set:
                 return True
 

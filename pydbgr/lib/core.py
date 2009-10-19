@@ -70,6 +70,10 @@ class DebuggerCore():
 
         self.filename_cache  = {}
 
+        # Initially the event parameter of the event hook.
+        # We can however modify it, such as for breakpoints
+        self.event           = None
+
         # Is debugged program currently under execution? 
         self.execution_status = 'Pre-execution'
 
@@ -265,9 +269,9 @@ class DebuggerCore():
             self.trace_hook_suspend = False
         return
 
-    def is_break_here(self, frame, event, arg):
+    def is_break_here(self, frame, arg):
         filename = self.canonic(frame.f_code.co_filename)
-        if 'call' == event:
+        if 'call' == self.event:
             find_name  = frame.f_code.co_name 
             # Could check code object or decide not to
             # The below could be done as a list comprehension, but
@@ -283,6 +287,7 @@ class DebuggerCore():
                         pass
                     self.stop_reason = ("at %scall breakpoint %d" % 
                                         (msg, bp.number))
+                    self.event = 'brkpt'
                     return True
                 pass
             pass
@@ -299,6 +304,7 @@ class DebuggerCore():
                     pass
                 self.stop_reason = ("at %sline breakpoint %d" % 
                                     (msg, bp.number))
+                self.event = 'brkpt'
                 return True
             else:
                 return False
@@ -387,6 +393,8 @@ class DebuggerCore():
 
             if self.trace_hook_suspend:
                 return None
+
+            self.event = event
             # FIXME: Understand what's going on here better.
             # When None gets returned, the frame's f_trace seems to get set
             # to None. Somehow this is changing other frames when get passed
@@ -399,13 +407,13 @@ class DebuggerCore():
 
             if self.debugger.settings['trace']:
                 print_event_set = self.debugger.settings['printset']
-                if event in print_event_set:
-                    self.trace_processor.event_processor(frame, event, arg)
+                if self.event in print_event_set:
+                    self.trace_processor.event_processor(frame, self.event, arg)
                     pass
                 pass
 
             trace_event_set = self.debugger.settings['events']
-            if trace_event_set is None or event not in trace_event_set:
+            if trace_event_set is None or self.event not in trace_event_set:
                 return True
 
             # I think we *have* to run is_stop_here() before is_break_here()
@@ -414,9 +422,9 @@ class DebuggerCore():
             # before steps. In this case we will need to factor out the counting
             # updates.
             if ( self.is_stop_here(frame, event, arg) or 
-                 self.is_break_here(frame, event, arg) ):
+                 self.is_break_here(frame, arg) ):
                 # Run the event processor
-                return self.processor.event_processor(frame, event, arg)
+                return self.processor.event_processor(frame, self.event, arg)
             return True
         finally:
             self.debugger_lock.release()

@@ -27,26 +27,31 @@ class InfoBreak(Mbase_subcmd.DebuggerSubcommand):
     need_stack = False
     short_help = "Status of user-settable breakpoints"
 
-    def bpprint(self, bp, out=None):
+    def bpprint(self, bp):
         if bp.temporary:
             disp = 'del  '
         else:
             disp = 'keep '
+            pass
         if bp.enabled:
             disp = disp + 'y  '
         else:
             disp = disp + 'n  '
+            pass
         self.msg('%-4dbreakpoint    %s at %s:%d' %
                  (bp.number, disp, self.core.filename(bp.filename), bp.line))
         if bp.condition:
             self.msg('\tstop only if %s' % (bp.condition))
+            pass
         if bp.ignore:
             self.msg('\tignore next %d hits' % (bp.ignore))
+            pass
         if (bp.hits):
             if (bp.hits > 1): ss = 's'
             else: ss = ''
             self.msg('\tbreakpoint already hit %d time%s' %
                      (bp.hits, ss))
+            pass
         return
 
     def run(self, args):

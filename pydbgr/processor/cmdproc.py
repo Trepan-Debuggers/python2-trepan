@@ -197,6 +197,7 @@ class CommandProcessor(Mbase_proc.Processor):
         self.continue_running = False  # True if we should leave command loop
         self.event2short      = dict(EVENT2SHORT)
         self.event2short['signal'] = '?!'
+        self.event2short['brkpt']  = 'xx'
 
         self.cmd_instances    = self._populate_commands()
         self.cmd_queue        = []     # Queued debugger commands

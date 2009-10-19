@@ -22,7 +22,7 @@ class TestBreak(unittest.TestCase):
         ##############################
         d.core.stop()
         out = ['-- foo()',
-               '-> def foo():',
+               'xx def foo():',
                "-- print 'foo here'"]
         compare_output(self, out, d, cmds)
         #######################################
@@ -36,7 +36,7 @@ class TestBreak(unittest.TestCase):
         ##############################
         d.core.stop()
         out = ['-- p = os.path.join("a", "b")',
-               '-> def join(a, *p):']
+               'xx def join(a, *p):']
         compare_output(self, out, d, cmds)
         return
 
@@ -54,7 +54,7 @@ class TestBreak(unittest.TestCase):
         ##############################
         d.core.stop()
         out = ['-- x = 5',
-               '-- z = 7']
+               'xx z = 7']
         compare_output(self, out, d, cmds)
         return
     pass

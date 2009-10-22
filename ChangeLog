@@ -1,3 +1,42 @@
+2009-10-19 08:12  rocky@gnu.org
+
+	* pydbgr/lib/core.py, pydbgr/processor/cmdproc.py,
+	  pydbgr/processor/command/info_subcmd/break.py,
+	  test/functional/test-break.py: When we are stopped at a
+	  breakpoint, make that the event.
+
+2009-10-19 00:00  rocky@gnu.org
+
+	* pydbgr/processor/command/info_subcmd/file.py: info file xx lines
+	  -> info file xx brkpts
+
+2009-10-17 12:48  rocky@gnu.org
+
+	* pydbgr/lib/breakpoint.py: Docstring correction
+
+2009-10-17 07:25  rocky@gnu.org
+
+	* pydbgr/lib/core.py, pydbgr/processor/command/base_cmd.py,
+	  pydbgr/processor/command/base_submgr.py,
+	  pydbgr/processor/command/help.py, test/functional/test-step.py:
+	  Missed a couple of places where traceset -> events
+	  Allow showing commands which matching a regular expression.
+
+2009-10-16 17:32  rocky@gnu.org
+
+	* pydbgr/cli.py, pydbgr/lib/default.py,
+	  pydbgr/processor/cmdproc.py, pydbgr/processor/command/exit.py,
+	  pydbgr/processor/command/show_subcmd/trace.py: cli.py: allow
+	  entry without a Python program to debug.
+	  trace.py, default.py: traceset -> events
+	  exit.py: we don't need to have a stack to run exit
+
+2009-10-16 02:29  rocky@gnu.org
+
+	* ChangeLog, pydbgr/api.py: Go over doc string for debug(). Thanks
+	  to Yarik yet again, for
+	  reminding me how bad my English skills are.
+
 2009-10-16 01:56  rocky@gnu.org
 
 	* pydbgr/api.py, test/unit/test-help.py: api.py: debug() change

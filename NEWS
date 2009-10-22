@@ -1,3 +1,16 @@
+0.1.2 10-27-09 - 
+- When we are stopped at a breakpoint, make that the event.
+- "info file xx lines" -> "info file xx brkpts"
+- "info tracesets" -> "info events"
+- "exit" doesn't need to have a stack to run
+- allow entering the debugger without having to run a Python script
+  (requested by Yaroslav Halchenko)
+- pydbgr.api.debug(step=ddd) -> pydbgr.api.debug(step_ignore=ddd)
+- allow getting regular expression patterns in help. (Suggested by Mike Welles)
+- Misc doc and bug fixes
+- add "edit" command
+
+
 0.1.1 07-04-09 - 
 - sys.argv had not been set correctly for debugged program. (Issue #1)
 - Allow disassembly of compiled python files (.pyc)

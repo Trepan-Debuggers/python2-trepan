@@ -1,3 +1,7 @@
+2009-10-22 14:00  rocky@gnu.org
+
+	* ChangeLog, NEWS: Update what's up in preparation for release.
+
 2009-10-19 08:12  rocky@gnu.org
 
 	* pydbgr/lib/core.py, pydbgr/processor/cmdproc.py,

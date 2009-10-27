@@ -1,4 +1,5 @@
-0.1.2 10-27-09 - 
+0.1.2 10-27-09 Halala ngosuku lokuzalwa 
+
 - When we are stopped at a breakpoint, make that the event.
 - "info file xx lines" -> "info file xx brkpts"
 - "info tracesets" -> "info events"

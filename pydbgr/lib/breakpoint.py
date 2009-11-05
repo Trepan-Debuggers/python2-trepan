@@ -87,7 +87,7 @@ class BreakpointManager:
         return (True, '')
 
     def en_disable_breakpoint_by_number(self, bpnum, do_enable=True):
-        "Disable a breakpoint given its breakpoint number."
+        "Enable or disable a breakpoint given its breakpoint number."
         success, msg, bp = self.get_breakpoint(bpnum)
         if not success: 
             return success, msg

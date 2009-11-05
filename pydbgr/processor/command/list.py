@@ -199,11 +199,7 @@ or 'show listsize' to see or set the value.
                     if (filename, lineno,) in bplist: 
                         bp = bplist[(filename, lineno,)][0]
                         a_pad = '%02d' % bp.number
-                        if bp.enabled:
-                            s += 'B'
-                        else:
-                            s += 'b'
-                            pass
+                        s += bp.icon_char()
                     else: 
                         s    += ' '
                         a_pad = '  '

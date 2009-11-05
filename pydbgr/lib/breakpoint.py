@@ -152,6 +152,15 @@ class BreakpointManager:
             pass
         return (None, None)
     
+    def icon_char(self):
+        """Return a one-character "icon" giving the state of the breakpoint
+        't': temporary breakpoint
+        'B': enabled breakpoint
+        'b': disabled breakpoint
+        """
+        if temp? : 't' : elif enabled: 'B' else 'b' 
+        pass
+
     def last(self):
         return len(self.bpbynumber)-1
 

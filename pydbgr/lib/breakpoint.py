@@ -152,15 +152,6 @@ class BreakpointManager:
             pass
         return (None, None)
     
-    def icon_char(self):
-        """Return a one-character "icon" giving the state of the breakpoint
-        't': temporary breakpoint
-        'B': enabled breakpoint
-        'b': disabled breakpoint
-        """
-        if temp? : 't' : elif enabled: 'B' else 'b' 
-        pass
-
     def last(self):
         return len(self.bpbynumber)-1
 
@@ -238,6 +229,17 @@ class Breakpoint:
         self.enabled = False
         return self.enabled
 
+    def icon_char(self):
+        """Return a one-character "icon" giving the state of the breakpoint
+        't': temporary breakpoint
+        'B': enabled breakpoint
+        'b': disabled breakpoint
+        """
+        if self.temporary : return 't' 
+        elif self.enabled:  return 'B' 
+        else: return 'b' 
+        return 
+
     pass # end of Breakpoint class
 
 def checkfuncname(b, frame):
@@ -272,6 +274,7 @@ if __name__=='__main__':
     bpmgr = BreakpointManager()
     print bpmgr.last()
     bp = bpmgr.add_breakpoint('foo', 5)
+    print bp.icon_char()
     print bpmgr.last()
     print repr(bp)
     print str(bp)
@@ -295,3 +298,6 @@ if __name__=='__main__':
     
     bp2 = bpmgr.add_breakpoint(None, None, False, None, 'foo')
     foo(bp2, bpmgr)
+    bp3 = bpmgr.add_breakpoint('foo', 5, temporary=True)
+    print bp3.icon_char()
+

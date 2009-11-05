@@ -13,7 +13,7 @@ class BreakpointManager:
     through a (file,line) tuple which is a key in the `bplist'
     dictionary. If the breakpoint is a function it is in `fnlist' as
     well.  Note there may be more than one breakpoint per line which
-    may have different conditions assocated with them.
+    may have different conditions associated with them.
     """
     def __init__(self):
         self.reset()
@@ -57,11 +57,15 @@ class BreakpointManager:
         return brkpt
 
     def delete_all_breakpoints(self):
-        if not self.file2lines:
-            return 'There are no breakpoints'
-        for bp in self.file2lines.bpbynumber:
+        count = 0
+        for bp in self.bpbynumber:
+            count += 1
             if bp: self.delete_breakpoint(bp)
-        self.file2lines = {}
+        if 0 == count:
+            return 'There are no breakpoints'
+        else:
+            return '%d breakpoints deleted' % count
+        return
 
     def delete_breakpoint(self, bp):
         " remove breakpoint `bp'"
@@ -152,17 +156,15 @@ class BreakpointManager:
         return len(self.bpbynumber)-1
 
     def reset(self):
-        # A list of breakpints by breakpoint number. 
-        # Each entry is None or an instance of Bpt index 0 is unused,
-        # except for marking an effective break .... see effective()
+        """ A list of breakpoints by breakpoint number.  Each entry is
+        None or an instance of Breakpoint.  Index 0 is unused, except
+        for marking an effective break .... see effective(). """
         self.bpbynumber = [None] 
 
         # A list of breakpoints indexed by (file, lineno) tuple
         self.bplist = {}
         self.fnlist  = {}
 
-        # A list of line numbers we have a breakpoint at, indexed by file
-        self.file2lines  = {}
         return
 
     pass # BreakpointManager

@@ -188,16 +188,6 @@ class DebuggerCore():
             return(os.path.basename(filename))
         return filename
 
-    def get_file_breaks(self, filename):
-        """Return a list of lines number where breakpoints have been
-        set in filename"""
-        filename = self.canonic(filename)
-        if filename in self.bpmgr.file2lines.keys():
-            return self.file2lines[filename]
-        else:
-            return []
-        pass
-
     def is_running(self):
         return 'Running' == self.execution_status
 

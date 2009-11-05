@@ -21,7 +21,8 @@ demonstrating how the command works.'''
 import os, sys
 from import_relative import import_relative
 import_relative('lib', '...', 'pydbgr')
-default   = import_relative('default', '...lib', 'pydbgr') # Default settings
+breakpoint = import_relative('breakpoint', '...lib', 'pydbgr')
+default    = import_relative('default', '...lib', 'pydbgr') # Default settings
 
 class MockIO():
     def readline(self, prompt='', add_to_history=False):
@@ -85,6 +86,7 @@ class MockDebuggerCore():
         self.execution_status = 'Pre-execution'
         self.filename_cache  = {}
         self.ignore_filter  = tracefilter.TraceFilter([])
+        self.bpmgr          = breakpoint.BreakpointManager()
         self.processor      = MockProcessor(self)
         self.step_ignore    = -1
         self.stop_frame     = None

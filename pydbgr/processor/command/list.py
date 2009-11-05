@@ -170,7 +170,6 @@ or 'show listsize' to see or set the value.
         filename, first, last = self.parse_list_cmd(args[1:])
         curframe = self.proc.curframe
         if filename is None: return
-        breaklist = self.core.get_file_breaks(filename)
 
         # We now have range information. Do the listing.
         max_line = pyficache.size(filename)
@@ -187,6 +186,7 @@ or 'show listsize' to see or set the value.
             self.msg('End position changed to last line %d ' % max_line)
             last = max_line
 
+        bplist = self.core.bpmgr.bplist
         try:
             for lineno in range(first, last+1):
                 line = pyficache.getline(filename, lineno)
@@ -196,11 +196,24 @@ or 'show listsize' to see or set the value.
                 else:
                     s = self.proc._saferepr(lineno).rjust(3)
                     if len(s) < 4: s = s + ' '
-                    if lineno in breaklist: s = s + 'B'
-                    else: s = s + ' '
+                    if (filename, lineno,) in bplist: 
+                        bp = bplist[(filename, lineno,)][0]
+                        a_pad = '%02d' % bp.number
+                        if bp.enabled:
+                            s += 'B'
+                        else:
+                            s += 'b'
+                            pass
+                    else: 
+                        s    += ' '
+                        a_pad = '  '
+                        pass
                     if curframe and lineno == inspect.getlineno(curframe) \
                        and filename == curframe.f_code.co_filename:
-                        s = s + '->'
+                        s += '->'
+                    else: 
+                        s += a_pad
+                        pass
                     self.msg(s + '\t' + line)
                     self.proc.list_lineno = lineno
                     pass
@@ -218,23 +231,40 @@ if __name__ == '__main__':
     command.proc = d.core.processor = cmdproc.CommandProcessor(d.core)
     command = ListCommand(d.core.processor)
     print '--' * 10
+
     command.run(['list', __file__ + ':10'])
     print '--' * 10
+
     command.run(['list', 'os', '10'])
     command.proc.frame = sys._getframe()
     command.proc.setup()
     print '--' * 10
+
     command.run(['list'])
     print '--' * 10
+
+    Mbreak  = import_relative('break', '.', 'pydbgr')
+    brk_cmd = Mbreak.BreakCommand(d.core.processor)
+    brk_cmd.run(['break'])
     command.run(['list', '.'])
     print '--' * 10
+
+    Mdisable     = import_relative('disable', '.', 'pydbgr')
+    disable_cmd  = Mdisable.DisableCommand(d.core.processor)
+    brk_cmd.run(['break'])
+    disable_cmd.run(['disable', '2'])
+    command.run(['list', '.'])
+    print '--' * 10
+
     command.run(['list', '10'])
     print '--' * 10
+
     command.run(['list', '1000'])
     def foo():
         return 'bar'
     command.run(['list', 'foo'])
     print '--' * 10
+
     command.run(['list', 'os.path'])
     print '--' * 10
     command.run(['list', 'os.path', '15'])
@@ -243,6 +273,7 @@ if __name__ == '__main__':
     print '--' * 10
     command.run(['list', 'os.path', '40', '50'])
     print '--' * 10
+
     command.run(['list', os.path.abspath(__file__)+':3', '4'])
     print '--' * 10
     command.run(['list', os.path.abspath(__file__)+':3', '12-10'])

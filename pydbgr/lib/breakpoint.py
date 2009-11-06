@@ -4,7 +4,7 @@
 This code is a rewrite of the stock python bdb.Breakpoint"""
 
 __all__ = ["BreakpointManager", "Breakpoint"]
-import types
+import types, os.path
 
 class BreakpointManager:
     """Manages the list of Breakpoints.
@@ -39,6 +39,7 @@ class BreakpointManager:
                        func=None):
 
         bpnum = len(self.bpbynumber)
+        if filename: filename  = os.path.realpath(filename)
         brkpt = Breakpoint(bpnum, filename, lineno, temporary, condition, 
                            func)
         # Build the internal lists of breakpoints
@@ -181,7 +182,9 @@ class Breakpoint:
 
         self.condition = condition
         self.enabled   = True
-        self.filename  = filename    # This better be in canonical form!
+
+        self.filename  = filename
+        if filename: self.filename  = os.path.realpath(filename)
 
         # Needed if funcname is not None.
         self.func_first_executable_line = None

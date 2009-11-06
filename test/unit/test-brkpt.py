@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 'Unit test for the debugger pydbgrcore breakpoint'
-import operator, os, sys, unittest
+import operator, os, re, sys, unittest
 from import_relative import *
 
 breakpoint = import_relative('lib.breakpoint', '...pydbgr')
@@ -12,11 +12,15 @@ class TestBreakpoint(unittest.TestCase):
         bpmgr = breakpoint.BreakpointManager()
         self.assertEqual(0, bpmgr.last())
         bp = bpmgr.add_breakpoint('foo', 5)
-        self.assertEqual('1   breakpoint   keep yes   at foo:5', str(bp))
+        self.assertFalse(not 
+                         re.search('1   breakpoint   keep yes   at .*foo:5', 
+                                   str(bp)))
         self.assertEqual('B', bp.icon_char())
         self.assertEqual(True, bp.enabled)
         bp.disable()
-        self.assertEqual('1   breakpoint   keep no    at foo:5', str(bp))
+        self.assertFalse(not
+                         re.search('1   breakpoint   keep no    at .*foo:5', 
+                         str(bp)))
         self.assertEqual(False, bp.enabled)
         self.assertEqual('b', bp.icon_char())
         self.assertEqual(1, bpmgr.last())

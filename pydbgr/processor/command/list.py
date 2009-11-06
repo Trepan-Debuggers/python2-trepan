@@ -177,6 +177,8 @@ or 'show listsize' to see or set the value.
             self.errmsg('No file %s found' % filename)
             return
 
+        canonic_filename = os.path.realpath(os.path.normcase(filename))
+        print filename, canonic_filename
         if first > max_line:
             self.errmsg('Bad start line %d - file "%s" has only %d lines'
                         % (first, filename, max_line))
@@ -195,11 +197,11 @@ or 'show listsize' to see or set the value.
                     break
                 else:
                     s = self.proc._saferepr(lineno).rjust(3)
-                    if len(s) < 4: s = s + ' '
-                    if (filename, lineno,) in bplist: 
-                        bp = bplist[(filename, lineno,)][0]
+                    if len(s) < 5: s += ' '
+                    if (canonic_filename, lineno,) in bplist.keys(): 
+                        bp    = bplist[(canonic_filename, lineno,)][0]
                         a_pad = '%02d' % bp.number
-                        s += bp.icon_char()
+                        s    += bp.icon_char()
                     else: 
                         s    += ' '
                         a_pad = '  '

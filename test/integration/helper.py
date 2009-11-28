@@ -15,7 +15,12 @@ def run_debugger(testname, python_file, dbgr_opts='', args='',
     os.environ['PYTHONPATH']=os.pathsep.join(sys.path)
     cmdfile     = os.path.join(datadir, "%s.cmd"   % testname)
     outfile     = os.path.join(srcdir, "%s.out" % testname)
-    programfile = os.path.join(progdir, python_file)
+    if python_file:
+        programfile = os.path.join(progdir, python_file)
+    else:
+        programfile = ''
+        pass
+
     outfile_opt = '--output=%s ' % outfile
 
     if os.path.exists(outfile): os.unlink(outfile)
@@ -23,7 +28,7 @@ def run_debugger(testname, python_file, dbgr_opts='', args='',
     cmd = "%s --command %s %s %s %s %s" % \
           (dbgr_path, cmdfile, outfile_opt, dbgr_opts, programfile, args)
 
-    print cmd
+    # print cmd
     os.system(cmd)
     fromfile  = rightfile
     fromdate  = time.ctime(os.stat(fromfile).st_mtime)

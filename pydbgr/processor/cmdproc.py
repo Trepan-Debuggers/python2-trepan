@@ -608,7 +608,7 @@ class CommandProcessor(Mbase_proc.Processor):
                             "so this is a no-op.")
                 pass
             return False
-        if last_command[0] == '#':
+        if last_command is None or last_command[0] == '#':
             return False
         try:
             args_list = arg_split(last_command)
@@ -679,9 +679,13 @@ class CommandProcessor(Mbase_proc.Processor):
             self.stack = self.curframe = \
                 self.botframe = None
             pass
-        self.list_lineno = \
-            max(1, inspect.getlineno(self.curframe) \
-                - (self.settings('listsize') / 2)) - 1
+        if self.curframe:
+            self.list_lineno = \
+                max(1, inspect.getlineno(self.curframe) \
+                        - (self.settings('listsize') / 2)) - 1
+        else:
+            self.list_lineno = None
+            pass
         # if self.execRcLines()==1: return True
         return False
 

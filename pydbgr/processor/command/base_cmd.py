@@ -68,16 +68,30 @@ class DebuggerCommand():
     # we wouldn't pick up that change in our self.msg
     def errmsg(self, msg):
         """ Convenience short-hand for self.debugger.intf[-1].errmsg """
-        return(self.debugger.intf[-1].errmsg(msg))
+        try:
+            return(self.debugger.intf[-1].errmsg(msg))
+        except EOFError:
+            # FIXME: what do we do here? 
+            pass
+        return None
                
     def msg(self, msg):
         """ Convenience short-hand for self.debugger.intf[-1].msg """
-        return(self.debugger.intf[-1].msg(msg))
-               
+        try:
+            return(self.debugger.intf[-1].msg(msg))
+        except EOFError:
+            # FIXME: what do we do here? 
+            pass
+        return None
+
     def msg_nocr(self, msg):
         """ Convenience short-hand for self.debugger.intf[-1].msg_nocr """
-        return(self.debugger.intf[-1].msg_nocr(msg))
-
+        try:
+            return(self.debugger.intf[-1].msg_nocr(msg))
+        except EOFError:
+            # FIXME: what do we do here? 
+            pass
+        return None
         
     def run(self, args):
         """ The method that implements the debugger command.

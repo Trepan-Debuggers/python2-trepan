@@ -68,5 +68,5 @@ zip_safe = False
 import os
 def read(*rnames):
     return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
-long_description   = ( read("README.txt") + '\n\n' +  read("CHANGES.txt") )
+long_description   = ( read("README.txt") + '\n\n' +  read("NEWS") )
 

@@ -1,5 +1,4 @@
 # Compatibility for us old-timers.
-SUBDIRS = emacs
 EXTRA_DIST=ipython/ipy_pydbgr.py
 PHONY=check clean dist distclean test test-unit test-functional
 all: check

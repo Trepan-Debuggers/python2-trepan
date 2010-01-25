@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2009, 2010 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -81,22 +81,22 @@ class DebuggerUserInput(Mbase_io.DebuggerInputBase):
         self.line_edit = get_option('try_readline') and readline_importable()
         return
 
-    def readline(self, use_raw=None):
+    def readline(self, use_raw=None, prompt=''):
         """Read a line of input. EOFError will be raised on EOF.  
 
-        Note that we don't support prompting first. Instead, arrange
-        to call DebuggerOutput.write() first with the prompt. If
-        `use_raw' is set raw_input() will be used in that is supported
-        by the specific input input. If this option is left None as is
-        normally expected the value from the class initialization is
-        used.
+        Note: some user interfaces may decide to arrange to call
+        DebuggerOutput.write() first with the prompt rather than pass
+        it here.. If `use_raw' is set raw_input() will be used in that
+        is supported by the specific input input. If this option is
+        left None as is normally expected the value from the class
+        initialization is used.
         """
         # FIXME we don't do command completion.
         if use_raw is None:
             use_raw = self.use_raw
             pass
         if use_raw:
-            return raw_input()
+            return raw_input(prompt)
         else:
             line = self.input.readline()
             if not line: raise EOFError

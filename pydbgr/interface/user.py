@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2009, 2010 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -85,11 +85,11 @@ class UserInterface(Mbase_intf.DebuggerInterface):
         return line
 
     def readline(self, prompt=''):
-        if prompt and len(prompt) > 0: 
+        if not self.input.use_raw and prompt and len(prompt) > 0: 
             self.output.write(prompt)
             self.output.flush()
             pass
-        return self.input.readline()
+        return self.input.readline(prompt=prompt)
     pass
 
 # Demo

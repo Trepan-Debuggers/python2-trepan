@@ -142,3 +142,4 @@ class ServerInterface(Mbase_intf.DebuggerInterface):
 # Demo
 if __name__=='__main__':
     intf = ServerInterface()
+    pass

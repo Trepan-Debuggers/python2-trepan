@@ -32,7 +32,7 @@ all breakpoints, give no argument.  those breakpoints.  Without
 argument, clear all breaks (but first ask confirmation).
     
 See also the 'clear' command which clears breakpoints by line/file
-number.."""
+number."""
 
     category      = 'breakpoints'
     min_args      = 0

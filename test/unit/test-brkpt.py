@@ -24,10 +24,10 @@ class TestBreakpoint(unittest.TestCase):
         self.assertEqual(False, bp.enabled)
         self.assertEqual('b', bp.icon_char())
         self.assertEqual(1, bpmgr.last())
-        self.assertEqual((False, 'Breakpoint number (10) out of range 1.'),
+        self.assertEqual((False, 'Breakpoint number 10 out of range 1..1.'),
                          bpmgr.delete_breakpoint_by_number(10))
         self.assertEqual((True, ''), bpmgr.delete_breakpoint_by_number(1))
-        self.assertEqual((False, 'Breakpoint (1) previously deleted.'),
+        self.assertEqual((False, 'Breakpoint 1 previously deleted.'),
                           bpmgr.delete_breakpoint_by_number(1))
         bp2 = bpmgr.add_breakpoint('foo', 5, temporary=True)
         self.assertEqual('t', bp2.icon_char())

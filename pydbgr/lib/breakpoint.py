@@ -27,12 +27,14 @@ class BreakpointManager:
                 return  (False, 'Breakpoint value %r is not a number.' % i,
                          None)
             pass
-        if i >= len(self.bpbynumber) or i <= 0:
-            return (False, 'Breakpoint number (%d) out of range %d.' % 
+        if 1 == len(self.bpbynumber):
+            return (False, 'No breakpoints set.', None)
+        elif i >= len(self.bpbynumber) or i <= 0:
+            return (False, 'Breakpoint number %d out of range 1..%d.' % 
                     (i, len(self.bpbynumber)-1), None)
         bp = self.bpbynumber[i]
         if bp is None:
-            return (False, 'Breakpoint (%d) previously deleted.' % i, None)
+            return (False, 'Breakpoint %d previously deleted.' % i, None)
         return (True, None, bp)
 
     def add_breakpoint(self, filename, lineno, temporary=False, condition=None,

@@ -71,5 +71,6 @@ if __name__ == '__main__':
     command.run(['condition', '1'])
     brkcmd.run(['break'])
     command.run(['condition', '1'])
-    command.run(['condition', '1', 'x' '>' '10'])
+    command.run(['condition', '1', 'x', '>', '10'])
+    command.run(['condition', '1'])
     pass

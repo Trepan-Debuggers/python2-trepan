@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2009 Rocky Bernstein
+#  Copyright (C) 2009, 2010 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -61,11 +61,15 @@ Examples:
 if __name__ == '__main__':
     import sys
     Mdebugger = import_relative('debugger', '...')
+    Mbreak    = import_relative('break', '.')
     d = Mdebugger.Debugger()
+    brkcmd = Mbreak.BreakCommand(d.core.processor)
     command = ConditionCommand(d.core.processor)
     command.proc.frame = sys._getframe()
     command.proc.setup()
 
-    command.run(['condition', '5'])
-    command.run(['condition', '5', 'x > 10'])
+    command.run(['condition', '1'])
+    brkcmd.run(['break'])
+    command.run(['condition', '1'])
+    command.run(['condition', '1', 'x' '>' '10'])
     pass

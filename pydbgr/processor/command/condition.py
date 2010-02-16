@@ -39,7 +39,7 @@ Examples:
     aliases       = ('cond',)
     category      = 'breakpoints'
     min_args      = 1
-    max_args      = 2
+    max_args      = None
     name          = os.path.basename(__file__).split('.')[0]
     need_stack    = False
     short_help    = 'Specify breakpoint number N to break only if COND is True'

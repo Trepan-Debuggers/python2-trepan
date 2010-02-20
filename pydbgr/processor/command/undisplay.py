@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009 Rocky Bernstein
+#   Copyright (C) 2009, 2010 Rocky Bernstein
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -22,15 +22,7 @@ from import_relative import import_relative
 Mbase_cmd  = import_relative('base_cmd', top_name='pydbgr')
 
 class UndisplayCommand(Mbase_cmd.DebuggerCommand):
-    """display [format] EXP
-    
-    Print value of expression EXP each time the program stops.
-    FMT may be used before EXP and may be one of 'c' for char,
-    'x' for hex, 'o' for octal, 'f' for float or 's' for string.
-    
-    With no argument, display all currently requested auto-display
-    expressions.  Use "undisplay" to cancel display requests previously
-    made."""
+    """undisplay display-number..."""
     
     aliases       = ('und',)
     category      = 'data'

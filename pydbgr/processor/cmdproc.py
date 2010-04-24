@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2008, 2009 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008, 2009, 2010 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -205,6 +205,7 @@ class CommandProcessor(Mbase_proc.Processor):
         self.intf             = core_obj.debugger.intf
         self.last_command     = None   # Initially a no-op
         self.precmd_hooks     = []
+        self.print_location   = lambda : print_location(self)
         self.preloop_hooks    = []
         self.postcmd_hooks    = []
 
@@ -271,7 +272,7 @@ class CommandProcessor(Mbase_proc.Processor):
 
         self.curindex = pos
         self.curframe = self.stack[self.curindex][0]
-        print_location(self)
+        self.print_location()
         self.list_lineno = None
         return
 
@@ -558,7 +559,7 @@ class CommandProcessor(Mbase_proc.Processor):
         """Handle debugger commands."""
         if self.core.execution_status != 'No program':
             self.setup()
-            print_location(self)
+            self.print_location()
             pass
         leave_loop = run_hooks(self, self.preloop_hooks)
         self.continue_running = False
@@ -821,6 +822,9 @@ if __name__=='__main__':
     cmdproc.frame = sys._getframe()
     cmdproc.setup()
     print
+    print '-' * 10
+    cmdproc.print_location()
+    print '-' * 10
     print cmdproc.eval('1+2')
     print cmdproc.eval('len(aliases)')
     import pprint

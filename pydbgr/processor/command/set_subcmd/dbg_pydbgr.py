@@ -26,7 +26,8 @@ class SetCmdDbgPydb(Mbase_subcmd.DebuggerSetBoolSubcommand):
     """Set the ability to debug the debugger.
     
 Setting this allows visibility and access to some of the debugger's
-internals.
+internals. Specifically variable "frame" contains the current frame and
+variable "debugger" contains the top-level debugger object.
 """
 
     in_list    = True
@@ -38,12 +39,18 @@ internals.
             # Put a stack frame in the list of frames so we have
             # something to inspect.
             frame = inspect.currentframe()
+            # Also give access to the top-level debugger
+            debugger = self.debugger
             self.proc.stack, self.proc.curindex = \
                 Mcmdproc.get_stack(frame, None, self.proc)
             self.proc.curframe = self.proc.stack[self.proc.curindex][0]
             # Remove ignored debugger functions.
+            self.save_ignore_filter = self.core.ignore_filter
             self.core.ignore_filter = None
+        else:
+            self.core.ignore_filter = self.save_ignore_filter
             pass
+        
         return
     pass
 

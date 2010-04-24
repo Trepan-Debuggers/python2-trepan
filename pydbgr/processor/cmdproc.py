@@ -205,7 +205,12 @@ class CommandProcessor(Mbase_proc.Processor):
         self.intf             = core_obj.debugger.intf
         self.last_command     = None   # Initially a no-op
         self.precmd_hooks     = []
-        self.print_location   = lambda : print_location(self)
+        
+        # Is this Kosher? 
+        self.__class__.__dict__['print_location']  = print_location
+        # If not:
+        # self.location         = lambda : print_location(self)
+
         self.preloop_hooks    = []
         self.postcmd_hooks    = []
 

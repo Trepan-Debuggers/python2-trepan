@@ -123,6 +123,20 @@ def print_source_line(msg_nocr, lineno, line, event_str=None):
     # however might.
     return msg_nocr('%s %d %s' % (event_str, lineno, line))
 
+def print_source_location_info(print_fn, filename, lineno, fn_name=None):
+    """Print out a source location , e.g. the first line in
+    line in:
+        (/tmp.py:2):  <module>
+        L -- 2 import sys,os
+        (Pydbgr)
+    """
+    mess = '(%s:%s):' % (filename, lineno)
+    if fn_name and fn_name != '?':
+        mess += " %s" % fn_name
+        pass
+    print_fn(mess)
+    return
+
 def print_location(proc_obj):
     """Show where we are. GUI's and front-end interfaces often
     use this to update displays. So it is helpful to make sure
@@ -151,12 +165,8 @@ def print_location(proc_obj):
 #                 break
 
         filename = Mstack.frame2file(core_obj, frame)
-        intf_obj.msg_nocr('(%s:%s):' % (filename, lineno))
         fn_name = frame.f_code.co_name
-        if fn_name and fn_name != '?':
-            intf_obj.msg(" %s" % frame.f_code.co_name)
-        else:
-            intf_obj.msg("")
+        print_source_location_info(intf_obj.msg, filename, lineno, fn_name)
 
         if '__loader__' in proc_obj.curframe.f_globals:
             l = proc_obj.curframe.f_globals['__loader__']

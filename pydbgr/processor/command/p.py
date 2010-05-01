@@ -35,7 +35,7 @@ shown and ... indicates it has been truncated
 See also `pp' and `examine' for commands which do more in the way of
 formatting.
 """
-    category     = 'data'
+    category      = 'data'
     min_args      = 1
     max_args      = None
     name          = os.path.basename(__file__).split('.')[0]

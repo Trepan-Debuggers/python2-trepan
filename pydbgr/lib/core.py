@@ -228,7 +228,7 @@ class DebuggerCore():
                 tracer_start_opts['trace_fn'] = self.trace_dispatch
                 tracer_start_opts['add_hook_opts'] = add_hook_opts
                 tracer.start(tracer_start_opts)
-            elif not get_option('force') \
+            elif get_option('force') \
                     and not tracer.find_hook(self.trace_dispatch):
                 tracer.add_hook(self.trace_dispatch, add_hook_opts)
                 pass

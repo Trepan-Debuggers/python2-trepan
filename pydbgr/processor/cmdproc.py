@@ -600,6 +600,7 @@ class CommandProcessor(Mbase_proc.Processor):
                 else:
                     if self.debugger.intf[-1].output:
                         self.debugger.intf[-1].output.writeline('Leaving')
+                        raise Mexcept.DebuggerQuit
                         pass
                     break
                 pass

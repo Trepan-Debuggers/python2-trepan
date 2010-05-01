@@ -96,7 +96,12 @@ class DebuggerUserInput(Mbase_io.DebuggerInputBase):
             use_raw = self.use_raw
             pass
         if use_raw:
-            return raw_input(prompt)
+            try:
+                return raw_input(prompt)
+            except ValueError:
+                raise EOFError
+            pass
+                
         else:
             line = self.input.readline()
             if not line: raise EOFError

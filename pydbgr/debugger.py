@@ -166,6 +166,10 @@ class Debugger():
         try:
             execfile(self.mainpyfile, globals_, locals_)
             retval = True
+        except  SyntaxError:
+            print sys.exc_info()[1]
+            retval = False
+            pass
         except IOError:
             print sys.exc_info()[1]
         except Mexcept.DebuggerQuit:

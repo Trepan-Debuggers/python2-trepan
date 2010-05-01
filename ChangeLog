@@ -1,462 +1,263 @@
+2010-05-01 02:04  rocky@gnu.org
+
+	* pydbgr/io/dbg_input.py, pydbgr/processor/cmdproc.py: Force quit()
+	  as an (auto)eval to exit program.
+
+2010-05-01 01:40  rocky@gnu.org
+
+	* pydbgr/lib/core.py, pydbgr/processor/command/debug.py,
+	  pydbgr/processor/command/p.py: Towards a working debug command.
+
+2010-04-24 15:44  rocky@gnu.org
+
+	* pydbgr/processor/cmdproc.py: Separate source location printing
+	  into a function so it can be customized.
+
+2010-04-24 08:20  rocky@gnu.org
+
+	* pydbgr/processor/cmdproc.py: Perhaps this is cooler. On the other
+	  hand perhaps it is too slick and implementation dependent. But we
+	  will try it anyway.
+
+2010-04-24 06:59  rocky@gnu.org
+
+	* pydbgr/processor/command/set_subcmd/dbg_pydbgr.py: Fix bug in
+	  restoring trace filter after turnning "set dbg_pydbgr" back on.
+
+2010-04-24 06:28  rocky@gnu.org
+
+	* pydbgr/processor/cmdproc.py: Turn print_location into a method
+	  inside the command processor.
+
+2010-02-20 20:45  rocky@gnu.org
+
+	* pydbgr/processor/command/undisplay.py: "undisplay" Docstring
+	  correction.
+
+2010-02-16 10:44  rocky@gnu.org
+
+	* pydbgr/processor/command/condition.py: Docstring indentation
+
+2010-02-16 10:40  rocky@gnu.org
+
+	* pydbgr/lib/breakpoint.py, test/unit/test-brkpt.py: Better error
+	  message when no breakpoints set
+
+2010-02-16 09:44  rocky@gnu.org
+
+	* pydbgr/processor/command/condition.py: One more demo-code
+	  change...
+
+2010-02-16 09:42  rocky@gnu.org
+
+	* pydbgr/processor/command/condition.py: Make demo code a bit more
+	  real.
+
+2010-02-16 09:35  rocky@gnu.org
+
+	* pydbgr/processor/command/condition.py: The condition doesn't have
+	  an upper bound on the number args it takes.
+
+2010-02-08 15:05  rocky@gnu.org
+
+	* Makefile: Makefile is a derived file
+
+2010-01-26 02:27  rocky@gnu.org
+
+	* MANIFEST.in: One was to get VERSION into the source tarball
+
+2010-01-25 10:59  rocky@gnu.org
+
+	* pydbgr/interface/server.py, pydbgr/interface/user.py,
+	  pydbgr/io/dbg_input.py, test/unit/test-user.py: Call to raw_input
+	  was removing prompt written via write. Push prompting down to
+	  raw_input when it's used. Issue #4
+
+2010-01-25 10:02  rocky@gnu.org
+
+	* pydbgr/processor/command/delete.py: Docstring typo
+
+2009-12-25 04:13  rocky@gnu.org
+
+	* NEWS: Update NEWS before release
+
+2009-12-25 04:11  rocky@gnu.org
+
+	* Makefile, Makefile.am, configure.ac, emacs: For emacs support see
+	  http://github.com/rocky/emacs-dbgr
+
+2009-12-24 21:07  rocky@gnu.org
+
+	* ChangeLog, NEWS, VERSION, __pkginfo__.py: Get ready for 0.1.3
+	  release
+
 2009-11-28 16:28  rocky@gnu.org
 
 	* pydbgr/processor/cmdproc.py,
 	  pydbgr/processor/command/base_cmd.py,
 	  pydbgr/processor/command/finish.py,
-	  pydbgr/processor/command/source.py,
-	  test/data/noscript.cmd,
-	  test/data/noscript.right,
-	  test/integration/helper.py,
-	  test/integration/test-noscript.py:
-	  Numerous
-	  small
-	  bugs
-	  including
-	  issue
-	  #2.
-	  cmdproc.py:
-	  fix
-	  small
-	  bugs
-	  when
-	  no
-	  script
-	  name
-	  given
-	  source.py:
-	  we
-	  shouldn't
-	  need
-	  a
-	  script
-	  name
-	  to
-	  source
-	  a
-	  file.
-	  finish.py:
-	  remove
-	  debug
-	  print
-	  base_cmd.py:
-	  Cope
-	  with
-	  EOF
-	  on
-	  message
-	  printing
-	  test-noscript.py:
-	  test
-	  issuing
-	  pydbgr
-	  without
-	  giving
-	  a
-	  script
-	  name.
-	  (This
-	  test
-	  is
-	  not
-	  very
-	  good
-	  or
-	  complete).
-	  helper.py:
-	  allow
-	  passing
-	  no
-	  script.
-	  Remove
-	  debug
-	  print
+	  pydbgr/processor/command/source.py, test/data/noscript.cmd,
+	  test/data/noscript.right, test/integration/helper.py,
+	  test/integration/test-noscript.py: Numerous small bugs including
+	  issue #2.
+	  
+	  cmdproc.py: fix small bugs when no script name given
+	  source.py: we shouldn't need a script name to source a file.
+	  finish.py: remove debug print
+	  base_cmd.py: Cope with EOF on message printing
+	  test-noscript.py: test issuing pydbgr without giving a script
+	  name. (This test is not very good or complete).
+	  helper.py: allow passing no script. Remove debug print
 
 2009-11-06 01:26  rocky@gnu.org
 
-	* pydbgr/lib/breakpoint.py,
-	  pydbgr/processor/command/list.py,
-	  test/unit/test-brkpt.py:
-	  Canonical
-	  filenames
-	  when
-	  adding
+	* pydbgr/lib/breakpoint.py, pydbgr/processor/command/list.py,
+	  test/unit/test-brkpt.py: Canonical filenames when adding
 	  breakpoints.
 
 2009-11-05 23:53  rocky@gnu.org
 
-	* pydbgr/processor/command/list.py:
-	  Use
-	  bp.icon_char
+	* pydbgr/processor/command/list.py: Use bp.icon_char
 
 2009-11-05 23:47  rocky@gnu.org
 
-	* pydbgr/lib/breakpoint.py,
-	  test/unit/test-brkpt.py:
-	  Fix
-	  bugs
-	  in
+	* pydbgr/lib/breakpoint.py, test/unit/test-brkpt.py: Fix bugs in
 	  icon_char.
 
 2009-11-05 23:30  rocky@gnu.org
 
-	* pydbgr/lib/breakpoint.py:
-	  Add
-	  icon_char
-	  -
-	  one-character
-	  icon
-	  state
-	  for
-	  a
-	  brkpt
+	* pydbgr/lib/breakpoint.py: Add icon_char - one-character icon
+	  state for a brkpt
 
 2009-11-05 15:04  rocky@gnu.org
 
-	* pydbgr/lib/breakpoint.py:
-	  Small
-	  docstring
-	  correction
+	* pydbgr/lib/breakpoint.py: Small docstring correction
 
 2009-11-05 12:04  rocky@gnu.org
 
-	* pydbgr/lib/breakpoint.py,
-	  pydbgr/lib/core.py,
+	* pydbgr/lib/breakpoint.py, pydbgr/lib/core.py,
 	  pydbgr/processor/command/list.py,
-	  pydbgr/processor/command/mock.py:
-	  Fix
-	  status
-	  indicator
-	  in
-	  list
-	  command
-	  to
-	  show
-	  current
-	  location,
-	  breakpoints,
-	  and
-	  possibly
-	  the
-	  breakpoint
-	  number.
+	  pydbgr/processor/command/mock.py: Fix status indicator in list
+	  command to show current location, breakpoints, and possibly
+	  the breakpoint number.
 
 2009-10-31 04:00  rocky@gnu.org
 
 	* pydbgr/processor/command/finish.py,
-	  test/functional/test-finish.py:
-	  Off
-	  by
-	  one
-	  bug
-	  in
-	  finish.
-	  But
-	  is
-	  the
-	  only
-	  thing
-	  wrong?
+	  test/functional/test-finish.py: Off by one bug in finish. But is
+	  the only thing wrong?
 
 2009-10-27 05:51  rocky@gnu.org
 
-	* ChangeLog,
-	  NEWS,
-	  VERSION:
-	  Last
-	  update
-	  before
-	  release
-	  0.1.2
+	* ChangeLog, NEWS, VERSION: Last update before release 0.1.2
 
 2009-10-22 14:00  rocky@gnu.org
 
-	* ChangeLog,
-	  NEWS:
-	  Update
-	  what's
-	  up
-	  in
-	  preparation
-	  for
-	  release.
+	* ChangeLog, NEWS: Update what's up in preparation for release.
 
 2009-10-19 08:12  rocky@gnu.org
 
-	* pydbgr/lib/core.py,
-	  pydbgr/processor/cmdproc.py,
+	* pydbgr/lib/core.py, pydbgr/processor/cmdproc.py,
 	  pydbgr/processor/command/info_subcmd/break.py,
-	  test/functional/test-break.py:
-	  When
-	  we
-	  are
-	  stopped
-	  at
-	  a
-	  breakpoint,
-	  make
-	  that
-	  the
-	  event.
+	  test/functional/test-break.py: When we are stopped at a
+	  breakpoint, make that the event.
 
 2009-10-19 00:00  rocky@gnu.org
 
-	* pydbgr/processor/command/info_subcmd/file.py:
-	  info
-	  file
-	  xx
-	  lines
-	  ->
-	  info
-	  file
-	  xx
-	  brkpts
+	* pydbgr/processor/command/info_subcmd/file.py: info file xx lines
+	  -> info file xx brkpts
 
 2009-10-17 12:48  rocky@gnu.org
 
-	* pydbgr/lib/breakpoint.py:
-	  Docstring
-	  correction
+	* pydbgr/lib/breakpoint.py: Docstring correction
 
 2009-10-17 07:25  rocky@gnu.org
 
-	* pydbgr/lib/core.py,
-	  pydbgr/processor/command/base_cmd.py,
+	* pydbgr/lib/core.py, pydbgr/processor/command/base_cmd.py,
 	  pydbgr/processor/command/base_submgr.py,
-	  pydbgr/processor/command/help.py,
-	  test/functional/test-step.py:
-	  Missed
-	  a
-	  couple
-	  of
-	  places
-	  where
-	  traceset
-	  ->
-	  events
-	  Allow
-	  showing
-	  commands
-	  which
-	  matching
-	  a
-	  regular
-	  expression.
+	  pydbgr/processor/command/help.py, test/functional/test-step.py:
+	  Missed a couple of places where traceset -> events
+	  Allow showing commands which matching a regular expression.
 
 2009-10-16 17:32  rocky@gnu.org
 
-	* pydbgr/cli.py,
-	  pydbgr/lib/default.py,
-	  pydbgr/processor/cmdproc.py,
-	  pydbgr/processor/command/exit.py,
-	  pydbgr/processor/command/show_subcmd/trace.py:
-	  cli.py:
-	  allow
-	  entry
-	  without
-	  a
-	  Python
-	  program
-	  to
-	  debug.
-	  trace.py,
-	  default.py:
-	  traceset
-	  ->
-	  events
-	  exit.py:
-	  we
-	  don't
-	  need
-	  to
-	  have
-	  a
-	  stack
-	  to
-	  run
-	  exit
+	* pydbgr/cli.py, pydbgr/lib/default.py,
+	  pydbgr/processor/cmdproc.py, pydbgr/processor/command/exit.py,
+	  pydbgr/processor/command/show_subcmd/trace.py: cli.py: allow
+	  entry without a Python program to debug.
+	  trace.py, default.py: traceset -> events
+	  exit.py: we don't need to have a stack to run exit
 
 2009-10-16 02:29  rocky@gnu.org
 
-	* ChangeLog,
-	  pydbgr/api.py:
-	  Go
-	  over
-	  doc
-	  string
-	  for
-	  debug().
-	  Thanks
-	  to
-	  Yarik
-	  yet
-	  again,
-	  for
-	  reminding
-	  me
-	  how
-	  bad
-	  my
-	  English
-	  skills
-	  are.
+	* ChangeLog, pydbgr/api.py: Go over doc string for debug(). Thanks
+	  to Yarik yet again, for
+	  reminding me how bad my English skills are.
 
 2009-10-16 01:56  rocky@gnu.org
 
-	* pydbgr/api.py,
-	  test/unit/test-help.py:
-	  api.py:
-	  debug()
-	  change
-	  parameter
-	  "step"
-	  to
-	  "step_ignore".
-	  Thanks
-	  to
-	  Yaroslav
-	  Halchenko
-	  for
-	  reporting
-	  the
-	  problem'
-	  . test-help.py:
-	  test_help_categories()
-	  add
-	  tests
-	  for
-	  recent
-	  bugs
+	* pydbgr/api.py, test/unit/test-help.py: api.py: debug() change
+	  parameter "step" to "step_ignore". Thanks to Yaroslav Halchenko
+	  for reporting the problem' .
+	  test-help.py: test_help_categories() add tests for recent bugs
 
 2009-10-16 01:38  rocky@gnu.org
 
-	* pydbgr/processor/command/help.py:
-	  Fix
-	  bug
-	  in
-	  listing
-	  command
-	  categories
-	  with
-	  *.
-	  Thanks
-	  to
-	  Yaroslav
-	  Halchenko
-	  for
-	  reporting
-	  the
+	* pydbgr/processor/command/help.py: Fix bug in listing command
+	  categories with *. Thanks to Yaroslav Halchenko for reporting the
 	  problem
 
 2009-10-16 01:32  rocky@gnu.org
 
-	* pydbgr/processor/command/help.py,
-	  test/unit/test-help.py:
-	  Fix
-	  bug
-	  in
-	  listing
-	  command
-	  categories.
-	  Thanks
-	  to
-	  Yaroslav
-	  Halchenko
-	  for
-	  reporting
-	  the
-	  problem
+	* pydbgr/processor/command/help.py, test/unit/test-help.py: Fix bug
+	  in listing command categories. Thanks to Yaroslav Halchenko for
+	  reporting the problem
 
 2009-09-26 13:04  rocky@gnu.org
 
-	* pydbgr/processor/cmdproc.py:
-	  Defensive
-	  programming
+	* pydbgr/processor/cmdproc.py: Defensive programming
 
 2009-09-26 12:47  rocky@gnu.org
 
-	* pydbgr/processor/cmdproc.py:
-	  Improve
-	  selection
-	  of
-	  parameter
-	  name
-	  and
-	  use
-	  it
-	  more.
+	* pydbgr/processor/cmdproc.py: Improve selection of parameter name
+	  and use it more.
 
 2009-09-26 12:00  rocky@gnu.org
 
-	* pydbgr/lib/file.py:
-	  Some
-	  small
-	  typos
+	* pydbgr/lib/file.py: Some small typos
 
 2009-09-26 03:27  rocky@gnu.org
 
-	* pydbgr/processor/command/list.py:
-	  Add
-	  list
-	  error
-	  return.
+	* pydbgr/processor/command/list.py: Add list error return.
 
 2009-09-25 20:15  rocky@gnu.org
 
-	* test/functional/test-step.py:
-	  Comment
-	  typo
+	* test/functional/test-step.py: Comment typo
 
 2009-09-23 02:39  rocky@gnu.org
 
-	* pydbgr/io/stringarray.py:
-	  Was
-	  using
-	  incorrorrect
-	  readline
-	  in
-	  standalone
-	  code.
-	  Harmless,
-	  but
-	  wrong
+	* pydbgr/io/stringarray.py: Was using incorrorrect readline in
+	  standalone code. Harmless, but wrong
 
 2009-09-23 02:05  rocky@gnu.org
 
-	* pydbgr/io/base_io.py,
-	  pydbgr/io/stringarray.py,
-	  pydbgr/processor/command/source.py:
-	  Variable
-	  name
-	  typo
-	  bug.
-	  And
-	  make
-	  pyflakes
-	  friendly
-	  too.
+	* pydbgr/io/base_io.py, pydbgr/io/stringarray.py,
+	  pydbgr/processor/command/source.py: Variable name typo bug. And
+	  make pyflakes friendly too.
 
 2009-09-22 14:11  rocky@gnu.org
 
-	* pydbgr/processor/cmdproc.py,
-	  pydbgr/processor/command/help.py,
-	  pydbgr/processor/command/mock.py:
-	  In
-	  slightly
-	  better
-	  alignment
-	  with
-	  rbdbgr
+	* pydbgr/processor/cmdproc.py, pydbgr/processor/command/help.py,
+	  pydbgr/processor/command/mock.py: In slightly better alignment
+	  with rbdbgr
 
 2009-09-19 15:36  rocky@gnu.org
 
-	* pydbgr/processor/command/source.py:
-	  Doc
-	  typo
+	* pydbgr/processor/command/source.py: Doc typo
 
 2009-09-19 15:11  rocky@gnu.org
 
-	* pydbgr/lib/default.py,
-	  pydbgr/processor/cmdproc.py,
+	* pydbgr/lib/default.py, pydbgr/processor/cmdproc.py,
 	  pydbgr/processor/command/base_subcmd.py,
 	  pydbgr/processor/command/mock.py,
 	  pydbgr/processor/command/set_subcmd/annotate.py,
@@ -480,177 +281,56 @@
 	  pydbgr/processor/command/show_subcmd/args.py,
 	  pydbgr/processor/command/show_subcmd/autopython.py,
 	  pydbgr/processor/command/show_subcmd/events.py,
-	  pydbgr/processor/command/show_subcmd/traceset.py:
-	  Add
-	  autopython
-	  command.
-	  Show
-	  location
-	  when
-	  coming
-	  out
-	  of
-	  python
-	  or
-	  ipython
-	  and
-	  not
-	  leaving
-	  debugger
-	  command
-	  loop.
-	  set
-	  traceset
-	  ->
-	  set
-	  events
-	  DRY
-	  code
-	  with
-	  respect
-	  to
-	  not
-	  having
-	  to
-	  specify
-	  short_help
-	  when
+	  pydbgr/processor/command/show_subcmd/traceset.py: Add autopython
+	  command. Show location when coming out of python or
+	  ipython and not leaving debugger command loop.
+	  
+	  set traceset -> set events
+	  
+	  DRY code with respect to not having to specify short_help when
 	  it's
-	  the
-	  same
-	  as
-	  the
-	  first
-	  line
-	  of
-	  help.
-	  Set
-	  abbrev
-	  lengths
-	  in
-	  a
-	  more
-	  expressive
-	  (less
-	  error
-	  prone)
-	  way.
-	  mock.rb:
-	  program_sys_argv
-	  is
-	  now
-	  set
-	  to
-	  the
-	  right
-	  type
+	  the same as the first line of help.
+	  
+	  Set abbrev lengths in a more expressive (less error prone) way.
+	  
+	  mock.rb: program_sys_argv is now set to the right type
 
 2009-09-19 12:29  rocky@gnu.org
 
-	* pydbgr/interface/script.py:
-	  Small
-	  changes
-	  which
-	  put
-	  code
-	  more
-	  in
-	  sync
-	  with
-	  rbdbgr.
+	* pydbgr/interface/script.py: Small changes which put code more in
+	  sync with rbdbgr.
 
 2009-09-13 22:49  rocky@gnu.org
 
 	* pydbgr/processor/command/info_subcmd/file.py,
-	  pydbgr/processor/command/pp.py:
-	  file.py:
-	  more
-	  defensive
-	  programming.
-	  Minor
-	  doc
-	  string
-	  correction
-	  pp.py:
-	  We
-	  don't
-	  need
-	  a
-	  stack
-	  to
-	  run
-	  this.
+	  pydbgr/processor/command/pp.py: file.py: more defensive
+	  programming. Minor doc string correction
+	  pp.py: We don't need a stack to run this.
 
 2009-09-09 00:18  rocky@gnu.org
 
-	* pydbgr/interface/base_intf.py:
-	  Make
-	  DebuggerInterface
-	  out
-	  parameter
-	  compatible
-	  with
-	  using
-	  File
-	  output
+	* pydbgr/interface/base_intf.py: Make DebuggerInterface out
+	  parameter compatible with using File output
 
 2009-09-08 13:50  rocky@gnu.org
 
-	* test/unit/test-user.py:
-	  Small
-	  doc
-	  change
+	* test/unit/test-user.py: Small doc change
 
 2009-09-08 13:47  rocky@gnu.org
 
-	* test/unit/test-user.py:
-	  Remove
-	  unused
-	  imports
-	  (found
-	  via
+	* test/unit/test-user.py: Remove unused imports (found via
 	  pyflakes)
 
 2009-09-08 13:29  rocky@gnu.org
 
-	* pydbgr/interface/base_intf.py,
-	  pydbgr/interface/script.py,
-	  pydbgr/interface/server.py,
-	  pydbgr/interface/user.py,
-	  pydbgr/processor/command/mock.py,
-	  test/unit/test-user.py:
-	  Make
-	  the
-	  caller
-	  of
-	  confirm
-	  more
-	  explicit
-	  by
-	  changing
-	  the
-	  confirm
-	  "default"
-	  parameter
-	  from
-	  optional
-	  to
-	  manditory.
-	  Allow
-	  base_intf.__init__
-	  to
-	  be
-	  used
-	  by
-	  default.
-	  These
-	  changes
-	  track
-	  what's
-	  going
-	  on
-	  in
-	  rbdbgr.
+	* pydbgr/interface/base_intf.py, pydbgr/interface/script.py,
+	  pydbgr/interface/server.py, pydbgr/interface/user.py,
+	  pydbgr/processor/command/mock.py, test/unit/test-user.py: Make
+	  the caller of confirm more explicit by changing the confirm
+	  "default" parameter from optional to manditory. Allow
+	  base_intf.__init__ to be used by default.
+	  
+	  These changes track what's going on in rbdbgr.
 
 2009-08-11 00:46  rocky@gnu.org
 
@@ -680,17 +360,14 @@
 	  pydbgr/processor/command/jump.py,
 	  pydbgr/processor/command/kill.py,
 	  pydbgr/processor/command/list.py,
-	  pydbgr/processor/command/next.py,
-	  pydbgr/processor/command/p.py,
-	  pydbgr/processor/command/pdef.py,
-	  pydbgr/processor/command/pp.py,
+	  pydbgr/processor/command/next.py, pydbgr/processor/command/p.py,
+	  pydbgr/processor/command/pdef.py, pydbgr/processor/command/pp.py,
 	  pydbgr/processor/command/pydocX.py,
 	  pydbgr/processor/command/python.py,
 	  pydbgr/processor/command/quit.py,
 	  pydbgr/processor/command/restart.py,
 	  pydbgr/processor/command/retval.py,
-	  pydbgr/processor/command/run.py,
-	  pydbgr/processor/command/set.py,
+	  pydbgr/processor/command/run.py, pydbgr/processor/command/set.py,
 	  pydbgr/processor/command/show.py,
 	  pydbgr/processor/command/skip.py,
 	  pydbgr/processor/command/source.py,
@@ -699,27 +376,10 @@
 	  pydbgr/processor/command/undisplay.py,
 	  pydbgr/processor/command/up.py,
 	  pydbgr/processor/command/whatis.py,
-	  pydbgr/processor/command/where.py,
-	  pydbgr/processor/subcmd.py,
-	  test/unit/test-cmdproc.py,
-	  test/unit/test-processor.py:
-	  Separate
-	  name_aliases
-	  into
-	  name
-	  string
-	  attribute
-	  and
-	  aliases
-	  tuple.
-	  Is
-	  cleaner
-	  and
-	  stays
-	  in
-	  sync
-	  with
-	  rbdbgr
+	  pydbgr/processor/command/where.py, pydbgr/processor/subcmd.py,
+	  test/unit/test-cmdproc.py, test/unit/test-processor.py: Separate
+	  name_aliases into name string attribute and aliases tuple. Is
+	  cleaner and stays in sync with rbdbgr
 
 2009-08-09 13:27  rocky@gnu.org
 
@@ -727,471 +387,212 @@
 	  pydbgr/processor/command/set.py,
 	  pydbgr/processor/command/set_subcmd/width.py,
 	  pydbgr/processor/command/show_subcmd/autoeval.py,
-	  pydbgr/processor/command/show_subcmd/width.py:
-	  Minor
-	  regularization
-	  changes
-	  to
-	  sync
-	  with
-	  rbdbgr
+	  pydbgr/processor/command/show_subcmd/width.py: Minor
+	  regularization changes to sync with rbdbgr
 
 2009-08-06 23:32  rocky@gnu.org
 
-	* pydbgr/processor/command/base_submgr.py:
-	  Regularize
-	  file
-	  directory
-	  import
-	  load
-	  method
-	  name.
-	  Keeps
-	  in
-	  sync
-	  with
-	  rbdbgr
-	  too.
+	* pydbgr/processor/command/base_submgr.py: Regularize file
+	  directory import load method name. Keeps in sync with rbdbgr too.
 
 2009-08-06 16:55  rocky@gnu.org
 
-	* pydbgr/cli.py,
-	  pydbgr/interface/script.py:
-	  output
-	  ->
-	  dbg_output
+	* pydbgr/cli.py, pydbgr/interface/script.py: output -> dbg_output
 
 2009-08-06 08:58  rocky@gnu.org
 
 	* pydbgr/processor/command/base_subcmd.py,
-	  pydbgr/processor/command/mock.py:
-	  Doc
-	  changes
+	  pydbgr/processor/command/mock.py: Doc changes
 
 2009-08-04 05:18  rocky@gnu.org
 
-	* pydbgr/processor/command/down.py,
-	  pydbgr/processor/command/up.py:
-	  up/down
-	  (help)
-	  docstring
-	  corrections
+	* pydbgr/processor/command/down.py, pydbgr/processor/command/up.py:
+	  up/down (help) docstring corrections
 
 2009-08-01 11:05  rocky@gnu.org
 
-	* ChangeLog,
-	  pydbgr/processor/command/down.py,
-	  pydbgr/processor/command/up.py:
-	  Do
-	  not
-	  run
-	  up/down
-	  command
-	  if
-	  there
-	  is
-	  an
-	  argument
-	  error
+	* ChangeLog, pydbgr/processor/command/down.py,
+	  pydbgr/processor/command/up.py: Do not run up/down command if
+	  there is an argument error
 
 2009-07-31 09:33  rocky@gnu.org
 
-	* pydbgr/interface/user.py,
-	  pydbgr/processor/cmdproc.py,
-	  test/unit/test-io-input.py:
-	  Change
-	  places
-	  where
-	  I
-	  forgot
-	  to
-	  rename
-	  {input,output}
-	  to
-	  dbg_{input,output}
-	  Remove
-	  cmdname
-	  from
-	  get_an_int
-	  -
-	  it's
-	  not
-	  used.
+	* pydbgr/interface/user.py, pydbgr/processor/cmdproc.py,
+	  test/unit/test-io-input.py: Change places where I forgot to
+	  rename {input,output} to dbg_{input,output}
+	  Remove cmdname from get_an_int - it's not used.
 
 2009-07-26 20:52  rocky@gnu.org
 
-	* pydbgr/io/dbg_input.py,
-	  pydbgr/io/dbg_output.py,
-	  pydbgr/io/input.py,
-	  pydbgr/io/output.py:
-	  input
-	  ->
-	  dbg_input,
-	  output
-	  ->
-	  dbg_output.
-	  I
-	  think
-	  input
-	  and
-	  output
-	  are
-	  reserved
-	  words.
+	* pydbgr/io/dbg_input.py, pydbgr/io/dbg_output.py,
+	  pydbgr/io/input.py, pydbgr/io/output.py: input -> dbg_input,
+	  output -> dbg_output. I think input and output are
+	  reserved words.
 
 2009-07-26 09:31  rocky@gnu.org
 
-	* pydbgr/processor/command/help.py:
-	  A
-	  minor
-	  neatify.
+	* pydbgr/processor/command/help.py: A minor neatify.
 
 2009-07-26 08:31  rocky@gnu.org
 
-	* test/unit/test-cmdproc.py:
-	  More
-	  stringent
-	  command
-	  class
-	  attribute
+	* test/unit/test-cmdproc.py: More stringent command class attribute
 	  checking.
 
 2009-07-26 08:11  rocky@gnu.org
 
 	* pydbgr/processor/command/edit.py,
-	  pydbgr/processor/command/help.py:
-	  A
-	  couple
-	  of
-	  typos,
-	  one
-	  variable
-	  name,
-	  one
-	  docstring.
+	  pydbgr/processor/command/help.py: A couple of typos, one variable
+	  name, one docstring.
 
 2009-07-26 06:33  rocky@gnu.org
 
-	* pydbgr/processor/command/help.py:
-	  Doc
-	  string
-	  typo.
+	* pydbgr/processor/command/help.py: Doc string typo.
 
 2009-07-18 21:54  rocky@gnu.org
 
-	* pydbgr/lib/stack.py:
-	  Doc
-	  typo.
+	* pydbgr/lib/stack.py: Doc typo.
 
 2009-07-05 16:04  rocky@gnu.org
 
-	* pydbgr/processor/command/cd.py,
-	  pydbgr/processor/command/edit.py:
-	  Add
-	  edit
-	  command.
-	  Change
-	  msg
-	  to
-	  errmsg
-	  in
-	  cd
-	  command.
+	* pydbgr/processor/command/cd.py, pydbgr/processor/command/edit.py:
+	  Add edit command. Change msg to errmsg in cd command.
 
 2009-07-05 12:03  rocky@gnu.org
 
-	* VERSION,
-	  pydbgr/processor/command/cd.py,
-	  pydbgr/processor/command/help.py:
-	  Add
-	  gdb-like
-	  cd
-	  command.
-	  Add
-	  "help
-	  files".
-	  We're
-	  In
-	  0.1.2svn
-	  now.
+	* VERSION, pydbgr/processor/command/cd.py,
+	  pydbgr/processor/command/help.py: Add gdb-like cd command. Add
+	  "help files". We're In 0.1.2svn now.
 
 2009-07-04 05:29  rocky@gnu.org
 
-	* configure.ac:
-	  Update
-	  for
-	  0.1.1
-	  release
+	* configure.ac: Update for 0.1.1 release
 
 2009-07-04 05:03  rocky@gnu.org
 
-	* CHANGES.txt,
-	  ChangeLog,
-	  NEWS,
-	  VERSION:
-	  Get
-	  ready
-	  for
-	  0.1.1
+	* CHANGES.txt, ChangeLog, NEWS, VERSION: Get ready for 0.1.1
 	  release.
 
 2009-06-20 23:40  rocky@gnu.org
 
-	* pydbgr/cli.py:
-	  sys.argv
-	  not
-	  set
-	  correctly
-	  for
-	  debugged
-	  program.
-	  Issue
-	  #1
+	* pydbgr/cli.py: sys.argv not set correctly for debugged program.
+	  Issue #1
 
 2009-03-30 01:21  rocky@gnu.org
 
-	* pydbgr/processor/cmdproc.py:
-	  We
-	  don't
-	  do
-	  non-gdb-style
-	  stack
-	  listing
-	  anymore.
+	* pydbgr/processor/cmdproc.py: We don't do non-gdb-style stack
+	  listing anymore.
 
 2009-03-25 19:47  rocky@gnu.org
 
-	* pydbgr/lib/disassemble.py:
-	  Minor
-	  change
+	* pydbgr/lib/disassemble.py: Minor change
 
 2009-03-25 19:45  rocky@gnu.org
 
-	* pydbgr/lib/disassemble.py:
-	  Minor
-	  change
+	* pydbgr/lib/disassemble.py: Minor change
 
 2009-03-24 03:39  rocky@gnu.org
 
 	* pydbgr/lib/disassemble.py,
-	  pydbgr/processor/command/disassemble.py:
-	  Allow
-	  disassembly
-	  of
-	  compiled
-	  python
-	  files
-	  (.pyc)
+	  pydbgr/processor/command/disassemble.py: Allow disassembly of
+	  compiled python files (.pyc)
 
 2009-03-20 01:35  rocky@gnu.org
 
-	* pydbgr/processor/command/display.py:
-	  Remove
-	  duplicate
-	  docstring
+	* pydbgr/processor/command/display.py: Remove duplicate docstring
 
 2009-03-20 01:31  rocky@gnu.org
 
-	* __pkginfo__.py,
-	  pydbgr/lib/print.py,
-	  pydbgr/processor/command/ipython.py:
-	  Minor
-	  change
+	* __pkginfo__.py, pydbgr/lib/print.py,
+	  pydbgr/processor/command/ipython.py: Minor change
 
 2009-03-17 21:37  rocky@gnu.org
 
-	* pydbgr/processor/command/pdef.py:
-	  Update
-	  pdef
-	  docstring
+	* pydbgr/processor/command/pdef.py: Update pdef docstring
 
 2009-03-17 21:09  rocky@gnu.org
 
-	* pydbgr/lib/print.py:
-	  Small
-	  demo
-	  addition
+	* pydbgr/lib/print.py: Small demo addition
 
 2009-03-15 06:27  rocky@gnu.org
 
-	* NEWS:
-	  Update
-	  NEWS
-	  for
-	  release
+	* NEWS: Update NEWS for release
 
 2009-03-15 06:13  rocky@gnu.org
 
-	* ChangeLog,
-	  svn2cl_usermap:
-	  Get
-	  ready
-	  for
-	  release
+	* ChangeLog, svn2cl_usermap: Get ready for release
 
 2009-03-15 06:12  rocky@gnu.org
 
-	* ChangeLog,
-	  Makefile.am,
-	  configure.ac,
-	  pydbgr/processor/command/show_subcmd/args.py:
-	  Add
-	  "show
-	  args"
+	* ChangeLog, Makefile.am, configure.ac,
+	  pydbgr/processor/command/show_subcmd/args.py: Add "show args"
 	  command
 
 2009-03-15 06:09  rocky@gnu.org
 
-	* Makefile.am,
-	  ipython,
-	  ipython/ipy_pydbgr.py,
-	  pydbgr/__init__.py,
-	  pydbgr/cli.py,
-	  pydbgr/processor/command/show_subcmd/listsize.py:
-	  Start
-	  dealing
-	  with
-	  running
-	  pydbgr
-	  from
-	  ipython.
-	  More
-	  bugs
-	  found
+	* Makefile.am, ipython, ipython/ipy_pydbgr.py, pydbgr/__init__.py,
+	  pydbgr/cli.py, pydbgr/processor/command/show_subcmd/listsize.py:
+	  Start dealing with running pydbgr from ipython. More bugs found
 
 2009-03-15 04:01  rocky@gnu.org
 
-	* pydbgr/cli.py,
-	  pydbgr/debugger.py,
-	  pydbgr/except.py,
-	  pydbgr/exception.py,
-	  pydbgr/lib/bytecode.py,
-	  pydbgr/lib/stack.py,
-	  pydbgr/post_mortem.py,
-	  pydbgr/processor/cmdproc.py,
+	* pydbgr/cli.py, pydbgr/debugger.py, pydbgr/except.py,
+	  pydbgr/exception.py, pydbgr/lib/bytecode.py, pydbgr/lib/stack.py,
+	  pydbgr/post_mortem.py, pydbgr/processor/cmdproc.py,
 	  pydbgr/processor/command/quit.py,
-	  pydbgr/processor/command/run.py,
-	  test/unit/test-except.py,
-	  test/unit/test-run.py:
-	  A
-	  pox
-	  on
-	  Python
-	  lame
-	  import
-	  system
-	  that
-	  doesn't
-	  allow
-	  you
-	  to
-	  have
-	  a
-	  file
-	  called
-	  except.py
+	  pydbgr/processor/command/run.py, test/unit/test-except.py,
+	  test/unit/test-run.py: A pox on Python lame import system that
+	  doesn't allow you to have a file called except.py
 
 2009-03-15 01:40  rocky@gnu.org
 
-	* pydbgr/lib/print.py,
-	  pydbgr/processor/command/display.py,
-	  pydbgr/processor/command/pydocX.py:
-	  Show
-	  function
-	  signature
-	  in
-	  "examine"
-	  when
-	  appropriate
+	* pydbgr/lib/print.py, pydbgr/processor/command/display.py,
+	  pydbgr/processor/command/pydocX.py: Show function signature in
+	  "examine" when appropriate
 
 2009-03-15 00:43  rocky@gnu.org
 
-	* pydbgr/lib/print.py,
-	  pydbgr/processor/cmdproc.py,
-	  pydbgr/processor/command/p.py,
-	  pydbgr/processor/command/pdef.py,
+	* pydbgr/lib/print.py, pydbgr/processor/cmdproc.py,
+	  pydbgr/processor/command/p.py, pydbgr/processor/command/pdef.py,
 	  pydbgr/processor/command/pp.py,
 	  pydbgr/processor/command/pydoc.py,
-	  pydbgr/processor/command/pydocX.py,
-	  test/unit/test-lib-print.py,
-	  test/unit/test-p.py,
-	  test/unit/test-pdef.py:
-	  Add
-	  pdef
-	  command.
-	  Print
-	  command-processor
-	  load
-	  errors.
-	  pydoc
-	  name
-	  import
-	  conflict
+	  pydbgr/processor/command/pydocX.py, test/unit/test-lib-print.py,
+	  test/unit/test-p.py, test/unit/test-pdef.py: Add pdef command.
+	  Print command-processor load errors. pydoc name import conflict
 	  woes.
 
 2009-03-14 18:18  rocky@gnu.org
 
-	* pydbgr/debugger.py:
-	  Give
-	  message
-	  on
-	  IOError
-	  when
-	  loading
-	  debugged
+	* pydbgr/debugger.py: Give message on IOError when loading debugged
 	  program
 
 2009-03-14 11:06  rocky@gnu.org
 
-	* pydbgr/post_mortem.py:
-	  Some
-	  post-mortem
-	  bugs
+	* pydbgr/post_mortem.py: Some post-mortem bugs
 
 2009-03-14 09:45  rocky@gnu.org
 
-	* README.txt:
-	  Revise
-	  for
-	  release.
+	* README.txt: Revise for release.
 
 2009-03-14 08:43  rocky@gnu.org
 
-	* pydbgr/cli.py:
-	  Silence
-	  Python
-	  2.6
+	* pydbgr/cli.py: Silence Python 2.6
 
 2009-03-14 03:17  rocky@gnu.org
 
-	* pydbgr/processor/command/help.py:
-	  Respect
-	  the
-	  width
-	  setting.
+	* pydbgr/processor/command/help.py: Respect the width setting.
 
 2009-03-14 02:33  rocky@gnu.org
 
-	* pydbgr/io/fifoserver.py,
-	  test/unit/test-fifo.py,
-	  test/unit/test-io-input.py:
-	  Changes
-	  to
-	  work
-	  on
-	  M$
+	* pydbgr/io/fifoserver.py, test/unit/test-fifo.py,
+	  test/unit/test-io-input.py: Changes to work on M$
 
 2009-03-13 09:55  rocky@gnu.org
 
-	* pydbgr/processor/command/handle.py:
-	  Small
-	  doc
-	  change.
+	* pydbgr/processor/command/handle.py: Small doc change.
 
 2009-03-13 09:49  rocky@gnu.org
 
-	* pydbgr/lib/default.py,
-	  pydbgr/processor/cmdproc.py,
+	* pydbgr/lib/default.py, pydbgr/processor/cmdproc.py,
 	  pydbgr/processor/command/base_subcmd.py,
 	  pydbgr/processor/command/continue.py,
 	  pydbgr/processor/command/ipython.py,
@@ -1211,30 +612,15 @@
 	  pydbgr/processor/command/show_subcmd/defskip.py,
 	  pydbgr/processor/command/show_subcmd/skip.py,
 	  pydbgr/processor/command/show_subcmd/trace.py,
-	  pydbgr/processor/command/step.py:
-	  Add
-	  set
-	  autoipython.
-	  ipython
-	  continue
-	  commands
-	  work.
-	  Some
-	  show
-	  doc
-	  helpstring
-	  improvements.
-	  defskip
-	  ->
-	  skip.
+	  pydbgr/processor/command/step.py: Add set autoipython. ipython
+	  continue commands work. Some show doc helpstring improvements.
+	  defskip -> skip.
 
 2009-03-13 03:21  rocky@gnu.org
 
 	* pydbgr/processor/command/ipython.py,
 	  pydbgr/processor/command/ipython_magic/pdef.py,
-	  pydbgr/processor/command/ipython_magic/pdoc.py:
-	  Revert
-	  code
+	  pydbgr/processor/command/ipython_magic/pdoc.py: Revert code
 
 2009-03-13 03:01  rocky@gnu.org
 
@@ -1242,94 +628,36 @@
 	  pydbgr/processor/command/ipython_magic/__init__.py,
 	  pydbgr/processor/command/ipython_magic/pdef.py,
 	  pydbgr/processor/command/ipython_magic/pdoc.py,
-	  pydbgr/processor/command/ipython_magic/pinfo.py:
-	  Add
-	  IPython
-	  pdef,
-	  pdoc,
-	  and
-	  pinfo
-	  commands
-	  as
-	  an
-	  example
-	  of
-	  how
-	  to
-	  write
-	  more
-	  custome
-	  commands.
-	  There's
-	  probably
-	  a
-	  better
-	  way
-	  to
-	  do
-	  it
-	  though
+	  pydbgr/processor/command/ipython_magic/pinfo.py: Add IPython
+	  pdef, pdoc, and pinfo commands as an example of how to write more
+	  custome commands. There's probably a better way to do it though
 
 2009-03-12 23:45  rocky@gnu.org
 
-	* pydbgr/processor/command/ipython.py:
-	  Magic
-	  for
-	  debugger
-	  aliases
-	  as
-	  well
-	  as
-	  commands
+	* pydbgr/processor/command/ipython.py: Magic for debugger aliases
+	  as well as commands
 
 2009-03-12 19:00  rocky@gnu.org
 
-	* pydbgr/processor/command/ipython.py:
-	  Another
-	  really
-	  small
-	  thing
+	* pydbgr/processor/command/ipython.py: Another really small thing
 
 2009-03-12 18:57  rocky@gnu.org
 
-	* pydbgr/processor/command/ipython.py:
-	  Small
-	  doc
-	  fix
+	* pydbgr/processor/command/ipython.py: Small doc fix
 
 2009-03-12 18:55  rocky@gnu.org
 
-	* pydbgr/processor/command/ipython.py:
-	  Install
-	  all
-	  debugger
-	  commands
-	  as
-	  ipython
-	  "magic"
-	  commands
+	* pydbgr/processor/command/ipython.py: Install all debugger
+	  commands as ipython "magic" commands
 
 2009-03-12 12:20  rocky@gnu.org
 
-	* pydbgr/processor/cmdproc.py,
-	  pydbgr/processor/command/ipython.py:
-	  Add
-	  my
-	  first
-	  ipython
-	  magic
-	  command
-	  in
-	  a
-	  sort
-	  of
-	  hacky
-	  way
+	* pydbgr/processor/cmdproc.py, pydbgr/processor/command/ipython.py:
+	  Add my first ipython magic command in a sort of hacky way
 
 2009-03-12 11:42  rocky@gnu.org
 
-	* __pkginfo__.py,
-	  pydbgr/processor/cmdproc.py,
+	* __pkginfo__.py, pydbgr/processor/cmdproc.py,
 	  pydbgr/processor/command/base_submgr.py,
 	  pydbgr/processor/command/info_subcmd,
 	  pydbgr/processor/command/info_subcmd/threads.py,
@@ -1340,170 +668,63 @@
 	  pydbgr/processor/command/set_subcmd,
 	  pydbgr/processor/command/setsub,
 	  pydbgr/processor/command/show_subcmd,
-	  pydbgr/processor/command/showsub,
-	  test/unit/test-info-file.py:
-	  Rename
-	  xsub
-	  x_subcmd.
-	  Start
-	  ipython
-	  magic
+	  pydbgr/processor/command/showsub, test/unit/test-info-file.py:
+	  Rename xsub x_subcmd. Start ipython magic
 
 2009-03-12 11:13  rocky@gnu.org
 
-	* pydbgr/processor/command/ipython.py:
-	  One
-	  more
-	  small
-	  change
-	  for
-	  ipython
-	  demo
-	  code
+	* pydbgr/processor/command/ipython.py: One more small change for
+	  ipython demo code
 
 2009-03-12 11:00  rocky@gnu.org
 
 	* pydbgr/processor/command/ipython.py,
-	  pydbgr/processor/command/python.py:
-	  Add
-	  local
-	  debugger
-	  variable
-	  in
-	  "python"
-	  and
-	  "ipython"
-	  commands
-	  only
-	  as
-	  an
-	  option
+	  pydbgr/processor/command/python.py: Add local debugger variable
+	  in "python" and "ipython" commands only as an option
 
 2009-03-12 03:40  rocky@gnu.org
 
-	* pydbgr/cli.py,
-	  pydbgr/processor/command/ipython.py,
-	  pydbgr/processor/command/python.py:
-	  Give
-	  access
-	  to
-	  the
-	  debugger
-	  internals
-	  in
-	  "ipython"
-	  and
-	  "python"
-	  commands.
-	  Possibly
-	  a
-	  slightly
-	  more
-	  flexible
-	  cli.main()
-	  routine
+	* pydbgr/cli.py, pydbgr/processor/command/ipython.py,
+	  pydbgr/processor/command/python.py: Give access to the debugger
+	  internals in "ipython" and "python" commands. Possibly a slightly
+	  more flexible cli.main() routine
 
 2009-03-12 01:26  rocky@gnu.org
 
-	* pydbgr/processor/command/list.py:
-	  Allow
-	  "."
-	  in
-	  list
-	  command
-	  to
-	  refer
-	  to
-	  the
-	  current
-	  line
+	* pydbgr/processor/command/list.py: Allow "." in list command to
+	  refer to the current line
 
 2009-03-12 01:20  rocky@gnu.org
 
-	* pydbgr/processor/cmdproc.py,
-	  pydbgr/processor/command/cmdfns.py,
+	* pydbgr/processor/cmdproc.py, pydbgr/processor/command/cmdfns.py,
 	  pydbgr/processor/command/frame.py,
 	  pydbgr/processor/command/infosub/threads.py,
 	  pydbgr/processor/command/jump.py,
-	  pydbgr/processor/command/where.py,
-	  test/unit/test-cmdfns.py:
-	  Add
-	  thread
-	  name
-	  to
-	  prompt
-	  if
-	  it's
-	  not
-	  'MainThread'.
-	  Allow
-	  negative
-	  numbers
-	  in
-	  'where'
-	  command
-	  to
-	  count
-	  from
-	  the
-	  other
-	  end.
-	  Show
-	  stopped
-	  thread
-	  distinct
-	  from
-	  'frame'
-	  set
-	  frame
-	  in
-	  'info
-	  threads.
-	  Remove
-	  cmdfns.get_pos_int
+	  pydbgr/processor/command/where.py, test/unit/test-cmdfns.py: Add
+	  thread name to prompt if it's not 'MainThread'. Allow negative
+	  numbers in 'where' command to count from the other end. Show
+	  stopped thread distinct from 'frame' set frame in 'info threads.
+	  Remove cmdfns.get_pos_int
 
 2009-03-11 09:56  rocky@gnu.org
 
-	* pydbgr/lib/default.py,
-	  pydbgr/processor/cmdproc.py,
+	* pydbgr/lib/default.py, pydbgr/processor/cmdproc.py,
 	  pydbgr/processor/command/ipython.py,
-	  pydbgr/processor/command/python.py:
-	  Move
-	  towards
-	  adding
-	  history
+	  pydbgr/processor/command/python.py: Move towards adding history
 	  saving/reading
 
 2009-03-11 01:42  rocky@gnu.org
 
-	* __pkginfo__.py,
-	  pydbgr/io/fifoclient.py,
-	  pydbgr/io/fifoserver.py,
-	  pydbgr/io/input.py,
-	  pydbgr/io/scriptin.py,
-	  pydbgr/io/tcpclient.py,
-	  pydbgr/processor/command/infosub/file.py,
-	  pydbgr/processor/command/python.py:
-	  Monkypatch
-	  code.py
-	  so
-	  we
-	  separate
-	  locals
-	  and
-	  globals
-	  properly.
-	  Add
-	  version
-	  numbers
-	  of
-	  required
-	  packages
+	* __pkginfo__.py, pydbgr/io/fifoclient.py, pydbgr/io/fifoserver.py,
+	  pydbgr/io/input.py, pydbgr/io/scriptin.py,
+	  pydbgr/io/tcpclient.py, pydbgr/processor/command/infosub/file.py,
+	  pydbgr/processor/command/python.py: Monkypatch code.py so we
+	  separate locals and globals properly. Add version numbers of
+	  required packages
 
 2009-03-10 01:53  rocky@gnu.org
 
-	* pydbgr/processor/cmdproc.py,
-	  pydbgr/processor/command/delete.py,
+	* pydbgr/processor/cmdproc.py, pydbgr/processor/command/delete.py,
 	  pydbgr/processor/command/exit.py,
 	  pydbgr/processor/command/finish.py,
 	  pydbgr/processor/command/mock.py,
@@ -1511,164 +732,70 @@
 	  pydbgr/processor/command/setsub/basename.py,
 	  pydbgr/processor/command/setsub/trace.py,
 	  pydbgr/processor/command/step.py,
-	  pydbgr/processor/command/where.py:
-	  cmdproc.get_pos_int
-	  ->
-	  get_int
-	  and
-	  use
-	  this
-	  in
-	  more
-	  commands.
-	  Split
-	  off
-	  "set
-	  traceset"
-	  from
-	  "set
-	  trace".
+	  pydbgr/processor/command/where.py: cmdproc.get_pos_int -> get_int
+	  and use this in more commands.
+	  Split off "set traceset" from "set trace".
 
 2009-03-09 19:04  rocky@gnu.org
 
 	* pydbgr/processor/command/setsub/trace.py,
-	  pydbgr/processor/command/showsub/trace.py:
-	  trace
-	  doc
-	  fixes
+	  pydbgr/processor/command/showsub/trace.py: trace doc fixes
 
 2009-03-09 18:57  rocky@gnu.org
 
-	* pydbgr/processor/command/setsub/trace.py:
-	  trace
-	  doc
-	  fix
+	* pydbgr/processor/command/setsub/trace.py: trace doc fix
 
 2009-03-09 18:48  rocky@gnu.org
 
-	* pydbgr/processor/cmdproc.py:
-	  Wrap
-	  another
-	  error
-	  message
+	* pydbgr/processor/cmdproc.py: Wrap another error message
 
 2009-03-09 18:38  rocky@gnu.org
 
-	* pydbgr/processor/cmdproc.py,
-	  pydbgr/processor/command/cmdfns.py,
+	* pydbgr/processor/cmdproc.py, pydbgr/processor/command/cmdfns.py,
 	  pydbgr/processor/command/finish.py,
 	  pydbgr/processor/command/mock.py,
 	  pydbgr/processor/command/next.py,
-	  pydbgr/processor/command/where.py,
-	  test/unit/test-cmdfns.py,
-	  test/unit/test-finish.py:
-	  finish,
-	  next,
-	  where:
-	  use
-	  more
-	  general
-	  integer
-	  evaluation
-	  routine.
-	  (FIXME:
-	  get_pos_int
-	  needs
-	  to
-	  be
-	  renamed
-	  to
-	  get_int_range).
-	  Some
-	  small
-	  bugs
-	  discovered
-	  and
-	  fixed
-	  in
-	  the
-	  various
-	  routines.
+	  pydbgr/processor/command/where.py, test/unit/test-cmdfns.py,
+	  test/unit/test-finish.py: finish, next, where: use more general
+	  integer evaluation routine. (FIXME: get_pos_int needs
+	  to be renamed to get_int_range). Some small bugs discovered and
+	  fixed in the various routines.
 
 2009-03-09 13:50  rocky@gnu.org
 
-	* pydbgr/cli.py:
-	  Add
-	  no-post-mortem
-	  option
+	* pydbgr/cli.py: Add no-post-mortem option
 
 2009-03-09 12:15  rocky@gnu.org
 
-	* pydbgr/cli.py,
-	  pydbgr/processor/cmdproc.py,
-	  pydbgr/processor/command/infosub/program.py:
-	  Add
-	  --post-mortem
-	  option
-	  to
-	  cli.py.
-	  Enter
-	  post-mortem
-	  by
-	  default
+	* pydbgr/cli.py, pydbgr/processor/cmdproc.py,
+	  pydbgr/processor/command/infosub/program.py: Add --post-mortem
+	  option to cli.py. Enter post-mortem by default
 
 2009-03-09 11:45  rocky@gnu.org
 
-	* pydbgr/api.py,
-	  pydbgr/processor/command/infosub/program.py:
-	  Add
-	  an
-	  immediate
-	  debug
-	  stop
-	  via
-	  "pydbgr.api.debug(steps=0)"
+	* pydbgr/api.py, pydbgr/processor/command/infosub/program.py: Add
+	  an immediate debug stop via "pydbgr.api.debug(steps=0)"
 
 2009-03-09 11:45  rocky@gnu.org
 
-	* test/example/gcd-dbgcall.py:
-	  Add
-	  an
-	  immediate
-	  debug
-	  stop
-	  via
+	* test/example/gcd-dbgcall.py: Add an immediate debug stop via
 	  "pydbgr.api.debug(steps=0)"
 
 2009-03-09 04:09  rocky@gnu.org
 
-	* pydbgr/lib/core.py,
-	  pydbgr/lib/sighandler.py,
+	* pydbgr/lib/core.py, pydbgr/lib/sighandler.py,
 	  pydbgr/processor/cmdproc.py,
 	  pydbgr/processor/command/infosub/program.py,
 	  pydbgr/processor/command/mock.py,
 	  pydbgr/processor/command/setsub/dbg_pydbgr.py,
-	  test/example/sigtest.py,
-	  test/functional/fn_helper.py,
-	  test/functional/test-sig.py:
-	  Redo
-	  signal
-	  handling
-	  to
-	  call
-	  debugger
-	  immediately
-	  rather
-	  than
-	  set
-	  up
-	  a
-	  "next
-	  event".
-	  "info
-	  program"
-	  adjusted
-	  too.
+	  test/example/sigtest.py, test/functional/fn_helper.py,
+	  test/functional/test-sig.py: Redo signal handling to call
+	  debugger immediately rather than set up a "next event". "info
+	  program" adjusted too.
 
 2009-03-08 22:13  rocky@gnu.org
 
-	* pydbgr/lib/sighandler.py,
-	  pydbgr/processor/command/base_cmd.py,
+	* pydbgr/lib/sighandler.py, pydbgr/processor/command/base_cmd.py,
 	  pydbgr/processor/command/break.py,
 	  pydbgr/processor/command/condition.py,
 	  pydbgr/processor/command/continue.py,
@@ -1682,607 +809,209 @@
 	  pydbgr/processor/command/retval.py,
 	  pydbgr/processor/command/set.py,
 	  pydbgr/processor/command/skip.py,
-	  pydbgr/processor/command/where.py:
-	  Use
-	  GPL
-	  v3
-	  over
-	  v2+.
-	  sighandler.py:
-	  start
-	  moving
-	  towards
-	  stopping
-	  after
-	  signal
-	  event.
+	  pydbgr/processor/command/where.py: Use GPL v3 over v2+.
+	  sighandler.py: start moving towards stopping after signal event.
 
 2009-03-08 22:02  rocky@gnu.org
 
 	* pydbgr/processor/command/mock.py,
-	  pydbgr/processor/command/skip.py,
-	  test/unit/test-disassemble.py:
-	  skip.py:
-	  use
-	  more
-	  general
-	  integer
-	  getting
-	  routine.
-	  Small
-	  doc
+	  pydbgr/processor/command/skip.py, test/unit/test-disassemble.py:
+	  skip.py: use more general integer getting routine. Small doc
 	  corrections.
-	  Make
-	  a
-	  little
-	  more
-	  amenable
-	  to
-	  Python
-	  2.6.
+	  Make a little more amenable to Python 2.6.
 
 2009-03-08 05:39  rocky@gnu.org
 
 	* pydbgr/lib/sighandler.py,
 	  pydbgr/processor/command/setsub/dbg_pydbg.py,
 	  pydbgr/processor/command/setsub/dbg_pydbgr.py,
-	  test/functional/test-sig.py:
-	  Experimental:
-	  replace
-	  signal.signal
-	  so
-	  the
-	  debugger
-	  can
-	  still
-	  intercept
-	  its
-	  signals.
-	  sighandler.py:
-	  Add
-	  handle
-	  to
-	  list
-	  of
-	  ignore.
-	  dbg_pdybg
-	  ->
-	  dbg_pydbgr.
-	  When
-	  debugging
-	  the
-	  debugger
-	  turn
-	  off
-	  all
-	  debugger
-	  "ignore"
-	  routines.
+	  test/functional/test-sig.py: Experimental: replace signal.signal
+	  so the debugger can still intercept
+	  its signals. sighandler.py: Add handle to list of ignore.
+	  dbg_pdybg -> dbg_pydbgr. When debugging the debugger turn off all
+	  debugger "ignore" routines.
 
 2009-03-08 04:27  rocky@gnu.org
 
-	* pydbgr/debugger.py,
-	  pydbgr/except.py,
-	  pydbgr/post_mortem.py,
+	* pydbgr/debugger.py, pydbgr/except.py, pydbgr/post_mortem.py,
 	  pydbgr/processor/command/mock.py,
 	  pydbgr/processor/command/restart.py,
-	  pydbgr/processor/command/run.py,
-	  test/example/sigtest.py,
-	  test/unit/test-cmdfns.py,
-	  test/unit/test-except.py:
-	  Make
-	  DebuggerRestart
-	  work
-	  in
-	  post-mortem
-	  when
-	  we
-	  haven't
-	  initially
-	  set
-	  up
-	  a
+	  pydbgr/processor/command/run.py, test/example/sigtest.py,
+	  test/unit/test-cmdfns.py, test/unit/test-except.py: Make
+	  DebuggerRestart work in post-mortem when we haven't initially set
+	  up a restart handler. We do this by recordign "sys_argv" in
 	  restart
-	  handler.
-	  We
-	  do
-	  this
-	  by
-	  recordign
-	  "sys_argv"
-	  in
-	  restart
-	  exception
-	  so
-	  we
-	  can
-	  use
-	  it
-	  in
-	  an
-	  execv-style
-	  restart
-	  if
-	  we
-	  need
+	  exception so we can use it in an execv-style restart if we need
 	  to.
 
 2009-03-07 17:22  rocky@gnu.org
 
-	* emacs/pydbgr.el,
-	  pydbgr/api.py,
-	  pydbgr/post_mortem.py,
+	* emacs/pydbgr.el, pydbgr/api.py, pydbgr/post_mortem.py,
 	  pydbgr/processor/command/infosub/program.py,
 	  pydbgr/processor/command/ipython.py,
 	  pydbgr/processor/command/restart.py,
-	  test/functional/fn_helper.py:
-	  Address
-	  some
-	  of
-	  the
-	  bugs
-	  in
-	  post-mortem
-	  handling.
-	  Allow
-	  prompt
-	  to
-	  be
-	  customized
-	  e.g.
-	  for
-	  post-mortem.
-	  Two-line
-	  "info
-	  program"
-	  for
-	  exceptions.
-	  Allow
-	  Quit
-	  to
-	  work
-	  when
-	  not
-	  started
-	  initially
-	  from
-	  the
-	  debugger.
+	  test/functional/fn_helper.py: Address some of the bugs in
+	  post-mortem handling. Allow prompt to be customized
+	  e.g. for post-mortem. Two-line "info program" for exceptions.
+	  Allow Quit
+	  to work when not started initially from the debugger.
 
 2009-03-07 11:40  rocky@gnu.org
 
-	* pydbgr/lib/sighandler.py,
-	  test/example/sigtest.py:
-	  More
-	  signal
-	  handling
-	  cleanup.
-	  There
-	  are
-	  still
-	  bugs
-	  lurking.
+	* pydbgr/lib/sighandler.py, test/example/sigtest.py: More signal
+	  handling cleanup. There are still bugs lurking.
 
 2009-03-07 04:21  rocky@gnu.org
 
-	* pydbgr/lib/sighandler.py,
-	  test/example/sigtest.py,
-	  test/unit/test-lib-sig.py:
-	  More
-	  sighandling
-	  bugs.
-	  Match
-	  the
-	  way
-	  pydb
-	  works
-	  a
-	  little
-	  closer
+	* pydbgr/lib/sighandler.py, test/example/sigtest.py,
+	  test/unit/test-lib-sig.py: More sighandling bugs. Match the way
+	  pydb works a little closer
 
 2009-03-06 20:43  rocky@gnu.org
 
-	* pydbgr/processor/command/handle.py,
-	  test/functional/test-sig.py:
-	  Second
-	  signal-handling
-	  test.
-	  Fix
-	  "help
-	  handle"
-	  spelling
-	  mistake.
+	* pydbgr/processor/command/handle.py, test/functional/test-sig.py:
+	  Second signal-handling test. Fix "help handle" spelling mistake.
 
 2009-03-06 20:22  rocky@gnu.org
 
-	* test/functional/test-sig.py,
-	  test/functional/test-step.py:
-	  First
-	  signal
-	  handling
-	  test
+	* test/functional/test-sig.py, test/functional/test-step.py: First
+	  signal handling test
 
 2009-03-06 03:38  rocky@gnu.org
 
-	* pydbgr/lib/sighandler.py:
-	  Minor
-	  change.
+	* pydbgr/lib/sighandler.py: Minor change.
 
 2009-03-06 03:20  rocky@gnu.org
 
-	* pydbgr/lib/core.py,
-	  pydbgr/lib/sighandler.py,
+	* pydbgr/lib/core.py, pydbgr/lib/sighandler.py,
 	  pydbgr/processor/command/handle.py,
 	  pydbgr/processor/command/mock.py,
-	  pydbgr/processor/command/next.py,
-	  test/example/sigtest.py:
-	  Work
-	  out
-	  more
-	  kinks
-	  in
-	  signal
-	  handling.
-	  Works
-	  mostly
-	  now.
-	  "print"
-	  no
-	  longer
-	  implies
-	  "stop".
-	  Add
-	  core.set_next().
-	  Initial
-	  signal
-	  handling
-	  output
-	  now
-	  reflects
-	  the
-	  current
-	  situation.
+	  pydbgr/processor/command/next.py, test/example/sigtest.py: Work
+	  out more kinks in signal handling. Works mostly now. "print" no
+	  longer implies "stop".
+	  Add core.set_next(). Initial signal handling output now reflects
+	  the current situation.
 
 2009-03-05 16:12  rocky@gnu.org
 
-	* pydbgr/lib/sighandler.py,
-	  pydbgr/processor/command/handle.py,
-	  test/example/sigtest.py:
-	  Towards
-	  getting
-	  signal
-	  handling
+	* pydbgr/lib/sighandler.py, pydbgr/processor/command/handle.py,
+	  test/example/sigtest.py: Towards getting signal handling
 	  *working*.
 
 2009-03-05 10:42  rocky@gnu.org
 
-	* pydbgr/lib/sighandler.py,
-	  pydbgr/processor/command/handle.py,
-	  test/unit/test-cmdfns.py,
-	  test/unit/test-lib-pp.py,
-	  test/unit/test-lib-sig.py:
-	  Bugs
-	  bugs
-	  bugs.
-	  DRY
-	  and
-	  generalize
-	  sighandler
-	  code.
-	  Allow
-	  us
-	  to
-	  set
-	  actions
-	  for
-	  signals
-	  that
-	  are
-	  initally
-	  ignored
+	* pydbgr/lib/sighandler.py, pydbgr/processor/command/handle.py,
+	  test/unit/test-cmdfns.py, test/unit/test-lib-pp.py,
+	  test/unit/test-lib-sig.py: Bugs bugs bugs. DRY and generalize
+	  sighandler code. Allow us to set actions for signals that are
+	  initally ignored
 
 2009-03-05 02:55  rocky@gnu.org
 
-	* pydbgr/lib/sighandler.py:
-	  One
-	  more
-	  wafer-thin
-	  change...
+	* pydbgr/lib/sighandler.py: One more wafer-thin change...
 
 2009-03-05 02:48  rocky@gnu.org
 
-	* pydbgr/debugger.py,
-	  pydbgr/lib/sighandler.py,
+	* pydbgr/debugger.py, pydbgr/lib/sighandler.py,
 	  pydbgr/processor/command/examine.py,
 	  pydbgr/processor/command/handle.py,
-	  pydbgr/processor/command/infosub/signals.py:
-	  More
-	  work
-	  towards
-	  getting
-	  the
-	  "handle"
-	  and
-	  "info
-	  signals"
-	  commands
-	  working.
+	  pydbgr/processor/command/infosub/signals.py: More work towards
+	  getting the "handle" and "info signals" commands working.
 
 2009-03-04 15:11  rocky@gnu.org
 
-	* pydbgr/processor/cmdproc.py,
-	  pydbgr/processor/command/examine.py:
-	  Error
-	  handling
-	  for
-	  shlex
-	  errors.
-	  Revise
-	  "examine"
-	  documentation.
+	* pydbgr/processor/cmdproc.py, pydbgr/processor/command/examine.py:
+	  Error handling for shlex errors. Revise "examine" documentation.
 
 2009-03-04 09:34  rocky@gnu.org
 
-	* .,
-	  .cvsignore,
-	  pydbgr/lib/bytecode.py,
-	  pydbgr/lib/sighandler.py:
-	  Start
-	  porting
-	  signal
-	  handling
-	  library
-	  routine
-	  from
-	  pydb
+	* ., .cvsignore, pydbgr/lib/bytecode.py, pydbgr/lib/sighandler.py:
+	  Start porting signal handling library routine from pydb
 
 2009-03-04 08:17  rocky@gnu.org
 
-	* test/data/Makefile:
-	  Administrivia:
-	  add
-	  boilerplate
-	  Makefile.
+	* test/data/Makefile: Administrivia: add boilerplate Makefile.
 
 2009-03-04 08:17  rocky@gnu.org
 
-	* Makefile.am,
-	  pydbgr/cli.py,
+	* Makefile.am, pydbgr/cli.py,
 	  pydbgr/processor/command/showsub/trace.py,
-	  pydbgr/processor/command/source.py,
-	  test/data,
-	  test/data/step.cmd,
-	  test/data/step.right,
-	  test/integration,
-	  test/integration/.cvsignore,
-	  test/integration/Makefile,
-	  test/integration/helper.py,
-	  test/integration/setup.cfg,
-	  test/integration/setup.py,
-	  test/integration/test-general.py:
-	  First
-	  integration
-	  test!
-	  Fix
-	  bug
-	  in
-	  setting
-	  script
-	  interface
-	  output
-	  in
-	  "source"
-	  command.
+	  pydbgr/processor/command/source.py, test/data,
+	  test/data/step.cmd, test/data/step.right, test/integration,
+	  test/integration/.cvsignore, test/integration/Makefile,
+	  test/integration/helper.py, test/integration/setup.cfg,
+	  test/integration/setup.py, test/integration/test-general.py:
+	  First integration test! Fix bug in setting script interface
+	  output in "source" command.
 
 2009-03-04 03:05  rocky@gnu.org
 
-	* pydbgr/cli.py,
-	  pydbgr/io/output.py,
-	  pydbgr/processor/cmdproc.py,
+	* pydbgr/cli.py, pydbgr/io/output.py, pydbgr/processor/cmdproc.py,
 	  pydbgr/processor/command/base_subcmd.py,
 	  pydbgr/processor/command/setsub/cmdtrace.py,
 	  pydbgr/processor/command/setsub/trace.py,
-	  pydbgr/processor/trace.py:
-	  Various
-	  bugs
-	  discovered
-	  in
-	  getting
-	  integration
-	  testing
-	  working:
-	  "set
-	  trace"
-	  needs
-	  to
-	  respect
-	  the
-	  basename
-	  setting.
-	  Have
-	  "set
-	  cmdtrace"
-	  work
-	  when
-	  issued
-	  in
-	  the
-	  middle
-	  of
-	  sourcing
-	  a
-	  script
-	  file.
-	  Fix
-	  bug
-	  in
-	  opening
-	  interface
-	  output
-	  when
-	  given
-	  as
-	  a
-	  string
-	  file
-	  name.
+	  pydbgr/processor/trace.py: Various bugs discovered in getting
+	  integration testing working: "set trace" needs to respect the
+	  basename setting. Have "set cmdtrace" work when issued in the
+	  middle of sourcing a script file. Fix bug in opening interface
+	  output when given as a string file name.
 
 2009-03-03 12:06  rocky@gnu.org
 
-	* pydbgr/lib/bytecode.py,
-	  pydbgr/lib/disassemble.py,
+	* pydbgr/lib/bytecode.py, pydbgr/lib/disassemble.py,
 	  pydbgr/processor/cmdproc.py,
-	  pydbgr/processor/command/disassemble.py:
-	  Break
-	  out
-	  library
-	  disassembly
-	  routines.
-	  disassembly
-	  evaluation
-	  deals
-	  with
-	  numbers
-	  better
-	  and
-	  is
-	  a
-	  little
-	  more
-	  modular,
-	  although
-	  still
-	  ugly.
+	  pydbgr/processor/command/disassemble.py: Break out library
+	  disassembly routines. disassembly evaluation deals with numbers
+	  better and is a little more modular, although still ugly.
 
 2009-03-03 04:53  rocky@gnu.org
 
-	* pydbgr/lib/bytecode.py,
-	  pydbgr/lib/default.py,
-	  pydbgr/lib/stack.py,
-	  pydbgr/processor/cmdproc.py,
+	* pydbgr/lib/bytecode.py, pydbgr/lib/default.py,
+	  pydbgr/lib/stack.py, pydbgr/processor/cmdproc.py,
 	  pydbgr/processor/command/setsub/defskip.py,
 	  pydbgr/processor/command/setsub/skip.py,
-	  test/unit/test-bytecode.py:
-	  Generalize
-	  "set
-	  skip"
-	  to
-	  include
-	  "class"
-	  definitions.
-	  More
-	  customization
-	  may
-	  be
-	  desired.
+	  test/unit/test-bytecode.py: Generalize "set skip" to include
+	  "class" definitions. More customization may be desired.
 
 2009-03-02 11:07  rocky@gnu.org
 
-	* .,
-	  .cvsignore,
-	  AUTHORS,
-	  Makefile,
-	  Makefile.am,
-	  NEWS,
-	  VERSION,
-	  __pkginfo__.py,
-	  autogen.sh,
-	  configure.ac,
-	  emacs,
-	  emacs/.cvsignore,
-	  emacs/Makefile.am,
-	  emacs/pydbgr-test.el,
-	  emacs/test-pydbgr.el,
-	  test/functional:
-	  Administrivia:
-	  add
-	  emacs
-	  testing/installation
-	  into
-	  the
-	  fold
+	* ., .cvsignore, AUTHORS, Makefile, Makefile.am, NEWS, VERSION,
+	  __pkginfo__.py, autogen.sh, configure.ac, emacs,
+	  emacs/.cvsignore, emacs/Makefile.am, emacs/pydbgr-test.el,
+	  emacs/test-pydbgr.el, test/functional: Administrivia: add emacs
+	  testing/installation into the fold
 
 2009-03-01 15:24  rocky@gnu.org
 
-	* pydbgr/__init__.py,
-	  pydbgr/cli.py,
-	  pydbgr/debugger.py,
-	  pydbgr/except.py,
-	  pydbgr/lib/core.py,
-	  pydbgr/post_mortem.py,
+	* pydbgr/__init__.py, pydbgr/cli.py, pydbgr/debugger.py,
+	  pydbgr/except.py, pydbgr/lib/core.py, pydbgr/post_mortem.py,
 	  pydbgr/processor/cmdproc.py,
 	  pydbgr/processor/command/disassemble.py,
 	  pydbgr/processor/command/quit.py,
-	  pydbgr/processor/command/run.py,
-	  test/functional/fn_helper.py,
-	  test/unit/test-run.py:
-	  Don't
-	  abort
-	  on
-	  exceptions
-	  in
-	  running
-	  a
-	  command.
-	  Exceptions
-	  need
-	  to
-	  be
-	  broken
-	  out
-	  to
-	  avoid
-	  circular
-	  imports.
-	  Document
-	  'disassemble'
-	  better
-	  and
-	  allow
-	  '.'
-	  and
-	  integer
-	  evaluations
-	  for
-	  numbers
+	  pydbgr/processor/command/run.py, test/functional/fn_helper.py,
+	  test/unit/test-run.py: Don't abort on exceptions in running a
+	  command. Exceptions need to be broken out to avoid circular
+	  imports. Document 'disassemble' better and allow '.' and integer
+	  evaluations for numbers
 
 2009-03-01 12:43  rocky@gnu.org
 
-	* pydbg.ChangeLog,
-	  svn-commit.tmp,
-	  svn2cl_usermap,
-	  test/notyet-test-set-trace-sub.py:
-	  Administrivia
+	* pydbg.ChangeLog, svn-commit.tmp, svn2cl_usermap,
+	  test/notyet-test-set-trace-sub.py: Administrivia
 
 2009-03-01 12:34  rocky@gnu.org
 
-	* __pkginfo__.py,
-	  emacs/pydbg-test.el,
-	  emacs/pydbg.el,
-	  emacs/pydbgr-test.el,
-	  emacs/pydbgr.el,
-	  pydbgr/api.py,
-	  pydbgr/cli.py,
-	  pydbgr/client.py,
-	  pydbgr/clifns.py,
-	  pydbgr/debugger.py,
-	  pydbgr/interface/client.py,
-	  pydbgr/interface/script.py,
-	  pydbgr/interface/server.py,
-	  pydbgr/interface/user.py,
-	  pydbgr/io/fifoclient.py,
-	  pydbgr/io/fifoserver.py,
-	  pydbgr/io/input.py,
-	  pydbgr/io/output.py,
-	  pydbgr/io/scriptin.py,
-	  pydbgr/io/stringarray.py,
-	  pydbgr/io/tcpclient.py,
-	  pydbgr/io/tcpserver.py,
-	  pydbgr/lib/core.py,
-	  pydbgr/lib/default.py,
-	  pydbgr/lib/display.py,
-	  pydbgr/lib/stack.py,
-	  pydbgr/post_mortem.py,
+	* __pkginfo__.py, emacs/pydbg-test.el, emacs/pydbg.el,
+	  emacs/pydbgr-test.el, emacs/pydbgr.el, pydbgr/api.py,
+	  pydbgr/cli.py, pydbgr/client.py, pydbgr/clifns.py,
+	  pydbgr/debugger.py, pydbgr/interface/client.py,
+	  pydbgr/interface/script.py, pydbgr/interface/server.py,
+	  pydbgr/interface/user.py, pydbgr/io/fifoclient.py,
+	  pydbgr/io/fifoserver.py, pydbgr/io/input.py, pydbgr/io/output.py,
+	  pydbgr/io/scriptin.py, pydbgr/io/stringarray.py,
+	  pydbgr/io/tcpclient.py, pydbgr/io/tcpserver.py,
+	  pydbgr/lib/core.py, pydbgr/lib/default.py, pydbgr/lib/display.py,
+	  pydbgr/lib/stack.py, pydbgr/post_mortem.py,
 	  pydbgr/processor/cmdproc.py,
 	  pydbgr/processor/command/base_subcmd.py,
 	  pydbgr/processor/command/break.py,
@@ -2312,16 +1041,14 @@
 	  pydbgr/processor/command/jump.py,
 	  pydbgr/processor/command/kill.py,
 	  pydbgr/processor/command/list.py,
-	  pydbgr/processor/command/mock.py,
-	  pydbgr/processor/command/p.py,
+	  pydbgr/processor/command/mock.py, pydbgr/processor/command/p.py,
 	  pydbgr/processor/command/pp.py,
 	  pydbgr/processor/command/pydoc.py,
 	  pydbgr/processor/command/python.py,
 	  pydbgr/processor/command/quit.py,
 	  pydbgr/processor/command/restart.py,
 	  pydbgr/processor/command/retval.py,
-	  pydbgr/processor/command/run.py,
-	  pydbgr/processor/command/set.py,
+	  pydbgr/processor/command/run.py, pydbgr/processor/command/set.py,
 	  pydbgr/processor/command/setsub/annotate.py,
 	  pydbgr/processor/command/setsub/autoeval.py,
 	  pydbgr/processor/command/setsub/autolist.py,
@@ -2354,136 +1081,59 @@
 	  pydbgr/processor/command/undisplay.py,
 	  pydbgr/processor/command/up.py,
 	  pydbgr/processor/command/whatis.py,
-	  pydbgr/processor/command/where.py,
-	  pydbgr/processor/trace.py,
-	  setup.py,
-	  src_obj_check.py,
-	  test/example/gcd-dbgcall.py,
-	  test/example/q-dbgcall.py,
-	  test/example/tlock.py,
-	  test/functional/fn_helper.py,
-	  test/notyet-test-set-trace-sub.py,
-	  test/unit/cmdhelper.py,
-	  test/unit/test-break.py,
-	  test/unit/test-brkpt.py,
-	  test/unit/test-bytecode.py,
-	  test/unit/test-clifns.py,
-	  test/unit/test-cmdfns.py,
-	  test/unit/test-cmdproc.py,
-	  test/unit/test-core.py,
-	  test/unit/test-disassemble.py,
-	  test/unit/test-fifo.py,
-	  test/unit/test-finish.py,
-	  test/unit/test-help.py,
-	  test/unit/test-helper.py,
-	  test/unit/test-info-file.py,
-	  test/unit/test-io-input.py,
-	  test/unit/test-kill.py,
-	  test/unit/test-lib-file.py,
-	  test/unit/test-lib-pp.py,
-	  test/unit/test-lib-print.py,
-	  test/unit/test-lib-thread.py,
-	  test/unit/test-list.py,
-	  test/unit/test-misc.py,
-	  test/unit/test-p.py,
-	  test/unit/test-processor.py,
-	  test/unit/test-quit.py,
-	  test/unit/test-run.py,
-	  test/unit/test-stack.py,
-	  test/unit/test-step.py,
-	  test/unit/test-subcmd.py,
-	  test/unit/test-tcp.py,
-	  test/unit/test-user.py:
-	  pydbg->pydbgr
-	  rename:
-	  regression
-	  tests
-	  now
-	  work
-	  again.
+	  pydbgr/processor/command/where.py, pydbgr/processor/trace.py,
+	  setup.py, src_obj_check.py, test/example/gcd-dbgcall.py,
+	  test/example/q-dbgcall.py, test/example/tlock.py,
+	  test/functional/fn_helper.py, test/notyet-test-set-trace-sub.py,
+	  test/unit/cmdhelper.py, test/unit/test-break.py,
+	  test/unit/test-brkpt.py, test/unit/test-bytecode.py,
+	  test/unit/test-clifns.py, test/unit/test-cmdfns.py,
+	  test/unit/test-cmdproc.py, test/unit/test-core.py,
+	  test/unit/test-disassemble.py, test/unit/test-fifo.py,
+	  test/unit/test-finish.py, test/unit/test-help.py,
+	  test/unit/test-helper.py, test/unit/test-info-file.py,
+	  test/unit/test-io-input.py, test/unit/test-kill.py,
+	  test/unit/test-lib-file.py, test/unit/test-lib-pp.py,
+	  test/unit/test-lib-print.py, test/unit/test-lib-thread.py,
+	  test/unit/test-list.py, test/unit/test-misc.py,
+	  test/unit/test-p.py, test/unit/test-processor.py,
+	  test/unit/test-quit.py, test/unit/test-run.py,
+	  test/unit/test-stack.py, test/unit/test-step.py,
+	  test/unit/test-subcmd.py, test/unit/test-tcp.py,
+	  test/unit/test-user.py: pydbg->pydbgr rename: regression tests
+	  now work again.
 
 2009-03-01 11:56  rocky@gnu.org
 
-	* pydbg,
-	  pydbgr,
-	  test/functional/UNKNOWN.egg-info,
-	  tmp:
-	  pydbg
-	  ->
-	  pydbgr
-	  rename.
-	  Part
-	  1
+	* pydbg, pydbgr, test/functional/UNKNOWN.egg-info, tmp: pydbg ->
+	  pydbgr rename. Part 1
 
 2009-03-01 11:52  rocky@gnu.org
 
-	* .cvsignore,
-	  .gitignore,
-	  CHANGES.txt,
-	  COPYING,
-	  Makefile,
-	  README.txt,
-	  __pkginfo__.py,
-	  emacs,
-	  emacs/.gitignore,
-	  emacs/elk-test.el,
-	  emacs/pydbg-test.el,
-	  emacs/pydbg.el,
-	  pydbg,
-	  pydbg/.gitignore,
-	  pydbg/Makefile,
-	  pydbg/__init__.py,
-	  pydbg/api.py,
-	  pydbg/cli.py,
-	  pydbg/client.py,
-	  pydbg/clifns.py,
-	  pydbg/debugger.py,
-	  pydbg/interface,
-	  pydbg/interface/.gitignore,
-	  pydbg/interface/Makefile,
-	  pydbg/interface/__init__.py,
-	  pydbg/interface/base_intf.py,
-	  pydbg/interface/client.py,
-	  pydbg/interface/comcodes.py,
-	  pydbg/interface/script.py,
-	  pydbg/interface/server.py,
-	  pydbg/interface/user.py,
-	  pydbg/io,
-	  pydbg/io/.gitignore,
-	  pydbg/io/Makefile,
-	  pydbg/io/__init__.py,
-	  pydbg/io/base_io.py,
-	  pydbg/io/fifoclient.py,
-	  pydbg/io/fifoserver.py,
-	  pydbg/io/input.py,
-	  pydbg/io/output.py,
-	  pydbg/io/scriptin.py,
-	  pydbg/io/stringarray.py,
-	  pydbg/io/tcpclient.py,
-	  pydbg/io/tcpfns.py,
-	  pydbg/io/tcpserver.py,
-	  pydbg/lib,
-	  pydbg/lib/Makefile,
-	  pydbg/lib/__init__.py,
-	  pydbg/lib/breakpoint.py,
-	  pydbg/lib/bytecode.py,
-	  pydbg/lib/core.py,
-	  pydbg/lib/default.py,
-	  pydbg/lib/display.py,
-	  pydbg/lib/file.py,
-	  pydbg/lib/pp.py,
-	  pydbg/lib/print.py,
-	  pydbg/lib/stack.py,
-	  pydbg/lib/thread.py,
-	  pydbg/misc.py,
-	  pydbg/post_mortem.py,
-	  pydbg/processor,
-	  pydbg/processor/.gitignore,
-	  pydbg/processor/Makefile,
-	  pydbg/processor/__init__.py,
-	  pydbg/processor/base_proc.py,
-	  pydbg/processor/cmdproc.py,
-	  pydbg/processor/command,
+	* .cvsignore, .gitignore, CHANGES.txt, COPYING, Makefile,
+	  README.txt, __pkginfo__.py, emacs, emacs/.gitignore,
+	  emacs/elk-test.el, emacs/pydbg-test.el, emacs/pydbg.el, pydbg,
+	  pydbg/.gitignore, pydbg/Makefile, pydbg/__init__.py,
+	  pydbg/api.py, pydbg/cli.py, pydbg/client.py, pydbg/clifns.py,
+	  pydbg/debugger.py, pydbg/interface, pydbg/interface/.gitignore,
+	  pydbg/interface/Makefile, pydbg/interface/__init__.py,
+	  pydbg/interface/base_intf.py, pydbg/interface/client.py,
+	  pydbg/interface/comcodes.py, pydbg/interface/script.py,
+	  pydbg/interface/server.py, pydbg/interface/user.py, pydbg/io,
+	  pydbg/io/.gitignore, pydbg/io/Makefile, pydbg/io/__init__.py,
+	  pydbg/io/base_io.py, pydbg/io/fifoclient.py,
+	  pydbg/io/fifoserver.py, pydbg/io/input.py, pydbg/io/output.py,
+	  pydbg/io/scriptin.py, pydbg/io/stringarray.py,
+	  pydbg/io/tcpclient.py, pydbg/io/tcpfns.py, pydbg/io/tcpserver.py,
+	  pydbg/lib, pydbg/lib/Makefile, pydbg/lib/__init__.py,
+	  pydbg/lib/breakpoint.py, pydbg/lib/bytecode.py,
+	  pydbg/lib/core.py, pydbg/lib/default.py, pydbg/lib/display.py,
+	  pydbg/lib/file.py, pydbg/lib/pp.py, pydbg/lib/print.py,
+	  pydbg/lib/stack.py, pydbg/lib/thread.py, pydbg/misc.py,
+	  pydbg/post_mortem.py, pydbg/processor,
+	  pydbg/processor/.gitignore, pydbg/processor/Makefile,
+	  pydbg/processor/__init__.py, pydbg/processor/base_proc.py,
+	  pydbg/processor/cmdproc.py, pydbg/processor/command,
 	  pydbg/processor/command/.gitignore,
 	  pydbg/processor/command/Makefile,
 	  pydbg/processor/command/__init__.py,
@@ -2504,8 +1154,7 @@
 	  pydbg/processor/command/exit.py,
 	  pydbg/processor/command/finish.py,
 	  pydbg/processor/command/frame.py,
-	  pydbg/processor/command/help.py,
-	  pydbg/processor/command/info.py,
+	  pydbg/processor/command/help.py, pydbg/processor/command/info.py,
 	  pydbg/processor/command/infosub,
 	  pydbg/processor/command/infosub/Makefile,
 	  pydbg/processor/command/infosub/__init__.py,
@@ -2520,20 +1169,15 @@
 	  pydbg/processor/command/infosub/source.py,
 	  pydbg/processor/command/infosub/threads.py,
 	  pydbg/processor/command/ipython.py,
-	  pydbg/processor/command/jump.py,
-	  pydbg/processor/command/kill.py,
-	  pydbg/processor/command/list.py,
-	  pydbg/processor/command/mock.py,
-	  pydbg/processor/command/next.py,
-	  pydbg/processor/command/p.py,
-	  pydbg/processor/command/pp.py,
-	  pydbg/processor/command/pydoc.py,
+	  pydbg/processor/command/jump.py, pydbg/processor/command/kill.py,
+	  pydbg/processor/command/list.py, pydbg/processor/command/mock.py,
+	  pydbg/processor/command/next.py, pydbg/processor/command/p.py,
+	  pydbg/processor/command/pp.py, pydbg/processor/command/pydoc.py,
 	  pydbg/processor/command/python.py,
 	  pydbg/processor/command/quit.py,
 	  pydbg/processor/command/restart.py,
 	  pydbg/processor/command/retval.py,
-	  pydbg/processor/command/run.py,
-	  pydbg/processor/command/set.py,
+	  pydbg/processor/command/run.py, pydbg/processor/command/set.py,
 	  pydbg/processor/command/setsub,
 	  pydbg/processor/command/setsub/Makefile,
 	  pydbg/processor/command/setsub/__init__.py,
@@ -2550,8 +1194,7 @@
 	  pydbg/processor/command/setsub/maxargstrsize.py,
 	  pydbg/processor/command/setsub/trace.py,
 	  pydbg/processor/command/setsub/width.py,
-	  pydbg/processor/command/show.py,
-	  pydbg/processor/command/showsub,
+	  pydbg/processor/command/show.py, pydbg/processor/command/showsub,
 	  pydbg/processor/command/showsub/.gitignore,
 	  pydbg/processor/command/showsub/Makefile,
 	  pydbg/processor/command/showsub/__init__.py,
@@ -2573,96 +1216,49 @@
 	  pydbg/processor/command/skip.py,
 	  pydbg/processor/command/source.py,
 	  pydbg/processor/command/step.py,
-	  pydbg/processor/command/tbreak.py,
-	  pydbg/processor/command/tmp,
+	  pydbg/processor/command/tbreak.py, pydbg/processor/command/tmp,
 	  pydbg/processor/command/tmp/dexec.py,
 	  pydbg/processor/command/tmp/ftrace.py,
 	  pydbg/processor/command/undisplay.py,
-	  pydbg/processor/command/up.py,
-	  pydbg/processor/command/whatis.py,
-	  pydbg/processor/command/where.py,
-	  pydbg/processor/subcmd.py,
-	  pydbg/processor/trace.py,
-	  setup.cfg,
-	  setup.py,
-	  src_obj_check.py,
-	  svn-commit.tmp,
-	  test,
-	  test/.gitignore,
-	  test/Makefile,
-	  test/example,
-	  test/example/.gitignore,
-	  test/example/Makefile,
-	  test/example/bgthread.py,
-	  test/example/gcd-dbgcall.py,
-	  test/example/gcd.py,
-	  test/example/hanoi.py,
-	  test/example/q-dbgcall.py,
-	  test/example/q.py,
-	  test/example/tlock.py,
-	  test/functional,
-	  test/functional/.cvsignore,
-	  test/functional/.gitignore,
-	  test/functional/Makefile,
-	  test/functional/UNKNOWN.egg-info,
+	  pydbg/processor/command/up.py, pydbg/processor/command/whatis.py,
+	  pydbg/processor/command/where.py, pydbg/processor/subcmd.py,
+	  pydbg/processor/trace.py, setup.cfg, setup.py, src_obj_check.py,
+	  svn-commit.tmp, test, test/.gitignore, test/Makefile,
+	  test/example, test/example/.gitignore, test/example/Makefile,
+	  test/example/bgthread.py, test/example/gcd-dbgcall.py,
+	  test/example/gcd.py, test/example/hanoi.py,
+	  test/example/q-dbgcall.py, test/example/q.py,
+	  test/example/tlock.py, test/functional,
+	  test/functional/.cvsignore, test/functional/.gitignore,
+	  test/functional/Makefile, test/functional/UNKNOWN.egg-info,
 	  test/functional/UNKNOWN.egg-info/PKG-INFO,
 	  test/functional/UNKNOWN.egg-info/SOURCES.txt,
 	  test/functional/UNKNOWN.egg-info/dependency_links.txt,
 	  test/functional/UNKNOWN.egg-info/top_level.txt,
-	  test/functional/fn_helper.py,
-	  test/functional/setup.cfg,
-	  test/functional/setup.py,
-	  test/functional/test-break.py,
-	  test/functional/test-jump.py,
-	  test/functional/test-next.py,
-	  test/functional/test-skip.py,
-	  test/functional/test-step.py,
-	  test/notyet-test-set-trace-sub.py,
-	  test/unit,
-	  test/unit/.gitignore,
-	  test/unit/Makefile,
-	  test/unit/cmdhelper.py,
-	  test/unit/test-break.py,
-	  test/unit/test-brkpt.py,
-	  test/unit/test-bytecode.py,
-	  test/unit/test-clifns.py,
-	  test/unit/test-cmdfns.py,
-	  test/unit/test-cmdproc.py,
-	  test/unit/test-core.py,
-	  test/unit/test-disassemble.py,
-	  test/unit/test-fifo.py,
-	  test/unit/test-finish.py,
-	  test/unit/test-help.py,
-	  test/unit/test-helper.py,
-	  test/unit/test-info-file.py,
-	  test/unit/test-io-input.py,
-	  test/unit/test-kill.py,
-	  test/unit/test-lib-file.py,
-	  test/unit/test-lib-pp.py,
-	  test/unit/test-lib-print.py,
-	  test/unit/test-lib-thread.py,
-	  test/unit/test-list.py,
-	  test/unit/test-misc.py,
-	  test/unit/test-p.py,
-	  test/unit/test-processor.py,
-	  test/unit/test-quit.py,
-	  test/unit/test-run.py,
-	  test/unit/test-stack.py,
-	  test/unit/test-step.py,
-	  test/unit/test-subcmd.py,
-	  test/unit/test-tcp.py,
-	  test/unit/test-user.py,
-	  tmp,
-	  tmp/restart.py:
-	  Initial
-	  import
-	  from
-	  pydbg
+	  test/functional/fn_helper.py, test/functional/setup.cfg,
+	  test/functional/setup.py, test/functional/test-break.py,
+	  test/functional/test-jump.py, test/functional/test-next.py,
+	  test/functional/test-skip.py, test/functional/test-step.py,
+	  test/notyet-test-set-trace-sub.py, test/unit,
+	  test/unit/.gitignore, test/unit/Makefile, test/unit/cmdhelper.py,
+	  test/unit/test-break.py, test/unit/test-brkpt.py,
+	  test/unit/test-bytecode.py, test/unit/test-clifns.py,
+	  test/unit/test-cmdfns.py, test/unit/test-cmdproc.py,
+	  test/unit/test-core.py, test/unit/test-disassemble.py,
+	  test/unit/test-fifo.py, test/unit/test-finish.py,
+	  test/unit/test-help.py, test/unit/test-helper.py,
+	  test/unit/test-info-file.py, test/unit/test-io-input.py,
+	  test/unit/test-kill.py, test/unit/test-lib-file.py,
+	  test/unit/test-lib-pp.py, test/unit/test-lib-print.py,
+	  test/unit/test-lib-thread.py, test/unit/test-list.py,
+	  test/unit/test-misc.py, test/unit/test-p.py,
+	  test/unit/test-processor.py, test/unit/test-quit.py,
+	  test/unit/test-run.py, test/unit/test-stack.py,
+	  test/unit/test-step.py, test/unit/test-subcmd.py,
+	  test/unit/test-tcp.py, test/unit/test-user.py, tmp,
+	  tmp/restart.py: Initial import from pydbg
 
 2009-03-01 10:31  
 
-	* .:
-	  Initial
-	  directory
-	  structure.
+	* .: Initial directory structure.
 

@@ -187,6 +187,10 @@ def print_location(proc_obj):
         if '<string>' != filename:
             break
         pass
+    if proc_obj.event in ['return', 'exception']:
+        val = proc_obj.event_arg
+        intf_obj.msg('R=> %s' % proc_obj._saferepr(val))
+        pass
     return True
 
 # Default settings for command processor method call

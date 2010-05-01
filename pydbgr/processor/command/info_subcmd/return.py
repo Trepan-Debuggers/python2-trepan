@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2009 Rocky Bernstein
+#  Copyright (C) 2009, 2010 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,25 +18,21 @@ import os, sys
 # Our local modules
 from import_relative import import_relative
 
-import_relative('lib', '...', 'pydbgr')
-Mbase_cmd  = import_relative('base_cmd', top_name='pydbgr')
-Mcmdfns    = import_relative('cmdfns', top_name='pydbgr')
-Mfile      = import_relative('file', '...lib', 'pydbgr')
-Mmisc      = import_relative('misc', '...', 'pydbgr')
-Mpp        = import_relative('pp', '...lib', 'pydbgr')
+import_relative('lib', '....', 'pydbgr')
+Mbase_subcmd = import_relative('base_subcmd', '..', top_name='pydbgr')
+Mcmdfns      = import_relative('cmdfns', '..', top_name='pydbgr')
+Mfile        = import_relative('file', '....lib', 'pydbgr')
+Mmisc        = import_relative('misc', '....', 'pydbgr')
+Mpp          = import_relative('pp', '....lib', 'pydbgr')
 
-class RetvalCommand(Mbase_cmd.DebuggerCommand):
-    """retval 
+class InfoReturn(Mbase_subcmd.DebuggerSubcommand):
+    """return value
 
 Show the value that is to be returned from a function.  This command
 is useful after a 'finish' command or stepping just after a 'return'
 statement."""
 
-    aliases       = ('rv',)
-    category      = 'data'
-    min_args      = 0
-    max_args      = 0
-    name          = os.path.basename(__file__).split('.')[0]
+    min_abbrev    = 1
     need_stack    = True
     short_help    = 'Show function return value'
 
@@ -56,10 +52,10 @@ statement."""
         return
 
 if __name__ == '__main__':
-    Mdebugger = import_relative('debugger', '...')
-    d = Mdebugger.Debugger()
-    command = RetvalCommand(d.core.processor)
-    command.proc.frame = sys._getframe()
-    command.proc.setup()
-    command.run(['retval'])
+    mock = import_relative('mock', '..')
+    Minfo = import_relative('info', '..')
+    d, cp = mock.dbg_setup()
+    i = Minfo.InfoCommand(cp)
+    sub = InfoReturn(i)
+    print sub.run([])
     pass

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2008, 2009 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008, 2009, 2010 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -54,6 +54,49 @@ class Debugger():
 
     # The following functions have to be defined before DEFAULT_INIT_OPTS which 
     # includes references to these.
+
+    # FIXME DRY run, run_exec, run_eval.
+
+    def run(self, cmd, start_opts=None, globals_=None, locals_=None):
+        """ Run debugger on string `cmd' using builtin function eval
+        and if that builtin exec.  Arguments `globals_' and `locals_'
+        are the dictionaries to use for local and global variables. By
+        default, the value of globals is globals(), the current global
+        variables. If `locals_' is not given, it becomes a copy of
+        `globals_'.
+
+        Debugger.core.start settings are passed via optional
+        dictionary `start_opts'. Overall debugger settings are in
+        Debugger.settings which changed after an instance is created
+        . Also see `run_eval' if what you want to run is an
+        run_eval'able expression have that result returned and
+        `run_call' if you want to debug function run_call.
+        """
+        if globals_ is None:
+            globals_ = globals()
+        if locals_ is None:
+            locals_ = globals_
+        if not isinstance(cmd, types.CodeType):
+            cmd = cmd+'\n'
+            pass
+        retval = None
+        self.core.start(start_opts)
+        try:
+            retval = eval(cmd, globals_, locals_)
+        except SyntaxError:
+            try:
+                exec cmd in globals_, locals_
+            except Mexcept.DebuggerQuit:
+                pass
+            except Mexcept.DebuggerQuit:
+                pass
+            pass
+        except Mexcept.DebuggerQuit:
+            pass
+        finally:
+            self.core.stop()
+        return retval
+
     def run_exec(self, cmd, start_opts=None, globals_=None, locals_=None):
         """ Run debugger on string `cmd' which will executed via the
         builtin function exec. Arguments `globals_' and `locals_' are
@@ -84,7 +127,6 @@ class Debugger():
         finally:
             self.core.stop()
         return
-
     def run_call(self, func, start_opts=None, *args, **kwds):
         """ Run debugger on function call: `func(*args, **kwds)'
 
@@ -299,8 +341,14 @@ if __name__=='__main__':
     d.core.step_ignore = -1
     print 'Issuing: run_eval("1+2")'
     print d.run_eval('1+2')
-    print 'Issuing: run("x=1; y=2")'
+    print 'Issuing: run_exec("x=1; y=2")'
     d.run_exec('x=1; y=2')
+
+    print 'Issuing: run("3*4")'
+    print d.run('3*4')
+    print 'Issuing: run("x=3; y=4")'
+    d.run('x=3; y=4')
+
     print 'Issuing: run_call(foo)'
     d.run_call(foo)
     if len(sys.argv) > 1:

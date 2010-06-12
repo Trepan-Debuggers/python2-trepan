@@ -1,6 +1,7 @@
-0.1.4 05-01-10
+0.1.4 06-12-10
 * show return value when at a return event
-* retval -> info return (like pdbgr)
+* Some support for nested debugging (debugger command "debug")
+* retval -> info return (like rbdbgr)
 * eval'ing quit() is accepted as quit
 * small bug fixes.
 

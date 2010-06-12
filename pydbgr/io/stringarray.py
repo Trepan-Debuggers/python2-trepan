@@ -42,7 +42,7 @@ class StringArrayInput(Mbase_io.DebuggerInputBase):
             raise IOError, ("Invalid input type (%s) for %s" % (type(inp), inp))
         return
 
-    def readline(self, use_raw=None):
+    def readline(self, use_raw=None, prompt=''):
         """Read a line of input. EOFError will be raised on EOF.  
 
         Note that we don't support prompting"""

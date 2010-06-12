@@ -85,7 +85,9 @@ class UserInterface(Mbase_intf.DebuggerInterface):
         return line
 
     def readline(self, prompt=''):
-        if not self.input.use_raw and prompt and len(prompt) > 0: 
+        if (hasattr(self.input, 'use_raw') 
+            and not self.input.use_raw 
+            and prompt and len(prompt) > 0):
             self.output.write(prompt)
             self.output.flush()
             pass

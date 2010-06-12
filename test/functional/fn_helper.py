@@ -27,7 +27,7 @@ def filter_line_cmd(a):
     # becomes
     # -- y = 5
     a1 = [re.sub(r'^(..) \d+\s+', r'\1 ', s) for s in a
-         if re.match(pydbgr_prompt, s)]
+         if re.match(r'^.. \d+\s+', s)]
     # First remove debugger location lines. 
     # For example: 
     #  (Pydbgr) (test-next.py:41): test_next_between_fn

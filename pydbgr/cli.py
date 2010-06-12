@@ -154,6 +154,7 @@ def process_options(debugger_name, pkg_version, sys_argv, option_list=None):
 
     optparser.disable_interspersed_args()
 
+    sys.argv = list(sys_argv)
     (opts, sys.argv) = optparser.parse_args()
     dbg_opts = {}
 
@@ -266,7 +267,7 @@ def main(dbg=None, sys_argv=list(sys.argv)):
     global __title__
 
     # Save the original just for use in the restart that works via exec.
-    orig_sys_argv = list(sys.argv)
+    orig_sys_argv = list(sys_argv)
     opts, dbg_opts, sys_argv  = process_options(__title__, __version__, 
                                                 sys_argv)
     dbg_opts['orig_sys_argv'] = sys_argv
@@ -285,7 +286,6 @@ def main(dbg=None, sys_argv=list(sys.argv)):
         # No program given to debug. Set to go into a command loop
         # anyway
         mainpyfile = None
-
     else:
         mainpyfile = sys_argv[0] # Get script filename.
         if not os.path.isfile(mainpyfile):

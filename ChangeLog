@@ -1,3 +1,19 @@
+2010-06-12 18:41  rocky@gnu.org
+
+	* configure.ac: We need this to make the Makefile
+
+2010-06-12 18:25  rocky@gnu.org
+
+	* NEWS: Final NEWS tweaks
+
+2010-06-12 18:23  rocky@gnu.org
+
+	* ChangeLog, Makefile.am, NEWS, pydbgr/interface/user.py,
+	  pydbgr/io/stringarray.py, test/functional/fn_helper.py,
+	  test/functional/test-break.py: Get ready for Release. Makefile.am
+	  is now complete and creates a ChangeLog.
+	  Remove functional tests for now :-(
+
 2010-06-12 05:52  rocky@gnu.org
 
 	* pydbgr/cli.py: Use passed sys_argv if given (but default to

@@ -1,15 +1,20 @@
-0.1.4 06-12-10
-* show return value when at a return event
-* Some support for nested debugging (debugger command "debug")
-* retval -> info return (like rbdbgr)
-* eval'ing quit() is accepted as quit
-* small bug fixes.
+0.1.4 06-12-10 the Fleetwood
 
+- Show return value when at a return event
+- Fix up ipython %pydbgr support.
+- Some support for nested debugging (debugger command "debug")
+- eval'ing quit() is accepted as quit
+- Debugger command "retval" becomes "info return" to match rbdbgr
+- Some small bug fixes.
+
+===================
 0.1.3 12-25-09 
-* Small bugs in invoking without a Python program and off-by one in 'finish'
-  command
-* Remove emacs code. For emacs support see http://github.com/rocky/emacs-dbgr
 
+- Small bugs in invoking without a Python program and off-by one in 'finish'
+  command
+- Remove emacs code. For emacs support see http://github.com/rocky/emacs-dbgr
+
+===================
 0.1.2 10-27-09 Halala ngosuku lokuzalwa 
 
 - When we are stopped at a breakpoint, make that the event.
@@ -23,11 +28,12 @@
 - Misc doc and bug fixes
 - add "edit" command
 
-
+===================
 0.1.1 07-04-09 - 
 - sys.argv had not been set correctly for debugged program. (Issue #1)
 - Allow disassembly of compiled python files (.pyc)
 
+===================
 0.1.0 03-15-09 - Ron Frankel Release
 
 - Initial release

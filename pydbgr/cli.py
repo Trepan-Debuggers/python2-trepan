@@ -39,7 +39,7 @@ Mmisc     = import_relative('misc', '.', package)
 # The name of the debugger we are currently going by.
 __title__ = package
 
-__version__ = '0.1.0'
+__version__ = '0.1.4'
 
 def process_options(debugger_name, pkg_version, sys_argv, option_list=None):
     """Handle debugger options. Set `option_list' if you are writing

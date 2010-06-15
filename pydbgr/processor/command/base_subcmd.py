@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009 Rocky Bernstein
+#   Copyright (C) 2009, 2010 Rocky Bernstein
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ NotImplementedMessage = "This method must be overriden in a subclass"
 # Note: don't end classname with Command (capital C) since cmdproc
 # will think this a command name like QuitCommand 
 #                                         ^
-class DebuggerSubcommand():
+class DebuggerSubcommand:
     """Base Class for Debugger subcommands. We pull in some helper
     functions for command from module cmdfns."""
 
@@ -98,7 +98,7 @@ class DebuggerSubcommand():
 
     pass
 
-from import_relative import *
+from import_relative import import_relative
 Mcmdfns = import_relative('cmdfns', '.', 'pydbgr')
 
 class DebuggerSetBoolSubcommand(DebuggerSubcommand):
@@ -127,8 +127,7 @@ class DebuggerShowBoolSubcommand(DebuggerSubcommand):
         return
 
 if __name__ == '__main__':
-    import os, sys
-    from import_relative import *
+    from import_relative import import_relative
     mock = import_relative('mock')
     d, cp = mock.dbg_setup()
     dd = DebuggerSubcommand(cp.name2cmd['quit'])

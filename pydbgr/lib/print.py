@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2007, 2008, 2009 Rocky Bernstein
+#  Copyright (C) 2007, 2008, 2009, 2010 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -117,7 +117,7 @@ if __name__ == '__main__':
     print print_obj('Exception', None)
     print '-' * 30
     print print_argspec('Exception', None)
-    class Foo():
+    class Foo:
         def __init__(self, bar=None): pass
         pass
     print print_obj('Foo.__init__', None)

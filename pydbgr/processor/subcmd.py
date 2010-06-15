@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2006, 2007, 2009 Rocky Bernstein
+#   Copyright (C) 2006, 2007, 2009, 2010 Rocky Bernstein
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -116,7 +116,7 @@ List of %s subcommands:
 # When invoked as main program, invoke the debugger on a script
 if __name__ == '__main__':
 
-    from import_relative import *
+    from import_relative import import_relative
     Mmock = import_relative('command.mock')
     Mbase_cmd = import_relative('command.base_cmd')
 
@@ -134,7 +134,7 @@ if __name__ == '__main__':
 
         def run(self, args): print 'test command run'
 
-    class TestTestingSubcommand():
+    class TestTestingSubcommand:
         '''Doc string for test testing subcommand'''
 
         def __init__(self):

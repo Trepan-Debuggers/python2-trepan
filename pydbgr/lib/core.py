@@ -37,7 +37,7 @@ Mcmdproc   = import_relative('cmdproc', '..processor', 'pydbgr')
 Mstack     = import_relative('stack')
 Mclifns    = import_relative('clifns', '..', 'pydbgr')
 
-class DebuggerCore():
+class DebuggerCore:
 
     DEFAULT_INIT_OPTS = {
         'processor'   : None,

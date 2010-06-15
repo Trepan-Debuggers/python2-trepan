@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2009 Rocky Bernstein
+#  Copyright (C) 2009, 2010 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ NotImplementedMessage = "This method must be overriden in a subclass"
 
 import columnize
 
-class DebuggerCommand():
+class DebuggerCommand:
     """Base Class for Debugger commands. We pull in some helper
     functions for command from module cmdfns."""
 

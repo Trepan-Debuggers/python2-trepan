@@ -28,7 +28,7 @@ user or client-side code for connecting to server'd debugged program.
 """
 
 # Common Python packages
-import inspect, os, sys, types
+import sys, types
 
 # External Egg packages
 import tracer, tracefilter
@@ -46,11 +46,9 @@ Muser     = import_relative('user', '.interface', 'pydbgr')
 Mmisc     = import_relative('misc', top_name='pydbgr')
 Msig      = import_relative('sighandler', '.lib', 'pydbgr')
 
-__all__   = ['debug', 'run_call', 'run_eval', 'run_exec', 'stop']
-
 debugger_obj = None
 
-class Debugger():
+class Debugger:
 
     # The following functions have to be defined before DEFAULT_INIT_OPTS which 
     # includes references to these.
@@ -331,11 +329,11 @@ if __name__=='__main__':
     def foo():
         y = 2
         for i in range(2):
-            print i
+            print i, y 
             pass
         return 3
     import debugger
-    d = Debugger()
+    d = debugger.Debugger()
     d.settings['trace'] = True
     d.settings['printset'] = tracer.ALL_EVENTS
     d.core.step_ignore = -1

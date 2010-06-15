@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: iso-8859-1 -*-
-#   Copyright (C) 2008, 2009 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008, 2009, 2010 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ''' The hairy command-line interface to the debugger.
 '''
-import os, sys
+import os, os.path, sys
 
 package='pydbgr'
 if not package in sys.modules:
@@ -26,7 +26,7 @@ if not package in sys.modules:
 from optparse import OptionParser
 
 # Our local modules
-from import_relative import import_relative
+from import_relative import import_relative, get_srcdir
 Mapi      = import_relative('api', top_name=package)
 Mclifns   = import_relative('clifns', top_name=package)
 Mdebugger = import_relative('debugger', top_name=package)
@@ -39,7 +39,8 @@ Mmisc     = import_relative('misc', '.', package)
 # The name of the debugger we are currently going by.
 __title__ = package
 
-__version__ = '0.1.4'
+VERSION_FILE=os.path.join(get_srcdir(), 'VERSION.py')
+__version__ = open(VERSION_FILE).readlines()[0].rstrip('\n')
 
 def process_options(debugger_name, pkg_version, sys_argv, option_list=None):
     """Handle debugger options. Set `option_list' if you are writing

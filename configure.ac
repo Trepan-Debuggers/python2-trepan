@@ -18,11 +18,14 @@
 ## Note: the version number (the 2nd parameter in AC_INIT) 
 ## is picked up inside the Python debugger script.
 
-AC_INIT([pydbgr],[0.1.4],[pydbgr@googlegroups.com])
+m4_include([version.m4])
+AC_INIT([pydbgr],VERSION_NUMBER,[pydbgr@googlegroups.com])
 AC_DEFINE([PACKAGE], [pydbgr], [Modular Python Debugger])
+PYDBGR_VERSION=$(cat pydbgr/VERSION.py)
+AC_SUBST(PYDBGR_VERSION)
 AM_MAINTAINER_MODE
 AC_ARG_PROGRAM
 AM_INIT_AUTOMAKE
 
-AC_CONFIG_FILES([Makefile])
+AC_CONFIG_FILES([Makefile version.m4])
 AC_OUTPUT

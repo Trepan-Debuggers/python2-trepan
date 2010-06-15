@@ -22,7 +22,7 @@
 # still is some room for improvement.
 
 # Things that change more often go here.
-copyright   = '''Copyright (C) 2008, 2009 Rocky Bernstein <rocky@gnu.org>.'''
+copyright   = '''Copyright (C) 2008, 2009, 2010 Rocky Bernstein <rocky@gnu.org>.'''
 classifiers =  ['Development Status :: 4 - Beta',
                 'Environment :: Console',
                 'Intended Audience :: Developers',
@@ -59,7 +59,12 @@ namespace_packages = [
 packages           = namespace_packages
 py_modules         = None
 short_desc         = 'Modular Python Debugger'
-version            = open('VERSION').readline().rstrip('\n')
+
+import os.path, sys
+from import_relative import get_srcdir
+
+VERSION_FILE       = os.path.join(get_srcdir(), 'pydbgr', 'VERSION.py')
+version            = open(VERSION_FILE).readlines()[0].rstrip('\n')
 web                = 'http://code.google.com/p/pydbgr/'
 
 # tracebacks in zip files are funky and not debuggable

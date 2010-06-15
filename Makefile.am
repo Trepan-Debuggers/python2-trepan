@@ -1,5 +1,5 @@
 # Compatibility for us old-timers.
-EXTRA_DIST=ipython/ipy_pydbgr.py
+EXTRA_DIST=ipython/ipy_pydbgr.py pydbgr version.m4.in
 PHONY=check clean dist distclean test test-unit test-functional
 all: check
 
@@ -22,6 +22,11 @@ clean:
 
 dist-python: 
 	python ./setup.py sdist bdist
+
+# Make sure we never package up '.svn' directories
+dist-hook:
+	find $(distdir) -name '.svn'  | xargs rm -rf
+	find $(distdir) -path '*.pyc' | xargs rm -rf
 
 # It is too much work to figure out how to add a new command to distutils
 # to do the following. I'm sure distutils will someday get there.

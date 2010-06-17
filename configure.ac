@@ -21,7 +21,11 @@
 m4_include([version.m4])
 AC_INIT([pydbgr],VERSION_NUMBER,[pydbgr@googlegroups.com])
 AC_DEFINE([PACKAGE], [pydbgr], [Modular Python Debugger])
-PYDBGR_VERSION=$(cat pydbgr/VERSION.py)
+
+# The below file sets veraible VERSION
+. ./pydbgr/VERSION.py
+
+PYDBGR_VERSION=$VERSION
 AC_SUBST(PYDBGR_VERSION)
 AM_MAINTAINER_MODE
 AC_ARG_PROGRAM

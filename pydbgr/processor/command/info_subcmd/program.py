@@ -45,7 +45,7 @@ class InfoProgram(Mbase_subcmd.DebuggerSubcommand):
             self.msg(Mmisc.wrapped_lines(part1, msg,
                                          self.settings['width']))
             if self.proc.curframe:
-                self.msg("PC offset %d" % self.proc.curframe.f_lasti)
+                self.msg("PC offset is %d." % self.proc.curframe.f_lasti)
 
             if self.proc.event == 'return': 
                 val = self.proc.event_arg

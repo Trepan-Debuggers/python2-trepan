@@ -28,6 +28,7 @@ def dis(msg, msg_nocr, errmsg, x=None, start_line=-1, end_line=None,
     With no argument, disassemble the last traceback.
 
     """
+    lasti = -1
     if x is None:
         distb()
         return
@@ -40,7 +41,12 @@ def dis(msg, msg_nocr, errmsg, x=None, start_line=-1, end_line=None,
         msg("Disassembly of %s: " % x)
         x = x.func_code
     elif hasattr(x, 'f_code'):
+        print "++++ 1"
         msg("Disassembly of %s: " % x)
+        if hasattr(x, 'f_lasti'):
+            print "++++ 2"
+            lasti = x.f_lasti
+            pass
         x = x.f_code
         pass
     elif inspect.iscode(x):
@@ -61,7 +67,8 @@ def dis(msg, msg_nocr, errmsg, x=None, start_line=-1, end_line=None,
                 except TypeError, msg:
                     errmsg("Sorry:", msg)
     elif hasattr(x, 'co_code'):
-        disassemble(msg, msg_nocr, x, start_line=start_line, end_line=end_line,
+        disassemble(msg, msg_nocr, x, lasti=lasti, 
+                    start_line=start_line, end_line=end_line,
                     relative_pos = relative_pos)
     elif isinstance(x, str):
         disassemble_string(msg, msg_nocr, x,)

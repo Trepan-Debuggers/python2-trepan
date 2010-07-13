@@ -22,7 +22,7 @@ from import_relative import import_relative
 
 import_relative('lib', '...', 'pydbgr')
 Mbase_cmd  = import_relative('base_cmd', top_name='pydbgr')
-Mcmdfns    = import_relative('cmdfns', top_name='pydbgr')
+Mcmdfns    = import_relative('cmdfns', '..', 'pydbgr')
 Mfile      = import_relative('file', '...lib', 'pydbgr')
 Mmisc      = import_relative('misc', '...', 'pydbgr')
 Mbreak     = import_relative('break', '.', 'pydbgr')

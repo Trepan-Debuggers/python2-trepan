@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2009 Rocky Bernstein
+#  Copyright (C) 2009, 2010 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,9 +18,11 @@ import os
 from import_relative import import_relative
 
 # Our local modules
+import_relative('lib', '...', 'pydbgr')
+import_relative('processor', '...', 'pydbgr')
 base_cmd   = import_relative('base_cmd')
-cmdfns     = import_relative('cmdfns')
-Mstack     = import_relative('stack', '...lib')
+Mcmdfns    = import_relative('cmdfns', '..', 'pydbgr')
+Mstack     = import_relative('stack',  '...lib', 'pydbgr')
 
 class NextCommand(base_cmd.DebuggerCommand):
 
@@ -58,8 +60,8 @@ the debugger setting 'different-line' determines this behavior.
             step_ignore -= 1
             pass
         self.core.different_line   = \
-            cmdfns.want_different_line(args[0], 
-                                       self.debugger.settings['different'])
+            Mcmdfns.want_different_line(args[0], 
+                                        self.debugger.settings['different'])
         self.core.set_next(self.proc.frame, step_ignore)
         self.proc.continue_running = True # Break out of command read loop
         return True

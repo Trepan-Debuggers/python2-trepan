@@ -19,7 +19,7 @@ import tracer
 
 # Our local modules
 Mbase_cmd  = import_relative('base_cmd')
-cmdfns     = import_relative('cmdfns')
+Mcmdfns    = import_relative('cmdfns', '..', 'pydbgr')
 
 class StepCommand(Mbase_cmd.DebuggerCommand):
 
@@ -108,7 +108,7 @@ Related and similar is the 'next' command.  See also the commands:
             pass
 
         self.core.different_line   = \
-            cmdfns.want_different_line(args[0], self.settings['different'])
+            Mcmdfns.want_different_line(args[0], self.settings['different'])
         self.core.stop_level       = None
         self.core.last_frame       = None
         self.core.stop_on_finish   = False

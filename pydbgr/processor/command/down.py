@@ -20,7 +20,7 @@ from import_relative import import_relative
 
 # Our local modules
 Mbase_cmd = import_relative('base_cmd', '.', 'pydbgr')
-Mcmdfns   = import_relative('cmdfns', '.', 'pydbgr')
+Mcmdfns   = import_relative('cmdfns', '..', 'pydbgr')
 
 class DownCommand(Mbase_cmd.DebuggerCommand):
 

@@ -18,7 +18,7 @@ from import_relative import import_relative
 
 # Our local modules
 Mbase_cmd  = import_relative('base_cmd', top_name='pydbgr')
-Mcmdfns    = import_relative('cmdfns', top_name='pydbgr')
+Mcmdfns    = import_relative('cmdfns', '..', 'pydbgr')
 
 class ExitCommand(Mbase_cmd.DebuggerCommand):
     """exit [exitcode] - hard exit of the debugged program.  

@@ -19,7 +19,7 @@ from import_relative import import_relative
 
 # Our local modules
 Mbase_cmd = import_relative('base_cmd', top_name='pydbgr')
-Mcmdfns   = import_relative('cmdfns', top_name='pydbgr')
+Mcmdfns   = import_relative('cmdfns', '..', 'pydbgr')
 Mdis      = import_relative('disassemble', '...lib', 'pydbgr')
 Mfile     = import_relative('file', '...lib', 'pydbgr')
 

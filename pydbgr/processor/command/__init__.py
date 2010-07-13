@@ -28,7 +28,7 @@ __py_files__    = glob.glob(os.path.join(__command_dir__, '[a-z]*.py'))
 # Take the basename of the filename and drop off '.py'. That minus the
 # files in exclude_files and tha becomes the list of modules that
 # commands.py will use to import
-exclude_files = ['base_proc.py', 'cmdfns.py', 'mock.py']
+exclude_files = ['base_proc.py', 'mock.py']
 __modules__ = [ os.path.basename(filename[0:-3]) for 
                 filename in __py_files__
                 if os.path.basename(filename) not in exclude_files]

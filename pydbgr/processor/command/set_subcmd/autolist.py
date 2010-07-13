@@ -16,8 +16,12 @@
 
 from import_relative import import_relative
 # Our local modules
+import_relative('lib', '....', 'pydbgr')
+import_relative('processor', '....', 'pydbgr')
+
 Mbase_subcmd = import_relative('base_subcmd', '..', 'pydbgr')
 Mcmdfns      = import_relative('cmdfns', '..', 'pydbgr')
+Mstack       = import_relative('lib/stack', '....', 'pydbgr')
 
 class SetAutoList(Mbase_subcmd.DebuggerSetBoolSubcommand):
     """Run a 'list' command every time we enter the debugger."""
@@ -40,7 +44,12 @@ class SetAutoList(Mbase_subcmd.DebuggerSetBoolSubcommand):
         return
 
     def run_list(self, args):
-        self.list_cmd(['list'])
+        # Check if there is a "file" to show. Right now we just 
+        # handle the case of a string. 
+        # FIXME: generalize this so for other kinds of missing "files"
+        # are not shown.
+        filename = Mstack.frame2file(self.core, self.proc.curframe)
+        if '<string>' != filename: self.list_cmd(['list'])
         return
     pass
 

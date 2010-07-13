@@ -16,9 +16,9 @@
 #    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 #    02110-1301 USA.
 
-import time
+import sys, time
 # Our local modules
-from import_relative import *
+from import_relative import import_relative
 Mmisc = import_relative('misc', '.', 'pydbgr')
 Mclient   = import_relative('client', '.interface', 'pydbgr')
 Mcomcodes = import_relative('comcodes', '.interface', 'pydbgr')

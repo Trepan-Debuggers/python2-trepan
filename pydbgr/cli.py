@@ -54,7 +54,7 @@ def process_options(debugger_name, pkg_version, sys_argv, option_list=None):
 
        Runs the extended python debugger"""
 
-    serverChoices = ('TCP','FIFO', None)
+    ## serverChoices = ('TCP','FIFO', None)
 
 
     optparser = OptionParser(usage=usage_str, option_list=option_list,
@@ -165,7 +165,7 @@ def process_options(debugger_name, pkg_version, sys_argv, option_list=None):
     if not opts.noexecute:
         # Read debugger startup file(s), e.g. $HOME/.pydbgrrc and ./.pydbgrrc
         startup_file = ".%src" % debugger_name
-        expanded_startup_file = Mclifns.path_expanduser_abs(startup_file)
+        # expanded_startup_file = Mclifns.path_expanduser_abs(startup_file)
         if 'HOME' in os.environ:
             startup_home_file = os.path.join(os.environ['HOME'], startup_file)
             expanded_startup_home = \

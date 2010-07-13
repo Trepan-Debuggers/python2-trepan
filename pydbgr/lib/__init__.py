@@ -14,7 +14,7 @@
 """ Copyright (C) 2008, 2009 Rocky Bernstein <rocky@gnu.org> """
 __import__('pkg_resources').declare_namespace(__name__)
 
-from import_relative import *
+from import_relative import get_srcdir
 import glob, os 
 # Get the name of our directory.
 __command_dir__ = get_srcdir(1)

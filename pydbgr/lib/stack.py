@@ -86,12 +86,12 @@ def format_stack_entry(dbg_obj, frame_lineno, lprefix=': ',
         elif s == '?()':
             if is_exec_stmt(frame):
                 s = 'in exec'
-                exec_str = get_exec_string(frame.f_back)
-                if exec_str != None:
-                    filename = exec_str
-                    add_quotes_around_file = False
-                    pass
-                pass
+                # exec_str = get_exec_string(frame.f_back)
+                # if exec_str != None:
+                #     filename = exec_str
+                #     add_quotes_around_file = False
+                #     pass
+                # pass
             elif not is_pseudo_file:
                 s = 'in file'
                 pass
@@ -122,12 +122,12 @@ def get_call_function_name(frame):
 
     co         = f_back.f_code
     code       = co.co_code
-    labels     = dis.findlabels(code)
+    # labels     = dis.findlabels(code)
     linestarts = dict(dis.findlinestarts(co))
     inst       = f_back.f_lasti
     while inst >= 0:
-        c = code[inst]
-        op = ord(c)
+        # c = code[inst]
+        # op = ord(c)
         if inst in linestarts:
             inst += 1
             oparg = ord(code[inst]) + (ord(code[inst+1]) << 8)

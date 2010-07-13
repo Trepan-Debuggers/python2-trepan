@@ -65,7 +65,7 @@ def pprint_simple_array(val, displaywidth, msg_nocr, msg, lineprefix=''):
                       colsep = ', ').split('\n')
     if '' == lines[-1]: del lines[-1]
     if 0 == len(lines):
-        self.msg(lineprefix + '[]')
+        msg(lineprefix + '[]')
         return
     
     msg_nocr(lineprefix + "[")

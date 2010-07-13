@@ -49,8 +49,8 @@ def next_opcode(code, offset):
 def next_linestart(co, offset, count=1):
     linestarts = dict(dis.findlinestarts(co))
     code = co.co_code
-    n = len(code)
-    contains_cond_jump = False
+    # n = len(code)
+    # contains_cond_jump = False
     for op, offset in next_opcode(code, offset):
         if offset in linestarts: 
             count -= 1

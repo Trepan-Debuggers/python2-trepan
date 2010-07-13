@@ -341,7 +341,7 @@ class SignalManager:
             return None
 
         if signame not in self.sigs.keys():
-            if not initialize_handler(signame): return None
+            if not self.initialize_handler(signame): return None
             pass
 
         # multiple commands might be specified, i.e. 'nopass nostop'

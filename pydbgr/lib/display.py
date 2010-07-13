@@ -70,8 +70,8 @@ Num Enb Expression""")
         """Delete display expression i"""
         for i in range(len(self.list)):
             display = self.list[i]
-            if display_number == self.list[i].number:
-                del self.list[i]
+            if display_number == display.number:
+                del display
                 return True
             pass
         return False

@@ -16,7 +16,7 @@
 import os, linecache
 
 # Our local modules
-from import_relative import *
+from import_relative import import_relative
 Mfile     = import_relative('file', '.lib', 'pydbgr')
 
 # FIXME: do a better job of this. Live parsing? 
@@ -83,7 +83,6 @@ def path_expanduser_abs(filename):
 # Demo
 if __name__=='__main__':
     import sys
-    from import_relative import get_srcdir
     print file2module(sys.argv[0]), sys.argv[0]
     ok = is_ok_line_for_breakpoint(__file__, 1, sys.stdout.write)
     print "\nCan stop at line 1: ", ok

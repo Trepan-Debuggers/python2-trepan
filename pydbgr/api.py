@@ -32,7 +32,7 @@ if necessary, first.
 # functions below.  (It also doesn't work once we add the exception handling
 # we see below. So for now, we'll live with the code duplication.
 
-import inspect, sys
+import sys
 from import_relative import import_relative
 
 Mdebugger    = import_relative('debugger', top_name='pydbgr')
@@ -210,7 +210,7 @@ if __name__=='__main__':
         for i in range(2):
             print i
             pass
-        return 3
+        return y
     Mdefault = import_relative('default', 'lib', 'pydbgr')
     settings = dict(Mdefault.DEBUGGER_SETTINGS)
     settings.update({'trace': True, 'printset': tracer.ALL_EVENTS})

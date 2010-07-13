@@ -19,7 +19,7 @@ try:
     import os, sys
 
     # Our local modules
-    from import_relative import get_srcdir, import_relative
+    from import_relative import import_relative
 
     import_relative('lib', '...', 'pydbgr')
     Mbase_cmd  = import_relative('base_cmd', top_name='pydbgr')

@@ -39,6 +39,14 @@ If -d is passed you can access debugger state via local variable "debugger".
     need_stack    = False
     short_help    = 'Run Python as a command subshell'
 
+    def dbgr(self, string):
+        '''Invoke a debugger command from inside a python shell called inside
+        the debugger. 
+        '''
+        self.proc.cmd_queue.append(string)
+        self.proc.process_command()
+        return
+
     def run(self, args):
         # See if python's code module is around
 
@@ -65,9 +73,11 @@ If -d is passed you can access debugger state via local variable "debugger".
 
         # Give python and the user a way to get access to the debugger.
         if debug: my_locals['debugger'] = self.debugger
+        my_locals['dbgr'] = self.dbgr
 
         if len(my_locals):
-            interact(banner='Pydbgr python shell (with locals)', 
+            interact(banner='''Pydbgr python shell (with locals)
+Use dbgr(*string*) to issue a debugger command: *string*''', 
                      my_locals=my_locals, my_globals=my_globals)
         else:
             interact(banner='Pydbgr python shell')

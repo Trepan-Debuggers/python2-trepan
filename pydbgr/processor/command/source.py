@@ -45,7 +45,6 @@ class SourceCommand(Mbase_cmd.DebuggerCommand):
 
 
     def run(self, args):
-        verbose=False
         parms = args[1:-1]
         opts = {}
         for arg in parms:

@@ -21,9 +21,7 @@ Mbase_subcmd  = import_relative('base_subcmd', '..', 'pydbgr')
 
 class SetTrace(Mbase_subcmd.DebuggerSetBoolSubcommand):
 
-    """Set trace [on|off]
-
-Turns event tracing on or off.
+    """Set event tracing.
 
 See also "set events","set trace", and "show trace".
 """

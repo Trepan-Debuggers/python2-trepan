@@ -103,7 +103,9 @@ Mcmdfns = import_relative('cmdfns', '..', 'pydbgr')
 
 class DebuggerSetBoolSubcommand(DebuggerSubcommand):
     def run(self, args):
+        doc = self.__doc__.capitalize().split('\n')[0].rstrip('.')
         Mcmdfns.run_set_bool(self, args)
+        Mcmdfns.run_show_bool(self, doc)
         return
 
     def summary_help(self, subcmd_name, subcmd):

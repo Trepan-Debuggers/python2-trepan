@@ -15,7 +15,7 @@
 #    along with this program; if not, write to the Free Software
 #    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 #    02110-1301 USA.
-import inspect, os, string, sys
+import inspect, os, re, string, sys
 from import_relative import get_srcdir, import_relative
 Mbase_cmd  = import_relative('base_cmd')
 Msubcmd    = import_relative('subcmd', os.path.pardir)

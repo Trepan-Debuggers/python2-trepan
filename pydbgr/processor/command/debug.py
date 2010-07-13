@@ -49,7 +49,6 @@ environment."""
         old_lock                  = self.core.debugger_lock
         old_stop_level            = self.core.stop_level
         old_different_line        = self.core.stop_level
-        old_stack                 = list(self.proc.stack)
         self.proc.debug_nest     += 1
 
         self.core.debugger_lock   = threading.Lock()

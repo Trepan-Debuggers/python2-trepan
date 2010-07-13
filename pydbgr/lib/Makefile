@@ -3,5 +3,5 @@
 PHONY=check all
 all: check
 
-%: 
+check: 
 	$(MAKE) -C ../.. $@

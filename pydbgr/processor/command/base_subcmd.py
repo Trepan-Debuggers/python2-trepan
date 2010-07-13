@@ -13,7 +13,7 @@
 #
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
-"""A base class for debugger commands.
+"""A base class for debugger subcommands.
 
 This file is a module in this directory that isn't a real command
 and commands.py needs to take care to avoid instantiating this class

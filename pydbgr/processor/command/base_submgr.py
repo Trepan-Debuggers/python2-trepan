@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009 Rocky Bernstein
+#   Copyright (C) 2009, 2010 Rocky Bernstein
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -16,11 +16,11 @@
 #    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 #    02110-1301 USA.
 import inspect, os, string, sys
-from import_relative import *
-base_cmd  = import_relative('base_cmd')
-subcmd    = import_relative('subcmd', os.path.pardir)
+from import_relative import get_srcdir, import_relative
+Mbase_cmd  = import_relative('base_cmd')
+Msubcmd    = import_relative('subcmd', os.path.pardir)
 
-class SubcommandMgr(base_cmd.DebuggerCommand):
+class SubcommandMgr(Mbase_cmd.DebuggerCommand):
 
     category      = 'status'
     min_args      = 0
@@ -33,13 +33,13 @@ class SubcommandMgr(base_cmd.DebuggerCommand):
         has to be setcmds ('set' + 'cmds') for subcommand completion
         to work."""
 
-        base_cmd.DebuggerCommand.__init__(self, proc)
+        Mbase_cmd.DebuggerCommand.__init__(self, proc)
 
         # Name is set in testing
         if name is None: name  = self.__module__.split('.')[-1]
         self.__class__.name = name
 
-        self.cmds = subcmd.Subcmd(name, self)
+        self.cmds = Msubcmd.Subcmd(name, self)
         self.name = name
         self._load_debugger_subcommands(name)
         self.proc = proc

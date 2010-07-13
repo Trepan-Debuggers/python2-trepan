@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009 Rocky Bernstein
+#   Copyright (C) 2009, 2010 Rocky Bernstein
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@ try:
     import os, sys
 
     # Our local modules
-    from import_relative import import_relative, get_srcdir
+    from import_relative import get_srcdir, import_relative
 
     import_relative('lib', '...', 'pydbgr')
     Mbase_cmd  = import_relative('base_cmd', top_name='pydbgr')

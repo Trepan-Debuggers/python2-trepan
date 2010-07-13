@@ -39,28 +39,46 @@ environment."""
         if not curframe:
             self.msg("No frame selected.")
             return
-        old_prompt_str            = self.proc.prompt_str
+
+        for attr in ('prompt_str', 'frame', 'event', 'event_arg', 
+                     'curindex'): 
+            cmd = 'old_%s = self.proc.%s' % (attr, attr)
+            exec cmd
+            pass
+
         old_lock                  = self.core.debugger_lock
         old_stop_level            = self.core.stop_level
         old_different_line        = self.core.stop_level
-        self.proc.prompt_str      = "(%s) " % old_prompt_str.strip()
+        old_stack                 = list(self.proc.stack)
+        self.proc.debug_nest     += 1
+
         self.core.debugger_lock   = threading.Lock()
         self.core.stop_level      = None
         self.core.different_line  = None
         global_vars               = curframe.f_globals
         local_vars                = curframe.f_locals
 
-        print "stop_level: %s, different_line: %s " % (self.core.stop_level,
-                                                       self.core.different_line)
         self.msg("ENTERING NESTED DEBUGGER")
 
-        sys.call_tracing(eval, (arg, global_vars, local_vars))
+        self.core.step_ignore = 2 # call_tracing will stop in itself.
+        try:
+            ret = sys.call_tracing(eval, (arg, global_vars, local_vars))
+            self.msg("R=> %s" % self.proc._saferepr(ret))
+        except:
+            pass
         self.msg("LEAVING NESTED DEBUGGER")
 
-        self.proc.prompt_str      = old_prompt_str
-        self.core.debugger_lock   = old_lock
-        self.core.stop_level      = old_stop_level
-        self.core.different_line  = old_different_line
+        self.core.debugger_lock    = old_lock
+        self.core.stop_level       = old_stop_level
+        self.core.different_line   = old_different_line
+        self.proc.continue_running = False
+        self.proc.debug_nest      -= 1
+
+        for attr in ('prompt_str', 'frame', 'event', 'event_arg', 'stack',
+                     'curindex'): 
+            cmd = 'self.proc.%s = old_%s' % (attr, attr)
+            exec cmd
+            pass
         self.proc.print_location()
         return False
     pass

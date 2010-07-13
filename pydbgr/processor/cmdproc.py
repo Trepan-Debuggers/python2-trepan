@@ -215,6 +215,7 @@ class CommandProcessor(Mbase_proc.Processor):
 
         self.cmd_instances    = self._populate_commands()
         self.cmd_queue        = []     # Queued debugger commands
+        self.debug_nest       = 1
         self.display_mgr      = Mdisplay.DisplayMgr()
         self.intf             = core_obj.debugger.intf
         self.last_command     = None   # Initially a no-op
@@ -326,7 +327,9 @@ class CommandProcessor(Mbase_proc.Processor):
         if self.thread_name != 'MainThread':
             prompt += ':' + self.thread_name
             pass
-        self.prompt_str = '(%s) ' % prompt
+        self.prompt_str = '%s%s%s ' % ('(' * self.debug_nest, 
+                                       prompt, 
+                                       ')' * self.debug_nest)
         self.process_commands()
         return True
 

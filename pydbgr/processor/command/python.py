@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2009 Rocky Bernstein
+#  Copyright (C) 2009, 2010 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -26,9 +26,15 @@ Mmisc      = import_relative('misc',   '...', 'pydbgr')
 class PythonCommand(Mbase_cmd.DebuggerCommand):
     """python [-d]
 
-Run Python as a command subshell.
+Run Python as a command subshell. The sys.ps1 prompt will be set to 
+'Pydbgr >>> '.
 
 If -d is passed you can access debugger state via local variable "debugger".
+
+To issue a debugger command, inside irb nested inside a debugger use function
+dbgr(). For example:
+
+  dbgr('info program')
 """
 
     aliases      = ('py',)
@@ -60,7 +66,14 @@ If -d is passed you can access debugger state via local variable "debugger".
                 pass
             pass
 
+        banner_tmpl='''Pydbgr python shell%s
+Use dbgr(*string*) to issue debugger command: *string*'''
+
         debug = len(args) > 1 and args[1] == '-d'
+        if debug:
+            banner_tmpl += ("\nVariable 'debugger' contains a pydbgr" + 
+                            "debugger object.")
+            pass
 
         my_locals  = {}
         my_globals = None
@@ -75,12 +88,12 @@ If -d is passed you can access debugger state via local variable "debugger".
         if debug: my_locals['debugger'] = self.debugger
         my_locals['dbgr'] = self.dbgr
 
+        sys.ps1 = 'Pydbgr >>> '
         if len(my_locals):
-            interact(banner='''Pydbgr python shell (with locals)
-Use dbgr(*string*) to issue a debugger command: *string*''', 
+            interact(banner=(banner_tmpl % ' with locals'),
                      my_locals=my_locals, my_globals=my_globals)
         else:
-            interact(banner='Pydbgr python shell')
+            interact(banner=(banner_tmpl % ''))
             pass
 
         # restore our history if we can do so.

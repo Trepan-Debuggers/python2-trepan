@@ -62,7 +62,7 @@ class ScriptInterface(Mbase_intf.DebuggerInterface):
         sure it's okay. """
         return self.default_confirm
 
-    def errmsg(self, msg, prefix="*** "):
+    def errmsg(self, msg, prefix="* "):
         """Common routine for reporting debugger error messages.
            """
         #  self.verbose shows lines so we don't have to duplicate info

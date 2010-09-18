@@ -44,7 +44,7 @@ the program and the outside portion which could be
         it's okay. `prompt' is printed; user response is returned."""
         raise NotImplementedError, NotImplementedMessage
 
-    def errmsg(self, str, prefix="*** "):
+    def errmsg(self, str, prefix="** "):
         """Common routine for reporting debugger error messages.
            """
         raise NotImplementedError, NotImplementedMessage

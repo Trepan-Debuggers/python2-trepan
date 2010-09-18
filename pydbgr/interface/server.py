@@ -77,7 +77,7 @@ class ServerInterface(Mbase_intf.DebuggerInterface):
             pass
         return default
 
-    def errmsg(self, str, prefix="*** "):
+    def errmsg(self, str, prefix="** "):
         """Common routine for reporting debugger error messages.
            """
         return self.msg("%s%s" %(prefix, str))

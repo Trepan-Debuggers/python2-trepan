@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009 Rocky Bernstein
+#   Copyright (C) 2009, 2010 Rocky Bernstein
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -22,9 +22,21 @@ from import_relative import *
 # FIXME: Until import_relative is fixed up...
 import_relative('processor', '....', 'pydbgr')
 
-Mbase_subcmd  = import_relative('base_subcmd', '..', 'pydbgr')
+Mbase_subcmd = import_relative('base_subcmd', '..', 'pydbgr')
+Mcmdfns      = import_relative('cmdfns', '..', 'pydbgr')
 
-class ShowMaxArgStrSize(Mbase_subcmd.DebuggerShowIntSubcommand):
-    "Show maximum string length to show in a parameter string"
-    min_abbrev = 2
+class SetMaxString(Mbase_subcmd.DebuggerSubcommand):
+    "Set maximum length to show string output"
+    
+    in_list    = True
+    min_abbrev = len('str') # Need at least "set max str"
+
+    def run(self, args):
+        Mcmdfns.run_set_int(self, ' '.join(args),
+                            "The '%s' command requires a character count" % self.name,
+                            0, None)
+        self.proc._repr.maxstring =  self.settings[self.name]
+        return None
     pass
+
+

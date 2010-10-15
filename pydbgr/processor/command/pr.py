@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2009 Rocky Bernstein
+#  Copyright (C) 2009, 2010 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,8 +19,8 @@ from import_relative import import_relative
 Mbase_cmd  = import_relative('base_cmd', top_name='pydbgr')
 Mprint     = import_relative('print', '...lib', 'pydbgr')
 
-class PrintCommand(Mbase_cmd.DebuggerCommand):
-    """p expression
+class PrCommand(Mbase_cmd.DebuggerCommand):
+    """pr expression
 
 Print the value of the expression. Variables accessible are those of the
 environment of the selected stack frame, plus globals. 
@@ -66,11 +66,12 @@ if __name__ == '__main__':
     d           = debugger.Debugger()
     cp          = d.core.processor
     cp.curframe = inspect.currentframe()
-    command = PrintCommand(cp)
+    command = PrCommand(cp)
     me = 10
-    command.run(['print', 'me'])
-    command.run(['print', '/x', 'me'])
-    command.run(['print', '/o', 'me'])
+    
+    command.run([command.name, 'me'])
+    command.run([command.name, '/x', 'me'])
+    command.run([command.name, '/o', 'me'])
     pass
 
 

@@ -98,7 +98,7 @@ def run_set_int(obj, arg, msg_on_error, min_value=None, max_value=None):
         return
     obj.debugger.settings[obj.name] = \
         get_an_int(obj.errmsg, arg, msg_on_error, min_value, max_value)
-    return
+    return obj.debugger.settings[obj.name]
 
 def run_show_bool(obj, what=None):
     """Generic subcommand showing a boolean-valued debugger setting.

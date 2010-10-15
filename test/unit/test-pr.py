@@ -4,7 +4,7 @@ import unittest
 
 from import_relative import import_relative
 
-Mp = import_relative('processor.command.p', '...pydbgr')
+Mp = import_relative('processor.command.pr', '...pydbgr')
 
 class TestP(unittest.TestCase):
     """Tests PCommand class"""
@@ -22,7 +22,7 @@ class TestP(unittest.TestCase):
         self.msgs.append(msg)
         return
 
-    def test_p(self):
+    def test_pr(self):
         import inspect
         cmdproc     = import_relative('processor.cmdproc', '...pydbgr', 
                                       'pydbgr')
@@ -30,15 +30,15 @@ class TestP(unittest.TestCase):
         d           = debugger.Debugger()
         cp          = d.core.processor
         cp.curframe = inspect.currentframe()
-        cmd         = Mp.PrintCommand(cp)
+        cmd         = Mp.PrCommand(cp)
         cmd.msg     = self.msg
         cmd.errmsg  = self.errmsg
         me = 10
-        cmd.run(['print', 'me'])
+        cmd.run([cmd.name, 'me'])
         self.assertEqual('10', self.msgs[-1])
-        cmd.run(['print', '/x', 'me'])
+        cmd.run([cmd.name, '/x', 'me'])
         self.assertEqual("'0xa'", self.msgs[-1])
-        cmd.run(['print', '/o', 'me'])
+        cmd.run([cmd.name, '/o', 'me'])
         self.assertEqual("'012'", self.msgs[-1])
         return
 

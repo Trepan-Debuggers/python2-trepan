@@ -41,7 +41,7 @@ environment."""
             return
 
         for attr in ('prompt_str', 'frame', 'event', 'event_arg', 
-                     'curindex'): 
+                     'stack', 'curindex'): 
             cmd = 'old_%s = self.proc.%s' % (attr, attr)
             exec cmd
             pass

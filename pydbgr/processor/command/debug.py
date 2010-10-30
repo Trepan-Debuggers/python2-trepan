@@ -41,7 +41,7 @@ environment."""
             return
 
         for attr in ('prompt_str', 'frame', 'event', 'event_arg', 
-                     'stack', 'curindex'): 
+                     'curindex'): 
             cmd = 'old_%s = self.proc.%s' % (attr, attr)
             exec cmd
             pass
@@ -73,7 +73,7 @@ environment."""
         self.proc.continue_running = False
         self.proc.debug_nest      -= 1
 
-        for attr in ('prompt_str', 'frame', 'event', 'event_arg', 'stack',
+        for attr in ('prompt_str', 'frame', 'event', 'event_arg',
                      'curindex'): 
             cmd = 'self.proc.%s = old_%s' % (attr, attr)
             exec cmd

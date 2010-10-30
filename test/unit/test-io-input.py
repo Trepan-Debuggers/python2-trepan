@@ -9,7 +9,8 @@ Minput = import_relative('io.dbg_input', '...pydbgr')
 class TestDebuggerInput(unittest.TestCase):
     
     def test_DebuggerInput(self):
-        inp = Minput.DebuggerUserInput('cmdhelper.py')
+        cmdhelper_file=os.path.join(get_srcdir(),'cmdhelper.py') 
+        inp = Minput.DebuggerUserInput(cmdhelper_file)
         self.assertTrue(inp, 'Should have gotten a DebuggerInput object back')
         line = inp.readline()
         self.assertEqual('# -*- coding: utf-8 -*-', line)

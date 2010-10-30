@@ -26,7 +26,7 @@ setup(
        entry_points = {
         'console_scripts': [
             'pydbgr  = pydbgr.cli:main',
-            'pydbgrc = pydbgr.client:main',
+            'pydbgr-client = pydbgr.client:main',
         ]},
        install_requires   = install_requires,
        license            = license,

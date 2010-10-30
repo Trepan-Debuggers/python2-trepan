@@ -1,3 +1,12 @@
+0.1.5 10-27-10
+
+- "p" command renamed to "pr" like trepanning debuggers
+- set maxstrsize -> set maxstring and fix bug to update that
+- remove pyflakes warnings
+- show return value in nested debugging and add level of parenthsis in prompts
+- report PC offset in info program and disassemble
+- some bug fixes
+
 0.1.4 06-12-10 the Fleetwood
 
 - Show return value when at a return event

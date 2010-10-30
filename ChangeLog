@@ -1,3 +1,158 @@
+2010-10-26 10:49  rocky@gnu.org
+
+	* pydbgr/processor/command/debug.py, test/example/gcd-dbgcall.py:
+	  Fix a couple of bugs.
+
+2010-10-15 19:39  rocky@gnu.org
+
+	* pydbgr/processor/cmdfns.py, pydbgr/processor/command/p.py,
+	  pydbgr/processor/command/pr.py,
+	  pydbgr/processor/command/set_subcmd/maxargstrsize.py,
+	  pydbgr/processor/command/set_subcmd/maxstring.py,
+	  pydbgr/processor/command/show_subcmd/maxargstrsize.py,
+	  pydbgr/processor/command/show_subcmd/maxstring.py,
+	  test/unit/test-p.py, test/unit/test-pr.py: Debugger command "p"
+	  changed to "pr" to disambiguate with user variables named p in
+	  code
+	  set maxastrsize -> set maxstring and fix bug in code to update
+	  _repr.maxstring.
+	  Both name changes keep in better alignment with the trepanning
+	  debuggers.
+
+2010-09-18 15:52  rocky@gnu.org
+
+	* pydbgr/interface/base_intf.py, pydbgr/interface/script.py,
+	  pydbgr/interface/server.py, pydbgr/interface/user.py: Make error
+	  prefix string match Ruby and POSIX shell debuggers
+
+2010-07-13 14:21  rocky@gnu.org
+
+	* pydbgr/api.py, pydbgr/cli.py, pydbgr/client.py, pydbgr/clifns.py,
+	  pydbgr/lib/__init__.py, pydbgr/lib/bytecode.py,
+	  pydbgr/lib/default.py, pydbgr/lib/display.py, pydbgr/lib/pp.py,
+	  pydbgr/lib/sighandler.py, pydbgr/lib/stack.py, pydbgr/misc.py:
+	  remove pyflakes warnings.
+
+2010-07-13 14:06  rocky@gnu.org
+
+	* pydbgr/processor/command/python.py: Improve help text.
+
+2010-07-13 13:37  rocky@gnu.org
+
+	* pydbgr/processor/command/base_subcmd.py,
+	  pydbgr/processor/command/base_submgr.py,
+	  pydbgr/processor/command/debug.py,
+	  pydbgr/processor/command/ipython.py,
+	  pydbgr/processor/command/pp.py,
+	  pydbgr/processor/command/python.py,
+	  pydbgr/processor/command/set_subcmd/trace.py,
+	  pydbgr/processor/command/source.py, test/data/step.right: Inside
+	  create dbgr() function inside python command to issue debugger
+	  commands.
+	  Some code adjustment based on pyflakes warnings.
+
+2010-07-13 12:25  rocky@gnu.org
+
+	* pydbgr/processor/command/set_subcmd/autolist.py: Don't try to
+	  list if we have <string>, i.e. nothing to show. Should generalize
+	  to any "nothing" to show.
+
+2010-07-13 12:07  rocky@gnu.org
+
+	* pydbgr/processor/cmdproc.py, pydbgr/processor/command/debug.py:
+	  Improve nested debugging: we now showt the return value. Each
+	  nesting adds a level of parenthesis in the prompt. Continue
+	  doesn't continue outside of the nesting and the stack frame is
+	  restored properly. We have a greater likelihood of not stopping
+	  at the initial sys.call_tracing().
+	  
+	  That said, there is yet more work that should be done here.
+
+2010-07-13 10:40  rocky@gnu.org
+
+	* pydbgr/processor/cmdbreak.py, pydbgr/processor/cmdfns.py,
+	  pydbgr/processor/command/__init__.py,
+	  pydbgr/processor/command/base_subcmd.py,
+	  pydbgr/processor/command/break.py,
+	  pydbgr/processor/command/cmdfns.py,
+	  pydbgr/processor/command/condition.py,
+	  pydbgr/processor/command/delete.py,
+	  pydbgr/processor/command/disable.py,
+	  pydbgr/processor/command/disassemble.py,
+	  pydbgr/processor/command/down.py,
+	  pydbgr/processor/command/enable.py,
+	  pydbgr/processor/command/exit.py,
+	  pydbgr/processor/command/finish.py,
+	  pydbgr/processor/command/jump.py,
+	  pydbgr/processor/command/list.py,
+	  pydbgr/processor/command/next.py,
+	  pydbgr/processor/command/python.py,
+	  pydbgr/processor/command/step.py,
+	  pydbgr/processor/command/tbreak.py,
+	  pydbgr/processor/command/up.py,
+	  pydbgr/processor/command/whatis.py,
+	  pydbgr/processor/command/where.py, test/unit/test-break.py: More
+	  code reorganization: move processor modules out of command
+	  directory which really should just have commands.
+
+2010-07-13 10:02  rocky@gnu.org
+
+	* pydbgr/lib/Makefile, pydbgr/processor/command/base_subcmd.py,
+	  pydbgr/processor/command/base_submgr.py,
+	  pydbgr/processor/command/ipython.py: Some smallish changes.
+
+2010-06-18 03:09  rocky@gnu.org
+
+	* pydbgr/processor/command/info_subcmd/program.py: Tidy one small
+	  output message
+
+2010-06-18 03:07  rocky@gnu.org
+
+	* pydbgr/lib/disassemble.py,
+	  pydbgr/processor/command/info_subcmd/program.py: Report PC offset
+	  in "info program" and "disassemble".
+
+2010-06-17 21:11  rocky@gnu.org
+
+	* __pkginfo__.py, configure.ac, pydbgr/VERSION.py, pydbgr/cli.py:
+	  VERSION.py is now a bilingual Python and POSIX shell program.
+	  This
+	  allows us to use more flexible version numbers and allows us to
+	  put in
+	  comment describing what the file is about.
+	  
+	  Thanks again, to Yarik for the key idea.
+
+2010-06-15 18:36  rocky@gnu.org
+
+	* autogen.sh: autogen.sh: Create initial version.m4 if needed
+
+2010-06-15 13:57  rocky@gnu.org
+
+	* pydbgr/debugger.py, pydbgr/interface/base_intf.py,
+	  pydbgr/lib/core.py, pydbgr/lib/print.py, pydbgr/lib/stack.py,
+	  pydbgr/processor/base_proc.py,
+	  pydbgr/processor/command/base_cmd.py,
+	  pydbgr/processor/command/base_subcmd.py,
+	  pydbgr/processor/command/mock.py, pydbgr/processor/subcmd.py: Go
+	  with old-style classes for classes that don't inherit.
+
+2010-06-15 02:55  rocky@gnu.org
+
+	* ., .cvsignore, .gitignore, MANIFEST.in, Makefile.am, VERSION,
+	  __pkginfo__.py, configure.ac, pydbgr/VERSION.py, pydbgr/cli.py,
+	  version.m4.in: Verison is all the sundy and various locations is
+	  now computed from pydbgr/VERSION.py. I'm amazed something as
+	  simple as this isn't easier.
+
+2010-06-12 20:35  rocky@gnu.org
+
+	* pydbgr/cli.py: Forgot to bump version
+
+2010-06-12 18:51  rocky@gnu.org
+
+	* ChangeLog: Update ChangeLog before release.
+
 2010-06-12 18:41  rocky@gnu.org
 
 	* configure.ac: We need this to make the Makefile

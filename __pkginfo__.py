@@ -60,6 +60,7 @@ packages           = namespace_packages
 py_modules         = None
 short_desc         = 'Modular Python Debugger'
 
+import os
 import os.path, sys
 from import_relative import get_srcdir
 
@@ -71,7 +72,6 @@ web                = 'http://code.google.com/p/pydbgr/'
 # tracebacks in zip files are funky and not debuggable
 zip_safe = False 
 
-import os
 def read(*rnames):
     return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
 long_description   = ( read("README.txt") + '\n\n' +  read("NEWS") )

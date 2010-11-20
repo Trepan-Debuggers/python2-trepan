@@ -18,7 +18,7 @@ from import_relative import import_relative
 # Our local modules
 import_relative('processor', '....', 'pydbgr')
 Mbase_subcmd = import_relative('base_subcmd', '..', 'pydbgr')
-Mcmdfns      = import_relative('cmdfns', '..', 'pydbgr')
+Mcmdfns      = import_relative('cmdfns', '...', 'pydbgr')
 Mcmdproc     = import_relative('cmdproc', '...', 'pydbgr')
 
 class SetAutoPython(Mbase_subcmd.DebuggerSetBoolSubcommand):

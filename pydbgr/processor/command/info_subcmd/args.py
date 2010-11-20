@@ -18,10 +18,12 @@ import inspect
 
 from import_relative import *
 # Our local modules
-base_subcmd  = import_relative('base_subcmd', os.path.pardir)
-cmdfns       = import_relative('cmdfns', os.path.pardir)
 
-class InfoArgs(base_subcmd.DebuggerSubcommand):
+# FIXME: Until import_relative is fixed up...
+import_relative('processor', '....', 'pydbgr')
+Mbase_subcmd = import_relative('base_subcmd', '..', 'pydbgr')
+
+class InfoArgs(Mbase_subcmd.DebuggerSubcommand):
     """Argument variables of the current stack frame."""
 
     min_abbrev = 1

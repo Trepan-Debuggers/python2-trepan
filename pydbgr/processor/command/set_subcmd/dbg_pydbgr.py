@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2008, 2009 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008, 2009, 2010 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@ from import_relative import import_relative
 # Our local modules
 import_relative('processor', '....', 'pydbgr')
 Mbase_subcmd  = import_relative('base_subcmd', '..', 'pydbgr')
-Mcmdfns       = import_relative('cmdfns', '..', 'pydbgr')
+Mcmdfns       = import_relative('cmdfns', '...', 'pydbgr')
 Mcmdproc      = import_relative('cmdproc', '...', 'pydbgr')
 
 class SetCmdDbgPydb(Mbase_subcmd.DebuggerSetBoolSubcommand):

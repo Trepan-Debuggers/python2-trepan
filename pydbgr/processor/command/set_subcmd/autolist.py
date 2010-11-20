@@ -20,7 +20,7 @@ import_relative('lib', '....', 'pydbgr')
 import_relative('processor', '....', 'pydbgr')
 
 Mbase_subcmd = import_relative('base_subcmd', '..', 'pydbgr')
-Mcmdfns      = import_relative('cmdfns', '..', 'pydbgr')
+Mcmdfns      = import_relative('cmdfns', '...', 'pydbgr')
 Mstack       = import_relative('lib/stack', '....', 'pydbgr')
 
 class SetAutoList(Mbase_subcmd.DebuggerSetBoolSubcommand):

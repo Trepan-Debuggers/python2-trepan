@@ -18,14 +18,18 @@
 
 from import_relative import *
 # Our local modules
-base_subcmd  = import_relative('base_subcmd', os.path.pardir)
-cmdfns       = import_relative('cmdfns', os.path.pardir)
-class ShowEvents(base_subcmd.DebuggerSubcommand):
+
+# FIXME: Until import_relative is fixed up...
+import_relative('processor', '....', 'pydbgr')
+
+Mbase_subcmd = import_relative('base_subcmd', os.path.pardir, 'pydbgr')
+Mcmdfns      = import_relative('cmdfns', '...', 'pydbgr')
+class ShowEvents(Mbase_subcmd.DebuggerSubcommand):
     '''Show trace events we may stop on.'''
     min_abbrev = 2
     run_cmd    = False
 
-    run = cmdfns.run_show_val
+    run = Mcmdfns.run_show_val
     pass
 
 if __name__ == '__main__':

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009, 2010 Rocky Bernstein
+#   Copyright (C) 2009, 2010 Rocky Bernstein <rocky@gnu.org>
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ from import_relative import *
 import_relative('processor', '....', 'pydbgr')
 
 Mbase_subcmd = import_relative('base_subcmd', '..', 'pydbgr')
-Mcmdfns      = import_relative('cmdfns', '..', 'pydbgr')
+Mcmdfns      = import_relative('cmdfns', '...', 'pydbgr')
 
 class SetMaxString(Mbase_subcmd.DebuggerSubcommand):
     "Set maximum length to show string output"

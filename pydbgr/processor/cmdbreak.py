@@ -33,7 +33,7 @@ def set_break(cmd_obj, func, filename, lineno, condition, temporary, args):
         pass
     if func is None:
         ok_linenos = pyficache.trace_line_numbers(filename)
-        if lineno not in ok_linenos:
+        if not ok_linenos or lineno not in ok_linenos:
             part1 = ('File %s' % cmd_obj.core.filename(filename))
             msg = Mmisc.wrapped_lines(part1, 
                                       "is not stoppable at line %d." %

@@ -3,7 +3,7 @@
 import unittest
 from import_relative import import_relative
 
-Mcmdfns = import_relative('processor.command.cmdfns', '...pydbgr')
+Mcmdfns = import_relative('processor.cmdfns', '...pydbgr')
 
 class TestCommandHelper(unittest.TestCase):
 

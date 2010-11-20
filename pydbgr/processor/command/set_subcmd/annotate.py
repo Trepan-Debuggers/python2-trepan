@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009 Rocky Bernstein
+#   Copyright (C) 2009, 2010 Rocky Bernstein
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -17,8 +17,11 @@
 from import_relative import import_relative
 # Our local modules
 
+# FIXME: Until import_relative is fixed up...
+import_relative('processor', '....', 'pydbgr')
+
 Mbase_subcmd = import_relative('base_subcmd', '..', 'pydbgr')
-Mcmdfns      = import_relative('cmdfns', '..', 'pydbgr')
+Mcmdfns      = import_relative('cmdfns', '...', 'pydbgr')
 
 class SetAnnotate(Mbase_subcmd.DebuggerSubcommand):
     """Set GNU Emacs 'annotation' level."""

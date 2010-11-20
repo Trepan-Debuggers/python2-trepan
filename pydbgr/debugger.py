@@ -27,14 +27,10 @@ start/stop and event-handling dispatcher and `client.py' which is a
 user or client-side code for connecting to server'd debugged program.
 """
 
-# Common Python packages
-import sys, types
-
-# External Egg packages
-import tracer, tracefilter
-
 # Our local modules
 from import_relative import import_relative
+
+import_relative('processor', '.', 'pydbgr')
 
 Mcore   = import_relative('core', '.lib', 'pydbgr')
 Mexcept = import_relative('exception', '.', 'pydbgr')
@@ -45,6 +41,12 @@ Mdefault  = import_relative('default', '.lib', 'pydbgr')
 Muser     = import_relative('user', '.interface', 'pydbgr')
 Mmisc     = import_relative('misc', top_name='pydbgr')
 Msig      = import_relative('sighandler', '.lib', 'pydbgr')
+
+# Common Python packages
+import sys, types
+
+# External Egg packages
+import tracer, tracefilter
 
 debugger_obj = None
 

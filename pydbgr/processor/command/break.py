@@ -22,7 +22,7 @@ import_relative('lib', '...', 'pydbgr')
 Mbase_cmd = import_relative('base_cmd', top_name='pydbgr')
 Mcmdfns   = import_relative('cmdfns', '..', 'pydbgr')
 Mfile     = import_relative('file', '...lib', 'pydbgr')
-Mbreak    = import_relative('cmdbreak', '..', 'pydbgr')
+Mcmdbreak = import_relative('cmdbreak', '..', 'pydbgr')
 
 
 class BreakCommand(Mbase_cmd.DebuggerCommand):
@@ -58,9 +58,9 @@ Examples:
     short_help    = 'Set breakpoint at specified line or function'
 
     def run(self, args):
-        func, filename, lineno, condition = Mbreak.parse_break_cmd(self, 
+        func, filename, lineno, condition = Mcmdbreak.parse_break_cmd(self, 
                                                                    args[1:])
-        Mbreak.set_break(self, func, filename, lineno, condition, False, args)
+        Mcmdbreak.set_break(self, func, filename, lineno, condition, False, args)
         return 
 
 if __name__ == '__main__':
@@ -71,18 +71,18 @@ if __name__ == '__main__':
     command.proc.frame = sys._getframe()
     command.proc.setup()
 
-    print Mbreak.parse_break_cmd(command, [])
-    print Mbreak.parse_break_cmd(command, ['10'])
-    print Mbreak.parse_break_cmd(command, [__file__ + ':10'])
+    print Mcmdbreak.parse_break_cmd(command, [])
+    print Mcmdbreak.parse_break_cmd(command, ['10'])
+    print Mcmdbreak.parse_break_cmd(command, [__file__ + ':10'])
     def foo():
         return 'bar'
-    print Mbreak.parse_break_cmd(command, ['foo'])
-    print Mbreak.parse_break_cmd(command, ['os.path'])
-    print Mbreak.parse_break_cmd(command, ['os.path', '5+1'])
-    print Mbreak.parse_break_cmd(command, ['os.path.join'])
-    print Mbreak.parse_break_cmd(command, ['if', 'True'])
-    print Mbreak.parse_break_cmd(command, ['foo', 'if', 'True'])
-    print Mbreak.parse_break_cmd(command, ['os.path:10', 'if', 'True'])
+    print Mcmdbreak.parse_break_cmd(command, ['foo'])
+    print Mcmdbreak.parse_break_cmd(command, ['os.path'])
+    print Mcmdbreak.parse_break_cmd(command, ['os.path', '5+1'])
+    print Mcmdbreak.parse_break_cmd(command, ['os.path.join'])
+    print Mcmdbreak.parse_break_cmd(command, ['if', 'True'])
+    print Mcmdbreak.parse_break_cmd(command, ['foo', 'if', 'True'])
+    print Mcmdbreak.parse_break_cmd(command, ['os.path:10', 'if', 'True'])
     command.run(['break'])
     command.run(['break', 'command.run'])
     command.run(['break', '10'])

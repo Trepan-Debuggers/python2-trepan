@@ -1,3 +1,13 @@
+2010-10-30 00:10  rocky@gnu.org
+
+	* pydbgr/processor/command/debug.py, setup.py,
+	  test/unit/test-io-input.py: More small changes
+
+2010-10-30 00:08  rocky@gnu.org
+
+	* ChangeLog, NEWS, __pkginfo__.py, pydbgr/interface/script.py:
+	  Small stuff
+
 2010-10-26 10:49  rocky@gnu.org
 
 	* pydbgr/processor/command/debug.py, test/example/gcd-dbgcall.py:

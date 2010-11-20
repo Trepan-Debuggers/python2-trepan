@@ -56,7 +56,7 @@ class SubcommandMgr(Mbase_cmd.DebuggerCommand):
         DebuggerCommand class instances form set of possible debugger
         commands."""
 
-        # Iniitialization
+        # Initialization
         cmd_instances     = []
         module_dir        = name + '_subcmd'
         class_prefix      = string.capitalize(name) # e.g. Info, Set, or Show
@@ -64,6 +64,8 @@ class SubcommandMgr(Mbase_cmd.DebuggerCommand):
         eval_cmd_template = 'command_mod.%s(self)'
         srcdir            = get_srcdir()
         sys.path.insert(0, srcdir)
+        sub_srcdir = os.path.join(srcdir, module_dir)
+        sys.path.insert(0, sub_srcdir)
 
         # Import, instantiate, and add classes for each of the
         # modules found in module_dir imported above.
@@ -75,7 +77,8 @@ class SubcommandMgr(Mbase_cmd.DebuggerCommand):
             except ImportError:
                 print("Error importing module %s: %s" % 
                       (module_name,sys.exc_info()[0]))
-                
+                continue
+            
 
             # Even though we tend not to do this, it is possible to
             # put more than one class into a module/file.  So look for
@@ -96,6 +99,7 @@ class SubcommandMgr(Mbase_cmd.DebuggerCommand):
                 pass
             pass
         sys.path.remove(srcdir)
+        sys.path.remove(sub_srcdir)
         return cmd_instances
 
     def help(self, args):

@@ -101,6 +101,9 @@ DEBUGGER_SETTINGS = {
     # max length to show of parameter string
     'maxargstrsize' : 100,
 
+    # max length to in other strings
+    'maxstring'     : 150,
+
     # printset is a set of events to print line-, call-, or return-like
     # tracing. See tracer.ALL_EVENT_NAMES and ALL_EVENTS. This only
     # has an effect if trace is set True.

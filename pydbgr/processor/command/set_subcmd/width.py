@@ -23,7 +23,7 @@ from import_relative import *
 import_relative('processor', '....', 'pydbgr')
 
 Mbase_subcmd = import_relative('base_subcmd', '..', 'pydbgr')
-Mcmdfns      = import_relative('cmdfns', '..', 'pydbgr')
+Mcmdfns      = import_relative('cmdfns', '...', 'pydbgr')
 
 class SetWidth(Mbase_subcmd.DebuggerSubcommand):
     """Set number of characters the debugger thinks are in a line"""

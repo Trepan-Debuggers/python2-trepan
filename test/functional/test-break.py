@@ -27,8 +27,7 @@ class TestBreak(unittest.TestCase):
         compare_output(self, out, d, cmds)
 
         
-        Try a break with a module name
-        
+        # Try a break with a module name
         import os
         cmds = ['break os.path.join', 'continue']
         d = strarray_setup(cmds)
@@ -54,8 +53,8 @@ class TestBreak(unittest.TestCase):
         z = 7
         ##############################
         d.core.stop()
-        out = ["-- x = 5\nBreakpoint 1 set at line 54 of file test-break.py",
-               'xx z = 7']
+        out = ["-- x = 5\nBreakpoint 1 set at line 53 of file test-break.py",
+               'xx z = 7\n']
         compare_output(self, out, d, cmds)
         return
     pass

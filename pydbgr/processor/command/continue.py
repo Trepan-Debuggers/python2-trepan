@@ -19,7 +19,7 @@ from import_relative import import_relative
 import_relative('lib', '...', 'pydbgr')
 Mbase_cmd  = import_relative('base_cmd', top_name='pydbgr')
 Mfile      = import_relative('file', '...lib', 'pydbgr')
-Mbreak     = import_relative('break', '.', 'pydbgr')
+Mcmdbreak  = import_relative('cmdbreak', '..', 'pydbgr')
 
 class ContinueCommand(Mbase_cmd.DebuggerCommand):
     """continue [[file:]lineno | function]
@@ -43,10 +43,10 @@ position before continuing."""
     def run(self, args):
         if len(args) > 1:
             # FIXME: DRY this code. Better is to hook into tbreak. 
-            func, filename, lineno, condition = Mbreak.parse_break_cmd(self,
-                                                                       args[1:])
-            if not Mbreak.set_break(self, func, filename, lineno, condition, 
-                                    True, args):
+            func, filename, lineno, condition = Mcmdbreak.parse_break_cmd(self,
+                                                                          args[1:])
+            if not Mcmdbreak.set_break(self, func, filename, lineno, condition, 
+                                       True, args):
                 return False
         self.core.step_events = None # All events
         self.core.step_ignore = -1

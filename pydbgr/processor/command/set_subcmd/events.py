@@ -16,9 +16,8 @@
 
 import tracer
 from import_relative import import_relative
+import_relative('lib', '....', 'pydbgr')
 Mbase_subcmd  = import_relative('base_subcmd', '..', 'pydbgr')
-cmdfns        = import_relative('cmdfns', '..', 'pydbgr')
-
 
 class SetEvents(Mbase_subcmd.DebuggerSubcommand):
 

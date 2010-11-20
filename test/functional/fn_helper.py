@@ -21,18 +21,21 @@ pydbgr_prompt = re.compile(r'^.. \d+.*\n\(Pydbgr(:.+)?\) ')
 pydbgr_loc    = re.compile(r'^\(.+:\d+\): ')
 def filter_line_cmd(a):
     '''Return output with source lines prompt and command removed'''
-    # Next remove line locations and extra leading spaces.
+    # Remove extra leading spaces.
     # For example:
     # -- 42         y = 5
     # becomes
     # -- y = 5
     a1 = [re.sub(r'^(..) \d+\s+', r'\1 ', s) for s in a
          if re.match(r'^.. \d+\s+', s)]
-    # First remove debugger location lines. 
+    # Remove debugger prompts
     # For example: 
-    #  (Pydbgr) (test-next.py:41): test_next_between_fn
+    #  (Pydbgr) 
     a2 = [re.sub(r'\n\(Pydbgr\) .*', '', s) for s in a1]
-    return a2
+
+    # Remove locations (test-next.py:41): test_next_between_fn
+    a3 = [re.sub(r'\n\(.*:\d+\):.*', '', s) for s in a2]
+    return a3
 
 def get_lineno():
     '''Return the caller's line number'''

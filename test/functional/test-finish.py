@@ -4,6 +4,8 @@ from fn_helper import *
 
 class TestNext(unittest.TestCase):
     def test_finish_same_level(self):
+        print "test ", __file__, "finish_same_level skipped"
+        return
 
         cmds = ['step 5', 'finish', 'continue']
         d = strarray_setup(cmds)

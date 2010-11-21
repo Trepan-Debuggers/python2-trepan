@@ -6,13 +6,13 @@ all: check
 test: check
 
 # check: test-unit test-functional test-integration
-check: test-unit test-integration
+check: test-unit test-functional test-integration
 
 test-unit: 
 	python ./setup.py nosetests
 
-# test-functional: 
-#	(cd test/functional && python ./setup.py nosetests)
+test-functional: 
+	(cd test/functional && python ./setup.py nosetests)
 
 test-integration: 
 	(cd test/integration && python ./setup.py nosetests)

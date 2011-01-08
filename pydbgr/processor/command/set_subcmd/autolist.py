@@ -21,7 +21,7 @@ import_relative('processor', '....', 'pydbgr')
 
 Mbase_subcmd = import_relative('base_subcmd', '..', 'pydbgr')
 Mcmdfns      = import_relative('cmdfns', '...', 'pydbgr')
-Mstack       = import_relative('lib/stack', '....', 'pydbgr')
+Mstack       = import_relative('stack', '....lib', 'pydbgr')
 
 class SetAutoList(Mbase_subcmd.DebuggerSetBoolSubcommand):
     """Run a 'list' command every time we enter the debugger."""

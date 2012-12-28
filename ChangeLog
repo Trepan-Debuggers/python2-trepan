@@ -1,3 +1,61 @@
+2012-12-28 02:12  rocky@gnu.org
+
+	* NEWS, pydbgr/VERSION.py,
+	  pydbgr/processor/command/info_subcmd/return.py,
+	  pydbgr/processor/command/set_subcmd/autolist.py,
+	  pydbgr/processor/command/set_subcmd/autopython.py,
+	  pydbgr/processor/command/set_subcmd/cmdtrace.py,
+	  pydbgr/processor/command/set_subcmd/dbg_pydbgr.py,
+	  pydbgr/processor/command/set_subcmd/events.py,
+	  pydbgr/processor/command/set_subcmd/listsize.py,
+	  pydbgr/processor/command/set_subcmd/width.py,
+	  pydbgr/processor/command/show_subcmd/maxstring.py,
+	  pydbgr/processor/command/show_subcmd/width.py: Get ready for
+	  0.1.6 release
+
+2011-01-08 21:55  rocky@gnu.org
+
+	* pydbgr/processor/command/set_subcmd/autolist.py: Fix Improper
+	  import_relative. Issue #11 (shmakes).
+
+2010-11-22 19:36  rocky@gnu.org
+
+	* test/functional/test-step.py: Start to reinstate tests.
+
+2010-11-21 19:00  rocky@gnu.org
+
+	* Makefile.am, test/functional/test-break.py,
+	  test/functional/test-finish.py, test/functional/test-next.py,
+	  test/functional/test-skip.py, test/functional/test-step.py:
+	  Reinstate functional tests. At least the ones that still pass.
+
+2010-11-20 21:23  rocky@gnu.org
+
+	* ChangeLog, pydbgr/VERSION.py, pydbgr/debugger.py,
+	  pydbgr/lib/default.py, pydbgr/processor/cmdbreak.py,
+	  pydbgr/processor/command/base_submgr.py,
+	  pydbgr/processor/command/break.py,
+	  pydbgr/processor/command/continue.py,
+	  pydbgr/processor/command/info_subcmd/args.py,
+	  pydbgr/processor/command/info_subcmd/return.py,
+	  pydbgr/processor/command/set_subcmd/annotate.py,
+	  pydbgr/processor/command/set_subcmd/autolist.py,
+	  pydbgr/processor/command/set_subcmd/autopython.py,
+	  pydbgr/processor/command/set_subcmd/cmdtrace.py,
+	  pydbgr/processor/command/set_subcmd/dbg_pydbgr.py,
+	  pydbgr/processor/command/set_subcmd/events.py,
+	  pydbgr/processor/command/set_subcmd/listsize.py,
+	  pydbgr/processor/command/set_subcmd/maxstring.py,
+	  pydbgr/processor/command/set_subcmd/skip.py,
+	  pydbgr/processor/command/set_subcmd/trace.py,
+	  pydbgr/processor/command/set_subcmd/width.py,
+	  pydbgr/processor/command/show_subcmd/events.py,
+	  pydbgr/processor/command/show_subcmd/width.py,
+	  test/functional/fn_helper.py, test/functional/test-break.py,
+	  test/functional/test-jump.py, test/unit/test-cmdfns.py: Work on
+	  reducing import errors, and recovery of subcommand imports. Some
+	  bugs fixed. More progress towards some functional tests working.
+
 2010-10-30 00:10  rocky@gnu.org
 
 	* pydbgr/processor/command/debug.py, setup.py,

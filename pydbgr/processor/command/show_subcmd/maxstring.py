@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009, 2010 Rocky Bernstein
+#   Copyright (C) 2009, 2010, 2012 Rocky Bernstein
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -18,9 +18,6 @@
 
 from import_relative import *
 # Our local modules
-
-# FIXME: Until import_relative is fixed up...
-import_relative('processor', '....', 'pydbgr')
 
 Mbase_subcmd  = import_relative('base_subcmd', '..', 'pydbgr')
 

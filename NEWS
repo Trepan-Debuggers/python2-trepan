@@ -1,3 +1,8 @@
+0.1.6 12-27-12
+
+- Try to repackage for 2.7 so we don't get easy install egg errors. 
+  (or at least fewer of them).
+
 0.1.5 10-27-10
 
 - "p" command renamed to "pr" like trepanning debuggers

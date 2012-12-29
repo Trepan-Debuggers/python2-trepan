@@ -243,8 +243,6 @@ def _postprocess_options(dbg, opts):
     else:
         dbg.settings['highlight'] = 'plain'
         
-    print "Highlight is", dbg.settings['highlight']
-
     # Normally we want to set Mdebugger.debugger_obj so that one can
     # put pydbgr.debugger breakpoints in a program and not have more
     # than one debugger running. More than one debugger may confuse

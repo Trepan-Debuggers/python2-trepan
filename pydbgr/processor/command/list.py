@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009 Rocky Bernstein
+#   Copyright (C) 2009, 2012 Rocky Bernstein
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -189,9 +189,14 @@ or 'show listsize' to see or set the value.
             last = max_line
 
         bplist = self.core.bpmgr.bplist
+        opts = {
+            'reload_on_change' : self.settings['reload'],
+            'output'           : self.settings['highlight']
+      }
+
         try:
             for lineno in range(first, last+1):
-                line = pyficache.getline(filename, lineno)
+                line = pyficache.getline(filename, lineno, opts).rstrip('\n')
                 if line is None:
                     self.msg('[EOF]')
                     break

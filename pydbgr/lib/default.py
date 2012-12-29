@@ -86,6 +86,11 @@ DEBUGGER_SETTINGS = {
     # This set controls entering the debugger command processor.
     'events'        : tracer.ALL_EVENTS,  
 
+    # Use terminal highlight? Acceptable values are
+    # 'terminal' : terminal output
+    #  'plain'   : no highlighting
+    'highlight'     : 'terminal',
+
     # Save debugger history?
     'hist_save'     : False,
 
@@ -112,6 +117,9 @@ DEBUGGER_SETTINGS = {
     # If this is set True, debugger startup file, e.g. .pydbgrrc will
     # not be read/run.
     'nostartup'     : False,
+
+    # Reread source file if we determine it has changed?
+    'reload'        : False,
 
     # Stop at 'def' and 'class' statements?
     'skip'          : True,

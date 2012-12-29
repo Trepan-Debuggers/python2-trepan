@@ -99,6 +99,12 @@ def process_options(debugger_name, pkg_version, sys_argv, option_list=None):
                          help="list of debugger commands to " +
                          "execute. Separate the commands with ;;")
 
+    optparser.add_option("--highlight", dest="highlight",
+                         action="store_true", default=True, 
+                         help="Use syntax and terminal highlight output")
+    optparser.add_option("--no-highlight", dest="highlight",
+                         action="store_false", default=True, 
+                         help="Don't use syntax and terminal highlight")
     optparser.add_option("--private", dest="private",
                          action='store_true', default=False,
                          help="Don't register this as a global debugger")
@@ -231,6 +237,13 @@ def _postprocess_options(dbg, opts):
     for setting in ('annotate', 'basename', 'different',): 
         dbg.settings[setting] = getattr(opts, setting)
         pass
+
+    if getattr(opts, 'highlight'):
+        dbg.settings['highlight'] = 'terminal'
+    else:
+        dbg.settings['highlight'] = 'plain'
+        
+    print "Highlight is", dbg.settings['highlight']
 
     # Normally we want to set Mdebugger.debugger_obj so that one can
     # put pydbgr.debugger breakpoints in a program and not have more

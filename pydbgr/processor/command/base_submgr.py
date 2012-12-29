@@ -75,8 +75,8 @@ class SubcommandMgr(Mbase_cmd.DebuggerCommand):
             try:
                 command_mod = getattr(__import__(import_name), module_name)
             except ImportError:
-                print("Error importing module %s: %s" % 
-                      (module_name,sys.exc_info()[0]))
+                print("Error importing name %s module %s: %s" % 
+                      (import_name, module_name, sys.exc_info()[0]))
                 continue
             
 

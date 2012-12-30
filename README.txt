@@ -13,9 +13,13 @@ alternative Python implementation should be able to use pieces of the
 debugger as they see fit.
 
 The command API portion of the debugger is largely modeled on the
-GNU GDB model. A command-line interface (CLI) is provided.
+GNU GDB model. A command-line interface (CLI) is provided as well
+as code for remote debugging
 
 There's a lot of cool stuff here that's not in pydb. 
+
+* Syntax colorization of source code and use of terminal highlighting
+  Of course, this can be turned off.
 
 * out-of-process debugging. You can now debug your program in a different
   process or even a different computer on a different network

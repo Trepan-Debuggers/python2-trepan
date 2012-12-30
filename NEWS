@@ -1,3 +1,11 @@
+0.1.7 
+
+- Port more of the trepanning debugger features here
+  * Terminal output for errors, sections, and code syntax highlighting
+
+- Try to repackage for 2.7 so we don't get easy install egg errors. 
+  (or at least fewer of them).
+
 0.1.6 12-27-12
 
 - Try to repackage for 2.7 so we don't get easy install egg errors. 

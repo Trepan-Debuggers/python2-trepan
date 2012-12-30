@@ -40,6 +40,7 @@ ftp_url            = None
 install_requires   = ['columnize >= 0.3.2', 
                       'import_relative >= 0.1.0',
                       'pyficache >= 0.1.5',
+                      'pygments',
                       'tracer >= 0.2.2']
 license            = 'GPL'
 mailing_list       = None

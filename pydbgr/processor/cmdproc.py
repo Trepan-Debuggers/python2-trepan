@@ -316,11 +316,13 @@ class CommandProcessor(Mbase_proc.Processor):
         self.event     = event
         self.event_arg = event_arg
 
+        filename = frame.f_code.co_filename
+        lineno   = frame.f_lineno
+        line     = linecache.getline(filename, lineno, frame.f_globals)
+        if not line:
+            line = pyficache.getline(filename, lineno, {'output': 'plain'})
+        self.current_source_text = line
         if self.settings('skip') is not None:
-            filename = frame.f_code.co_filename
-            lineno   = frame.f_lineno
-            line     = pyficache.getline(filename, lineno)
-            self.current_source_text = line
             if Mbytecode.is_def_stmt(line, frame):
                 return True
             if Mbytecode.is_class_def(line, frame):

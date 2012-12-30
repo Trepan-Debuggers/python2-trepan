@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2009, 2012 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -85,7 +85,7 @@ _re_def = re.compile(_re_def_str)
 def is_def_stmt(line, frame):
     """Return True if we are looking at a def statement"""
     # Should really also check that operand of 'LOAD_CONST' is a code object
-    return (_re_def.match(line) and op_at_frame(frame)=='LOAD_CONST'
+    return (line and _re_def.match(line) and op_at_frame(frame)=='LOAD_CONST'
             and stmt_contains_opcode(frame.f_code, frame.f_lineno,
                                           'MAKE_FUNCTION'))
 

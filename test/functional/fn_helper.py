@@ -6,14 +6,15 @@ Mstringarray = import_relative('io.stringarray', '...pydbgr')
 
 def strarray_setup(debugger_cmds):
     ''' Common setup to create a debugger with stringio attached '''
-    stringin               = Mstringarray.StringArrayInput(debugger_cmds)
-    stringout              = Mstringarray.StringArrayOutput()
-    d_opts                 = {'input' : stringin, 
-                              'output': stringout}
-    d                      = Mdebugger.Debugger(d_opts)
-    d.settings['basename'] = True
+    stringin                = Mstringarray.StringArrayInput(debugger_cmds)
+    stringout               = Mstringarray.StringArrayOutput()
+    d_opts                  = {'input' : stringin, 
+                               'output': stringout}
+    d                       = Mdebugger.Debugger(d_opts)
+    d.settings['basename']  = True
     d.settings['different'] = False
-    d.settings['autoeval'] = False
+    d.settings['autoeval']  = False
+    d.settings['highlight'] = 'plain'
     return d
 
 import re

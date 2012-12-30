@@ -14,6 +14,7 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import inspect, linecache, os, sys, shlex, traceback, types
+import pyficache
 from repr import Repr
 
 from import_relative import import_relative, get_srcdir
@@ -168,13 +169,12 @@ def print_location(proc_obj):
         fn_name = frame.f_code.co_name
         print_source_location_info(intf_obj.msg, filename, lineno, fn_name)
 
-        if '__loader__' in proc_obj.curframe.f_globals:
-            l = proc_obj.curframe.f_globals['__loader__']
-            intf_obj.msg(str(l))
-            pass
-        if 2 == linecache.getline.func_code.co_argcount:
-            line = linecache.getline(filename, lineno)
-        else:
+        opts = {
+            'reload_on_change' : proc_obj.settings('reload'),
+            'output'           : proc_obj.settings('highlight')
+            }
+        line = pyficache.getline(filename, lineno, opts)
+        if not line:
             line = linecache.getline(filename, lineno, 
                                      proc_obj.curframe.f_globals)
             pass
@@ -316,7 +316,7 @@ class CommandProcessor(Mbase_proc.Processor):
         if self.settings('skip') is not None:
             filename = frame.f_code.co_filename
             lineno   = frame.f_lineno
-            line     = linecache.getline(filename, lineno)
+            line     = pyficache.getline(filename, lineno)
             if Mbytecode.is_def_stmt(line, frame):
                 return True
             if Mbytecode.is_class_def(line, frame):

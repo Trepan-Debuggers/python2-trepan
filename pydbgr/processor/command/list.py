@@ -192,7 +192,7 @@ or 'show listsize' to see or set the value.
         opts = {
             'reload_on_change' : self.settings['reload'],
             'output'           : self.settings['highlight']
-      }
+            }
 
         try:
             for lineno in range(first, last+1):

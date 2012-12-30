@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2008, 2009 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008, 2009, 2012 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -92,7 +92,7 @@ all    -- All of the above information.
                 pass
             if arg in ['all', 'brkpts']:
                 lines = pyficache.trace_line_numbers(canonic_name)
-                self.msg("Possible breakpoint line numbers:")
+                self.section("Possible breakpoint line numbers:")
                 fmt_lines = columnize.columnize(lines, ljust = False,
                                                 arrange_vertical = False,
                                                 lineprefix='  ')

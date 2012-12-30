@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009 Rocky Bernstein
+#   Copyright (C) 2009, 2012 Rocky Bernstein
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -78,7 +78,7 @@ See also 'examine' and 'whatis'.
         if len(args) > 1:
             cmd_name = args[1]
             if cmd_name == '*':
-                self.msg("List of all debugger commands:")
+                self.section("List of all debugger commands:")
                 self.msg_nocr(self.columnize_commands(self.proc.name2cmd.keys()))
                 return
             elif cmd_name in categories.keys():
@@ -110,7 +110,7 @@ See also 'examine' and 'whatis'.
                     self.errmsg("No commands found matching /^%s/. Try \"help\"." 
                                 % cmd_name)
                 else:
-                    self.msg("Command names matching /^%s/:" % cmd_name)
+                    self.section("Command names matching /^%s/:" % cmd_name)
                     self.msg_nocr(self.columnize_commands(cmds))
                     pass
             return
@@ -122,11 +122,11 @@ See also 'examine' and 'whatis'.
 
     def list_categories(self):
         """List the command categories and a short description of each."""
-        self.msg("Classes of commands:\n")
+        self.section("Classes of commands:")
         cats = categories.keys()
         cats.sort()
         for cat in cats:  # Foo! iteritems() doesn't do sorting
-            self.msg("%-13s -- %s" % (cat, categories[cat]))
+            self.msg("  %-13s -- %s" % (cat, categories[cat]))
             pass
         final_msg = """
 Type "help" followed by a class name for a list of commands in that class.
@@ -143,7 +143,7 @@ Type "help" followed by command name for full documentation.
         n2cmd = self.proc.name2cmd
         names = n2cmd.keys()
         if len(args) == 1 and args[0] == '*':
-            self.msg("Commands in class %s:" % category)
+            self.section("Commands in class %s:" % category)
             cmds = [cmd for cmd in names if category == n2cmd[cmd].category]
             cmds.sort()
             self.msg_nocr(self.columnize_commands(cmds))

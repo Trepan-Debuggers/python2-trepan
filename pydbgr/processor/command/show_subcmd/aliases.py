@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2009 Rocky Bernstein
+#  Copyright (C) 2009, 2012 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ of aliases is printed, not what commands they are attached to.
     run_cmd    = False
 
     def _alias_header(self):
-        self.msg("%-10s : %s" % ('Alias', 'Command'))
+        self.section("%-10s : %s" % ('Alias', 'Command'))
         self.msg("%-10s : %s" % ('-' * 10, '-' * 11))
         return
 
@@ -53,7 +53,7 @@ of aliases is printed, not what commands they are attached to.
                 pass
             return
         if '*' in args:
-            self.msg("Current aliases:")
+            self.section("Current aliases:")
             self.msg(columnize.columnize(aliases, lineprefix='    '))
         else:
             self._alias_header()

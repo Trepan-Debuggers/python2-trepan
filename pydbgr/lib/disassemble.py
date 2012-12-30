@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009 Rocky Bernstein
+#   Copyright (C) 2009, 2012 Rocky Bernstein
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
 #  the Free Software Foundation, either version 3 of the License, or
@@ -21,7 +21,7 @@ from opcode import cmp_op, hasconst, hascompare, hasfree, hasname, hasjrel, \
 
 # Modified from dis. Changed output to use msg and msg_nocr.
 # Added first_line and last_line parameters
-def dis(msg, msg_nocr, errmsg, x=None, start_line=-1, end_line=None,
+def dis(msg, msg_nocr, section, errmsg, x=None, start_line=-1, end_line=None,
         relative_pos = False):
     """Disassemble classes, methods, functions, or code.
 
@@ -35,16 +35,14 @@ def dis(msg, msg_nocr, errmsg, x=None, start_line=-1, end_line=None,
     if type(x) is types.InstanceType:
         x = x.__class__
     if hasattr(x, 'im_func'):
-        msg("Disassembly of %s: " % x)
+        section("Disassembly of %s: " % x)
         x = x.im_func
     if hasattr(x, 'func_code'):
-        msg("Disassembly of %s: " % x)
+        section("Disassembly of %s: " % x)
         x = x.func_code
     elif hasattr(x, 'f_code'):
-        print "++++ 1"
-        msg("Disassembly of %s: " % x)
+        section("Disassembly of %s: " % x)
         if hasattr(x, 'f_lasti'):
-            print "++++ 2"
             lasti = x.f_lasti
             pass
         x = x.f_code

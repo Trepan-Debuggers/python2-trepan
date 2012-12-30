@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2009, 2010 Rocky Bernstein
+#  Copyright (C) 2009, 2010, 2012 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@ and storing it as a list of known debugger commands.
 NotImplementedMessage = "This method must be overriden in a subclass"
 
 import columnize
+from pygments.console import colorize
 
 class DebuggerCommand:
     """Base Class for Debugger commands. We pull in some helper
@@ -66,7 +67,7 @@ class DebuggerCommand:
     # dynamically. That is, the value of self.debugger may change
     # in the course of the program and if we made such an method assignemnt
     # we wouldn't pick up that change in our self.msg
-    def errmsg(self, msg):
+    def errmsg(self, msg, opts={}):
         """ Convenience short-hand for self.debugger.intf[-1].errmsg """
         try:
             return(self.debugger.intf[-1].errmsg(msg))
@@ -75,7 +76,7 @@ class DebuggerCommand:
             pass
         return None
                
-    def msg(self, msg):
+    def msg(self, msg, opts={}):
         """ Convenience short-hand for self.debugger.intf[-1].msg """
         try:
             return(self.debugger.intf[-1].msg(msg))
@@ -84,7 +85,7 @@ class DebuggerCommand:
             pass
         return None
 
-    def msg_nocr(self, msg):
+    def msg_nocr(self, msg, opts={}):
         """ Convenience short-hand for self.debugger.intf[-1].msg_nocr """
         try:
             return(self.debugger.intf[-1].msg_nocr(msg))
@@ -100,6 +101,12 @@ class DebuggerCommand:
         raise NotImplementedError, NotImplementedMessage
 
     pass
+
+    def section(self, message, opts={}):
+        if 'terminal' == self.settings['highlight']:
+            message = colorize('bold', message)
+            pass
+        self.msg(message)
 
 if __name__ == '__main__':
     from import_relative import import_relative

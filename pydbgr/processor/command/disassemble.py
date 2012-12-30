@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2009 Rocky Bernstein
+#  Copyright (C) 2009, 2012 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -120,7 +120,7 @@ Examples
                     except:
                         return
                     pass
-                Mdis.dis(self.msg, self.msg_nocr, self.errmsg, obj, 
+                Mdis.dis(self.msg, self.msg_nocr, self.section, self.errmsg, obj, 
                          start_line=start_line, end_line=end_line, 
                          relative_pos=relative_pos)
                 return False
@@ -142,7 +142,7 @@ Examples
             self.errmsg("No frame selected.")
             return
 
-        Mdis.dis(self.msg, self.msg_nocr, self.errmsg, 
+        Mdis.dis(self.msg, self.msg_nocr, self.section, self.errmsg, 
                  self.proc.curframe, 
                  start_line=start_line, end_line=end_line, 
                  relative_pos=relative_pos)

@@ -225,7 +225,7 @@ class Debugger:
         return retval
 
     def restart_argv(self):
-        '''Return an array that would be execv'd to restart the program'''
+        '''Return an array that would be execv-ed  to restart the program'''
         return self.orig_sys_argv or self.program_sys_argv
 
     # Note: has to come after functions listed in ignore_filter.
@@ -265,12 +265,13 @@ class Debugger:
         }
 
     def __init__(self, opts=None):
-        """ Create a debugger object. But depending on the value of
-        key 'start' inside hash `opts', we may or may not initially
+        """Create a debugger object. But depending on the value of
+        key 'start' inside hash 'opts', we may or may not initially
         start debugging.
 
-        See also `Debugger.start' and `Debugger.stop'.
+        See also Debugger.start and Debugger.stop.
         """
+
         self.mainpyfile = None
         self.thread     = None
         get_option = lambda key: Mmisc.option_set(opts, key, 

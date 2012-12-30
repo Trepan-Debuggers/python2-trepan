@@ -15,7 +15,7 @@
 #    along with this program; if not, write to the Free Software
 #    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 #    02110-1301 USA.
-import inspect, os, pyficache, sys
+import inspect, os, linecache, pyficache, sys
 
 # Our local modules
 from import_relative import import_relative
@@ -178,7 +178,6 @@ or 'show listsize' to see or set the value.
             return
 
         canonic_filename = os.path.realpath(os.path.normcase(filename))
-        print filename, canonic_filename
         if first > max_line:
             self.errmsg('Bad start line %d - file "%s" has only %d lines'
                         % (first, filename, max_line))
@@ -196,7 +195,11 @@ or 'show listsize' to see or set the value.
 
         try:
             for lineno in range(first, last+1):
-                line = pyficache.getline(filename, lineno, opts).rstrip('\n')
+                line = pyficache.getline(filename, lineno, opts)
+                if line is None:
+                    line = linecache.getline(filename, lineno, self.proc.frame.f_globals)
+                    pass
+                line = line.rstrip('\n')
                 if line is None:
                     self.msg('[EOF]')
                     break

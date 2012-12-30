@@ -68,8 +68,7 @@ See also 'set autoeval', `pr', `pp' and `examine'.
             pass
         text = text.strip()
         try:
-            val = self.proc.exec_line(text)
-            self.msg(self.proc._saferepr(val))
+            self.proc.exec_line(text)
         except:
             pass
 

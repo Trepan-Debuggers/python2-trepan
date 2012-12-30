@@ -320,7 +320,9 @@ class CommandProcessor(Mbase_proc.Processor):
         lineno   = frame.f_lineno
         line     = linecache.getline(filename, lineno, frame.f_globals)
         if not line:
-            line = pyficache.getline(filename, lineno, {'output': 'plain'})
+            opts = {'output': 'plain',
+                    'reload_on_change': self.settings('reload')}
+            line = pyficache.getline(filename, lineno, opts)
         self.current_source_text = line
         if self.settings('skip') is not None:
             if Mbytecode.is_def_stmt(line, frame):

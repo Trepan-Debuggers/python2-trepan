@@ -92,7 +92,7 @@ def is_def_stmt(line, frame):
 _re_class = re.compile(r'^\s*class\s')
 def is_class_def(line, frame):
     """Return True if we are looking at a class definition statement"""
-    return (_re_class.match(line) 
+    return (line and _re_class.match(line) 
             and stmt_contains_opcode(frame.f_code, frame.f_lineno,
                                      'BUILD_CLASS'))
 

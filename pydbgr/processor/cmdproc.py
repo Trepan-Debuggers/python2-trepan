@@ -214,7 +214,10 @@ class CommandProcessor(Mbase_proc.Processor):
         self.event2short['brkpt']  = 'xx'
 
         self.cmd_instances    = self._populate_commands()
+        self.cmd_name         = ''     # command name before alias or
+                                       # macro resolution
         self.cmd_queue        = []     # Queued debugger commands
+        self.current_command  = ''     # Current command getting run
         self.debug_nest       = 1
         self.display_mgr      = Mdisplay.DisplayMgr()
         self.intf             = core_obj.debugger.intf
@@ -317,6 +320,7 @@ class CommandProcessor(Mbase_proc.Processor):
             filename = frame.f_code.co_filename
             lineno   = frame.f_lineno
             line     = pyficache.getline(filename, lineno)
+            self.current_source_text = line
             if Mbytecode.is_def_stmt(line, frame):
                 return True
             if Mbytecode.is_class_def(line, frame):
@@ -617,37 +621,40 @@ class CommandProcessor(Mbase_proc.Processor):
     def process_command(self):
         # process command
         if len(self.cmd_queue) > 0:
-            last_command = self.cmd_queue[0].strip()
+            current_command = self.cmd_queue[0].strip()
             del self.cmd_queue[0]
         else:
-            last_command = self.intf[-1].read_command(self.prompt_str).strip()
-            if '' == last_command and self.intf[-1].interactive: 
-                last_command = self.last_command
+            current_command = (
+                self.intf[-1].read_command(self.prompt_str).strip())
+            if '' == current_command and self.intf[-1].interactive: 
+                current_command = self.last_command
                 pass
             pass
         # Look for comments
-        if '' == last_command:
+        if '' == current_command:
             if self.intf[-1].interactive:
                 self.errmsg("No previous command registered, " + 
                             "so this is a no-op.")
                 pass
             return False
-        if last_command is None or last_command[0] == '#':
+        if current_command is None or current_command[0] == '#':
             return False
         try:
-            args_list = arg_split(last_command)
+            args_list = arg_split(current_command)
         except:
             self.errmsg("bad parse %s"< sys.exc_info()[0])
             return False
 
         for args in args_list:
             if len(args):
-                cmd_name = resolve_name(self, args[0])
+                self.cmd_name = args[0]
+                cmd_name = resolve_name(self, self.cmd_name)
                 if cmd_name:
-                    self.last_command = last_command
+                    self.last_command = current_command
                     cmd_obj = self.name2cmd[cmd_name]
                     if self.ok_for_running(cmd_obj, cmd_name, len(args)-1):
-                        try: 
+                        try:
+                            self.current_command = current_command
                             result = cmd_obj.run(args)
                             if result: return result
                         except (Mexcept.DebuggerQuit, 
@@ -661,9 +668,9 @@ class CommandProcessor(Mbase_proc.Processor):
                         pass
                     pass
                 elif not self.settings('autoeval'):
-                    self.undefined_cmd(last_command)
+                    self.undefined_cmd(current_command)
                 else:
-                    self.exec_line(last_command)
+                    self.exec_line(current_command)
                     pass
                 pass
             pass

@@ -190,7 +190,8 @@ or 'show listsize' to see or set the value.
         bplist = self.core.bpmgr.bplist
         opts = {
             'reload_on_change' : self.settings['reload'],
-            'output'           : self.settings['highlight']
+            'output'           : self.settings['highlight'],
+            'strip_nl'         : False
             }
 
         try:
@@ -199,11 +200,11 @@ or 'show listsize' to see or set the value.
                 if line is None:
                     line = linecache.getline(filename, lineno, self.proc.frame.f_globals)
                     pass
-                line = line.rstrip('\n')
                 if line is None:
                     self.msg('[EOF]')
                     break
                 else:
+                    line = line.rstrip('\n')
                     s = self.proc._saferepr(lineno).rjust(3)
                     if len(s) < 5: s += ' '
                     if (canonic_filename, lineno,) in bplist.keys(): 

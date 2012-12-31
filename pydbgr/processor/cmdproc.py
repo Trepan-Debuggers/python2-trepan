@@ -109,7 +109,7 @@ def resolve_name(obj, command_name):
         return None
     return
 
-def print_source_line(msg_nocr, lineno, line, event_str=None):
+def print_source_line(msg, lineno, line, event_str=None):
     """Print out a source line of text , e.g. the second
     line in:
         (/tmp.py:2):  <module>
@@ -122,7 +122,7 @@ def print_source_line(msg_nocr, lineno, line, event_str=None):
 
     # We don't use the filename normally. ipython and other applications
     # however might.
-    return msg_nocr('%s %d %s' % (event_str, lineno, line))
+    return msg('%s %d %s' % (event_str, lineno, line))
 
 def print_source_location_info(print_fn, filename, lineno, fn_name=None):
     """Print out a source location , e.g. the first line in
@@ -181,7 +181,7 @@ def print_location(proc_obj):
 
         if line and len(line.strip()) != 0:
             if proc_obj.event:
-                print_source_line(intf_obj.msg_nocr, lineno, line, 
+                print_source_line(intf_obj.msg, lineno, line, 
                                   proc_obj.event2short[proc_obj.event])
             pass
         if '<string>' != filename:
@@ -321,7 +321,8 @@ class CommandProcessor(Mbase_proc.Processor):
         line     = linecache.getline(filename, lineno, frame.f_globals)
         if not line:
             opts = {'output': 'plain',
-                    'reload_on_change': self.settings('reload')}
+                    'reload_on_change': self.settings('reload'),
+                    'strip_nl': False}
             line = pyficache.getline(filename, lineno, opts)
         self.current_source_text = line
         if self.settings('skip') is not None:
@@ -852,7 +853,9 @@ if __name__=='__main__':
     print resolve_name(cmdproc, 'q')
     print resolve_name(cmdproc, 'info')
     print resolve_name(cmdproc, 'i')
-    print_source_line(sys.stdout.write, 100, 'source_line_test.py')
+    # print '-' * 10
+    # print_source_line(sys.stdout.write, 100, 'source_line_test.py')
+    # print '-' * 10
     cmdproc.frame = sys._getframe()
     cmdproc.setup()
     print

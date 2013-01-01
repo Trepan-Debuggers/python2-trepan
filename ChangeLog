@@ -1,3 +1,102 @@
+2013-01-01 10:52  rocky@gnu.org
+
+	* pydbgr/processor/command/list.py, test/functional/test-jump.py,
+	  test/functional/test-skip.py: Tests now run again! list.py: in
+	  command xxx.pyc the same thing as xxx.py. There's probably a more
+	  reliable way to do this. test*.py: output has changed.
+
+2012-12-31 11:24  rocky@gnu.org
+
+	* pydbgr/processor/cmdproc.py, pydbgr/processor/command/list.py:
+	  Track change in pyficache and stripping \n from lines returned.
+	  Warning: tests fail probably because of a bug in pyficache.
+
+2012-12-30 19:33  rocky@gnu.org
+
+	* configure.ac, pydbgr/debugger.py,
+	  pydbgr/processor/command/eval.py,
+	  pydbgr/processor/command/list.py: Remove stray output.
+
+2012-12-30 16:04  rocky@gnu.org
+
+	* pydbgr/processor/command/eval.py: Improve eval help.
+
+2012-12-30 15:03  rocky@gnu.org
+
+	* pydbgr/lib/bytecode.py, pydbgr/processor/cmdproc.py: See comment
+	  in previous commit. This time, for sure!
+
+2012-12-30 14:42  rocky@gnu.org
+
+	* pydbgr/lib/bytecode.py, pydbgr/processor/cmdproc.py: For raw
+	  source line retrieval (as opposed to syntax highlight), use
+	  linecache.getline rather that pyficache.getline. Guard against
+	  errors in getting that line.
+
+2012-12-30 07:08  rocky@gnu.org
+
+	* pydbgr/lib/eval.py, pydbgr/processor/cmdproc.py,
+	  pydbgr/processor/command/eval.py, test/unit/test-lib-eval.py: Add
+	  smarter eval routine from trepanning. eval? and eval no args
+	  added.
+
+2012-12-30 03:49  rocky@gnu.org
+
+	* .: See above
+
+2012-12-30 03:48  rocky@gnu.org
+
+	* .: More administrivia
+
+2012-12-30 03:24  rocky@gnu.org
+
+	* NEWS, README.txt, __pkginfo__.py: Administrivia
+
+2012-12-30 02:37  rocky@gnu.org
+
+	* pydbgr/lib/disassemble.py, pydbgr/processor/base_proc.py,
+	  pydbgr/processor/command/base_cmd.py,
+	  pydbgr/processor/command/base_subcmd.py,
+	  pydbgr/processor/command/debug.py,
+	  pydbgr/processor/command/disassemble.py,
+	  pydbgr/processor/command/help.py,
+	  pydbgr/processor/command/info_subcmd/break.py,
+	  pydbgr/processor/command/info_subcmd/file.py,
+	  pydbgr/processor/command/show_subcmd/aliases.py: Add Add
+	  sectioning commands various places where it is useful
+
+2012-12-30 02:03  rocky@gnu.org
+
+	* __pkginfo__.py, pydbgr/VERSION.py, pydbgr/processor/base_proc.py,
+	  pydbgr/processor/cmdproc.py, pydbgr/processor/command/list.py,
+	  test/functional/fn_helper.py: Add terminal italic for error
+	  messages, syntax coloring of the location line, and add section()
+	  for section headings, to be used next.
+
+2012-12-30 00:00  rocky@gnu.org
+
+	* pydbgr/processor/command/set_subcmd/highlight.py: Add "set
+	  highlight"
+
+2012-12-29 21:22  rocky@gnu.org
+
+	* pydbgr/cli.py, pydbgr/processor/command/show_subcmd/highlight.py:
+	  Add "show highlight". Still need "set "highlight".
+
+2012-12-29 19:22  rocky@gnu.org
+
+	* pydbgr/cli.py, pydbgr/lib/default.py,
+	  pydbgr/processor/command/base_submgr.py,
+	  pydbgr/processor/command/list.py,
+	  test/integration/test-general.py, test/unit/test-list.py: Syntax
+	  highlight of source code via pygments! Add --highlight and
+	  --no-highlight optiosn. More is needed: set/show, location
+	  prompt, section headings...)
+
+2012-12-28 02:13  rocky@gnu.org
+
+	* ChangeLog: See above.
+
 2012-12-28 02:12  rocky@gnu.org
 
 	* NEWS, pydbgr/VERSION.py,

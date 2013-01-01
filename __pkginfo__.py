@@ -43,7 +43,7 @@ install_requires   = ['columnize >= 0.3.2',
                       'pygments',
                       'tracer >= 0.2.2']
 license            = 'GPL'
-mailing_list       = None
+mailing_list       = 'python-debugger@googlegroups.com'
 modname            = 'pydbgr'
 namespace_packages = [
     'pydbgr', 

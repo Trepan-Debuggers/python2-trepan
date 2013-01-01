@@ -17,7 +17,7 @@ class TestSkip(unittest.TestCase):
         ##############################
         d.core.stop()
         out = ['-- x = 4', # x = 4 is shown in prompt, but not *run*.
-               '-- x = 5\n'] 
+               '-- x = 5'] 
         compare_output(self, out, d, cmds)
         self.assertEqual(5, x)  # Make sure lines were skipped.
 

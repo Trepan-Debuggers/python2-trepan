@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009, 2012 Rocky Bernstein
+#   Copyright (C) 2009, 2012, 2013 Rocky Bernstein
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -24,6 +24,11 @@ import_relative('lib', '...', 'pydbgr')
 Mbase_cmd = import_relative('base_cmd', top_name='pydbgr')
 Mcmdfns   = import_relative('cmdfns', '..', 'pydbgr')
 Mfile     = import_relative('file', '...lib', 'pydbgr')
+
+def pyc2py(filename):
+    if '.pyc' == filename[-4:]:
+        return filename[:-1]
+    return filename
 
 class ListCommand(Mbase_cmd.DebuggerCommand):
     """list [MODULE] [FIRST [NUM]]
@@ -170,6 +175,7 @@ or 'show listsize' to see or set the value.
         filename, first, last = self.parse_list_cmd(args[1:])
         curframe = self.proc.curframe
         if filename is None: return
+        filename = pyc2py(filename)
 
         # We now have range information. Do the listing.
         max_line = pyficache.size(filename)

@@ -22,7 +22,7 @@ class TestJump(unittest.TestCase):
         d.core.stop(options={'remove': True})
         out = ['-- x = 5', # x = 10 is shown in prompt, but not run.
                '-- x = 6',
-               '-- z = 8\n']  
+               '-- z = 8']
         compare_output(self, out, d, cmds)
         self.assertEqual(5, x)  # Make sure x = 6, 7 were skipped.
         return

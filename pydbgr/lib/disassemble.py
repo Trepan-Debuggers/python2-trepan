@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009, 2012 Rocky Bernstein
+#   Copyright (C) 2009, 2012, 2013 Rocky Bernstein
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
 #  the Free Software Foundation, either version 3 of the License, or
@@ -14,15 +14,15 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''Disassembly Routines'''
 
-import inspect, sys, types
+import inspect, pygments, sys, types
 from dis import distb, findlabels, findlinestarts
 from opcode import cmp_op, hasconst, hascompare, hasfree, hasname, hasjrel, \
     haslocal, opname, EXTENDED_ARG, HAVE_ARGUMENT
 
-# Modified from dis. Changed output to use msg and msg_nocr.
+# Modified from dis. Changed output to use msg, msg_nocr, section, and pygments.
 # Added first_line and last_line parameters
 def dis(msg, msg_nocr, section, errmsg, x=None, start_line=-1, end_line=None,
-        relative_pos = False):
+        relative_pos = False, color=True):
     """Disassemble classes, methods, functions, or code.
 
     With no argument, disassemble the last traceback.
@@ -58,7 +58,7 @@ def dis(msg, msg_nocr, section, errmsg, x=None, start_line=-1, end_line=None,
                             types.CodeType,
                             types.ClassType):
                 try:
-                    dis(msg, msg_nocr, errmsg, x1, 
+                    dis(msg, msg_nocr, errmsg, section, x1, 
                         start_line=start_line, end_line=end_line, 
                         relative_pos = relative_pos)
                     msg("")
@@ -76,19 +76,19 @@ def dis(msg, msg_nocr, section, errmsg, x=None, start_line=-1, end_line=None,
     return
 
 def disassemble(msg, msg_nocr, co, lasti=-1, start_line=-1, end_line=None,
-                relative_pos=False):
+                relative_pos=False, color=True):
     """Disassemble a code object."""
     disassemble_string(msg, msg_nocr, co.co_code, lasti, co.co_firstlineno,
                        start_line, end_line, relative_pos,
                        co.co_varnames, co.co_names, co.co_consts,
                        co.co_cellvars, co.co_freevars,
-                       dict(findlinestarts(co)))
+                       dict(findlinestarts(co)), color)
     return
 
 def disassemble_string(orig_msg, orig_msg_nocr, code, lasti=-1, cur_line=0,
                        start_line=-1, end_line=None, relative_pos=False,
                        varnames=(), names=(), consts=(), cellvars=(),
-                       freevars=(), linestarts={}):
+                       freevars=(), linestarts={}, color=True):
     """Disassemble byte string of code. If end_line is negative
     it counts the number of statement linestarts to use."""
     statement_count = 10000

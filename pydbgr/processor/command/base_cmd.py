@@ -103,7 +103,7 @@ class DebuggerCommand:
     pass
 
     def section(self, message, opts={}):
-        if 'terminal' == self.settings['highlight']:
+        if 'plain' != self.settings['highlight']:
             message = colorize('bold', message)
             pass
         self.msg(message)

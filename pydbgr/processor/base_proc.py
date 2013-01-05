@@ -32,7 +32,7 @@ class Processor:
     # we wouldn't pick up that change in our self.msg
     def errmsg(self, message, opts={}):
         """ Convenience short-hand for self.intf[-1].errmsg """
-        if 'terminal' == self.core.debugger.settings['highlight']:
+        if 'plain' != self.core.debugger.settings['highlight']:
             message = colorize('standout', message)
             pass
         return(self.intf[-1].errmsg(message))
@@ -49,7 +49,7 @@ class Processor:
         raise NotImplementedError, NotImplementedMessage
 
     def section(self, message, opts={}):
-        if 'terminal' == self.settings['highlight']:
+        if 'plain' != self.settings['highlight']:
             message = colorize('bold', message)
             pass
         self.msg(message, opts)

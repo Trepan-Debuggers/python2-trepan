@@ -25,12 +25,20 @@ Mcmdfns = import_relative('cmdfns', '...', 'pydbgr')
 
 Mbase_subcmd  = import_relative('base_subcmd', '..')
 
-class ShowHighlight(Mbase_subcmd.DebuggerShowBoolSubcommand):
+class ShowHighlight(Mbase_subcmd.DebuggerSubcommand):
     "Show whether we use terminal highlighting"
 
     def run(self, args):
-        val = ('terminal' == self.settings['highlight'])
-        onoff = Mcmdfns.show_onoff(val)
-        self.msg("highlight is %s." % onoff)
+        val = self.settings['highlight']
+        if 'plain' == val:
+            mess = 'output is not for a terminal'
+        elif 'light' == val:
+            mess = 'output is for a terminal with a light background'
+        elif 'dark' == val:
+            mess = 'output is for a terminal with a dark background'
+        else:
+            self.errmsg('Internal error: incorrect highlight setting %s' % val)
+            return
+        self.msg(mess)
         return
     pass

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: iso-8859-1 -*-
-#   Copyright (C) 2008, 2009, 2010 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008-2010, 2013 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -99,12 +99,10 @@ def process_options(debugger_name, pkg_version, sys_argv, option_list=None):
                          help="list of debugger commands to " +
                          "execute. Separate the commands with ;;")
 
-    optparser.add_option("--highlight", dest="highlight",
-                         action="store_true", default=True, 
-                         help="Use syntax and terminal highlight output")
-    optparser.add_option("--no-highlight", dest="highlight",
-                         action="store_false", default=True, 
-                         help="Don't use syntax and terminal highlight")
+    optparser.add_option("--highlight", dest="highlight", 
+                         action="store", type='string', metavar='{light|dark|plain}',
+                         default='light', 
+                         help="Use syntax and terminal highlight output. 'plain' is no highlight")
     optparser.add_option("--private", dest="private",
                          action='store_true', default=False,
                          help="Don't register this as a global debugger")
@@ -239,7 +237,7 @@ def _postprocess_options(dbg, opts):
         pass
 
     if getattr(opts, 'highlight'):
-        dbg.settings['highlight'] = 'terminal'
+        dbg.settings['highlight'] = opts.highlight
     else:
         dbg.settings['highlight'] = 'plain'
         

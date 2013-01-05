@@ -87,9 +87,10 @@ DEBUGGER_SETTINGS = {
     'events'        : tracer.ALL_EVENTS,  
 
     # Use terminal highlight? Acceptable values are
-    # 'terminal' : terminal output
     #  'plain'   : no highlighting
-    'highlight'     : 'terminal',
+    #  'dark'    : terminal highlighting for a dark background
+    #  'light'   : terminal highlighting for a light background
+    'highlight'     : 'light',
 
     # Save debugger history?
     'hist_save'     : False,

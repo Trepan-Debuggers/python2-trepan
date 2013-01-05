@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2012 Rocky Bernstein
+#   Copyright (C) 2012, 2013 Rocky Bernstein
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -20,28 +20,41 @@ from pyficache import clear_file_format_cache
 # Our local modules
 Mbase_subcmd = import_relative('base_subcmd', '..', 'pydbgr')
 
-class SetHighlight(Mbase_subcmd.DebuggerSetBoolSubcommand):
-    """Set whether we use terminal highlighting"""
+class SetHighlight(Mbase_subcmd.DebuggerSubcommand):
+    """Set whether we use terminal highlighting.
+    Permissable values are:
+       plain:  no terminal highlighting
+       light:  terminal background is light (the default)
+       dark:   terimanl background is dark
+
+    If the first argument is 'reset' we clear any existing color formatting
+    and recolor all file output.
+    """
 
     in_list    = True
     min_abbrev = len('hi')
 
-    def run(self, args):
-        if len(args) == 1 and 'reset' == args[0]:
-            clear_file_format_cache
-            self.settings['highlight'] = 'terminal'
+    def get_highlight_type(self, arg):
+        if not arg: return 'light'
+        if arg in ['light', 'dark', 'plain']:
+            return arg
         else:
-            # I haven't been able to figure out how to use super() to
-            # shorten this:
-            Mbase_subcmd.DebuggerSetBoolSubcommand.run(self, args)
+            self.errmsg('Expecting "light", "dark", "plain"; got %s' % arg)
+            return None
+        pass
 
-            # The above makes settings['highlight'] be a boolean, but
-            # we want it to be either 'terminal' or 'plain'
-            if self.settings['highlight']:
-                self.settings['highlight'] = 'terminal'
-            else:
-                self.settings['highlight'] = 'plain'
+    def run(self, args):
+        if len(args) >= 1 and 'reset' == args[0]:
+            highlight_type = self.get_highlight_type(args[1])
+            if not highlight_type: return
+            clear_file_format_cache()
+        else:
+            highlight_type = self.get_highlight_type(args[0])
+            if not highlight_type: return
             pass
+        self.settings['highlight'] = highlight_type
+        show_cmd = self.proc.name2cmd['show']
+        show_cmd.run(['show', 'highlight'])
         return
     pass
 

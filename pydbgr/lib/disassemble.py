@@ -19,6 +19,32 @@ from dis import distb, findlabels, findlinestarts
 from opcode import cmp_op, hasconst, hascompare, hasfree, hasname, hasjrel, \
     haslocal, opname, EXTENDED_ARG, HAVE_ARGUMENT
 
+from pygments.formatters.terminal import TERMINAL_COLORS
+from pygments.console import ansiformat
+from pygments.token import *
+
+def format_token(ttype, token, colorscheme=TERMINAL_COLORS, highlight='light' ):
+    if 'plain' == highlight: return token
+    darkbg = 'light' == highlight
+
+    color = colorscheme.get(ttype)
+    if color:
+        color = color[darkbg]
+        return ansiformat(color, token)
+        pass
+    return token
+
+
+Token.Arrow      = Name.Variable
+Token.Compare    = Name.Exception
+Token.Const      = String
+Token.Label      = Operator.Word
+Token.LineNumber = Number
+Token.Name       = Comment.Preproc
+Token.Offset     = Operator
+Token.Opcode     = Name.Function
+Token.Var        = Keyword
+
 # Modified from dis. Changed output to use msg, msg_nocr, section, and pygments.
 # Added first_line and last_line parameters
 def dis(msg, msg_nocr, section, errmsg, x=None, start_line=-1, end_line=None,
@@ -65,7 +91,7 @@ def dis(msg, msg_nocr, section, errmsg, x=None, start_line=-1, end_line=None,
                 except TypeError, msg:
                     errmsg("Sorry:", msg)
     elif hasattr(x, 'co_code'):
-        disassemble(msg, msg_nocr, x, lasti=lasti, 
+        disassemble(msg, msg_nocr, section, x, lasti=lasti, 
                     start_line=start_line, end_line=end_line,
                     relative_pos = relative_pos)
     elif isinstance(x, str):
@@ -75,7 +101,7 @@ def dis(msg, msg_nocr, section, errmsg, x=None, start_line=-1, end_line=None,
               type(x).__name__)
     return
 
-def disassemble(msg, msg_nocr, co, lasti=-1, start_line=-1, end_line=None,
+def disassemble(msg, msg_nocr, section, co, lasti=-1, start_line=-1, end_line=None,
                 relative_pos=False, color=True):
     """Disassemble a code object."""
     disassemble_string(msg, msg_nocr, co.co_code, lasti, co.co_firstlineno,
@@ -126,17 +152,23 @@ def disassemble_string(orig_msg, orig_msg_nocr, code, lasti=-1, cur_line=0,
                 msg = orig_msg
                 pass
             if cur_line > end_line: break
-            msg_nocr("%3d" % cur_line)
+            msg_nocr(format_token(Token.LineNumber,
+                                  "%3d" % cur_line,
+                                  highlight=color))
         else:
             msg_nocr('   ')
 
-        if i == lasti: msg_nocr('-->')
+        if i == lasti: msg_nocr(format_token(Token.Arrow, '-->',
+                                             highlight=color))
         else: msg_nocr('   ')
-        if i in labels: msg_nocr('>>')
+        if i in labels: msg_nocr(format_token(Token.Arrow, '>>',
+                                              highlight=color))
         else: msg_nocr('  ')
         msg_nocr(repr(i).rjust(4))
         msg_nocr(' ')
-        msg_nocr(opname[op].ljust(20))
+        msg_nocr(format_token(Token.Opcode,
+                              opname[op].ljust(20),
+                              highlight=color))
         i += 1
         if op >= HAVE_ARGUMENT:
             oparg = ord(code[i]) + ord(code[i+1])*256 + extended_arg
@@ -147,15 +179,32 @@ def disassemble_string(orig_msg, orig_msg_nocr, code, lasti=-1, cur_line=0,
             msg_nocr(repr(oparg).rjust(5))
             msg_nocr(' ')
             if op in hasconst:
-                msg_nocr('(' + repr(consts[oparg]) + ')')
+                msg_nocr('(' +
+                         format_token(Token.Const,
+                                      repr(consts[oparg]),
+                                      highlight=color)
+                         + ')')
+                pass
             elif op in hasname:
-                msg_nocr('(' + names[oparg] + ')')
+                msg_nocr('(' +
+                         format_token(Token.Name,
+                                      names[oparg],
+                                      highlight=color)
+                         + ')')
             elif op in hasjrel:
-                msg_nocr('(to ' + repr(i + oparg) + ')')
+                msg_nocr(format_token(Token.Label,
+                                      '(to ' + repr(i + oparg) + ')',
+                                      highlight=color))
             elif op in haslocal:
-                msg_nocr('(' + varnames[oparg] + ')')
+                msg_nocr('(' +
+                         format_token(Token.Var,
+                                      varnames[oparg],
+                                      highlight=color) + ')')
             elif op in hascompare:
-                msg_nocr('(' + cmp_op[oparg] + ')')
+                msg_nocr('(' +
+                         format_token(Token.Compare,
+                                      cmp_op[oparg],
+                                      highlight=color) + ')')
             elif op in hasfree:
                 if free is None:
                     free = cellvars + freevars
@@ -189,13 +238,16 @@ if __name__ == '__main__':
     def errmsg(msg_str):
         msg('*** ' + msg_str)
         return
+    def section(msg_str):
+        msg('=== ' + msg_str + ' ===')
+        return
     curframe = inspect.currentframe()
-    dis(msg, msg_nocr, errmsg, curframe,
+    dis(msg, msg_nocr, errmsg, section, curframe,
         start_line=10, end_line=40)
     print '-' * 40
-    dis(msg, msg_nocr, errmsg, disassemble)
+    dis(msg, msg_nocr, section, errmsg, disassemble)
     print '-' * 40
     magic, moddate, modtime, co = pyc2code(sys.modules['types'].__file__)
-    disassemble(msg, msg_nocr, co, -1, 1, 70)
+    disassemble(msg, msg_nocr, section, co, -1, 1, 70)
     pass
 

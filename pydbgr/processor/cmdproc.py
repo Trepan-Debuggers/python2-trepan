@@ -124,14 +124,18 @@ def print_source_line(msg, lineno, line, event_str=None):
     # however might.
     return msg('%s %d %s' % (event_str, lineno, line))
 
-def print_source_location_info(print_fn, filename, lineno, fn_name=None):
+def print_source_location_info(print_fn, filename, lineno, fn_name=None,
+                               f_lasti=None):
     """Print out a source location , e.g. the first line in
     line in:
         (/tmp.py:2):  <module>
         L -- 2 import sys,os
         (Pydbgr)
     """
-    mess = '(%s:%s):' % (filename, lineno)
+    if f_lasti and f_lasti != -1:
+        mess = '(%s:%s @%d):' % (filename, lineno, f_lasti)
+    else:
+        mess = '(%s:%s):' % (filename, lineno)
     if fn_name and fn_name != '?':
         mess += " %s" % fn_name
         pass
@@ -168,6 +172,7 @@ def print_location(proc_obj):
         filename = Mstack.frame2file(core_obj, frame)
         fn_name = frame.f_code.co_name
         print_source_location_info(intf_obj.msg, filename, lineno, fn_name)
+                                   # proc_obj.curframe.f_lasti)
 
         opts = {
             'reload_on_change' : proc_obj.settings('reload'),

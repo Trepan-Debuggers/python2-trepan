@@ -31,11 +31,11 @@ class ShowHighlight(Mbase_subcmd.DebuggerSubcommand):
     def run(self, args):
         val = self.settings['highlight']
         if 'plain' == val:
-            mess = 'output is not for a terminal'
+            mess = 'output set to not use terminal escape sequences'
         elif 'light' == val:
-            mess = 'output is for a terminal with a light background'
+            mess = 'output set for terminal with escape sequences for a light background'
         elif 'dark' == val:
-            mess = 'output is for a terminal with a dark background'
+            mess = 'output set for terminal with escape sequences a dark background'
         else:
             self.errmsg('Internal error: incorrect highlight setting %s' % val)
             return

@@ -1,4 +1,8 @@
-0.1.7 01-01-13
+0.2.1 
+
+- Add call stack and disassembly colorization
+
+0.2.0 01-01-13
 
 - Port more of the trepanning debugger features here
   * Terminal output for errors, sections, and code syntax highlighting

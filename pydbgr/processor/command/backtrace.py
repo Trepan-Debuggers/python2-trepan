@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2009 Rocky Bernstein
+#  Copyright (C) 2009, 2013 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -21,8 +21,8 @@ Mbase_cmd = import_relative('base_cmd', top_name='pydbgr')
 Mstack    = import_relative('stack',  '...lib', 'pydbgr')
 Mcmdfns   = import_relative('cmdfns', '..',     'pydbgr')
 
-class WhereCommand(Mbase_cmd.DebuggerCommand):
-    """where [count]
+class BacktraceCommand(Mbase_cmd.DebuggerCommand):
+    """backtrace [count]
 
 Print a stack trace, with the most recent frame at the top.  With a
 positive number, print at most many entries.  With a negative number
@@ -33,13 +33,13 @@ the context used for many debugger commands such as expression
 evaluation or source-line listing.
 
 Examples:
-   where    # Print a full stack trace
-   where 2  # Print only the top two entries
-   where -1 # Print a stack trace except the initial (least recent) call.
+   backtrace    # Print a full stack trace
+   backtrace 2  # Print only the top two entries
+   backtrace -1 # Print a stack trace except the initial (least recent) call.
 """
 
 
-    aliases       = ('bt', 'backtrace')
+    aliases       = ('bt', 'where')
     category      = 'stack'
     min_args      = 0
     max_args      = 1
@@ -55,7 +55,7 @@ Examples:
                 return False
             min_value = - at_most + 1
             count = self.proc.get_int(args[1], min_value = min_value,
-                                      cmdname = 'where',
+                                      cmdname = 'backtrace',
                                       default=0, at_most = at_most)
             if count is None: return False
             if count < 0:
@@ -69,7 +69,7 @@ Examples:
         if not self.proc.curframe:
             self.errmsg("No stack.")
             return False
-        Mstack.print_stack_trace(self.proc, count)
+        Mstack.print_stack_trace(self.proc, count, color=self.settings['highlight'])
         return False
 
     pass
@@ -79,8 +79,8 @@ if __name__ == '__main__':
     debugger     = import_relative('debugger', '...')
     d            = debugger.Debugger()
     cp           = d.core.processor
-    command      = WhereCommand(cp)
-    command.run(['where', 'wrong', 'number', 'of', 'args'])
+    command      = BacktraceCommand(cp)
+    command.run(['backtrace', 'wrong', 'number', 'of', 'args'])
 
     def nest_me(cp, command, i):
         import inspect
@@ -89,9 +89,9 @@ if __name__ == '__main__':
             cp.stack, cp.curindex = cmdproc.get_stack(cp.curframe, None, None,
                                                       cp)
             print '-' * 10
-            command.run(['where'])
+            command.run(['backtrace'])
             print '-' * 10
-            command.run(['where', '1'])
+            command.run(['backtrace', '1'])
         else:
             nest_me(cp, command, i+1)
         return
@@ -103,16 +103,16 @@ if __name__ == '__main__':
         nest_me(cp, command, 1)
         return
     cp.forget()
-    command.run(['where'])
+    command.run(['backtrace'])
     print '-' * 10
     ignore_me(cp, command, 1)
-    command.run(['where', '1'])
+    command.run(['backtrace', '1'])
     print '-' * 10
-    command.run(['where', '-1'])
+    command.run(['backtrace', '-1'])
     print '-' * 10
-    command.run(['where', '3'])
+    command.run(['backtrace', '3'])
     print '-' * 10
-    command.run(['where', '-2'])
+    command.run(['backtrace', '-2'])
     print '-' * 10
     pass
 

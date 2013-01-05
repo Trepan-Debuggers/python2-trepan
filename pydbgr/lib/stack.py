@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2008, 2009, 2010 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008-2010,2013 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -19,6 +19,8 @@ import re, types
 from import_relative import import_relative
 Mbytecode = import_relative('bytecode', top_name='pydbgr')
 Mprint    = import_relative('print', top_name='pydbgr')
+Mformat   = import_relative('format', top_name='pydbgr')
+format_token = Mformat.format_token
 
 def count_frames(frame, count_start=0):
     "Return a count of the number of frames"
@@ -34,7 +36,7 @@ import inspect
 _re_pseudo_file = re.compile(r'^<.+>')
 
 def format_stack_entry(dbg_obj, frame_lineno, lprefix=': ',
-                       include_location=True):
+                       include_location=True, color='plain'):
     """Format and return a stack entry gdb-style.
     Note: lprefix is not used. It is kept for compatibility.
     """
@@ -43,7 +45,8 @@ def format_stack_entry(dbg_obj, frame_lineno, lprefix=': ',
 
     s = ''
     if frame.f_code.co_name:
-        s = frame.f_code.co_name
+        s = format_token(Mformat.Function, frame.f_code.co_name,
+                         highlight=color)
     else:
         s = "<lambda>"
         pass
@@ -54,8 +57,9 @@ def format_stack_entry(dbg_obj, frame_lineno, lprefix=': ',
         if is_exec_stmt(frame): 
             s += ' exec()'
         else:
-            fn_name = get_call_function_name(frame)
-            if fn_name: s += ' %s()' % fn_name
+            fn_name = get_call_function_name(frame, color=color)
+            if fn_name: s += ' %s()' % format_token(Mformat.Function, fn_name,
+                                                    highlight=color)
             pass
     else:
         is_module = False
@@ -74,7 +78,8 @@ def format_stack_entry(dbg_obj, frame_lineno, lprefix=': ',
     if '__return__' in frame.f_locals:
         rv = frame.f_locals['__return__']
         s += '->'
-        s += Mrepr.repr(rv)
+        s += format_token(Mformat.Return, Mrepr.repr(rv),
+                          highlight=color)
         pass
 
     if include_location:
@@ -101,7 +106,12 @@ def format_stack_entry(dbg_obj, frame_lineno, lprefix=': ',
             pass
 
         if add_quotes_around_file: filename = "'%s'" % filename
-        s += " %s at line %r" % (filename, lineno)
+        s += " %s at line %s" % (
+            format_token(Mformat.Filename, filename,
+                         highlight=color),
+            format_token(Mformat.LineNumber, "%r" % lineno,
+                         highlight=color)
+            )
     return s
 
 def frame2file(core_obj, frame):
@@ -113,7 +123,7 @@ def is_exec_stmt(frame):
         Mbytecode.op_at_frame(frame.f_back)=='EXEC_STMT'
 
 import dis
-def get_call_function_name(frame):
+def get_call_function_name(frame, color='plain'):
     """If f_back is looking at a call function, return 
     the name for it. Otherwise return None"""
     f_back = frame.f_back
@@ -131,22 +141,25 @@ def get_call_function_name(frame):
         if inst in linestarts:
             inst += 1
             oparg = ord(code[inst]) + (ord(code[inst+1]) << 8)
-            return co.co_names[oparg]
+            return format_token(Mformat.Function, co.co_names[oparg],
+                                highlight=color)
         inst -= 1
         pass
     return None
 
-def print_stack_entry(proc_obj, i_stack):
+def print_stack_entry(proc_obj, i_stack, color='plain'):
     frame_lineno = proc_obj.stack[len(proc_obj.stack)-i_stack-1]
     frame, lineno = frame_lineno
     if frame is proc_obj.curframe:
-        proc_obj.intf[-1].msg_nocr('->')
+        proc_obj.intf[-1].msg_nocr(format_token(Mformat.Arrow, '->',
+                                                highlight=color))
     else:
         proc_obj.intf[-1].msg_nocr('##')
     proc_obj.intf[-1].msg("%d %s" %
-             (i_stack, format_stack_entry(proc_obj.debugger, frame_lineno)))
+             (i_stack, format_stack_entry(proc_obj.debugger, frame_lineno,
+                                          color=color)))
 
-def print_stack_trace(proc_obj, count=None):
+def print_stack_trace(proc_obj, count=None, color='plain'):
     "Print count entries of the stack trace"
     if count is None:
         n=len(proc_obj.stack)
@@ -154,7 +167,7 @@ def print_stack_trace(proc_obj, count=None):
         n=min(len(proc_obj.stack), count)
     try:
         for i in range(n):
-            print_stack_entry(proc_obj, i)
+            print_stack_entry(proc_obj, i, color=color)
     except KeyboardInterrupt:
         pass
     return
@@ -231,6 +244,7 @@ if __name__=='__main__':
     frame = inspect.currentframe()
     m = MockDebugger()
     print format_stack_entry(m, (frame, 10,))
+    print format_stack_entry(m, (frame, 10,), color='dark')
     print "frame count: ", count_frames(frame)
     print "frame count: ", count_frames(frame.f_back)
     print "frame count: ", count_frames(frame, 1)

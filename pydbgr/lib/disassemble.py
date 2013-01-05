@@ -19,31 +19,9 @@ from dis import distb, findlabels, findlinestarts
 from opcode import cmp_op, hasconst, hascompare, hasfree, hasname, hasjrel, \
     haslocal, opname, EXTENDED_ARG, HAVE_ARGUMENT
 
-from pygments.formatters.terminal import TERMINAL_COLORS
-from pygments.console import ansiformat
-from pygments.token import *
-
-def format_token(ttype, token, colorscheme=TERMINAL_COLORS, highlight='light' ):
-    if 'plain' == highlight: return token
-    darkbg = 'light' == highlight
-
-    color = colorscheme.get(ttype)
-    if color:
-        color = color[darkbg]
-        return ansiformat(color, token)
-        pass
-    return token
-
-
-Token.Arrow      = Name.Variable
-Token.Compare    = Name.Exception
-Token.Const      = String
-Token.Label      = Operator.Word
-Token.LineNumber = Number
-Token.Name       = Comment.Preproc
-Token.Offset     = Operator
-Token.Opcode     = Name.Function
-Token.Var        = Keyword
+from import_relative import import_relative
+Mformat   = import_relative('format', top_name='pydbgr')
+format_token = Mformat.format_token
 
 # Modified from dis. Changed output to use msg, msg_nocr, section, and pygments.
 # Added first_line and last_line parameters
@@ -102,7 +80,7 @@ def dis(msg, msg_nocr, section, errmsg, x=None, start_line=-1, end_line=None,
     return
 
 def disassemble(msg, msg_nocr, section, co, lasti=-1, start_line=-1, end_line=None,
-                relative_pos=False, color=True):
+                relative_pos=False, color='light'):
     """Disassemble a code object."""
     disassemble_string(msg, msg_nocr, co.co_code, lasti, co.co_firstlineno,
                        start_line, end_line, relative_pos,
@@ -114,7 +92,7 @@ def disassemble(msg, msg_nocr, section, co, lasti=-1, start_line=-1, end_line=No
 def disassemble_string(orig_msg, orig_msg_nocr, code, lasti=-1, cur_line=0,
                        start_line=-1, end_line=None, relative_pos=False,
                        varnames=(), names=(), consts=(), cellvars=(),
-                       freevars=(), linestarts={}, color=True):
+                       freevars=(), linestarts={}, color='light'):
     """Disassemble byte string of code. If end_line is negative
     it counts the number of statement linestarts to use."""
     statement_count = 10000
@@ -152,21 +130,21 @@ def disassemble_string(orig_msg, orig_msg_nocr, code, lasti=-1, cur_line=0,
                 msg = orig_msg
                 pass
             if cur_line > end_line: break
-            msg_nocr(format_token(Token.LineNumber,
+            msg_nocr(format_token(Mformat.LineNumber,
                                   "%3d" % cur_line,
                                   highlight=color))
         else:
             msg_nocr('   ')
 
-        if i == lasti: msg_nocr(format_token(Token.Arrow, '-->',
+        if i == lasti: msg_nocr(format_token(Mformat.Arrow, '-->',
                                              highlight=color))
         else: msg_nocr('   ')
-        if i in labels: msg_nocr(format_token(Token.Arrow, '>>',
+        if i in labels: msg_nocr(format_token(Mformat.Arrow, '>>',
                                               highlight=color))
         else: msg_nocr('  ')
         msg_nocr(repr(i).rjust(4))
         msg_nocr(' ')
-        msg_nocr(format_token(Token.Opcode,
+        msg_nocr(format_token(Mformat.Opcode,
                               opname[op].ljust(20),
                               highlight=color))
         i += 1
@@ -180,29 +158,29 @@ def disassemble_string(orig_msg, orig_msg_nocr, code, lasti=-1, cur_line=0,
             msg_nocr(' ')
             if op in hasconst:
                 msg_nocr('(' +
-                         format_token(Token.Const,
+                         format_token(Mformat.Const,
                                       repr(consts[oparg]),
                                       highlight=color)
                          + ')')
                 pass
             elif op in hasname:
                 msg_nocr('(' +
-                         format_token(Token.Name,
+                         format_token(Mformat.Name,
                                       names[oparg],
                                       highlight=color)
                          + ')')
             elif op in hasjrel:
-                msg_nocr(format_token(Token.Label,
+                msg_nocr(format_token(Mformat.Label,
                                       '(to ' + repr(i + oparg) + ')',
                                       highlight=color))
             elif op in haslocal:
                 msg_nocr('(' +
-                         format_token(Token.Var,
+                         format_token(Mformat.Var,
                                       varnames[oparg],
                                       highlight=color) + ')')
             elif op in hascompare:
                 msg_nocr('(' +
-                         format_token(Token.Compare,
+                         format_token(Mformat.Compare,
                                       cmp_op[oparg],
                                       highlight=color) + ')')
             elif op in hasfree:

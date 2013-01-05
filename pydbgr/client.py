@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009 Rocky Bernstein
+#   Copyright (C) 2009, 2013 Rocky Bernstein
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -36,9 +36,9 @@ def start_client(connection_opts):
       while not done:
             control, remote_msg = intf.read_remote()
             # print 'c, r', control, remote_msg
-            if Mcomcodes.PROMPT == control:
-                  msg = intf.read_command('(Pydbgr*) ').strip()
-                  intf.write_remote(Mcomcodes.PRINT, msg)
+            if Mcomcodes.PRINT == control:
+                  print remote_msg,
+                  pass
             elif control in [Mcomcodes.CONFIRM_TRUE, Mcomcodes.CONFIRM_FALSE]:
                   default = (Mcomcodes.CONFIRM_TRUE == control)
                   if intf.confirm(remote_msg.rstrip('\n'), default):
@@ -46,7 +46,10 @@ def start_client(connection_opts):
                   else:
                         msg='N'
                         pass
-                  intf.write_remote(Mcomcodes.PRINT, msg)
+                  intf.write_remote(Mcomcodes.CONFIRM_REPLY, msg)
+            elif Mcomcodes.PROMPT == control:
+                  msg = intf.read_command('(Pydbgr*) ').strip()
+                  intf.write_remote(Mcomcodes.CONFIRM_REPLY, msg)
             elif Mcomcodes.QUIT == control:
                   print 'Quitting...'
                   done = True
@@ -64,9 +67,6 @@ def start_client(connection_opts):
                         done=True
                         pass
                   break
-            elif Mcomcodes.PRINT == control:
-                  print remote_msg,
-                  pass
             else:
                   print "!! Weird status code received '%s'" % control
                   print remote_msg,

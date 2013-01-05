@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2008, 2009 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008, 2009, 2013 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -15,8 +15,11 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """ Communication status codes"""
 PRINT         = '.'
+COMMAND       = 'C'   # read a command
 CONFIRM_TRUE  = 'Y'
 CONFIRM_FALSE = 'N'
+CONFIRM_REPLY = '?'
 QUIT          = 'q'
 PROMPT        = 'p'
+SYNC          = 's'   # Resynchronize communication
 RESTART       = 'r'

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009, 2010, 2012 Rocky Bernstein
+#   Copyright (C) 2009-2010, 2012-2013 Rocky Bernstein
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -91,6 +91,10 @@ class DebuggerSubcommand:
     aliases = ('alias1', 'alias2..',)
     name    = 'YourCommandName'
         
+    def rst_msg(self, text):
+        """Convenience short-hand for self.proc.rst_msg(text)"""
+        return(self.proc.rst_msg(text))
+
     def run(self):
         """ The method that implements the debugger command.
         Help on the command comes from the docstring of this method.

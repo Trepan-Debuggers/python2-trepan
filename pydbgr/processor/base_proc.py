@@ -35,7 +35,7 @@ class Processor:
     # we wouldn't pick up that change in our self.msg
     def errmsg(self, message, opts={}):
         """ Convenience short-hand for self.intf[-1].errmsg """
-        if 'plain' != self.core.debugger.settings['highlight']:
+        if 'plain' != self.debugger.settings['highlight']:
             message = colorize('standout', message)
             pass
         return(self.intf[-1].errmsg(message))
@@ -53,13 +53,13 @@ class Processor:
 
     def rst_msg(self, text, opts={}):
         """Convert ReStructuredText and run through msg()"""
-        if 'plain' != self.settings['highlight']:
+        if 'plain' != self.debugger.settings['highlight']:
             text = Mformat.rst_text(text)
             pass
         return self.msg(text)
                
     def section(self, message, opts={}):
-        if 'plain' != self.settings['highlight']:
+        if 'plain' != self.settings('highlight'):
             message = colorize('bold', message)
             pass
         return self.msg(message, opts)

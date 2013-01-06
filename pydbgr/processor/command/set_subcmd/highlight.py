@@ -21,15 +21,16 @@ from pyficache import clear_file_format_cache
 Mbase_subcmd = import_relative('base_subcmd', '..', 'pydbgr')
 
 class SetHighlight(Mbase_subcmd.DebuggerSubcommand):
-    """Set whether we use terminal highlighting.
-    Permissable values are:
+    """**set highlight** [**reset**] {**plain**|**light**|**dark**}
+
+Set whether we use terminal highlighting. Permissable values are:
+
        plain:  no terminal highlighting
        light:  terminal background is light (the default)
-       dark:   terimanl background is dark
+       dark:   terminal background is dark
 
-    If the first argument is 'reset' we clear any existing color formatting
-    and recolor all file output.
-    """
+If the first argument is *reset*, we clear any existing color formatting
+and recolor all file output."""
 
     in_list    = True
     min_abbrev = len('hi')

@@ -37,18 +37,8 @@ categories = {
     }
 
 class HelpCommand(Mbase_cmd.DebuggerCommand):
-
-    aliases       = ('?',)
-    category      = 'support'
-    min_args      = 0
-    max_args      = None
-    name          = os.path.basename(__file__).split('.')[0]
-    need_stack    = False
-    short_help    = 'Print commands or give help for command(s)'
-
-    def run(self, args):
-        """**help** [*command* [*subcommand*]|*expression*]
-
+    """**help** [*command* [*subcommand*]|*expression*]
+        
 Without argument, print the list of available debugger commands.
 
 When an argument is given, it is first checked to see if it is command
@@ -69,7 +59,15 @@ info line command.
 
 See also `examine` and `whatis`.
 """
+    aliases       = ('?',)
+    category      = 'support'
+    min_args      = 0
+    max_args      = None
+    name          = os.path.basename(__file__).split('.')[0]
+    need_stack    = False
+    short_help    = 'Print commands or give help for command(s)'
 
+    def run(self, args):
         # It does not make much sense to repeat the last help
         # command. Also, given that 'help' uses PAGER, the you may
         # enter an extra CR which would rerun the (long) help command.

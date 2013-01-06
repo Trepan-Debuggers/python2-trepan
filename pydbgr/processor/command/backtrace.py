@@ -22,7 +22,7 @@ Mstack    = import_relative('stack',  '...lib', 'pydbgr')
 Mcmdfns   = import_relative('cmdfns', '..',     'pydbgr')
 
 class BacktraceCommand(Mbase_cmd.DebuggerCommand):
-    """backtrace [count]
+    """**backtrace** [*count*]
 
 Print a stack trace, with the most recent frame at the top.  With a
 positive number, print at most many entries.  With a negative number

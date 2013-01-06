@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009, 2010 Rocky Bernstein
+#   Copyright (C) 2009, 2010, 2013 Rocky Bernstein
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -118,7 +118,7 @@ class SubcommandMgr(Mbase_cmd.DebuggerCommand):
             # "help cmd". Give the general help for the command part.
             doc = self.__doc__ or self.run.__doc__
             if doc:
-                self.proc.intf[-1].msg(doc)
+                self.rst_msg(doc.rstrip('\n'))
             else:
                 self.proc.intf[-1].errmsg('Sorry - author mess up. ' + 
                                           'No help registered for command' + 
@@ -129,7 +129,7 @@ class SubcommandMgr(Mbase_cmd.DebuggerCommand):
         subcmd_name = args[2]
 
         if '*' == subcmd_name:
-            self.msg("List of subcommands for command '%s':" % self.name)
+            self.section("List of subcommands for command '%s':" % self.name)
             self.msg(self.columnize_commands(self.cmds.list()))
             return
 
@@ -138,7 +138,7 @@ class SubcommandMgr(Mbase_cmd.DebuggerCommand):
         if cmd:
             doc = cmd.__doc__ or cmd.run.__doc__
             if doc:
-                self.proc.intf[-1].msg(doc)
+                self.proc.rst_msg(doc.rstrip('\n'))
             else:
                 self.proc.intf[-1].errmsg('Sorry - author mess up. ' + 
                                           'No help registered for subcommand: ' + 
@@ -152,7 +152,7 @@ class SubcommandMgr(Mbase_cmd.DebuggerCommand):
                 self.errmsg("No %s subcommands found matching /^%s/. Try \"help\"." %
                             (self.name, subcmd_name,))
             else:
-                self.msg("Subcommand(s) of \"%s\" matching /^%s/:" %
+                self.section("Subcommand(s) of \"%s\" matching /^%s/:" %
                          (self.name, subcmd_name,))
                 self.msg_nocr(self.columnize_commands(cmds))
                 pass

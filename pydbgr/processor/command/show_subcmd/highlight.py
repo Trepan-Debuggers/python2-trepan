@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2012 Rocky Bernstein
+#   Copyright (C) 2012, 2013 Rocky Bernstein
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -26,7 +26,9 @@ Mcmdfns = import_relative('cmdfns', '...', 'pydbgr')
 Mbase_subcmd  = import_relative('base_subcmd', '..')
 
 class ShowHighlight(Mbase_subcmd.DebuggerSubcommand):
-    "Show whether we use terminal highlighting"
+    '''**show highlight**
+
+Show whether we use terminal highlighting.'''
 
     def run(self, args):
         val = self.settings['highlight']

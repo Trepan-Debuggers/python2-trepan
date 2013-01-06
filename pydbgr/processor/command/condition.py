@@ -24,10 +24,10 @@ Mfile      = import_relative('file', '...lib', 'pydbgr')
 Mmisc      = import_relative('misc', '...', 'pydbgr')
 
 class ConditionCommand(Mbase_cmd.DebuggerCommand):
-    """condition BP_NUMBER CONDITION
+    """**condition** *bp_number* *condition*
 
-BP_NUMBER is a breakpoint number.  CONDITION is an expression which
-must evaluate to True before the breakpoint is honored.  If CONDITION
+*bp_number* is a breakpoint number. *condition* is an expression which
+must evaluate to *True* before the breakpoint is honored.  If *condition*
 is absent, any existing condition is removed; i.e., the breakpoint is
 made unconditional.
 

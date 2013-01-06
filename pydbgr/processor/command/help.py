@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009, 2012 Rocky Bernstein
+#   Copyright (C) 2009, 2012, 2013 Rocky Bernstein
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ import_relative('processor', '...', 'pydbgr')
 
 Mbase_cmd  = import_relative('base_cmd', top_name='pydbgr')
 Mcmdproc   = import_relative('cmdproc', '..', 'pydbgr')
-Mmisc      = import_relative('misc', '...', 'pydbgr')
+Mmisc      = import_relative('misc',    '...', 'pydbgr')
 
 categories = {
     'breakpoints' : 'Making the program stop at certain points',
@@ -47,27 +47,27 @@ class HelpCommand(Mbase_cmd.DebuggerCommand):
     short_help    = 'Print commands or give help for command(s)'
 
     def run(self, args):
-        """help [command [subcommand]|expression]
+        """**help** [*command* [*subcommand*]|*expression*]
 
 Without argument, print the list of available debugger commands.
 
 When an argument is given, it is first checked to see if it is command
-name. 'help exec' gives help on the ! command.
+name.
 
-With the argument is an expression or object name, you get the same
+If the argument is an expression or object name, you get the same
 help that you would get inside a Python shell running the built-in
-help() command.
+*help()* command.
 
-If the environment variable $PAGER is defined, the file is
+If the environment variable *$PAGER* is defined, the file is
 piped through that command.  You'll notice this only for long help
 output.
 
-Some commands like 'info', 'set', and 'show' can accept an
+Some commands like `info`, `set`, and `show` can accept an
 additional subcommand to give help just about that particular
-subcommand. For example 'help info line' give help about the
+subcommand. For example `help info line` give help about the
 info line command.
 
-See also 'examine' and 'whatis'.
+See also `examine` and `whatis`.
 """
 
         # It does not make much sense to repeat the last help
@@ -92,7 +92,8 @@ See also 'examine' and 'whatis'.
                     return instance.help(args)
                 else:
                     doc = instance.__doc__ or instance.run.__doc__
-                    self.msg(doc.rstrip("\n"))
+                    doc = doc.rstrip('\n')
+                    self.rst_msg(doc.rstrip("\n"))
                     aliases = [key for key in self.proc.alias2name 
                                if command_name == self.proc.alias2name[key]]
                     if len(aliases) > 0:
@@ -129,13 +130,13 @@ See also 'examine' and 'whatis'.
             self.msg("  %-13s -- %s" % (cat, categories[cat]))
             pass
         final_msg = """
-Type "help" followed by a class name for a list of commands in that class.
-Type "help *" for the list of all commands.
-Type "help REGEXP" for the list of commands matching /^#{REGEXP}/
-Type "help CLASS *" for the list of all commands in class CLASS.
-Type "help" followed by command name for full documentation.
+Type `help` followed by a class name for a list of commands in that class.
+Type `help *` for the list of all commands.
+Type `help` *regexp* for the list of commands matching /^#{*regexp*}/
+Type `help` *class* `*` for the list of all commands in class *class*
+Type `help` followed by command name for full documentation.
 """
-        self.msg(final_msg)
+        self.rst_msg(final_msg.rstrip('\n'))
         return
 
     def show_category(self, category, args):

@@ -15,6 +15,9 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 NotImplementedMessage = "This method must be overriden in a subclass"
 from pygments.console import colorize
+from import_relative import import_relative
+Mformat = import_relative('format',  '..lib', 'pydbgr')
+
 class Processor:
     """ A processor is the thing that handles the events that come to the debugger.
     It has it's own I/O mechanism and a way to handle the events.
@@ -48,11 +51,18 @@ class Processor:
     def event_processor(self, frame, event, arg):
         raise NotImplementedError, NotImplementedMessage
 
+    def rst_msg(self, text, opts={}):
+        """Convert ReStructuredText and run through msg()"""
+        if 'plain' != self.settings['highlight']:
+            text = Mformat.rst_text(text)
+            pass
+        return self.msg(text)
+               
     def section(self, message, opts={}):
         if 'plain' != self.settings['highlight']:
             message = colorize('bold', message)
             pass
-        self.msg(message, opts)
+        return self.msg(message, opts)
 
     def settings(self, setting):
         return self.core.debugger.settings[setting]

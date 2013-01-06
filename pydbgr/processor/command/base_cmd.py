@@ -24,6 +24,8 @@ NotImplementedMessage = "This method must be overriden in a subclass"
 
 import columnize
 from pygments.console import colorize
+from import_relative import import_relative
+Mformat = import_relative('format',  '...lib', 'pydbgr')
 
 class DebuggerCommand:
     """Base Class for Debugger commands. We pull in some helper
@@ -94,6 +96,13 @@ class DebuggerCommand:
             pass
         return None
         
+    def rst_msg(self, text, opts={}):
+        """Convert ReStructuredText and run through msg()"""
+        if 'plain' != self.settings['highlight']:
+            text = Mformat.rst_text(text)
+            pass
+        return self.msg(text)
+               
     def run(self, args):
         """ The method that implements the debugger command.
         Help on the command comes from the docstring of this method.

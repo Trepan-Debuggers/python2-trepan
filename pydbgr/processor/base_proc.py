@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2008, 2009, 2010, 2012 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008-2010, 2012-2013 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -19,8 +19,9 @@ from import_relative import import_relative
 Mformat = import_relative('format',  '..lib', 'pydbgr')
 
 class Processor:
-    """ A processor is the thing that handles the events that come to the debugger.
-    It has it's own I/O mechanism and a way to handle the events.
+    """A processor is the thing that handles the events that come to
+    the debugger.  It has it's own I/O mechanism and a way to handle
+    the events.
     """
     def __init__(self, core_obj):
         self.core = core_obj
@@ -53,9 +54,8 @@ class Processor:
 
     def rst_msg(self, text, opts={}):
         """Convert ReStructuredText and run through msg()"""
-        if 'plain' != self.debugger.settings['highlight']:
-            text = Mformat.rst_text(text)
-            pass
+        text = Mformat.rst_text(text,
+                                'plain' == self.debugger.settings['highlight'])
         return self.msg(text)
                
     def section(self, message, opts={}):

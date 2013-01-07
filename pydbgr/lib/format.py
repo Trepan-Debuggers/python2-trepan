@@ -77,18 +77,44 @@ class RstFilter(Filter):
         return
     pass
 
+class MonoTerminalFormatter(TerminalFormatter):
+    def format_unencoded(self, tokensource, outfile):
+        for ttype, value in tokensource:
+            if ttype is Token.Name.Variable:
+                value = '"%s"' % value
+                pass
+            elif ttype is Token.Generic.Emph:
+                type
+                value = "*%s*" % value
+                pass            
+            elif ttype is Token.Generic.Strong:
+                value = value.upper()
+                pass
+            pass
+            
+            outfile.write(value)
+            pass
+        return
+    pass
+
 rst_lex = RstLexer()
 rst_filt = RstFilter()
 rst_lex.add_filter(rst_filt)
-tf = TerminalFormatter(colorscheme=color_scheme)
+color_tf = TerminalFormatter(colorscheme=color_scheme)
+mono_tf  = MonoTerminalFormatter()
 
-def rst_text(text):
+def rst_text(text, mono):
+    if mono:
+        tf = mono_tf
+    else:
+        tf = color_tf
     return highlight(text, rst_lex, tf)
 
 if __name__ == '__main__':
     string = '`A` very *emphasis* **strong** `code`'
-    print highlight(string, rst_lex, tf)
+    print highlight(string, rst_lex, color_tf)
     for t in lex(string, rst_lex):
         print t
         pass
+    print highlight(string, rst_lex, mono_tf)
     pass

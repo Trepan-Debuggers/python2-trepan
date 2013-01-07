@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2009 Rocky Bernstein
+#  Copyright (C) 2009, 2013 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -22,14 +22,24 @@ Mfile      = import_relative('file', '...lib', 'pydbgr')
 Mcmdbreak  = import_relative('cmdbreak', '..', 'pydbgr')
 
 class ContinueCommand(Mbase_cmd.DebuggerCommand):
-    """continue [[file:]lineno | function]
+    """**continue** [[*file*:]*lineno* | *function*]
 
 Leave the debugger loop and continue execution. Subsequent entry to
 the debugger however may occur via breakpoints or explicit calls, or
 exceptions.
 
-If a line position is given, a temporary breakpoint is set at that
-position before continuing."""
+If a line position or function is given, a temporary breakpoint is set at that
+position before continuing.
+
+**EXAMPLES:**
+
+    continue          # Continue execution
+    continue 5        # Continue with a one-time breakpoint at line 5
+    continue basename # Go to os.path.basename if we have basename imported
+    continue /usr/lib/python2.7/posixpath.py:110 # Possibly the same as
+                                                 # the above using file
+                                                 # and line number
+"""
 
     category      = 'running'
     aliases       = ('c',)

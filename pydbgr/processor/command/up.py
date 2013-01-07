@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009 Rocky Bernstein
+#   Copyright (C) 2009, 2013 Rocky Bernstein
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -24,22 +24,20 @@ Mcmdfns   = import_relative('cmdfns',   '..', 'pydbgr')
 
 class UpCommand(Mbase_cmd.DebuggerCommand):
 
-    aliases       = ('u',)
     category      = 'stack'
     min_args      = 0
     max_args      = 1
     name          = os.path.basename(__file__).split('.')[0]
     need_stack    = True
-    short_help    = 'Move stack frame to a more recent selected frame'
-
+    short_help    = 'Move frame in the direction of the caller of the last-selected frame'
 
     def run(self, args):
-        """u(p) [count]
+        """**up** [*count*]
 
-Move the current frame up in the stack trace (to a newer frame). 0 is
+Move the current frame up in the stack trace (to an older frame). 0 is
 the most recent frame. If no count is given, move up 1.
 
-See also 'down' and 'frame'."""
+See also `down` and `frame`."""
 
         if not self.proc.stack:
             self.errmsg("Program has no stack frame set.")
@@ -56,7 +54,7 @@ See also 'down' and 'frame'."""
             if count is None: return
             pass
 
-        self.proc.adjust_frame(pos=-count, absolute_pos=False)
+        self.proc.adjust_frame(pos=count, absolute_pos=False)
         return False
 
 if __name__ == '__main__':

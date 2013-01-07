@@ -53,7 +53,7 @@ and recolor all file output."""
             highlight_type = self.get_highlight_type(args[0])
             if not highlight_type: return
             pass
-        self.settings['highlight'] = highlight_type
+        self.debugger.settings['highlight'] = highlight_type
         show_cmd = self.proc.name2cmd['show']
         show_cmd.run(['show', 'highlight'])
         return

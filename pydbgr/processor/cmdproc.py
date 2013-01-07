@@ -96,7 +96,7 @@ def run_hooks(obj, hooks, *args):
     return False
 
 def resolve_name(obj, command_name):
-    if command_name not in obj.name2cmd:
+    if command_name.lower() not in obj.name2cmd:
         if command_name in obj.alias2name:
             command_name = obj.alias2name[command_name]
             pass
@@ -104,7 +104,7 @@ def resolve_name(obj, command_name):
             return None
         pass
     try:
-        return command_name
+        return command_name.lower()
     except:
         return None
     return

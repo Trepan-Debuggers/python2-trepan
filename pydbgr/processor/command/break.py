@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-#  Copyright (C) 2009, 2010 Rocky Bernstein
+#  Copyright (C) 2009-2010, 2013 Rocky Bernstein
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
 #  the Free Software Foundation, either version 3 of the License, or
@@ -26,19 +26,19 @@ Mcmdbreak = import_relative('cmdbreak', '..', 'pydbgr')
 
 
 class BreakCommand(Mbase_cmd.DebuggerCommand):
-    """break [LOCATION] [if CONDITION]]
+    """**break** [*location*] [if *condition*]]
 
 With a line number argument, set a break there in the current file.
 With a function name, set a break at first executable line of that
 function.  Without argument, set a breakpoint at current location.  If
-a second argument is "if", subsequent arguments given an expression
+a second argument is `if`, subsequent arguments given an expression
 which must evaluate to true before the breakpoint is honored.
 
 The location line number may be prefixed with a filename or module
-name and a colon. Files is searched for using sys.path, adnd the .py
+name and a colon. Files is searched for using *sys.path*, and the `.py`
 suffix may be omitted in the file name.
 
-Examples:
+**Examples:**
    break              # Break where we are current stopped at
    break if i < j     # Break at current line if i < j
    break 10           # Break on line 10 of the file we are currently stopped at

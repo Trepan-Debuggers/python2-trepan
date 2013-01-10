@@ -99,7 +99,8 @@ class DebuggerCommand:
     def rst_msg(self, text, opts={}):
         """Convert ReStructuredText and run through msg()"""
         text = Mformat.rst_text(text,
-                                'plain' == self.debugger.settings['highlight'])
+                                'plain' == self.debugger.settings['highlight'],
+                                self.debugger.settings['width'])
         return self.msg(text)
                
     def run(self, args):

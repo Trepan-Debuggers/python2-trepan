@@ -134,7 +134,9 @@ Type `help` *regexp* for the list of commands matching /^#{*regexp*}/
 Type `help` *class* `*` for the list of all commands in class *class*
 Type `help` followed by command name for full documentation.
 """
-        self.rst_msg(final_msg.rstrip('\n'))
+        for line in re.compile('\n').split(final_msg.rstrip('\n')):
+            self.rst_msg(line)
+            pass
         return
 
     def show_category(self, category, args):
@@ -148,8 +150,8 @@ Type `help` followed by command name for full documentation.
             self.msg_nocr(self.columnize_commands(cmds))
             return
         
-        self.msg("%s." % categories[category])
-        self.msg("List of commands:\n")
+        self.msg("%s.\n" % categories[category])
+        self.section("List of commands:")
         names.sort()
         for name in names: # Foo! iteritems() doesn't do sorting
             if category != n2cmd[name].category: continue

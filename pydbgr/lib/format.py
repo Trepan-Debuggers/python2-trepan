@@ -15,21 +15,25 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''Pygments-related terminal formatting'''
 
+import re
 from pygments                     import highlight, lex
 from pygments.console             import ansiformat
 from pygments.filter              import Filter
+from pygments.formatter           import Formatter
 from pygments.formatters          import TerminalFormatter
 from pygments.formatters.terminal import TERMINAL_COLORS
 from pygments.lexers              import RstLexer
 from pygments.token               import *
+from pygments.util                import get_choice_opt
 
-def format_token(ttype, token, colorscheme=TERMINAL_COLORS, highlight='light' ):
+def format_token(ttype, token, colorscheme=TERMINAL_COLORS,
+                 highlight='light' ):
     if 'plain' == highlight: return token
-    darkbg = 'light' == highlight
+    light_bg = 'light' == highlight
 
     color = colorscheme.get(ttype)
     if color:
-        color = color[darkbg]
+        color = color[light_bg]
         return ansiformat(color, token)
         pass
     return token
@@ -77,22 +81,181 @@ class RstFilter(Filter):
         return
     pass
 
-class MonoTerminalFormatter(TerminalFormatter):
+class RSTTerminalFormatter(Formatter):
+    r"""
+    Format tokens with ANSI color sequences, for output in a text console.
+    Color sequences are terminated at newlines, so that paging the output
+    works correctly.
+
+    The `get_style_defs()` method doesn't do anything special since there is
+    no support for common styles.
+
+    Options accepted:
+
+    `bg`
+        Set to ``"light"`` or ``"dark"`` depending on the terminal's background
+        (default: ``"light"``).
+
+    `colorscheme`
+        A dictionary mapping token types to (lightbg, darkbg) color names or
+        ``None`` (default: ``None`` = use builtin colorscheme).
+    """
+    name = 'Terminal'
+    aliases = ['terminal', 'console']
+    filenames = []
+
+    def __init__(self, **options):
+        Formatter.__init__(self, **options)
+        self.darkbg = get_choice_opt(options, 'bg',
+                                     ['light', 'dark'], 'light') == 'dark'
+        self.colorscheme = options.get('colorscheme', None) or TERMINAL_COLORS
+        self.width = options.get('width', 80)
+        self.verbatim = False
+        self.in_list  = False
+        self.column   = 1
+        self.last_was_nl = False
+        return
+
+    def reset(self, width=None):
+        self.column = 0
+        if width: self.width = width
+        return
+
+    def format(self, tokensource, outfile):
+        # hack: if the output is a terminal and has an encoding set,
+        # use that to avoid unicode encode problems
+        if not self.encoding and hasattr(outfile, "encoding") and \
+           hasattr(outfile, "isatty") and outfile.isatty() and \
+           sys.version_info < (3,):
+            self.encoding = outfile.encoding
+            pass
+        self.outfile = outfile
+        return Formatter.format(self, tokensource, outfile)
+
+    def write(self, text, color):
+        color_text = text
+        if color: color_text = ansiformat(color, color_text)
+        self.outfile.write(color_text)
+        self.column += len(text)
+        return self.column
+
+    def write_nl(self):
+        self.outfile.write('\n')
+        self.column = 0
+        return self.column
+        
+
+    def reflow_text(self, text, color):
+        # print '%r' % text
+        # from pydbgr.api import debug
+        # if u' or ' == text: debug()
+        last_last_nl = self.last_was_nl
+        if text[-1] == '\n':
+            if self.last_was_nl:
+                self.write_nl()
+                self.write_nl()
+                text = text[:-1]
+            elif self.verbatim:
+                pass
+            else:
+                self.write(' ', color)
+                text = text[:-1]
+                pass
+            self.last_was_nl = True
+            if '' == text: return
+            while text[-1] == '\n':
+                self.write_nl()
+                text = text[:-1]
+                if '' == text: return
+                pass
+            pass
+        else:
+            self.last_was_nl = False
+            pass
+        self.in_list = self.verbatim = False
+        if last_last_nl:
+            if ' * ' == text[0:3]: self.in_list = True
+            elif '  ' == text[0:2]: self.verbatim = True
+            pass
+
+        # FIXME: there may be nested lists, tables and so on.
+        if self.verbatim:
+            self.write(text, color)
+            self.column = 0
+        elif self.in_list:
+            # FIXME: 
+            self.write(text, color,)
+        else:
+            words = re.compile('[ \t]+').split(text)
+            for word in words[:-1]:
+                # print "column: %d, word %s" % (self.column, word)
+                if (self.column + len(word) + 1) >= self.width:
+                    self.write_nl()
+                    pass
+                if not (self.column == 0 and word == ''):
+                    self.write(word + ' ', color)
+                    pass
+                pass
+            if words[-1]:
+                # print "column2: %d, word %r" % (self.column, words[-1])
+                if (self.column + len(words[-1])) >= self.width:
+                    self.write_nl()
+                    pass
+                self.write(words[-1], color)
+                pass
+            pass
+        return
+        
+
     def format_unencoded(self, tokensource, outfile):
-        for ttype, value in tokensource:
+        for ttype, text in tokensource:
+            color = self.colorscheme.get(ttype)
+            while color is None:
+                ttype = ttype[:-1]
+                color = self.colorscheme.get(ttype)
+                pass
+            if color: color = color[self.darkbg]
+            self.reflow_text(text, color)
+            pass
+        return
+    pass
+    
+class MonoRSTTerminalFormatter(RSTTerminalFormatter):
+    def format_unencoded(self, tokensource, outfile):
+        for ttype, text in tokensource:
             if ttype is Token.Name.Variable:
-                value = '"%s"' % value
+                text = '"%s"' % text
                 pass
             elif ttype is Token.Generic.Emph:
                 type
-                value = "*%s*" % value
+                text = "*%s*" % text
                 pass            
             elif ttype is Token.Generic.Strong:
-                value = value.upper()
+                text = text.upper()
                 pass
             pass
             
-            outfile.write(value)
+            self.reflow_text(text, None)
+            pass
+        return
+    pass
+
+class MonoTerminalFormatter(TerminalFormatter):
+    def format_unencoded(self, tokensource, outfile):
+        for ttype, text in tokensource:
+            if ttype is Token.Name.Variable:
+                text = '"%s"' % text
+                pass
+            elif ttype is Token.Generic.Emph:
+                type
+                text = "*%s*" % text
+                pass            
+            elif ttype is Token.Generic.Strong:
+                text = text.upper()
+                pass
+            pass
+            
+            outfile.write(text)
             pass
         return
     pass
@@ -100,21 +263,74 @@ class MonoTerminalFormatter(TerminalFormatter):
 rst_lex = RstLexer()
 rst_filt = RstFilter()
 rst_lex.add_filter(rst_filt)
-color_tf = TerminalFormatter(colorscheme=color_scheme)
-mono_tf  = MonoTerminalFormatter()
+color_tf = RSTTerminalFormatter(colorscheme=color_scheme)
+mono_tf  = MonoRSTTerminalFormatter()
 
-def rst_text(text, mono):
+def rst_text(text, mono, width=80):
     if mono:
         tf = mono_tf
     else:
         tf = color_tf
+        pass
+    tf.reset(width)
     return highlight(text, rst_lex, tf)
 
 if __name__ == '__main__':
+
+    def show_it(string, tf, width=80):
+        tf.reset(width)
+        print '=' * 30
+        for t in lex(string, rst_lex):
+            print t
+            pass
+        print '-' * 30
+        print highlight(string, rst_lex, tf)
+        return
+        
     string = '`A` very *emphasis* **strong** `code`'
-    print highlight(string, rst_lex, color_tf)
-    for t in lex(string, rst_lex):
-        print t
-        pass
-    print highlight(string, rst_lex, mono_tf)
+    show_it(string, color_tf)
+    show_it(string, mono_tf)
+
+    test_string ='''
+This is an example to show off *reformatting.*
+We have several lines
+here which should be reflowed.
+
+But paragraphs should be respected.
+
+    And verbatim
+    text should not be
+    touched
+
+End of test.
+'''
+
+    rst_tf = RSTTerminalFormatter(colorscheme=color_scheme)
+    show_it(test_string, rst_tf)
+
+    rst_tf = MonoRSTTerminalFormatter()
+    show_it(test_string, rst_tf, 30)
+
+    quit_text = """**quit** - gently terminate the debugged program.
+
+The program being debugged is aborted via a *DebuggerQuit*
+exception.
+
+When the debugger from the outside (e.g. via a `pydbgr` command), the
+debugged program is contained inside a try block which handles the
+*DebuggerQuit* exception.  However if you called the debugger was
+started in the middle of a program, there might not be such an
+exception handler; the debugged program still terminates but generally
+with a traceback showing that exception.
+
+If the debugged program is threaded or worse threaded and deadlocked,
+raising an exception in one thread isn't going to quit the
+program. For this see `exit` or `kill` for more forceful termination
+commands.
+
+Also, see `run` and `restart` for other ways to restart the debugged
+program.
+"""
+
+    show_it(quit_text, rst_tf)
     pass

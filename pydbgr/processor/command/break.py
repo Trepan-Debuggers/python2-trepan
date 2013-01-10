@@ -39,6 +39,7 @@ name and a colon. Files is searched for using *sys.path*, and the `.py`
 suffix may be omitted in the file name.
 
 **Examples:**
+
    break              # Break where we are current stopped at
    break if i < j     # Break at current line if i < j
    break 10           # Break on line 10 of the file we are currently stopped at

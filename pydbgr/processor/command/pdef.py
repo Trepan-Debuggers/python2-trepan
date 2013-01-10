@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2009 Rocky Bernstein
+#  Copyright (C) 2009, 2013 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -24,12 +24,12 @@ Mbase_cmd  = import_relative('base_cmd', top_name='pydbgr')
 Mprint     = import_relative('print', '...lib', 'pydbgr')
 
 class PrintDefCommand(Mbase_cmd.DebuggerCommand):
-    """pdef obj
+    """**pdef** *obj*
 
-Print the definition header for a callable object.
+Print the definition header for a callable object *obj*.
 If the object is a class, print the constructor information.
 
-See also pydoc."""
+See also `pydocX`."""
 
     category     = 'data'
     min_args      = 1

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2009 Rocky Bernstein
+#  Copyright (C) 2009, 2013 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,9 +19,9 @@ import_relative('lib', '...', 'pydbgr')
 Mbase_cmd  = import_relative('base_cmd', top_name='pydbgr')
 
 class CDCommand(Mbase_cmd.DebuggerCommand):
-    """cd DIRECTORY
-    
-Set working directory to DIRECTORY for debugger and program
+    """**cd** *directory*
+
+Set working directory to *directory* for debugger and program
 being debugged. """
 
     aliases       = ('chdir',)

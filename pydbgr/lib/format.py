@@ -15,7 +15,7 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''Pygments-related terminal formatting'''
 
-import re
+import re, types
 from pygments                     import highlight, lex
 from pygments.console             import ansiformat
 from pygments.filter              import Filter
@@ -49,6 +49,7 @@ Offset     = Operator
 Opcode     = Name.Function
 Return     = Operator.Word
 Var        = Keyword
+Verbatim   = String
 
 color_scheme = TERMINAL_COLORS.copy()
 color_scheme[Generic.Strong] = ('*black*', '*white*')
@@ -132,6 +133,17 @@ class RSTTerminalFormatter(Formatter):
         self.outfile = outfile
         return Formatter.format(self, tokensource, outfile)
 
+    def write_verbatim(self, text):
+        # If we are doing color, then change to the verbatim
+        # color
+        if self.__class__ != MonoRSTTerminalFormatter:
+            cs = self.colorscheme.get(Verbatim)
+            color = cs[self.darkbg]
+        else:
+            color = None
+            pass
+        return self.write(text, color)
+
     def write(self, text, color):
         color_text = text
         if color: color_text = ansiformat(color, color_text)
@@ -156,7 +168,11 @@ class RSTTerminalFormatter(Formatter):
                 self.write_nl()
                 text = text[:-1]
             elif self.verbatim:
-                pass
+                self.write_verbatim(text)
+                self.column = 0
+                self.verbatim = False
+                self.last_was_nl = True
+                return
             else:
                 self.write(' ', color)
                 text = text[:-1]
@@ -172,7 +188,7 @@ class RSTTerminalFormatter(Formatter):
         else:
             self.last_was_nl = False
             pass
-        self.in_list = self.verbatim = False
+        self.in_list = False
         if last_last_nl:
             if ' * ' == text[0:3]: self.in_list = True
             elif '  ' == text[0:2]: self.verbatim = True
@@ -180,8 +196,7 @@ class RSTTerminalFormatter(Formatter):
 
         # FIXME: there may be nested lists, tables and so on.
         if self.verbatim:
-            self.write(text, color)
-            self.column = 0
+            self.write_verbatim(text)
         elif self.in_list:
             # FIXME: 
             self.write(text, color,)
@@ -287,50 +302,55 @@ if __name__ == '__main__':
         print highlight(string, rst_lex, tf)
         return
         
-    string = '`A` very *emphasis* **strong** `code`'
-    show_it(string, color_tf)
-    show_it(string, mono_tf)
-
-    test_string ='''
-This is an example to show off *reformatting.*
-We have several lines
-here which should be reflowed.
-
-But paragraphs should be respected.
-
-    And verbatim
-    text should not be
-    touched
-
-End of test.
-'''
-
-    rst_tf = RSTTerminalFormatter(colorscheme=color_scheme)
-    show_it(test_string, rst_tf)
+#    string = '`A` very *emphasis* **strong** `code`'
+#    show_it(string, color_tf)
+#    show_it(string, mono_tf)
+#
+#    test_string ='''
+#This is an example to show off *reformatting.*
+#We have several lines
+#here which should be reflowed.
+#
+#But paragraphs should be respected.
+#
+#    And verbatim
+#    text should not be
+#    touched
+#
+#End of test.
+#'''
+#
+#    rst_tf = RSTTerminalFormatter(colorscheme=color_scheme)
+#    show_it(test_string, rst_tf)
 
     rst_tf = MonoRSTTerminalFormatter()
-    show_it(test_string, rst_tf, 30)
+#    show_it(test_string, rst_tf, 30)
 
-    quit_text = """**quit** - gently terminate the debugged program.
+    text =     """**break** [*location*] [if *condition*]]
 
-The program being debugged is aborted via a *DebuggerQuit*
-exception.
+With a line number argument, set a break there in the current file.
+With a function name, set a break at first executable line of that
+function.  Without argument, set a breakpoint at current location.  If
+a second argument is `if`, subsequent arguments given an expression
+which must evaluate to true before the breakpoint is honored.
 
-When the debugger from the outside (e.g. via a `pydbgr` command), the
-debugged program is contained inside a try block which handles the
-*DebuggerQuit* exception.  However if you called the debugger was
-started in the middle of a program, there might not be such an
-exception handler; the debugged program still terminates but generally
-with a traceback showing that exception.
+The location line number may be prefixed with a filename or module
+name and a colon. Files is searched for using *sys.path*, and the `.py`
+suffix may be omitted in the file name.
 
-If the debugged program is threaded or worse threaded and deadlocked,
-raising an exception in one thread isn't going to quit the
-program. For this see `exit` or `kill` for more forceful termination
-commands.
+**Examples:**
 
-Also, see `run` and `restart` for other ways to restart the debugged
-program.
+   break              # Break where we are current stopped at
+   break if i < j     # Break at current line if i < j
+   break 10           # Break on line 10 of the file we are currently stopped at
+   break os.path.join # Break in function os.path.join
+   break os.path:45   # Break on line 45 of os.path
+   break myfile:5 if i < j # Same as above but only if i < j
+   break myfile.py:45 # Break on line 45 of myfile.py
+   break myfile:45    # Same as above.
 """
 
-    show_it(quit_text, rst_tf)
+    show_it(text, rst_tf)
+    rst_tf = RSTTerminalFormatter(colorscheme=color_scheme)
+    show_it(text, rst_tf)
     pass

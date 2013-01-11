@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2009 Rocky Bernstein
+#  Copyright (C) 2009, 2013 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -22,14 +22,14 @@ Mstack     = import_relative('stack', '...lib', 'pydbgr')
 Mcmdfns    = import_relative('cmdfns', '..',     'pydbgr')
 
 class FinishCommand(Mbase_cmd.DebuggerCommand):
-    """finish [levels]
+    """**finish** [*level*]
 
-Continue execution until leaving the current function. When `level' is
-specified, that many frame levels need to be popped. Note that 'yield'
+Continue execution until leaving the current function. When *level* is
+specified, that many frame levels need to be popped. Note that *yield*
 and exceptions raised my reduce the number of stack frames. Also, if a
 thread is switched, we stop ignoring levels.
 
-See the break command if you want to stop at a particular point in a
+See the `break` command if you want to stop at a particular point in a
 program."""
 
     # FIXME: add finish [levels|fn]

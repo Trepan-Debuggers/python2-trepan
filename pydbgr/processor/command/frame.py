@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2009 Rocky Bernstein
+#  Copyright (C) 2009, 2013 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -41,6 +41,7 @@ blank-delimited parameter. That is, the expression `(5*3)-1` is okay
 while `(5 * 3) - 1)` isn't.
 
 **Examples:**
+
    frame     # Set current frame at the current stopping point
    frame 0   # Same as above
    frame 5-5 # Same as above. Note: no spaces allowed in expression 5-5

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2009 Rocky Bernstein
+#  Copyright (C) 2009, 2013 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -21,12 +21,13 @@ Mbase_cmd  = import_relative('base_cmd', top_name='pydbgr')
 Mcmdfns    = import_relative('cmdfns', '..', 'pydbgr')
 
 class ExitCommand(Mbase_cmd.DebuggerCommand):
-    """exit [exitcode] - hard exit of the debugged program.  
+    """**exit** [*exitcode*]
 
-The program being debugged is exited via sys.exit(). If a return code
-is given that is the return code passed to sys.exit() - presumably the
+Hard exit of the debugged program.  
+
+The program being debugged is exited via *sys.exit()*. If a return code
+is given, that is the return code passed to *sys.exit()*, the
 return code that will be passed back to the OS."""
-
 
     category      = 'support'
     min_args      = 0

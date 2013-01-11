@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2012 Rocky Bernstein
+#  Copyright (C) 2012-2013 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -21,12 +21,12 @@ Mprint     = import_relative('print', '...lib', 'pydbgr')
 Meval      = import_relative('eval',  '...lib', 'pydbgr')
 
 class EvalCommand(Mbase_cmd.DebuggerCommand):
-    """eval <python-statement>
+    """**eval** *python-statement*
 
-Run the Python code in the context of the current frame.
+Run *python-statement* in the context of the current frame.
 
 If no string is given, we run the string from the current source code
-about to be run. If the command ends ? (via an alias) and no string is
+about to be run. If the command ends `?` (via an alias) and no string is
 given, the following translations occur:
 
    {if|elif} <expr> :  => <expr>
@@ -35,17 +35,17 @@ given, the following translations occur:
    <var> = <expr>      => <expr>
 
 The above is done via regular expression matching. No fancy parsing is
-done, say, to look to see if <expr> is split across a line or whether
+done, say, to look to see if *expr* is split across a line or whether
 var an assignment might have multiple variables on the left-hand side.
 
-Examples:
+**Examples:**
 
-eval 1+2  # 3
-eval      # Run current source-code line
-eval?     # but strips off leading 'if', 'while', ..
-          # from command 
+    eval 1+2  # 3
+    eval      # Run current source-code line
+    eval?     # but strips off leading 'if', 'while', ..
+              # from command
 
-See also 'set autoeval', `pr', `pp' and `examine'.
+See also `set autoeval`, `pr`, `pp` and `examine`.
 """
     aliases       = ('eval?','?')
     category      = 'data'

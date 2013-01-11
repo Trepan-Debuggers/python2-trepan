@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2009, 2010 Rocky Bernstein
+#  Copyright (C) 2009-2010, 2013 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -31,7 +31,8 @@ must evaluate to *True* before the breakpoint is honored.  If *condition*
 is absent, any existing condition is removed; i.e., the breakpoint is
 made unconditional.
 
-Examples:
+**Examples:**
+
    condition 5 x > 10  # Breakpoint 5 now has condition x > 10
    condition 5         # Remove above condition
 """

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2010, 2012 Rocky Bernstein
+#  Copyright (C) 2010, 2012-2013 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -20,9 +20,9 @@ Mbase_cmd  = import_relative('base_cmd', top_name='pydbgr')
 Mdebugger  = import_relative('debugger', '...', top_name='pydbgr')
 
 class DebugCommand(Mbase_cmd.DebuggerCommand):
-    """debug PYTHON-EXPR
-    
-Enter a nested debugger that steps through the PYTHON-CODE argument
+    """**debug** *python-expression*
+
+Enter a nested debugger that steps through the *python-expression* argument
 which is an arbitrary expression to be executed the current
 environment."""
 

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2009 Rocky Bernstein
+#  Copyright (C) 2009-2013 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -20,21 +20,21 @@ from import_relative import import_relative
 Mbase_cmd  = import_relative('base_cmd', top_name='pydbgr')
 
 class DisplayCommand(Mbase_cmd.DebuggerCommand):
-    """display [format] EXP
-    
-    Print value of expression EXP each time the program stops.
-    FMT may be used before EXP and may be one of 'c' for char,
-    'x' for hex, 'o' for octal, 'f' for float or 's' for string.
+    """**display** [*format*] *expression*
 
-    For now, display expressions are only evaluated when in the same
-    code as the frame that was in effect when the display expression
-    was set.  This is a departure from gdb and we may allow for more
-    flexibility in the future to specify whether this should be the
-    case or not.
-    
-    With no argument, evaluate and display all currently requested
-    auto-display expressions.  Use "undisplay" to cancel display
-    requests previously made."""
+Print value of expression *expression* each time the program stops.
+*format* may be used before *expression* and may be one of `c` for char,
+`x` for hex, `o` for octal, `f` for float or `s` for string.
+
+For now, display expressions are only evaluated when in the same
+code as the frame that was in effect when the display expression
+was set.  This is a departure from gdb and we may allow for more
+flexibility in the future to specify whether this should be the
+case or not.
+
+With no argument, evaluate and display all currently requested
+auto-display expressions.  Use `undisplay` to cancel display
+requests previously made."""
     
     category      = 'data'
     min_args      = 0

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2009 Rocky Bernstein
+#  Copyright (C) 2009, 2013 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -25,13 +25,15 @@ Mmisc      = import_relative('misc', '...', 'pydbgr')
 Mbreak     = import_relative('break', '.', 'pydbgr')
 
 class DeleteCommand(Mbase_cmd.DebuggerCommand):
-    """delete [bpnumber [bpnumber...]]  - Delete some breakpoints.
+    """**delete** [*bpnumber* [*bpnumber*...]]
+
+Delete some breakpoints.
 
 Arguments are breakpoint numbers with spaces in between.  To delete
 all breakpoints, give no argument.  those breakpoints.  Without
 argument, clear all breaks (but first ask confirmation).
     
-See also the 'clear' command which clears breakpoints by line/file
+See also the `clear` command which clears breakpoints by line/file
 number."""
 
     category      = 'breakpoints'

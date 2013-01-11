@@ -77,7 +77,7 @@ def run_call(func, debug_opts=None, start_opts=None, *args, **kwds):
 
     dbg = Mdebugger.Debugger(opts=debug_opts) 
     try:
-        return dbg.run_call(func, start_opts=start_opts, *args, **kwds)
+        return dbg.run_call(func, start_opts, *args, **kwds)
     except:
         Mpost_mortem.uncaught_exception(dbg)
         pass
@@ -205,9 +205,9 @@ def stop(opts=None):
 # Demo it
 if __name__=='__main__':
     import sys, tracer
-    def foo():
-        y = 2
-        for i in range(2):
+    def foo(n):
+        y = n
+        for i in range(n):
             print i
             pass
         return y
@@ -219,13 +219,13 @@ if __name__=='__main__':
     print run_eval('1+2', debug_opts=debug_opts)
     print 'Issuing: run_exec("x=1; y=2")'
     run_exec('x=1; y=2', debug_opts=debug_opts)
-    print 'Issuing: run_call(foo)'
-    run_call(foo, debug_opts=debug_opts)
-    if len(sys.argv) > 1:
-        # FIXME: should this work better?
-        # print 'Issuing interactive: run_exec(x=1; y=2)'
-        # run_exec('x=1; y=2')
-        print 'Issuing interactive: run_call(foo)'
-        run_call(foo)
+    print 'Issuing: run_call(foo, debug_opts, None, 2)'
+    run_call(foo, debug_opts, None, 2)
+    # if len(sys.argv) > 1:
+    #     # FIXME: should this work better?
+    #     # print 'Issuing interactive: run_exec(x=1; y=2)'
+    #     # run_exec('x=1; y=2')
+    #     print 'Issuing interactive: run_call(foo)'
+    #     run_call(foo, debug_opts)
     pass
  

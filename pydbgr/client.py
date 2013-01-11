@@ -19,6 +19,7 @@
 import sys, time
 # Our local modules
 from import_relative import import_relative
+import pydbgr.interface
 Mmisc = import_relative('misc', '.', 'pydbgr')
 Mclient   = import_relative('client', '.interface', 'pydbgr')
 Mcomcodes = import_relative('comcodes', '.interface', 'pydbgr')

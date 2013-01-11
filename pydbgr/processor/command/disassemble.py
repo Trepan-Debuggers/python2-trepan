@@ -24,22 +24,22 @@ Mdis      = import_relative('disassemble', '...lib', 'pydbgr')
 Mfile     = import_relative('file', '...lib', 'pydbgr')
 
 class DisassembleCommand(Mbase_cmd.DebuggerCommand):
-    """disassemble [thing] [[+|-]start-line|. [[+|-]end-line|.]]
-    
+    """**disassemble** [*thing*] [[**+**|**-**]*start-line*|**.** [[**+**|**-**]*end-line*|**.**]]
+
 With no argument, disassemble the current frame.  With an integer
 start-line, the disassembly is narrowed to show lines starting
 at that line number or later; with an end-line number, disassembly
 stops when the next line would be greater than that or the end of the
 code is hit.
 
-If start-line or end-line is '.', '+', or '-', the current line number
+If *start-line* or *end-line is* `.`, `+`, or `-`, the current line number
 is used.  If instead it starts with a plus or minus prefix to a
 number, then the line number is relative to the current frame number.
 
 With a class, method, function, pyc-file, code or string argument
 disassemble that.
 
-Examples
+**Examples:**
 
    disassemble    # Possibly lots of stuff dissassembled
    disassemble .  # Disassemble lines starting at current stopping point.

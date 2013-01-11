@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009 Rocky Bernstein
+#   Copyright (C) 2009, 2013 Rocky Bernstein
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -27,10 +27,10 @@ Mmisc      = import_relative('misc',   '...', 'pydbgr')
 Mbreak     = import_relative('break',  '.', 'pydbgr')
 
 class EnableCommand(Mbase_cmd.DebuggerCommand):
-    """enable [display] bpnumber [bpnumber ...]
-    
+    """**enable** *bpnumber* [*bpnumber* ...]
+
 Enables the breakpoints given as a space separated list of breakpoint
-numbers. See also 'info break' to get a list.
+numbers. See also `info break` to get a list.
 """
 
     aliases       = ('en',)

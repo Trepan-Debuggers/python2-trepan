@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009 Rocky Bernstein
+#   Copyright (C) 2009, 2013 Rocky Bernstein
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -37,11 +37,15 @@ class PrintProcessor(Mbase_proc.Processor):
         lineno = frame.f_lineno
         filename = self.core.canonic_filename(frame)
         filename = self.core.filename(filename)
-        out.write("%s - %s:%d" % (event, filename, lineno))
-        if arg is not None: 
-            out.writeline(', %s ' % repr(arg))
+        if not out:
+            print("%s - %s:%d" % (event, filename, lineno))
         else:
-            out.writeline('')
+            out.write("%s - %s:%d" % (event, filename, lineno))
+            if arg is not None: 
+                out.writeline(', %s ' % repr(arg))
+            else:
+                out.writeline('')
+                pass
             pass
         return self.event_processor
 

@@ -27,6 +27,8 @@ from pygments.console import colorize
 from import_relative import import_relative
 Mformat = import_relative('format',  '...lib', 'pydbgr')
 
+__all__ = ['DebuggerCommand']
+
 class DebuggerCommand:
     """Base Class for Debugger commands. We pull in some helper
     functions for command from module cmdfns."""

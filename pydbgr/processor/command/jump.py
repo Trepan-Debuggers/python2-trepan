@@ -24,6 +24,10 @@ Mcmdproc   = import_relative('cmdproc', '..', 'pydbgr')
 Mcmdfns    = import_relative('cmdfns',  '..', 'pydbgr')
 
 class JumpCommand(Mbase_cmd.DebuggerCommand):
+    """**jump** *lineno*
+
+Set the next line that will be executed. The line must be within the
+stopped or bottom-most execution frame frame."""
 
     aliases       = ('j',)
     category      = 'running'
@@ -35,11 +39,6 @@ class JumpCommand(Mbase_cmd.DebuggerCommand):
     short_help    = 'Set the next line to be executed'
 
     def run(self, args):
-        """**jump** *lineno*
-
-Set the next line that will be executed. The line must be within the
-stopped or bottom-most execution frame frame."""
-
         if not self.core.is_running(): return False
 
         if self.proc.curindex + 1 != len(self.proc.stack):

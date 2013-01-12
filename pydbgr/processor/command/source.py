@@ -20,7 +20,7 @@ from import_relative import import_relative
 Mbase_cmd = import_relative('base_cmd', top_name='pydbgr')
 Mdebugger = import_relative('debugger', '...', 'pydbgr')
 Mfile     = import_relative('file', '...lib', 'pydbgr')
-Mscript   = import_relative('script', '...interface', 'pydbgr')
+Mscript   = import_relative('script', '...interfaces', 'pydbgr')
 
 class SourceCommand(Mbase_cmd.DebuggerCommand):
     """**source** [**-v**][**-Y**|**-N**][**-c**] *file*

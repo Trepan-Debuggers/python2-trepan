@@ -38,7 +38,7 @@ Mexcept = import_relative('exception', '.', 'pydbgr')
 # Default settings used here
 Mdefault  = import_relative('default', '.lib', 'pydbgr') 
 
-Muser     = import_relative('user', '.interface', 'pydbgr')
+Muser     = import_relative('user', '.interfaces', 'pydbgr')
 Mmisc     = import_relative('misc', top_name='pydbgr')
 Msig      = import_relative('sighandler', '.lib', 'pydbgr')
 

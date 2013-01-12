@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009, 2010 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2009-2010, 2013 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -19,11 +19,12 @@ import atexit
 
 # Our local modules
 from import_relative import *
-Mbase_intf = import_relative('base_intf', top_name='pydbgr')
+import_relative('interfaces',  '..',   'pydbgr')
+Minterface = import_relative('interface',  '..',   'pydbgr')
 Minput     = import_relative('dbg_input', '..io', 'pydbgr')
 Moutput    = import_relative('dbg_output', '..io', 'pydbgr')
 
-class UserInterface(Mbase_intf.DebuggerInterface):
+class UserInterface(Minterface.DebuggerInterface):
     """Interface when communicating with the user in the same
     process as the debugged program."""
 

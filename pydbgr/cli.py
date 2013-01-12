@@ -27,14 +27,15 @@ from optparse import OptionParser
 
 # Our local modules
 from import_relative import import_relative, get_srcdir
-Mapi      = import_relative('api', top_name=package)
-Mclifns   = import_relative('clifns', top_name=package)
-Mdebugger = import_relative('debugger', top_name=package)
-Mexcept   = import_relative('exception', top_name=package)
-Moutput   = import_relative('dbg_output', '.io', package)
-Mserver   = import_relative('server', '.interface', package)
-Mfile     = import_relative('file', '.lib', package)
-Mmisc     = import_relative('misc', '.', package)
+Minterface = import_relative('interface', '.', package)
+Mapi       = import_relative('api', top_name=package)
+Mclifns    = import_relative('clifns', top_name=package)
+Mdebugger  = import_relative('debugger', top_name=package)
+Mexcept    = import_relative('exception', top_name=package)
+Moutput    = import_relative('dbg_output', '.io', package)
+Mserver    = import_relative('server', '.interfaces', package)
+Mfile      = import_relative('file', '.lib', package)
+Mmisc      = import_relative('misc', '.', package)
 
 # The name of the debugger we are currently going by.
 __title__ = package

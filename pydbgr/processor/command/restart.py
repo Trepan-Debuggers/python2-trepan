@@ -19,7 +19,7 @@ from import_relative import import_relative
 # Our local modules
 Mdebugger  = import_relative('debugger', '...', 'pydbgr')
 Mbase_cmd  = import_relative('base_cmd', top_name='pydbgr')
-Mcomcodes  = import_relative('comcodes', '...interface', 'pydbgr')
+Mcomcodes  = import_relative('comcodes', '...interfaces', 'pydbgr')
 debugger   = import_relative('debugger', '...')
 Mmisc      = import_relative('misc', '...', 'pydbgr')
 

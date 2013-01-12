@@ -21,8 +21,8 @@ import sys, time
 from import_relative import import_relative
 import pydbgr.interface
 Mmisc = import_relative('misc', '.', 'pydbgr')
-Mclient   = import_relative('client', '.interface', 'pydbgr')
-Mcomcodes = import_relative('comcodes', '.interface', 'pydbgr')
+Mclient   = import_relative('client', '.interfaces', 'pydbgr')
+Mcomcodes = import_relative('comcodes', '.interfaces', 'pydbgr')
 
 #
 # Connects to a debugger in server mode

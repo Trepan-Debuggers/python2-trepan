@@ -47,7 +47,7 @@ mailing_list       = 'python-debugger@googlegroups.com'
 modname            = 'pydbgr'
 namespace_packages = [
     'pydbgr', 
-    'pydbgr.interface',
+    'pydbgr.interfaces',
     'pydbgr.io',
     'pydbgr.lib',
     'pydbgr.processor',

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2009, 2013 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -19,12 +19,12 @@ import atexit
 # Our local modules
 from import_relative import *
 import_relative('io', '..', 'pydbgr')
-Mbase_intf = import_relative('base_intf', top_name='pydbgr')
-Mscriptin  = import_relative('scriptin', '..io', 'pydbgr')
+Minterface = import_relative('interface',  '..',   'pydbgr')
+Mscriptin  = import_relative('scriptin',   '..io', 'pydbgr')
 Moutput    = import_relative('dbg_output', '..io', 'pydbgr')
 Mmisc      = import_relative('misc', '..', 'pydbgr')
 
-class ScriptInterface(Mbase_intf.DebuggerInterface):
+class ScriptInterface(Minterface.DebuggerInterface):
     """Interface when reading debugger scripts"""
 
     DEFAULT_INIT_OPTS = {

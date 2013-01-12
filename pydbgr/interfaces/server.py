@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2009, 2013 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -18,13 +18,13 @@ import atexit, os
 
 # Our local modules
 from import_relative import *
-Mbase_intf  = import_relative('base_intf', top_name='pydbgr')
+Minterface  = import_relative('interface',  '..',   'pydbgr')
 Mtcpserver  = import_relative('tcpserver', '..io', 'pydbgr')
 Mfifoserver = import_relative('fifoserver', '..io', 'pydbgr')
 Mmisc       = import_relative('misc', '..', 'pydbgr')
 Mcomcodes   = import_relative('comcodes', '.', 'pydbgr')
 
-class ServerInterface(Mbase_intf.DebuggerInterface):
+class ServerInterface(Minterface.DebuggerInterface):
     """Interface for debugging a program but having user control
     reside outside of the debugged process, possibly on another
     computer."""

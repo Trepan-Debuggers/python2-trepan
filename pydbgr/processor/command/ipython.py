@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009, 2010 Rocky Bernstein
+#   Copyright (C) 2009-2010, 2013 Rocky Bernstein
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -28,16 +28,17 @@ try:
     from IPython.genutils import arg_split
 
     class IPythonCommand(Mbase_cmd.DebuggerCommand):
-        """ipython [-d] [ipython-arg1 ipython-arg2 ...]
+        """**ipython** [**-d**] [*ipython-arg1* *ipython-arg2* ...]
 
 Run IPython as a command subshell. You need to have ipython installed
 for this command to work. If no IPython options are given, the
-following options are passed: 
+following options are passed:
+
    -noconfirm_exit -prompt_in1 'Pydbgr In [\#]: '
 
-If -d is passed you can access debugger state via local variable "debugger".
+If *-d* is passed, you can access debugger state via local variable *debugger*.
 Debugger commands like are installed as IPython magic commands, e.g.
-%list, %up, %where.
+*%list*, *%up*, *%where*.
 """
         aliases       = ('ipy',)
         category      = 'support'

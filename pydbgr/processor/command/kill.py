@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009 Rocky Bernstein
+#   Copyright (C) 2009, 2013 Rocky Bernstein
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -33,15 +33,15 @@ class KillCommand(Mbase_cmd.DebuggerCommand):
     short_help    = 'Send this process a POSIX signal ("9" for "kill -9")'
 
     def run(self, args):
-        """kill [unconditionally]
+        """**kill** [**unconditionally**]
 
 Kill execution of program being debugged.
 
-Equivalent of kill -KILL <pid> where <pid> is os.getpid(), the current
+Equivalent of `kill -KILL` *pid* where *pid* is *os.getpid()*, the current
 debugged process. This is an unmaskable signal. When all else fails, e.g. in
 thread code, use this.
 
-If 'unconditionally' is given, no questions are asked. Otherwise, if
+If `unconditionally` is given, no questions are asked. Otherwise, if
 we are in interactive mode, we'll prompt to make sure.
 """
 

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009 Rocky Bernstein
+#   Copyright (C) 2009, 2013 Rocky Bernstein
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -35,10 +35,10 @@ class JumpCommand(Mbase_cmd.DebuggerCommand):
     short_help    = 'Set the next line to be executed'
 
     def run(self, args):
-        """jump lineno
+        """**jump** *lineno*
 
-        Set the next line that will be executed. The line must be within
-        the stopped or bottom-most execution frame frame."""
+Set the next line that will be executed. The line must be within the
+stopped or bottom-most execution frame frame."""
 
         if not self.core.is_running(): return False
 

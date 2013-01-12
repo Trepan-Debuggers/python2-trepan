@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009 Rocky Bernstein
+#   Copyright (C) 2009, 2013 Rocky Bernstein
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -26,8 +26,8 @@ class InfoCommand(Mbase_submgr.SubcommandMgr):
 You can give unique prefix of the name of a subcommand to get
 information about just that subcommand.
 
-Type "info" for a list of "info" subcommands and what they do.
-Type "help info *" for just a list of "info" subcommands.
+Type `info` for a list of *info* subcommands and what they do.
+Type `help info *` for just a list of *info* subcommands.
 """
 
     aliases       = ('i',)

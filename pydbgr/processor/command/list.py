@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009, 2012, 2013 Rocky Bernstein
+#   Copyright (C) 2009, 2012-2013 Rocky Bernstein
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -31,22 +31,22 @@ def pyc2py(filename):
     return filename
 
 class ListCommand(Mbase_cmd.DebuggerCommand):
-    """list [MODULE] [FIRST [NUM]]
-list LOCATION [NUM]
+    """**list** [*module] [*first* [*num*]]
+list *location* [*num*]
 
 List source code. 
 
-Without arguments, print LISTSIZE lines centered around the current
-line. If this is the first list command issued since the debugger
-command loop was entered, then the current line is the current
-frame. If a subsequent list command was issued with no intervening
-frame changing, then that is start the line after we last one
-previously shown.
+Without arguments, print lines centered around the current line. If
+*num* is given that number of lines is shown.
 
-"list -" shows LISTSIZE lines before a previous listing. 
+If this is the first `list` command issued since the debugger command
+loop was entered, then the current line is the current frame. If a
+subsequent list command was issued with no intervening frame changing,
+then that is start the line after we last one previously shown.
 
-A LOCATION is a either 
-  - number, e.g. 5, 
+A *location* is either:
+
+  - a number, e.g. 5, 
   - a function, e.g. join or os.path.join
   - a module, e.g. os or os.path
   - a filename, colon, and a number, e.g. foo.py:5,  
@@ -55,30 +55,29 @@ A LOCATION is a either
   - a '-' for the lines before the current linenumber
 
 If the location form is used with a subsequent parameter, the
-parameter is the starting line number and LISTSIZE lines are
-used. When there two numbers are given, the last number value is
-treated as a stopping line unless it is less than the start line, in
-which case it is taken to mean the number of lines to list instead.
+parameter is the starting line number is used. When there two numbers
+are given, the last number value is treated as a stopping line unless
+it is less than the start line, in which case it is taken to mean the
+number of lines to list instead.
 
 Wherever a number is expected, it does not need to be a constant --
 just something that evaluates to a positive integer.
 
-Some examples:
+**Examples:**
 
-list 5            # List starting from line 5
-list 4+1          # Same as above.
-list foo.py:5     # List starting from line 5 of foo.py
-list os.path:5    # List starting from line 5 of os.path
-list os.path 5    # Same as above.
-list os.path 5 6  # list lines 5 and 6 of os.path
-list os.path 5 2  # Same as above, since 2 < 5.
-list foo.py:5 2   # List two lines starting from line 5 of foo.py
-list os.path.join # List lines around the os.join.path function.
-list .            # List lines centered from where we currently are stopped
-list -            # List lines previous to those just shown
+    list 5            # List starting from line 5
+    list 4+1          # Same as above.
+    list foo.py:5     # List starting from line 5 of foo.py
+    list os.path:5    # List starting from line 5 of os.path
+    list os.path 5    # Same as above.
+    list os.path 5 6  # list lines 5 and 6 of os.path
+    list os.path 5 2  # Same as above, since 2 < 5.
+    list foo.py:5 2   # List two lines starting from line 5 of foo.py
+    list os.path.join # List lines around the os.join.path function.
+    list .            # List lines centered from where we currently are stopped
+    list -            # List lines previous to those just shown
 
-LISTSIZE is the current debugger listsize setting. Use 'set listize'
-or 'show listsize' to see or set the value.
+See `set listize` or `show listsize` to see or set the value.
 """
 
     aliases       = ('l',)

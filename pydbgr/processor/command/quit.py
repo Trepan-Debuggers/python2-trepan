@@ -19,7 +19,9 @@ Mbase_cmd  = import_relative('base_cmd', top_name='pydbgr')
 Mexcept    = import_relative('exception', '...', 'pydbgr')
 
 class QuitCommand(Mbase_cmd.DebuggerCommand):
-    """**quit** - gently terminate the debugged program.
+    """**quit** [**unconditionally**]
+
+Gently terminate the debugged program.
 
 The program being debugged is aborted via a *DebuggerQuit*
 exception.

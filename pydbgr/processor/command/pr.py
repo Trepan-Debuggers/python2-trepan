@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2009, 2010 Rocky Bernstein
+#  Copyright (C) 2009-2010, 2013 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -20,19 +20,19 @@ Mbase_cmd  = import_relative('base_cmd', top_name='pydbgr')
 Mprint     = import_relative('print', '...lib', 'pydbgr')
 
 class PrCommand(Mbase_cmd.DebuggerCommand):
-    """pr expression
+    """**pr** *expression*
 
 Print the value of the expression. Variables accessible are those of the
 environment of the selected stack frame, plus globals. 
 
-The expression may be preceded with /FMT where FMT is one of the
+The expression may be preceded with */fmt* where *fmt* is one of the
 format letters 'c', 'x', 'o', 'f', or 's' for chr, hex, oct, 
 float or str respectively.
 
 If the length output string large, the first part of the value is
-shown and ... indicates it has been truncated
+shown and `...` indicates it has been truncated
 
-See also `pp' and `examine' for commands which do more in the way of
+See also `pp` and `examine` for commands which do more in the way of
 formatting.
 """
     category      = 'data'

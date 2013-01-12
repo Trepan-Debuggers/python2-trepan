@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009 Rocky Bernstein
+#   Copyright (C) 2009, 2013 Rocky Bernstein
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -23,8 +23,10 @@ Mbase_cmd  = import_relative('base_cmd', top_name='pydbgr')
 Mexcept    = import_relative('exception', '...', 'pydbgr')
 
 class RunCommand(Mbase_cmd.DebuggerCommand):
-    """restart - Restart debugger and program via an exec
-call. All state is lost, and new copy of the debugger is used."""
+    """run
+
+Soft restart debugger and program via a *DebuggerRestart*
+exception."""
 
     aliases       = ('R',)
     category      = 'support'
@@ -35,7 +37,7 @@ call. All state is lost, and new copy of the debugger is used."""
     short_help    = '(Soft) restart program via a DebuggerRestart exception'
 
     def run(self, args):
-        confirmed = self.confirm('Restart', False)
+        confirmed = self.confirm('Soft restart', False)
         if confirmed: 
             self.core.step_ignore = 0
             self.core.step_events = None

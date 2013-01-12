@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2009, 2010 Rocky Bernstein
+#  Copyright (C) 2009-2010, 2013 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -36,16 +36,16 @@ class NextCommand(base_cmd.DebuggerCommand):
     short_help    = 'Step program without entering called functions'
 
     def run(self, args):
-        """next[+|-] [count]
+        """**next**[**+**|**-**] [*count*]
 
 Step one statement ignoring steps into function calls at this level.
 
-With an integer argument, perform 'next' that many times. However if
-an exception occurs at this level, or we 'return' or 'yield' or the
+With an integer argument, perform `next` that many times. However if
+an exception occurs at this level, or we *return*, *yield* or the
 thread changes, we stop regardless of count.
 
-A suffix of '+' on the command or an alias to the command forces to
-move to another line, while a suffix of '-' does the opposite and
+A suffix of `+` on the command or an alias to the command forces to
+move to another line, while a suffix of `-` does the opposite and
 disables the requiring a move to a new line. If no suffix is given,
 the debugger setting 'different-line' determines this behavior.
 """

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2009 Rocky Bernstein
+#  Copyright (C) 2009, 2013 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@ Mcmdproc   = import_relative('cmdproc', '..', 'pydbgr')
 Mbytecode  = import_relative('bytecode', '...lib', 'pydbgr')
 
 class SkipCommand(Mbase_cmd.DebuggerCommand):
-    """skip [count]
+    """**skip** [*count*]
     
 Set the next line that will be executed. The line must be within the
 stopped or bottom-most execution frame."""

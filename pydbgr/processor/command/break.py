@@ -24,7 +24,6 @@ Mcmdfns   = import_relative('cmdfns', '..', 'pydbgr')
 Mfile     = import_relative('file', '...lib', 'pydbgr')
 Mcmdbreak = import_relative('cmdbreak', '..', 'pydbgr')
 
-
 class BreakCommand(Mbase_cmd.DebuggerCommand):
     """**break** [*location*] [if *condition*]]
 
@@ -48,6 +47,8 @@ suffix may be omitted in the file name.
    break myfile:5 if i < j # Same as above but only if i < j
    break myfile.py:45 # Break on line 45 of myfile.py
    break myfile:45    # Same as above.
+
+See also `tbreak`.
 """
 
     aliases       = ('b',)

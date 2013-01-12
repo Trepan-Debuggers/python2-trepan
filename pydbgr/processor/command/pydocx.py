@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2009 Rocky Bernstein
+#  Copyright (C) 2009, 2013 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -31,14 +31,14 @@ from import_relative import import_relative
 Mbase_cmd  = import_relative('base_cmd', top_name='pydbgr')
 
 class PyDocCommand(Mbase_cmd.DebuggerCommand):
-    """pydoc <name> ...
+    """**pydocx** *name* ...
 
-Show pydoc documentation on something. <name> may be the name of a
+Show pydoc documentation on something. *name* may be the name of a
 Python keyword, topic, function, module, or package, or a dotted
 reference to a class or function within a module or module in a
-package.  If <name> contains a '/', it is used as the path to a Python
-source file to document. If name is 'keywords', 'topics', or
-'modules', a listing of these things is displayed.
+package.  If *name* contains a '/', it is used as the path to a Python
+source file to document. If name is *keywords*, *topics*, or
+*modules*, a listing of these things is displayed.
 """
 
     category     = 'data'

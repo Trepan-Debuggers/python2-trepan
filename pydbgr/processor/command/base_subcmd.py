@@ -30,11 +30,12 @@ class DebuggerSubcommand:
     """Base Class for Debugger subcommands. We pull in some helper
     functions for command from module cmdfns."""
 
-    in_list    = True  # Show item in help list of commands
-    run_cmd    = True  # Run subcommand for those subcommands like "show"
-                       # which append current settings to list output.
-    min_abbrev = 1
-    need_stack = False
+    in_list     = True  # Show item in help list of commands
+    run_cmd     = True  # Run subcommand for those subcommands like "show"
+                        # which append current settings to list output.
+    run_in_help = True  # Run to get value in 'show' command?
+    min_abbrev  = 1
+    need_stack  = False
 
     def __init__(self, cmd):
         """cmd contains the command object that this

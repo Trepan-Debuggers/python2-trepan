@@ -23,7 +23,7 @@ Mbase_subcmd = import_relative('base_subcmd', '..', 'pydbgr')
 Mcmdfns      = import_relative('cmdfns', '...', 'pydbgr')
 
 class SetListSize(Mbase_subcmd.DebuggerSubcommand):
-    "Set the number lines printed in a 'list' command by default"
+    "Set the number lines printed in a *list* command by default"
     
     in_list    = True
     min_abbrev = len('lis') # Need at least "set lis"

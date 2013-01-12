@@ -18,6 +18,6 @@ from import_relative import import_relative
 Mbase_subcmd  = import_relative('base_subcmd', '..', 'pydbgr')
 
 class ShowAutolist(Mbase_subcmd.DebuggerShowBoolSubcommand):
-    """Show automatic 'list' when we enter the debugger."""
+    """Show debugger *list* command automatically on entry."""
     min_abbrev = len('autol')
     pass

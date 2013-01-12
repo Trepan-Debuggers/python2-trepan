@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2009 Rocky Bernstein
+#  Copyright (C) 2009, 2013 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -24,8 +24,10 @@ debugger   = import_relative('debugger', '...')
 Mmisc      = import_relative('misc', '...', 'pydbgr')
 
 class RestartCommand(Mbase_cmd.DebuggerCommand):
-    """restart - Restart debugger and program via an exec
-    call. All state is lost, and new copy of the debugger is used."""
+    """**restart**
+
+Restart debugger and program via an *exec()* call. All state is lost,
+and new copy of the debugger is used."""
 
     category      = 'support'
     min_args      = 0

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009, 2012 Rocky Bernstein
+#   Copyright (C) 2009, 2012-2013 Rocky Bernstein
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ Mcmdfns      = import_relative('cmdfns', '...', 'pydbgr')
 Mstack       = import_relative('stack', '....lib', 'pydbgr')
 
 class SetAutoList(Mbase_subcmd.DebuggerSetBoolSubcommand):
-    """Run a 'list' command every time we enter the debugger."""
+    """Run a *list* command every time we enter the debugger."""
 
     in_list    = True
     min_abbrev = len('autol')

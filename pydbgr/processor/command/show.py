@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009 Rocky Bernstein
+#   Copyright (C) 2009, 2013 Rocky Bernstein
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -25,8 +25,8 @@ class ShowCommand(Mbase_submgr.SubcommandMgr):
 give unique prefix of the name of a subcommand to get information
 about just that subcommand.
 
-Type "show" for a list of "show" subcommands and what they do.
-Type "help show *" for just a list of "show" subcommands.
+Type `show` for a list of *show* subcommands and what they do.
+Type `help show *` for just a list of *show* subcommands.
 """
 
     category      = 'status'
@@ -38,10 +38,10 @@ Type "help show *" for just a list of "show" subcommands.
 
     def summary_help(self, subcmd_name, subcmd):
         self.msg_nocr("%-13s(%d): " % (subcmd_name, subcmd.min_abbrev))
-        if subcmd.run_cmd:
+        if subcmd.run_in_help and subcmd.run_cmd:
             return subcmd.run([])
         else:
-            self.msg("%s." % subcmd.short_help)
+            self.rst_msg("%s." % subcmd.short_help)
             pass
         return
 

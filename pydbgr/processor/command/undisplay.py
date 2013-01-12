@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009, 2010 Rocky Bernstein
+#   Copyright (C) 2009-2010, 2013 Rocky Bernstein
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -22,7 +22,16 @@ from import_relative import import_relative
 Mbase_cmd  = import_relative('base_cmd', top_name='pydbgr')
 
 class UndisplayCommand(Mbase_cmd.DebuggerCommand):
-    """undisplay display-number..."""
+    """**undisplay** *display-number*...
+
+Cancel some expressions to be displayed when program stops.
+Arguments are the code numbers of the expressions to stop displaying.
+
+No argument cancels all automatic-display expressions and is
+the same as `delete display`.
+
+Use `info display` to see current list of code numbers.
+"""
     
     aliases       = ('und',)
     category      = 'data'
@@ -33,12 +42,6 @@ class UndisplayCommand(Mbase_cmd.DebuggerCommand):
     short_help    = 'Cancel some expressions to be displayed when program stops'
 
     def run(self, args):
-        """Cancel some expressions to be displayed when program stops.
-Arguments are the code numbers of the expressions to stop displaying.
-No argument means cancel all automatic-display expressions.
-"delete display" has the same effect as this command.
-Do "info display" to see current list of code numbers.
-"""
 
         if len(args) == 1:
             self.proc.display_mgr.clear()

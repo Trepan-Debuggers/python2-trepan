@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2009 Rocky Bernstein
+#  Copyright (C) 2009, 2013 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -21,14 +21,14 @@ Mdebugger  = import_relative('debugger', '...', 'pydbgr')
 Mpp        = import_relative('pp', '...lib', 'pydbgr')
 
 class PrettyPrintCommand(Mbase_cmd.DebuggerCommand):
-    """pp expression
+    """**pp** *expression*
 
 Pretty-print the value of the expression. 
 
 Simple arrays are shown columnized horizontally. Other values are printed
-via pprint.pformat.
+via *pprint.pformat()*.
 
-See also `p' and `examine' for commands which do more in the way of
+See also `pr` and `examine` for commands which do more in the way of
 formatting.
 """
 

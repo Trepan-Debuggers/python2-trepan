@@ -186,9 +186,11 @@ class SubcommandMgr(Mbase_cmd.DebuggerCommand):
         return # Not reached
 
     def summary_help(self, subcmd_name, subcmd):
-        return self.msg('%s (%d) %-11s -- %s' %
-                        (self.name, subcmd.min_abbrev,
-                         subcmd_name, subcmd.short_help))
+        self.msg_nocr('%s (%d) %-11s -- ' %
+                      (self.name, subcmd.min_abbrev,
+                       subcmd_name))
+        self.rst_msg(subcmd.short_help.rstrip("\n"))
+        return
     pass
 
     def undefined_subcmd(self, cmd, subcmd):

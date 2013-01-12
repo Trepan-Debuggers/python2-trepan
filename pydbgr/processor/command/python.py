@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2009, 2010 Rocky Bernstein
+#  Copyright (C) 2009-2010, 2013 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -24,15 +24,14 @@ Mcmdfns    = import_relative('cmdfns', '..', 'pydbgr')
 Mmisc      = import_relative('misc',   '...', 'pydbgr')
 
 class PythonCommand(Mbase_cmd.DebuggerCommand):
-    """python [-d]
+    """**python** [**-d**]
 
-Run Python as a command subshell. The sys.ps1 prompt will be set to 
-'Pydbgr >>> '.
+Run Python as a command subshell. The *sys.ps1* prompt will be set to
+`Pydbgr >>> `.
 
-If -d is passed you can access debugger state via local variable "debugger".
+If *-d* is passed, you can access debugger state via local variable *debugger*.
 
-To issue a debugger command, inside irb nested inside a debugger use function
-dbgr(). For example:
+To issue a debugger command use function *dbgr()*. For example:
 
   dbgr('info program')
 """

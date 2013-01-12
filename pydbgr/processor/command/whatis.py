@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009 Rocky Bernstein
+#   Copyright (C) 2009, 2013 Rocky Bernstein
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -24,8 +24,10 @@ Mstack    = import_relative('stack',  '...lib', 'pydbgr')
 Mcmdfns   = import_relative('cmdfns', '..', 'pydbgr')
 
 class WhatisCommand(Mbase_cmd.DebuggerCommand):
-    '''whatis arg
-    Prints the type of the argument which can be a Python expression.'''
+    '''**whatis** *arg*
+
+Prints the type of the argument which can be a Python expression.'''
+    aliases       = ()
     category      = 'data'
     min_args      = 0
     max_args      = None

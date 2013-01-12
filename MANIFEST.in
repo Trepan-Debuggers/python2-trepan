@@ -1,5 +1,6 @@
 include Makefile
 include NEWS
+include make-check-filter.py
 include __pkginfo__.py
 recursive-include test/data Makefile
 recursive-include test/data *.cmd

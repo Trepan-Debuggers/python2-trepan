@@ -1,6 +1,13 @@
 0.2.1 
 
 - Add call stack and disassembly colorization
+- Command docstring are now in ReStructuredText so they are
+  colorized and reformatted according to width setting
+- api run_eval() and and run_exec() strings are now saveed
+  and remapped to a temporary file for front ends.
+- debugger command names are downcased.
+- Some code restructuring.
+  
 
 0.2.0 01-01-13
 

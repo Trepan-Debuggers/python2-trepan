@@ -9,19 +9,37 @@ all: check
 test: check
 
 #: Run all tests: unit, functional and integration
+check-short: test-unit-short test-functional-short test-integration-short
+
+#: Run all tests: unit, functional and integration verbosely
 check: test-unit test-functional test-integration
 
 #: Run unit (white-box) tests
 test-unit: 
 	$(PYTHON) ./setup.py nosetests
 
+#: Run unit (white-box) tests
+test-unit-short: 
+	$(PYTHON) ./setup.py nosetests | \
+	$(PYTHON) ./make-check-filter.py
+
 #: Run functional tests
 test-functional: 
 	(cd test/functional && $(PYTHON) ./setup.py nosetests)
 
+#: Run functional tests
+test-functional-short: 
+	(cd test/functional && $(PYTHON) ./setup.py nosetests) | \
+	$(PYTHON) ./make-check-filter.py
+
 #: Run integration (black-box) tests
 test-integration: 
-	(cd test/integration && $(PYTHON) ./setup.py nosetests)
+	(cd test/integration && $(PYTHON) ./setup.py nosetests) | \
+	$(PYTHON) ./make-check-filter.py
+
+#: Run integration (black-box) tests
+test-integration-short: 
+	(cd test/integration && $(PYTHON) ./setup.py nosetests) 
 
 #: Clean up temporary files
 clean: 
@@ -50,8 +68,12 @@ distclean: clean
 	-find . -name \*.pyc -exec rm -v {} \;
 
 #: Install package locally
-install: 
+verbose-install: 
 	$(PYTHON) ./setup.py install
+
+#: Install package locally without the verbiage
+install: 
+	$(PYTHON) ./setup.py install >/dev/null
 
 #: Create a ChangeLog from git via git log and git2cl
 ChangeLog:

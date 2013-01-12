@@ -13,7 +13,7 @@
 #
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import inspect, linecache, os, sys, shlex, traceback, types
+import inspect, linecache, os, sys, shlex, tempfile, traceback, types
 import pyficache
 from repr import Repr
 
@@ -125,17 +125,20 @@ def print_source_line(msg, lineno, line, event_str=None):
     return msg('%s %d %s' % (event_str, lineno, line))
 
 def print_source_location_info(print_fn, filename, lineno, fn_name=None,
-                               f_lasti=None):
+                               f_lasti=None, remapped_file=None):
     """Print out a source location , e.g. the first line in
     line in:
         (/tmp.py:2):  <module>
         L -- 2 import sys,os
         (Pydbgr)
     """
+    mess = '(%s:%s' % (filename, lineno)
+    if remapped_file:
+        mess += ' remapped %s' % remapped_file
     if f_lasti and f_lasti != -1:
-        mess = '(%s:%s @%d):' % (filename, lineno, f_lasti)
-    else:
-        mess = '(%s:%s):' % (filename, lineno)
+        mess += ' @%d' % f_lasti
+        pass
+    mess += '):'
     if fn_name and fn_name != '?':
         mess += " %s" % fn_name
         pass
@@ -151,12 +154,14 @@ def print_location(proc_obj):
     if i_stack is None or proc_obj.stack is None: 
         return False
     core_obj = proc_obj.core
-    intf_obj = core_obj.debugger.intf[-1]
+    dbgr_obj = proc_obj.debugger
+    intf_obj = dbgr_obj.intf[-1]
 
     # Evaluation routines like "exec" don't show useful location
     # info. In these cases, we will use the position before that in
     # the stack.  Hence the looping below which in practices loops
     # once and sometimes twice.
+    remapped_file = None
     while i_stack >= 0:
         frame_lineno = proc_obj.stack[i_stack]
         i_stack -= 1
@@ -170,8 +175,25 @@ def print_location(proc_obj):
 #                 break
 
         filename = Mstack.frame2file(core_obj, frame)
+        if '<string>' == filename and dbgr_obj.eval_string:
+            remapped_file = filename
+            filename = pyficache.unmap_file(filename)
+            if '<string>' == filename:
+                fd = tempfile.NamedTemporaryFile(suffix='.py',
+                                                 prefix='eval_string',
+                                                 delete=False)
+                with fd:
+                    fd.write(dbgr_obj.eval_string)
+                    fd.close()
+                    pass
+                pyficache.remap_file(fd.name, '<string>')
+                filename = fd.name
+                pass
+            pass
+
         fn_name = frame.f_code.co_name
-        print_source_location_info(intf_obj.msg, filename, lineno, fn_name)
+        print_source_location_info(intf_obj.msg, filename, lineno, fn_name,
+                                   remapped_file = remapped_file)
                                    # proc_obj.curframe.f_lasti)
 
         opts = {
@@ -189,9 +211,9 @@ def print_location(proc_obj):
                 print_source_line(intf_obj.msg, lineno, line, 
                                   proc_obj.event2short[proc_obj.event])
             pass
-        if '<string>' != filename:
-            break
+        if '<string>' != filename: break
         pass
+    
     if proc_obj.event in ['return', 'exception']:
         val = proc_obj.event_arg
         intf_obj.msg('R=> %s' % proc_obj._saferepr(val))

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2008, 2009, 2010 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008-2010, 2013 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -77,6 +77,7 @@ class Debugger:
         if locals_ is None:
             locals_ = globals_
         if not isinstance(cmd, types.CodeType):
+            self.eval_string = cmd
             cmd = cmd+'\n'
             pass
         retval = None
@@ -160,6 +161,7 @@ class Debugger:
         if locals_ is None:
             locals_ = globals_
         if not isinstance(expr, types.CodeType):
+            self.eval_string = expr
             expr = expr+'\n'
             pass
         retval = None
@@ -272,8 +274,9 @@ class Debugger:
         See also Debugger.start and Debugger.stop.
         """
 
-        self.mainpyfile = None
-        self.thread     = None
+        self.mainpyfile  = None
+        self.thread      = None
+        self.eval_string = None
         get_option = lambda key: Mmisc.option_set(opts, key, 
                                                   self.DEFAULT_INIT_OPTS)
 

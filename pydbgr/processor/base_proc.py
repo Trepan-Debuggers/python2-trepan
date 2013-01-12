@@ -18,6 +18,8 @@ from pygments.console import colorize
 from import_relative import import_relative
 Mformat = import_relative('format',  '..lib', 'pydbgr')
 
+__all__ = ['Processor']
+
 class Processor:
     """A processor is the thing that handles the events that come to
     the debugger.  It has it's own I/O mechanism and a way to handle

@@ -28,10 +28,9 @@ __command_dir__ = os.path.dirname(__file__)
 # A glob pattern that will get all *.py files but not __init__.py
 __py_files__    = glob.glob(os.path.join(__command_dir__, '[a-z]*.py'))
 
-# Take the basename of the filename and drop off '.py'. That minus the
-# file base_proc.py (the parent base class of debugger commands) becomes
+# Take the basename of the filename and drop off '.py'. That becomes
 # the list of modules that commands.py will use to import
-exclude_files = ['base_proc']
+exclude_files = []
 __modules__ = [ os.path.basename(filename[0:-3]) for 
                 filename in __py_files__
                 if os.path.basename(filename) not in exclude_files]

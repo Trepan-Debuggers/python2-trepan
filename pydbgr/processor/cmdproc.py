@@ -21,7 +21,7 @@ from import_relative import import_relative, get_srcdir
 from tracer import EVENT2SHORT
 
 import_relative('lib', '..', 'pydbgr')
-Mbase_proc = import_relative('base_proc', '.', 'pydbgr')
+Mprocessor = import_relative('vprocessor', '..', 'pydbgr')
 Mbytecode  = import_relative('bytecode', '..lib', 'pydbgr')
 Mexcept    = import_relative('exception', '..', 'pydbgr')
 Mdisplay   = import_relative('display', '..lib', 'pydbgr')
@@ -228,12 +228,12 @@ DEFAULT_PROC_OPTS = {
     'initfile_list' : []
 }
 
-class CommandProcessor(Mbase_proc.Processor):
+class CommandProcessor(Mprocessor.Processor):
 
     def __init__(self, core_obj, opts=None):
         get_option = lambda key: \
             Mmisc.option_set(opts, key, DEFAULT_PROC_OPTS)
-        Mbase_proc.Processor.__init__(self, core_obj)
+        Mprocessor.Processor.__init__(self, core_obj)
         
         self.continue_running = False  # True if we should leave command loop
         self.event2short      = dict(EVENT2SHORT)

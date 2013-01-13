@@ -14,9 +14,12 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 NotImplementedMessage = "This method must be overriden in a subclass"
+
+import pydbgr.lib
 from pygments.console import colorize
 from import_relative import import_relative
-Mformat = import_relative('format',  '..lib', 'pydbgr')
+
+Mformat = import_relative('format',  '.lib', 'pydbgr')
 
 __all__ = ['Processor']
 

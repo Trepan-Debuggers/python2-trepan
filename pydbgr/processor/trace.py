@@ -20,15 +20,16 @@
 
 from import_relative import *
 from tracer import EVENT2SHORT
-Mbase_proc = import_relative('base_proc', '.', 'pydbgr')
+Mprocessor = import_relative('vprocessor', '..', 'pydbgr')
 
-class PrintProcessor(Mbase_proc.Processor):
-    """ A processor that just prints out events as we see them. This is suitable for example
-    for line/call tracing. We assume that the caller is going to filter out which events it
-    wants printed or whether it wants any printed at all.
+class PrintProcessor(Mprocessor.Processor):
+    """ A processor that just prints out events as we see them. This
+    is suitable for example for line/call tracing. We assume that the
+    caller is going to filter out which events it wants printed or
+    whether it wants any printed at all.
     """
     def __init__(self, debugger, opts=None):
-        Mbase_proc.Processor.__init__(self, debugger)
+        Mprocessor.Processor.__init__(self, debugger)
         return
 
     def event_processor(self, frame, event, arg):

@@ -70,7 +70,7 @@ def format_location(proc_obj):
 
 def print_location(proc_obj, event=None):
     response = proc_obj.response
-    response['name'] = 'info_program'
+    response['name'] = 'status'
     response['location'] = format_location(proc_obj)
     if event:
         response['event'] = event
@@ -79,7 +79,8 @@ def print_location(proc_obj, event=None):
             event['arg'] = val
             pass
         pass
-    return proc_obj.intf[-1].msg(response)
+    proc_obj.intf[-1].msg(response)
+    return 
   
 
 # Demo it

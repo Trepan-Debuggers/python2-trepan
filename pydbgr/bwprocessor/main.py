@@ -283,7 +283,7 @@ class BWProcessor(Mprocessor.Processor):
         """Handle debugger commands."""
         if self.core.execution_status != 'No program':
             self.setup()
-            self.intf[-1].msg(Mlocation.print_location(self, self.event))
+            Mlocation.print_location(self, self.event)
             pass
         leave_loop = run_hooks(self, self.preloop_hooks)
         self.continue_running = False
@@ -320,8 +320,17 @@ class BWProcessor(Mprocessor.Processor):
         # process command
         self.response = {'errs':[], 'msg':[]}
         cmd_hash = self.intf[-1].read_command()
+
+        ## FIXME: put this into a routine
         if type(cmd_hash) is not types.DictionaryType:
-            Mmsg.errmsg(self, "invalid input: %s" % cmd_hash,
+            Mmsg.errmsg(self, "invalid input, expecting a hash: %s" % cmd_hash,
+                        {'set_name': True})
+            self.intf[-1].msg(self.response)
+            return False
+        if 'command' not in cmd_hash:
+            Mmsg.errmsg(self,
+                        "invalid input, expecting a 'command' key: %s" %
+                        cmd_hash,
                         {'set_name': True})
             self.intf[-1].msg(self.response)
             return False

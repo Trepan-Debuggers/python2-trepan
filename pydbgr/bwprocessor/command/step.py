@@ -21,7 +21,26 @@ import tracer
 Mbase_cmd  = import_relative('base_cmd')
 
 class StepCommand(Mbase_cmd.DebuggerCommand):
-    """Something"""
+    """
+step statements
+
+**Input Fields:**
+
+   { command  => 'step',
+     [count   => <integer>],
+   }
+
+If *count* is given, that many statements will be stepped. If it
+is not given, 1 is used, i.e. stop at the next statement.
+
+**Output Fields:**
+
+   { name     => 'step',
+     count    => <integer>,
+     [errmsg  => <error-message-array>]
+     [msg     => <message-text array>]
+   }
+"""
 
     name          = os.path.basename(__file__).split('.')[0]
     need_stack    = True

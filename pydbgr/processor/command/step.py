@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2009 Rocky Bernstein
+#  Copyright (C) 2009, 2013 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -22,18 +22,6 @@ Mbase_cmd  = import_relative('base_cmd')
 Mcmdfns    = import_relative('cmdfns', '..', 'pydbgr')
 
 class StepCommand(Mbase_cmd.DebuggerCommand):
-
-    aliases       = ('step+', 'step-', 'step>', 'step<', 'step!',
-                     's', 's+', 's-', 's<', 's>', 's!')
-    category      = 'running'
-    min_args      = 0
-    max_args      = None
-    execution_set = ['Running']
-    name          = os.path.basename(__file__).split('.')[0]
-    need_stack    = True
-    short_help    = 'Step program (possibly entering called functions)'
-
-    def run(self, args):
         """**step**[**+**|**-**|**<**|**>**|**!**] [*event*...] [*count*]
 
 Execute the current line, stopping at the next event.
@@ -70,6 +58,18 @@ Related and similar is the `next` command.  See also the commands:
 `skip`, `jump` (there's no `hop` yet), `continue`, `return` and
 `finish` for other ways to progress execution.
 """
+
+    aliases       = ('step+', 'step-', 'step>', 'step<', 'step!',
+                     's', 's+', 's-', 's<', 's>', 's!')
+    category      = 'running'
+    min_args      = 0
+    max_args      = None
+    execution_set = ['Running']
+    name          = os.path.basename(__file__).split('.')[0]
+    need_stack    = True
+    short_help    = 'Step program (possibly entering called functions)'
+
+    def run(self, args):
         step_events  = []
         if args[0][-1] == '>':
             step_events  = ['call']

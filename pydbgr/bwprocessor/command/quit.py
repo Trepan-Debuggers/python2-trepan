@@ -19,7 +19,22 @@ Mbase_cmd  = import_relative('base_cmd', top_name='pydbgr')
 Mexcept    = import_relative('exception', '...', 'pydbgr')
 
 class QuitCommand(Mbase_cmd.DebuggerCommand):
-    """Something here
+    """Gently exit the debugger and debugged program.
+
+**Input Fields:**
+
+   { command     => 'quit',
+   }
+
+The program being debugged is exited raising a *DebuggerQuit* exception.
+
+**Output Fields: **
+
+   { name      => 'status',
+     event     => 'terminated',
+     [errmsg   => <error-message-array>]
+     [msg      => <message-text array>]
+  }
 """
 
     name          = os.path.basename(__file__).split('.')[0]
@@ -30,6 +45,9 @@ class QuitCommand(Mbase_cmd.DebuggerCommand):
 
         self.debugger.core.stop()
         self.debugger.core.execution_status = 'Quit command'
+        self.proc.response['event'] = 'terminated'
+        self.proc.response['name']  = 'status'
+        self.proc.intf[-1].msg(self.proc.response)
         raise Mexcept.DebuggerQuit
 
     def threaded_quit(self, arg):
@@ -37,14 +55,14 @@ class QuitCommand(Mbase_cmd.DebuggerCommand):
         self.msg("Quit for threading not fully done yet. Try 'kill'.")
         return False
 
-    def run(self, args):
+    def run(self, cmd_hash):
         threading_list = threading.enumerate()
         if (len(threading_list) == 1 and
             threading_list[0].getName() == 'MainThread'):
             # We just have a main thread so that's safe to quit
-            return self.nothread_quit(args)
+            return self.nothread_quit(cmd_hash)
         else:
-            return self.threaded_quit(args)
+            return self.threaded_quit(cmd_hash)
         pass
 
 if __name__ == '__main__':

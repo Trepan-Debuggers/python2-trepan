@@ -24,11 +24,13 @@ import_relative('lib', '..', 'pydbgr')
 import_relative('bwprocessor', '..', 'pydbgr')
 
 Mprocessor = import_relative('vprocessor', '..', 'pydbgr')
+Mbytecode  = import_relative('bytecode', '..lib', 'pydbgr')
 Mexcept    = import_relative('exception', '..', 'pydbgr')
 Mdisplay   = import_relative('display', '..lib', 'pydbgr')
 Mmisc      = import_relative('misc', '..', 'pydbgr')
 Mfile      = import_relative('file', '..lib', 'pydbgr')
 Mlocation  = import_relative('location', '.', 'pydbgr')
+Mmsg       = import_relative('msg',      '.', 'pydbgr')
 Mstack     = import_relative('stack', '..lib', 'pydbgr')
 Mthread    = import_relative('thread', '..lib', 'pydbgr')
 
@@ -135,6 +137,7 @@ class BWProcessor(Mprocessor.Processor):
         self.stack             = []
         self.thread_name       = None
         self.frame_thread_name = None
+        return
 
     def add_preloop_hook(self, hook, position=-1, nodups = True):
         if hook in self.preloop_hooks: return False
@@ -147,7 +150,7 @@ class BWProcessor(Mprocessor.Processor):
 
         A negative number indexes from the other end."""
         if not self.curframe:
-            self.errmsg("No stack.")
+            Mmsgs.errmsg(self, "No stack.")
             return
 
         # Below we remove any negativity. At the end, pos will be
@@ -161,10 +164,10 @@ class BWProcessor(Mprocessor.Processor):
             pos += self.curindex
 
         if pos < 0:
-            self.errmsg("Adjusting would put us beyond the oldest frame.")
+            Mmsgs.errmsg(self, "Adjusting would put us beyond the oldest frame.")
             return
         elif pos >= len(self.stack):
-            self.errmsg("Adjusting would put us beyond the newest frame.")
+            Mmsgs.errmsg(self, "Adjusting would put us beyond the newest frame.")
             return
 
         self.curindex = pos
@@ -207,12 +210,6 @@ class BWProcessor(Mprocessor.Processor):
             pass
         self.thread_name = Mthread.current_thread_name()
         self.frame_thread_name = self.thread_name
-        if self.thread_name != 'MainThread':
-            prompt += ':' + self.thread_name
-            pass
-        self.prompt_str = '%s%s%s ' % ('(' * self.debug_nest, 
-                                       prompt, 
-                                       ')' * self.debug_nest)
         self.process_commands()
         return True
 
@@ -236,7 +233,7 @@ class BWProcessor(Mprocessor.Processor):
                 exc_type_name = t
                 pass
             else: exc_type_name = t.__name__
-            self.errmsg(str("%s: %s" % (exc_type_name, arg)))
+            Mmsgs.errmsg(self, str("%s: %s" % (exc_type_name, arg)))
             raise
         return None # Not reached
 
@@ -259,11 +256,11 @@ class BWProcessor(Mprocessor.Processor):
             if type(t) == types.StringType:
                 exc_type_name = t
             else: exc_type_name = t.__name__
-            self.errmsg('%s: %s' % (str(exc_type_name), str(v)))
+            Mmsgs.errmsg(self, '%s: %s' % (str(exc_type_name), str(v)))
             pass
         return
 
-    def ok_for_running(self, cmd_obj, name, nargs):
+    def ok_for_running(self, cmd_obj, name, cmd_hash):
         '''We separate some of the common debugger command checks here:
         whether it makes sense to run the command in this execution state,
         if the command has the right number of arguments and so on.
@@ -272,7 +269,7 @@ class BWProcessor(Mprocessor.Processor):
             if not (self.core.execution_status in cmd_obj.execution_set):
                 part1 = ("Command '%s' is not available for execution status:" 
                          % name)
-                self.errmsg(Mmisc.wrapped_lines(part1, self.core.execution_status,
+                Mmsgs.errmsg(self, Mmisc.wrapped_lines(part1, self.core.execution_status,
                                                 self.debugger.settings['width']))
                 return False
             pass
@@ -280,23 +277,13 @@ class BWProcessor(Mprocessor.Processor):
             self.intf[-1].errmsg("Command '%s' needs an execution stack." 
                                  % name)
             return False
-        if nargs < cmd_obj.min_args:
-            self.errmsg(("Command '%s' needs at least %d argument(s); " + 
-                             "got %d.") % 
-                             (name, cmd_obj.min_args, nargs))
-            return False
-        elif cmd_obj.max_args is not None and nargs > cmd_obj.max_args:
-            self.errmsg(("Command '%s' can take at most %d argument(s);" + 
-                              " got %d.") % 
-                             (name, cmd_obj.max_args, nargs))
-            return False
         return True
 
     def process_commands(self):
         """Handle debugger commands."""
         if self.core.execution_status != 'No program':
             self.setup()
-            Mlocation.print_location(self, self.event)
+            self.intf[-1].msg(Mlocation.print_location(self, self.event))
             pass
         leave_loop = run_hooks(self, self.preloop_hooks)
         self.continue_running = False
@@ -331,33 +318,39 @@ class BWProcessor(Mprocessor.Processor):
 
     def process_command(self):
         # process command
-        args = self.intf[-1].read_command()
+        self.response = {'errs':[], 'msg':[]}
+        cmd_hash = self.intf[-1].read_command()
+        if type(cmd_hash) is not types.DictionaryType:
+            Mmsg.errmsg(self, "invalid input: %s" % cmd_hash,
+                        {'set_name': True})
+            self.intf[-1].msg(self.response)
+            return False
 
-        if len(args):
-            self.cmd_name = args[0]
-            cmd_name = resolve_name(self, self.cmd_name)
-            if cmd_name:
-                cmd_obj = self.name2cmd[cmd_name]
-                if self.ok_for_running(cmd_obj, cmd_name, len(args)-1):
-                    try:
-                        result = cmd_obj.run(args)
-                        if result: return result
-                    except (Mexcept.DebuggerQuit, 
-                            Mexcept.DebuggerRestart, SystemExit):
-                        # Let these exceptions propagate through
-                        raise
-                    except:
-                        self.errmsg("INTERNAL ERROR: " + 
-                                    traceback.format_exc())
-                        pass
+        self.cmd_name = cmd_hash['command']
+        cmd_name = resolve_name(self, self.cmd_name)
+        if cmd_name:
+            cmd_obj = self.name2cmd[cmd_name]
+            if self.ok_for_running(cmd_obj, cmd_name, cmd_hash):
+                try:
+                    self.response['name'] = cmd_name
+                    result = cmd_obj.run(cmd_hash)
+                    self.intf[-1].msg(self.response)
+                    if result: return result
+                except (Mexcept.DebuggerQuit, 
+                        Mexcept.DebuggerRestart, SystemExit):
+                    # Let these exceptions propagate through
+                    raise
+                except:
+                    Mmsg.errmsg(self, "INTERNAL ERROR: " + 
+                                traceback.format_exc())
                     pass
-                else:
-                    self.undefined_cmd(args)
-                    pass
+                pass
+            else:
+                self.undefined_cmd(args)
                 pass
             pass
         return False
-        
+    
     def remove_preloop_hook(self, hook):
         try:
             position = self.preloop_hooks.index(hook)
@@ -403,7 +396,7 @@ class BWProcessor(Mprocessor.Processor):
 
     def undefined_cmd(self, cmd):
         """Error message when a command doesn't exist"""
-        self.errmsg('Undefined command: "%s". Try "help".' % cmd)
+        Mmsg.errmsg(self, 'Undefined command: "%s". Try "help".' % cmd)
         return
 
     def _populate_commands(self):
@@ -462,7 +455,7 @@ if __name__=='__main__':
     Mbullwinkle  = import_relative('bullwinkle', '..interfaces', 'pydbgr')
     class Debugger:
         def __init__(self):
-            self.intf = Mbullwinkle.BWInterface()
+            self.intf = [Mbullwinkle.BWInterface()]
             self.settings = {'dbg_pydbgr': True, 'reload': False}
         pass
     class MockCore:
@@ -486,7 +479,7 @@ if __name__=='__main__':
     bwproc.setup()
     # print
     # print '-' * 10
-    print Mlocation.print_location(bwproc)
+    Mlocation.print_location(bwproc)
 
     # print 'Removing non-existing quit hook: ', bwproc.remove_preloop_hook(fn)
     # bwproc.add_preloop_hook(fn)

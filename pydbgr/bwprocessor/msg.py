@@ -9,7 +9,7 @@
 # we wouldn't pick up that change in our self.msg
 def errmsg(proc_obj, message, opts={}):
     response = proc_obj.response
-    if opts['set_name']: response['name'] = 'error'
+    if 'set_name' in opts: response['name'] = 'error'
     return response['errs'].append(message)
 
 

@@ -53,7 +53,8 @@ class BWInterface(Minterface.DebuggerInterface):
         return
 
     def msg(self, msg):
-        return self.pp.pformat(msg)
+        self.output.write(self.pp.pformat(msg) + "\n")
+        return 
 
     def read_command(self):
         line = self.readline('Bullwinkle read: ')
@@ -79,7 +80,7 @@ if __name__=='__main__':
         except EOFError:
             print "No input EOF: "
         else:
-            print intf.msg(entry)
+            intf.msg(entry)
             pass
         pass
     pass

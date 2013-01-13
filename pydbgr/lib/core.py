@@ -34,6 +34,8 @@ default    = import_relative('default')
 Mmisc      = import_relative('misc', '..', 'pydbgr')
 Mtrace     = import_relative('trace', '..processor', 'pydbgr')
 Mcmdproc   = import_relative('cmdproc', '..processor', 'pydbgr')
+import_relative('bwprocessor', '..', 'pydbgr')
+Mbwproc    = import_relative('main', '..bwprocessor', 'pydbgr')
 Mstack     = import_relative('stack')
 Mclifns    = import_relative('clifns', '..', 'pydbgr')
 
@@ -86,6 +88,8 @@ class DebuggerCore:
         proc_opts      = get_option('proc_opts')
         if not self.processor:
             self.processor   = Mcmdproc.CommandProcessor(self, opts=proc_opts)
+        elif self.processor == 'bullwinkle':
+            self.processor   = Mbwproc.BWProcessor(self, opts=proc_opts)
             pass
         # What events are considered in stepping. Note: 'None' means *all*.
         self.step_events     = None

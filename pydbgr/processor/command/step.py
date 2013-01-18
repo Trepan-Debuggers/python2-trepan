@@ -22,7 +22,7 @@ Mbase_cmd  = import_relative('base_cmd')
 Mcmdfns    = import_relative('cmdfns', '..', 'pydbgr')
 
 class StepCommand(Mbase_cmd.DebuggerCommand):
-        """**step**[**+**|**-**|**<**|**>**|**!**] [*event*...] [*count*]
+    """**step**[**+**|**-**|**<**|**>**|**!**] [*event*...] [*count*]
 
 Execute the current line, stopping at the next event.
 

@@ -65,7 +65,7 @@ environment."""
             self.msg("R=> %s" % self.proc._saferepr(ret))
         except:
             pass
-        self.setion("LEAVING NESTED DEBUGGER")
+        self.section("LEAVING NESTED DEBUGGER")
 
         self.core.debugger_lock    = old_lock
         self.core.stop_level       = old_stop_level

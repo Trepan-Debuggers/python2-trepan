@@ -1,3 +1,64 @@
+2013-02-02  rocky <rocky@gnu.org>
+
+	* pydbgr/lib/default.py, pydbgr/processor/cmdproc.py,
+	pydbgr/processor/command/base_subcmd.py,
+	pydbgr/processor/command/macro.py, test/data/macro.cmd,
+	test/data/macro.right, test/integration/test-macro.py: Add "macro"
+	and "info macro" tests. Some macro code wasn't checked in previously
+	has it should have been.
+
+2013-02-01  rocky <rocky@gnu.org>
+
+	* pydbgr/processor/command/info_subcmd/macro.py,
+	pydbgr/processor/command/macro.py: Add debugger macros courtesy of
+	Python's lambdas.
+
+2013-01-18  rocky <rocky@gnu.org>
+
+	* __pkginfo__.py, pydbgr/processor/command/debug.py,
+	pydbgr/processor/command/step.py: debug.py: spelled method "section"
+	incorrectly. __pkginfo__.py add bwprocessor. step.py: correct
+	indentation on doc string.
+
+2013-01-13  rocky <rocky@gnu.org>
+
+	* pydbgr/bwprocessor/command/quit.py,
+	pydbgr/bwprocessor/command/step.py, pydbgr/bwprocessor/location.py,
+	pydbgr/bwprocessor/main.py, pydbgr/processor/command/step.py: More
+	complete BW 'step' and 'quit' command, fix some of the bugs in BW.
+
+2013-01-12  rocky <rocky@gnu.org>
+
+	* pydbgr/bwcli.py, pydbgr/bwprocessor/command/step.py,
+	pydbgr/bwprocessor/location.py, pydbgr/bwprocessor/main.py,
+	pydbgr/bwprocessor/msg.py, pydbgr/interfaces/bullwinkle.py,
+	pydbgr/lib/core.py: Get Bullwinkle protocol "step" and "quit"
+	minimally working.
+
+2013-01-12  rocky <rocky@gnu.org>
+
+	* pydbgr/__init__.py, pydbgr/bwprocessor/__init__.py,
+	pydbgr/bwprocessor/command/__init__.py,
+	pydbgr/bwprocessor/command/base_cmd.py,
+	pydbgr/bwprocessor/command/mock.py,
+	pydbgr/bwprocessor/command/quit.py, pydbgr/bwprocessor/location.py,
+	pydbgr/bwprocessor/main.py, pydbgr/bwprocessor/msg.py,
+	pydbgr/interfaces/bullwinkle.py, pydbgr/processor/base_proc.py,
+	pydbgr/processor/cmdproc.py, pydbgr/processor/command/__init__.py,
+	pydbgr/processor/command/ipython_magic/__init__.py,
+	pydbgr/processor/command/set_subcmd/__init__.py,
+	pydbgr/processor/trace.py, pydbgr/vprocessor.py: Start Bullwinkle
+	processor.
+
+2013-01-12  rocky <rocky@gnu.org>
+
+	* MANIFEST.in, pydbgr/VERSION.py: Bump version add
+	make-check-filter.py
+
+2013-01-12  rocky <rocky@gnu.org>
+
+	* ChangeLog, NEWS, pydbgr/VERSION.py: Get ready for release 0.2.2
+
 2013-01-12  rocky <rocky@gnu.org>
 
 	* .gitignore, Makefile, make-check-filter.py, pydbgr/api.py,

@@ -29,19 +29,19 @@ without parenthesis or commas. See below for an example.
 
 The macro (really a Python lambda) should return either a String or an
 Array of Strings. The string in both cases are strings of debugger
-commands.  If the return is a String, that gets tokenized by a simple
-String#split .  Note that macro processing is done right after
-splitting on ;; so if the macro returns a string containing ;; this
-will not be handled on the string returned.
+commands.  If a string is returned, that gets tokenized by a simple
+split() .  Note that macro processing is done right after splitting on
+`;;`. As a result, if the macro returns a string containing `;;` this
+will not be interpreted as separating debugger command.
 
-If instead, Array of Strings is returned, then the first string is
-shifted from the array and executed. The remaining strings are pushed
+If a list of strings is returned, then the first string is
+shifted from the list and executed. The remaining strings are pushed
 onto the command queue. In contrast to the first string, subsequent
-strings can contain other macros, and ;; in those strings will be
+strings can contain other macros. `;;` in those strings will be
 split into separate commands.
 
 Here is an trivial example. The below creates a macro called `l=` which is
-the same thing as 'list .'
+the same thing as `list`.
 
     macro l= lambda: 'list ='
 
@@ -50,7 +50,7 @@ needed here. But usually you will want to run several commands. So those
 have to be wrapped up into a list.
 
 The below creates a macro called `fin+` which issues two commands
-'finish' followed by 'step':
+`finish` followed by `step`:
 
     macro fin+ lambda: ['finish','step']
 

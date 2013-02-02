@@ -73,6 +73,9 @@ DEBUGGER_SETTINGS = {
     # confirm potentially dangerous operations?
     'confirm'       : True,
 
+    # Debug macros?
+    'debugmacro'    : False,
+
     # Debug the debugger?
     'dbg_pydbgr'    : False,
 

@@ -1,17 +1,18 @@
 # -*- coding: utf-8 -*-
-# copyright (c) 2013 rocky bernstein
-#   this program is free software: you can redistribute it and/or modify
-#   it under the terms of the gnu general public license as published by
-#   the free software foundation, either version 3 of the license, or
+# Copyright (C) 2013 Rocky Bernstein <rocky@gnu.org>
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
 #   (at your option) any later version.
 #
-#   this program is distributed in the hope that it will be useful,
-#   but without any warranty; without even the implied warranty of
-#   merchantability or fitness for a particular purpose.  see the
-#   gnu general public license for more details.
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
 #
-#   you should have received a copy of the gnu general public license
-#   along with this program.  if not, see <http://www.gnu.org/licenses/>.
+#   You should have received a copy of the GNU General Public License
+#   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import os, sys, types
 
@@ -39,8 +40,17 @@ onto the command queue. In contrast to the first string, subsequent
 strings can contain other macros, and ;; in those strings will be
 split into separate commands.
 
-Here is an example. The below creates a macro called `fin+` which
-issues two commands 'finish' followed by 'step':
+Here is an trivial example. The below creates a macro called `l=` which is
+the same thing as 'list .'
+
+    macro l= lambda: 'list ='
+
+A simple text to text substitution of one command was all that was
+needed here. But usually you will want to run several commands. So those
+have to be wrapped up into a list.
+
+The below creates a macro called `fin+` which issues two commands
+'finish' followed by 'step':
 
     macro fin+ lambda: ['finish','step']
 
@@ -66,10 +76,11 @@ See also 'info macro'.
   """
 
   category   = 'support'
-  min_args   = 2  # Need at least this many
+  min_args   = 2  # Need at least this many: macro_name
   max_args   = None
   name       = os.path.basename(__file__).split('.')[0]
-  short_help = 'Define a macro'
+  need_stack  = False
+  short_help  = 'Define a macro'
   
   def run(self, args):
     

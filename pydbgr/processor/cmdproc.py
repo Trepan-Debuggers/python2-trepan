@@ -241,6 +241,9 @@ class CommandProcessor(Mprocessor.Processor):
         self.event2short['brkpt']  = 'xx'
 
         self.cmd_instances    = self._populate_commands()
+        self.cmd_argstr       = ''     # command argument string. Is
+                                       # like current_command, but the part
+                                       # after cmd_name has been removed.
         self.cmd_name         = ''     # command name before alias or
                                        # macro resolution
         self.cmd_queue        = []     # Queued debugger commands
@@ -271,6 +274,8 @@ class CommandProcessor(Mprocessor.Processor):
         self.event_arg      = None
         self.frame          = None
         self.list_lineno    = 0
+
+        self.macros         = {}     # Debugger Macros
 
         # Create a custom safe Repr instance and increase its maxstring.
         # The default of 30 truncates error messages too easily.
@@ -653,6 +658,7 @@ class CommandProcessor(Mprocessor.Processor):
     def process_command(self):
         # process command
         if len(self.cmd_queue) > 0:
+            print self.cmd_queue
             current_command = self.cmd_queue[0].strip()
             del self.cmd_queue[0]
         else:
@@ -679,8 +685,45 @@ class CommandProcessor(Mprocessor.Processor):
 
         for args in args_list:
             if len(args):
+                while True:
+                    if len(args) == 0: return False
+                    macro_cmd_name = args[0]
+                    if macro_cmd_name not in self.macros: break
+                    try:
+                        current_command = self.macros[macro_cmd_name][0](*args[1:])
+                    except TypeError:
+                        t, v = sys.exc_info()[:2]
+                        self.errmsg("Error expanding macro %s" % macro_cmd_name)
+                        return False
+                    if self.settings('debugmacro'):
+                        print current_command
+                        pass
+                    if type(current_command) == types.ListType:
+                        for x in current_command:
+                            if types.StringType != type(x):
+                                self.errmsg("macro %s should return a List " +
+                                            "of Strings. Has %s of type %s" %
+                                            (macro_cmd_name, x, type(x),
+                                             current_command))
+                                return False
+                            pass
+                        
+                        first = current_command[0]
+                        args =  first.split()
+                        self.cmd_queue + [current_command[1:]]
+                        current_command = first
+                    elif type(current_command) == types.StringType:
+                        args = current_command.split()
+                    else:
+                        self.errmsg("macro %s should return a List " +
+                   "of Strings or a String. Got %s" % (macro_cmd_name,
+                                                       current_command))
+                        return False
+                    pass
+                
                 self.cmd_name = args[0]
                 cmd_name = resolve_name(self, self.cmd_name)
+                self.cmd_argstr = current_command[len(self.cmd_name):].lstrip()
                 if cmd_name:
                     self.last_command = current_command
                     cmd_obj = self.name2cmd[cmd_name]

@@ -21,6 +21,7 @@ and storing it as a list of known debugger commands.
 """
 
 NotImplementedMessage = "This method must be overriden in a subclass"
+import columnize
 from pygments.console import colorize
 
 # Note: don't end classname with Command (capital C) since cmdproc
@@ -66,6 +67,13 @@ class DebuggerSubcommand:
         self.name  = self.__module__.split('.')[-1]
 
         return
+
+    def columnize_commands(self, commands):
+        """List commands arranged in an aligned columns"""
+        commands.sort()
+        width = self.debugger.settings['width']
+        return columnize.columnize(commands, displaywidth=width, 
+                                   lineprefix='    ')
 
     def confirm(self, msg, default=False):
         """ Convenience short-hand for self.debugger.intf.confirm """

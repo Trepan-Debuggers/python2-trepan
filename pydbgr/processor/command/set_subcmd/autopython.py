@@ -34,7 +34,7 @@ Go into Python on debugger entry."""
         Mcmdfns.run_set_bool(self, args)
         if self.settings['autopython']:
             if self.python_cmd == None:
-                self.python_cmd = self.proc.name2cmd['python'].run
+                self.python_cmd = self.proc.commands['python'].run
                 pass
             self.proc.add_preloop_hook(self.run_python, -1)
         else:

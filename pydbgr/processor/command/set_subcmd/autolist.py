@@ -35,7 +35,7 @@ class SetAutoList(Mbase_subcmd.DebuggerSetBoolSubcommand):
         Mcmdfns.run_set_bool(self, args)
         if self.settings['autolist']:
             if self.list_cmd == None:
-                self.list_cmd = self.proc.name2cmd['list'].run
+                self.list_cmd = self.proc.commands['list'].run
                 pass
             self.proc.add_preloop_hook(self.run_list, 0)
         else:

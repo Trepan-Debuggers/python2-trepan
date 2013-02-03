@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009, 2012, 2013 Rocky Bernstein
+#   Copyright (C) 2009, 2012-2013 Rocky Bernstein
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -77,7 +77,7 @@ See also `examine` and `whatis`.
             cmd_name = args[1]
             if cmd_name == '*':
                 self.section("List of all debugger commands:")
-                self.msg_nocr(self.columnize_commands(self.proc.name2cmd.keys()))
+                self.msg_nocr(self.columnize_commands(self.proc.commands.keys()))
                 return
             elif cmd_name in categories.keys():
                 self.show_category(cmd_name, args[2:])
@@ -85,15 +85,15 @@ See also `examine` and `whatis`.
 
             command_name = Mcmdproc.resolve_name(self.proc, cmd_name)
             if command_name:
-                instance = self.proc.name2cmd[command_name]
+                instance = self.proc.commands[command_name]
                 if hasattr(instance, 'help'):
                     return instance.help(args)
                 else:
                     doc = instance.__doc__ or instance.run.__doc__
                     doc = doc.rstrip('\n')
                     self.rst_msg(doc.rstrip("\n"))
-                    aliases = [key for key in self.proc.alias2name 
-                               if command_name == self.proc.alias2name[key]]
+                    aliases = [key for key in self.proc.aliases 
+                               if command_name == self.proc.aliases[key]]
                     if len(aliases) > 0:
                         self.msg('')
                         msg = Mmisc.wrapped_lines('Aliases:', 
@@ -103,7 +103,7 @@ See also `examine` and `whatis`.
                         pass
                     pass
             else:
-                cmds = [cmd for cmd in self.proc.name2cmd.keys()
+                cmds = [cmd for cmd in self.proc.commands.keys()
                         if re.match('^' + cmd_name, cmd) ]
                 if cmds is None:
                     self.errmsg("No commands found matching /^%s/. Try \"help\"." 
@@ -141,7 +141,7 @@ Type `help` followed by command name for full documentation.
 
     def show_category(self, category, args):
         """Show short help for all commands in `category'."""
-        n2cmd = self.proc.name2cmd
+        n2cmd = self.proc.commands
         names = n2cmd.keys()
         if len(args) == 1 and args[0] == '*':
             self.section("Commands in class %s:" % category)

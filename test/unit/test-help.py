@@ -41,7 +41,7 @@ class TestHelp(unittest.TestCase):
     def test_help_command(self):
         """Test we can run 'help *cmd* for each command"""
         
-        for name in self.cp.name2cmd.keys():
+        for name in self.cp.commands.keys():
             self.cmd.run(['help', name])
             pass
         self.assertTrue(len(self.msgs) > 0, 'Should get help output')
@@ -67,7 +67,7 @@ class TestHelp(unittest.TestCase):
 
     def test_short_help(self):
         """Test each command has some sort of short help"""
-        for cmd in self.cp.name2cmd.values():
+        for cmd in self.cp.commands.values():
             self.assertEqual(types.StringType, type(cmd.short_help))
             pass
         return

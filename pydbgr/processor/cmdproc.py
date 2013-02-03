@@ -96,9 +96,9 @@ def run_hooks(obj, hooks, *args):
     return False
 
 def resolve_name(obj, command_name):
-    if command_name.lower() not in obj.name2cmd:
-        if command_name in obj.alias2name:
-            command_name = obj.alias2name[command_name]
+    if command_name.lower() not in obj.commands:
+        if command_name in obj.aliases:
+            command_name = obj.aliases[command_name]
             pass
         else: 
             return None
@@ -725,7 +725,7 @@ class CommandProcessor(Mprocessor.Processor):
                 self.cmd_argstr = current_command[len(self.cmd_name):].lstrip()
                 if cmd_name:
                     self.last_command = current_command
-                    cmd_obj = self.name2cmd[cmd_name]
+                    cmd_obj = self.commands[cmd_name]
                     if self.ok_for_running(cmd_obj, cmd_name, len(args)-1):
                         try:
                             self.current_command = current_command
@@ -873,18 +873,18 @@ class CommandProcessor(Mprocessor.Processor):
 
     def _populate_cmd_lists(self):
         """ Populate self.lists and hashes:
-        self.name2cmd, and self.alias2name, self.category """
-        self.name2cmd = {}
-        self.alias2name = {}
+        self.commands, and self.aliases, self.category """
+        self.commands = {}
+        self.aliases = {}
         self.category = {}
 #         self.short_help = {}
         for cmd_instance in self.cmd_instances:
             if not hasattr(cmd_instance, 'aliases'): continue 
             alias_names = cmd_instance.aliases
             cmd_name = cmd_instance.name
-            self.name2cmd[cmd_name] = cmd_instance
+            self.commands[cmd_name] = cmd_instance
             for alias_name in alias_names:
-                self.alias2name[alias_name] = cmd_name
+                self.aliases[alias_name] = cmd_name
                 pass
             cat  = getattr(cmd_instance, 'category')
             if cat and self.category.get(cat):
@@ -911,11 +911,11 @@ if __name__=='__main__':
     d = Mmock.MockDebugger()
     cmdproc = CommandProcessor(d.core)
     print 'commands:'
-    commands = cmdproc.name2cmd.keys()
+    commands = cmdproc.commands.keys()
     commands.sort()
     print commands
     print 'aliases:'
-    aliases = cmdproc.alias2name.keys()
+    aliases = cmdproc.aliases.keys()
     aliases.sort()
     print aliases
     print resolve_name(cmdproc, 'quit')
@@ -948,8 +948,8 @@ if __name__=='__main__':
     print cmdproc.parse_position('/bin/bash')
     print cmdproc.parse_position('/bin/bash:4')
 
-    print cmdproc.name2cmd
-    fn = cmdproc.name2cmd['quit']
+    print cmdproc.commands
+    fn = cmdproc.commands['quit']
     
     print 'Removing non-existing quit hook: ', cmdproc.remove_preloop_hook(fn)
     cmdproc.add_preloop_hook(fn)

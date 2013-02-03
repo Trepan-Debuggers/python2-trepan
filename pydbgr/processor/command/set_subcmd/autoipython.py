@@ -36,7 +36,7 @@ try:
             Mcmdfns.run_set_bool(self, args)
             if self.settings['autoipython']:
                 if self.ipython_cmd == None:
-                    self.ipython_cmd = self.proc.name2cmd['ipython'].run
+                    self.ipython_cmd = self.proc.commands['ipython'].run
                     pass
                 self.proc.add_preloop_hook(self.run_ipython, -1)
             else:

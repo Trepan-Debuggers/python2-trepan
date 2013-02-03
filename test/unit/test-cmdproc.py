@@ -28,8 +28,8 @@ class TestCmdProc(unittest.TestCase):
     def test_basic(self):
 
         # We assume there's at least one command
-        self.assertTrue(len(self.cp.name2cmd) > 0)
-        self.assertTrue(len(self.cp.alias2name) > 0)
+        self.assertTrue(len(self.cp.commands) > 0)
+        self.assertTrue(len(self.cp.aliases) > 0)
 
         # In fact we assume there is a 'quit' command...
         self.assertEqual('quit', Mcmdproc.resolve_name(self.cp, 'quit'))
@@ -45,9 +45,9 @@ class TestCmdProc(unittest.TestCase):
 
     def test_class_vars(self):
         '''See that each command has required attributes defined.  Possibly in
-        a strongly-typed language we wouldn't need to do much of this.'''
+        a strongly-typed language we would not need to do much of this.'''
 
-        for cmd in self.cp.name2cmd.values():
+        for cmd in self.cp.commands.values():
 
             name = cmd.__class__
             for attr in ['aliases', 'min_args', 'max_args', 'name', 
@@ -139,7 +139,7 @@ class TestCmdProc(unittest.TestCase):
         return
 
     def test_preloop_hooks(self):
-        fn = self.cp.name2cmd['list']
+        fn = self.cp.commands['list']
         self.assertEqual(0, len(self.cp.preloop_hooks),
                          'Should start out with no preloop hooks')
         self.assertEqual(False, self.cp.remove_preloop_hook(fn),

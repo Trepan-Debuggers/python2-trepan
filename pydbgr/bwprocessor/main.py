@@ -75,7 +75,7 @@ def run_hooks(obj, hooks, *args):
     return False
 
 def resolve_name(obj, command_name):
-    if command_name not in obj.name2cmd:
+    if command_name not in obj.commands:
         return None
     return command_name
 
@@ -338,7 +338,7 @@ class BWProcessor(Mprocessor.Processor):
         self.cmd_name = cmd_hash['command']
         cmd_name = resolve_name(self, self.cmd_name)
         if cmd_name:
-            cmd_obj = self.name2cmd[cmd_name]
+            cmd_obj = self.commands[cmd_name]
             if self.ok_for_running(cmd_obj, cmd_name, cmd_hash):
                 try:
                     self.response['name'] = cmd_name
@@ -449,11 +449,11 @@ class BWProcessor(Mprocessor.Processor):
         return cmd_instances
 
     def _populate_cmd_lists(self):
-        """ Populate self.name2cmd"""
-        self.name2cmd = {}
+        """ Populate self.commands"""
+        self.commands = {}
         for cmd_instance in self.cmd_instances:
             cmd_name = cmd_instance.name
-            self.name2cmd[cmd_name] = cmd_instance
+            self.commands[cmd_name] = cmd_instance
             pass
         return
 
@@ -477,7 +477,7 @@ if __name__=='__main__':
     core = MockCore()
     bwproc = BWProcessor(core)
     print 'commands:'
-    commands = bwproc.name2cmd.keys()
+    commands = bwproc.commands.keys()
     commands.sort()
     print commands
     print resolve_name(bwproc, 'quit')

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2009, 2012 Rocky Bernstein
+#  Copyright (C) 2009, 2012-2013 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -40,11 +40,11 @@ of aliases is printed, not what commands they are attached to.
         return
 
     def _alias_line(self, alias):
-        self.msg("%-10s : %s" % (alias, self.proc.alias2name[alias]))
+        self.msg("%-10s : %s" % (alias, self.proc.aliases[alias]))
         return
 
     def run(self, args):
-        aliases = self.proc.alias2name.keys()
+        aliases = self.proc.aliases.keys()
         aliases.sort()
         if len(args) == 0:
             self._alias_header()
@@ -61,7 +61,7 @@ of aliases is printed, not what commands they are attached to.
                 if alias in aliases:
                     self._alias_line(alias)
                 else:
-                    self.errsg("%s is not an alias" % alias)
+                    self.errmsg("%s is not an alias" % alias)
                     pass
                 pass
             return

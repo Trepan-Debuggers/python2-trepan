@@ -151,4 +151,4 @@ if __name__ == '__main__':
     from import_relative import import_relative
     mock = import_relative('mock')
     d, cp = mock.dbg_setup()
-    dd = DebuggerSubcommand(cp.name2cmd['quit'])
+    dd = DebuggerSubcommand(cp.commands['quit'])

@@ -31,10 +31,10 @@ class TestProcesor(unittest.TestCase):
 
     def test_get_commands_aliases(self):
         "Test that the command processor finds a command, alias, and method"
-        self.assertTrue('quit' in self.cp.name2cmd.keys())
-        self.assertEqual('quit', self.cp.alias2name['q'])
+        self.assertTrue('quit' in self.cp.commands.keys())
+        self.assertEqual('quit', self.cp.aliases['q'])
         import inspect
-        self.assertTrue(inspect.ismethod(self.cp.name2cmd['quit'].run))
+        self.assertTrue(inspect.ismethod(self.cp.commands['quit'].run))
         return
 
     def test_resolve_name(self):

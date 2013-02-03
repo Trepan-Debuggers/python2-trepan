@@ -57,7 +57,7 @@ and recolor all source code output."""
             if 'off' == highlight_type: highlight_type = 'plain'
             pass
         self.debugger.settings['highlight'] = highlight_type
-        show_cmd = self.proc.name2cmd['show']
+        show_cmd = self.proc.commands['show']
         show_cmd.run(['show', 'highlight'])
         return
     pass

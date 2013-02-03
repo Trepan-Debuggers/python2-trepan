@@ -1,3 +1,5 @@
+- Add debugger "alias" and "unalias" commands
+
 0.2.3 2013-02-02
 
 - Add debugger "macro" command

@@ -100,7 +100,7 @@ Debugger commands like are installed as IPython magic commands, e.g.
 def ipy_%s(self, args):
    argv = arg_split(args)
    proc = ipshell.debugger.core.processor
-   cmd = proc.name2cmd['%s']
+   cmd = proc.commands['%s']
    leave = cmd.run(['%s'] + argv)
    if leave: self.shell.exit()
    return

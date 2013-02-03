@@ -1,5 +1,9 @@
 2013-02-02  rocky <rocky@gnu.org>
 
+	* ChangeLog, pydbgr/VERSION.py: Release 0.2.3
+
+2013-02-02  rocky <rocky@gnu.org>
+
 	* ChangeLog, pydbgr/processor/command/macro.py: Better help text for
 	macro command.
 

@@ -658,7 +658,6 @@ class CommandProcessor(Mprocessor.Processor):
     def process_command(self):
         # process command
         if len(self.cmd_queue) > 0:
-            print self.cmd_queue
             current_command = self.cmd_queue[0].strip()
             del self.cmd_queue[0]
         else:

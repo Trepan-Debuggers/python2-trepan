@@ -1,4 +1,14 @@
-0.2.1 
+0.2.3 2013-02-02
+
+- Add debugger "macro" command
+- Start Bullwinkle processor
+
+0.2.2 01-12-13
+
+- More pervive use of ReStructuredText and fixes to the
+  formatting code.
+
+0.2.1 01-05-13
 
 - Add call stack and disassembly colorization
 - Command docstring are now in ReStructuredText so they are

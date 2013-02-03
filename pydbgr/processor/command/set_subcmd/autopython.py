@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009, 2012 Rocky Bernstein
+#   Copyright (C) 2009, 2012-2013 Rocky Bernstein
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -21,7 +21,9 @@ Mcmdfns      = import_relative('cmdfns', '...', 'pydbgr')
 Mcmdproc     = import_relative('cmdproc', '...', 'pydbgr')
 
 class SetAutoPython(Mbase_subcmd.DebuggerSetBoolSubcommand):
-    """Go into Python on debugger entry."""
+    """**set** **autopython** [**on**|**off**]
+
+Go into Python on debugger entry."""
     
     in_list    = True
     min_abbrev = len('autopy') # Need at least "set autopy"

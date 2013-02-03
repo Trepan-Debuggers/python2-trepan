@@ -14,6 +14,7 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from pyficache import highlight_string
 from import_relative import *
 # Our local modules
 import_relative('processor', '....', 'pydbgr')
@@ -50,6 +51,10 @@ In the last form the only definitions of the given macro names is shown."""
         if macro_name in self.proc.macros:
           self.section("%s:" % macro_name)
           string = self.proc.macros[macro_name][1]
+          highlight = self.settings['highlight']
+          if  highlight in ['light', 'dark']:
+            string = highlight_string(string, highlight)
+            pass
           self.msg("  %s" % string)
         else:
           self.errmsg('%s is not a defined macro' % macro_name)

@@ -41,7 +41,7 @@ strings can contain other macros. `;;` in those strings will be
 split into separate commands.
 
 Here is an trivial example. The below creates a macro called `l=` which is
-the same thing as `list`.
+the same thing as `list`:
 
     macro l= lambda: 'list .'
 

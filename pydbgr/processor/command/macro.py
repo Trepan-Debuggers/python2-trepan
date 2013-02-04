@@ -24,15 +24,15 @@ class MacroCommand(Mbase_cmd.DebuggerCommand):
   """**macro** *macro-name* *lambda-object*
 
 Define *macro-name* as a debugger macro. Debugger macros get a list of
-arguments. Debugger macros get a list of arguments which you supply
-without parenthesis or commas. See below for an example.
+arguments which you supply without parenthesis or commas. See below
+for an example.
 
 The macro (really a Python lambda) should return either a String or an
-Array of Strings. The string in both cases are strings of debugger
-commands.  If a string is returned, that gets tokenized by a simple
-split() .  Note that macro processing is done right after splitting on
-`;;`. As a result, if the macro returns a string containing `;;` this
-will not be interpreted as separating debugger command.
+List of Strings. The string in both cases is a debugger command.  Each
+string gets tokenized by a simple split() .  Note that macro
+processing is done right after splitting on `;;`. As a result, if the
+macro returns a string containing `;;` this will not be interpreted as
+separating debugger commands.
 
 If a list of strings is returned, then the first string is
 shifted from the list and executed. The remaining strings are pushed
@@ -43,7 +43,7 @@ split into separate commands.
 Here is an trivial example. The below creates a macro called `l=` which is
 the same thing as `list`.
 
-    macro l= lambda: 'list ='
+    macro l= lambda: 'list .'
 
 A simple text to text substitution of one command was all that was
 needed here. But usually you will want to run several commands. So those

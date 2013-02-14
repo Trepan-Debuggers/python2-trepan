@@ -1,4 +1,12 @@
 # Compatibility for us old-timers.
+
+# Note: This makefile include remake-style target comments. 
+# These comments before the targets start with #:
+# remake --tasks to shows the targets and the comments
+
+GIT2CL ?= git2cl
+PYTHON ?= python
+
 EXTRA_DIST=ipython/ipy_pydbgr.py pydbgr
 PHONY=check clean dist distclean test test-unit test-functional
 

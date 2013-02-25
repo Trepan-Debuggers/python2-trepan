@@ -19,10 +19,10 @@ import atexit
 # Our local modules
 from import_relative import *
 import_relative('io', '..', 'pydbgr')
-Minterface = import_relative('interface',  '..',   'pydbgr')
-Mscriptin  = import_relative('scriptin',   '..io', 'pydbgr')
-Moutput    = import_relative('dbg_output', '..io', 'pydbgr')
-Mmisc      = import_relative('misc', '..', 'pydbgr')
+Minterface = import_relative('interface', '..',   'pydbgr')
+Mscriptin  = import_relative('scriptin',  '..io', 'pydbgr')
+Moutput    = import_relative('output',    '..io', 'pydbgr')
+Mmisc      = import_relative('misc',      '..', 'pydbgr')
 
 class ScriptInterface(Minterface.DebuggerInterface):
     """Interface when reading debugger scripts"""

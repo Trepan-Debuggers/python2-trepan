@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2009, 2013 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -61,7 +61,7 @@ class DebuggerUserOutput(Mbase_io.DebuggerOutputBase):
 
 # Demo
 if __name__=='__main__':
-    out = DebuggerOutput()
+    out = DebuggerUserOutput()
     out.writeline("Hello, world!")
     out.write("Hello");
     out.writeline(", again.");

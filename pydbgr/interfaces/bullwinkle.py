@@ -19,10 +19,10 @@ import atexit, pprint
 
 # Our local modules
 from import_relative import *
-import_relative('interfaces',  '..',   'pydbgr')
-Minterface = import_relative('interface',  '..',   'pydbgr')
-Minput     = import_relative('dbg_input', '..io', 'pydbgr')
-Moutput    = import_relative('dbg_output', '..io', 'pydbgr')
+import_relative('interfaces',             '..',   'pydbgr')
+Minterface = import_relative('interface', '..',   'pydbgr')
+Minput     = import_relative('input',     '..io', 'pydbgr')
+Moutput    = import_relative('output',    '..io', 'pydbgr')
 
 class BWInterface(Minterface.DebuggerInterface):
     """Interface when communicating with the user in the same

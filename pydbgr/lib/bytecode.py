@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009, 2012 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2009, 2012-2013 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -64,7 +64,7 @@ def stmt_contains_opcode(co, lineno, query_opcode):
     linestarts = dict(dis.findlinestarts(co))
     code = co.co_code
     found_start = False
-    for offset, start_line in linestarts.items():
+    for offset, start_line in list(linestarts.items()):
         if start_line == lineno: 
             found_start = True
             break
@@ -104,22 +104,22 @@ if __name__=='__main__':
     frame = inspect.currentframe()
     co = frame.f_code
     lineno = frame.f_lineno
-    print 'contains MAKE_FUNCTION', stmt_contains_opcode(co, lineno-4, 
-                                                         'MAKE_FUNCTION')
-    print 'contains MAKE_FUNCTION', stmt_contains_opcode(co, lineno,
-                                                         'MAKE_FUNCTION')
+    print('contains MAKE_FUNCTION %s' % stmt_contains_opcode(co, lineno-4, 
+                                                             'MAKE_FUNCTION'))
+    print('contains MAKE_FUNCTION %s' % stmt_contains_opcode(co, lineno,
+                                                             'MAKE_FUNCTION'))
 
-    print "op at frame: ", op_at_frame(frame)
-    print "op at frame, position 2", op_at_frame(frame, 2)
-    print "def statement: x=5?: ", is_def_stmt('x=5', frame)
+    print("op at frame: %s" % op_at_frame(frame))
+    print("op at frame, position 2: %s" % op_at_frame(frame, 2))
+    print("def statement: x=5?: %s" % is_def_stmt('x=5', frame))
     # Not a "def" statement because frame is wrong spot
-    print is_def_stmt('def foo():', frame)
+    print(is_def_stmt('def foo():', frame))
 
     class Foo:
         pass
     lineno = frame.f_lineno
-    print 'contains BUILD_CLASS', stmt_contains_opcode(co, lineno-2,
-                                                       'BUILD_CLASS')
-    print 'contains BUILD_CLASS', stmt_contains_opcode(co, lineno,
-                                                       'BUILD_CLASS')
+    print('contains BUILD_CLASS %s' % stmt_contains_opcode(co, lineno-2,
+                                                           'BUILD_CLASS'))
+    print('contains BUILD_CLASS %s' % stmt_contains_opcode(co, lineno,
+                                                           'BUILD_CLASS'))
     pass

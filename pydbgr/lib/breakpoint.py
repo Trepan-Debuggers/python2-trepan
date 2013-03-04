@@ -20,7 +20,7 @@ class BreakpointManager:
         return
 
     def get_breakpoint(self, i):
-        if isinstance(i, types.StringType):
+        if isinstance(i, bytes):
             try:
                 i = int(i)
             except ValueError:
@@ -46,13 +46,13 @@ class BreakpointManager:
                            func)
         # Build the internal lists of breakpoints
         self.bpbynumber.append(brkpt)
-        if self.bplist.has_key((filename, lineno)):
+        if (filename, lineno) in self.bplist:
             self.bplist[filename, lineno].append(brkpt)
         else:
             self.bplist[filename, lineno] = [brkpt]
             pass
         if func:
-            if self.fnlist.has_key(func):
+            if func in self.fnlist:
                 self.fnlist[func].append(brkpt)
             else:
                 self.fnlist[func] = [brkpt]
@@ -277,32 +277,32 @@ def checkfuncname(b, frame):
 
 if __name__=='__main__':
     bpmgr = BreakpointManager()
-    print bpmgr.last()
+    print(bpmgr.last())
     bp = bpmgr.add_breakpoint('foo', 5)
-    print bp.icon_char()
-    print bpmgr.last()
-    print repr(bp)
-    print str(bp)
+    print(bp.icon_char())
+    print(bpmgr.last())
+    print(repr(bp))
+    print(str(bp))
     bp.disable()
-    print str(bp)
+    print(str(bp))
     for i in 10, 1:
         status, msg = bpmgr.delete_breakpoint_by_number(i)
-        print "Delete breakpoint %s: %s %s" % (i, status, msg,)
+        print("Delete breakpoint %s: %s %s" % (i, status, msg,))
     import inspect
     frame = inspect.currentframe()  
-    print "Stop at bp: %s" % checkfuncname(bp, frame)
+    print("Stop at bp: %s" % checkfuncname(bp, frame))
 
     def foo(bp, bpmgr):
         frame = inspect.currentframe()
-        print "Stop at bp2: %s" % checkfuncname(bp, frame)
+        print("Stop at bp2: %s" % checkfuncname(bp, frame))
         # frame.f_lineno is constantly updated. So adjust for the 
         # line difference between the add_breakpoint and the check.
         bp3 = bpmgr.add_breakpoint('foo', frame.f_lineno+1) 
-        print "Stop at bp3: %s" % checkfuncname(bp3, frame)
+        print("Stop at bp3: %s" % checkfuncname(bp3, frame))
         return
     
     bp2 = bpmgr.add_breakpoint(None, None, False, None, 'foo')
     foo(bp2, bpmgr)
     bp3 = bpmgr.add_breakpoint('foo', 5, temporary=True)
-    print bp3.icon_char()
+    print(bp3.icon_char())
 

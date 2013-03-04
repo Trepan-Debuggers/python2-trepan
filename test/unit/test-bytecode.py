@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-'Unit test for pydbgr.code'
+'Unit test for pydbgr.bytecode'
 import inspect, os, sys, unittest
 from import_relative import *
 

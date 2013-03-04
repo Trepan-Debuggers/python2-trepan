@@ -7,7 +7,7 @@
 GIT2CL ?= git2cl
 PYTHON ?= python
 
-EXTRA_DIST=ipython/ipy_pydbgr.py pydbgr
+#EXTRA_DIST=ipython/ipy_pydbgr.py pydbgr
 PHONY=check clean dist distclean test test-unit test-functional
 
 #: Default target - same as "check"
@@ -68,12 +68,13 @@ bdist_egg:
 
 # It is too much work to figure out how to add a new command to distutils
 # to do the following. I'm sure distutils will someday get there.
-DISTCLEAN_FILES = build dist *.egg-info *.pyc
+DISTCLEAN_FILES = build dist *.pyc
 
 #: Remove ALL dervied files 
 distclean: clean
 	-rm -fr $(DISTCLEAN_FILES) || true
 	-find . -name \*.pyc -exec rm -v {} \;
+	-find . -name \*.egg-info -exec rm -v {} \;
 
 #: Install package locally
 verbose-install: 

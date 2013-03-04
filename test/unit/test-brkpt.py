@@ -1,15 +1,15 @@
 #!/usr/bin/env python
-'Unit test for the debugger pydbgrcore breakpoint'
+'Unit test for the debugger lib breakpoint'
 import operator, os, re, sys, unittest
 from import_relative import *
 
-breakpoint = import_relative('lib.breakpoint', '...pydbgr')
+Mbreakpoint = import_relative('lib.breakpoint', '...pydbgr')
 
 class TestBreakpoint(unittest.TestCase):
     
     def test_breakpoint(self):
         'Test breakpoint'
-        bpmgr = breakpoint.BreakpointManager()
+        bpmgr = Mbreakpoint.BreakpointManager()
         self.assertEqual(0, bpmgr.last())
         bp = bpmgr.add_breakpoint('foo', 5)
         self.assertFalse(not 
@@ -35,23 +35,23 @@ class TestBreakpoint(unittest.TestCase):
         return
 
     def test_checkfuncname(self):
-        'Test breakpoint.checkfuncname()'
+        'Test Mbreakpoint.checkfuncname()'
         import inspect
         frame = inspect.currentframe()
 
-        bpmgr = breakpoint.BreakpointManager()
+        bpmgr = Mbreakpoint.BreakpointManager()
         bp    = bpmgr.add_breakpoint('foo', 5)
 
-        self.assertEqual(False, breakpoint.checkfuncname(bp, frame))
+        self.assertEqual(False, Mbreakpoint.checkfuncname(bp, frame))
 
         def foo(bp, bpmgr):
             frame = inspect.currentframe()
-            self.assertEqual(True, breakpoint.checkfuncname(bp, frame))
+            self.assertEqual(True, Mbreakpoint.checkfuncname(bp, frame))
             # frame.f_lineno is constantly updated. So adjust for the 
             # line difference between the add_breakpoint and the check.
             bp3 = bpmgr.add_breakpoint('foo', frame.f_lineno+1) 
-            self.assertEqual(True, breakpoint.checkfuncname(bp3, frame))
-            self.assertEqual(False, breakpoint.checkfuncname(bp3, frame))
+            self.assertEqual(True, Mbreakpoint.checkfuncname(bp3, frame))
+            self.assertEqual(False, Mbreakpoint.checkfuncname(bp3, frame))
             return
     
         bp2 = bpmgr.add_breakpoint(None, None, False, None, 'foo')

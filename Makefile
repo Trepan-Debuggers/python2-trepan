@@ -28,7 +28,7 @@ test-unit:
 
 #: Run unit (white-box) tests
 test-unit-short: 
-	$(PYTHON) ./setup.py nosetests | \
+	$(PYTHON) ./setup.py nosetests --quiet | \
 	$(PYTHON) ./make-check-filter.py
 
 #: Run functional tests
@@ -37,7 +37,7 @@ test-functional:
 
 #: Run functional tests
 test-functional-short: 
-	(cd test/functional && $(PYTHON) ./setup.py nosetests) | \
+	(cd test/functional && $(PYTHON) ./setup.py nosetests --quiet) | \
 	$(PYTHON) ./make-check-filter.py
 
 #: Run integration (black-box) tests

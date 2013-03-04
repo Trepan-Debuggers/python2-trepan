@@ -1,10 +1,9 @@
 *.bak
-*.pyc
+*.py?
 *~
 /*.egg-info
-/*.pyc
 /*~
 /build
 /dist
 __pycache__
-UNKNOWN.egg-info
+testing_test.egg-info

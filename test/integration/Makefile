@@ -3,24 +3,16 @@ PYTHON ?= python
 PHONY=all check check-short clean test-integration test-integration-short
 
 #: Same as test-integration
-all: 
+all, check, test: 
 	$(MAKE) test-integration
-
-#: Same as test-integration
-check: 
-	$(MAKE) test-integration
-
-#: Same as test-integration-short
-check-short:
-	$(MAKE) test-integration-short
 
 #: Run integration tests
 test-integration: 
 	$(PYTHON) ./setup.py nosetests
 
 #: Run integration tests reduced verbosity
-test-integration-short: 
-	$(PYTHON) ./setup.py nosetests) | \
+check-short, test-integration-short: 
+	$(PYTHON) ./setup.py nosetests | \
 	$(PYTHON) ../../make-check-filter.py
 
 #: Remove derived files

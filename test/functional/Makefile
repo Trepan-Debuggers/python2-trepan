@@ -3,11 +3,7 @@ PYTHON ?= python
 PHONY=all check check-short test-functional test-functional-short
 
 #: Same as test-functional
-all: 
-	$(MAKE) test-functional
-
-#: Same as test-functional
-check: 
+all, test, check: 
 	$(MAKE) test-functional
 
 #: Same as test-functional-short
@@ -20,7 +16,7 @@ test-functional:
 
 #: Run functional tests reduced verbosity
 test-functional-short: 
-	$(PYTHON) ./setup.py nosetests) | \
+	$(PYTHON) ./setup.py nosetests | \
 	$(PYTHON) ../../make-check-filter.py
 
 #: Remove derived files

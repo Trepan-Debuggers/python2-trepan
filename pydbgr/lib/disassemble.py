@@ -54,7 +54,7 @@ def dis(msg, msg_nocr, section, errmsg, x=None, start_line=-1, end_line=None,
     elif inspect.iscode(x):
         pass
     if hasattr(x, '__dict__'):
-        items = x.__dict__.items()
+        items = list(x.__dict__.items())
         items.sort()
         for name, x1 in items:
             if type(x1) in (types.MethodType,
@@ -153,7 +153,7 @@ def disassemble_string(orig_msg, orig_msg_nocr, code, lasti=-1, cur_line=0,
             extended_arg = 0
             i += 2
             if op == EXTENDED_ARG:
-                extended_arg = oparg*65536L
+                extended_arg = oparg*65536
             msg_nocr(repr(oparg).rjust(5))
             msg_nocr(' ')
             if op in hasconst:
@@ -208,7 +208,7 @@ def pyc2code(fname):
 # Demo it
 if __name__ == '__main__':
     def msg(msg_str):
-        print msg_str
+        print(msg_str)
         return
     def msg_nocr(msg_str):
         sys.stdout.write(msg_str)
@@ -222,9 +222,9 @@ if __name__ == '__main__':
     curframe = inspect.currentframe()
     dis(msg, msg_nocr, errmsg, section, curframe,
         start_line=10, end_line=40)
-    print '-' * 40
+    print('-' * 40)
     dis(msg, msg_nocr, section, errmsg, disassemble)
-    print '-' * 40
+    print('-' * 40)
     magic, moddate, modtime, co = pyc2code(sys.modules['types'].__file__)
     disassemble(msg, msg_nocr, section, co, -1, 1, 70)
     pass

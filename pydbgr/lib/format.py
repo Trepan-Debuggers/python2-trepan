@@ -294,12 +294,12 @@ if __name__ == '__main__':
 
     def show_it(string, tf, width=80):
         tf.reset(width)
-        print '=' * 30
+        print('=' * 30)
         for t in lex(string, rst_lex):
-            print t
+            print(t)
             pass
-        print '-' * 30
-        print highlight(string, rst_lex, tf)
+        print('-' * 30)
+        print(highlight(string, rst_lex, tf))
         return
         
 #    string = '`A` very *emphasis* **strong** `code`'

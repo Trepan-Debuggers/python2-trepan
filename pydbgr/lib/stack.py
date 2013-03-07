@@ -176,7 +176,7 @@ def print_dict(s, obj, title):
     if hasattr(obj, "__dict__"):
         d=obj.__dict__
         if type(d) == types.DictType or type(d) == types.DictProxyType:
-            keys = d.keys()
+            keys = list(d.keys())
             if len(keys) == 0:
                 s += "\n  No %s" % title
             else:
@@ -243,25 +243,25 @@ if __name__=='__main__':
         
     frame = inspect.currentframe()
     m = MockDebugger()
-    print format_stack_entry(m, (frame, 10,))
-    print format_stack_entry(m, (frame, 10,), color='dark')
-    print "frame count: ", count_frames(frame)
-    print "frame count: ", count_frames(frame.f_back)
-    print "frame count: ", count_frames(frame, 1)
-    print "def statement: x=5?: ", Mbytecode.is_def_stmt('x=5', frame)
+    print(format_stack_entry(m, (frame, 10,)))
+    print(format_stack_entry(m, (frame, 10,), color='dark'))
+    print("frame count: %d" % count_frames(frame))
+    print("frame count: %d" % count_frames(frame.f_back))
+    print("frame count: %d" % count_frames(frame, 1))
+    print("def statement: x=5?: %s" % repr(Mbytecode.is_def_stmt('x=5', frame)))
     # Not a "def" statement because frame is wrong spot
-    print Mbytecode.is_def_stmt('def foo():', frame)
+    print(Mbytecode.is_def_stmt('def foo():', frame))
     def sqr(x): x * x 
     def fn(x):
         frame = inspect.currentframe()
-        print get_call_function_name(frame)
+        print(get_call_function_name(frame))
         return
-    print '=' * 30
+    print('=' * 30)
     eval('fn(5)')
-    print '=' * 30
-    print print_obj('fn', fn)
-    print '=' * 30
-    print print_obj('len', len)
-    print '=' * 30
-    print print_obj('MockDebugger', MockDebugger)
+    print('=' * 30)
+    print(print_obj('fn', fn))
+    print('=' * 30)
+    print(print_obj('len', len))
+    print('=' * 30)
+    print(print_obj('MockDebugger', MockDebugger))
     pass

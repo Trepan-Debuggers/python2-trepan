@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2012 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2012-2013 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -43,6 +43,6 @@ if __name__=='__main__':
         'return return_value',
         'nothing_to_be.done'
         ):
-        print extract_expression(stmt)
+        print(extract_expression(stmt))
         pass
     pass

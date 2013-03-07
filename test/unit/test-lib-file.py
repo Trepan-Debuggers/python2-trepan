@@ -3,8 +3,8 @@
 import os, stat, tempfile, unittest
 from import_relative import import_relative
 
-import_relative('lib', '...pydbgr', 'pydbgr')
-Mfile = import_relative('lib.file', '...pydbgr', 'pydbgr')
+import_relative('lib', '...pydbgr')
+Mfile = import_relative('lib.file', '...pydbgr')
 
 class TestLibFile(unittest.TestCase):
 

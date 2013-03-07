@@ -6,4 +6,4 @@
 /build
 /dist
 __pycache__
-testing_test.egg-info
+*.egg-info

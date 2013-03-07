@@ -3,8 +3,8 @@
 import unittest
 from import_relative import import_relative
 
-import_relative('lib', '...pydbgr', 'pydbgr')
-Meval = import_relative('lib.eval', '...pydbgr', 'pydbgr')
+import_relative('lib', '...pydbgr')
+Meval = import_relative('lib.eval', '...pydbgr')
 
 class TestExtractExpression(unittest.TestCase):
 

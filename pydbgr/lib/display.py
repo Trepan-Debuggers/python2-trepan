@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2009, 2013 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -142,15 +142,15 @@ if __name__=='__main__':
     x = 1
     frame = inspect.currentframe()
     mgr.add(frame, 'x > 1')
-    for line in mgr.all(): print line
+    for line in mgr.all(): print(line)
     mgr.enable_disable(1, False)
-    for line in mgr.all(): print line
-    print mgr.display(frame)
+    for line in mgr.all(): print(line)
+    print(mgr.display(frame))
     mgr.enable_disable(1, False)
-    for line in mgr.display(frame): print line
+    for line in mgr.display(frame): print(line)
     mgr.enable_disable(1, True)
-    for line in mgr.display(frame): print line
+    for line in mgr.display(frame): print(line)
     mgr.clear()
-    print '-' * 10
-    for line in mgr.all(): print line
+    print('-' * 10)
+    for line in mgr.all(): print(line)
     pass

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2008, 2009 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008-2009, 2013 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@ import os, stat, string, sys
 def file_pyc2py(filename):
     """Given a file name, if the suffix is pyo or pyc (an optimized bytecode
     file), change that to the py equivalent"""
-    if string.lower(filename[-4:]) in ('.pyc', '.pyo'):
+    if filename[-4:].lower() in ('.pyc', '.pyo'):
         return filename[:-1]
     return filename
 
@@ -93,18 +93,18 @@ def parse_position(errmsg, arg):
 # Demo it
 if __name__=='__main__':
     import tempfile
-    print 'readable: "fdafsa": ', readable('fdafdsa')
+    print('readable("fdafsa"): %s' % readable('fdafdsa'))
     for mode, can_read in [(stat.S_IRUSR, True), (stat.S_IWUSR, False)]: 
         f = tempfile.NamedTemporaryFile()
         os.chmod(f.name, mode)
-        print ("readable(%s):" % f.name), readable(f.name)
+        print("readable('%s'): %s" % (f.name, readable(f.name)))
         f.close()
         pass
-    print "lookupmodule('os.path'): ", lookupmodule('os.path')
-    print "lookupmodule(__file__): ", lookupmodule(__file__)
-    print "lookupmodule('fafdsadsa'): ", lookupmodule('fafdsafdsa')
+    print("lookupmodule('os.path'): %s" % repr(lookupmodule('os.path')))
+    print("lookupmodule(__file__): %s" % repr(lookupmodule(__file__)))
+    print("lookupmodule('fafdsadsa'): %s" % repr(lookupmodule('fafdsafdsa')))
 
-    print 'file_pyc2py("foo.pyc"):',  file_pyc2py("foo.pyc")
-    print file_pyc2py("stays-the-same.py")
-    print file_pyc2py("stays-the-same-without-suffix")
+    print('file_pyc2py("foo.pyc"): %s' % file_pyc2py("foo.pyc"))
+    print(file_pyc2py("stays-the-same.py"))
+    print(file_pyc2py("stays-the-same-without-suffix"))
     pass

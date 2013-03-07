@@ -15,7 +15,6 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 NotImplementedMessage = "This method must be overriden in a subclass"
 
-import pydbgr.lib
 from pygments.console import colorize
 from import_relative import import_relative
 
@@ -55,7 +54,7 @@ class Processor:
         return(self.intf[-1].msg_nocr(msg))
 
     def event_processor(self, frame, event, arg):
-        raise NotImplementedError, NotImplementedMessage
+        raise NotImplementedError(NotImplementedMessage)
 
     def rst_msg(self, text, opts={}):
         """Convert ReStructuredText and run through msg()"""

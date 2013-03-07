@@ -104,13 +104,13 @@ if __name__=='__main__':
         try:
             line = intf.readline("Type something: ")
         except EOFError:
-            print "No input EOF: "
+            print("No input EOF: ")
         else:
-            print "You typed: ", line
+            print("You typed: %s" % line)
             pass
         line = intf.confirm("Are you sure", False)
-        print "You typed: ", line
+        print("You typed: %s" % line)
         line = intf.confirm("Are you not sure", True)
-        print "You typed: ", line
+        print("You typed: %s" % line)
         pass
     pass

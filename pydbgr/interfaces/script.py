@@ -19,10 +19,11 @@ import atexit
 # Our local modules
 from import_relative import *
 import_relative('io', '..', 'pydbgr')
-Minterface = import_relative('interface', '..',   'pydbgr')
-Mscriptin  = import_relative('scriptin',  '..io', 'pydbgr')
-Moutput    = import_relative('output',    '..io', 'pydbgr')
-Mmisc      = import_relative('misc',      '..', 'pydbgr')
+import_relative('interfaces', '..')
+Minterface = import_relative('interface', '..')
+Mscriptin  = import_relative('scriptin',  '..io')
+Moutput    = import_relative('output',    '..io')
+Mmisc      = import_relative('misc',      '..')
 
 class ScriptInterface(Minterface.DebuggerInterface):
     """Interface when reading debugger scripts"""
@@ -34,7 +35,7 @@ class ScriptInterface(Minterface.DebuggerInterface):
         }
 
     def __init__(self, script_name, out=None, opts=None):
-        get_option = lambda key: Mmisc.option_set(opts, key, 
+        get_option = lambda key: Mmisc.option_set(opts, key,
                                                   self.DEFAULT_INIT_OPTS)
 
         atexit.register(self.finalize)
@@ -69,7 +70,7 @@ class ScriptInterface(Minterface.DebuggerInterface):
         #  here. Perhaps there should be a 'terse' mode to never show
         #  position info.
         if not self.verbose:
-            location = ("%s:%s: Error in source command file" 
+            location = ("%s:%s: Error in source command file"
                         % (self.script_name, self.input_lineno))
             msg = "%s%s:\n%s%s" %(prefix, location, prefix, msg)
         else:
@@ -87,7 +88,7 @@ class ScriptInterface(Minterface.DebuggerInterface):
         return
 
     def read_command(self, prompt=''):
-        '''Script interface to read a command. `prompt' is a parameter for 
+        '''Script interface to read a command. `prompt' is a parameter for
         compatibilty and is ignored.'''
         self.input_lineno += 1
         line = self.readline()
@@ -100,7 +101,7 @@ class ScriptInterface(Minterface.DebuggerInterface):
 
     # Could decide make this look for interactive input?
     def readline(self, prompt=''):
-        '''Script interface to read a line. `prompt' is a parameter for 
+        '''Script interface to read a line. `prompt' is a parameter for
         compatibilty and is ignored.'''
         return self.input.readline()
 
@@ -108,5 +109,5 @@ class ScriptInterface(Minterface.DebuggerInterface):
 if __name__=='__main__':
     intf = ScriptInterface('script.py')
     line = intf.readline()
-    print "Line read: ", line
+    print("Line read: %s" % line)
     pass

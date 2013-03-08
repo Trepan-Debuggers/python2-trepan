@@ -431,7 +431,7 @@ class DebuggerCore:
 
 # Demo it
 if __name__=='__main__':
-    class MockProcessor():
+    class MockProcessor:
         pass
     opts = {'processor': MockProcessor()}
     dc = DebuggerCore(None, opts=opts)

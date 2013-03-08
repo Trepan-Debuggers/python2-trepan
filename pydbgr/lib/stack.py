@@ -226,13 +226,13 @@ def print_obj(arg, val, format=None, short=False):
 
 # Demo stuff above
 if __name__=='__main__':
-    class MockDebuggerCore():
+    class MockDebuggerCore:
         def canonic_filename(self, frame):
             return frame.f_code.co_filename
         def filename(self, name):
             return name
         pass
-    class MockDebugger():
+    class MockDebugger:
         def __init__(self):
             self.core = MockDebuggerCore()
             self.settings = {

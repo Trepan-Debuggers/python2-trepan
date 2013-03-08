@@ -85,12 +85,12 @@ def print_location(proc_obj, event=None):
 
 # Demo it
 if __name__=='__main__':
-    class MockDebugger():
+    class MockDebugger:
         def __init__(self):
             self.eval_string = None
         pass
     
-    class MockProcessor():
+    class MockProcessor:
         def __init__(self, core_obj):
             self.curindex = 0
             self.stack = []
@@ -102,7 +102,7 @@ if __name__=='__main__':
             return self.opts[key]
         pass
 
-    class MockCore():
+    class MockCore:
         def filename(self, fn): return fn
         def canonic_filename(self, frame): return frame.f_code.co_filename
         pass

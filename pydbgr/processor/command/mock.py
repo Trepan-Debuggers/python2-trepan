@@ -30,7 +30,7 @@ class MockIO:
         return 'quit'
     pass
 
-class MockUserInterface():
+class MockUserInterface:
     def __init__(self):
         self.io = MockIO()
         return
@@ -56,7 +56,7 @@ class MockUserInterface():
         return
     pass
 
-class MockProcessor():
+class MockProcessor:
     def __init__(self, core):
         self.core         = core
         self.debugger     = core.debugger
@@ -80,7 +80,7 @@ class MockProcessor():
 # External Egg packages
 import tracefilter
 
-class MockDebuggerCore():
+class MockDebuggerCore:
     def __init__(self, debugger):
         self.debugger       = debugger
         self.execution_status = 'Pre-execution'
@@ -109,7 +109,7 @@ class MockDebuggerCore():
         return []
     pass
 
-class MockDebugger():
+class MockDebugger:
     def __init__(self):
         self.intf             = [MockUserInterface()]
         self.core             = MockDebuggerCore(self)

@@ -20,7 +20,7 @@ def msg(proc_obj, message, opts={}):
         
 # Demo it
 if __name__=='__main__':
-    class Demo():
+    class Demo:
         def __init__(self):
             self.response = {'errs': [],
                              'msg' : []}

@@ -5,7 +5,7 @@ from import_relative import *
 
 Mcore = import_relative('lib.core', '...pydbgr')
 
-class MockProcessor():
+class MockProcessor:
     pass
 
 class TestCore(unittest.TestCase):

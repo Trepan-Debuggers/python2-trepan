@@ -22,7 +22,7 @@ class MyCommand(Mbase_cmd.DebuggerCommand):
     def run(self, args): print 'test command run'
     pass
     
-class MySubcommand():
+class MySubcommand:
     '''Doc string for test testing subcommand'''
     
     def __init__(self):

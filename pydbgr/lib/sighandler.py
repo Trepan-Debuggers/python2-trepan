@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2009, 2013 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -18,16 +18,16 @@
 #  - Doublecheck handle_pass and other routines.
 #  - can remove signal handler altogether when
 #         ignore=True, print=False, pass=True
-#     
+#
 #
 import signal, types
 
-def YN(bool):
+def YN(b):
     """Return 'Yes' for True and 'No' for False, and ?? for anything
     else."""
-    if type(bool) != types.BooleanType:
+    if type(b) != bool:
         return "??"
-    if bool:
+    if b:
         return "Yes"
     return "No"
 
@@ -36,7 +36,7 @@ def lookup_signame(num):
     if 'num' is invalid."""
     signames = signal.__dict__
     num = abs(num)
-    for signame in signames.keys():
+    for signame in list(signames.keys()):
         if signames[signame] == num: return signame
         pass
     # Something went wrong. Should have returned above
@@ -71,7 +71,7 @@ def canonic_signame(name_num):
         except:
             return False
         return signame
-    
+
     signame = name_num.upper()
     if not signame.startswith('SIG'): return 'SIG'+signame
     return signame
@@ -147,7 +147,7 @@ class SignalManager:
         # dbgr.core.add_ignore(SigHandler.handle)
         self.sigs    = {}
         self.siglist = [] # List of signals. Dunno why signal doesn't provide.
-    
+
         # Ignore signal handling initially for these known signals.
         if ignore_list is None:
             ignore_list = ['SIGALRM',    'SIGCHLD',  'SIGURG',
@@ -166,7 +166,7 @@ class SignalManager:
 
         if default_print: default_print = self.dbgr.intf[-1].msg
 
-        for signame in signal.__dict__.keys():
+        for signame in list(signal.__dict__.keys()):
             # Look for a signal name on this os.
             if signame.startswith('SIG') and '_' not in signame:
                 self.siglist.append(signame)
@@ -179,7 +179,7 @@ class SignalManager:
         if signame in fatal_signals: return False
         signum = lookup_signum(signame)
         if signum is None: return False
-        
+
         try:
             old_handler = signal.getsignal(signum)
         except ValueError:
@@ -191,13 +191,13 @@ class SignalManager:
                 pass
 
         if signame in self.ignore_list:
-            self.sigs[signame] = SigHandler(self.dbgr, signame, signum, 
+            self.sigs[signame] = SigHandler(self.dbgr, signame, signum,
                                             old_handler,
                                             None, False,
                                             print_stack=False,
                                             pass_along=True)
         else:
-            self.sigs[signame] = SigHandler(self.dbgr, signame, signum, 
+            self.sigs[signame] = SigHandler(self.dbgr, signame, signum,
                                             old_handler,
                                             self.dbgr.intf[-1].msg,
                                             True,
@@ -221,7 +221,7 @@ class SignalManager:
             self.sigs[signame].old_handler = handle
             return True
         return False
-            
+
     def check_and_adjust_sighandler(self, signame, sigs):
         """Check to see if a single signal handler that we are interested in
         has changed or has not been set initially. On return self.sigs[signame]
@@ -255,7 +255,7 @@ class SignalManager:
     def check_and_adjust_sighandlers(self):
         """Check to see if any of the signal handlers we are interested in have
         changed or is not initially set. Change any that are not right. """
-        for signame in self.sigs.keys():
+        for signame in list(self.sigs.keys()):
             if not self.check_and_adjust_sighandler(signame, self.sigs):
                 break
             pass
@@ -280,16 +280,16 @@ class SignalManager:
         else:
             description=""
             pass
-        if signame not in self.sigs.keys():
+        if signame not in list(self.sigs.keys()):
             # Fake up an entry as though signame were in sigs.
             self.dbgr.intf[-1].msg(self.info_fmt
-                                   % (signame, 'No', 'No', 'No', 'Yes', 
+                                   % (signame, 'No', 'No', 'No', 'Yes',
                                       description))
             return
-            
+
         sig_obj = self.sigs[signame]
-        self.dbgr.intf[-1].msg(self.info_fmt % 
-                               (signame, 
+        self.dbgr.intf[-1].msg(self.info_fmt %
+                               (signame,
                                 YN(sig_obj.b_stop),
                                 YN(sig_obj.print_method is not None),
                                 YN(sig_obj.print_stack),
@@ -340,7 +340,7 @@ class SignalManager:
         if signame in fatal_signals:
             return None
 
-        if signame not in self.sigs.keys():
+        if signame not in list(self.sigs.keys()):
             if not self.initialize_handler(signame): return None
             pass
 
@@ -460,13 +460,13 @@ class SigHandler:
             core = self.dbgr.core
             old_trace_hook_suspend = core.trace_hook_suspend
             core.trace_hook_suspend = True
-            core.stop_reason = ('intercepting signal %s (%d)' % 
+            core.stop_reason = ('intercepting signal %s (%d)' %
                                 (self.signame, signum))
             core.processor.event_processor(frame, 'signal', signum)
             core.trace_hook_suspend = old_trace_hook_suspend
             pass
         if self.pass_along:
-            # pass the signal to the program 
+            # pass the signal to the program
             if self.old_handler:
                 self.old_handler(signum, frame)
                 pass
@@ -477,7 +477,7 @@ class SigHandler:
 # When invoked as main program, do some basic tests of a couple of functions
 if __name__=='__main__':
     for b in (True, False,):
-        print 'YN of %s is %s' % (repr(b), YN(b))
+        print('YN of %s is %s' % (repr(b), YN(b)))
         pass
     for signum in range(signal.NSIG):
         signame = lookup_signame(signum)
@@ -489,17 +489,17 @@ if __name__=='__main__':
         pass
 
     for i in (15, -15, 300):
-        print 'lookup_signame(%d): %s' % (i, lookup_signame(i))
+        print('lookup_signame(%d): %s' % (i, lookup_signame(i)))
         pass
-    
+
     for i in ('term', 'TERM', 'NotThere'):
-        print 'lookup_signum(%s): %s' % (i, repr(lookup_signum(i)))
+        print('lookup_signum(%s): %s' % (i, repr(lookup_signum(i))))
         pass
-    
+
     for i in ('15', '-15', 'term', 'sigterm', 'TERM', '300', 'bogus'):
-        print 'canonic_signame(%s): %s' % (i, canonic_signame(i))
+        print('canonic_signame(%s): %s' % (i, canonic_signame(i)))
         pass
-    
+
     from import_relative import import_relative
     Mdebugger = import_relative('debugger', '..', 'pydbgr')
     dbgr = Mdebugger.Debugger()

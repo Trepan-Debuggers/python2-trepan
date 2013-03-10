@@ -28,7 +28,7 @@ def pp(val, display_width, msg_nocr, msg, prefix=None):
         else:
             msg(prefix)
         pass
-    if not pprint_simple_array(val, display_width, msg_nocr, msg, 
+    if not pprint_simple_array(val, display_width, msg_nocr, msg,
                                '  '):
         msg('  ' + pprint.pformat(val))
         pass
@@ -39,25 +39,21 @@ def pp(val, display_width, msg_nocr, msg, prefix=None):
 def pprint_simple_array(val, displaywidth, msg_nocr, msg, lineprefix=''):
     '''Try to pretty print a simple case where a list is not nested.
     Return True if we can do it and False if not. '''
-    
-    if type(val) != types.ListType:
+
+    if type(val) != list:
         return False
-    
+
     numeric = True
     for i in range(len(val)):
-        if not (type(val[i]) in [types.BooleanType, 
-                                 types.FloatType, 
-                                 types.IntType, types.LongType]):
+        if not (type(val[i]) in [bool, float, int, types.LongType]):
             numeric = False
-            if not (type(val[i]) in [types.BooleanType, 
-                                     types.FloatType, 
-                                     types.IntType,  types.StringType,
-                                     types.UnicodeType, types.NoneType,
-                                     types.LongType]):
+            if not (type(val[i]) in [bool, float, int, string,
+                                     types.LongType, types.UnicodeType,
+                                     types.NoneType]):
                 return False
             pass
         pass
-    lines = columnize([repr(v) for v in val], 
+    lines = columnize([repr(v) for v in val],
                       displaywidth = int(displaywidth)-2,
                       arrange_vertical = False,
                       ljust = not numeric,
@@ -67,7 +63,7 @@ def pprint_simple_array(val, displaywidth, msg_nocr, msg, lineprefix=''):
     if 0 == len(lines):
         msg(lineprefix + '[]')
         return
-    
+
     msg_nocr(lineprefix + "[")
     msg_nocr(lines[0][1:])
     if 1 == len(lines):
@@ -86,19 +82,17 @@ if __name__ == '__main__':
         sys.stdout.write(m)
         return
     import sys
-    def msg(m): print m
+    def msg(m): print(m)
     pprint_simple_array(range(50), 50, msg_nocr, msg)
-    pp(range(10), 50, msg_nocr, msg)
+    pp([i for i in range(10)], 50, msg_nocr, msg)
     pp(locals(), 50, msg_nocr, msg)
-    x = range(10)
+    x = [i for i in range(10)]
     pp(x, 50, msg_nocr, msg, 'x = ')
     pp(x, 20, msg_nocr, msg, 'x = ')
     pp(x, 32, msg_nocr, msg, 'x = ')
-    x = range(30)
+    x = [i for i in range(30)]
     l = locals().keys()
-    l.sort()
-    for k in l:
+    for k in sorted(l):
         pp(eval(k), 80, msg_nocr, msg, prefix='%s =' % k)
         pass
     pass
-

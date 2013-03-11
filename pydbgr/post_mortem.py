@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2009, 2013 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -54,18 +54,18 @@ def post_mortem_excepthook(exc_type, exc_value, exc_tb):
     if exc_type == Mexcept.DebuggerRestart: 
         if ( exc_value and exc_value.sys_argv and 
              len(exc_value.sys_argv) > 0 ):
-            print ("No restart handler - trying restart via execv(%s)" % 
+            print("No restart handler - trying restart via execv(%s)" % 
                    repr(exc_value.sys_argv))
             os.execvp(exc_value.sys_argv[0], exc_value.sys_argv)
         else:
-            print "No restart handler, no params registered"
-            print "Entering post-mortem debugger..."
+            print("No restart handler, no params registered")
+            print("Entering post-mortem debugger...")
     else:
         traceback.print_exception(exc_type, exc_value, exc_tb)
-        print "Uncaught exception. Entering post-mortem debugger..."
+        print("Uncaught exception. Entering post-mortem debugger...")
         pass
     post_mortem((exc_type, exc_value, exc_tb))
-    print "Post-mortem debugger finished."
+    print("Post-mortem debugger finished.")
     return
 
 def post_mortem(exc=None, frameno=1, dbg=None):
@@ -97,8 +97,8 @@ def post_mortem(exc=None, frameno=1, dbg=None):
         # in get_last_or_frame_exception
         exc = get_last_or_frame_exception()
         if exc[0] is None:
-            print "Can't find traceback for post_mortem " + \
-                  "in sys.last_traceback or sys.exec_info()"
+            print("Can't find traceback for post_mortem " + \
+                  "in sys.last_traceback or sys.exec_info()")
             return
         pass
     exc_type, exc_value, exc_tb = exc
@@ -160,19 +160,19 @@ def uncaught_exception(dbg):
     exc_type, exc_value, exc_tb = exc
     if exc_type == Mexcept.DebuggerQuit: return
     if exc_type == Mexcept.DebuggerRestart: 
-        print "restart not done yet - entering post mortem debugging"
+        print("restart not done yet - entering post mortem debugging")
     elif exc_tb is None:
-        print "You don't seem to have an exception traceback, yet."
+        print("You don't seem to have an exception traceback, yet.")
         return
     else:
         traceback.print_exception(exc_type, exc_value, exc_tb)
-        print "uncaught exception. entering post mortem debugging"
+        print("uncaught exception. entering post mortem debugging")
         pass
     dbg.core.execution_status = ('Terminated with unhandled exception %s'
                                  % exc_type)
     dbg.core.processor.event_processor(exc_tb.tb_frame, 'exception', exc,
                                        'Pydbgr:pm')
-    print "Post mortem debugger finished."
+    print("Post mortem debugger finished.")
     return
 
 if __name__=='__main__':

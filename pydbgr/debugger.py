@@ -86,7 +86,7 @@ class Debugger:
             retval = eval(cmd, globals_, locals_)
         except SyntaxError:
             try:
-                exec cmd in globals_, locals_
+                exec(cmd, globals_, locals_)
             except Mexcept.DebuggerQuit:
                 pass
             except Mexcept.DebuggerQuit:
@@ -122,7 +122,7 @@ class Debugger:
             pass
         self.core.start(start_opts)
         try:
-            exec cmd in globals_, locals_
+            exec(cmd, globals_, locals_)
         except Mexcept.DebuggerQuit:
             pass
         finally:
@@ -208,14 +208,14 @@ class Debugger:
         retval = False
         self.core.execution_status = 'Running'
         try:
-            execfile(self.mainpyfile, globals_, locals_)
+            exec(compile(open(self.mainpyfile).read(), self.mainpyfile, 'exec'), globals_, locals_)
             retval = True
         except  SyntaxError:
-            print sys.exc_info()[1]
+            print(sys.exc_info()[1])
             retval = False
             pass
         except IOError:
-            print sys.exc_info()[1]
+            print(sys.exc_info()[1])
         except Mexcept.DebuggerQuit:
             retval = False
             pass
@@ -335,7 +335,7 @@ if __name__=='__main__':
     def foo():
         y = 2
         for i in range(2):
-            print i, y 
+            print("%d %d" % (i, y) )
             pass
         return 3
     import debugger
@@ -343,38 +343,38 @@ if __name__=='__main__':
     d.settings['trace'] = True
     d.settings['printset'] = tracer.ALL_EVENTS
     d.core.step_ignore = -1
-    print 'Issuing: run_eval("1+2")'
-    print d.run_eval('1+2')
-    print 'Issuing: run_exec("x=1; y=2")'
+    print('Issuing: run_eval("1+2")')
+    print(d.run_eval('1+2'))
+    print('Issuing: run_exec("x=1; y=2")')
     d.run_exec('x=1; y=2')
 
-    print 'Issuing: run("3*4")'
-    print d.run('3*4')
-    print 'Issuing: run("x=3; y=4")'
+    print('Issuing: run("3*4")')
+    print(d.run('3*4'))
+    print('Issuing: run("x=3; y=4")')
     d.run('x=3; y=4')
 
-    print 'Issuing: run_call(foo)'
+    print('Issuing: run_call(foo)')
     d.run_call(foo)
     if len(sys.argv) > 1:
         while True:
             try:
-                print 'started'
+                print('started')
                 d.core.step_ignore = 0
                 d.core.start()
                 x = 4
                 x = foo()
                 for i in range(2):
-                    print (i+1)*10
+                    print("%d" % (i+1)*10)
                     pass
                 d.core.stop()
                 def square(x): return x*x
-                print 'calling: run_call(square,2)' 
+                print('calling: run_call(square,2)') 
                 d.run_call(square, 2)
             except Mexcept.DebuggerQuit:
-                print "That's all Folks!..."
+                print("That's all Folks!...")
                 break
             except Mexcept.DebuggerRestart:
-                print 'Restarting...'
+                print('Restarting...')
                 pass
             pass
         pass

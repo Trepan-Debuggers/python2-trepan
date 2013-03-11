@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2008, 2009, 2010 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008-2010, 2013 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -285,7 +285,7 @@ class DebuggerCore:
                     return True
                 pass
             pass
-        if (filename, frame.f_lineno) in self.bpmgr.bplist.keys():
+        if (filename, frame.f_lineno) in list(self.bpmgr.bplist.keys()):
             (bp, clear_bp) = self.bpmgr.find_bp(filename, frame.f_lineno, 
                                                 frame)
             if bp:
@@ -436,11 +436,11 @@ if __name__=='__main__':
     opts = {'processor': MockProcessor()}
     dc = DebuggerCore(None, opts=opts)
     dc.step_ignore = 1
-    print 'dc._is_step_next_stop():', dc._is_step_next_stop('line')
-    print 'dc._is_step_next_stop():', dc._is_step_next_stop('line')
-    print 'dc.step_ignore:', dc.step_ignore
-    print 'dc.is_started:', dc.is_started()
-    print dc.canonic('<string>')
-    print dc.canonic(__file__)
+    print('dc._is_step_next_stop():', dc._is_step_next_stop('line'))
+    print('dc._is_step_next_stop():', dc._is_step_next_stop('line'))
+    print('dc.step_ignore:', dc.step_ignore)
+    print('dc.is_started:', dc.is_started())
+    print(dc.canonic('<string>'))
+    print(dc.canonic(__file__))
     pass
  

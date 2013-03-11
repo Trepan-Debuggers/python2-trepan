@@ -20,7 +20,6 @@ from repr import Repr
 from import_relative import import_relative, get_srcdir
 from tracer import EVENT2SHORT
 
-import_relative('lib', '..', 'pydbgr')
 Mprocessor = import_relative('vprocessor', '..', 'pydbgr')
 Mbytecode  = import_relative('bytecode', '..lib', 'pydbgr')
 Mexcept    = import_relative('exception', '..', 'pydbgr')

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2008, 2009 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008-2009, 2013 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -50,10 +50,10 @@ def id2thread_name(thread_id):
 def map_thread_names():
     '''Invert threading._active'''
     name2id = {}
-    for thread_id in threading._active.keys():
+    for thread_id in list(threading._active.keys()):
         thread = threading._active[thread_id]
         name = thread.getName() 
-        if name not in name2id.keys():
+        if name not in list(name2id.keys()):
             name2id[name] = thread_id
             pass
         pass
@@ -62,18 +62,18 @@ def map_thread_names():
 # Demo this masterpiece:
 if __name__ == '__main__':
     import sys
-    print '=' * 10
+    print('=' * 10)
     def showit():
-        print 'Current thread:', current_thread_name()
-        print 'All threads:'
-        for thread_id, f in sys._current_frames().items():
-            print '  ', id2thread_name(thread_id), \
-                find_debugged_frame(f)
+        print('Current thread: %s' % current_thread_name())
+        print('All threads:')
+        for thread_id, f in list(sys._current_frames().items()):
+            print('  %s %s' % (id2thread_name(thread_id), 
+                               find_debugged_frame(f)))
             pass
-        print '-' * 10
-        print 'Thread->id map:'
-        print map_thread_names()
-        print '=' * 10
+        print('-' * 10)
+        print('Thread->id map:')
+        print(map_thread_names())
+        print('=' * 10)
     showit()
 
     class BgThread(threading.Thread):

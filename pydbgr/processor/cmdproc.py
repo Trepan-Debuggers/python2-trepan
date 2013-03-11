@@ -253,10 +253,7 @@ class CommandProcessor(Mprocessor.Processor):
         self.last_command     = None   # Initially a no-op
         self.precmd_hooks     = []
         
-        # Is this Kosher? 
-        self.__class__.__dict__['print_location']  = print_location
-        # If not:
-        # self.location         = lambda : print_location(self)
+        self.location         = lambda : print_location(self)
 
         self.preloop_hooks    = []
         self.postcmd_hooks    = []
@@ -621,7 +618,7 @@ class CommandProcessor(Mprocessor.Processor):
         """Handle debugger commands."""
         if self.core.execution_status != 'No program':
             self.setup()
-            self.print_location()
+            self.location()
             pass
         leave_loop = run_hooks(self, self.preloop_hooks)
         self.continue_running = False
@@ -909,49 +906,49 @@ if __name__=='__main__':
     Mmock = import_relative('command.mock')
     d = Mmock.MockDebugger()
     cmdproc = CommandProcessor(d.core)
-    print 'commands:'
-    commands = cmdproc.commands.keys()
+    print('commands:')
+    commands = list(cmdproc.commands.keys())
     commands.sort()
-    print commands
-    print 'aliases:'
-    aliases = cmdproc.aliases.keys()
+    print(commands)
+    print('aliases:')
+    aliases = list(cmdproc.aliases.keys())
     aliases.sort()
-    print aliases
-    print resolve_name(cmdproc, 'quit')
-    print resolve_name(cmdproc, 'q')
-    print resolve_name(cmdproc, 'info')
-    print resolve_name(cmdproc, 'i')
+    print(aliases)
+    print(resolve_name(cmdproc, 'quit'))
+    print(resolve_name(cmdproc, 'q'))
+    print(resolve_name(cmdproc, 'info'))
+    print(resolve_name(cmdproc, 'i'))
     # print '-' * 10
     # print_source_line(sys.stdout.write, 100, 'source_line_test.py')
     # print '-' * 10
     cmdproc.frame = sys._getframe()
     cmdproc.setup()
-    print
-    print '-' * 10
-    cmdproc.print_location()
-    print '-' * 10
-    print cmdproc.eval('1+2')
-    print cmdproc.eval('len(aliases)')
+    print()
+    print('-' * 10)
+    cmdproc.location()
+    print('-' * 10)
+    print(cmdproc.eval('1+2'))
+    print(cmdproc.eval('len(aliases)'))
     import pprint
-    print pprint.pformat(cmdproc.category)
-    print arg_split("Now is the time")
-    print arg_split("Now is the time ;;")
-    print arg_split("Now is 'the time'")
-    print arg_split("Now is the time ;; for all good men")
-    print arg_split("Now is the time ';;' for all good men")
+    print(pprint.pformat(cmdproc.category))
+    print(arg_split("Now is the time"))
+    print(arg_split("Now is the time ;;"))
+    print(arg_split("Now is 'the time'"))
+    print(arg_split("Now is the time ;; for all good men"))
+    print(arg_split("Now is the time ';;' for all good men"))
 
-    print cmdproc.parse_position_one_arg('4+1')
-    print cmdproc.parse_position_one_arg('os.path')
-    print cmdproc.parse_position_one_arg('os.path.join')
-    print cmdproc.parse_position_one_arg('/bin/bash', show_errmsg=False)
-    print cmdproc.parse_position('/bin/bash')
-    print cmdproc.parse_position('/bin/bash:4')
+    print(cmdproc.parse_position_one_arg('4+1'))
+    print(cmdproc.parse_position_one_arg('os.path'))
+    print(cmdproc.parse_position_one_arg('os.path.join'))
+    print(cmdproc.parse_position_one_arg('/bin/bash', show_errmsg=False))
+    print(cmdproc.parse_position('/bin/bash'))
+    print(cmdproc.parse_position('/bin/bash:4'))
 
-    print cmdproc.commands
+    print(cmdproc.commands)
     fn = cmdproc.commands['quit']
     
-    print 'Removing non-existing quit hook: ', cmdproc.remove_preloop_hook(fn)
+    print('Removing non-existing quit hook: %s' % cmdproc.remove_preloop_hook(fn))
     cmdproc.add_preloop_hook(fn)
-    print cmdproc.preloop_hooks
-    print 'Removed existing quit hook: ', cmdproc.remove_preloop_hook(fn)
+    print(cmdproc.preloop_hooks)
+    print('Removed existing quit hook: %s' % cmdproc.remove_preloop_hook(fn))
     pass

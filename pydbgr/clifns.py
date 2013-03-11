@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2008, 2009 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008-2009, 2013 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@ import os, linecache
 
 # Our local modules
 from import_relative import import_relative
-Mfile     = import_relative('file', '.lib', 'pydbgr')
+Mfile     = import_relative('file', '.lib')
 
 # FIXME: do a better job of this. Live parsing? 
 def is_ok_line_for_breakpoint(filename, lineno, errmsg_fn):
@@ -83,11 +83,11 @@ def path_expanduser_abs(filename):
 # Demo
 if __name__=='__main__':
     import sys
-    print file2module(sys.argv[0]), sys.argv[0]
+    print(file2module(sys.argv[0]), sys.argv[0])
     ok = is_ok_line_for_breakpoint(__file__, 1, sys.stdout.write)
-    print "\nCan stop at line 1: ", ok
+    print("\nCan stop at line 1? ", ok)
     ok = is_ok_line_for_breakpoint(__file__, 2, sys.stdout.write)
-    print "\nCan stop at line 2? ", ok
-    print path_expanduser_abs("./.pydbgrrc")
-    print path_expanduser_abs("~/.pydbgrrc")
+    print("\nCan stop at line 2? ", ok)
+    print(path_expanduser_abs("./.pydbgrrc"))
+    print(path_expanduser_abs("~/.pydbgrrc"))
 

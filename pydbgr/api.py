@@ -208,18 +208,18 @@ if __name__=='__main__':
     def foo(n):
         y = n
         for i in range(n):
-            print i
+            print(i)
             pass
         return y
     Mdefault = import_relative('default', 'lib', 'pydbgr')
     settings = dict(Mdefault.DEBUGGER_SETTINGS)
     settings.update({'trace': True, 'printset': tracer.ALL_EVENTS})
     debug_opts={'step_ignore': -1, 'settings': settings}
-    print 'Issuing: run_eval("1+2")'
-    print run_eval('1+2', debug_opts=debug_opts)
-    print 'Issuing: run_exec("x=1; y=2")'
+    print('Issuing: run_eval("1+2")')
+    print(run_eval('1+2', debug_opts=debug_opts))
+    print('Issuing: run_exec("x=1; y=2")')
     run_exec('x=1; y=2', debug_opts=debug_opts)
-    print 'Issuing: run_call(foo, debug_opts, None, 2)'
+    print('Issuing: run_call(foo, debug_opts, None, 2)')
     run_call(foo, debug_opts, None, 2)
     # if len(sys.argv) > 1:
     #     # FIXME: should this work better?

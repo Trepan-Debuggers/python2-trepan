@@ -51,10 +51,10 @@ def pm(frameno=1, dbg=None):
 
 def post_mortem_excepthook(exc_type, exc_value, exc_tb):
     if exc_type == Mexcept.DebuggerQuit: return
-    if exc_type == Mexcept.DebuggerRestart: 
-        if ( exc_value and exc_value.sys_argv and 
+    if exc_type == Mexcept.DebuggerRestart:
+        if ( exc_value and exc_value.sys_argv and
              len(exc_value.sys_argv) > 0 ):
-            print("No restart handler - trying restart via execv(%s)" % 
+            print("No restart handler - trying restart via execv(%s)" %
                    repr(exc_value.sys_argv))
             os.execvp(exc_value.sys_argv[0], exc_value.sys_argv)
         else:
@@ -92,7 +92,7 @@ def post_mortem(exc=None, frameno=1, dbg=None):
         pass
     re_bogus_file = re.compile("^<.+>$")
 
-    if exc is None:
+    if exc[0] is None:
         # frameno+1 because we are about to add one more level of call
         # in get_last_or_frame_exception
         exc = get_last_or_frame_exception()
@@ -108,13 +108,16 @@ def post_mortem(exc=None, frameno=1, dbg=None):
     # tb has least-recent traceback entry first. We want the most-recent
     # entry. Also we'll pick out a mainpyfile name if it hasn't previously
     # been set.
-    while exc_tb.tb_next is not None:
-        filename = exc_tb.tb_frame.f_code.co_filename
-        if (dbg.mainpyfile and 0 == len(dbg.mainpyfile) 
-            and not re_bogus_file.match(filename)):
-            dbg.mainpyfile = filename
-        exc_tb = exc_tb.tb_next
-    dbg.core.processor.curframe = exc_tb.tb_frame
+    if exc_tb is not None:
+        while exc_tb.tb_next is not None:
+            filename = exc_tb.tb_frame.f_code.co_filename
+            if (dbg.mainpyfile and 0 == len(dbg.mainpyfile) and not re_bogus_file.match(filename)):
+                dbg.mainpyfile = filename
+                pass
+            exc_tb = exc_tb.tb_next
+            pass
+        dbg.core.processor.curframe = exc_tb.tb_frame
+        pass
 
     if 0 == len(dbg.program_sys_argv):
         # Fake program (run command) args since we weren't called with any
@@ -159,7 +162,7 @@ def uncaught_exception(dbg):
     exc = sys.exc_info()
     exc_type, exc_value, exc_tb = exc
     if exc_type == Mexcept.DebuggerQuit: return
-    if exc_type == Mexcept.DebuggerRestart: 
+    if exc_type == Mexcept.DebuggerRestart:
         print("restart not done yet - entering post mortem debugging")
     elif exc_tb is None:
         print("You don't seem to have an exception traceback, yet.")

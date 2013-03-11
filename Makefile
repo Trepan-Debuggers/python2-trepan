@@ -47,7 +47,8 @@ test-integration:
 
 #: Run integration (black-box) tests
 test-integration-short: 
-	(cd test/integration && $(PYTHON) ./setup.py nosetests) 
+	(cd test/integration && $(PYTHON) ./setup.py nosetests) | \
+	$(PYTHON) ./make-check-filter.py
 
 #: Clean up temporary files
 clean: 

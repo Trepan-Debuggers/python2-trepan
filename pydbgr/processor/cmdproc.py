@@ -411,7 +411,7 @@ class CommandProcessor(Mprocessor.Processor):
             global_vars = None
         try:
             code = compile(line + '\n', '"%s"' % line, 'single')
-            exec code in global_vars, local_vars
+            exec(code, global_vars, local_vars)
         except:
             t, v = sys.exc_info()[:2]
             if type(t) == types.StringType:
@@ -695,7 +695,7 @@ class CommandProcessor(Mprocessor.Processor):
                         self.errmsg("Error expanding macro %s" % macro_cmd_name)
                         return False
                     if self.settings('debugmacro'):
-                        print current_command
+                        print(current_command)
                         pass
                     if type(current_command) == types.ListType:
                         for x in current_command:
@@ -850,7 +850,7 @@ class CommandProcessor(Mprocessor.Processor):
             try:
                 command_mod = getattr(__import__(import_name), mod_name)
             except:
-                print ('Error importing %s: %s' % (mod_name, sys.exc_info()[0]))
+                print('Error importing %s: %s' % (mod_name, sys.exc_info()[0]))
                 continue
                 
             classnames = [ tup[0] for tup in 
@@ -863,8 +863,8 @@ class CommandProcessor(Mprocessor.Processor):
                     instance = eval(eval_cmd)
                     cmd_instances.append(instance)
                 except:
-                    print ('Error loading %s from %s: %s' %
-                           (classname, mod_name, sys.exc_info()[0]))
+                    print('Error loading %s from %s: %s' %
+                          (classname, mod_name, sys.exc_info()[0]))
                     pass
                 pass
             pass
@@ -897,7 +897,7 @@ class CommandProcessor(Mprocessor.Processor):
 #                 self.short_help[cmd_name] = getattr(c, 'short_help')
 #                 pass
             pass
-        for k in self.category.keys():
+        for k in list(self.category.keys()):
             self.category[k].sort()
             pass
 

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009, 2010 Rocky Bernstein
+#   Copyright (C) 2009-2010, 2013 Rocky Bernstein
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ default    = import_relative('default', '...lib', 'pydbgr') # Default settings
 
 class MockIO:
     def readline(self, prompt='', add_to_history=False):
-        print prompt
+        print(prompt)
         return 'quit'
     pass
 
@@ -36,19 +36,19 @@ class MockUserInterface:
         return
 
     def confirm(self, msg, default):
-        print '** %s' % msg
+        print('** %s' % msg)
         # Ignore the default.
         return True
 
     def errmsg(self, msg):
-        print '** %s' % msg
+        print('** %s' % msg)
         return
 
     def finalize(self, last_wishes=None):
         return
 
     def msg(self, msg):
-        print msg
+        print(msg)
         return
 
     def msg_nocr(self, msg):

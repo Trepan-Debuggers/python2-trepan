@@ -77,10 +77,10 @@ if __name__ == '__main__':
             cmd.continue_running = False
             cmd.proc.stack = [(sys._getframe(0), 14,)]
             result = cmd.run(c)
-            print 'Execute result: %s' % result
-            print 'stop_frame %s, continue_running: %s' % (
+            print('Execute result: %s' % result)
+            print('stop_frame %s, continue_running: %s' % (
                 cmd.core.stop_frame,
-                cmd.continue_running,)
+                cmd.continue_running,))
             pass
         return
     demo_finish(cmd)

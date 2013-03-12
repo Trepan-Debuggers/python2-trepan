@@ -1,20 +1,18 @@
 # -*- coding: utf-8 -*-
 #   Copyright (C) 2009, 2012-2013 Rocky Bernstein
 #
-#    This program is free software; you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation; either version 2 of the License, or
-#    (at your option) any later version.
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
 #
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
-#    along with this program; if not, write to the Free Software
-#    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
-#    02110-1301 USA.
+#  You should have received a copy of the GNU General Public License
+#  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import inspect, os, linecache, pyficache, sys
 
 # Our local modules
@@ -34,7 +32,7 @@ class ListCommand(Mbase_cmd.DebuggerCommand):
     """**list** [*module] [*first* [*num*]]
 list *location* [*num*]
 
-List source code. 
+List source code.
 
 Without arguments, print lines centered around the current line. If
 *num* is given that number of lines is shown.
@@ -46,11 +44,11 @@ then that is start the line after we last one previously shown.
 
 A *location* is either:
 
-  - a number, e.g. 5, 
+  - a number, e.g. 5,
   - a function, e.g. join or os.path.join
   - a module, e.g. os or os.path
-  - a filename, colon, and a number, e.g. foo.py:5,  
-  - or a module name and a number, e.g,. os.path:5.  
+  - a filename, colon, and a number, e.g. foo.py:5,
+  - or a module name and a number, e.g,. os.path:5.
   - a '.' for the current line number
   - a '-' for the lines before the current linenumber
 
@@ -88,14 +86,14 @@ See `set listize` or `show listsize` to see or set the value.
     need_stack    = False
     short_help    = 'List source code'
 
-    # What a f*cking mess. Necessitated I suppose because we want to 
+    # What a f*cking mess. Necessitated I suppose because we want to
     # allow somewhat flexible parsing with either module names, files or none
     # and optional line counts or end-line numbers.
     def parse_list_cmd(self, args):
         """Parses arguments for the "list" command and returns the tuple:
         filename, start, last
         or sets these to None if there was some problem."""
-        
+
         dbg_obj = self.core.debugger
         curframe = self.proc.curframe
 
@@ -104,18 +102,18 @@ See `set listize` or `show listsize` to see or set the value.
         else:
             filename = None
             pass
-        
+
         last = None
         listsize = dbg_obj.settings['listsize']
         if len(args) == 0 and not curframe:
             self.errmsg("No Python program loaded.")
             return (None, None, None)
-        
+
         if len(args) > 0:
             if args[0] == '-':
                 first = max(1, self.proc.list_lineno - 2*listsize - 1)
             elif args[0] == '.':
-                first = max(1, inspect.getlineno(curframe) - listsize/2)
+                first = max(1, inspect.getlineno(curframe) - int(listsize/2))
             else:
                 (modfunc, filename, first) = self.proc.parse_position(args[0])
                 if first == None and modfunc == None:
@@ -123,13 +121,13 @@ See `set listize` or `show listsize` to see or set the value.
                     return (None, None, None)
                 if len(args) == 1:
                     if first is None and modfunc is not None: first = 1
-                    first = max(1, first - (listsize/2))
+                    first = max(1, first - int(listsize/2))
                 elif len(args) == 2 or (len(args) == 3 and modfunc):
                     msg = 'Starting line expected, got %s.' % args[-1]
                     num = self.proc.get_an_int(args[1], msg)
                     if num is None: return (None, None, None)
                     if modfunc:
-                        if first is None: 
+                        if first is None:
                             first = num
                             if len(args) == 3 and modfunc:
                                 msg = ('last or count parameter expected, ' +
@@ -150,26 +148,26 @@ See `set listize` or `show listsize` to see or set the value.
                     pass
                 elif not modfunc:
                     self.errmsg(('At most 2 parameters allowed when no module' +
-                                 ' name is found/given. Saw: %d parameters') 
+                                 ' name is found/given. Saw: %d parameters')
                                 % len(args))
                     return (None, None, None)
                 else:
                     self.errmsg(('At most 3 parameters allowed when a module' +
-                                 ' name is given. Saw: %d parameters') % 
+                                 ' name is given. Saw: %d parameters') %
                                 len(args))
                     return (None, None, None)
                 pass
         elif self.proc.list_lineno is None and self.core.is_running():
-            first = max(1, inspect.getlineno(curframe) - listsize/2)
+            first = max(1, inspect.getlineno(curframe) - int(listsize/2))
         else:
             first = self.proc.list_lineno + 1
             pass
         if last is None:
             last = first + listsize - 1
             pass
-        
+
         return (filename, first, last)
-    
+
     def run(self, args):
         filename, first, last = self.parse_list_cmd(args[1:])
         curframe = self.proc.curframe
@@ -212,18 +210,18 @@ See `set listize` or `show listsize` to see or set the value.
                     line = line.rstrip('\n')
                     s = self.proc._saferepr(lineno).rjust(3)
                     if len(s) < 5: s += ' '
-                    if (canonic_filename, lineno,) in list(bplist.keys()): 
+                    if (canonic_filename, lineno,) in list(bplist.keys()):
                         bp    = bplist[(canonic_filename, lineno,)][0]
                         a_pad = '%02d' % bp.number
                         s    += bp.icon_char()
-                    else: 
+                    else:
                         s    += ' '
                         a_pad = '  '
                         pass
                     if curframe and lineno == inspect.getlineno(curframe) \
                        and filename == curframe.f_code.co_filename:
                         s += '->'
-                    else: 
+                    else:
                         s += a_pad
                         pass
                     self.msg(s + '\t' + line)

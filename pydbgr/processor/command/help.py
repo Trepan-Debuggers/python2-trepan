@@ -77,9 +77,9 @@ See also `examine` and `whatis`.
             cmd_name = args[1]
             if cmd_name == '*':
                 self.section("List of all debugger commands:")
-                self.msg_nocr(self.columnize_commands(self.proc.commands.keys()))
+                self.msg_nocr(self.columnize_commands(list(self.proc.commands.keys())))
                 return
-            elif cmd_name in categories.keys():
+            elif cmd_name in list(categories.keys()):
                 self.show_category(cmd_name, args[2:])
                 return
 
@@ -103,7 +103,7 @@ See also `examine` and `whatis`.
                         pass
                     pass
             else:
-                cmds = [cmd for cmd in self.proc.commands.keys()
+                cmds = [cmd for cmd in list(self.proc.commands.keys())
                         if re.match('^' + cmd_name, cmd) ]
                 if cmds is None:
                     self.errmsg("No commands found matching /^%s/. Try \"help\"." 
@@ -122,7 +122,7 @@ See also `examine` and `whatis`.
     def list_categories(self):
         """List the command categories and a short description of each."""
         self.section("Classes of commands:")
-        cats = categories.keys()
+        cats = list(categories.keys())
         cats.sort()
         for cat in cats:  # Foo! iteritems() doesn't do sorting
             self.msg("  %-13s -- %s" % (cat, categories[cat]))
@@ -131,7 +131,7 @@ See also `examine` and `whatis`.
 Type `help` followed by a class name for a list of commands in that class.
 Type `help *` for the list of all commands.
 Type `help` *regexp* for the list of commands matching /^#{*regexp*}/
-Type `help` *class* `*` for the list of all commands in class *class*
+Type `help` *category* `*` for the list of all commands in category *category*
 Type `help` followed by command name for full documentation.
 """
         for line in re.compile('\n').split(final_msg.rstrip('\n')):
@@ -142,7 +142,7 @@ Type `help` followed by command name for full documentation.
     def show_category(self, category, args):
         """Show short help for all commands in `category'."""
         n2cmd = self.proc.commands
-        names = n2cmd.keys()
+        names = list(n2cmd.keys())
         if len(args) == 1 and args[0] == '*':
             self.section("Commands in class %s:" % category)
             cmds = [cmd for cmd in names if category == n2cmd[cmd].category]
@@ -165,18 +165,18 @@ if __name__ == '__main__':
     mock = import_relative('mock')
     d, cp = mock.dbg_setup()
     command = HelpCommand(cp)
-    print '-' * 20
+    print('-' * 20)
     command.run(['help'])
-    print '-' * 20
+    print('-' * 20)
     command.run(['help', '*'])
-    print '-' * 20
+    print('-' * 20)
     command.run(['help', 'quit'])
-    print '-' * 20
+    print('-' * 20)
     command.run(['help', 'stack'])
-    print '-' * 20
+    print('-' * 20)
     command.run(['help', 'breakpoints'])
-    print '-' * 20
+    print('-' * 20)
     command.run(['help', 'breakpoints', '*'])
-    print '-' * 20
+    print('-' * 20)
     command.run(['help', 'c.*'])
     pass

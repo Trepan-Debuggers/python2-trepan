@@ -212,7 +212,7 @@ See `set listize` or `show listsize` to see or set the value.
                     line = line.rstrip('\n')
                     s = self.proc._saferepr(lineno).rjust(3)
                     if len(s) < 5: s += ' '
-                    if (canonic_filename, lineno,) in bplist.keys(): 
+                    if (canonic_filename, lineno,) in list(bplist.keys()): 
                         bp    = bplist[(canonic_filename, lineno,)][0]
                         a_pad = '%02d' % bp.number
                         s    += bp.icon_char()
@@ -242,52 +242,52 @@ if __name__ == '__main__':
     cmdproc = import_relative('cmdproc', '..')
     command.proc = d.core.processor = cmdproc.CommandProcessor(d.core)
     command = ListCommand(d.core.processor)
-    print '--' * 10
+    print('--' * 10)
 
     command.run(['list', __file__ + ':10'])
-    print '--' * 10
+    print('--' * 10)
 
     command.run(['list', 'os', '10'])
     command.proc.frame = sys._getframe()
     command.proc.setup()
-    print '--' * 10
+    print('--' * 10)
 
     command.run(['list'])
-    print '--' * 10
+    print('--' * 10)
 
     Mbreak  = import_relative('break', '.', 'pydbgr')
     brk_cmd = Mbreak.BreakCommand(d.core.processor)
     brk_cmd.run(['break'])
     command.run(['list', '.'])
-    print '--' * 10
+    print('--' * 10)
 
     Mdisable     = import_relative('disable', '.', 'pydbgr')
     disable_cmd  = Mdisable.DisableCommand(d.core.processor)
     brk_cmd.run(['break'])
     disable_cmd.run(['disable', '2'])
     command.run(['list', '.'])
-    print '--' * 10
+    print('--' * 10)
 
     command.run(['list', '10'])
-    print '--' * 10
+    print('--' * 10)
 
     command.run(['list', '1000'])
     def foo():
         return 'bar'
     command.run(['list', 'foo'])
-    print '--' * 10
+    print('--' * 10)
 
     command.run(['list', 'os.path'])
-    print '--' * 10
+    print('--' * 10)
     command.run(['list', 'os.path', '15'])
-    print '--' * 10
+    print('--' * 10)
     command.run(['list', 'os.path', '30', '3'])
-    print '--' * 10
+    print('--' * 10)
     command.run(['list', 'os.path', '40', '50'])
-    print '--' * 10
+    print('--' * 10)
 
     command.run(['list', os.path.abspath(__file__)+':3', '4'])
-    print '--' * 10
+    print('--' * 10)
     command.run(['list', os.path.abspath(__file__)+':3', '12-10'])
     command.run(['list', 'os.path:5'])
     pass

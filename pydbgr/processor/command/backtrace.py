@@ -89,31 +89,31 @@ if __name__ == '__main__':
             cp.curframe = inspect.currentframe()
             cp.stack, cp.curindex = cmdproc.get_stack(cp.curframe, None, None,
                                                       cp)
-            print '-' * 10
+            print('-' * 10)
             command.run(['backtrace'])
-            print '-' * 10
+            print('-' * 10)
             command.run(['backtrace', '1'])
         else:
             nest_me(cp, command, i+1)
         return
     def ignore_me(cp, command, i):
-        print '=' * 10
+        print('=' * 10)
         nest_me(cp, command, 1)
-        print '=' * 10
+        print('=' * 10)
         cp.core.add_ignore(ignore_me)
         nest_me(cp, command, 1)
         return
     cp.forget()
     command.run(['backtrace'])
-    print '-' * 10
+    print('-' * 10)
     ignore_me(cp, command, 1)
     command.run(['backtrace', '1'])
-    print '-' * 10
+    print('-' * 10)
     command.run(['backtrace', '-1'])
-    print '-' * 10
+    print('-' * 10)
     command.run(['backtrace', '3'])
-    print '-' * 10
+    print('-' * 10)
     command.run(['backtrace', '-2'])
-    print '-' * 10
+    print('-' * 10)
     pass
 

@@ -128,9 +128,9 @@ if __name__ == '__main__':
         d.core.step_ignore = 0
         cmd.proc.continue_running = False
         result = cmd.run(c)
-        print 'Execute result: %s' % result
-        print 'step_ignore %s' % repr(d.core.step_ignore)
-        print 'continue_running: %s' % cmd.proc.continue_running
+        print('Execute result: %s' % result)
+        print('step_ignore %s' % repr(d.core.step_ignore))
+        print('continue_running: %s' % cmd.proc.continue_running)
         pass
     for c in (['s'], ['step+'], ['s-'], ['s!'], ['s>'], ['s<']): 
         d.core.step_ignore = 0

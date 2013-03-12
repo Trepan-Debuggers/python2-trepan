@@ -77,14 +77,14 @@ if __name__ == '__main__':
         d.core.step_ignore = 0
         cmd.continue_running = False
         result = cmd.run(c)
-        print 'Run result: %s' % result
-        print 'step_ignore %d, continue_running: %s' % (d.core.step_ignore,
-                                                        cmd.continue_running,)
+        print('Run result: %s' % result)
+        print('step_ignore %d, continue_running: %s' % (d.core.step_ignore,
+                                                        cmd.continue_running,))
         pass
     for c in (['n'], ['next+'], ['n-']): 
         d.core.step_ignore = 0
         cmd.continue_running = False
         result = cmd.run(c)
-        print cmd.core.different_line
+        print(cmd.core.different_line)
         pass
     pass

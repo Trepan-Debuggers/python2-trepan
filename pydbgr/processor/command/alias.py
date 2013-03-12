@@ -29,7 +29,7 @@ might be `step`, `show`, or `set` among others
 
 **Example:**
 
-    alias cat list   # "cat rubyfile.rb" is the same as "list rubyfile.rb"
+    alias cat list   # "cat prog.py" is the same as "list prog.py"
     alias s   step   # "s" is now an alias for "step".
                      # The above example is done by default.
 
@@ -57,12 +57,12 @@ See also `unalias` and `show alias`."""
                               "alias for '%s'.") %
                              (al, command, od_command, old_command))
                 else:
-                    self.msg("New alias '%s' for command 'created." % 
-                             command)
+                    self.msg("New alias '%s' for command '%s' created." % 
+                             (al, command))
                     pass
                 self.proc.aliases[al] = command
             else:
-                self.errmsg(("You must alias to a command name, and '%s'" +
+                self.errmsg(("You must alias to a command name, and '%s' " +
                              'and is not one.') % command)  
                 pass
             return

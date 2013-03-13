@@ -46,7 +46,7 @@ made unconditional.
     short_help    = 'Specify breakpoint number N to break only if COND is True'
 
     def run(self, args):
-        success, msg, bp = self.core.bpmgr.get_breakpoint(args[1])
+        success, msg, bp = self.core.bpmgr.get_breakpoint(int(args[1]))
         if not success: 
             self.errmsg(msg)
             return

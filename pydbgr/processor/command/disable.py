@@ -46,7 +46,7 @@ numbers. See also `info break` to get a list.
 #             self.display_enable(args[2:], 0)
 #             return
         for i in args[1:]:
-            success, msg = self.core.bpmgr.en_disable_breakpoint_by_number(i, False)
+            success, msg = self.core.bpmgr.en_disable_breakpoint_by_number(int(i), False)
             if not success:
                 self.errmsg(msg)
             else:

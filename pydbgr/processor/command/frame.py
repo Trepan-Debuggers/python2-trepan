@@ -65,7 +65,7 @@ See also `up`, `down`, `backtrace`, and `info thread`.
 
     def find_and_set_debugged_frame(self, frame, thread_id):
         '''The dance we have to do to set debugger frame state to
-        `frame', which is in the thread with id `thread_id'. We may
+        *frame*, which is in the thread with id *thread_id*. We may
         need to the hide initial debugger frames.
         '''
         thread = threading._active[thread_id]
@@ -117,7 +117,7 @@ See also `up`, `down`, `backtrace`, and `info thread`.
         return # Not reached
 
     def get_from_thread_name_or_id(self, name_or_id, report_error=True):
-        '''See if `name_or_id' is either a thread name or a thread id.
+        '''See if *name_or_id* is either a thread name or a thread id.
         The frame of that id/name is returned, or None if name_or_id is
         invalid.'''
         thread_id = self.proc.get_int_noerr(name_or_id)
@@ -186,20 +186,20 @@ if __name__ == '__main__':
     command = FrameCommand(cp)
     command.run(['frame'])
     command.run(['frame', '1'])
-    print '=' * 20
+    print('=' * 20)
     cp.curframe = inspect.currentframe()
     cp.stack, cp.curindex = Mcmdproc.get_stack(cp.curframe, None, None,
                                                cp)
     def showit(cmd):
-        print '=' * 20
+        print('=' * 20)
         cmd.run(['frame'])
-        print '-' * 20
+        print('-' * 20)
         cmd.run(['frame', 'MainThread'])
-        print '-' * 20
+        print('-' * 20)
         cmd.run(['frame', '.', '0'])
-        print '-' * 20
+        print('-' * 20)
         cmd.run(['frame', '.'])
-        print '=' * 20
+        print('=' * 20)
         return
 
     # showit(command)

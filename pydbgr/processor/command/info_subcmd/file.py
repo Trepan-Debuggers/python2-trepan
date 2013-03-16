@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2008, 2009, 2012 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008-2009, 2012-2013 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -21,20 +21,21 @@ Mbase_subcmd  = import_relative('base_subcmd', '..', 'pydbgr')
 Mmisc         = import_relative('misc', '....', 'pydbgr')
 
 class InfoFile(Mbase_subcmd.DebuggerSubcommand):
-    '''info file [filename [all | lines | sha1 | size]]
+    '''**info file** [*filename* [**all** | **lines** | **sha1** | **size**]]
 
 Show information about the current file. If no filename is given and
 the program is running then the current file associated with the
 current stack entry is used. Sub options which can be shown about a file are:
+  
+ * **brkpts** Line numbers where there are statement boundaries. These
+ lines can be used in breakpoint commands.
 
-brkpts -- Line numbers where there are statement boundaries. 
-          These lines can be used in breakpoint commands.
-sha1   -- A SHA1 hash of the source text. This may be useful in comparing
-          source code.
-size   -- The number of lines in the file.
+ * **sha1**	A SHA1 hash of the source text. This may be useful in comparing source code.
 
-all    -- All of the above information.
-'''
+ * **size**	The number of lines in the file.
+ 
+ * **all** All of the above information.
+ '''
 
     min_abbrev = 2
     need_stack = False
@@ -71,7 +72,7 @@ all    -- All of the above information.
                                      self.settings['width']))
         for name in (canonic_name, filename):
             if name in sys.modules:
-                for key in [k for k,v in sys.modules.items()
+                for key in [k for k,v in list(sys.modules.items())
                             if name == v]:
                     self.msg("module: %s", key)
                     pass
@@ -81,7 +82,7 @@ all    -- All of the above information.
             processed_arg = False
             if arg in ['all', 'size']:
                 if pyficache.size(canonic_name):
-                    self.msg("File has %d lines." % 
+                    self.msg("File has %d lines." %
                              pyficache.size(canonic_name))
                     pass
                 processed_arg = True
@@ -120,7 +121,7 @@ if __name__ == '__main__':
     for width in (200, 80):
         sub.settings['width'] = width
         sub.run(['file.py', 'lines'])
-        print sub.run([])
+        print(sub.run([]))
         pass
     sub.run(['file.py', 'all'])
     # sub.run(['file.py', 'lines', 'sha1'])

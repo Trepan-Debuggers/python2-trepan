@@ -41,7 +41,7 @@ In the last form the only definitions of the given macro names is shown."""
   def run(self, args):
     if len(args) > 0: 
       if len(args) == 1 and '*' == args[0]:
-        macro_names = self.proc.macros.keys()
+        macro_names = list(self.proc.macros.keys())
       else:
         macro_names = args
         pass
@@ -60,19 +60,22 @@ In the last form the only definitions of the given macro names is shown."""
           self.errmsg('%s is not a defined macro' % macro_name)
           pass
         pass
-    elif 0 == len(self.proc.macros.keys()):
+    elif 0 == len(list(self.proc.macros.keys())):
       self.msg('No macros defined.')
     else:
-      self.msg(self.columnize_commands(self.proc.macros.keys()))
+      self.msg(self.columnize_commands(list(self.proc.macros.keys())))
       pass
     return
   pass
         
 if __name__ == '__main__':
-  # Demo it.
+    # Demo it.
     mock = import_relative('mock', '..')
     Minfo = import_relative('info', '..')
-    d, cp = mock.dbg_setup()
-    # i = Minfo.InfoMacro(cp)
-    # cmd.run(cmd.prefix + %w(u foo))
+    Mdebugger = import_relative('debugger', '....')
+    d = Mdebugger.Debugger()
+    d, cp = mock.dbg_setup(d)
+    i = Minfo.InfoCommand(cp)
+    sub = InfoMacro(i)
+    sub.run(["u"])
     pass

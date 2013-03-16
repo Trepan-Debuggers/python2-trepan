@@ -64,7 +64,7 @@ To get the full stack trace for a specific thread pass in the thread name.
     def info_thread_terse(self, name2id, arg=None):
         if arg is not None:
             thread_name = arg
-            if thread_name in name2id.keys():
+            if thread_name in list(name2id.keys()):
                 self.info_thread_line(thread_name, name2id)
             else:
                 self.errmsg("Don't know about thread name %s" % thread_name)
@@ -72,7 +72,7 @@ To get the full stack trace for a specific thread pass in the thread name.
             pass
             
         # Show all threads
-        thread_name_list = name2id.keys()
+        thread_name_list = list(name2id.keys())
         thread_name_list.sort()
         for thread_name in thread_name_list:
             self.info_thread_line(thread_name, name2id)
@@ -100,10 +100,10 @@ To get the full stack trace for a specific thread pass in the thread name.
 
         name2id = Mthread.map_thread_names()
         # invert threading._active
-        for thread_id in threading._active.keys():
+        for thread_id in list(threading._active.keys()):
             thread = threading._active[thread_id]
             name = thread.getName() 
-            if name not in self.name2id.keys():
+            if name not in list(self.name2id.keys()):
                self.name2id[name] = thread_id
                pass
             pass
@@ -123,13 +123,13 @@ To get the full stack trace for a specific thread pass in the thread name.
                 thread_name = self.thread_name
             try:
                 thread_id = int(thread_name)
-                if thread_id not in threading._active.keys():
+                if thread_id not in list(threading._active.keys()):
                     self.errmsg("Don't know about thread number %s" % 
                                 thread_name)
                     self.info_thread_terse(name2id)
                     return
             except ValueError:
-                if thread_name not in self.name2id.keys():
+                if thread_name not in list(self.name2id.keys()):
                     self.errmsg("Don't know about thread %s" % thread_name)
                     self.info_thread_terse(name2id)
                     return
@@ -141,7 +141,7 @@ To get the full stack trace for a specific thread pass in the thread name.
             return
 
         # Show info about *all* threads
-        thread_key_list = self.name2id.keys()
+        thread_key_list = list(self.name2id.keys())
         thread_key_list.sort()
         for thread_name in thread_key_list:
             thread_id = self.name2id[thread_name]
@@ -191,15 +191,15 @@ if __name__ == '__main__':
     import inspect
     cp.curframe = inspect.currentframe()
     sub.run([])
-    print '=' * 30
+    print('=' * 30)
     sub.run(['foo'])
-    print '=' * 30
+    print('=' * 30)
     sub.run(['MainThread'])
-    print '=' * 30
+    print('=' * 30)
     sub.run(['terse'])
-    print '=' * 30
+    print('=' * 30)
     sub.run(['verbose'])
-    print '=' * 30
+    print('=' * 30)
     sub.run(['MainThread', 'verbose'])
     # Try with threading.
     pass

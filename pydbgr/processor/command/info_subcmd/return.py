@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2009, 2010 Rocky Bernstein
+#  Copyright (C) 2009-2010, 2013 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -55,5 +55,5 @@ if __name__ == '__main__':
     d, cp = mock.dbg_setup()
     i = Minfo.InfoCommand(cp)
     sub = InfoReturn(i)
-    print sub.run([])
+    print(sub.run([]))
     pass

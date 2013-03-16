@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2009, 2013 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@ Mbase_subcmd  = import_relative('base_subcmd', '..', 'pydbgr')
 Mpp           = import_relative('pp', '....lib', 'pydbgr')
 
 class InfoDisplay(Mbase_subcmd.DebuggerSubcommand):
-    ''''Expressions to display when program stops'''
+    '''Expressions to display when program stops'''
     min_abbrev = 2 # info di
     need_stack = True
     short_help = 'Expressions to display when program stops'

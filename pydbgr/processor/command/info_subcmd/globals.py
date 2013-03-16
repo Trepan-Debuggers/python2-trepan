@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2008, 2009 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008-2009, 2013 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ class InfoGlobals(Mbase_subcmd.DebuggerSubcommand):
         if not self.proc.curframe:
             self.errmsg("No frame selected.")
             return False
-        var_names = self.proc.curframe.f_globals.keys()
+        var_names = list(self.proc.curframe.f_globals.keys())
         var_names.sort()
         for var_name in var_names:
             val = self.proc.getval(var_name)

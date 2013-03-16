@@ -1,4 +1,12 @@
+0.2.4 2013-03-15 Ron Frankel Ides of March
+
 - Add debugger "alias" and "unalias" commands
+
+- Better handling of "info args"
+
+- Start Python3 compability. However for something that
+  works with Python3 see work-in-progress 
+  https://code.google.com/p/python3-trepan/
 
 0.2.3 2013-02-02
 

@@ -8,7 +8,7 @@ GIT2CL ?= git2cl
 PYTHON ?= python
 
 #EXTRA_DIST=ipython/ipy_pydbgr.py pydbgr
-PHONY=check clean dist distclean test test-unit test-functional
+PHONY=check clean dist distclean test test-unit test-functional rmChangeLog
 
 #: Default target - same as "check"
 all: check
@@ -85,8 +85,11 @@ verbose-install:
 install: 
 	$(PYTHON) ./setup.py install >/dev/null
 
+rmChangeLog: 
+	rm ChangeLog || true
+
 #: Create a ChangeLog from git via git log and git2cl
-ChangeLog:
+ChangeLog: rmChangeLog
 	git log --pretty --numstat --summary | $(GIT2CL) >$@
 
 .PHONY: $(PHONY)

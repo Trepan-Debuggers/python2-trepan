@@ -1,3 +1,210 @@
+2013-03-15  rocky <rocky@gnu.org>
+
+	* pydbgr/processor/command/base_subcmd.py,
+	pydbgr/processor/command/base_submgr.py,
+	pydbgr/processor/command/display.py,
+	pydbgr/processor/command/info.py,
+	pydbgr/processor/command/info_subcmd/args.py,
+	pydbgr/processor/command/kill.py, pydbgr/processor/subcmd.py,
+	test/unit/test-cmd-alias.py: Better handling of "info args". Some 3k
+	compatibility.
+
+2013-03-12  rocky <rocky@gnu.org>
+
+	* pydbgr/processor/command/condition.py,
+	pydbgr/processor/command/disable.py: Add int conversion when needed
+
+2013-03-12  rocky <rocky@gnu.org>
+
+	* pydbgr/processor/cmdproc.py, pydbgr/processor/command/down.py,
+	pydbgr/processor/command/frame.py, pydbgr/processor/command/up.py: 
+	3k compatibility.
+
+2013-03-12  rocky <rocky@gnu.org>
+
+	* pydbgr/processor/command/alias.py,
+	pydbgr/processor/command/break.py: 3k compatibility
+
+2013-03-11  rocky <rocky@gnu.org>
+
+	* pydbgr/processor/cmdproc.py, pydbgr/processor/command/finish.py,
+	pydbgr/processor/command/list.py, test/example/hanoi.py: 3k
+	compatibility
+
+2013-03-11  rocky <rocky@gnu.org>
+
+	* pydbgr/processor/command/backtrace.py,
+	pydbgr/processor/command/continue.py,
+	pydbgr/processor/command/help.py, pydbgr/processor/command/list.py,
+	pydbgr/processor/command/next.py, pydbgr/processor/command/step.py,
+	test/example/gcd.py: 3k compatability
+
+2013-03-11  rocky <rocky@gnu.org>
+
+	* pydbgr/post_mortem.py: Sync with 3k trepan
+
+2013-03-11  rocky <rocky@gnu.org>
+
+	* pydbgr/post_mortem.py: post_mortem.py 3k compatible
+
+2013-03-11  rocky <rocky@gnu.org>
+
+	* pydbgr/api.py: 3k compatibility
+
+2013-03-11  rocky <rocky@gnu.org>
+
+	* pydbgr/clifns.py: 3k compatibility
+
+2013-03-11  rocky <rocky@gnu.org>
+
+	* pydbgr/debugger.py, pydbgr/lib/core.py: 3k compatibility
+
+2013-03-11  rocky <rocky@gnu.org>
+
+	* pydbgr/processor/command/base_cmd.py,
+	pydbgr/processor/command/quit.py: 3k compatibility
+
+2013-03-11  rocky <rocky@gnu.org>
+
+	* pydbgr/processor/command/mock.py: 3k compatibility
+
+2013-03-11  rocky <rocky@gnu.org>
+
+	* pydbgr/processor/cmdproc.py: More 3k compatibility
+
+2013-03-11  rocky <rocky@gnu.org>
+
+	* pydbgr/processor/command/mock.py: 3k compatibility
+
+2013-03-11  rocky <rocky@gnu.org>
+
+	* pydbgr/lib/thread.py, pydbgr/processor/cmdproc.py: 3k
+	compatibility
+
+2013-03-11  rocky <rocky@gnu.org>
+
+	* Makefile, pydbgr/processor/cmdproc.py: cmdproc.py: Python 3k
+	compatibility. Makefile: test-integration-short filters now
+
+2013-03-10  rocky <rocky@gnu.org>
+
+	* pydbgr/lib/pp.py, pydbgr/lib/sighandler.py, pydbgr/lib/stack.py,
+	pydbgr/processor/cmdfns.py: More 3k tolerance
+
+2013-03-08  rocky <rocky@gnu.org>
+
+	* pydbgr/bwprocessor/command/mock.py,
+	pydbgr/bwprocessor/location.py, pydbgr/bwprocessor/msg.py,
+	pydbgr/lib/core.py, pydbgr/lib/stack.py,
+	pydbgr/processor/command/mock.py, test/unit/test-core.py,
+	test/unit/test-subcmd.py: Drop () in "Class foo():" for older
+	Pythons
+
+2013-03-07  rocky <rocky@gnu.org>
+
+	* pydbgr/vprocessor.py: Remove non-relative import
+
+2013-03-07  rocky <rocky@gnu.org>
+
+	* pydbgr/interfaces/script.py: interfaces/script now 3k compatible
+
+2013-03-07  rocky <rocky@gnu.org>
+
+	* pydbgr/interfaces/user.py: Make user more 3k compatible
+
+2013-03-07  rocky <rocky@gnu.org>
+
+	* .gitignore, pydbgr/lib/display.py, pydbgr/lib/eval.py,
+	pydbgr/lib/file.py, pydbgr/lib/stack.py,
+	test/unit/test-lib-eval.py, test/unit/test-lib-file.py: Reduce
+	python2 vs python3 differences.
+
+2013-03-04  rocky <rocky@gnu.org>
+
+	* pydbgr/lib/disassemble.py, pydbgr/lib/format.py: Python 3k
+	compatability
+
+2013-03-04  rocky <rocky@gnu.org>
+
+	* .gitignore, Makefile, test/functional/Makefile,
+	test/integration/Makefile, test/unit/Makefile,
+	test/unit/test-brkpt.py: More administrivia
+
+2013-03-04  rocky <rocky@gnu.org>
+
+	* test/functional/.cvsignore, test/functional/.gitignore: 
+	test-brkpt.py: 3k compatible. rest: Administrivia
+
+2013-03-04  rocky <rocky@gnu.org>
+
+	* Makefile, pydbgr/io/input.py, pydbgr/lib/breakpoint.py,
+	pydbgr/lib/bytecode.py, test/functional/Makefile,
+	test/functional/setup.py, test/integration/Makefile,
+	test/integration/setup.py, test/unit/test-bytecode.py: pydbgr/*.py
+	More python3 compatibility where possible. test/* Remove bogus
+	egg.info files and tag them better. Go over Makefiles to narrow
+	test/check routines that directory.
+
+2013-02-25  rocky <rocky@gnu.org>
+
+	* pydbgr/bwcli.py, pydbgr/cli.py, pydbgr/interfaces/bullwinkle.py,
+	pydbgr/interfaces/script.py, pydbgr/interfaces/user.py,
+	pydbgr/io/__init__.py, pydbgr/io/dbg_input.py,
+	pydbgr/io/dbg_output.py, pydbgr/io/input.py, pydbgr/io/output.py,
+	pydbgr/lib/__init__.py, pydbgr/misc.py, test/unit/test-io-input.py: 
+	dbg_{input,output} -> {input,output} start to simplify __init__.py
+
+2013-02-24  rocky <rocky@gnu.org>
+
+	* test/unit/test-tcp.py: On cygwin and possibly other OS's we might
+	not be able to do the socket tests. That's okay.
+
+2013-02-14  rocky <rocky@gnu.org>
+
+	* Makefile: Set reasonable default values for PYTHON and GIT2CL
+
+2013-02-04  rocky <rocky@gnu.org>
+
+	* pydbgr/processor/command/macro.py: Update macro docstring
+
+2013-02-04  rocky <rocky@gnu.org>
+
+	* pydbgr/processor/command/macro.py: Update macro docstring
+
+2013-02-03  rocky <rocky@gnu.org>
+
+	* pydbgr/VERSION.py, pydbgr/processor/command/alias.py: We
+	semi-released 0.2.3_01.
+
+2013-02-03  rocky <rocky@gnu.org>
+
+	* NEWS, pydbgr/bwprocessor/main.py, pydbgr/processor/cmdproc.py,
+	pydbgr/processor/command/alias.py,
+	pydbgr/processor/command/base_subcmd.py,
+	pydbgr/processor/command/help.py,
+	pydbgr/processor/command/ipython.py,
+	pydbgr/processor/command/macro.py,
+	pydbgr/processor/command/set_subcmd/autoipython.py,
+	pydbgr/processor/command/set_subcmd/autolist.py,
+	pydbgr/processor/command/set_subcmd/autopython.py,
+	pydbgr/processor/command/set_subcmd/highlight.py,
+	pydbgr/processor/command/show_subcmd/aliases.py,
+	pydbgr/processor/command/unalias.py, test/unit/test-cmd-alias.py,
+	test/unit/test-cmdproc.py, test/unit/test-help.py,
+	test/unit/test-processor.py: Add "alias" and "unalias" debugger
+	commands. Rename "name2cmds" and "alias2cmds" to "commands" and
+	"aliases" to match Trepanning debugger internals.
+
+2013-02-03  rocky <rocky@gnu.org>
+
+	* ChangeLog, NEWS, pydbgr/VERSION.py, pydbgr/processor/cmdproc.py,
+	pydbgr/processor/command/info_subcmd/macro.py,
+	pydbgr/processor/command/set_subcmd/autoeval.py,
+	pydbgr/processor/command/set_subcmd/autopython.py,
+	pydbgr/processor/command/set_subcmd/different.py: cmdproc.py: remove
+	debug print. autopython.py: Stray character got in beginning of
+	file. set_subcommand/*.py: update docstring.
+
 2013-02-02  rocky <rocky@gnu.org>
 
 	* ChangeLog, pydbgr/VERSION.py: Release 0.2.3

@@ -87,6 +87,6 @@ if __name__ == '__main__':
     command.run(['display'])
     command.run(['display', '/x', '10'])
     command.run(['display', 'd'])
-    print '==' * 10
+    print('==' * 10)
     command.run(['display'])
     pass

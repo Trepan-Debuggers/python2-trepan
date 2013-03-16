@@ -1,20 +1,18 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2006, 2007, 2009, 2010 Rocky Bernstein
+#   Copyright (C) 2006-2010, 2013 Rocky Bernstein
 #
-#    This program is free software; you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation; either version 2 of the License, or
-#    (at your option) any later version.
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
 #
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
-#    along with this program; if not, write to the Free Software
-#    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
-#    02110-1301 USA.
+#  You should have received a copy of the GNU General Public License
+#  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Handles gdb-like subcommand processing."""
 
 class Subcmd:
@@ -28,7 +26,7 @@ class Subcmd:
 
     def lookup(self, subcmd_prefix):
         """Find subcmd in self.subcmds"""
-        for subcmd_name in self.subcmds.keys():
+        for subcmd_name in list(self.subcmds.keys()):
             if subcmd_name.startswith(subcmd_prefix) \
                and len(subcmd_prefix) >= self.subcmds[subcmd_name].__class__.min_abbrev:
                 return self.subcmds[subcmd_name]
@@ -83,7 +81,7 @@ class Subcmd:
     def help(self, *args):
         """help for subcommands."""
 
-        print args
+        print(args)
         subcmd_prefix = args[0]
         if not subcmd_prefix or len(subcmd_prefix) == 0:
             self.msg(self.doc)
@@ -102,7 +100,7 @@ List of %s subcommands:
                                 % (self.name, subcmd_prefix))
 
     def list(self):
-        l = self.subcmds.keys()
+        l = list(self.subcmds.keys())
         l.sort()
         return l
 
@@ -132,7 +130,7 @@ if __name__ == '__main__':
             self.name  = 'test'
             return
 
-        def run(self, args): print 'test command run'
+        def run(self, args): print('test command run')
 
     class TestTestingSubcommand:
         '''Doc string for test testing subcommand'''
@@ -144,7 +142,7 @@ if __name__ == '__main__':
         short_help = 'This is short help for test testing'
         min_abbrev = 4
         in_list    = True
-        def run(self, args): print 'test testing run'
+        def run(self, args): print('test testing run')
         pass
 
     d = Mmock.MockDebugger()
@@ -157,16 +155,16 @@ if __name__ == '__main__':
     
     for prefix in ['tes', 'test', 'testing', 'testing1']: 
         x = testcmdMgr.lookup(prefix)
-        if x: print x.name
-        else: print 'None'
+        if x: print(x.name)
+        else: print('None')
         pass
 
     testcmdMgr.short_help(testcmd, 'testing')
     testcmdMgr.short_help(testcmd, 'test', True)
     testcmdMgr.short_help(testcmd, 'tes')
-    print testcmdMgr.list()
+    print(testcmdMgr.list())
     testsub2 = TestTestingSubcommand()
     testsub2.name = 'foobar'
     testcmdMgr.add(testsub2)
-    print testcmdMgr.list()
+    print(testcmdMgr.list())
     pass

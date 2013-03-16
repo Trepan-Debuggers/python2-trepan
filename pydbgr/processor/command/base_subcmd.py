@@ -108,7 +108,7 @@ class DebuggerSubcommand:
         """ The method that implements the debugger command.
         Help on the command comes from the docstring of this method.
         """
-        raise NotImplementedError, NotImplementedMessage
+        raise NotImplementedError(NotImplementedMessage)
 
     def section(self, message, opts={}):
         if 'plain' != self.settings['highlight']:

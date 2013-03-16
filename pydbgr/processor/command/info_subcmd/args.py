@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2008, 2009 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008-2009, 2013 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -36,19 +36,28 @@ class InfoArgs(Mbase_subcmd.DebuggerSubcommand):
             return False
         f = self.proc.curframe
         co = f.f_code
-        # Break out display into args, varargs, keywords, and locals ? 
+        # Break out display into args, varargs, keywords, and locals ?
         # args, varargs, varkw, f_locals = getargvalues(f)
         d = f.f_locals
         n = co.co_argcount
         if co.co_flags & inspect.CO_VARARGS: n += 1
         if co.co_flags & inspect.CO_VARKEYWORDS: n += 1
-        for i in range(n):
-            name = co.co_varnames[i]
-            self.msg_nocr("%s =" %  name)
-            if name in d: self.msg(d[name])
-            else: self.msg("*** undefined ***")
+        
+        if n == 0:
+            self.msg("no parameters")
+        else:
+            self.section("Argument parameters")
+            for i in range(n):
+                name = co.co_varnames[i]
+                self.msg_nocr("%d: %s = " % (i+1, name))
+                if name in d:
+                    self.msg(d[name])
+                else:
+                    self.ermsg("undefined")
+                    pass
+                pass
             pass
-        return True
+        return False
     pass
 
 if __name__ == '__main__':
@@ -57,17 +66,17 @@ if __name__ == '__main__':
     d, cp = mock.dbg_setup()
     i = Minfo.InfoCommand(cp)
     sub = InfoArgs(i)
-    print sub.run([])
+    print(sub.run([]))
     cp.curframe = inspect.currentframe()
-    print sub.run([])
+    print(sub.run([]))
 
     def nest_me(sub, cp, b=1):
         cp.curframe = inspect.currentframe()
-        print sub.run([])
+        print(sub.run([]))
         return
-    print '-' * 10
+    print('-' * 10)
     nest_me(sub, cp, 3)
-    print '-' * 10
+    print('-' * 10)
     nest_me(sub, cp)
     pass
 

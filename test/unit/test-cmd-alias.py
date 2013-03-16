@@ -61,7 +61,7 @@ class TestAliasCommand(unittest.TestCase):
         return
       
     def is_alias_defined(self, alias_name):
-        return alias_name in self.cmdproc.aliases.keys()
+        return alias_name in list(self.cmdproc.aliases.keys())
       
     def test_alias_unalias_command(self):
         self.assertEqual(False, len(self.cmdproc.aliases) == 0,

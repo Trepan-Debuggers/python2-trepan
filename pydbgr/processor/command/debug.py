@@ -43,7 +43,7 @@ environment."""
         for attr in ('prompt_str', 'frame', 'event', 'event_arg', 
                      'curindex'): 
             cmd = 'old_%s = self.proc.%s' % (attr, attr)
-            exec cmd
+            exec(cmd)
             pass
 
         old_lock                  = self.core.debugger_lock
@@ -76,7 +76,7 @@ environment."""
         for attr in ('prompt_str', 'frame', 'event', 'event_arg',
                      'curindex'): 
             cmd = 'self.proc.%s = old_%s' % (attr, attr)
-            exec cmd
+            exec(cmd)
             pass
         self.proc.print_location()
         return False

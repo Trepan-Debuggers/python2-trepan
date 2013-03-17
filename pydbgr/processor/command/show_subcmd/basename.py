@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2009 Rocky Bernstein
+#  Copyright (C) 2009, 2013 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -27,4 +27,15 @@ Change with **set basename**
 '''
     short_help = "Show the basename portion only of filenames"
     min_abbrev = len('ba')
+    pass
+
+if __name__ == '__main__':
+    mock = import_relative('mock', '..')
+    Mshow = import_relative('show', '..')
+    Mdebugger = import_relative('debugger', '....')
+    d, cp = mock.dbg_setup()
+    i = Mshow.ShowCommand(cp)
+    sub = ShowBasename(i)
+    sub.name = 'basename'
+    sub.run([])
     pass

@@ -75,7 +75,7 @@ DISTCLEAN_FILES = build dist *.pyc
 distclean: clean
 	-rm -fr $(DISTCLEAN_FILES) || true
 	-find . -name \*.pyc -exec rm -v {} \;
-	-find . -name \*.egg-info -exec rm -v {} \;
+	-find . -name \*.egg-info -exec rm -vr {} \;
 
 #: Install package locally
 verbose-install: 

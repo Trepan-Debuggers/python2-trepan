@@ -18,6 +18,13 @@ from import_relative import import_relative
 Mbase_subcmd  = import_relative('base_subcmd', '..', 'pydbgr')
 
 class ShowAutoPython(Mbase_subcmd.DebuggerShowBoolSubcommand):
-    """Show automatic Python when we enter the debugger."""
+    '''**show autopython**
+
+Show whether we go into a python shell when automatically when the
+debugger is entered.
+
+Change with **set autopython**
+'''
+    short_help = "Show automatic Python shell entry"
     min_abbrev = len('autopy')
     pass

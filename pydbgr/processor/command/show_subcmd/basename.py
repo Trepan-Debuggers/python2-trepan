@@ -18,8 +18,13 @@ from import_relative import import_relative
 Mbase_subcmd  = import_relative('base_subcmd', '..', 'pydbgr')
 
 class ShowBasename(Mbase_subcmd.DebuggerShowBoolSubcommand):
-    """Show the basename portion only of filenames."""
-    min_abbrev = len('ba') 
+    '''**show basename**
+
+Show whether filenames are reported with just the basename or the
+fully qualified filename.
+
+Change with **set basename**
+'''
+    short_help = "Show the basename portion only of filenames"
+    min_abbrev = len('ba')
     pass
-
-

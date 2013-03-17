@@ -21,12 +21,12 @@ from import_relative import import_relative
 Mbase_subcmd  = import_relative('base_subcmd', '..', 'pydbgr')
 
 class ShowAliases(Mbase_subcmd.DebuggerShowIntSubcommand):
-    '''show aliases [ALIAS ...| *]
+    '''**show aliases** [*alias* ...| *]
 
- Show command aliases. If parameters are given a list of all aliases and
+Show command aliases. If parameters are given a list of all aliases and
 the command they run are printed. Alternatively one can list specific
 alias names for the commands those specific aliases are attached to.
-If instead of an alias '*' appears anywhere as an alias then just a list
+If instead of an alias `*` appears anywhere as an alias then just a list
 of aliases is printed, not what commands they are attached to.
 '''
 
@@ -44,7 +44,7 @@ of aliases is printed, not what commands they are attached to.
         return
 
     def run(self, args):
-        aliases = self.proc.aliases.keys()
+        aliases = list(self.proc.aliases.keys())
         aliases.sort()
         if len(args) == 0:
             self._alias_header()

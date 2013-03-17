@@ -128,12 +128,12 @@ def run_show_int(obj, what=None):
     if not what: what = obj.name
     return obj.msg("%s is %d." % (what, val))
 
-def show_onoff(bool):
+def show_onoff(b):
     """Return 'on' for True and 'off' for False, and ?? for anything
     else."""
-    if not isinstance(bool, types.BooleanType):
+    if not isinstance(b, bool):
         return "??"
-    if bool:
+    if b:
         return "on"
     return "off"
 

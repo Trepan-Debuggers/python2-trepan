@@ -47,7 +47,7 @@ class TestCmdProc(unittest.TestCase):
         '''See that each command has required attributes defined.  Possibly in
         a strongly-typed language we would not need to do much of this.'''
 
-        for cmd in self.cp.commands.values():
+        for cmd in list(self.cp.commands.values()):
 
             name = cmd.__class__
             for attr in ['aliases', 'min_args', 'max_args', 'name', 

@@ -67,8 +67,8 @@ class TestHelp(unittest.TestCase):
 
     def test_short_help(self):
         """Test each command has some sort of short help"""
-        for cmd in self.cp.commands.values():
-            self.assertEqual(types.StringType, type(cmd.short_help))
+        for cmd in list(self.cp.commands.values()):
+            self.assertEqual(str, type(cmd.short_help))
             pass
         return
 

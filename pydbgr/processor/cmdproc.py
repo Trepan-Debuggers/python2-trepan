@@ -410,7 +410,7 @@ class CommandProcessor(Mprocessor.Processor):
             exec(code, global_vars, local_vars)
         except:
             t, v = sys.exc_info()[:2]
-            if type(t) == types.StringType:
+            if type(t) == bytes:
                 exc_type_name = t
             else: exc_type_name = t.__name__
             self.errmsg('%s: %s' % (str(exc_type_name), str(v)))
@@ -695,7 +695,7 @@ class CommandProcessor(Mprocessor.Processor):
                         pass
                     if type(current_command) == types.ListType:
                         for x in current_command:
-                            if types.StringType != type(x):
+                            if bytes != type(x):
                                 self.errmsg("macro %s should return a List " +
                                             "of Strings. Has %s of type %s" %
                                             (macro_cmd_name, x, type(x),
@@ -707,7 +707,7 @@ class CommandProcessor(Mprocessor.Processor):
                         args =  first.split()
                         self.cmd_queue + [current_command[1:]]
                         current_command = first
-                    elif type(current_command) == types.StringType:
+                    elif type(current_command) == bytes:
                         args = current_command.split()
                     else:
                         self.errmsg("macro %s should return a List " +

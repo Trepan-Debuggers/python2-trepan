@@ -41,7 +41,7 @@ Mmisc      = import_relative('misc', '.', package)
 __title__ = package
 
 # VERSION.py sets variable VERSION.
-execfile(os.path.join(get_srcdir(), 'VERSION.py'))
+exec(compile(open(os.path.join(get_srcdir(), 'VERSION.py')).read(), os.path.join(get_srcdir(), 'VERSION.py'), 'exec'))
 __version__ = VERSION
 
 def process_options(debugger_name, pkg_version, sys_argv, option_list=None):
@@ -201,12 +201,12 @@ def process_options(debugger_name, pkg_version, sys_argv, option_list=None):
         try: 
             dbg_opts['output'] = Moutput.DebuggerUserOutput(opts.output)
         except IOError, (errno, strerror):
-            print "I/O in opening debugger output file %s" % opts.output
-            print "error(%s): %s" % (errno, strerror)
+            print("I/O in opening debugger output file %s" % opts.output)
+            print("error(%s): %s" % (errno, strerror))
         except:
-            print "Unexpected error in opening debugger output file %s" % \
-                  opts.output
-            print sys.exc_info()[0]
+            print("Unexpected error in opening debugger output file %s" % \
+                  opts.output)
+            print(sys.exc_info()[0])
             sys.exit(2)
             pass
         pass
@@ -282,7 +282,7 @@ def main(dbg=None, sys_argv=list(sys.argv)):
     orig_sys_argv = list(sys_argv)
     opts, dbg_opts, sys_argv  = process_options(__title__, __version__, 
                                                 sys_argv)
-    dbg_opts['orig_sys_argv'] = sys_argv
+    dbg_opts['orig_sys_argv'] = orig_sys_argv
 
     if dbg is None:
         dbg = Mdebugger.Debugger(dbg_opts)

@@ -19,7 +19,7 @@ class MyCommand(Mbase_cmd.DebuggerCommand):
         self.name  = 'test'
         return
     
-    def run(self, args): print 'test command run'
+    def run(self, args): print('test command run')
     pass
     
 class MySubcommand:
@@ -32,7 +32,7 @@ class MySubcommand:
     short_help = 'This is short help for test testing'
     min_abbrev = 4
     in_list    = True
-    def run(self, args): print 'test testing run'
+    def run(self, args): print('test testing run')
     pass
 
 class TestSubcommand(unittest.TestCase):

@@ -22,7 +22,7 @@ class TestLibThread(unittest.TestCase):
     def id_name_checker(self):
         '''Helper for testing map_thread_names and id2thread'''
         name2id = Mthread.map_thread_names()
-        for thread_id, f in sys._current_frames().items():
+        for thread_id, f in list(sys._current_frames().items()):
             self.assertEqual(thread_id, 
                              name2id[Mthread.id2thread_name(thread_id)])
             # FIXME: use a better test

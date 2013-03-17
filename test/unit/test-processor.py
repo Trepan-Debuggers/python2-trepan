@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-'Unit test for the debugger pydb.processor.cmdproc'
+'Unit test for pydbgr.processor.cmdproc'
 import os, sys, types, unittest
 from import_relative import *
 
@@ -17,12 +17,12 @@ class TestProcesor(unittest.TestCase):
         in the command directory ."""
         for i in self.cp.cmd_instances:
             if hasattr(i, 'aliases'):
-                self.assertEqual(types.TupleType, type(i.aliases), 
+                self.assertEqual(tuple, type(i.aliases), 
                                  "not tuple %s." % repr(i.aliases))
                 
                 self.assertEqual([],
                                  [item for item in i.aliases 
-                                  if types.StringType != type(item)],
+                                  if str != type(item)],
                                  "elements of tuple should be strings %s" % 
                                  repr(i.aliases))
                 pass
@@ -31,7 +31,7 @@ class TestProcesor(unittest.TestCase):
 
     def test_get_commands_aliases(self):
         "Test that the command processor finds a command, alias, and method"
-        self.assertTrue('quit' in self.cp.commands.keys())
+        self.assertTrue('quit' in list(self.cp.commands.keys()))
         self.assertEqual('quit', self.cp.aliases['q'])
         import inspect
         self.assertTrue(inspect.ismethod(self.cp.commands['quit'].run))
@@ -39,8 +39,8 @@ class TestProcesor(unittest.TestCase):
 
     def test_resolve_name(self):
         "Test that the command processor finds a command, alias, and method"
-        self.assert_(Mcmdproc.resolve_name(self.cp, 'quit'))
-        self.assert_(Mcmdproc.resolve_name(self.cp, 'q'))
+        self.assertTrue(Mcmdproc.resolve_name(self.cp, 'quit'))
+        self.assertTrue(Mcmdproc.resolve_name(self.cp, 'q'))
         return
 
 if __name__ == '__main__':

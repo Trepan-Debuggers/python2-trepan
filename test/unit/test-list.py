@@ -26,8 +26,8 @@ class TestListCommand(unittest.TestCase):
         return
     
     def print_lines(self):
-        for msg in self.msgs: print msg
-        for msg in self.errors: print msg
+        for msg in self.msgs: print(msg)
+        for msg in self.errors: print(msg)
 
     def check_lines(self, nums):
         j = 0
@@ -70,26 +70,26 @@ class TestListCommand(unittest.TestCase):
         d.settings['listsize']  = self.listsize
         d.settings['highlight'] = 'plain'
         # Simple list command.
-        self.clear_run_check(['list'], range(1, self.listsize+1))
+        self.clear_run_check(['list'], list(range(1, self.listsize+1)))
         # Check 2nd set of consecutive lines
         self.clear_run_check(['list'], 
-                             range(self.listsize+1, (2*self.listsize)+1))
+                             list(range(self.listsize+1, (2*self.listsize)+1)))
         # Try going backwards.
-        self.clear_run_check(['list', '-'], range(1, self.listsize+1))
+        self.clear_run_check(['list', '-'], list(range(1, self.listsize+1)))
         # And again. Since we hit the beginning it's the same as before
-        self.clear_run_check(['list', '-'], range(1, self.listsize+1))
+        self.clear_run_check(['list', '-'], list(range(1, self.listsize+1)))
 
         # BUG Simple arithmetic expression
         # self.clear_run_check(['list', '4+1'], range(4+1, 4+1+listsize))
 
         # List first last
-        self.clear_run_check(['list', '10', '20'], range(10, 21))
+        self.clear_run_check(['list', '10', '20'], list(range(10, 21)))
         # List first count
-        self.clear_run_check(['list', '10', '5'], range(10, 15))
+        self.clear_run_check(['list', '10', '5'], list(range(10, 15)))
 
         # Module
         # BUG? without '1' below the default starts with self.listsize+1
-        self.clear_run_check(['os.path', '1'], range(1, self.listsize+1))
+        self.clear_run_check(['os.path', '1'], list(range(1, self.listsize+1)))
 
         # Function
         self.clear_run_checksize(['list', 'os.path.join'])
@@ -99,14 +99,14 @@ class TestListCommand(unittest.TestCase):
 
         # BUG
         # self.clear_run_check(['os.path:1'], range(1, self.listsize+1))
-        self.clear_run_check(['os.path', '10', '5'], range(10, 15))
+        self.clear_run_check(['os.path', '10', '5'], list(range(10, 15)))
         # Use a file name
-        self.clear_run_check(['list', __file__+':3', '4'], range(3, 5))
+        self.clear_run_check(['list', __file__+':3', '4'], list(range(3, 5)))
 
         # BUGS - but possibly the windowing thing is happening?
-        # self.clear_run_check(['list', __file__, '3'], range(3, 5))
-        # self.clear_run_check(['list', __file__, '20', '4'], range(20, 24))
-        # self.clear_run_check(['list', __file__, '3', '4'], range(3, 5))
+        # self.clear_run_check(['list', __file__, '3'], list(range(3, 5)))
+        # self.clear_run_check(['list', __file__, '20', '4'], list(range(20, 24)))
+        # self.clear_run_check(['list', __file__, '3', '4'], list(range(3, 5)))
         return
 
 if __name__ == '__main__':

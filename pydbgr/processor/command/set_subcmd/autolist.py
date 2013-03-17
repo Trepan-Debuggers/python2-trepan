@@ -16,8 +16,8 @@
 
 from import_relative import import_relative
 # Our local modules
-import_relative('lib', '....', 'pydbgr')
-import_relative('processor', '....', 'pydbgr')
+import_relative('lib', '....')
+import_relative('processor', '....')
 
 Mbase_subcmd = import_relative('base_subcmd', '..', 'pydbgr')
 Mcmdfns      = import_relative('cmdfns', '...', 'pydbgr')

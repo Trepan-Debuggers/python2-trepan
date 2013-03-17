@@ -18,8 +18,7 @@ import atexit
 
 # Our local modules
 from import_relative import *
-import_relative('io', '..', 'pydbgr')
-import_relative('interfaces', '..')
+import_relative('io', '...pydbgr')
 Minterface = import_relative('interface', '..')
 Mscriptin  = import_relative('scriptin',  '..io')
 Moutput    = import_relative('output',    '..io')

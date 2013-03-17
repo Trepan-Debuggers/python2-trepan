@@ -19,11 +19,10 @@ from repr import Repr
 
 from import_relative import import_relative, get_srcdir
 
-import pydbgr.lib
-import_relative('lib', '..', 'pydbgr')
-import_relative('bwprocessor', '..', 'pydbgr')
+import_relative('lib', '...pydbgr')
+import_relative('bwprocessor', '...pydbgr')
 
-Mprocessor = import_relative('vprocessor', '..', 'pydbgr')
+Mprocessor = import_relative('vprocessor', '..')
 Mbytecode  = import_relative('bytecode', '..lib', 'pydbgr')
 Mexcept    = import_relative('exception', '..', 'pydbgr')
 Mdisplay   = import_relative('display', '..lib', 'pydbgr')

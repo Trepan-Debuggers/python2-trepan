@@ -3,7 +3,6 @@
 
 import pyficache, linecache, tempfile
 from import_relative import import_relative, get_srcdir
-import pydbgr.lib
 Mstack = import_relative('stack', '..lib', 'pydbgr')
 
 def format_location(proc_obj):

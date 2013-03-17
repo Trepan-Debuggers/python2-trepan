@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2008, 2009 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008-2009, 2013 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -16,9 +16,8 @@
 
 from import_relative import *
 # Our local modules
-# FIXME: Until import_relative is fixed up...
-import_relative('processor', '....', 'pydbgr')
-Mbase_subcmd  = import_relative('base_subcmd', '..', 'pydbgr')
+import_relative('processor', '....')
+Mbase_subcmd  = import_relative('base_subcmd', '..')
 
 class InfoSource(Mbase_subcmd.DebuggerSubcommand):
     """Information about the current Python file."""

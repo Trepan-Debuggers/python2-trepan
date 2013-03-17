@@ -19,10 +19,9 @@ import atexit
 
 # Our local modules
 from import_relative import *
-import_relative('interfaces',  '..',   'pydbgr')
-Minterface = import_relative('interface',  '..',   'pydbgr')
-Minput     = import_relative('input', '..io', 'pydbgr')
-Moutput    = import_relative('output', '..io', 'pydbgr')
+Minterface = import_relative('interface',  '...pydbgr')
+Minput     = import_relative('input', '..io')
+Moutput    = import_relative('output', '..io')
 
 class UserInterface(Minterface.DebuggerInterface):
     """Interface when communicating with the user in the same

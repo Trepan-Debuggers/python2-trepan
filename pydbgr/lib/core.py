@@ -34,10 +34,9 @@ default    = import_relative('default')
 Mmisc      = import_relative('misc', '..', 'pydbgr')
 Mtrace     = import_relative('trace', '..processor', 'pydbgr')
 Mcmdproc   = import_relative('cmdproc', '..processor', 'pydbgr')
-import_relative('bwprocessor', '..', 'pydbgr')
-Mbwproc    = import_relative('main', '..bwprocessor', 'pydbgr')
+Mbwproc    = import_relative('main', '..bwprocessor')
 Mstack     = import_relative('stack')
-Mclifns    = import_relative('clifns', '..', 'pydbgr')
+Mclifns    = import_relative('clifns', '...pydbgr')
 
 class DebuggerCore:
 

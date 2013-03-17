@@ -1,7 +1,7 @@
 import os, sys
 from import_relative import *
 
-Mdebugger    = import_relative('debugger', '...pydbgr', 'pydbgr')
+Mdebugger    = import_relative('debugger', '...pydbgr')
 Mstringarray = import_relative('io.stringarray', '...pydbgr')
 
 def strarray_setup(debugger_cmds):

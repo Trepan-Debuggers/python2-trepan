@@ -17,9 +17,7 @@
 import sys
 from import_relative import import_relative
 # Our local modules
-# FIXME: Until import_relative is fixed up...
-import_relative('processor', '....', 'pydbgr')
-Mbase_subcmd  = import_relative('base_subcmd', '..', 'pydbgr')
+Mbase_subcmd  = import_relative('base_subcmd', '..')
 Mmisc         = import_relative('misc', '....', 'pydbgr')
 
 class InfoProgram(Mbase_subcmd.DebuggerSubcommand):

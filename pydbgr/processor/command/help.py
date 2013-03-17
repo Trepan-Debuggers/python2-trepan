@@ -20,7 +20,7 @@ import os, re
 # Our local modules
 from import_relative import import_relative
 
-import_relative('processor', '...', 'pydbgr') 
+import_relative('processor', '....pydbgr') 
 
 Mbase_cmd  = import_relative('base_cmd', top_name='pydbgr')
 Mcmdproc   = import_relative('cmdproc', '..', 'pydbgr')

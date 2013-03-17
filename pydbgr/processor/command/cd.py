@@ -15,7 +15,6 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import os, sys
 from import_relative import import_relative
-import_relative('lib', '...', 'pydbgr')
 Mbase_cmd  = import_relative('base_cmd', top_name='pydbgr')
 
 class CDCommand(Mbase_cmd.DebuggerCommand):

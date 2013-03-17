@@ -19,9 +19,7 @@
 from import_relative import *
 # Our local modules
 
-# FIXME: Until import_relative is fixed up...
-import_relative('processor', '....', 'pydbgr')
-Mcmdfns = import_relative('cmdfns', '...', 'pydbgr')
+Mcmdfns = import_relative('cmdfns', '...')
 
 Mbase_subcmd  = import_relative('base_subcmd', '..')
 

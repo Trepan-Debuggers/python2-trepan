@@ -18,7 +18,7 @@
 
 from import_relative import *
 # Our local modules
-import_relative('processor', '....', 'pydbgr')
+import_relative('processor', '....')
 Mbase_subcmd = import_relative('base_subcmd', '..', 'pydbgr')
 
 class SetSkip(Mbase_subcmd.DebuggerSetBoolSubcommand):

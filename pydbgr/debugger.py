@@ -30,7 +30,7 @@ user or client-side code for connecting to server'd debugged program.
 # Our local modules
 from import_relative import import_relative
 
-import_relative('processor', '.', 'pydbgr')
+import_relative('processor', '..pydbgr')
 
 Mcore   = import_relative('core', '.lib', 'pydbgr')
 Mexcept = import_relative('exception', '.', 'pydbgr')

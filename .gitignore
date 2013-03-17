@@ -2,6 +2,7 @@
 *.egg-info
 *.py?
 *~
+/*.egg
 /build
 /dist
 __pycache__

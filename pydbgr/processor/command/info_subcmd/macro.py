@@ -17,8 +17,8 @@
 from pyficache import highlight_string
 from import_relative import *
 # Our local modules
-import_relative('processor', '....', 'pydbgr')
-Mbase_subcmd  = import_relative('base_subcmd', '..', 'pydbgr')
+import_relative('processor', '....')
+Mbase_subcmd  = import_relative('base_subcmd', '..')
 
 class InfoMacro(Mbase_subcmd.DebuggerSubcommand):
   """**macro**

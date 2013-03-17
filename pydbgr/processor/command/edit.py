@@ -16,7 +16,6 @@
 
 import inspect, os
 from import_relative import import_relative
-import_relative('lib', '...', 'pydbgr')
 Mbase_cmd  = import_relative('base_cmd', top_name='pydbgr')
 
 class EditCommand(Mbase_cmd.DebuggerCommand):

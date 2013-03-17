@@ -18,9 +18,6 @@
 
 from import_relative import *
 
-# FIXME: Until import_relative is fixed up...
-import_relative('processor', '....', 'pydbgr')
-
 # Our local modules
 Mbase_subcmd  = import_relative('base_subcmd', '..', 'pydbgr')
 

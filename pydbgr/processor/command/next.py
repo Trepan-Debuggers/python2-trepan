@@ -18,8 +18,8 @@ import os
 from import_relative import import_relative
 
 # Our local modules
-import_relative('lib', '...', 'pydbgr')
-import_relative('processor', '...', 'pydbgr')
+import_relative('lib', '....pydbgr')
+import_relative('processor', '....pydbgr')
 base_cmd   = import_relative('base_cmd')
 Mcmdfns    = import_relative('cmdfns', '..', 'pydbgr')
 Mstack     = import_relative('stack',  '...lib', 'pydbgr')

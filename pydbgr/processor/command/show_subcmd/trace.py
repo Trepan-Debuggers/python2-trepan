@@ -17,9 +17,6 @@
 from import_relative import import_relative
 # Our local modules
 
-# FIXME: Until import_relative is fixed up...
-import_relative('processor', '....', 'pydbgr')
-
 Mbase_subcmd  = import_relative('base_subcmd', '..', 'pydbgr')
 
 class ShowTrace(Mbase_subcmd.DebuggerShowBoolSubcommand):

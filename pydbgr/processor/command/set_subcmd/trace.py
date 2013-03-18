@@ -37,6 +37,6 @@ if __name__ == '__main__':
     d = sub.proc.debugger
     for args in (['on'], ['off']):
         sub.run(args)
-        print d.settings['trace']
+        print(d.settings['trace'])
         pass
     pass

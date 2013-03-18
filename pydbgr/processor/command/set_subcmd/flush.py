@@ -26,4 +26,7 @@ class SetFlush(Mbase_subcmd.DebuggerSetBoolSubcommand):
     min_abbrev = len('flu') # Need at least "set flu"
     pass
 
-
+if __name__ == '__main__':
+    Mhelper = import_relative('__demo_helper__', '.', 'pydbgr')
+    Mhelper.demo_run(SetFlush)
+    pass

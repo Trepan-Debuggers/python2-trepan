@@ -54,10 +54,7 @@ class SetAutoList(Mbase_subcmd.DebuggerSetBoolSubcommand):
     pass
 
 if __name__ == '__main__':
-    mock = import_relative('mock', '..')
-    Mset = import_relative('set', '..')
-    d, cp = mock.dbg_setup()
-    s = Mset.SetCommand(cp)
-    sub = SetAutoList(s)
+    Mhelper = import_relative('__demo_helper__', '.', 'pydbgr')
+    Mhelper.demo_run(SetAutoList)
     pass
 

@@ -47,4 +47,7 @@ See also `set trace` to change what events you want to filter.
     min_abbrev = len('dif')    # Min is "set dif"
     pass
 
-
+if __name__ == '__main__':
+    Mhelper = import_relative('__demo_helper__', '.', 'pydbgr')
+    Mhelper.demo_run(SetDifferent)
+    pass

@@ -40,6 +40,7 @@ Go into Python on debugger entry."""
         else:
             self.proc.remove_preloop_hook(self.run_python)
             pass
+        Mcmdfns.run_show_bool(self)
         return
 
     def run_python(self, args):
@@ -47,4 +48,9 @@ Go into Python on debugger entry."""
         if not leave_loop: Mcmdproc.print_location(self.proc)
         return leave_loop
 
+    pass
+
+if __name__ == '__main__':
+    Mhelper = import_relative('__demo_helper__', '.', 'pydbgr')
+    Mhelper.demo_run(SetAutoPython)
     pass

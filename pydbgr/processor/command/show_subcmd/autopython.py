@@ -30,12 +30,6 @@ Change with **set autopython**
     pass
 
 if __name__ == '__main__':
-    mock = import_relative('mock', '..')
-    Mshow = import_relative('show', '..')
-    Mdebugger = import_relative('debugger', '....')
-    d, cp = mock.dbg_setup()
-    i = Mshow.ShowCommand(cp)
-    sub = ShowAutoPython(i)
-    sub.name = 'autopython'
-    sub.run([])
+    Mhelper = import_relative('__demo_helper__', '.', 'pydbgr')
+    mgr = Mhelper.demo_run(ShowAutoPython)
     pass

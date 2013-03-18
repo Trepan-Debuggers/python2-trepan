@@ -20,7 +20,7 @@ class BreakpointManager:
         return
 
     def get_breakpoint(self, i):
-        if isinstance(i, bytes):
+        if isinstance(i, str):
             try:
                 i = int(i)
             except ValueError:

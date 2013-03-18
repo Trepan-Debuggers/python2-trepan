@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 ''' Location routines'''
 
+from __future__ import with_statement
 import pyficache, linecache, tempfile
 from import_relative import import_relative, get_srcdir
 Mstack = import_relative('stack', '..lib', 'pydbgr')

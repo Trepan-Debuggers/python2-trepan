@@ -53,7 +53,9 @@ we are in interactive mode, we'll prompt to make sure.
             try:
                 signo = int(args[1])
                 confirmed = True
-            except ValueError as TypeError:
+            except ValueError:
+                pass
+            except TypeError:
                 pass
             pass
 

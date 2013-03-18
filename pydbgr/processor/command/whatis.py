@@ -47,7 +47,7 @@ Prints the type of the argument which can be a Python expression.'''
                              self.proc.curframe.f_locals)
         except:
             t, v = sys.exc_info()[:2]
-            if type(t) == types.StringType:
+            if type(t) == str:
                 exc_type_name = t
             else: exc_type_name = t.__name__
             if exc_type_name == 'NameError':
@@ -78,14 +78,13 @@ Prints the type of the argument which can be a Python expression.'''
     pass
 
 if __name__ == '__main__':
-    cmdproc      = import_relative('cmdproc', '..')
-    debugger     = import_relative('debugger', '...')
-    d            = debugger.Debugger()
-    cp           = d.core.processor
-    command      = WhatisCommand(cp)
+    Mcmdproc    = import_relative('cmdproc', '..')
+    Mmock       = import_relative('mock')
+    d, cp       = Mmock.dbg_setup()
+    command     = WhatisCommand(cp)
     cp.curframe = inspect.currentframe()
-    cp.stack, cp.curindex = cmdproc.get_stack(cp.curframe, None, None,
-                                              cp)
+    cp.stack, cp.curindex = Mcmdproc.get_stack(cp.curframe, None, None,
+                                               cp)
     command.run(['whatis', 'cp'])
     command.run(['whatis', '5'])
     pass

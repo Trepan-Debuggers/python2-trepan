@@ -2,7 +2,7 @@
 -> 10 """
 Set short filenames (the basename) in debug output is on.
 Set event tracing is on.
-Set stopping before *def* or *class*' (function or class) statements is off.
+Set stopping before def or class' (function or class) statements is off.
 No macros defined.
 Macro "foo" defined.
   5    	not have a 'return' statement.

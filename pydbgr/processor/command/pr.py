@@ -61,10 +61,8 @@ formatting.
 
 if __name__ == '__main__':
     import inspect
-    cmdproc     = import_relative('cmdproc', '..')
-    debugger    = import_relative('debugger', '...')
-    d           = debugger.Debugger()
-    cp          = d.core.processor
+    mock = import_relative('mock')
+    d, cp = mock.dbg_setup()
     cp.curframe = inspect.currentframe()
     command = PrCommand(cp)
     me = 10

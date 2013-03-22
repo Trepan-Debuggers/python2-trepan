@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2009, 2012, 2013 Rocky Bernstein
+#  Copyright (C) 2009, 2012-2013 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -47,8 +47,8 @@ disassemble that.
    disassemble +0                 # Same as above
    disassemble os.path            # Disassemble all of os.path
    disassemble os.path.normcase   # Disaassemble just method os.path.normcase
-   disassemble -3  # Disassemble subtracting 3 from the current line number 
-   disassemble +3  # Disassemble adding 3 from the current line number 
+   disassemble -3  # Disassemble subtracting 3 from the current line number
+   disassemble +3  # Disassemble adding 3 from the current line number
    disassemble 3                  # Disassemble starting from line 3
    disassemble 3 10               # Disassemble lines 3 to 10
    disassemble myprog.pyc         # Disassemble file myprog.pyc
@@ -75,13 +75,14 @@ disassemble that.
         return None, None
 
     def run(self, args):
-        start_line = end_line = None
+        start_line = -1
+        end_line = None
         relative_pos = False
         if len(args) > 1:
             start_line, relative_pos = self.parse_arg(args[1])
             if start_line is None:
                 # First argument should be an evaluatable object
-                # or a filename 
+                # or a filename
                 if args[1].endswith('.pyc') and Mfile.readable(args[1]):
                     magic, moddate, modtime, obj = Mdis.pyc2code(args[1])
                 elif not self.proc.curframe:
@@ -93,17 +94,17 @@ disassemble that.
                     except:
                         self.errmsg(("Object '%s' is not something we can"
                                      + " disassemble.") % args[1])
-                        return 
+                        return
                     pass
                 if len(args) > 2:
                     start_line, relative_pos = self.parse_arg(args[2])
                     if start_line is None:
-                        self.errmsg = ('Start line should be a number. Got %s.' 
+                        self.errmsg = ('Start line should be a number. Got %s.'
                                        % args[2])
                         return
                     if len(args) == 4:
                         end_line, relative_pos = self.parse_arg(args[3])
-                        if end_line is None: 
+                        if end_line is None:
                             self.errmsg = ('End line should be a number. ' +
                                            ' Got %s.' % args[3])
                             return
@@ -115,19 +116,19 @@ disassemble that.
                     pass
                 else:
                     try:
-                        obj=Mcmdfns.get_val(self.proc.curframe, 
+                        obj=Mcmdfns.get_val(self.proc.curframe,
                                             self.errmsg, args[1])
                     except:
                         return
                     pass
-                Mdis.dis(self.msg, self.msg_nocr, self.section, self.errmsg, obj, 
-                         start_line=start_line, end_line=end_line, 
+                Mdis.dis(self.msg, self.msg_nocr, self.section, self.errmsg, obj,
+                         start_line=start_line, end_line=end_line,
                          relative_pos=relative_pos)
                 return False
             else:
                 if len(args) == 3:
                     end_line, not_used = self.parse_arg(args[2])
-                    if end_line is None: 
+                    if end_line is None:
                         self.errmsg = ('End line should be a number. ' +
                                        ' Got %s.' % args[2])
                         return
@@ -142,9 +143,9 @@ disassemble that.
             self.errmsg("No frame selected.")
             return
 
-        Mdis.dis(self.msg, self.msg_nocr, self.section, self.errmsg, 
-                 self.proc.curframe, 
-                 start_line=start_line, end_line=end_line, 
+        Mdis.dis(self.msg, self.msg_nocr, self.section, self.errmsg,
+                 self.proc.curframe,
+                 start_line=start_line, end_line=end_line,
                  relative_pos=relative_pos)
         return False
 
@@ -156,21 +157,20 @@ if __name__ == '__main__':
     cp.curframe = inspect.currentframe()
     command = DisassembleCommand(cp)
     prefix = '-' * 20 + ' disassemble '
-    print prefix + 'cp.errmsg'
+    print(prefix + 'cp.errmsg')
     command.run(['dissassemble', 'cp.errmsg'])
-    print prefix
+    print(prefix)
     command.run(['disassemble'])
-    print prefix + 'me'
+    print(prefix + 'me')
     command.run(['disassemble', 'me'])
-    print prefix + '+0 2'
+    print(prefix + '+0 2')
     command.run(['disassemble', '+0', '2'])
-    print prefix + '+ 2-1'
+    print(prefix + '+ 2-1')
     command.run(['disassemble', '+', '2-1'])
-    print prefix + '- 1'
+    print(prefix + '- 1')
     command.run(['disassemble', '-', '1'])
-    print prefix + '.'
+    print(prefix + '.')
     command.run(['disassemble', '.'])
-    print prefix + 'disassemble.pyc 30 70'
-    from pydbgr.api import debug; debug()
+    print(prefix + 'disassemble.pyc 30 70')
     command.run(['disassemble', './disassemble.pyc', '10', '100'])
     pass

@@ -151,14 +151,14 @@ def runcode(obj, code_obj):
     
     """
     try:
-        exec code_obj in obj.locals, obj.globals
+        exec(code_obj, obj.locals, obj.globals)
     except SystemExit:
         raise
     except:
         obj.showtraceback()
     else:
         if code.softspace(sys.stdout, 0):
-            print
+            print()
             pass
         pass
     return
@@ -171,12 +171,12 @@ if __name__ == '__main__':
     command.proc.frame = sys._getframe()
     command.proc.setup()
     if len(sys.argv) > 1:
-        print "Type Python commands and exit to quit."
-        print sys.argv[1]
+        print("Type Python commands and exit to quit.")
+        print(sys.argv[1])
         if sys.argv[1] == '-d':
-            print command.run(['python', '-d'])
+            print(command.run(['python', '-d']))
         else:
-            print command.run(['python'])
+            print(command.run(['python']))
             pass
         pass
     pass

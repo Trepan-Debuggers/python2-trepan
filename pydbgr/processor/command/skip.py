@@ -69,7 +69,7 @@ stopped or bottom-most execution frame."""
             self.proc.stack[self.proc.curindex] = \
                 self.proc.stack[self.proc.curindex][0], lineno
             Mcmdproc.print_location(self.proc)
-        except ValueError, e:
+        except ValueError as e:
             self.errmsg('skip failed: %s' % e)
         return False
     pass
@@ -78,7 +78,7 @@ if __name__ == '__main__':
     mock = import_relative('mock')
     d, cp = mock.dbg_setup()
     command = SkipCommand(cp)
-    print 'skip when not running: ', command.run(['skip', '1'])
+    print('skip when not running: ', command.run(['skip', '1']))
     command.core.execution_status = 'Running'
     cp.curframe = inspect.currentframe()
     cp.curindex = 0

@@ -62,9 +62,9 @@ if __name__ == '__main__':
     command = ExamineCommand(cp)
     command.run(['examine', '10'])
     me = []
-    print '=' * 30
+    print('=' * 30)
     command.run(['examine', 'me'])
-    print '=' * 30
+    print('=' * 30)
     command.run(['examine', 'Mbase_cmd.DebuggerCommand'])
     pass
 

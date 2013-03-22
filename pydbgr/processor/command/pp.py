@@ -23,7 +23,7 @@ Mpp        = import_relative('pp', '...lib', 'pydbgr')
 class PrettyPrintCommand(Mbase_cmd.DebuggerCommand):
     """**pp** *expression*
 
-Pretty-print the value of the expression. 
+Pretty-print the value of the expression.
 
 Simple arrays are shown columnized horizontally. Other values are printed
 via *pprint.pformat()*.
@@ -48,16 +48,15 @@ formatting.
 
 if __name__ == '__main__':
     import inspect
-    cmdproc     = import_relative('cmdproc', '..')
-    debugger    = import_relative('debugger', '...')
-    d           = debugger.Debugger()
-    cp          = d.core.processor
+    mock = import_relative('mock')
+    d, cp = mock.dbg_setup()
     cp.curframe = inspect.currentframe()
     command = PrettyPrintCommand(cp)
-    me = range(10)
+    me = list(range(10))
     command.run(['pp', 'me'])
-    me = range(100)
+    me = list(range(100))
     command.run(['pp', 'me'])
+    import sys
     command.run(['pp', 'sys.modules.keys()'])
     me = 'fooled you'
     command.run(['pp', 'locals()'])

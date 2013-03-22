@@ -116,5 +116,5 @@ if __name__ == '__main__':
     cmd.cmd_argstr = cmd_argstr
     command.run(args)
     pass
-  print cmd.macros
+  print(cmd.macros)
   pass

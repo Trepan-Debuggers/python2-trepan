@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2009, 2013 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -69,18 +69,18 @@ class FIFOClient(Mbase_io.DebuggerInOutBase):
        is_readable = Mfile.readable(self.out_name)
        if not is_readable:
            if is_readable is None:
-               raise IOError, ("output FIFO %s doesn't exist" % 
+               raise IOError("output FIFO %s doesn't exist" % 
                                self.out_name)
            else:
-               raise IOError, ("output FIFO %s is not readable" % 
+               raise IOError("output FIFO %s is not readable" % 
                                self.out_name)
        is_readable = Mfile.readable(self.in_name)
        if not is_readable:
            if is_readable is None:
-               raise IOError, ("input FIFO %s doesn't exist" % 
+               raise IOError("input FIFO %s doesn't exist" % 
                                self.in_name)
            else:
-               raise IOError, ("output FIFO %s is not readable" % 
+               raise IOError("output FIFO %s is not readable" % 
                                self.out_name)
        self.state     = 'active'
        return
@@ -101,7 +101,7 @@ class FIFOClient(Mbase_io.DebuggerInOutBase):
                 raise EOFError
             return line.rstrip("\n")
         else:
-            raise IOError, ("readline called in state: %s." % self.state)
+            raise IOError("readline called in state: %s." % self.state)
         return # Not reached
 
     def write(self, msg):
@@ -124,16 +124,16 @@ if __name__=='__main__':
     fifo = FIFOClient(opts={'open': False})
     import sys
     if len(sys.argv) > 1:
-        print 'Connecting...',
+        print('Connecting...',)
         fifo.open(sys.argv[1])
-        print 'connected.'
+        print('connected.')
         while True:
             prompt = fifo.readline()
             line = raw_input(prompt)
             if len(line) == 0: break
             try: 
                 line = fifo.writeline(line)
-                print "Got: ", fifo.readline()
+                print("Got: ", fifo.readline())
             except EOFError:
                 break
             pass

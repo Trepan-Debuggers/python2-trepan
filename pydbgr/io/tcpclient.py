@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2009, 2013 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -64,19 +64,19 @@ class TCPClient(Mbase_io.DebuggerInOutBase):
            try:
                self.inout = socket.socket(af, socktype, proto)
                self.state = 'connected'
-           except socket.error, msg:
+           except socket.error as msg:
                self.inout = None
                self.state = 'disconnected'
                continue
            try:
                self.inout.connect(sa)
-           except socket.error, msg:
+           except socket.error as msg:
                self.inout.close()
                self.inout = None
                continue
            break
        if self.inout is None:
-           raise IOError, ('could not open client socket on port %s' %
+           raise IOError('could not open client socket on port %s' %
                            PORT)
 
        return
@@ -97,7 +97,7 @@ class TCPClient(Mbase_io.DebuggerInOutBase):
             self.buf, data = Mtcpfns.unpack_msg(self.buf)
             return data
         else:
-            raise IOError, ("read_msg called in state: %s." % self.state)
+            raise IOError("read_msg called in state: %s." % self.state)
 
     def write(self, msg):
         """ This method the debugger uses to write a message unit."""
@@ -113,13 +113,13 @@ if __name__=='__main__':
     if len(sys.argv) > 1:
         print 'Connecting...',
         inout.open()
-        print 'connected.'
+        print('connected.')
         while True:
             line = raw_input('nu? ')
             if len(line) == 0: break
             try: 
                 line = inout.writeline(line)
-                print "Got: ", inout.read_msg().rstrip('\n')
+                print("Got: ", inout.read_msg().rstrip('\n'))
             except EOFError:
                 break
             pass

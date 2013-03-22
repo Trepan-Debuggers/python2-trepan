@@ -19,10 +19,10 @@
 import sys, time
 # Our local modules
 from import_relative import import_relative
-import pydbgr.interface
-Mmisc = import_relative('misc', '.', 'pydbgr')
-Mclient   = import_relative('client', '.interfaces', 'pydbgr')
-Mcomcodes = import_relative('comcodes', '.interfaces', 'pydbgr')
+import trepan.interface
+Mmisc = import_relative('misc', '.', 'trepan')
+Mclient   = import_relative('client', '.interfaces', 'trepan')
+Mcomcodes = import_relative('comcodes', '.interfaces', 'trepan')
 
 #
 # Connects to a debugger in server mode
@@ -38,7 +38,7 @@ def start_client(connection_opts):
             control, remote_msg = intf.read_remote()
             # print 'c, r', control, remote_msg
             if Mcomcodes.PRINT == control:
-                  print remote_msg,
+                  print(remote_msg,)
                   pass
             elif control in [Mcomcodes.CONFIRM_TRUE, Mcomcodes.CONFIRM_FALSE]:
                   default = (Mcomcodes.CONFIRM_TRUE == control)
@@ -49,28 +49,28 @@ def start_client(connection_opts):
                         pass
                   intf.write_remote(Mcomcodes.CONFIRM_REPLY, msg)
             elif Mcomcodes.PROMPT == control:
-                  msg = intf.read_command('(Pydbgr*) ').strip()
+                  msg = intf.read_command('(Trepan*) ').strip()
                   intf.write_remote(Mcomcodes.CONFIRM_REPLY, msg)
             elif Mcomcodes.QUIT == control:
-                  print 'Quitting...'
+                  print('Quitting...')
                   done = True
                   break
             elif Mcomcodes.RESTART == control:
                   # FIXME need to save stuff like port # and
                   # and for FIFO we need new pid.
                   if 'TCP' == connection_opts['IO']:
-                        print 'Restarting...'
+                        print('Restarting...')
                         intf.inout.close()
                         time.sleep(1)
                         intf.inout.open()
                   else:
-                        print "Don't know how to hard-restart FIFO..."
+                        print("Don't know how to hard-restart FIFO...")
                         done=True
                         pass
                   break
             else:
-                  print "!! Weird status code received '%s'" % control
-                  print remote_msg,
+                  print("!! Weird status code received '%s'" % control)
+                  print(remote_msg,)
                   pass
             pass
       intf.close()

@@ -78,7 +78,7 @@ if __name__=='__main__':
         try:
             entry = intf.read_command()
         except EOFError:
-            print "No input EOF: "
+            print("No input EOF: ")
         else:
             intf.msg(entry)
             pass

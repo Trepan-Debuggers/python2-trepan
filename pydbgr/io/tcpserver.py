@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2009, 2013 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -70,7 +70,7 @@ class TCPServer(Mbase_io.DebuggerInOutBase):
             af, socktype, proto, canonname, sa = res
             try:
                 self.inout = socket.socket(af, socktype, proto)
-            except socket.error, msg:
+            except socket.error as msg:
                 self.inout = None
                 continue
             try:
@@ -84,13 +84,13 @@ class TCPServer(Mbase_io.DebuggerInOutBase):
                 self.inout.bind(sa)
                 self.inout.listen(1)
                 self.state = 'listening'
-            except socket.error, msg:
+            except socket.error as msg:
                 self.inout.close()
                 self.inout = None
                 continue
             break
         if self.inout is None:
-            raise IOError, ('could not open server socket on port %s' %
+            raise IOError('could not open server socket on port %s' %
                             self.PORT)
         return
     
@@ -119,7 +119,7 @@ class TCPServer(Mbase_io.DebuggerInOutBase):
             self.buf, data = Mtcpfns.unpack_msg(self.buf)
             return data
         else:
-            raise IOError, ("read_msg called in state: %s." % self.state)
+            raise IOError("read_msg called in state: %s." % self.state)
 
     def wait_for_connect(self):
         self.conn, self.addr = self.inout.accept()
@@ -147,7 +147,7 @@ if __name__=='__main__':
         while True:
             try: 
                 line = inout.read_msg().rstrip('\n')
-                print line
+                print(line)
                 inout.writeline('ack: ' + line)
             except EOFError:
                 break

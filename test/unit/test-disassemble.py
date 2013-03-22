@@ -18,7 +18,7 @@ class TestDisassemble(unittest.TestCase):
         self.errmsgs.append(msg)
         pass
         
-    def test_quit(self):
+    def test_disassemble(self):
         """Test processor.command.disassemble.run()"""
         d, cp = dbg_setup()
         command = Mdis.DisassembleCommand(cp)
@@ -30,10 +30,12 @@ class TestDisassemble(unittest.TestCase):
         command.run(['disassemble'])
         self.assertTrue(len(self.errmsgs) > 0)
         self.assertEqual(len(self.msgs), 0)
-        me = self.test_quit
+        me = self.test_disassemble
         cp.curframe = inspect.currentframe()
         # All of these should work
         for args in (['disassemble'],
+                     ['disassemble', 'cp.errmsg'],
+                     ['disassemble', 'unittest'],
                      ['disassemble', '1'],
                      ['disassemble', '10', '100'],
                      ['disassemble', '+', '1'],

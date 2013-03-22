@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2009, 2013 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -39,21 +39,21 @@ class StringArrayInput(Mbase_io.DebuggerInputBase):
         if isinstance(inp, types.ListType):
             self.input = inp
         else:
-            raise IOError, ("Invalid input type (%s) for %s" % (type(inp), inp))
+            raise IOError("Invalid input type (%s) for %s" % (type(inp), inp))
         return
 
     def readline(self, use_raw=None, prompt=''):
-        """Read a line of input. EOFError will be raised on EOF.  
+        """Read a line of input. EOFError will be raised on EOF.
 
         Note that we don't support prompting"""
         if self.closed: raise ValueError
-        if 0 == len(self.input): 
+        if 0 == len(self.input):
             self.closed = True
             raise EOFError
         line = self.input[0]
         del self.input[0]
-        return line 
-    pass 
+        return line
+    pass
 
 class StringArrayOutput(Mbase_io.DebuggerOutputBase):
     """Simulate I/O using an array of strings. Sort of like StringIO, but
@@ -75,7 +75,7 @@ class StringArrayOutput(Mbase_io.DebuggerOutputBase):
         return
 
     def open(self, output):
-        """Use this to set where to write to. output can be a 
+        """Use this to set where to write to. output can be a
         file object or a string. This code raises IOError on error.
 
         If another file was previously open upon calling this open,
@@ -85,7 +85,7 @@ class StringArrayOutput(Mbase_io.DebuggerOutputBase):
         if isinstance(output, types.Listype):
             self.output = output
         else:
-            raise IOError, ("Invalid output type (%s) for %s" % (type(output), 
+            raise IOError("Invalid output type (%s) for %s" % (type(output),
                                                                  output))
         return
 
@@ -109,36 +109,36 @@ class StringArrayOutput(Mbase_io.DebuggerOutputBase):
         self.write(msg)
         self.output.append('')
         return
-    
-    pass 
+
+    pass
 
 # Demo
 if __name__=='__main__':
     inp= StringArrayInput(['Now is the time', 'for all good men'])
     line = inp.readline()
-    print line
+    print(line)
     line = inp.readline()
-    print line
+    print(line)
     try:
         line = inp.readline()
     except EOFError:
-        print 'EOF hit on read'
+        print('EOF hit on read')
         pass
     out = StringArrayOutput()
     print(out.output)
 #    line = io.readline("Type some more characters: ")
     out.writeline("Hello, world!")
     print(out.output)
-    out.write("Hello");
+    out.write("Hello")
     print(out.output)
-    out.writeline(", again.");
+    out.writeline(", again.")
     print(out.output)
 #     io.open_write(sys.stdout)
     out.flush_after_write = True
     out.write("Last hello")
     out.close()
     print(out.output)
-    try: 
+    try:
          out.writeline("You won't see me")
     except:
          pass
@@ -146,4 +146,3 @@ if __name__=='__main__':
     out.close()
     inp.close()
     pass
-

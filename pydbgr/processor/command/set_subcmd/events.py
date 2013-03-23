@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009, 2012 Rocky Bernstein
+#   Copyright (C) 2009, 2012-2013 Rocky Bernstein
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -70,6 +70,6 @@ if __name__ == '__main__':
     for args in (['line'], ['bogus'],
                 ['call', 'return']):
         sub.run(args)
-        print d.settings['printset']
+        print(d.settings['printset'])
         pass
     pass

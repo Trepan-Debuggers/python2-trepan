@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 'Unit test for pydbgr.io.tcp*'
-import inspect, os, sys, unittest
+import inspect, sys, unittest
 
 from import_relative import *
 import_relative('io', '...pydbgr', 'pydbgr')

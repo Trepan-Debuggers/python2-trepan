@@ -3,7 +3,7 @@
 import os
 if hasattr(os, 'mkfifo'):
 
-    import inspect, sys, unittest
+    import sys, unittest
 
     from import_relative import *
     Mserver = import_relative('io.fifoserver', '...pydbgr')

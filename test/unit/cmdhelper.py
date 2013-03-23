@@ -2,7 +2,6 @@
 """ Mock classes used for testing which in turn really come from 
 pydbgr.processor.command.mock """
 
-import os
 from import_relative import *
 
 default   = import_relative('lib.default', '...pydbgr') # Default settings

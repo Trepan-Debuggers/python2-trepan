@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 'Unit test for the debugger lib breakpoint'
-import operator, os, re, sys, unittest
+import re, unittest
 from import_relative import *
 
 Mbreakpoint = import_relative('lib.breakpoint', '...pydbgr')

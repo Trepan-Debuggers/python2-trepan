@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 'Unit test for pydbgr.processor.cmdproc'
-import inspect, os, sys, unittest
+import os, unittest
 from import_relative import *
 
 Mcore = import_relative('lib.core', '...pydbgr')

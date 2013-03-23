@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 'Unit test for pydbgr.processor.command.quit'
-import inspect, os, sys, unittest
+import unittest
 
 from import_relative import *
 
@@ -10,10 +10,6 @@ from cmdhelper import dbg_setup
 
 class TestQuit(unittest.TestCase):
     """Tests QuitCommand class"""
-
-    def setUp(self):
-        self.signal_caught = False
-        return
 
     def test_quit(self):
         """Test processor.command.quit.QuitCommand.run()"""

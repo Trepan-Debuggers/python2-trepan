@@ -697,10 +697,11 @@ class CommandProcessor(Mprocessor.Processor):
                     if type(current_command) == types.ListType:
                         for x in current_command:
                             if bytes != type(x):
-                                self.errmsg("macro %s should return a List " +
-                                            "of Strings. Has %s of type %s" %
-                                            (macro_cmd_name, x, type(x),
-                                             current_command))
+                                self.errmsg(("macro %s should return a List " +
+                                             "of Strings. Has %s of type %s") %
+                                             (macro_cmd_name, x,
+                                              repr(current_command),
+                                              type(x)))
                                 return False
                             pass
 
@@ -711,9 +712,9 @@ class CommandProcessor(Mprocessor.Processor):
                     elif type(current_command) == bytes:
                         args = current_command.split()
                     else:
-                        self.errmsg("macro %s should return a List " +
-                   "of Strings or a String. Got %s" % (macro_cmd_name,
-                                                       current_command))
+                        self.errmsg(("macro %s should return a List " +
+                                     "of Strings or a String. Got %s") %
+                                     (macro_cmd_name, repr(current_command)))
                         return False
                     pass
 

@@ -2,7 +2,7 @@ import sys
 from import_relative import import_relative
 
 Mdebugger    = import_relative('debugger', '...pydbgr')
-Mstringarray = import_relative('io.stringarray', '...pydbgr')
+Mstringarray = import_relative('io.stringarray', '...pydbgr', 'pydbgr')
 
 def strarray_setup(debugger_cmds):
     ''' Common setup to create a debugger with stringio attached '''

@@ -17,7 +17,7 @@
 
 import socket
 
-from import_relative import *
+from import_relative import import_relative
 Mbase_io = import_relative('base_io', top_name='pydbgr')
 Mdefault = import_relative('default', '..lib', top_name='pydbgr')
 Mmisc    = import_relative('misc', '..', 'pydbgr')
@@ -70,7 +70,7 @@ class TCPServer(Mbase_io.DebuggerInOutBase):
             af, socktype, proto, canonname, sa = res
             try:
                 self.inout = socket.socket(af, socktype, proto)
-            except socket.error as msg:
+            except socket.error:
                 self.inout = None
                 continue
             try:
@@ -84,7 +84,7 @@ class TCPServer(Mbase_io.DebuggerInOutBase):
                 self.inout.bind(sa)
                 self.inout.listen(1)
                 self.state = 'listening'
-            except socket.error as msg:
+            except socket.error:
                 self.inout.close()
                 self.inout = None
                 continue

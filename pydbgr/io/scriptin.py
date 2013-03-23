@@ -15,9 +15,9 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Debugger Script input interface. """
 
-import operator, os, sys, types, StringIO
+import types
 
-from import_relative import *
+from import_relative import import_relative, get_srcdir
 Mbase_io = import_relative('base_io', top_name='pydbgr')
 
 # Do we need this? 

@@ -1,3 +1,11 @@
+0.2.5 2013-03-23
+
+- eval? handles if/while expressions better
+- Numerous small bug fixes
+- Make code more Python3 compatible to reduce the difference between this
+  and python3-trepan.
+- Start linting code via pyflakes
+
 0.2.4 2013-03-15 Ron Frankel Ides of March
 
 - Add debugger "alias" and "unalias" commands

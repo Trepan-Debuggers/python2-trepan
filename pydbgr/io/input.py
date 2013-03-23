@@ -15,9 +15,9 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Debugger input possibly attached to a user or interactive. """
 
-import operator, os, sys, types, StringIO
+import sys, types, StringIO
 
-from import_relative import *
+from import_relative import import_relative
 Mbase_io  = import_relative('base_io', top_name='pydbgr')
 Mmisc    = import_relative('misc', '..', 'pydbgr')
 
@@ -130,7 +130,7 @@ if __name__=='__main__':
     pass
 
     if len(sys.argv) > 1:
-        inp = DebuggerInput()
+        inp = DebuggerUserInput()
         try:
             print("Type some characters:"),
             line = inp.readline()

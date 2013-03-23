@@ -15,9 +15,8 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Debugger Socket Input/Output Interface. """
 
-import socket, cPickle
-
-from import_relative import *
+import socket
+from import_relative import import_relative
 Mbase_io = import_relative('base_io', top_name='pydbgr')
 Mdefault = import_relative('default', '..lib', 'pydbgr')
 Mmisc    = import_relative('misc', '..', 'pydbgr')
@@ -64,13 +63,13 @@ class TCPClient(Mbase_io.DebuggerInOutBase):
            try:
                self.inout = socket.socket(af, socktype, proto)
                self.state = 'connected'
-           except socket.error as msg:
+           except socket.error:
                self.inout = None
                self.state = 'disconnected'
                continue
            try:
                self.inout.connect(sa)
-           except socket.error as msg:
+           except socket.error:
                self.inout.close()
                self.inout = None
                continue

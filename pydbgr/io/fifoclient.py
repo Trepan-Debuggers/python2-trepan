@@ -17,7 +17,7 @@
 
 import tempfile, os
 
-from import_relative import *
+from import_relative import import_relative
 Mbase_io = import_relative('base_io', top_name='pydbgr')
 Mdefault = import_relative('default', '..lib', 'pydbgr')
 Mfile    = import_relative('file', '..lib', 'pydbgr')
@@ -58,9 +58,6 @@ class FIFOClient(Mbase_io.DebuggerInOutBase):
         return self.output.flush()
     
     def open(self, pid, opts=None):
-
-       get_option = lambda key: Mmisc.option_set(opts, key, 
-                                                 Mdefault.CLIENT_SOCKET_OPTS)
 
        # Not in/out are reversed from server side
        d              = tempfile.gettempdir()

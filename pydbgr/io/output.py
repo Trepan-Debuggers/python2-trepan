@@ -15,9 +15,9 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Debugger output. """
 
-import types, StringIO
+import types, sys, StringIO
 
-from import_relative import *
+from import_relative import import_relative
 Mbase_io  = import_relative('base_io', top_name='pydbgr')
 
 class DebuggerUserOutput(Mbase_io.DebuggerOutputBase):

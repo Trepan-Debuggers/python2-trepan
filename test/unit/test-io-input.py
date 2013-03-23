@@ -4,7 +4,7 @@
 import os, unittest
 from import_relative import import_relative, get_srcdir
 
-Minput = import_relative('io.input', '...pydbgr')
+Minput = import_relative('pydbgr.io.input', '...')
 
 class TestDebuggerInput(unittest.TestCase):
     

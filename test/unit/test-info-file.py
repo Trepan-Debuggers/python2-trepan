@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-'Unit test for pydbgr.clifns'
+'Unit test for debugger info file'
 import inspect, unittest
 from import_relative import import_relative
 

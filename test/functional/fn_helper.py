@@ -48,17 +48,17 @@ def compare_output(obj, right, d, debugger_cmds):
     if got != right:
         for i in range(len(got)):
             if i < len(right) and got[i] != right[i]:
-                print "! ", got[i]
+                print("! ", got[i])
             else:
-                print "  ", got[i]
+                print("  ", got[i])
                 pass
             pass
-        print '-' * 10
+        print('-' * 10)
         for i in range(len(right)):
             if i < len(got) and got[i] != right[i]:
-                print "! ", right[i]
+                print("! ", right[i])
             else:
-                print "  ", right[i]
+                print("  ", right[i])
                 pass
             pass
         pass
@@ -67,5 +67,5 @@ def compare_output(obj, right, d, debugger_cmds):
 
 # Demo it
 if __name__=='__main__':
-    print get_lineno()
+    print(get_lineno())
     pass

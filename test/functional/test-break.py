@@ -4,7 +4,7 @@ from fn_helper import *
 
 class TestBreak(unittest.TestCase):
     def test_break_on_function(self):
-        print "test ", __file__, "break_on_function skipped"
+        print("test ", __file__, "break_on_function skipped")
         return
 
         ##############################
@@ -16,7 +16,7 @@ class TestBreak(unittest.TestCase):
         d.core.start()
         ##############################
         def foo():
-            print 'foo here'
+            print('foo here')
             return
         foo()
         y = 6
@@ -42,7 +42,7 @@ class TestBreak(unittest.TestCase):
         return
 
     def test_break_at_line_number(self):
-        print "test", __file__, "break_at_line_number skipped"
+        print("test", __file__, "break_at_line_number skipped")
         return
         import inspect
         curframe = inspect.currentframe()

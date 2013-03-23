@@ -20,17 +20,18 @@ class TestTCP(unittest.TestCase):
             return
         try:
             client = Mclient.TCPClient(opts={'open': True})
-            for line in ['one', 'two', 'three']: 
+            for line in ['one', 'two', 'three']:
                 server.writeline(line)
                 self.assertEqual(line, client.read_msg().rstrip('\n'))
                 pass
-            for line in ['four', 'five', 'six']: 
+            for line in ['four', 'five', 'six']:
                 client.writeline(line)
                 self.assertEqual(line, server.read_msg().rstrip('\n'))
                 pass
         except:
             print("Skipping because of client open failure")
-            return
+            pass
+        server.close()
         return
 
 if __name__ == '__main__':

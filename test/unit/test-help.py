@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 'Unit test for pydbgr.processor.command.help'
-import inspect, os, sys, unittest, types
+import unittest
 
 from import_relative import *
 
@@ -9,9 +9,6 @@ import_relative('pydbgr', '...', 'pydbgr')
 
 Mhelp    = import_relative('processor.command.help', '...pydbgr', 'pydbgr')
 Mcmdproc = import_relative('processor.cmdproc', '...pydbgr', 'pydbgr')
-
-from cmdhelper import dbg_setup
-import signal
 
 Mmock = import_relative('processor.command.mock', '...pydbgr')
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 'Unit test for pydbgr.processor.command.step'
-import inspect, os, sys, unittest
+import sys, unittest
 
 from import_relative import *
 Mfinish = import_relative('processor.command.finish', '...pydbgr')

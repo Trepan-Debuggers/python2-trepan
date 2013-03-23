@@ -24,8 +24,7 @@ class TestPDef(unittest.TestCase):
 
     def test_pdef(self):
         import inspect
-        cmdproc     = import_relative('processor.cmdproc', '...pydbgr', 
-                                      'pydbgr')
+        import_relative('processor.cmdproc', '...pydbgr', 'pydbgr')
         debugger    = import_relative('debugger', '...pydbgr', 'pydbgr')
         d           = debugger.Debugger()
         cp          = d.core.processor

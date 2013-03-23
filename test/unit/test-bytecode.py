@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 'Unit test for pydbgr.bytecode'
-import inspect, os, sys, unittest
-from import_relative import *
+import inspect, unittest
+from import_relative import import_relative
 
 Mcode = import_relative('lib.bytecode', '...pydbgr')
 

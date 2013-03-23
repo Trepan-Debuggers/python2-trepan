@@ -2,7 +2,7 @@
 'Unit test for pydbgr.interfaces.user'
 import unittest
 
-from import_relative import *
+from import_relative import import_relative
 Muser = import_relative('interfaces.user', '...pydbgr')
 
 from cmdhelper import dbg_setup

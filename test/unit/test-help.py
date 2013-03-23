@@ -2,7 +2,7 @@
 'Unit test for pydbgr.processor.command.help'
 import unittest
 
-from import_relative import *
+from import_relative import import_relative
 
 # FIXME: until import_relative is fixed
 import_relative('pydbgr', '...', 'pydbgr')

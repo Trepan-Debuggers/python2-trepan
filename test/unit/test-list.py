@@ -1,12 +1,11 @@
 #!/usr/bin/env python
 'Unit test for pydbgr.processor.command.list'
-import inspect, os, sys, unittest
+import os, sys, unittest
 
-from import_relative import *
+from import_relative import import_relative
 
 Mlist = import_relative('processor.command.list', '...pydbgr')
 
-from cmdhelper import dbg_setup
 import signal
 
 class TestListCommand(unittest.TestCase):

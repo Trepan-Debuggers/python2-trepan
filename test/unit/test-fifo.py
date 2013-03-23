@@ -5,7 +5,7 @@ if hasattr(os, 'mkfifo'):
 
     import unittest
 
-    from import_relative import *
+    from import_relative import import_relative
     Mserver = import_relative('io.fifoserver', '...pydbgr')
     Mclient = import_relative('io.fifoclient', '...pydbgr')
 

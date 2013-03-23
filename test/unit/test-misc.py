@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 'Unit test for pydbgr.misc'
-import inspect, os, sys, unittest
-from import_relative import *
+import unittest
+from import_relative import import_relative
 
 Mmisc = import_relative('misc', '...pydbgr', 'pydbgr')
 

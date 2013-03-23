@@ -2,7 +2,7 @@
 'Unit test for pydbgr.processor.command.alias and unalias'
 import inspect, unittest
 
-from import_relative import *
+from import_relative import import_relative
 
 Malias    = import_relative('processor.command.alias', '...pydbgr')
 
@@ -20,8 +20,7 @@ class TestAliasCommand(unittest.TestCase):
     def setUp(self):
         self.errors = []
         self.msgs = []
-        Mcmdproc         = import_relative('processor.cmdproc', '...pydbgr', 
-                                           'pydbgr')
+        import_relative('processor.cmdproc', '...pydbgr', 'pydbgr')
         Mdebugger        = import_relative('debugger', '...pydbgr', 'pydbgr')
         d                     = Mdebugger.Debugger()
         self.cmdproc          = d.core.processor

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 'Unit test for pydbgr.lib.sighandler'
-import inspect, os, signal, sys, unittest
+import signal, unittest
 
 from import_relative import import_relative
 Msig = import_relative('lib.sighandler', '...pydbgr')

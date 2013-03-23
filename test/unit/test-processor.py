@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 'Unit test for pydbgr.processor.cmdproc'
-import os, sys, types, unittest
-from import_relative import *
+import unittest
+from import_relative import import_relative
 
 Mcmdproc = import_relative('processor.cmdproc', '...pydbgr')
 

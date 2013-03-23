@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 'Unit test for pydbgr.lib.pp'
-import inspect, os, sys, unittest
+import sys, unittest
 from import_relative import import_relative
 
 Mpp = import_relative('lib.pp', '...pydbgr')
@@ -26,7 +26,6 @@ class TestLibPrint(unittest.TestCase):
         def msg_nocr(self, m):
             sys.stdout.write(m)
             return
-        import sys
         def msg(self, m): print(m)
         Mpp.pprint_simple_array(list(range(50)), 50, self.msg_nocr, self.msg)
         self.assertEqual(

@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 'Unit test for pydbgr.io.tcp*'
-import inspect, sys, unittest
+import unittest
 
-from import_relative import *
+from import_relative import import_relative
 import_relative('io', '...pydbgr', 'pydbgr')
 Mserver   = import_relative('io.tcpserver', '...pydbgr', 'pydbgr')
 Mclient   = import_relative('io.tcpclient', '...pydbgr', 'pydbgr')

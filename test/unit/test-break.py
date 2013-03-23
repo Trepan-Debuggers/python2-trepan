@@ -2,7 +2,7 @@
 'Unit test for pydbgr.processor.command.break'
 import os, unittest
 
-from import_relative import *
+from import_relative import import_relative
 
 Mcmdbreak = import_relative('processor.cmdbreak', '...pydbgr')
 Mbreak    = import_relative('processor.command.break', '...pydbgr')
@@ -24,8 +24,7 @@ class TestBreakCommand(unittest.TestCase):
     
     def test_parse_break_cmd(self):
         import inspect, types
-        cmdproc         = import_relative('processor.cmdproc', '...pydbgr', 
-                                          'pydbgr')
+        import_relative('processor.cmdproc', '...pydbgr', 'pydbgr')
         debugger        = import_relative('debugger', '...pydbgr', 'pydbgr')
         d               = debugger.Debugger()
         cp              = d.core.processor

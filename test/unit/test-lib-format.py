@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 'Unit test for pydbgr.lib.file'
 import unittest
-import StringIO
 from pygments.lexers import RstLexer
 from import_relative import import_relative
 

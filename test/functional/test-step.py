@@ -4,7 +4,7 @@ import tracer
 from fn_helper import strarray_setup, compare_output
 
 class TestStep(unittest.TestCase):
-    print "test ", __file__, "skipped"
+    print("test ", __file__, "skipped")
 
     def test_step_same_level(self):
         return

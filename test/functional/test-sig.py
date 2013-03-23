@@ -15,7 +15,7 @@ class TestSigHandler(unittest.TestCase):
         d = strarray_setup(cmds)
 
         def signal_handler(num, f):
-            print 'signal %d received' % num
+            print('signal %d received' % num)
             return
 
         signal.signal(signal.SIGUSR1, signal_handler)
@@ -42,7 +42,7 @@ class TestSigHandler(unittest.TestCase):
         d.intf[-1].input.input = cmds 
 
         def signal_handler2(num, f):
-            print 'signal %d received' % num
+            print('signal %d received' % num)
             return
         signal.signal(signal.SIGUSR1, signal_handler2)
 
@@ -69,7 +69,7 @@ class TestSigHandler(unittest.TestCase):
         d.intf[-1].input.input = cmds 
 
         def signal_handler3(num, f):
-            print 'signal %d received' % num
+            print('signal %d received' % num)
             return
         signal.signal(signal.SIGUSR2, signal_handler2)
 

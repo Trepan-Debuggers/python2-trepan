@@ -3,7 +3,7 @@ import unittest
 from fn_helper import *
 
 class TestNext(unittest.TestCase):
-    print "test ", __file__, "skipped"
+    print("test ", __file__, "skipped")
     
     def no__test_next_same_level(self):
         return

@@ -21,7 +21,7 @@ class TestSkip(unittest.TestCase):
         self.assertEqual(5, x)  # Make sure lines were skipped.
 
         # See that we can skip with a count value
-        print "skipping second skip test"
+        print("skipping second skip test")
         return
         cmds = ['skip 2', 'continue']
         d = strarray_setup(cmds)

@@ -66,7 +66,8 @@ def dis(msg, msg_nocr, section, errmsg, x=None, start_line=-1, end_line=None,
                         start_line=start_line, end_line=end_line,
                         relative_pos = relative_pos)
                     msg("")
-                except TypeError as msg:
+                except TypeError:
+                    _, msg, _ = sys.exc_info()
                     errmsg("Sorry:", msg)
                     pass
                 pass

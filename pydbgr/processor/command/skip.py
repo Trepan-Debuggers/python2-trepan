@@ -69,7 +69,8 @@ stopped or bottom-most execution frame."""
             self.proc.stack[self.proc.curindex] = \
                 self.proc.stack[self.proc.curindex][0], lineno
             Mcmdproc.print_location(self.proc)
-        except ValueError as e:
+        except ValueError:
+            _, e, _ = sys.exc_info()
             self.errmsg('skip failed: %s' % e)
         return False
     pass

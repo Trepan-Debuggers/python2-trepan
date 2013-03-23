@@ -59,7 +59,8 @@ stopped or bottom-most execution frame frame."""
             self.proc.stack[self.proc.curindex] = \
                 self.proc.stack[self.proc.curindex][0], lineno
             Mcmdproc.print_location(self.proc)
-        except ValueError as e:
+        except ValueError:
+            _, e, _ = sys.exc_info()
             self.errmsg('jump failed: %s' % e)
         return False
     pass
@@ -77,5 +78,3 @@ if __name__ == '__main__':
     cp.curindex = len(cp.stack)-1
     command.run(['jump', '1'])
     pass
-
-

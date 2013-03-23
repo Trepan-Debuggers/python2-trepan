@@ -411,7 +411,7 @@ class CommandProcessor(Mprocessor.Processor):
             exec(code, global_vars, local_vars)
         except:
             t, v = sys.exc_info()[:2]
-            if type(t) == bytes:
+            if type(t) == str:
                 exc_type_name = t
             else: exc_type_name = t.__name__
             self.errmsg('%s: %s' % (str(exc_type_name), str(v)))
@@ -709,7 +709,7 @@ class CommandProcessor(Mprocessor.Processor):
                         args =  first.split()
                         self.cmd_queue + [current_command[1:]]
                         current_command = first
-                    elif type(current_command) == bytes:
+                    elif type(current_command) == str:
                         args = current_command.split()
                     else:
                         self.errmsg(("macro %s should return a List " +

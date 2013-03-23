@@ -1,5 +1,9 @@
 2013-03-23  rocky <rocky@gnu.org>
 
+	* ChangeLog, pydbgr/VERSION.py: Get ready for release 0.2.5
+
+2013-03-23  rocky <rocky@gnu.org>
+
 	* test/functional/fn_helper.py: Small change
 
 2013-03-23  rocky <rocky@gnu.org>

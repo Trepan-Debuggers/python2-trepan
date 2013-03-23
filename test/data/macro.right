@@ -1,6 +1,6 @@
 (gcd.py:10): <module>
 -> 10 """
-Set short filenames (the basename) in debug output is on.
+Set basename (short filenames) in debugger output is on.
 Set event tracing is on.
 Set stopping before def or class' (function or class) statements is off.
 No macros defined.

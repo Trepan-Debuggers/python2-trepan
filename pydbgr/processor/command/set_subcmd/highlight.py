@@ -62,5 +62,7 @@ and recolor all source code output."""
         return
     pass
 
-
-
+if __name__ == '__main__':
+    Mhelper = import_relative('__demo_helper__', '.', 'pydbgr')
+    Mhelper.demo_run(SetHighlight)
+    pass

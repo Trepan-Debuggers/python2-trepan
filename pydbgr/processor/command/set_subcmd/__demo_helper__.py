@@ -16,7 +16,6 @@ def get_name():
 def demo_setup():
     Mmock = import_relative('mock', '..')
     Mshow = import_relative('set', '..')
-    Mdebugger = import_relative('debugger', '....')
     d, cp = Mmock.dbg_setup()
     mgr = Mshow.SetCommand(cp)
     return mgr

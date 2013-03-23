@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009 Rocky Bernstein
+#   Copyright (C) 2009, 2013 Rocky Bernstein
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@ from import_relative import import_relative
 Mbase_subcmd = import_relative('base_subcmd', '..', 'pydbgr')
 
 class SetBasename(Mbase_subcmd.DebuggerSetBoolSubcommand):
-    """Set short filenames (the basename) in debug output.
+    """Set basename (short filenames) in debugger output.
 
 Setting this causes the debugger output to give just the basename for
 filenames. This is useful in debugger testing or possibly showing
@@ -30,4 +30,7 @@ installation information."""
     min_abbrev = len('ba')
     pass
 
-
+if __name__ == '__main__':
+    Mhelper = import_relative('__demo_helper__', '.', 'trepan')
+    Mhelper.demo_run(SetBasename)
+    pass

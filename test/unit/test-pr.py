@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-'Unit test for pydbgr.processor.command.p'
+'Unit test for pydbgr.processor.command.pr'
 import unittest
 
 from import_relative import import_relative
@@ -24,7 +24,6 @@ class TestP(unittest.TestCase):
 
     def test_pr(self):
         import inspect
-        import_relative('processor.cmdproc', '...pydbgr', 'pydbgr')
         debugger    = import_relative('debugger', '...pydbgr', 'pydbgr')
         d           = debugger.Debugger()
         cp          = d.core.processor

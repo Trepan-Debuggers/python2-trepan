@@ -20,7 +20,6 @@ class TestAliasCommand(unittest.TestCase):
     def setUp(self):
         self.errors = []
         self.msgs = []
-        import_relative('processor.cmdproc', '...pydbgr', 'pydbgr')
         Mdebugger        = import_relative('debugger', '...pydbgr', 'pydbgr')
         d                     = Mdebugger.Debugger()
         self.cmdproc          = d.core.processor

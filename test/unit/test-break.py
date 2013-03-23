@@ -24,7 +24,6 @@ class TestBreakCommand(unittest.TestCase):
     
     def test_parse_break_cmd(self):
         import inspect, types
-        import_relative('processor.cmdproc', '...pydbgr', 'pydbgr')
         debugger        = import_relative('debugger', '...pydbgr', 'pydbgr')
         d               = debugger.Debugger()
         cp              = d.core.processor

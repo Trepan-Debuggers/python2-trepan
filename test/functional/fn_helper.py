@@ -1,5 +1,5 @@
-import os, sys
-from import_relative import *
+import sys
+from import_relative import import_relative
 
 Mdebugger    = import_relative('debugger', '...pydbgr')
 Mstringarray = import_relative('io.stringarray', '...pydbgr')
@@ -39,7 +39,7 @@ def filter_line_cmd(a):
     return a3
 
 def get_lineno():
-    '''Return the caller's line number'''
+    """Return the caller's line number"""
     caller = sys._getframe(1)
     return caller.f_lineno
 

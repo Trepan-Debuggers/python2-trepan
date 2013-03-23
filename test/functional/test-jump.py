@@ -1,6 +1,5 @@
 #!/usr/bin/env python
-import os, sys, unittest, inspect
-import tracer
+import unittest, inspect
 from fn_helper import *
 
 class TestJump(unittest.TestCase):

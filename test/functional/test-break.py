@@ -1,6 +1,5 @@
 #!/usr/bin/env python
-import os, sys, unittest
-import tracer
+import unittest
 from fn_helper import *
 
 class TestBreak(unittest.TestCase):

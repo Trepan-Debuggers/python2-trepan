@@ -6,7 +6,7 @@ from import_relative import *
 Mstack = import_relative('lib.stack', '...pydbgr')
 
 class TestStack(unittest.TestCase):
-    
+
     def test_count_frames(self):
         f = inspect.currentframe()
         frame_count = Mstack.count_frames(f)
@@ -19,8 +19,9 @@ class TestStack(unittest.TestCase):
         f = inspect.currentframe()
         self.assertEqual('startTest', Mstack.get_call_function_name(f))
         self.assertFalse(Mstack.is_exec_stmt(f))
-        exec "result = Mstack.is_exec_stmt(inspect.currentframe())"
-        self.assertTrue(result)
+        self.result = False
+        exec("self.result = Mstack.is_exec_stmt(inspect.currentframe())")
+        self.assertTrue(self.result)
         return
 
 if __name__ == '__main__':

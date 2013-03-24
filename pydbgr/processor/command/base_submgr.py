@@ -70,6 +70,7 @@ class SubcommandMgr(Mbase_cmd.DebuggerCommand):
         for module_name in mod.__modules__:
             import_name = module_dir + '.' + module_name
 
+            command_mod = getattr(__import__(import_name), module_name)
             try:
                 command_mod = getattr(__import__(import_name), module_name)
             except ImportError:

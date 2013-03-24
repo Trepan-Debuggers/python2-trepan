@@ -13,4 +13,4 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """ Copyright (C) 2008-2009, 2013 Rocky Bernstein <rocky@gnu.org> """
 __import__('pkg_resources').declare_namespace(__name__)
-__all__ = ['api', 'exception', 'interfaces', 'interface', 'io', 'lib', 'processor', 'bwprocessor']
+__all__ = ['api', 'exception', 'interfaces', 'interface', 'io', 'lib', 'processor', 'bwprocessor', 'clifns', 'misc']

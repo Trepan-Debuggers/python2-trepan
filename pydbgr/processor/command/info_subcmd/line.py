@@ -17,10 +17,10 @@ import inspect, os, re
 
 from import_relative import import_relative
 # Our local modules
-base_subcmd  = import_relative('base_subcmd', '..', 'pydbgr')
-Mclifns      = import_relative('clifns', '....', 'pydbgr')
-Mmisc        = import_relative('misc', '....', 'pydbgr')
-Mfile        = import_relative('lib.file', '....', 'pydbgr')
+Mbase_subcmd  = import_relative('base_subcmd', '..')
+Mclifns       = import_relative('clifns', '.....pydbgr')
+Mmisc         = import_relative('misc', '.....pydbgr')
+Mfile         = import_relative('lib.file', '.....pydbgr')
 
 def find_function(funcname, filename):
     cre = re.compile(r'def\s+%s\s*[(]' % re.escape(funcname))
@@ -43,7 +43,7 @@ def find_function(funcname, filename):
     fp.close()
     return answer
 
-class InfoLine(base_subcmd.DebuggerSubcommand):
+class InfoLine(Mbase_subcmd.DebuggerSubcommand):
     '''Show information about the current line'''
     min_abbrev = 2
     need_stack = True

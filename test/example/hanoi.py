@@ -20,7 +20,7 @@ if __name__=='__main__':
     if i_args > 1:
       try: 
         n = int(sys.argv[1])
-      except ValueError as msg:
+      except ValueError:
         print("** Expecting an integer, got: %s" % repr(sys.argv[1]))
         sys.exit(2)
 

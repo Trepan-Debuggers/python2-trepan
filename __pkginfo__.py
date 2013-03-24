@@ -38,10 +38,10 @@ author             = "Rocky Bernstein"
 author_email       = "rocky@gnu.org"
 ftp_url            = None
 install_requires   = ['columnize >= 0.3.4', 
-                      'import_relative >= 0.2.1',
-                      'pyficache >= 0.2.2',
+                      'import_relative >= 0.2.3',
+                      'pyficache >= 0.2.3',
                       'pygments',
-                      'tracer >= 0.3.1']
+                      'tracer >= 0.3.2']
 license            = 'GPL'
 mailing_list       = 'python-debugger@googlegroups.com'
 modname            = 'pydbgr'

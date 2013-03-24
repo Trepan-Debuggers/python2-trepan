@@ -1,13 +1,13 @@
+include COPYING
 include Makefile
 include NEWS
-include make-check-filter.py
 include __pkginfo__.py
-recursive-include test/data Makefile
+include make-check-filter.py
 recursive-include test/data *.cmd
 recursive-include test/data *.right
-recursive-include test/example Makefile
+recursive-include test/data Makefile
 recursive-include test/example *.py
+recursive-include test/example Makefile
 recursive-include test/functional *.py
 recursive-include test/integration *.py
 recursive-include test/unit *.py
-

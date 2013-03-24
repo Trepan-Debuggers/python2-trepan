@@ -70,7 +70,7 @@ bdist_egg:
 # to do the following. I'm sure distutils will someday get there.
 DISTCLEAN_FILES = build dist *.pyc
 
-#: Remove ALL dervied files 
+#: Remove ALL derived files 
 distclean: clean
 	-rm -fr $(DISTCLEAN_FILES) || true
 	-find . -name \*.pyc -exec rm -v {} \;

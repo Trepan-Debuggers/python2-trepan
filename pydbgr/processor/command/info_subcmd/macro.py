@@ -15,9 +15,8 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from pyficache import highlight_string
-from import_relative import *
+from import_relative import import_relative
 # Our local modules
-import_relative('processor', '....')
 Mbase_subcmd  = import_relative('base_subcmd', '..')
 
 class InfoMacro(Mbase_subcmd.DebuggerSubcommand):
@@ -47,7 +46,7 @@ In the last form the only definitions of the given macro names is shown."""
         pass
       pass
       
-      for macro_name in macro_names:
+      for macro_name in sorted(macro_names):
         if macro_name in self.proc.macros:
           self.section("%s:" % macro_name)
           string = self.proc.macros[macro_name][1]

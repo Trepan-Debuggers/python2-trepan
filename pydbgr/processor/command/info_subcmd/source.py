@@ -14,7 +14,7 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from import_relative import *
+from import_relative import import_relative
 # Our local modules
 import_relative('processor', '....')
 Mbase_subcmd  = import_relative('base_subcmd', '..')

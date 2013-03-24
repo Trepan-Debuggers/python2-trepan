@@ -1,4 +1,4 @@
-# Copyright (C) 2008, 2009, 2010 Rocky Bernstein <rocky@gnu.org>
+# Copyright (C) 2008-2010, 2013 Rocky Bernstein <rocky@gnu.org>
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -37,11 +37,11 @@ classifiers =  ['Development Status :: 4 - Beta',
 author             = "Rocky Bernstein"
 author_email       = "rocky@gnu.org"
 ftp_url            = None
-install_requires   = ['columnize >= 0.3.2', 
-                      'import_relative >= 0.1.0',
-                      'pyficache >= 0.2.01',
+install_requires   = ['columnize >= 0.3.4', 
+                      'import_relative >= 0.2.1',
+                      'pyficache >= 0.2.2',
                       'pygments',
-                      'tracer >= 0.2.2']
+                      'tracer >= 0.3.1']
 license            = 'GPL'
 mailing_list       = 'python-debugger@googlegroups.com'
 modname            = 'pydbgr'

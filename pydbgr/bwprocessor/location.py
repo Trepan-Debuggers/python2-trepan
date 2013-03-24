@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 ''' Location routines'''
 
-from __future__ import with_statement
 import pyficache, linecache, tempfile
 from import_relative import import_relative, get_srcdir
 Mstack = import_relative('stack', '..lib', 'pydbgr')
@@ -41,10 +40,8 @@ def format_location(proc_obj):
                 fd = tempfile.NamedTemporaryFile(suffix='.py',
                                                  prefix='eval_string',
                                                  delete=False)
-                with fd:
-                    fd.write(dbgr_obj.eval_string)
-                    fd.close()
-                    pass
+                fd.write(dbgr_obj.eval_string)
+                fd.close()
                 pyficache.remap_file(fd.name, '<string>')
                 filename = fd.name
                 pass

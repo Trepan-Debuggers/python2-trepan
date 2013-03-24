@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 'Unit test for pydbgr.frame'
-import inspect, unittest
+import inspect, sys, unittest
 from import_relative import import_relative
 
 Mstack = import_relative('lib.stack', '...pydbgr')
@@ -17,7 +17,12 @@ class TestStack(unittest.TestCase):
 
     def test_stack_misc(self):
         f = inspect.currentframe()
-        self.assertEqual('startTest', Mstack.get_call_function_name(f))
+        if sys.version_info[0] == 2 and sys.version_info[1] <= 4:
+            expect = 'defaultTestResult'
+        else:
+            expect = 'startTest'
+            pass
+        self.assertEqual(expect, Mstack.get_call_function_name(f))
         self.assertFalse(Mstack.is_exec_stmt(f))
         self.result = False
         exec("self.result = Mstack.is_exec_stmt(inspect.currentframe())")

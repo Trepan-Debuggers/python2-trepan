@@ -8,7 +8,7 @@ from opcode import cmp_op, hasconst, hascompare, hasfree, hasname, hasjrel, \
     haslocal, opname, EXTENDED_ARG, HAVE_ARGUMENT
 
 from import_relative import import_relative
-Mformat   = import_relative('format', top_name='pydbgr')
+Mformat   = import_relative('lib.format', '...pydbgr')
 format_token = Mformat.format_token
 
 _have_code = (types.MethodType, types.FunctionType, types.CodeType, type)

@@ -67,9 +67,8 @@ class TestNext(unittest.TestCase):
             self.assertTrue(False, 'should have raised an exception')
         except ZeroDivisionError:
             self.assertTrue(True, 'Got the exception')
-        finally:
-            d.core.stop(options={'remove': True})
             pass
+        d.core.stop(options={'remove': True})
 
         out = ['-- x = buggy_fact(4)',
                '!! x = buggy_fact(4)']

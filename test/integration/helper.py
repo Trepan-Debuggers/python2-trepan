@@ -1,4 +1,4 @@
-import difflib, os, sys, time
+import difflib, os, re, sys, time
 from import_relative import get_srcdir
 
 def run_debugger(testname, python_file, dbgr_opts='', args='',
@@ -36,6 +36,11 @@ def run_debugger(testname, python_file, dbgr_opts='', args='',
     tofile    = outfile
     todate    = time.ctime(os.stat(tofile).st_mtime)
     tolines   = open(tofile, 'U').readlines()
+
+    # Filter out <module> for Python 2.4 and before
+    module_re = re.compile('[)]: <module>')
+    tolines = [re.sub(module_re, '):', line) for line in tolines]
+
     diff = list(difflib.unified_diff(fromlines, tolines, fromfile,
                                      tofile, fromdate, todate))
     if len(diff) == 0:

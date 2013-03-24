@@ -13,7 +13,6 @@
 #
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
-from __future__ import with_statement
 import inspect, linecache, os, sys, shlex, tempfile, traceback, types
 import pyficache
 from repr import Repr
@@ -182,10 +181,8 @@ def print_location(proc_obj):
                 fd = tempfile.NamedTemporaryFile(suffix='.py',
                                                  prefix='eval_string',
                                                  delete=False)
-                with fd:
-                    fd.write(dbgr_obj.eval_string)
-                    fd.close()
-                    pass
+                fd.write(dbgr_obj.eval_string)
+                fd.close()
                 pyficache.remap_file(fd.name, '<string>')
                 filename = fd.name
                 pass
@@ -347,7 +344,11 @@ class CommandProcessor(Mprocessor.Processor):
 
         filename = frame.f_code.co_filename
         lineno   = frame.f_lineno
-        line     = linecache.getline(filename, lineno, frame.f_globals)
+        if sys.version_info[0] == 2 and sys.version_info[1] <= 4:
+            line = None
+        else:
+            line = linecache.getline(filename, lineno, frame.f_globals)
+            pass
         if not line:
             opts = {'output': 'plain',
                     'reload_on_change': self.settings('reload'),
@@ -845,13 +846,13 @@ class CommandProcessor(Mprocessor.Processor):
             if mod_name in ('info_sub', 'set_sub', 'show_sub',):
                 pass
             import_name = "command." + mod_name
-            if True:
+            if False:
                 # Sometimes we want this
                 command_mod = getattr(__import__(import_name), mod_name)
             else:
                 # FIXME give more info like the above when desired
                 # For debugging:
-                # command_mod = getattr(__import__(import_name), mod_name)
+                command_mod = getattr(__import__(import_name), mod_name)
                 try:
                     command_mod = getattr(__import__(import_name), mod_name)
                 except:

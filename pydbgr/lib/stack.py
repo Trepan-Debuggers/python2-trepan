@@ -17,9 +17,9 @@
 import re, types
 
 from import_relative import import_relative
-Mbytecode = import_relative('bytecode', top_name='pydbgr')
-Mprint    = import_relative('print', top_name='pydbgr')
-Mformat   = import_relative('format', top_name='pydbgr')
+Mbytecode = import_relative('lib.bytecode', '...pydbgr')
+Mprint    = import_relative('lib.print', '...pydbgr')
+Mformat   = import_relative('lib.format', '...pydbgr')
 format_token = Mformat.format_token
 
 def count_frames(frame, count_start=0):

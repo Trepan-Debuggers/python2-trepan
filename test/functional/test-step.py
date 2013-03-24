@@ -169,9 +169,8 @@ class TestStep(unittest.TestCase):
             self.assertTrue(False, 'should have raised an exception')
         except ZeroDivisionError:
             self.assertTrue(True, 'Got the exception')
-        finally:
-            d.core.stop(options={'remove': True})
             pass
+        d.core.stop(options={'remove': True})
 
         out = ['-- x = bad(0)',  # line event
                '-> def bad(x):', # call event

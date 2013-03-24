@@ -94,8 +94,7 @@ class Debugger:
             pass
         except Mexcept.DebuggerQuit:
             pass
-        finally:
-            self.core.stop()
+        self.core.stop()
         return retval
 
     def run_exec(self, cmd, start_opts=None, globals_=None, locals_=None):
@@ -125,8 +124,7 @@ class Debugger:
             exec(cmd, globals_, locals_)
         except Mexcept.DebuggerQuit:
             pass
-        finally:
-            self.core.stop()
+        self.core.stop()
         return
     def run_call(self, func, start_opts=None, *args, **kwds):
         """ Run debugger on function call: `func(*args, **kwds)'
@@ -141,8 +139,7 @@ class Debugger:
             res = func(*args, **kwds)
         except Mexcept.DebuggerQuit:
             pass
-        finally:
-            self.core.stop()
+        self.core.stop()
         return res
 
     def run_eval(self, expr, start_opts=None, globals_=None, locals_=None):
@@ -170,8 +167,7 @@ class Debugger:
             retval = eval(expr, globals_, locals_)
         except Mexcept.DebuggerQuit:
             pass
-        finally:
-            self.core.stop()
+        self.core.stop()
         return retval
 
     def run_script(self, filename, start_opts=None, globals_=None, 
@@ -222,8 +218,7 @@ class Debugger:
         except Mexcept.DebuggerRestart:
             self.core.execution_status = 'Restart requested'
             raise Mexcept.DebuggerRestart
-        finally:
-            self.core.stop(options={'remove': True})
+        self.core.stop(options={'remove': True})
         return retval
 
     def restart_argv(self):

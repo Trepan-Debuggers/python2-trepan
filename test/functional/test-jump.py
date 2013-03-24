@@ -1,9 +1,13 @@
 #!/usr/bin/env python
-import unittest, inspect
+import inspect, unittest, sys
 from fn_helper import *
 
 class TestJump(unittest.TestCase):
-    def test_skip(self):
+    def test_jump(self):
+
+        if sys.version_info[0] == 2 and sys.version_info[1] <= 4:
+            print("skipping jump test on Python 2.4")
+            return
 
         # See that we can jump with line number
         curframe = inspect.currentframe()

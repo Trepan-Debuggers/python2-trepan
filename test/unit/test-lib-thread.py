@@ -3,8 +3,7 @@
 import sys, thread, threading, unittest
 from import_relative import import_relative
 
-import_relative('lib', '...pydbgr', 'pydbgr')
-Mthread = import_relative('lib.thread', '...pydbgr', 'pydbgr')
+Mthread = import_relative('lib.thread', '...pydbgr')
 
 class BgThread(threading.Thread):
     def __init__(self, id_name_checker):
@@ -21,6 +20,9 @@ class TestLibThread(unittest.TestCase):
 
     def id_name_checker(self):
         '''Helper for testing map_thread_names and id2thread'''
+        if sys.version_info[0] == 2 and sys.version_info[1] <= 4:
+            # Don't have sys._current_frames
+            return 
         name2id = Mthread.map_thread_names()
         for thread_id, f in list(sys._current_frames().items()):
             self.assertEqual(thread_id, 

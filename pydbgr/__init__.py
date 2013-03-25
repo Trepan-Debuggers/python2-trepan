@@ -14,10 +14,10 @@
 """
 Abstract
 ========
-A gdb-like debugger for Python 3.
+A gdb-like debugger for Python 2.
 
 
-This code assumes Python of 3.2 and up. It is port of `pydbgr <https://code.google.com/p/pydbgr>`_. Use *pydbgr* for Python 2.4 to 2.7 and *pydb* for before Python 2.4.
+This is Python of 2.4 to 2.7. Use *trepan*: <http://code.google.com/p/pydbgr> for Python 3.2 to 3.3.
 
 A command-line interface (CLI) is provided.
 

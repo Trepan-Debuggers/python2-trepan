@@ -1,3 +1,50 @@
+2013-03-24  rocky <rocky@gnu.org>
+
+	* MANIFEST.in, Makefile, NEWS, __pkginfo__.py,
+	make-check-filter.py, pydbgr/VERSION.py, pydbgr/__init__.py: Get
+	ready for release 0.2.6
+
+2013-03-24  rocky <rocky@gnu.org>
+
+	* pydbgr/bwprocessor/location.py, pydbgr/debugger.py,
+	pydbgr/lib/disassemble.py, pydbgr/lib/stack.py,
+	pydbgr/processor/cmdproc.py, pydbgr/processor/command/base_cmd.py,
+	pydbgr/vprocessor.py, test/data/macro.right, test/data/step.right,
+	test/functional/test-jump.py, test/functional/test-next.py,
+	test/functional/test-step.py, test/integration/helper.py,
+	test/unit/test-lib-thread.py, test/unit/test-stack.py: Make Python
+	2.4 compatible
+
+2013-03-24  rocky <rocky@gnu.org>
+
+	* pydbgr/__init__.py, pydbgr/processor/command/base_submgr.py,
+	pydbgr/processor/command/info_subcmd/line.py, test/example/hanoi.py: 
+	Make Python 2.5.6 compatibile
+
+2013-03-24  rocky <rocky@gnu.org>
+
+	* __pkginfo__.py, pydbgr/processor/cmdproc.py,
+	pydbgr/processor/command/info_subcmd/args.py,
+	pydbgr/processor/command/info_subcmd/break.py,
+	pydbgr/processor/command/info_subcmd/display.py,
+	pydbgr/processor/command/info_subcmd/line.py,
+	pydbgr/processor/command/info_subcmd/macro.py,
+	pydbgr/processor/command/info_subcmd/program.py,
+	pydbgr/processor/command/info_subcmd/return.py,
+	pydbgr/processor/command/info_subcmd/source.py,
+	pydbgr/processor/command/info_subcmd/threads.py,
+	pydbgr/processor/command/next.py, test/data/macro.right,
+	test/functional/fn_helper.py: __pkginfo__.py: Bump minimum dependant
+	versions. Sort macros in "info macro". Pylint info subcommands. Make
+	it work on 2.6
+
+2013-03-23  rocky <rocky@gnu.org>
+
+	* ChangeLog, pydbgr/VERSION.py, pydbgr/cli.py,
+	pydbgr/lib/disassemble.py, pydbgr/processor/cmdproc.py,
+	pydbgr/processor/command/jump.py, pydbgr/processor/command/skip.py: 
+	Start Python 2.5 compatibility
+
 2013-03-23  rocky <rocky@gnu.org>
 
 	* ChangeLog, pydbgr/VERSION.py: Get ready for release 0.2.5

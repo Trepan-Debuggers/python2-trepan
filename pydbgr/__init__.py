@@ -17,19 +17,19 @@ Abstract
 A gdb-like debugger for Python 3.
 
 
-This code assumes Python of 3.2 and up. It is port of `pydbgr <https://code.google.com/p/pydbgr>`_. Use *pydbgr* for Python 2.4 to 2.7 and _pydb_ for before Python 2.4.
+This code assumes Python of 3.2 and up. It is port of `pydbgr <https://code.google.com/p/pydbgr>`_. Use *pydbgr* for Python 2.4 to 2.7 and *pydb* for before Python 2.4.
 
 A command-line interface (CLI) is provided.
 
-See the `Tutorial <http://code.google.com/p/pydbgr/wiki/Tutorial>` for how to use.
+See the _Tutorial: <http://code.google.com/p/pydbgr/wiki/Tutorial for how to use.
 
 Features
 ========
-There's a lot of cool stuff here that's not in *pydb* or the stock Python debugger *pdb*_.
+There's a lot of cool stuff here that's not in *pydb* or the stock Python debugger *pdb*.
 
 Source-code Syntax Colorization
 -------------------------------
-w
+
 Terminal source code is colorized and we make use of terminal bold and emphasized text in debugger output and help text. Of course, you can also turn this off.
 
 Smart Eval
@@ -47,7 +47,7 @@ This fundamental issue is handled in a couple ways:
 Step Granularity
 ----------------
 
-There are now `step` _event_ and `next`  _event_ commands with aliases to `s+`, `s>` and so on. The plus-suffixed commands force a different line on a subsequent stop, the dash-suffixed commands don't.
+There are now `step` *event* and `next`  *event* commands with aliases to `s+`, `s>` and so on. The plus-suffixed commands force a different line on a subsequent stop, the dash-suffixed commands don't.
 Suffixes `>`, `<`, and `!` specify `call`, `return` and `exception` events respectively. And without a suffix you get the default; this is set by the `set different` command.
 
 Event Filtering and Tracing
@@ -55,7 +55,7 @@ Event Filtering and Tracing
 
 By default the debugger stops at every event: `call`, `return`, `line`, `exception`, `c-call`, `c-exception`. If you just want to stop at `line` events (which is largely what you happens in _pdb_) you can. If however you just want to stop at calls and returns, that's possible too. Or pick some combination.
 
-In conjunction with handling _all_ events by default, the event status is shown when stopped. The reason for stopping is also available via `info program`.
+In conjunction with handling *all* events by default, the event status is shown when stopped. The reason for stopping is also available via `info program`.
 
 Event Tracing of Calls and Returns
 ----------------------------------
@@ -66,7 +66,7 @@ Because we're really handling return events, we can show you the return value. (
 
 Debugger Macros via Python Lambda expressions
 ---------------------------------------------
-In *gdb*, there is a _macro_ debugger command to extend debugger commands. However Python has its own rich programming language so it seems silly to recreate the macro language that is in *gdb*. Simpler and more powerful is just to use Python here. A debugger macro here is just a lambda expression which returns a string or a list of strings. Each string returned should be a debugger command.
+In *gdb*, there is a *macro* debugger command to extend debugger commands. However Python has its own rich programming language so it seems silly to recreate the macro language that is in *gdb*. Simpler and more powerful is just to use Python here. A debugger macro here is just a lambda expression which returns a string or a list of strings. Each string returned should be a debugger command.
 
 We also have _aliases_ for the extremely simple situation where you want to give an alias to an existing debugger command. But beware: some commands, like `step` inspect command suffixes and change their behavior accordingly.
 
@@ -78,17 +78,17 @@ Byte-code Instruction Introspection
 -----------------------------------
 
 We do more in the way of looking at the byte codes to give better information. Through this we can provide:
-* a `skip` command. It is like the `jump` command, but you don't have to deal with line numbers.
+* a *skip* command. It is like the *jump* command, but you don't have to deal with line numbers.
 * disassembly of code fragments. You can now disassemble relative to the stack frames you are currently stopped at.
 * Better interpretation of where you are when inside execfile or exec. (But really though this is probably a Python compiler misfeature.)
 * Check that breakpoints are set only where they make sense.
-* A more accurate determination of if you are at a function-defining `def` statement (because the caller instruction contains `MAKE_FUNCTION`.)
+* A more accurate determination of if you are at a function-defining *def* statement (because the caller instruction contains *MAKE_FUNCTION*.)
 
 Debugger Command Arguments can be Variables and Expressions
 ===========================================================
 
-Commands that take integer arguments like `up`, `list` or
-`disassemble` allow you to use a Python expression which may include
+Commands that take integer arguments like *up*, *list* or
+*disassemble* allow you to use a Python expression which may include
 local or global variables that evaluates to an integer. This
 eliminates the need in *gdb* for special "dollar" debugger
 variables. (Note however because of _shlex_ parsing expressions can't

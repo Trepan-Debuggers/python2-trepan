@@ -14,7 +14,7 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''Some singleton debugger methods that can be called without first
-creating a debugger object -- these methods will create a debugger object, 
+creating a debugger object -- these methods will create a debugger object,
 if necessary, first.
 '''
 
@@ -23,7 +23,7 @@ if necessary, first.
 # def _build_standalone(methodname, docstring=None):
 #     def function(arg, arg2=None, globals=None, locals=None):
 #         Debugger().getattr(methodname)(arg, arg2, globals, locals)
-#        return 
+#        return
 #    function.__name__ = methodname
 #    function.__doc__ = docstring
 #    return function
@@ -43,7 +43,7 @@ def debugger_on_post_mortem():
     sys.excepthook = Mpost_mortem.post_mortem_excepthook
     return
 
-def run_eval(expression, debug_opts=None, start_opts=None, globals_=None, 
+def run_eval(expression, debug_opts=None, start_opts=None, globals_=None,
              locals_=None):
 
     """Evaluate the expression (given as a string) under debugger
@@ -55,10 +55,10 @@ def run_eval(expression, debug_opts=None, start_opts=None, globals_=None,
     When run_eval() returns, it returns the value of the expression.
     Otherwise this function is similar to run()."""
 
-    
+
     dbg = Mdebugger.Debugger(opts=debug_opts)
     try:
-        return dbg.run_eval(expression, start_opts=start_opts, 
+        return dbg.run_eval(expression, start_opts=start_opts,
                             globals_=globals_, locals_=locals_)
     except:
         Mpost_mortem.uncaught_exception(dbg)
@@ -75,7 +75,7 @@ def run_call(func, debug_opts=None, start_opts=None, *args, **kwds):
     returned.  The debugger prompt appears as soon as the function is
     entered."""
 
-    dbg = Mdebugger.Debugger(opts=debug_opts) 
+    dbg = Mdebugger.Debugger(opts=debug_opts)
     try:
         return dbg.run_call(func, start_opts, *args, **kwds)
     except:
@@ -83,7 +83,7 @@ def run_call(func, debug_opts=None, start_opts=None, *args, **kwds):
         pass
     return
 
-def run_exec(statement, debug_opts=None, start_opts=None, globals_=None, 
+def run_exec(statement, debug_opts=None, start_opts=None, globals_=None,
              locals_=None):
 
     """Execute the statement (given as a string) under debugger
@@ -100,9 +100,9 @@ def run_exec(statement, debug_opts=None, start_opts=None, globals_=None,
     in which the code is executed; by default the dictionary of the
     module __main__ is used."""
 
-    dbg = Mdebugger.Debugger(opts=debug_opts) 
+    dbg = Mdebugger.Debugger(opts=debug_opts)
     try:
-        return dbg.run_exec(statement, start_opts=start_opts, 
+        return dbg.run_exec(statement, start_opts=start_opts,
                             globals_=globals_, locals_=locals_)
     except:
         Mpost_mortem.uncaught_exception(dbg)
@@ -111,7 +111,7 @@ def run_exec(statement, debug_opts=None, start_opts=None, globals_=None,
 
 def debug(dbg_opts=None, start_opts=None, post_mortem=True,
           step_ignore=1):
-    """ 
+    """
 Enter the debugger. Use like this:
 
     ... # Possibly some Python code
@@ -121,9 +121,9 @@ Enter the debugger. Use like this:
     pass  # Stop will be here.
     # Below is code you want to use the debugger to do things.
     ....  # more Python code
-    # If you get to a place in the program where you aren't going 
+    # If you get to a place in the program where you aren't going
     # want to debug any more, but want to remove debugger trace overhead:
-    pydbgr.api.stop() 
+    pydbgr.api.stop()
 
 In situations where you want an immediate stop in the "debug" call
 rather than the statement following it ("pass" above), add parameter
@@ -145,7 +145,7 @@ module pydbgr). If not, it will get changed to that type.
    >>> from pydbgr.debugger import debugger_obj
    >>> type(debugger_obj)
    <type 'NoneType'>
-   >>>  import pydbgr.api 
+   >>>  import pydbgr.api
    >>>  pydbgr.api.debug()
    ...
    (Pydbgr) c
@@ -195,7 +195,7 @@ debug() call. 0 means don't even wait for the debug() call to finish.
     else:
         core.step_ignore = step_ignore-1;
         pass
-    return 
+    return
 
 def stop(opts=None):
     if Mdebugger.Debugger == type(Mdebugger.debugger_obj):
@@ -228,4 +228,3 @@ if __name__=='__main__':
     #     print 'Issuing interactive: run_call(foo)'
     #     run_call(foo, debug_opts)
     pass
- 

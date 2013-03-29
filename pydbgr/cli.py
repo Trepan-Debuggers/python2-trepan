@@ -74,7 +74,7 @@ def process_options(debugger_name, pkg_version, sys_argv, option_list=None):
                          help="Filenames strip off basename, (e.g. for regression tests)"
                          )
 #     optparser.add_option("--batch", dest="noninteractive",
-#                          action="store_true", default=False, 
+#                          action="store_true", default=False,
 #                          help="Don't run interactive commands shell on "+
 #                          "stops.")
     optparser.add_option("-x", "--command", dest="command",
@@ -87,7 +87,7 @@ def process_options(debugger_name, pkg_version, sys_argv, option_list=None):
                          action="store_true", default=True,
                          help="Confirm potentially dangerous operations")
     optparser.add_option("--dbg_pydbgr", dest="dbg_pydbgr",
-                         action="store_true", default=False, 
+                         action="store_true", default=False,
                          help="Debug the debugger")
     optparser.add_option("--different", dest="different",
                          action="store_true", default=True,
@@ -172,7 +172,7 @@ def process_options(debugger_name, pkg_version, sys_argv, option_list=None):
         startup_file = ".%src" % debugger_name
         # expanded_startup_file = Mclifns.path_expanduser_abs(startup_file)
         if 'HOME' in os.environ:
-            startup_home_file = os.path.join(os.environ['HOME'], startup_file)
+            startup_home_file = os.path.expanduser("~/%s" % startup_file)
             expanded_startup_home = \
                 Mclifns.path_expanduser_abs(startup_home_file)
             if Mfile.readable(expanded_startup_home):
@@ -222,7 +222,7 @@ def process_options(debugger_name, pkg_version, sys_argv, option_list=None):
             print('Starting TCP server listening on port %s.' % intf.inout.PORT)
             pass
         pass
-        
+
     return opts, dbg_opts, sys.argv
 
 def _postprocess_options(dbg, opts):
@@ -243,7 +243,7 @@ def _postprocess_options(dbg, opts):
         dbg.settings['highlight'] = opts.highlight
     else:
         dbg.settings['highlight'] = 'plain'
-        
+
     # Normally we want to set Mdebugger.debugger_obj so that one can
     # put pydbgr.debugger breakpoints in a program and not have more
     # than one debugger running. More than one debugger may confuse

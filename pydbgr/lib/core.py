@@ -57,7 +57,7 @@ class DebuggerCore:
 
         See also `start' and `stop'.
         """
-        get_option       = lambda key: Mmisc.option_set(opts, key, 
+        get_option       = lambda key: Mmisc.option_set(opts, key,
                                                         self.DEFAULT_INIT_OPTS)
 
         self.bpmgr           = breakpoint.BreakpointManager()
@@ -75,14 +75,14 @@ class DebuggerCore:
         # We can however modify it, such as for breakpoints
         self.event           = None
 
-        # Is debugged program currently under execution? 
+        # Is debugged program currently under execution?
         self.execution_status = 'Pre-execution'
 
         # main_dirname is the directory where the script resides.
         # Filenames in co_filename are often relative to this.
         self.main_dirname    = os.curdir
 
-        # What event processor and processor options do we use? 
+        # What event processor and processor options do we use?
         self.processor = get_option('processor')
         proc_opts      = get_option('proc_opts')
         if not self.processor:
@@ -117,7 +117,7 @@ class DebuggerCore:
 
         self.trace_processor = Mtrace.PrintProcessor(self)
 
-        # What routines (keyed by f_code) will we not trace into? 
+        # What routines (keyed by f_code) will we not trace into?
         self.ignore_filter = get_option('ignore_filter')
 
         self.search_path     = sys.path # Source filename search path
@@ -129,7 +129,7 @@ class DebuggerCore:
         return
 
     def add_ignore(self, *frames_or_fns):
-        """Add `frame_or_fn' to the list of functions that are not to 
+        """Add `frame_or_fn' to the list of functions that are not to
         be debugged"""
         for frame_or_fn in frames_or_fns:
             rc = self.ignore_filter.add_include(frame_or_fn)
@@ -138,7 +138,7 @@ class DebuggerCore:
 
     def canonic(self, filename):
         """ Turns `filename' into its canonic representation and returns this
-        string. This allows a user to refer to a given file in one of several 
+        string. This allows a user to refer to a given file in one of several
         equivalent ways.
 
         Relative filenames need to be fully resolved, since the current working
@@ -196,20 +196,20 @@ class DebuggerCore:
 
     def is_started(self):
         '''Return True if debugging is in progress.'''
-        return (tracer.is_started() and 
+        return (tracer.is_started() and
                 not self.trace_hook_suspend
                 and tracer.find_hook(self.trace_dispatch))
 
     def remove_ignore(self, frame_or_fn):
-        """Remove `frame_or_fn' to the list of functions that are not to 
+        """Remove `frame_or_fn' to the list of functions that are not to
         be debugged"""
         return self.ignore_filter.remove_include(frame_or_fn)
 
     def start(self, opts=None):
         """ We've already created a debugger object, but here we start
         debugging in earnest. We can also turn off debugging (but have
-        the hooks suspended or not) using 'stop'. 
-        
+        the hooks suspended or not) using 'stop'.
+
         'opts' is a hash of every known value you might want to set when
         starting the debugger. See START_OPTS of module default.
         """
@@ -218,11 +218,11 @@ class DebuggerCore:
         #    sys.settrace(self._trace_dispatch)
         try:
             self.trace_hook_suspend = True
-            get_option = lambda key: Mmisc.option_set(opts, key, 
+            get_option = lambda key: Mmisc.option_set(opts, key,
                                                       default.START_OPTS)
-            
+
             add_hook_opts = get_option('add_hook_opts')
-            
+
             # Has tracer been started?
             if not tracer.is_started():
                 # FIXME: should filter out opts not for tracer
@@ -241,11 +241,11 @@ class DebuggerCore:
         return
 
     def stop(self, options=None):
-        # Our version of: 
+        # Our version of:
         #    sys.settrace(None)
         try:
             self.trace_hook_suspend = True
-            get_option = lambda key: Mmisc.option_set(options, key, 
+            get_option = lambda key: Mmisc.option_set(options, key,
                                                       default.STOP_OPTS)
             args = [self.trace_dispatch]
             remove = get_option('remove')
@@ -265,7 +265,7 @@ class DebuggerCore:
     def is_break_here(self, frame, arg):
         filename = self.canonic(frame.f_code.co_filename)
         if 'call' == self.event:
-            find_name  = frame.f_code.co_name 
+            find_name  = frame.f_code.co_name
             # Could check code object or decide not to
             # The below could be done as a list comprehension, but
             # I'm feeling in Fortran mood right now.
@@ -278,14 +278,14 @@ class DebuggerCore:
                     else:
                         msg = ''
                         pass
-                    self.stop_reason = ("at %scall breakpoint %d" % 
+                    self.stop_reason = ("at %scall breakpoint %d" %
                                         (msg, bp.number))
                     self.event = 'brkpt'
                     return True
                 pass
             pass
         if (filename, frame.f_lineno) in list(self.bpmgr.bplist.keys()):
-            (bp, clear_bp) = self.bpmgr.find_bp(filename, frame.f_lineno, 
+            (bp, clear_bp) = self.bpmgr.find_bp(filename, frame.f_lineno,
                                                 frame)
             if bp:
                 self.current_bp = bp
@@ -295,7 +295,7 @@ class DebuggerCore:
                 else:
                     msg = ''
                     pass
-                self.stop_reason = ("at %sline breakpoint %d" % 
+                self.stop_reason = ("at %sline breakpoint %d" %
                                     (msg, bp.number))
                 self.event = 'brkpt'
                 return True
@@ -315,13 +315,13 @@ class DebuggerCore:
         """
 
         # Add an generic event filter here?
-        # FIXME TODO: Check for 
+        # FIXME TODO: Check for
         #  - thread switching (under set option)
 
         # Check for "next" and "finish" stopping via stop_level
 
         # Do we want a different line and if so,
-        # do we have one? 
+        # do we have one?
         lineno = frame.f_lineno
         filename = frame.f_code.co_filename
         if self.different_line and event == 'line':
@@ -362,7 +362,7 @@ class DebuggerCore:
             self.step_ignore -= 1
             pass
         return False
-    
+
     def set_next(self, frame, step_ignore=0, step_events=None):
         "Sets to stop on the next event that happens in frame 'frame'."
         self.step_events      = None # Consider all events
@@ -379,10 +379,10 @@ class DebuggerCore:
         different line). We could put that here, but since that seems
         processor-specific I think it best to distribute the checks.'''
 
-        # For now we only allow one instance in a process 
+        # For now we only allow one instance in a process
         # In Python 2.6 and beyond one can use "with threading.Lock():"
         try:
-            self.debugger_lock.acquire()            
+            self.debugger_lock.acquire()
 
             if self.trace_hook_suspend:
                 return None
@@ -391,7 +391,7 @@ class DebuggerCore:
             # FIXME: Understand what's going on here better.
             # When None gets returned, the frame's f_trace seems to get set
             # to None. Somehow this is changing other frames when get passed
-            # to this routine which also have their f_trace set to None. 
+            # to this routine which also have their f_trace set to None.
             # This will disallow a command like "jump" from working properly,
             # which will give a cryptic the message on setting f_lineno:
             #   f_lineno can only be set by a trace function
@@ -414,7 +414,7 @@ class DebuggerCore:
             # be more desirable from the user's standpoint to test for breaks
             # before steps. In this case we will need to factor out the counting
             # updates.
-            if ( self.is_stop_here(frame, event, arg) or 
+            if ( self.is_stop_here(frame, event, arg) or
                  self.is_break_here(frame, arg) ):
                 # Run the event processor
                 return self.processor.event_processor(frame, self.event, arg)
@@ -442,4 +442,3 @@ if __name__=='__main__':
     print(dc.canonic('<string>'))
     print(dc.canonic(__file__))
     pass
- 

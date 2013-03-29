@@ -17,8 +17,8 @@
 
 This module contains the `Debugger' class and some top-level routines
 for creating and invoking a debugger. Most of this module serves as:
-  * a wrapper for `Debugger.core' routines, 
-  * a place to define `Debugger' exceptions, and 
+  * a wrapper for `Debugger.core' routines,
+  * a place to define `Debugger' exceptions, and
   * `Debugger' settings.
 
 See also module `cli' which contains a command-line interface to debug
@@ -36,7 +36,7 @@ Mcore   = import_relative('core', '.lib', 'pydbgr')
 Mexcept = import_relative('exception', '.', 'pydbgr')
 
 # Default settings used here
-Mdefault  = import_relative('default', '.lib', 'pydbgr') 
+Mdefault  = import_relative('default', '.lib', 'pydbgr')
 
 Muser     = import_relative('user', '.interfaces', 'pydbgr')
 Mmisc     = import_relative('misc', top_name='pydbgr')
@@ -52,7 +52,7 @@ debugger_obj = None
 
 class Debugger:
 
-    # The following functions have to be defined before DEFAULT_INIT_OPTS which 
+    # The following functions have to be defined before DEFAULT_INIT_OPTS which
     # includes references to these.
 
     # FIXME DRY run, run_exec, run_eval.
@@ -103,7 +103,7 @@ class Debugger:
         the dictionaries to use for local and global variables. By
         default, the value of globals is globals(), the current global
         variables. If `locals_' is not given, it becomes a copy of
-        `globals_'. 
+        `globals_'.
 
         Debugger.core.start settings are passed via optional
         dictionary `start_opts'. Overall debugger settings are in
@@ -170,7 +170,7 @@ class Debugger:
         self.core.stop()
         return retval
 
-    def run_script(self, filename, start_opts=None, globals_=None, 
+    def run_script(self, filename, start_opts=None, globals_=None,
                    locals_=None):
         """ Run debugger on Python script `filename'. The script may
         inspect sys.argv for command arguments. `globals_' and
@@ -227,9 +227,9 @@ class Debugger:
 
     # Note: has to come after functions listed in ignore_filter.
     DEFAULT_INIT_OPTS = {
-        # What routines will we not trace into? 
+        # What routines will we not trace into?
         'ignore_filter': tracefilter.TraceFilter(
-            [tracer.start, tracer.stop, 
+            [tracer.start, tracer.stop,
              run_eval, run_call, run_eval, run_script]),
 
         # sys.argv when not None contains sys.argv *before* debugger
@@ -247,12 +247,12 @@ class Debugger:
         'save_sys_argv' : True,
 
         # How is I/O for this debugger handled?
-        'activate'    : False, 
+        'activate'    : False,
         'interface'   : Muser.UserInterface(),
         'input'       : None,
         'output'      : None,
         'processor'   : None,
-        
+
         # Setting contains lots of debugger settings - a whole file
         # full of them!
         'settings'    : Mdefault.DEBUGGER_SETTINGS,
@@ -272,7 +272,7 @@ class Debugger:
         self.mainpyfile  = None
         self.thread      = None
         self.eval_string = None
-        get_option = lambda key: Mmisc.option_set(opts, key, 
+        get_option = lambda key: Mmisc.option_set(opts, key,
                                                   self.DEFAULT_INIT_OPTS)
 
         # set the instance variables that come directly from options.
@@ -281,7 +281,7 @@ class Debugger:
             pass
 
         core_opts = {}
-        for opt in ('ignore_filter', 'proc_opts', 'processor', 'step_ignore', 
+        for opt in ('ignore_filter', 'proc_opts', 'processor', 'step_ignore',
                     'processor',):
             core_opts[opt] = get_option(opt)
             pass
@@ -318,8 +318,8 @@ class Debugger:
 
         self.sigmgr = Msig.SignalManager(self)
 
-        # Were we requested to activate immediately? 
-        if get_option('activate'): 
+        # Were we requested to activate immediately?
+        if get_option('activate'):
             self.core.start(get_option('start_opts'))
             pass
         return
@@ -363,7 +363,7 @@ if __name__=='__main__':
                     pass
                 d.core.stop()
                 def square(x): return x*x
-                print('calling: run_call(square,2)') 
+                print('calling: run_call(square,2)')
                 d.run_call(square, 2)
             except Mexcept.DebuggerQuit:
                 print("That's all Folks!...")
@@ -374,4 +374,3 @@ if __name__=='__main__':
             pass
         pass
     pass
- 

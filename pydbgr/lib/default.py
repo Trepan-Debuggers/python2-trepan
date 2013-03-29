@@ -29,11 +29,6 @@ if 'COLUMNS' in ENV:
         pass
     pass
 
-if 'HOME' in os.environ:
-    histfile = os.path.join(os.environ['HOME'], '.pydbgr_hist')
-else:
-    histfile = None
-
 # Below are the default debugger settings. The debugger object version
 # of this may change. A setting is something a user may want to
 # change, in contrast to settings that the debugger decides to set in
@@ -98,12 +93,6 @@ DEBUGGER_SETTINGS = {
     #  'dark'    : terminal highlighting for a dark background
     #  'light'   : terminal highlighting for a light background
     'highlight'     : 'light',
-
-    # Save debugger history?
-    'hist_save'     : False,
-
-    # Where do we save the history?
-    'histfile'     : None,
 
     # Show function calls/returns?
     'fntrace'       : False,

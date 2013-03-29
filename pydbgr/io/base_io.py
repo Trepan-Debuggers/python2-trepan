@@ -42,12 +42,15 @@ class DebuggerInputBase(object):
             pass
         return
 
+    def use_history(self):
+        return False
+
     def open(self, inp, opts=None):
         """Use this to set where to read from. """
         raise NotImplementedError, NotImplementedMessage
 
     def readline(self, use_raw=None):
-        """Read a line of input. EOFError will be raised on EOF.  
+        """Read a line of input. EOFError will be raised on EOF.
 
         Note that we don't support prompting first. Instead, arrange
         to call DebuggerOutput.write() first with the prompt. If
@@ -59,7 +62,7 @@ class DebuggerInputBase(object):
         raise NotImplementedError, NotImplementedMessage
 
     pass
-    
+
 # FIXME: In 2.6 we can really use an Abstract Class (ABC). But for now,
 # we want 2.5.x compatibility.
 class DebuggerOutputBase(object):
@@ -79,7 +82,7 @@ class DebuggerOutputBase(object):
         raise NotImplementedError, NotImplementedMessage
 
     def write(self, output):
-        """Use this to set where to write to. output can be a 
+        """Use this to set where to write to. output can be a
         file object or a string. This code raises IOError on error.
         """
         raise NotImplementedError, NotImplementedMessage
@@ -116,7 +119,7 @@ class DebuggerInOutBase(object):
 
 
     def readline(self, use_raw=None):
-        """Read a line of input. EOFError will be raised on EOF.  
+        """Read a line of input. EOFError will be raised on EOF.
 
         Note that we don't support prompting first. Instead, arrange
         to call DebuggerOutput.write() first with the prompt. If
@@ -128,7 +131,7 @@ class DebuggerInOutBase(object):
         raise NotImplementedError, NotImplementedMessage
 
     def write(self, output):
-        """Use this to set where to write to. output can be a 
+        """Use this to set where to write to. output can be a
         file object or a string. This code raises IOError on error.
         """
         raise NotImplementedError, NotImplementedMessage
@@ -164,5 +167,3 @@ if __name__=='__main__':
     except NotImplementedError:
         print 'Ooops. Forgot to implement write()'
         pass
-
-    

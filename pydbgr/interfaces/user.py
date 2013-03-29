@@ -15,34 +15,56 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Interface when communicating with the user in the same process as
     the debugged program."""
-import atexit
+import atexit, os
 
 # Our local modules
 from import_relative import import_relative
 Minterface = import_relative('interface',  '...pydbgr')
-Minput     = import_relative('input', '..io')
-Moutput    = import_relative('output', '..io')
+Minput     = import_relative('io.input', '...pydbgr')
+Moutput    = import_relative('io.output', '...pydbgr')
+Mmisc    = import_relative('misc', '...pydbgr')
+
+histfile = os.path.expanduser('~/.pydbgr_hist')
+
+DEFAULT_USER_SETTINGS = {
+    'histfile'     : histfile, # Where do we save the history?
+    'hist_save'    : True,    # Save debugger history?
+
+}
+
+try:
+    from readline import read_history_file, set_completer, set_history_length
+    from readline import write_history_file
+except ImportError:
+    pass
 
 class UserInterface(Minterface.DebuggerInterface):
     """Interface when communicating with the user in the same
     process as the debugged program."""
 
-    FILE_HISTORY='.pydbgr_hist'
-
     def __init__(self, inp=None, out=None, opts={}):
+        get_option = lambda key: Mmisc.option_set(opts, key,
+                                                  DEFAULT_USER_SETTINGS)
+
         atexit.register(self.finalize)
         self.interactive = True # Or at least so we think initially
         self.input       = inp or Minput.DebuggerUserInput()
         self.output      = out or Moutput.DebuggerUserOutput()
 
-        if 'complete' in opts and hasattr(self.input, 'set_completer'):
-            self.input.set_completer = opts['complete']
-            read_history_file
-            pass
-
-        if 'histfile' in opts and hasattr(self.input, 'read_history_file'):
-            self.input.read_history_file(opts['histfile'])
-            pass
+        if self.input.use_history():
+            complete = get_option('complete')
+            if complete:
+                set_completer = complete
+                pass
+            histfile = get_option('histfile')
+            if histfile:
+                try:
+                    read_history_file(histfile)
+                except IOError:
+                    pass
+                set_history_length(50)
+                atexit.register(write_history_file, histfile)
+                pass
 
         return
 

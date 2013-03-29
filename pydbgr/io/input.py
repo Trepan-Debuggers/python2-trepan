@@ -18,8 +18,8 @@
 import sys, types, StringIO
 
 from import_relative import import_relative
-Mbase_io  = import_relative('base_io', top_name='pydbgr')
-Mmisc    = import_relative('misc', '..', 'pydbgr')
+Mbase_io  = import_relative('io.base_io', '...pydbgr')
+Mmisc     = import_relative('misc', '...pydbgr')
 
 def readline_importable():
     try:
@@ -48,7 +48,11 @@ class DebuggerUserInput(Mbase_io.DebuggerInputBase):
         'use_raw'      : True,
         'try_readline' : True,
         }
-    def open(self, inp, opts=None):
+
+    def use_history(self):
+        return self.use_raw and readline_importable()
+
+    def open(self, inp, opts={}):
         """Use this to set where to read from.
 
         Set opts['try_lineedit'] if you want this input to interact

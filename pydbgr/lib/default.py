@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2008, 2009 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008-2009, 2013 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -15,7 +15,6 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """ A place for the debugger default settings """
 
-# A Perl/Rubyism
 from os import environ as ENV
 
 # External Egg packages
@@ -29,6 +28,11 @@ if 'COLUMNS' in ENV:
     except:
         pass
     pass
+
+if 'HOME' in os.environ:
+    histfile = os.path.join(os.environ['HOME'], '.pydbgr_hist')
+else:
+    histfile = None
 
 # Below are the default debugger settings. The debugger object version
 # of this may change. A setting is something a user may want to

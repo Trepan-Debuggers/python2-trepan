@@ -18,7 +18,7 @@
 import atexit
 
 # Our local modules
-from import_relative import *
+from import_relative import import_relative
 Minterface = import_relative('interface',  '...pydbgr')
 Minput     = import_relative('input', '..io')
 Moutput    = import_relative('output', '..io')
@@ -29,11 +29,21 @@ class UserInterface(Minterface.DebuggerInterface):
 
     FILE_HISTORY='.pydbgr_hist'
 
-    def __init__(self, inp=None, out=None, opts=None):
+    def __init__(self, inp=None, out=None, opts={}):
         atexit.register(self.finalize)
         self.interactive = True # Or at least so we think initially
         self.input       = inp or Minput.DebuggerUserInput()
         self.output      = out or Moutput.DebuggerUserOutput()
+
+        if 'complete' in opts and hasattr(self.input, 'set_completer'):
+            self.input.set_completer = opts['complete']
+            read_history_file
+            pass
+
+        if 'histfile' in opts and hasattr(self.input, 'read_history_file'):
+            self.input.read_history_file(opts['histfile'])
+            pass
+
         return
 
     def close(self):

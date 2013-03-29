@@ -15,23 +15,13 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Interface when communicating with the user in the same process as
     the debugged program."""
-import atexit, os, readline
+import atexit
 
 # Our local modules
 from import_relative import import_relative
-Mfile      = import_relative('lib.file',   '...pydbgr')
 Minterface = import_relative('interface',  '...pydbgr')
-Minput     = import_relative('io.input', '...pydbgr')
-Moutput    = import_relative('io.output', '...pydbgr')
-
-histfile = os.path.expanduser('~/.pydbgr_hist')
-
-DEFAULT_USER_SETTINGS = {
-    'histfile'     : histfile, # Where do we save the history?
-    'hist_save'     : True,    # Save debugger history?
-
-}
-
+Minput     = import_relative('input', '..io')
+Moutput    = import_relative('output', '..io')
 
 class UserInterface(Minterface.DebuggerInterface):
     """Interface when communicating with the user in the same
@@ -39,22 +29,19 @@ class UserInterface(Minterface.DebuggerInterface):
 
     FILE_HISTORY='.pydbgr_hist'
 
-    def __init__(self, inp=None, out=None, opts=DEFAULT_USER_SETTINGS):
+    def __init__(self, inp=None, out=None, opts={}):
         atexit.register(self.finalize)
         self.interactive = True # Or at least so we think initially
         self.input       = inp or Minput.DebuggerUserInput()
         self.output      = out or Moutput.DebuggerUserOutput()
-        self.history_file = None
 
-        if 'complete' in opts and hasattr(readline, 'set_completer'):
-            readline.set_completer = opts['complete']
+        if 'complete' in opts and hasattr(self.input, 'set_completer'):
+            self.input.set_completer = opts['complete']
+            read_history_file
             pass
 
-        if 'histfile' in opts and hasattr(readline, 'read_history_file'):
-            self.history_file = opts['histfile']
-            if Mfile.readable(self.history_file):
-                readline.read_history_file(self.history_file)
-            atexit.register(readline.write_history_file, self.history_file)
+        if 'histfile' in opts and hasattr(self.input, 'read_history_file'):
+            self.input.read_history_file(opts['histfile'])
             pass
 
         return
@@ -98,14 +85,13 @@ class UserInterface(Minterface.DebuggerInterface):
 
     def finalize(self, last_wishes=None):
         # print exit annotation
+        # save history
         self.close()
         return
 
     def read_command(self, prompt=''):
         line = self.readline(prompt)
-        if hasattr(self.input, 'add_history'):
-            self.input.add_history(line)
-            pass
+        # Do something with history?
         return line
 
     def readline(self, prompt=''):

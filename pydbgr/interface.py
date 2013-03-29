@@ -25,7 +25,7 @@ class DebuggerInterface:
     """
 A debugger interface handles the communication or interaction with between
 the program and the outside portion which could be
-    - a user,
+    - a user, 
     - a front-end that talks to a user, or
     - another interface in another process or computer
     """
@@ -33,7 +33,7 @@ the program and the outside portion which could be
     def __init__(self, inp=None, out=None):
         self.input  = inp or sys.stdin
         self.output = out or sys.stdout
-        self.interactive = False
+        self.interactive = False 
         return
 
     def close(self):
@@ -77,5 +77,5 @@ the program and the outside portion which could be
 
     def readline(self, prompt, add_to_history=True):
         raise NotImplementedError, NotImplementedMessage
-
+    
     pass

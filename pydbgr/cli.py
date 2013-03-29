@@ -172,7 +172,7 @@ def process_options(debugger_name, pkg_version, sys_argv, option_list=None):
         startup_file = ".%src" % debugger_name
         # expanded_startup_file = Mclifns.path_expanduser_abs(startup_file)
         if 'HOME' in os.environ:
-            startup_home_file = os.path.expanduser("~/%s" % startup_file)
+            startup_home_file = os.path.join(os.environ['HOME'], startup_file)
             expanded_startup_home = \
                 Mclifns.path_expanduser_abs(startup_home_file)
             if Mfile.readable(expanded_startup_home):

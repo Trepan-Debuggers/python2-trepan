@@ -37,7 +37,7 @@ classifiers =  ['Development Status :: 4 - Beta',
 author             = "Rocky Bernstein"
 author_email       = "rocky@gnu.org"
 ftp_url            = None
-install_requires   = ['columnize >= 0.3.4', 
+install_requires   = ['columnize >= 0.3.4',
                       'import_relative >= 0.2.3',
                       'pyficache >= 0.2.3',
                       'pygments',
@@ -46,7 +46,7 @@ license            = 'GPL'
 mailing_list       = 'python-debugger@googlegroups.com'
 modname            = 'pydbgr'
 namespace_packages = [
-    'pydbgr', 
+    'pydbgr',
     'pydbgr.bwprocessor',
     'pydbgr.interfaces',
     'pydbgr.io',
@@ -72,9 +72,8 @@ version            = VERSION
 web                = 'http://code.google.com/p/pydbgr/'
 
 # tracebacks in zip files are funky and not debuggable
-zip_safe = False 
+zip_safe = False
 
 def read(*rnames):
     return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
 long_description   = ( read("README.txt") + '\n\n' +  read("NEWS") )
-

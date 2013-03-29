@@ -85,8 +85,8 @@ class UserInterface(Minterface.DebuggerInterface):
         return line
 
     def readline(self, prompt=''):
-        if (hasattr(self.input, 'use_raw') 
-            and not self.input.use_raw 
+        if (hasattr(self.input, 'use_raw')
+            and not self.input.use_raw
             and prompt and len(prompt) > 0):
             self.output.write(prompt)
             self.output.flush()
@@ -99,7 +99,7 @@ if __name__=='__main__':
     intf = UserInterface()
     intf.errmsg("Houston, we have a problem here!")
     import sys
-    if len(sys.argv) > 1: 
+    if len(sys.argv) > 1:
         try:
             line = intf.readline("Type something: ")
         except EOFError:

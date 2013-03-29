@@ -62,8 +62,8 @@ DEBUGGER_SETTINGS = {
     # Enter Python every time we enter the debugger?
     'autopython'    : False,
 
-    # Show basename only on filename output? 
-    # This opiton is useful in integration testing and 
+    # Show basename only on filename output?
+    # This opiton is useful in integration testing and
     # possibly to prepare example output for publication
     'basename'      : False,
 
@@ -87,7 +87,7 @@ DEBUGGER_SETTINGS = {
     # tracing. See tracer.ALL_EVENT_NAMES and ALL_EVENTS
     # Note this is independent of printset which just prints the event.
     # This set controls entering the debugger command processor.
-    'events'        : tracer.ALL_EVENTS,  
+    'events'        : tracer.ALL_EVENTS,
 
     # Use terminal highlight? Acceptable values are
     #  'plain'   : no highlighting
@@ -116,7 +116,7 @@ DEBUGGER_SETTINGS = {
     # printset is a set of events to print line-, call-, or return-like
     # tracing. See tracer.ALL_EVENT_NAMES and ALL_EVENTS. This only
     # has an effect if trace is set True.
-    'printset'      : tracer.ALL_EVENTS,  
+    'printset'      : tracer.ALL_EVENTS,
 
     # If this is set True, debugger startup file, e.g. .pydbgrrc will
     # not be read/run.
@@ -133,11 +133,11 @@ DEBUGGER_SETTINGS = {
 
     # The target maximum print length. Used for example in listing
     # arrays which are columnized.
-    'width'         : width  
+    'width'         : width
 }
 
 CLIENT_SOCKET_OPTS = {
-    'HOST': '127.0.0.1',  
+    'HOST': '127.0.0.1',
     'PORT': 1027          # Arbitrary non-privileged port
     }
 
@@ -153,7 +153,7 @@ START_OPTS = {
     'event_set'     : tracer.ALL_EVENTS,
     'add_hook_opts' : tracer.DEFAULT_ADD_HOOK_OPTS,
     'start'         : False,
-    'force'         : False,  # Force a new event handler? 
+    'force'         : False,  # Force a new event handler?
     'backlevel'     : 0  # trace caller and frames created from that
     }
 
@@ -172,4 +172,3 @@ if __name__=='__main__':
         print
         pass
     pass
-

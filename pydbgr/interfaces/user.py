@@ -66,7 +66,6 @@ class UserInterface(Minterface.DebuggerInterface):
                 set_history_length(50)
                 atexit.register(write_history_file, histfile)
                 pass
-
         return
 
     def close(self):

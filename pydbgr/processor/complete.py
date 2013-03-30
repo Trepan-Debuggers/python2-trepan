@@ -8,7 +8,7 @@ def complete_token(complete_ary, prefix):
 
 def complete_token_with_next(complete_hash, prefix, cmd_prefix=''):
     result = []
-    for cmd_name in complete_hash.keys():
+    for cmd_name in list(complete_hash.keys()):
         if cmd_name.startswith(cmd_prefix + prefix):
             result.append([cmd_name[len(cmd_prefix):], complete_hash[cmd_name]])
             pass
@@ -22,7 +22,7 @@ def complete_token_filtered(aliases, prefix, expanded):
     with *prefix*, but filter out any matches already in
     *expanded*."""
 
-    complete_ary = aliases.keys()
+    complete_ary = list(aliases.keys())
     return sorted([cmd for cmd in
                    complete_ary if cmd.startswith(prefix)] and not (
                        cmd in aliases and expanded not in aliases[cmd])
@@ -34,8 +34,8 @@ def complete_token_filtered_with_next(aliases, prefix, expanded, commands):
     with *prefix*, but filter out any matches already in
     *expanded*."""
 
-    complete_ary = aliases.keys()
-    expanded_ary = expanded.keys()
+    complete_ary = list(aliases.keys())
+    expanded_ary = list(expanded.keys())
     return sorted([cmd for cmd in
                    complete_ary if cmd.startswith(prefix)] and not (
                        cmd in aliases and
@@ -76,11 +76,11 @@ def completer(self, str, state, last_token=''):
 
     alias_pairs = complete_token_filtered_with_next(self.aliases(),
                                                     token, match_hash,
-                                                    self.commands.keys())
+                                                    list(self.commands.keys()))
 
-    matches = complete_token(self.commands.keys() +
-                             self.aliases.keys() +
-                             self.macros.keys(), token)
+    matches = complete_token(list(self.commands.keys()) +
+                             list(self.aliases.keys()) +
+                             list(self.macros.keys()), token)
     return matches + [None]
 
 if __name__=='__main__':

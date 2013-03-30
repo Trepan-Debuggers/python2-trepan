@@ -34,7 +34,7 @@ DEFAULT_USER_SETTINGS = {
 
 try:
     from readline import read_history_file, set_completer, set_history_length
-    from readline import write_history_file
+    from readline import write_history_file, parse_and_bind
 except ImportError:
     pass
 
@@ -54,7 +54,8 @@ class UserInterface(Minterface.DebuggerInterface):
         if self.input.use_history():
             complete = get_option('complete')
             if complete:
-                set_completer = complete
+                parse_and_bind("tab: complete")
+                set_completer(complete)
                 pass
             histfile = get_option('histfile')
             if histfile:

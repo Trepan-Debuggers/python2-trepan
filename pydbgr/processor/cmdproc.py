@@ -28,6 +28,7 @@ Mmisc      = import_relative('misc', '..', 'pydbgr')
 Mfile      = import_relative('file', '..lib', 'pydbgr')
 Mstack     = import_relative('stack', '..lib', 'pydbgr')
 Mthread    = import_relative('thread', '..lib', 'pydbgr')
+Mcomplete  = import_relative('processor.complete', '...pydbgr')
 
 # arg_split culled from ipython's routine
 def arg_split(s,posix=False):
@@ -244,6 +245,7 @@ class CommandProcessor(Mprocessor.Processor):
         self.cmd_name         = ''     # command name before alias or
                                        # macro resolution
         self.cmd_queue        = []     # Queued debugger commands
+        self.completer        = lambda text, state: Mcomplete.completer(self, text, state)
         self.current_command  = ''     # Current command getting run
         self.debug_nest       = 1
         self.display_mgr      = Mdisplay.DisplayMgr()

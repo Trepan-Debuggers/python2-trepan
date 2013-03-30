@@ -17,17 +17,17 @@
 
 import socket
 from import_relative import import_relative
-Mbase_io = import_relative('base_io', top_name='pydbgr')
+Mbase    = import_relative('io.base', '...pydbgr')
 Mdefault = import_relative('default', '..lib', 'pydbgr')
 Mmisc    = import_relative('misc', '..', 'pydbgr')
 Mtcpfns  = import_relative('tcpfns', '.', 'pydbgr')
 
-class TCPClient(Mbase_io.DebuggerInOutBase):
+class TCPClient(Mbase.DebuggerInOutBase):
     """Debugger Client Input/Output Socket."""
 
     DEFAULT_INIT_OPTS = {'open': True}
     def __init__(self, inout=None, opts=None):
-        get_option = lambda key: Mmisc.option_set(opts, key, 
+        get_option = lambda key: Mmisc.option_set(opts, key,
                                                   Mdefault.CLIENT_SOCKET_OPTS)
         self.inout     = None
         self.addr      = None
@@ -51,7 +51,7 @@ class TCPClient(Mbase_io.DebuggerInOutBase):
 
     def open(self, opts=None):
 
-       get_option = lambda key: Mmisc.option_set(opts, key, 
+       get_option = lambda key: Mmisc.option_set(opts, key,
                                                  Mdefault.CLIENT_SOCKET_OPTS)
 
        HOST = get_option('HOST')
@@ -100,7 +100,7 @@ class TCPClient(Mbase_io.DebuggerInOutBase):
 
     def write(self, msg):
         """ This method the debugger uses to write a message unit."""
-        # FIXME: do we have to check the size of msg and split output? 
+        # FIXME: do we have to check the size of msg and split output?
         return self.inout.send(Mtcpfns.pack_msg(msg))
 
     pass
@@ -116,7 +116,7 @@ if __name__=='__main__':
         while True:
             line = raw_input('nu? ')
             if len(line) == 0: break
-            try: 
+            try:
                 line = inout.writeline(line)
                 print("Got: ", inout.read_msg().rstrip('\n'))
             except EOFError:
@@ -125,5 +125,3 @@ if __name__=='__main__':
         pass
     inout.close()
     pass
-
-

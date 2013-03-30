@@ -18,10 +18,10 @@
 import types
 
 from import_relative import import_relative, get_srcdir
-Mbase_io = import_relative('base_io', top_name='pydbgr')
+Mbase = import_relative('base', top_name='pydbgr')
 
-# Do we need this? 
-class ScriptInput(Mbase_io.DebuggerInputBase):
+# Do we need this?
+class ScriptInput(Mbase.DebuggerInputBase):
     """Debugger Script input - largely the same as DebuggerInput."""
 
     def __init__(self, inp, opts=None):
@@ -46,7 +46,7 @@ class ScriptInput(Mbase_io.DebuggerInputBase):
             self.name  = inp
             self.input = open(inp, 'r')
         else:
-            raise IOError, ("Invalid input type (%s) for %s" % (type(inp), 
+            raise IOError, ("Invalid input type (%s) for %s" % (type(inp),
                                                                 inp))
         return
 
@@ -71,7 +71,7 @@ if __name__=='__main__':
     my_file = os.path.join(get_srcdir(), 'scriptin.py')
     inp.open(my_file, opts={'use_raw': False})
     while True:
-        try: 
+        try:
             inp.readline()
         except EOFError:
             break
@@ -81,4 +81,3 @@ if __name__=='__main__':
     except EOFError:
         print('EOF handled correctly')
     pass
-

@@ -18,20 +18,20 @@
 import socket
 
 from import_relative import import_relative
-Mbase_io = import_relative('base_io', top_name='pydbgr')
+Mbase    = import_relative('io.base', '...pydbgr')
 Mdefault = import_relative('default', '..lib', top_name='pydbgr')
 Mmisc    = import_relative('misc', '..', 'pydbgr')
 Mtcpfns  = import_relative('tcpfns', '.', 'pydbgr')
 
 ## FIXME: Consider using Python's socketserver/SocketServer?
-class TCPServer(Mbase_io.DebuggerInOutBase):
+class TCPServer(Mbase.DebuggerInOutBase):
     """Debugger Server Input/Output Socket."""
 
     DEFAULT_INIT_OPTS = {'open': True}
     def __init__(self, inout=None, opts=None):
-        get_option = lambda key: Mmisc.option_set(opts, key, 
+        get_option = lambda key: Mmisc.option_set(opts, key,
                                                   self.DEFAULT_INIT_OPTS)
-        
+
         self.inout  = None
         self.conn   = None
         self.addr   = None
@@ -59,9 +59,9 @@ class TCPServer(Mbase_io.DebuggerInOutBase):
         return
 
     def open(self, opts=None):
-        get_option = lambda key: Mmisc.option_set(opts, key, 
+        get_option = lambda key: Mmisc.option_set(opts, key,
                                                   Mdefault.SERVER_SOCKET_OPTS)
-        
+
         self.HOST = get_option('HOST')
         self.PORT = get_option('PORT')
         self.inout = None
@@ -77,9 +77,9 @@ class TCPServer(Mbase_io.DebuggerInOutBase):
                 if get_option('reuse'):
                     # The following socket option allows the OS to reclaim
                     # The address faster on termination.
-                    self.inout.setsockopt(socket.SOL_SOCKET, 
+                    self.inout.setsockopt(socket.SOL_SOCKET,
                                           socket.SO_REUSEADDR, 1)
-                    
+
                     pass
                 self.inout.bind(sa)
                 self.inout.listen(1)
@@ -93,7 +93,7 @@ class TCPServer(Mbase_io.DebuggerInOutBase):
             raise IOError('could not open server socket on port %s' %
                             self.PORT)
         return
-    
+
     def read(self):
         if len(self.buf) == 0:
             self.read_msg()
@@ -125,7 +125,7 @@ class TCPServer(Mbase_io.DebuggerInOutBase):
         self.conn, self.addr = self.inout.accept()
         self.state = 'connected'
         return
-    
+
     def write(self, msg):
         """ This method the debugger uses to write. In contrast to
         writeline, no newline is added to the end to `str'. Also
@@ -134,7 +134,7 @@ class TCPServer(Mbase_io.DebuggerInOutBase):
         if self.state != 'connected':
             self.wait_for_connect()
             pass
-        # FIXME: do we have to check the size of msg and split output? 
+        # FIXME: do we have to check the size of msg and split output?
         return self.conn.send(Mtcpfns.pack_msg(msg))
 
 # Demo
@@ -145,7 +145,7 @@ if __name__=='__main__':
         print('Listening for connection...')
         inout.open()
         while True:
-            try: 
+            try:
                 line = inout.read_msg().rstrip('\n')
                 print(line)
                 inout.writeline('ack: ' + line)
@@ -155,5 +155,3 @@ if __name__=='__main__':
         pass
     inout.close()
     pass
-
-

@@ -18,17 +18,17 @@
 import tempfile, os
 
 from import_relative import import_relative
-Mbase_io = import_relative('base_io', top_name='pydbgr')
-Mdefault = import_relative('default', '..lib', 'pydbgr')
+Mbase    = import_relative('base', '..io', top_name='pydbgr')
+Mdefault = import_relative('lib.default', '..', 'pydbgr')
 Mfile    = import_relative('file', '..lib', 'pydbgr')
 Mmisc    = import_relative('misc', '..', 'pydbgr')
 
-class FIFOClient(Mbase_io.DebuggerInOutBase):
+class FIFOClient(Mbase.DebuggerInOutBase):
     """Debugger Client Input/Output Socket."""
 
     DEFAULT_INIT_OPTS = {'open': True}
     def __init__(self, inp=None, opts=None):
-        get_option = lambda key: Mmisc.option_set(opts, key, 
+        get_option = lambda key: Mmisc.option_set(opts, key,
                                                   Mdefault.CLIENT_SOCKET_OPTS)
         self.state = 'disconnected'
         self.flush_after_write = True
@@ -56,7 +56,7 @@ class FIFOClient(Mbase_io.DebuggerInOutBase):
 
     def flush(self):
         return self.output.flush()
-    
+
     def open(self, pid, opts=None):
 
        # Not in/out are reversed from server side
@@ -66,34 +66,34 @@ class FIFOClient(Mbase_io.DebuggerInOutBase):
        is_readable = Mfile.readable(self.out_name)
        if not is_readable:
            if is_readable is None:
-               raise IOError("output FIFO %s doesn't exist" % 
+               raise IOError("output FIFO %s doesn't exist" %
                                self.out_name)
            else:
-               raise IOError("output FIFO %s is not readable" % 
+               raise IOError("output FIFO %s is not readable" %
                                self.out_name)
        is_readable = Mfile.readable(self.in_name)
        if not is_readable:
            if is_readable is None:
-               raise IOError("input FIFO %s doesn't exist" % 
+               raise IOError("input FIFO %s doesn't exist" %
                                self.in_name)
            else:
-               raise IOError("output FIFO %s is not readable" % 
+               raise IOError("output FIFO %s is not readable" %
                                self.out_name)
        self.state     = 'active'
        return
 
     def readline(self):
-        """Read a line of input. EOFError will be raised on EOF.  
+        """Read a line of input. EOFError will be raised on EOF.
 
         Note that we don't support prompting"""
         # FIXME: do we have to create and check a buffer for
-        # lines? 
+        # lines?
         if self.state == 'active':
             if not self.input:
                 self.input = open(self.in_name, 'r')
                 pass
             line = self.input.readline()
-            if not line: 
+            if not line:
                 self.state = 'disconnected'
                 raise EOFError
             return line.rstrip("\n")
@@ -110,7 +110,7 @@ class FIFOClient(Mbase_io.DebuggerInOutBase):
                 self.output = open(self.out_name, 'w')
                 pass
             pass
-        else: 
+        else:
             raise EOFError
         self.output.write(msg)
         if self.flush_after_write: self.flush()
@@ -128,7 +128,7 @@ if __name__=='__main__':
             prompt = fifo.readline()
             line = raw_input(prompt)
             if len(line) == 0: break
-            try: 
+            try:
                 line = fifo.writeline(line)
                 print("Got: ", fifo.readline())
             except EOFError:
@@ -137,5 +137,3 @@ if __name__=='__main__':
         pass
     fifo.close()
     pass
-
-

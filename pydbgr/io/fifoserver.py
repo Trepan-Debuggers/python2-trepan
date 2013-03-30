@@ -21,17 +21,17 @@ if hasattr(os, 'mkfifo'):
     import atexit, tempfile
 
     from import_relative import import_relative
-    Mbase_io = import_relative('base_io', top_name='pydbgr')
-    Mdefault = import_relative('default', '..lib', top_name='pydbgr')
+    Mbase    = import_relative('base', '..io', top_name='pydbgr')
+    Mdefault = import_relative('lib.default', '..', top_name='pydbgr')
     Mmisc    = import_relative('misc', '..', 'pydbgr')
 
     ## FIXME: Consider using Python's socketserver/SocketServer?
-    class FIFOServer(Mbase_io.DebuggerInOutBase):
+    class FIFOServer(Mbase.DebuggerInOutBase):
         """Debugger Server Input/Output Socket."""
 
         DEFAULT_INIT_OPTS = {'open': True}
         def __init__(self, opts=None):
-            get_option = lambda key: Mmisc.option_set(opts, key, 
+            get_option = lambda key: Mmisc.option_set(opts, key,
                                                       self.DEFAULT_INIT_OPTS)
             atexit.register(self.close)
             self.flush_after_write = True
@@ -78,17 +78,17 @@ if hasattr(os, 'mkfifo'):
             return
 
         def readline(self):
-            """Read a line of input. EOFError will be raised on EOF.  
+            """Read a line of input. EOFError will be raised on EOF.
 
             Note that we don't support prompting"""
             # FIXME: do we have to create and check a buffer for
-            # lines? 
+            # lines?
             if self.state == 'active':
                 if not self.input:
                     self.input = open(self.in_name, 'r')
                     pass
                 line = self.input.readline()
-                if not line: 
+                if not line:
                     self.state = 'disconnected'
                     raise EOFError
                 return line.rstrip("\n")
@@ -105,7 +105,7 @@ if hasattr(os, 'mkfifo'):
                     self.output = open(self.out_name, 'w')
                     pass
                 pass
-            else: 
+            else:
                 raise EOFError
             self.output.write(msg)
             if self.flush_after_write: self.flush()
@@ -118,7 +118,7 @@ if hasattr(os, 'mkfifo'):
             fifo.open()
             print('Looking for input on %s"...' % fifo.in_name)
             while True:
-                try: 
+                try:
                     fifo.write('nu?')
                     fifo.writeline(' ')
                     line = fifo.readline()

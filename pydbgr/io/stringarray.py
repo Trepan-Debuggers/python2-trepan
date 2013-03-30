@@ -17,9 +17,9 @@
 
 import types
 from import_relative import import_relative
-Mbase_io = import_relative('base_io', top_name='pydbgr')
+Mbase  = import_relative('io.base', '...pydbgr')
 
-class StringArrayInput(Mbase_io.DebuggerInputBase):
+class StringArrayInput(Mbase.DebuggerInputBase):
     """Simulate I/O using an array of strings. Sort of like StringIO, but
     even simplier. """
 
@@ -55,7 +55,7 @@ class StringArrayInput(Mbase_io.DebuggerInputBase):
         return line
     pass
 
-class StringArrayOutput(Mbase_io.DebuggerOutputBase):
+class StringArrayOutput(Mbase.DebuggerOutputBase):
     """Simulate I/O using an array of strings. Sort of like StringIO, but
     even simplier. """
 

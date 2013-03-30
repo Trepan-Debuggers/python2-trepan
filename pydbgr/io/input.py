@@ -18,8 +18,8 @@
 import sys, types, StringIO
 
 from import_relative import import_relative
-Mbase_io  = import_relative('io.base_io', '...pydbgr')
-Mmisc     = import_relative('misc', '...pydbgr')
+Mbase  = import_relative('io.base', '...pydbgr')
+Mmisc  = import_relative('misc', '...pydbgr')
 
 def readline_importable():
     try:
@@ -29,7 +29,7 @@ def readline_importable():
         return False
     return # Not reached
 
-class DebuggerUserInput(Mbase_io.DebuggerInputBase):
+class DebuggerUserInput(Mbase.DebuggerInputBase):
     """Debugger input connected to what we think of as a end-user input
     as opposed to a relay mechanism to another process. Input could be
     interative terminal, but it might be file input."""

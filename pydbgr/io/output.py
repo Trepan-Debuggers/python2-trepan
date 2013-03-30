@@ -18,9 +18,9 @@
 import types, sys, StringIO
 
 from import_relative import import_relative
-Mbase_io  = import_relative('base_io', top_name='pydbgr')
+Mbase  = import_relative('io.base', '...pydbgr')
 
-class DebuggerUserOutput(Mbase_io.DebuggerOutputBase):
+class DebuggerUserOutput(Mbase.DebuggerOutputBase):
     """Debugger output shown directly to what we think of as end-user
     ouptut as opposed to a relay mechanism to another process. Output
     could be an interactive terminal, but it might also be file output"""
@@ -34,9 +34,9 @@ class DebuggerUserOutput(Mbase_io.DebuggerOutputBase):
 
     def flush(self):
         return self.output.flush()
-    
+
     def open(self, output, opts=None):
-        """Use this to set where to write to. output can be a 
+        """Use this to set where to write to. output can be a
         file object or a string. This code raises IOError on error."""
         if isinstance(output, types.FileType) or \
            isinstance(output, StringIO.StringIO) or \
@@ -45,7 +45,7 @@ class DebuggerUserOutput(Mbase_io.DebuggerOutputBase):
         elif isinstance(output, types.StringType):
             output = open(output, 'w')
         else:
-            raise IOError, ("Invalid output type (%s) for %s" % (type(output), 
+            raise IOError, ("Invalid output type (%s) for %s" % (type(output),
                                                                  output))
         self.output = output
         return
@@ -70,11 +70,10 @@ if __name__=='__main__':
     out.flush_after_write = True
     out.write("Last hello")
     out.close()
-    try: 
+    try:
         out.writeline("You won't see me")
     except ValueError:
         pass
     # Closing after already closed is okay.
     out.close()
     pass
-

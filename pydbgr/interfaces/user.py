@@ -28,8 +28,6 @@ histfile = os.path.expanduser('~/.pydbgr_hist')
 
 DEFAULT_USER_SETTINGS = {
     'histfile'     : histfile, # Where do we save the history?
-    'hist_save'    : True,    # Save debugger history?
-
 }
 
 try:
@@ -57,14 +55,14 @@ class UserInterface(Minterface.DebuggerInterface):
                 parse_and_bind("tab: complete")
                 set_completer(complete)
                 pass
-            histfile = get_option('histfile')
-            if histfile:
+            self.histfile = get_option('histfile')
+            if self.histfile:
                 try:
                     read_history_file(histfile)
                 except IOError:
                     pass
                 set_history_length(50)
-                atexit.register(write_history_file, histfile)
+                atexit.register(write_history_file, self.histfile)
                 pass
         return
 

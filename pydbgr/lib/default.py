@@ -94,6 +94,9 @@ DEBUGGER_SETTINGS = {
     #  'light'   : terminal highlighting for a light background
     'highlight'     : 'light',
 
+    # Save debugger history?
+    'hist_save'     : True,
+
     # Show function calls/returns?
     'fntrace'       : False,
 
@@ -143,11 +146,11 @@ SERVER_SOCKET_OPTS = {
 
 # Default settings on the Debugger#start() method call
 START_OPTS = {
-    'event_set'     : tracer.ALL_EVENTS,
     'add_hook_opts' : tracer.DEFAULT_ADD_HOOK_OPTS,
-    'start'         : False,
+    'backlevel'     : 0,      # trace caller and frames created from that
+    'event_set'     : tracer.ALL_EVENTS,
     'force'         : False,  # Force a new event handler?
-    'backlevel'     : 0  # trace caller and frames created from that
+    'start'         : False,
     }
 
 # Default settings. on the Debugger#stop() method call.

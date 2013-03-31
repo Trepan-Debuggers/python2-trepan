@@ -818,11 +818,12 @@ class CommandProcessor(Mprocessor.Processor):
     def write_history_file(self):
         """Write the command history file -- possibly."""
         settings = self.debugger.settings
+        histfile = self.debugger.intf[-1].histfile
         if settings['hist_save']:
             try:
                 import readline
                 try:
-                    readline.write_history_file(settings['histfile'])
+                    readline.write_history_file(histfile)
                 except IOError:
                     pass
             except ImportError:

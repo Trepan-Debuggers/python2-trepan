@@ -50,6 +50,13 @@ import tracer, tracefilter
 
 debugger_obj = None
 
+try:
+    from readline import get_line_buffer
+except ImportError:
+    def get_line_buffer():
+        return None
+    pass
+
 class Debugger:
 
     # The following functions have to be defined before DEFAULT_INIT_OPTS which
@@ -329,9 +336,10 @@ class Debugger:
             pass
         return
 
-    def complete(self, text, state):
+    def complete(self, last_token, state):
         if hasattr(self.core.processor, 'completer'):
-            results = self.core.processor.completer(text, state)
+            str = get_line_buffer() or last_token
+            results = self.core.processor.completer(str, state)
             return results[state]
         else:
             return ['', None]

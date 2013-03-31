@@ -17,6 +17,7 @@ import inspect, os, re, string, sys
 from import_relative import get_srcdir, import_relative
 Mbase_cmd  = import_relative('base_cmd')
 Msubcmd    = import_relative('subcmd', os.path.pardir)
+Mcomplete  = import_relative('complete', '...lib', 'pydbgr')
 
 class SubcommandMgr(Mbase_cmd.DebuggerCommand):
 
@@ -74,22 +75,22 @@ class SubcommandMgr(Mbase_cmd.DebuggerCommand):
             try:
                 command_mod = getattr(__import__(import_name), module_name)
             except ImportError:
-                print("Error importing name %s module %s: %s" % 
+                print("Error importing name %s module %s: %s" %
                       (import_name, module_name, sys.exc_info()[0]))
                 continue
-            
+
 
             # Even though we tend not to do this, it is possible to
             # put more than one class into a module/file.  So look for
             # all of them.
-            classnames = [ classname for classname, classvalue in 
+            classnames = [ classname for classname, classvalue in
                            inspect.getmembers(command_mod, inspect.isclass)
-                           if ('DebuggerCommand' != classname and 
+                           if ('DebuggerCommand' != classname and
                                classname.startswith(class_prefix)) ]
 
             for classname in classnames:
                 eval_cmd = eval_cmd_template % classname
-                try: 
+                try:
                     instance = eval(eval_cmd)
                     self.cmds.add(instance)
                 except:
@@ -108,7 +109,7 @@ class SubcommandMgr(Mbase_cmd.DebuggerCommand):
             help cmd subcmd
             help cmd commands
 
-        Our shtick is to give help for the overall command only if 
+        Our shtick is to give help for the overall command only if
         subcommand or 'commands' is not given. If a subcommand is given and
         found, then specific help for that is given. If 'commands' is given
         we will list the all the subcommands.
@@ -119,8 +120,8 @@ class SubcommandMgr(Mbase_cmd.DebuggerCommand):
             if doc:
                 self.rst_msg(doc.rstrip('\n'))
             else:
-                self.proc.intf[-1].errmsg('Sorry - author mess up. ' + 
-                                          'No help registered for command' + 
+                self.proc.intf[-1].errmsg('Sorry - author mess up. ' +
+                                          'No help registered for command' +
                                           self.name)
                 pass
             return
@@ -139,9 +140,9 @@ class SubcommandMgr(Mbase_cmd.DebuggerCommand):
             if doc:
                 self.proc.rst_msg(doc.rstrip('\n'))
             else:
-                self.proc.intf[-1].errmsg('Sorry - author mess up. ' + 
-                                          'No help registered for subcommand: ' + 
-                                          subcmd_name + ', of command: ' + 
+                self.proc.intf[-1].errmsg('Sorry - author mess up. ' +
+                                          'No help registered for subcommand: ' +
+                                          subcmd_name + ', of command: ' +
                                           self.name)
                 pass
         else:
@@ -157,6 +158,16 @@ class SubcommandMgr(Mbase_cmd.DebuggerCommand):
                 pass
             pass
         return
+
+    # Return an Array of subcommands that can start with +arg+. If none
+    # found we just return +arg+.
+    # FIXME: Not used any more?
+    def complete(self, prefix):
+        return Mcomplete.complete_token(self.subcmds.subcmds.keys(), prefix)
+
+    def complete_token_with_next(self, prefix):
+        result = Mcomplete.complete_token_with_next(self.cmds.subcmds, prefix)
+        return Mcomplete.complete_token_with_next(self.cmds.subcmds, prefix)
 
     def run(self, args):
         """Ooops -- the debugger author didn't redefine this run docstring."""
@@ -194,7 +205,7 @@ class SubcommandMgr(Mbase_cmd.DebuggerCommand):
 
     def undefined_subcmd(self, cmd, subcmd):
         """Error message when subcommand asked for but doesn't exist"""
-        self.proc.intf[-1].errmsg(('Undefined "%s" subcommand: "%s". ' + 
+        self.proc.intf[-1].errmsg(('Undefined "%s" subcommand: "%s". ' +
                                   'Try "help %s *".') % (cmd, subcmd, cmd))
         return
     pass

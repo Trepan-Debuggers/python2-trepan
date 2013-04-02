@@ -70,10 +70,10 @@ if __name__ == '__main__':
     Mdebugger = import_relative('debugger', '...')
     d, cp = mock.dbg_setup()
     command = QuitCommand(cp)
-    try: 
+    try:
         command.run(['quit'])
     except Mexcept.DebuggerQuit:
-        print "A got 'quit' a exception. Ok, be that way - I'm going home."
+        print("A got 'quit' a exception. Ok, be that way - I'm going home.")
         pass
 
     class MyThread(threading.Thread):

@@ -12,4 +12,4 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """ Copyright (C) 2013 Rocky Bernstein <rocky@gnu.org> """
 __import__('pkg_resources').declare_namespace(__name__)
-__all__ = ['main']
+__all__ = ['main', 'msg']

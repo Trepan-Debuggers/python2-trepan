@@ -42,7 +42,7 @@ class DebuggerCommand:
         # or debugger will change over the course of the program
         # execution like errmsg(), msg(), and msg_nocr() might. (See
         # the note below on these latter 3 methods.)
-        # 
+        #
         self.core     = proc.core
         self.debugger = proc.debugger
         self.settings = self.debugger.settings
@@ -53,7 +53,7 @@ class DebuggerCommand:
 
     # Note for errmsg, msg, and msg_nocr we don't want to simply make
     # an assignment of method names like self.msg = self.debugger.intf.msg,
-    # because we want to allow the interface (intf) to change 
+    # because we want to allow the interface (intf) to change
     # dynamically. That is, the value of self.debugger may change
     # in the course of the program and if we made such an method assignemnt
     # we wouldn't pick up that change in our self.msg
@@ -62,16 +62,16 @@ class DebuggerCommand:
         try:
             return(self.debugger.intf[-1].errmsg(msg))
         except EOFError:
-            # FIXME: what do we do here? 
+            # FIXME: what do we do here?
             pass
         return None
-               
+
     def msg(self, msg, opts={}):
         """ Convenience short-hand for self.debugger.intf.msg """
         try:
             return(self.debugger.intf[-1].msg(msg))
         except EOFError:
-            # FIXME: what do we do here? 
+            # FIXME: what do we do here?
             pass
         return None
 
@@ -80,15 +80,15 @@ class DebuggerCommand:
         try:
             return(self.debugger.intf[-1].msg_nocr(msg))
         except EOFError:
-            # FIXME: what do we do here? 
+            # FIXME: what do we do here?
             pass
         return None
-        
+
     def run(self, args):
         """ The method that implements the debugger command.
         Help on the command comes from the docstring of this method.
         """
-        raise NotImplementedError, NotImplementedMessage
+        raise NotImplementedError(NotImplementedMessage)
 
     pass
 

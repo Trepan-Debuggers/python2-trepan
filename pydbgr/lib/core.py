@@ -47,7 +47,7 @@ class DebuggerCore:
         # entering event processor? Zero (0) means stop at the next one.
         # A negative number indicates no eventual stopping.
         'step_ignore' : 0,
-        'ignore_filter': None # But see debugger.py
+        'ignore_filter': None, # But see debugger.py
         }
 
     def __init__(self, debugger, opts=None):
@@ -102,7 +102,7 @@ class DebuggerCore:
         # We also will cache the last frame and thread number encountered
         # so we don't have to compute the current level all the time.
         self.last_frame      = None
-        self.last_level      = None
+        self.last_level      = 10000
         self.last_thread     = None
         self.stop_level      = None
         self.stop_on_finish  = False
@@ -125,6 +125,8 @@ class DebuggerCore:
         # When trace_hook_suspend is set True, we'll suspend
         # debugging.
         self.trace_hook_suspend = False
+
+        self.until_condition = get_option('until_condition')
 
         return
 
@@ -304,6 +306,19 @@ class DebuggerCore:
             pass
         return False
 
+    def matches_condition(self, frame):
+        # Conditional bp.
+        # Ignore count applies only to those bpt hits where the
+        # condition evaluates to true.
+        try:
+            val = eval(self.until_condition, frame.f_globals, frame.f_locals)
+        except:
+            # if eval fails, most conservative thing is to
+            # stop on breakpoint regardless of ignore count.
+            # Don't delete temporary, as another hint to user.
+            return False
+        return val
+
     def is_stop_here(self, frame, event, arg):
         """ Does the magic to determine if we stop here and run a
         command processor or not. If so, return True and set
@@ -403,6 +418,10 @@ class DebuggerCore:
                 if self.event in print_event_set:
                     self.trace_processor.event_processor(frame, self.event, arg)
                     pass
+                pass
+
+            if self.until_condition:
+                if not self.matches_condition(frame): return True
                 pass
 
             trace_event_set = self.debugger.settings['events']

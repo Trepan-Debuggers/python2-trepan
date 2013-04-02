@@ -42,7 +42,7 @@ Mmisc       = import_relative('misc', '.', package)
 __title__ = package
 
 # VERSION.py sets variable VERSION.
-execfile(os.path.join(get_srcdir(), 'VERSION.py'))
+exec(compile(open(os.path.join(get_srcdir(), 'VERSION.py')).read(), os.path.join(get_srcdir(), 'VERSION.py'), 'exec'))
 __version__ = VERSION
 
 def process_options(debugger_name, pkg_version, sys_argv, option_list=None):
@@ -63,15 +63,15 @@ def process_options(debugger_name, pkg_version, sys_argv, option_list=None):
                              version="%%prog version %s" % pkg_version)
 
     optparser.add_option("-F", "--fntrace", dest="fntrace",
-                         action="store_true", default=False, 
+                         action="store_true", default=False,
                          help="Show functions before executing them. " +
                          "This option also sets --batch")
     optparser.add_option("--basename", dest="basename",
-                         action="store_true", default=False, 
+                         action="store_true", default=False,
                          help="Filenames strip off basename, (e.g. for regression tests)"
                          )
     optparser.add_option("--different", dest="different",
-                         action="store_true", default=True, 
+                         action="store_true", default=True,
                          help="Consecutive stops should have different positions")
     optparser.disable_interspersed_args()
 
@@ -87,18 +87,18 @@ def _postprocess_options(dbg, opts):
     print_events = []
     if opts.fntrace:   print_events = ['c_call', 'c_return', 'call', 'return']
     # if opts.linetrace: print_events += ['line']
-    if len(print_events): 
+    if len(print_events):
         dbg.settings['printset'] = frozenset(print_events)
         pass
 
-    for setting in ('basename', 'different',): 
+    for setting in ('basename', 'different',):
         dbg.settings[setting] = getattr(opts, setting)
         pass
 
     dbg.settings['highlight'] = 'plain'
-        
+
     Mdebugger.debugger_obj = dbg
-    return 
+    return
 
 def main(dbg=None, sys_argv=list(sys.argv)):
     """Routine which gets run if we were invoked directly"""
@@ -106,7 +106,7 @@ def main(dbg=None, sys_argv=list(sys.argv)):
 
     # Save the original just for use in the restart that works via exec.
     orig_sys_argv = list(sys_argv)
-    opts, dbg_opts, sys_argv  = process_options(__title__, __version__, 
+    opts, dbg_opts, sys_argv  = process_options(__title__, __version__,
                                                 sys_argv)
     dbg_opts['orig_sys_argv'] = sys_argv
     dbg_opts['interface']     = Mbullwinkle.BWInterface()
@@ -121,7 +121,6 @@ def main(dbg=None, sys_argv=list(sys.argv)):
     # process_options has munged sys.argv to remove any options that
     # options that belong to this debugger. The original options to
     # invoke the debugger and script are in global sys_argv
-
     if len(sys_argv) == 0:
         # No program given to debug. Set to go into a command loop
         # anyway
@@ -188,7 +187,7 @@ def main(dbg=None, sys_argv=list(sys.argv)):
             dbg.core.execution_status = 'Restart requested'
             if dbg.program_sys_argv:
                 sys.argv = list(dbg.program_sys_argv)
-                part1 = ('Restarting %s with arguments:' % 
+                part1 = ('Restarting %s with arguments:' %
                          dbg.core.filename(mainpyfile))
                 args  = ' '.join(dbg.program_sys_argv[1:])
                 dbg.intf[-1].msg(Mmisc.wrapped_lines(part1, args,

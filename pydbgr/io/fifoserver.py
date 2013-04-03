@@ -72,9 +72,13 @@ if hasattr(os, 'mkfifo'):
             pid            = os.getpid()
             self.out_name  = os.path.join(d, ('pydbgr-%s.out' % pid))
             self.in_name   = os.path.join(d, ('pydbgr-%s.in' % pid))
-            os.mkfifo(self.in_name)
-            os.mkfifo(self.out_name)
-            self.state     = 'active'
+            try:
+                os.mkfifo(self.in_name)
+                os.mkfifo(self.out_name)
+                self.state     = 'active'
+            except OSError:
+                self.state = 'error'
+                pass
             return
 
         def readline(self):

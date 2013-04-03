@@ -31,6 +31,7 @@ class TestTCP(unittest.TestCase):
         except:
             print("Skipping because of client open failure")
             pass
+        client.close()
         server.close()
         return
 

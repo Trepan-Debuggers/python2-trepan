@@ -5,7 +5,7 @@ def run_debugger(testname, python_file, dbgr_opts='', args='',
                  outfile=None):
     srcdir    = get_srcdir()
     datadir   = os.path.join(srcdir, '..', 'data')
-    progdir   = os.path.join(srcdir, '..', 'example')  
+    progdir   = os.path.join(srcdir, '..', 'example')
     dbgrdir   = os.path.join(srcdir, '..', '..', 'pydbgr')
     dbgr_short= "cli.py"
     dbgr_path = os.path.join(dbgrdir, dbgr_short)
@@ -50,4 +50,3 @@ def run_debugger(testname, python_file, dbgr_opts='', args='',
         print(line.rstrip())
         pass
     return len(diff) == 0
-    

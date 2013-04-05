@@ -288,7 +288,6 @@ def main(dbg=None, sys_argv=list(sys.argv)):
         elif 'TCP' == intf.server_type:
             print('Starting TCP server listening on port %s.' % intf.inout.PORT)
             pass
-        return
     elif opts.client:
         Mclient.main()
         return

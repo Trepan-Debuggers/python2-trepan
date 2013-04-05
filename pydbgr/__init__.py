@@ -116,4 +116,4 @@ Copyright (C) 2008-2009, 2013 Rocky Bernstein <rocky@gnu.org>
 """
 __docformat__ = 'restructuredtext'
 __import__('pkg_resources').declare_namespace(__name__)
-__all__ = ['api', 'exception', 'interfaces', 'interface', 'io', 'lib', 'processor', 'bwprocessor', 'clifns', 'misc']
+__all__ = ['api', 'client', 'exception', 'interfaces', 'interface', 'io', 'lib', 'processor', 'bwprocessor', 'clifns', 'misc']

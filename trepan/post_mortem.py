@@ -142,7 +142,7 @@ def post_mortem(exc=None, frameno=1, dbg=None):
         # not always equal to t.tb_lineno, I don't know.
         f = exc_tb.tb_frame
         if f and f.f_lineno != exc_tb.tb_lineno : f = f.f_back
-        dbg.core.processor.event_processor(f, 'exception', exc, 'Trepan:pm')
+        dbg.core.processor.event_processor(f, 'exception', exc, 'trepan2:pm')
     except Mexcept.DebuggerRestart:
         while True:
             sys.argv = list(dbg._program_sys_argv)
@@ -174,7 +174,7 @@ def uncaught_exception(dbg):
     dbg.core.execution_status = ('Terminated with unhandled exception %s'
                                  % exc_type)
     dbg.core.processor.event_processor(exc_tb.tb_frame, 'exception', exc,
-                                       'Trepan:pm')
+                                       'trepan2:pm')
     print("Post mortem debugger finished.")
     return
 

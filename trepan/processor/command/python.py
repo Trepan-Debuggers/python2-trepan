@@ -26,7 +26,7 @@ class PythonCommand(Mbase_cmd.DebuggerCommand):
     """**python** [**-d**]
 
 Run Python as a command subshell. The *sys.ps1* prompt will be set to
-`Trepan >>> `.
+`trepan2 >>> `.
 
 If *-d* is passed, you can access debugger state via local variable *debugger*.
 
@@ -64,7 +64,7 @@ To issue a debugger command use function *dbgr()*. For example:
                 pass
             pass
 
-        banner_tmpl='''Trepan python shell%s
+        banner_tmpl='''trepan2 python shell%s
 Use dbgr(*string*) to issue debugger command: *string*'''
 
         debug = len(args) > 1 and args[1] == '-d'
@@ -86,7 +86,7 @@ Use dbgr(*string*) to issue debugger command: *string*'''
         if debug: my_locals['debugger'] = self.debugger
         my_locals['dbgr'] = self.dbgr
 
-        sys.ps1 = 'Trepan >>> '
+        sys.ps1 = 'trepan2 >>> '
         if len(my_locals):
             interact(banner=(banner_tmpl % ' with locals'),
                      my_locals=my_locals, my_globals=my_globals)

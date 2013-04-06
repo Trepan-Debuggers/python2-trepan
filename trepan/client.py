@@ -50,7 +50,7 @@ def start_client(connection_opts):
                 intf.write_remote(Mcomcodes.CONFIRM_REPLY, msg)
                 pass
             elif Mcomcodes.PROMPT == control:
-                msg = intf.read_command('(Trepan*) ').strip()
+                msg = intf.read_command('(trepan2*) ').strip()
                 intf.write_remote(Mcomcodes.CONFIRM_REPLY, msg)
             elif Mcomcodes.QUIT == control:
                 print('Quitting...')

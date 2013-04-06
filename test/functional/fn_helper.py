@@ -31,8 +31,8 @@ def filter_line_cmd(a):
          if re.match(r'^.. \d+\s+', s)]
     # Remove debugger prompts
     # For example:
-    #  (Trepan)
-    a2 = [re.sub(r'\n\(Trepan\) .*', '', s) for s in a1]
+    #  (trepan2)
+    a2 = [re.sub(r'\n\(trepan2\) .*', '', s) for s in a1]
 
     # Remove locations (test-next.py:41): test_next_between_fn
     a3 = [re.sub(r'\n\(.*:\d+\):.*', '', s) for s in a2]

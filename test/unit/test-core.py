@@ -1,9 +1,9 @@
 #!/usr/bin/env python
-'Unit test for pydbgr.processor.cmdproc'
+'Unit test for trepan.processor.cmdproc'
 import os, unittest
 from import_relative import import_relative
 
-Mcore = import_relative('lib.core', '...pydbgr')
+Mcore = import_relative('lib.core', '...trepan')
 
 class MockProcessor:
     pass
@@ -26,7 +26,7 @@ class TestCore(unittest.TestCase):
         opts = {'processor': MockProcessor()}
         dc = Mcore.DebuggerCore(None, opts=opts)
         s = '<string>'
-        self.assertEqual(s, dc.canonic(s), 
+        self.assertEqual(s, dc.canonic(s),
                          'canonic should not have changed string')
         self.assertEqual(os.path.sep, dc.canonic(__file__)[0],
                          'canonic should produce an absolute file')

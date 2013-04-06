@@ -1,10 +1,10 @@
 #!/usr/bin/env python
-'Unit test for pydbgr.processor.command.kill'
+'Unit test for trepan.processor.command.kill'
 import unittest
 
 from import_relative import import_relative
 
-Mkill = import_relative('processor.command.kill', '...pydbgr')
+Mkill = import_relative('processor.command.kill', '...trepan')
 
 from cmdhelper import dbg_setup
 import signal

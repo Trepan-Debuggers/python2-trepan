@@ -1,16 +1,16 @@
 #!/usr/bin/env python
-'Unit test for pydbgr.processor.command.help'
+'Unit test for trepan.processor.command.help'
 import unittest
 
 from import_relative import import_relative
 
 # FIXME: until import_relative is fixed
-import_relative('pydbgr', '...', 'pydbgr')
+import_relative('trepan', '...', 'trepan')
 
-Mhelp    = import_relative('processor.command.help', '...pydbgr', 'pydbgr')
-Mcmdproc = import_relative('processor.cmdproc', '...pydbgr', 'pydbgr')
+Mhelp    = import_relative('processor.command.help', '...trepan', 'trepan')
+Mcmdproc = import_relative('processor.cmdproc', '...trepan', 'trepan')
 
-Mmock = import_relative('processor.command.mock', '...pydbgr')
+Mmock = import_relative('processor.command.mock', '...trepan')
 
 class TestHelp(unittest.TestCase):
     """Tests HelpCommand class"""
@@ -20,7 +20,7 @@ class TestHelp(unittest.TestCase):
         self.msgs               = []
         self.d                  = Mmock.MockDebugger()
         self.cp                 = Mcmdproc.CommandProcessor(self.d.core)
-        self.cp.intf[-1].msg    = self.msg 
+        self.cp.intf[-1].msg    = self.msg
         self.cp.intf[-1].errmsg = self.errmsg
         self.cmd                = Mhelp.HelpCommand(self.cp)
         self.cmd.msg            = self.msg
@@ -37,7 +37,7 @@ class TestHelp(unittest.TestCase):
 
     def test_help_command(self):
         """Test we can run 'help *cmd* for each command"""
-        
+
         for name in self.cp.commands.keys():
             self.cmd.run(['help', name])
             pass

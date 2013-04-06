@@ -1,10 +1,10 @@
 #!/usr/bin/env python
-'Unit test for pydbgr.lib.file'
+'Unit test for trepan.lib.file'
 import os, stat, tempfile, unittest
 from import_relative import import_relative
 
-import_relative('lib', '...pydbgr')
-Mfile = import_relative('lib.file', '...pydbgr')
+import_relative('lib', '...trepan')
+Mfile = import_relative('lib.file', '...trepan')
 
 class TestLibFile(unittest.TestCase):
 
@@ -29,14 +29,14 @@ class TestLibFile(unittest.TestCase):
 
     def test_readable(self):
         self.assertFalse(Mfile.readable('fdafdsa'))
-        for mode, can_read in [(stat.S_IRUSR, True), (stat.S_IWUSR, False)]: 
+        for mode, can_read in [(stat.S_IRUSR, True), (stat.S_IWUSR, False)]:
             f = tempfile.NamedTemporaryFile()
             os.chmod(f.name, mode)
             self.assertEqual(can_read, Mfile.readable(f.name))
             f.close()
             pass
         return
-    
+
     pass
 
 if __name__ == '__main__':

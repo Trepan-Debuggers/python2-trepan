@@ -1,10 +1,10 @@
 #!/usr/bin/env python
-'Unit test for pydbgr.processor.command.alias and unalias'
+'Unit test for trepan.processor.command.alias and unalias'
 import inspect, unittest
 
 from import_relative import import_relative
 
-Malias    = import_relative('processor.command.alias', '...pydbgr')
+Malias    = import_relative('processor.command.alias', '...trepan')
 
 class TestAliasCommand(unittest.TestCase):
     '''Test 'alias' and 'unalias' commands'''
@@ -20,7 +20,7 @@ class TestAliasCommand(unittest.TestCase):
     def setUp(self):
         self.errors = []
         self.msgs = []
-        Mdebugger        = import_relative('debugger', '...pydbgr', 'pydbgr')
+        Mdebugger        = import_relative('debugger', '...trepan', 'trepan')
         d                     = Mdebugger.Debugger()
         self.cmdproc          = d.core.processor
         self.cmdproc.curframe = inspect.currentframe()
@@ -53,23 +53,23 @@ class TestAliasCommand(unittest.TestCase):
                          "Expecting %serror for #{arg_str}.\n Got #{errmsgs}" %
                          shoulda[1])
         return
-      
+
     def is_alias_defined(self, alias_name):
         return alias_name in list(self.cmdproc.aliases.keys())
-      
+
     def test_alias_unalias_command(self):
         self.assertEqual(False, len(self.cmdproc.aliases) == 0,
                          'There should be some aliases defined')
-        
+
         self.assertEqual(False, self.is_alias_defined('ki'))
-        # from pydbgr.api import debug
+        # from trepan.api import debug
         # debug()
         self.check_alias(False, 'alias', 'ki', 'kill')
         self.assertEqual(True, self.is_alias_defined('ki'))
         self.check_alias(False, 'unalias', 'ki')
         self.assertEqual(False, self.is_alias_defined('ki'))
         return
-    
+
     pass
 
 if __name__ == '__main__':

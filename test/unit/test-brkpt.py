@@ -3,23 +3,23 @@
 import re, unittest
 from import_relative import import_relative
 
-Mbreakpoint = import_relative('lib.breakpoint', '...pydbgr')
+Mbreakpoint = import_relative('lib.breakpoint', '...trepan')
 
 class TestBreakpoint(unittest.TestCase):
-    
+
     def test_breakpoint(self):
         'Test breakpoint'
         bpmgr = Mbreakpoint.BreakpointManager()
         self.assertEqual(0, bpmgr.last())
         bp = bpmgr.add_breakpoint('foo', 5)
-        self.assertFalse(not 
-                         re.search('1   breakpoint   keep yes   at .*foo:5', 
+        self.assertFalse(not
+                         re.search('1   breakpoint   keep yes   at .*foo:5',
                                    str(bp)))
         self.assertEqual('B', bp.icon_char())
         self.assertEqual(True, bp.enabled)
         bp.disable()
         self.assertFalse(not
-                         re.search('1   breakpoint   keep no    at .*foo:5', 
+                         re.search('1   breakpoint   keep no    at .*foo:5',
                          str(bp)))
         self.assertEqual(False, bp.enabled)
         self.assertEqual('b', bp.icon_char())
@@ -47,13 +47,13 @@ class TestBreakpoint(unittest.TestCase):
         def foo(bp, bpmgr):
             frame = inspect.currentframe()
             self.assertEqual(True, Mbreakpoint.checkfuncname(bp, frame))
-            # frame.f_lineno is constantly updated. So adjust for the 
+            # frame.f_lineno is constantly updated. So adjust for the
             # line difference between the add_breakpoint and the check.
-            bp3 = bpmgr.add_breakpoint('foo', frame.f_lineno+1) 
+            bp3 = bpmgr.add_breakpoint('foo', frame.f_lineno+1)
             self.assertEqual(True, Mbreakpoint.checkfuncname(bp3, frame))
             self.assertEqual(False, Mbreakpoint.checkfuncname(bp3, frame))
             return
-    
+
         bp2 = bpmgr.add_breakpoint(None, None, False, None, 'foo')
         foo(bp2, bpmgr)
         return

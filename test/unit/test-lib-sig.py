@@ -1,9 +1,9 @@
 #!/usr/bin/env python
-'Unit test for pydbgr.lib.sighandler'
+'Unit test for trepan.lib.sighandler'
 import signal, unittest
 
 from import_relative import import_relative
-Msig = import_relative('lib.sighandler', '...pydbgr')
+Msig = import_relative('lib.sighandler', '...trepan')
 
 class TestLibSigHandle(unittest.TestCase):
 
@@ -14,11 +14,11 @@ class TestLibSigHandle(unittest.TestCase):
         return
 
     def test_canonic_signame(self):
-        for expect, name_num in (('SIGTERM',  '15'), 
-                                 ('SIGTERM', '-15'), 
-                                 ('SIGTERM', 'term'), 
+        for expect, name_num in (('SIGTERM',  '15'),
+                                 ('SIGTERM', '-15'),
+                                 ('SIGTERM', 'term'),
                                  ('SIGTERM', 'sigterm'),
-                                 ('SIGTERM', 'TERM'), 
+                                 ('SIGTERM', 'TERM'),
                                  (None, '300'),
                                  (False, 'bogus')):
             self.assertEqual(expect, Msig.canonic_signame(name_num),
@@ -27,14 +27,14 @@ class TestLibSigHandle(unittest.TestCase):
         pass
 
     def test_lookup_signame(self):
-        for expect, num in (('SIGTERM', 15), ('SIGTERM', -15), 
+        for expect, num in (('SIGTERM', 15), ('SIGTERM', -15),
                           (None, 300)):
             self.assertEqual(expect, Msig.lookup_signame(num))
             pass
         return
-    
+
     def test_lookup_signum(self):
-        for expect, name in ((15, 'SIGTERM'), (15, 'TERM'), 
+        for expect, name in ((15, 'SIGTERM'), (15, 'TERM'),
                              (15, 'term'), (None, 'nothere')):
             self.assertEqual(expect, Msig.lookup_signum(name))
             pass
@@ -50,7 +50,7 @@ class TestLibSigHandle(unittest.TestCase):
                 pass
             pass
         return
-    
+
     pass
 
 if __name__ == '__main__':

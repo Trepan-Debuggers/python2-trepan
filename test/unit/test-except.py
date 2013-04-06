@@ -1,9 +1,9 @@
 #!/usr/bin/env python
-'Unit test for pydbgr.exception'
+'Unit test for trepan.exception'
 import unittest
 from import_relative import import_relative
 
-Mexcept = import_relative('exception', '...pydbgr')
+Mexcept = import_relative('exception', '...trepan')
 
 class TestDeguggerExcept(unittest.TestCase):
 
@@ -17,6 +17,6 @@ class TestDeguggerExcept(unittest.TestCase):
             self.assertFalse(True)
         pass
         return
-        
+
 if __name__ == '__main__':
     unittest.main()

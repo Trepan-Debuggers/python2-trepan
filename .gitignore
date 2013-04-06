@@ -5,4 +5,5 @@
 /*.egg
 /build
 /dist
+/ChangeLog
 __pycache__

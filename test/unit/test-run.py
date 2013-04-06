@@ -1,14 +1,14 @@
 #!/usr/bin/env python
-'Unit test for pydbgr.processor.command.run'
+'Unit test for trepan.processor.command.run'
 import unittest
 
 from import_relative import import_relative
 
 # FIXME: until import_relative is fixed
-import_relative('pydbgr', '...', 'pydbgr')
+import_relative('trepan', '...', 'trepan')
 
-Mexcept  = import_relative('exception', '...pydbgr', 'pydbgr')
-Mrun     = import_relative('pydbgr.processor.command.run', '...', 'pydbgr')
+Mexcept  = import_relative('exception', '...trepan', 'trepan')
+Mrun     = import_relative('trepan.processor.command.run', '...', 'trepan')
 
 from cmdhelper import dbg_setup
 

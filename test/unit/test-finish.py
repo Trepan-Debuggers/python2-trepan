@@ -1,9 +1,9 @@
 #!/usr/bin/env python
-'Unit test for pydbgr.processor.command.step'
+'Unit test for trepan.processor.command.step'
 import sys, unittest
 
 from import_relative import import_relative
-Mfinish = import_relative('processor.command.finish', '...pydbgr')
+Mfinish = import_relative('processor.command.finish', '...trepan')
 
 from cmdhelper import dbg_setup
 

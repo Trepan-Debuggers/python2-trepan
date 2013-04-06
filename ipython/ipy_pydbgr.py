@@ -15,11 +15,11 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # Imported this when running IPython to cut over debugging stuff to use
-# pydbgr. There is much, much, much room for improvement.
+# trepan. There is much, much, much room for improvement.
 try:
-    import pydbgr.post_mortem, pydbgr.cli
+    import trepan.post_mortem, trepan.cli
 except ImportError:
-    raise ImportError("Sorry - pydbgr doesn't seem to be installed.")
+    raise ImportError("Sorry - trepan doesn't seem to be installed.")
 
 try:
     import IPython.ipapi
@@ -27,34 +27,34 @@ except ImportError:
     raise ImportError("IPython doesn't seem to be installed.")
 
 from IPython.genutils import arg_split
-from pydbgr.debugger import Debugger
+from trepan.debugger import Debugger
 
 ip = IPython.ipapi.get()
 
 if not ip:
     raise ImportError("IPython isn't running")
 
-def ipy_pydbgr_post_mortem(force=False):
-    '''A pydbgr replacement for IPython's iplib.debugger.
+def ipy_trepan_post_mortem(force=False):
+    '''A trepan replacement for IPython's iplib.debugger.
     The routine is called when IPython hits an exception and
     the user has indicated they want to go into post-mortem
     debugging for this.
     '''
     if not (force or __IPYTHON__.call_pdb): return
-    __IPYTHON__.history_saving_wrapper(pydbgr.post_mortem.pm)()
+    __IPYTHON__.history_saving_wrapper(trepan.post_mortem.pm)()
     return
 
-__IPYTHON__.debugger = ipy_pydbgr_post_mortem
-__IPYTHON__.InteractiveTB.debugger = ipy_pydbgr_post_mortem
+__IPYTHON__.debugger = ipy_trepan_post_mortem
+__IPYTHON__.InteractiveTB.debugger = ipy_trepan_post_mortem
 
-def ipy_pydbgr(self, args):
-    '''Call the pydbgr debugger.'''
+def ipy_trepan(self, args):
+    '''Call the trepan debugger.'''
     sys_argv = ['cli.py'] + arg_split(args)
     dbg = Debugger()
 
     # This is broken. For now I'd rather switch than fight it.
-    # __IPYTHON__.history_saving_wrapper(pydbgr.cli.main(sys_argv=argv))()
-    pydbgr.cli.main(dbg, sys_argv)
+    # __IPYTHON__.history_saving_wrapper(trepan.cli.main(sys_argv=argv))()
+    trepan.cli.main(dbg, sys_argv)
     return
 
-ip.expose_magic('pydbgr', ipy_pydbgr)
+ip.expose_magic('trepan', ipy_trepan)

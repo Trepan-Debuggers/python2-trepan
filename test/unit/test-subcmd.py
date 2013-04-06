@@ -1,34 +1,34 @@
 #!/usr/bin/env python
-'Unit test for pydbgr.processor.subcmd'
+'Unit test for trepan.processor.subcmd'
 import unittest
 from import_relative import import_relative
 
-Msubcmd   = import_relative('processor.subcmd', '...pydbgr')
-Mbase_cmd = import_relative('processor.command.base_cmd', '...pydbgr')
-Mmock     = import_relative('processor.command.mock', '...pydbgr')
+Msubcmd   = import_relative('processor.subcmd', '...trepan')
+Mbase_cmd = import_relative('processor.command.base_cmd', '...trepan')
+Mmock     = import_relative('processor.command.mock', '...trepan')
 
 class MyCommand(Mbase_cmd.DebuggerCommand):
     '''Doc string for testing'''
-    
+
     category = 'data'
     min_args = 0
     max_args = 5
     name_aliases = ('mycommand',)
-    
+
     def __init__(self):
         self.name  = 'test'
         return
-    
+
     def run(self, args): print('test command run')
     pass
-    
+
 class MySubcommand:
     '''Doc string for test testing subcommand'''
-    
+
     def __init__(self):
         self.name  = 'testing'
         return
-    
+
     short_help = 'This is short help for test testing'
     min_abbrev = 4
     in_list    = True
@@ -52,11 +52,11 @@ class TestSubcommand(unittest.TestCase):
             ('tes',      'None',),     # Too few chars
             ('test',     'testing',),  # A valid abbrev
             ('testing',  'testing',),  # equal name
-            ('testing1', 'None',)):    # Too long 
+            ('testing1', 'None',)):    # Too long
             x = self.mycmdMgr.lookup(prefix)
-            if x: s = x.name 
+            if x: s = x.name
             else: s = 'None'
-            self.assertEqual(expected, s, 
+            self.assertEqual(expected, s,
                              ("prefix %s, expected: %s result: %s" %
 
                              (prefix, expected, s,)))

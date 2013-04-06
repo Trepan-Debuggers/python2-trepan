@@ -1,14 +1,14 @@
 import sys
 from import_relative import import_relative
 
-Mdebugger    = import_relative('debugger', '...pydbgr')
-Mstringarray = import_relative('io.stringarray', '...pydbgr')
+Mdebugger    = import_relative('debugger', '...trepan')
+Mstringarray = import_relative('io.stringarray', '...trepan')
 
 def strarray_setup(debugger_cmds):
     ''' Common setup to create a debugger with stringio attached '''
     stringin                = Mstringarray.StringArrayInput(debugger_cmds)
     stringout               = Mstringarray.StringArrayOutput()
-    d_opts                  = {'input' : stringin, 
+    d_opts                  = {'input' : stringin,
                                'output': stringout}
     d                       = Mdebugger.Debugger(d_opts)
     d.settings['basename']  = True
@@ -18,8 +18,8 @@ def strarray_setup(debugger_cmds):
     return d
 
 import re
-pydbgr_prompt = re.compile(r'^.. \d+.*\n\(Pydbgr(:.+)?\) ')
-pydbgr_loc    = re.compile(r'^\(.+:\d+\): ')
+trepan_prompt = re.compile(r'^.. \d+.*\n\(Trepan(:.+)?\) ')
+trepan_loc    = re.compile(r'^\(.+:\d+\): ')
 def filter_line_cmd(a):
     '''Return output with source lines prompt and command removed'''
     # Remove extra leading spaces.
@@ -30,9 +30,9 @@ def filter_line_cmd(a):
     a1 = [re.sub(r'^(..) \d+\s+', r'\1 ', s) for s in a
          if re.match(r'^.. \d+\s+', s)]
     # Remove debugger prompts
-    # For example: 
-    #  (Pydbgr) 
-    a2 = [re.sub(r'\n\(Pydbgr\) .*', '', s) for s in a1]
+    # For example:
+    #  (Trepan)
+    a2 = [re.sub(r'\n\(Trepan\) .*', '', s) for s in a1]
 
     # Remove locations (test-next.py:41): test_next_between_fn
     a3 = [re.sub(r'\n\(.*:\d+\):.*', '', s) for s in a2]

@@ -1,10 +1,10 @@
 #!/usr/bin/env python
-'Unit test for pydbgr.processor.command.list'
+'Unit test for trepan.processor.command.list'
 import os, sys, unittest
 
 from import_relative import import_relative
 
-Mlist = import_relative('processor.command.list', '...pydbgr')
+Mlist = import_relative('processor.command.list', '...trepan')
 
 import signal
 
@@ -23,7 +23,7 @@ class TestListCommand(unittest.TestCase):
     def msg(self, msg):
         self.msgs.append(msg)
         return
-    
+
     def print_lines(self):
         for msg in self.msgs: print(msg)
         for msg in self.errors: print(msg)
@@ -33,7 +33,7 @@ class TestListCommand(unittest.TestCase):
         # self.print_lines()
         if len(nums) != len(self.msgs):
             self.print_lines()
-            self.assertFalse(True, "len(msg): %d vs len(check): %d" 
+            self.assertFalse(True, "len(msg): %d vs len(check): %d"
                              % (len(self.msgs), len(nums)))
             return
         for i in nums:
@@ -58,8 +58,8 @@ class TestListCommand(unittest.TestCase):
 
     def test_list_command(self):
         import inspect
-        cmdproc     = import_relative('processor.cmdproc', '...pydbgr', 'pydbgr')
-        debugger        = import_relative('debugger', '...pydbgr', 'pydbgr')
+        cmdproc     = import_relative('processor.cmdproc', '...trepan', 'trepan')
+        debugger        = import_relative('debugger', '...trepan', 'trepan')
         d               = debugger.Debugger()
         cp              = d.core.processor
         cp.curframe     = inspect.currentframe()
@@ -71,7 +71,7 @@ class TestListCommand(unittest.TestCase):
         # Simple list command.
         self.clear_run_check(['list'], list(range(1, self.listsize+1)))
         # Check 2nd set of consecutive lines
-        self.clear_run_check(['list'], 
+        self.clear_run_check(['list'],
                              list(range(self.listsize+1, (2*self.listsize)+1)))
         # Try going backwards.
         self.clear_run_check(['list', '-'], list(range(1, self.listsize+1)))

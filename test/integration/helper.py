@@ -6,7 +6,7 @@ def run_debugger(testname, python_file, dbgr_opts='', args='',
     srcdir    = get_srcdir()
     datadir   = os.path.join(srcdir, '..', 'data')
     progdir   = os.path.join(srcdir, '..', 'example')
-    dbgrdir   = os.path.join(srcdir, '..', '..', 'pydbgr')
+    dbgrdir   = os.path.join(srcdir, '..', '..', 'trepan')
     dbgr_short= "cli.py"
     dbgr_path = os.path.join(dbgrdir, dbgr_short)
 
@@ -28,7 +28,7 @@ def run_debugger(testname, python_file, dbgr_opts='', args='',
     cmd = "%s --command %s %s %s %s %s" % \
           (dbgr_path, cmdfile, outfile_opt, dbgr_opts, programfile, args)
 
-    # print(cmd)
+    print(cmd)
     os.system(cmd)
     fromfile  = rightfile
     fromdate  = time.ctime(os.stat(fromfile).st_mtime)

@@ -5,7 +5,7 @@ import thread
 import time
 from threading import *
 import Queue
-from pydbgr.api import debug
+from trepan.api import debug
 
 class Producer(Thread):
 
@@ -15,7 +15,7 @@ class Producer(Thread):
         return
 
     def run(self):
-        
+
         itemq=self.itemq
         i=0
         for j in range(10):
@@ -44,11 +44,11 @@ class Consumer(Thread):
             print currentThread(),"Consumed One Item:",it
             pass
         return
-            
+
 if __name__=="__main__":
 
     q=Queue.Queue(10)
-   
+
     pro=Producer(q)
     cons1=Consumer(q)
     cons2=Consumer(q)

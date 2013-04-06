@@ -1,9 +1,9 @@
 #!/usr/bin/env python
-'Unit test for pydbgr.bytecode'
+'Unit test for trepan.bytecode'
 import inspect, unittest
 from import_relative import import_relative
 
-Mcode = import_relative('lib.bytecode', '...pydbgr')
+Mcode = import_relative('lib.bytecode', '...trepan')
 
 class TestByteCode(unittest.TestCase):
 
@@ -13,7 +13,7 @@ class TestByteCode(unittest.TestCase):
         frame = inspect.currentframe()
         co = frame.f_code
         lineno = frame.f_lineno
-        self.assertTrue(Mcode.stmt_contains_opcode(co, lineno-4, 
+        self.assertTrue(Mcode.stmt_contains_opcode(co, lineno-4,
                                                    'MAKE_FUNCTION'))
         self.assertFalse(Mcode.stmt_contains_opcode(co, lineno,
                                                     'MAKE_FUNCTION'))
@@ -29,6 +29,6 @@ class TestByteCode(unittest.TestCase):
         frame = inspect.currentframe()
         self.assertFalse(Mcode.is_def_stmt('foo(): pass', frame))
         return
-        
+
 if __name__ == '__main__':
     unittest.main()

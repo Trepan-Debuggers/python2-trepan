@@ -1,10 +1,10 @@
 #!/usr/bin/env python
-'Unit test for pydbgr.processor.command.disassemble'
+'Unit test for trepan.processor.command.disassemble'
 import inspect, unittest
 from import_relative import import_relative
 
-import_relative('pydbgr', '...', 'pydbgr')
-Mdis = import_relative('processor.command.disassemble', '...pydbgr')
+import_relative('trepan', '...', 'trepan')
+Mdis = import_relative('processor.command.disassemble', '...trepan')
 
 from cmdhelper import dbg_setup
 

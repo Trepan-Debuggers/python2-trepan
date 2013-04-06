@@ -1,16 +1,16 @@
 #!/usr/bin/env python
-'Unit test for pydbgr.lib.thread'
+'Unit test for trepan.lib.thread'
 import sys, thread, threading, unittest
 from import_relative import import_relative
 
-Mthread = import_relative('lib.thread', '...pydbgr')
+Mthread = import_relative('lib.thread', '...trepan')
 
 class BgThread(threading.Thread):
     def __init__(self, id_name_checker):
         threading.Thread.__init__(self)
         self.id_name_checker = id_name_checker
         return
-    
+
     def run(self):
         self.id_name_checker()
         return
@@ -22,10 +22,10 @@ class TestLibThread(unittest.TestCase):
         '''Helper for testing map_thread_names and id2thread'''
         if sys.version_info[0] == 2 and sys.version_info[1] <= 4:
             # Don't have sys._current_frames
-            return 
+            return
         name2id = Mthread.map_thread_names()
         for thread_id, f in list(sys._current_frames().items()):
-            self.assertEqual(thread_id, 
+            self.assertEqual(thread_id,
                              name2id[Mthread.id2thread_name(thread_id)])
             # FIXME: use a better test
             self.assertNotEqual(f, Mthread.find_debugged_frame(f))

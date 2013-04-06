@@ -1,29 +1,29 @@
 #!/usr/bin/env python
-'Unit test for pydbgr.processor.cmdproc'
+'Unit test for trepan.processor.cmdproc'
 import unittest
 from import_relative import import_relative
 
-Mcmdproc = import_relative('processor.cmdproc', '...pydbgr')
+Mcmdproc = import_relative('processor.cmdproc', '...trepan')
 
 from cmdhelper import dbg_setup
 
 class TestProcesor(unittest.TestCase):
-    
+
     def setUp(self):
         self.d, self.cp = dbg_setup()
-    
+
     def test_populate_commands(self):
         """ Test that we are creating instances for all of classes of files
         in the command directory ."""
         for i in self.cp.cmd_instances:
             if hasattr(i, 'aliases'):
-                self.assertEqual(tuple, type(i.aliases), 
+                self.assertEqual(tuple, type(i.aliases),
                                  "not tuple %s." % repr(i.aliases))
-                
+
                 self.assertEqual([],
-                                 [item for item in i.aliases 
+                                 [item for item in i.aliases
                                   if str != type(item)],
-                                 "elements of tuple should be strings %s" % 
+                                 "elements of tuple should be strings %s" %
                                  repr(i.aliases))
                 pass
             pass

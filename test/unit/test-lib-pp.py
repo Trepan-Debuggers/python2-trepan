@@ -1,9 +1,9 @@
 #!/usr/bin/env python
-'Unit test for pydbgr.lib.pp'
+'Unit test for trepan.lib.pp'
 import sys, unittest
 from import_relative import import_relative
 
-Mpp = import_relative('lib.pp', '...pydbgr')
+Mpp = import_relative('lib.pp', '...trepan')
 
 class TestLibPrint(unittest.TestCase):
 
@@ -36,7 +36,7 @@ class TestLibPrint(unittest.TestCase):
              ' 48, 49]'],
             self.msgs)
         return
-    
+
     pass
 
 if __name__ == '__main__':

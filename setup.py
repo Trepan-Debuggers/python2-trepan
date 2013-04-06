@@ -5,7 +5,7 @@ distutils setup (setup.py).
 
 This is just boilerplate code, since we do like to try to keep data separate
 from code as much as possible. The customizable information really comes
-from file __pkginfo__.py. 
+from file __pkginfo__.py.
 """
 
 # Get the package information used in setup().
@@ -25,8 +25,8 @@ setup(
        description        = short_desc,
        entry_points = {
         'console_scripts': [
-            'pydbgr  = pydbgr.cli:main',
-            'pydbgr-client = pydbgr.client:main',
+            'trepan2  = trepan.cli:main',
+            'trepan2-client = trepan.client:main',
         ]},
        install_requires   = install_requires,
        license            = license,

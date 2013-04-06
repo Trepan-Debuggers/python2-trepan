@@ -1,10 +1,10 @@
 #!/usr/bin/env python
-'Unit test for pydbgr.processor.command.pdef'
+'Unit test for trepan.processor.command.pdef'
 import unittest
 
 from import_relative import import_relative
 
-Mp = import_relative('processor.command.pdef', '...pydbgr')
+Mp = import_relative('processor.command.pdef', '...trepan')
 
 class TestPDef(unittest.TestCase):
     """Tests PCommand class"""
@@ -24,7 +24,7 @@ class TestPDef(unittest.TestCase):
 
     def test_pdef(self):
         import inspect
-        debugger    = import_relative('debugger', '...pydbgr', 'pydbgr')
+        debugger    = import_relative('debugger', '...trepan', 'trepan')
         d           = debugger.Debugger()
         cp          = d.core.processor
         cp.curframe = inspect.currentframe()
@@ -34,7 +34,7 @@ class TestPDef(unittest.TestCase):
         cmd.run(['pdef', 'self.test_pdef'])
         self.assertEqual('self.test_pdef(self)', self.msgs[-1])
         cmd.run(['pdef', 'TestPDef'])
-        self.assertEqual("TestPDef(self, methodName='runTest')", 
+        self.assertEqual("TestPDef(self, methodName='runTest')",
                          self.msgs[-1])
         self.assertEqual(0, len(self.errors))
         cmd.run(['pdef', 'FOO'])

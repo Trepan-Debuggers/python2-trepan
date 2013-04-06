@@ -1,10 +1,10 @@
 #!/usr/bin/env python
-'Unit test for pydbgr.processor.cmdproc'
+'Unit test for trepan.processor.cmdproc'
 import inspect, os, sys, types, unittest
 from import_relative import import_relative
 
-Mcmdproc = import_relative('processor.cmdproc', '...pydbgr')
-Mmock    = import_relative('processor.command.mock', '...pydbgr')
+Mcmdproc = import_relative('processor.cmdproc', '...trepan')
+Mmock    = import_relative('processor.command.mock', '...trepan')
 
 class TestCmdProc(unittest.TestCase):
 
@@ -13,7 +13,7 @@ class TestCmdProc(unittest.TestCase):
         self.msgs               = []
         self.d                  = Mmock.MockDebugger()
         self.cp                 = Mcmdproc.CommandProcessor(self.d.core)
-        self.cp.intf[-1].msg    = self.msg 
+        self.cp.intf[-1].msg    = self.msg
         self.cp.intf[-1].errmsg = self.errmsg
         return
 
@@ -35,7 +35,7 @@ class TestCmdProc(unittest.TestCase):
         self.assertEqual('quit', Mcmdproc.resolve_name(self.cp, 'quit'))
         #   with alias 'q'
         self.assertEqual('quit', Mcmdproc.resolve_name(self.cp, 'q'))
-#         processor.cmdproc.print_source_line(self.msg, 100, 
+#         processor.cmdproc.print_source_line(self.msg, 100,
 #                                             'source_line_test.py')
 
         self.cp.frame = sys._getframe()
@@ -50,7 +50,7 @@ class TestCmdProc(unittest.TestCase):
         for cmd in list(self.cp.commands.values()):
 
             name = cmd.__class__
-            for attr in ['aliases', 'min_args', 'max_args', 'name', 
+            for attr in ['aliases', 'min_args', 'max_args', 'name',
                          'need_stack']:
                 self.assertTrue(hasattr(cmd, attr),
                                 '%s command should have a %s attribute' %
@@ -69,7 +69,7 @@ class TestCmdProc(unittest.TestCase):
 
             self.assertEqual(types.StringType, type(cmd.name))
             self.assertEqual(types.TupleType, type(cmd.aliases),
-                             '%s aliases should be a tuple type' % 
+                             '%s aliases should be a tuple type' %
                              repr(cmd.aliases))
             for value in cmd.aliases:
                 self.assertEqual(types.StringType, type(value),
@@ -79,7 +79,7 @@ class TestCmdProc(unittest.TestCase):
             if cmd.min_args is not None:
                 if cmd.max_args is not None:
                     self.assertTrue(cmd.min_args <= cmd.max_args,
-                                    "%s min_args: %d, max_args: %d" % 
+                                    "%s min_args: %d, max_args: %d" %
                                     (name, cmd.min_args, cmd.max_args))
                     pass
                 pass
@@ -93,7 +93,7 @@ class TestCmdProc(unittest.TestCase):
             ("Now is the time ;; for all good men",
              [['Now', 'is', 'the', 'time'], ['for', 'all', 'good', 'men']],),
             ("Now is the time ';;' for all good men",
-             [['Now', 'is', 'the', 'time', "';;'", 
+             [['Now', 'is', 'the', 'time', "';;'",
                'for', 'all', 'good', 'men']],)
             ):
             self.assertEqual(expect, Mcmdproc.arg_split(test))
@@ -104,7 +104,7 @@ class TestCmdProc(unittest.TestCase):
         self.cp.frame = sys._getframe()
         self.cp.setup()
 
-        # See that we can parse a file/line combo: e.g. filename.py:10 
+        # See that we can parse a file/line combo: e.g. filename.py:10
         filename = os.path.realpath(os.path.abspath(__file__))
         modfunc, f, l = self.cp.parse_position("%s:10" % filename)
         self.assertEqual(filename, f, 'file:line parsing bolixed')
@@ -112,11 +112,11 @@ class TestCmdProc(unittest.TestCase):
         # Without the line number should be a problem though
         modfunc, f, l = self.cp.parse_position(filename)
         self.assertEqual(None, f, 'file should not work')
-        return 
+        return
 
 
     def test_parse_position_one_arg(self):
-        self.assertEqual((None, None, None), 
+        self.assertEqual((None, None, None),
                          self.cp.parse_position_one_arg('4+1'))
         self.cp.frame = sys._getframe()
         self.cp.setup()

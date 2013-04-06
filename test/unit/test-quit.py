@@ -1,10 +1,10 @@
 #!/usr/bin/env python
-'Unit test for pydbgr.processor.command.quit'
+'Unit test for trepan.processor.command.quit'
 import unittest
 
 from import_relative import import_relative
 
-Mquit = import_relative('processor.command.quit', '...pydbgr')
+Mquit = import_relative('processor.command.quit', '...trepan')
 
 from cmdhelper import dbg_setup
 

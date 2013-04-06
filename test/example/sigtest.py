@@ -3,7 +3,7 @@
 a program that installs a signal handler and sends it a signal.
 """
 import sys, os, signal, time
-from pydbgr.api import debug; debug()
+from trepan.api import debug; debug()
 def signal_handler(num, f):
     print 'signal %d received' % num
     return
@@ -17,4 +17,3 @@ while True:
     os.kill(os.getpid(), signal.SIGUSR1)
     pass
 pass
-

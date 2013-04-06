@@ -1,0 +1,149 @@
+# -*- coding: utf-8 -*-
+#   Copyright (C) 2013 Rocky Bernstein <rocky@gnu.org>
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"CommandProcessor completion routines"
+import re
+
+from import_relative import import_relative
+Mcomplete = import_relative('complete', '..lib', 'trepan')
+
+def complete_token_filtered(aliases, prefix, expanded):
+
+    """Find all starting matches in dictionary *aliases* that start
+    with *prefix*, but filter out any matches already in
+    *expanded*."""
+
+    complete_ary = list(aliases.keys())
+    results = [cmd for cmd in
+               complete_ary if cmd.startswith(prefix)] and not (
+                   cmd in aliases and expanded not in aliases[cmd])
+    return sorted(results, key=lambda pair: pair[0])
+
+def next_token(str, start_pos):
+    """Find the next token in str string from start_pos, we return
+    the token and the next blank position after the token or
+    str.size if this is the last token. Tokens are delimited by
+    white space."""
+    look_at = str[start_pos:]
+    match = re.search('\S', look_at)
+    if match:
+        pos = match.start()
+    else:
+        pos = 0
+        pass
+    next_nonblank_pos = start_pos + pos
+    next_match = re.search('\s', str[next_nonblank_pos:])
+    if next_match:
+        next_blank_pos = next_nonblank_pos + next_match.start()
+    else:
+        next_blank_pos = len(str)
+        pass
+    return [next_blank_pos, str[next_nonblank_pos:next_blank_pos+1].rstrip()]
+
+def completer(self, str, state, last_token=''):
+    next_blank_pos, token = next_token(str, 0)
+    if len(token) == 0 and not 0 == len(last_token):
+        return ['', None]
+    match_pairs = Mcomplete.complete_token_with_next(self.commands, token)
+    match_hash = {}
+    for pair in match_pairs:
+      match_hash[pair[0]] = pair[1]
+      pass
+
+    alias_pairs = Mcomplete.complete_token_filtered_with_next(self.aliases,
+                                                              token, match_hash,
+                                                              list(self.commands.keys()))
+    match_pairs += alias_pairs
+
+    macro_pairs = Mcomplete.complete_token_filtered_with_next(self.macros,
+                                                              token, match_hash,
+                                                              self.commands.keys())
+    match_pairs += macro_pairs
+
+    if len(str) == next_blank_pos:
+        return sorted([pair[0] for pair in match_pairs]) + [None]
+    else:
+        for pair in alias_pairs:
+            match_hash[pair[0]] = pair[1]
+            pass
+        pass
+
+    if len(match_pairs) > 1:
+      # FIXME: figure out what to do here.
+      # Matched multiple items in the middle of the string
+      # We can't handle this so do nothing.
+      return [None]
+      # return match_pairs.map do |name, cmd|
+      #   ["#{name} #{args[1..-1].join(' ')}"]
+      # end
+      pass
+
+    # len(match_pairs) == 1
+    return next_complete(str, next_blank_pos, match_pairs[0][1],
+                         token) + [None]
+
+def next_complete(str, next_blank_pos, cmd, last_token):
+    next_blank_pos, token = next_token(str, next_blank_pos)
+    if len(token) == 0 and 0 != len(last_token):
+        return [None]
+
+    if hasattr(cmd, 'complete_token_with_next'):
+        match_pairs = cmd.complete_token_with_next(token)
+        if len(match_pairs) == 0:
+            return [None]
+        if next_blank_pos >= len(str.rstrip()):
+            return [pair[0] for pair in match_pairs]
+        else:
+            if len(match_pairs) == 1:
+                return next_complete(str, next_blank_pos,  match_pairs[0][1],
+                                     last_token)
+            else:
+                # FIXME: figure out what to do here.
+                # Matched multiple items in the middle of the string
+                # We can't handle this so do nothing.
+                return [None]
+                pass
+            pass
+        pass
+    elif hasattr(cmd, 'complete'):
+        matches = cmd.complete(token)
+        if 0 == len(matches):
+            return [None]
+        if len(str.rstrip()) == 0 and (len(token) == 0 or token == last_token):
+            return matches
+        else:
+            # FIXME: figure out what to do here.
+            # Matched multiple items in the middle of the string
+            # We can't handle this so do nothing.
+            return [None]
+        pass
+    return [None]
+
+if __name__=='__main__':
+    print(Mcomplete.complete_token(['ba', 'aa', 'ab'], 'a'))
+    print(Mcomplete.complete_token(['cond', 'condition', 'continue'], 'cond'))
+    print(next_token('ab cd ef', 0))
+    print(next_token('ab cd ef', 2))
+    h = {'ab':1, 'aac':2, 'aa':3, 'b':4}
+    print(Mcomplete.complete_token(h.keys(), 'a'))
+    print(Mcomplete.complete_token_with_next(h, 'a'))
+
+    ##   0         1
+    ##   0123456789012345678
+    x = '  now is  the  time'
+    for pos in [0, 2, 5, 8, 9, 13, 19]:
+        print(next_token(x, pos))
+        pass
+    pass

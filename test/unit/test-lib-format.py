@@ -1,11 +1,11 @@
 #!/usr/bin/env python
-'Unit test for pydbgr.lib.file'
+'Unit test for trepan.lib.file'
 import unittest
 from pygments.lexers import RstLexer
 from import_relative import import_relative
 
-import_relative('lib', '...pydbgr', 'pydbgr')
-Mformat = import_relative('lib.format', '...pydbgr', 'pydbgr')
+import_relative('lib', '...trepan')
+Mformat = import_relative('lib.format', '...trepan')
 
 class TestLibFile(unittest.TestCase):
 
@@ -25,7 +25,7 @@ class TestLibFile(unittest.TestCase):
 The program being debugged is aborted via a *DebuggerQuit*
 exception.
 
-When the debugger from the outside (e.g. via a `pydbgr` command), the
+When the debugger from the outside (e.g. via a `trepan` command), the
 debugged program is contained inside a try block which handles the
 *DebuggerQuit* exception.  However if you called the debugger was
 started in the middle of a program, there might not be such an
@@ -46,7 +46,7 @@ program.
 
 The program being debugged is aborted via a *DebuggerQuit* exception. 
 
-When the debugger from the outside (e.g. via a "pydbgr" command), the debugged 
+When the debugger from the outside (e.g. via a "trepan" command), the debugged 
 program is contained inside a try block which handles the *DebuggerQuit* 
 exception. However if you called the debugger was started in the middle of a 
 program, there might not be such an exception handler; the debugged program 
@@ -91,7 +91,7 @@ respected.
 End of test. """,
             got)
 
-         
+
         return
     pass
 

@@ -3,11 +3,11 @@
 import inspect, unittest
 from import_relative import import_relative
 
-debugger  = import_relative('debugger', '...pydbgr', 'pydbgr')
-Minfo     = import_relative('pydbgr.processor.command.info', '...')
-MinfoFile = import_relative('pydbgr.processor.command.info_subcmd.file', 
+debugger  = import_relative('debugger', '...trepan', 'trepan')
+Minfo     = import_relative('trepan.processor.command.info', '...')
+MinfoFile = import_relative('trepan.processor.command.info_subcmd.file',
                             '...')
-Mdebugger = import_relative('debugger', '...pydbgr')
+Mdebugger = import_relative('debugger', '...trepan')
 
 from cmdhelper import dbg_setup
 
@@ -59,6 +59,6 @@ class TestInfoFile(unittest.TestCase):
             sub.run([])
             pass
         pass
-        
+
 if __name__ == '__main__':
     unittest.main()

@@ -1,9 +1,9 @@
 #!/usr/bin/env python
-'Unit test for pydbgr.misc'
+'Unit test for trepan.misc'
 import unittest
 from import_relative import import_relative
 
-Mmisc = import_relative('misc', '...pydbgr', 'pydbgr')
+Mmisc = import_relative('misc', '...trepan', 'trepan')
 
 class TestMisc(unittest.TestCase):
 
@@ -11,13 +11,13 @@ class TestMisc(unittest.TestCase):
         TEST_OPTS = {'a': True, 'b': 5, 'c': None}
         get_option = lambda key: Mmisc.option_set(opts, key, TEST_OPTS)
         opts={'d': 6, 'a': False}
-        for opt, expect in [('a', False), 
+        for opt, expect in [('a', False),
                             ('b', 5),
                             ('c', None),
                             ('d', 6)]:
             self.assertEqual(expect, get_option(opt))
         opts=None
-        for opt, expect in [('a', True), 
+        for opt, expect in [('a', True),
                             ('b', 5),
                             ('c', None),
                             ('d', None)]:
@@ -29,7 +29,7 @@ class TestMisc(unittest.TestCase):
         self.assertEqual('hi there', Mmisc.wrapped_lines('hi', 'there', 80))
         self.assertEqual('hi\n\tthere', Mmisc.wrapped_lines('hi', 'there', 5))
         return
-    
+
     pass
 
 if __name__ == '__main__':

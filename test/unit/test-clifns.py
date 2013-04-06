@@ -1,9 +1,9 @@
 #!/usr/bin/env python
-'Unit test for pydbgr.clifns'
+'Unit test for trepan.clifns'
 import inspect, os, sys, unittest
 from import_relative import import_relative
 
-Mclifns = import_relative('clifns', '...pydbgr')
+Mclifns = import_relative('clifns', '...trepan')
 
 class TestCLIFns(unittest.TestCase):
 

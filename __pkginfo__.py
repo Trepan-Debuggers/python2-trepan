@@ -44,19 +44,19 @@ install_requires   = ['columnize >= 0.3.4',
                       'tracer >= 0.3.2']
 license            = 'GPL'
 mailing_list       = 'python-debugger@googlegroups.com'
-modname            = 'pydbgr'
+modname            = 'trepan'
 namespace_packages = [
-    'pydbgr',
-    'pydbgr.bwprocessor',
-    'pydbgr.interfaces',
-    'pydbgr.io',
-    'pydbgr.lib',
-    'pydbgr.processor',
-    'pydbgr.processor.command',
-    'pydbgr.processor.command.ipython_magic',
-    'pydbgr.processor.command.info_subcmd',
-    'pydbgr.processor.command.set_subcmd',
-    'pydbgr.processor.command.show_subcmd'
+    'trepan',
+    'trepan.bwprocessor',
+    'trepan.interfaces',
+    'trepan.io',
+    'trepan.lib',
+    'trepan.processor',
+    'trepan.processor.command',
+    'trepan.processor.command.ipython_magic',
+    'trepan.processor.command.info_subcmd',
+    'trepan.processor.command.set_subcmd',
+    'trepan.processor.command.show_subcmd'
 ]
 packages           = namespace_packages
 py_modules         = None
@@ -67,7 +67,7 @@ import os.path, sys
 from import_relative import get_srcdir
 
 # VERSION.py sets variable VERSION.
-execfile(os.path.join(get_srcdir(), 'pydbgr', 'VERSION.py'))
+execfile(os.path.join(get_srcdir(), 'trepan', 'VERSION.py'))
 version            = VERSION
 web                = 'http://code.google.com/p/pydbgr/'
 

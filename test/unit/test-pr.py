@@ -1,10 +1,10 @@
 #!/usr/bin/env python
-'Unit test for pydbgr.processor.command.pr'
+'Unit test for trepan.processor.command.pr'
 import unittest
 
 from import_relative import import_relative
 
-Mp = import_relative('processor.command.pr', '...pydbgr')
+Mp = import_relative('processor.command.pr', '...trepan')
 
 class TestP(unittest.TestCase):
     """Tests PCommand class"""
@@ -24,7 +24,7 @@ class TestP(unittest.TestCase):
 
     def test_pr(self):
         import inspect
-        debugger    = import_relative('debugger', '...pydbgr', 'pydbgr')
+        debugger    = import_relative('debugger', '...trepan', 'trepan')
         d           = debugger.Debugger()
         cp          = d.core.processor
         cp.curframe = inspect.currentframe()

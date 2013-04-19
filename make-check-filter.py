@@ -9,7 +9,7 @@ pats = '|'.join(
      'writing',
      "reading",
      ]) + ')'
-# puts pats
+# pats = "RuntimeWarning: Parent module"
 skip_re = re.compile(pats)
 
 for line in sys.stdin:

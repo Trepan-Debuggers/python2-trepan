@@ -200,8 +200,13 @@ def print_location(proc_obj):
             }
         line = pyficache.getline(filename, lineno, opts)
         if not line:
-            line = linecache.getline(filename, lineno,
-                                     proc_obj.curframe.f_globals)
+            if sys.version_info[1] <= 4:
+                # Python 2.4 and before doesn't have 3-arg getline
+                line = linecache.getline(filename, lineno)
+            else:
+                line = linecache.getline(filename, lineno,
+                                         proc_obj.curframe.f_globals)
+                pass
             pass
 
         if line and len(line.strip()) != 0:
@@ -738,8 +743,8 @@ class CommandProcessor(Mprocessor.Processor):
                             raise
                         except:
                             ## FIXME: Should be handled above without this mess
-                            if (repr(sys.exc_info()[0]) ==
-                                repr(Mexcept.DebuggerQuit)):
+                            if (str(sys.exc_info()[0]) ==
+                                str(Mexcept.DebuggerQuit)):
                                 raise
                             self.errmsg("INTERNAL ERROR: " +
                                         traceback.format_exc())

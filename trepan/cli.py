@@ -154,7 +154,7 @@ def main(dbg=None, sys_argv=list(sys.argv)):
             break
         except:
             ## FIXME: Should be handled above without this mess
-            if repr(sys.exc_info()[0]) == repr(Mexcept.DebuggerQuit):
+            if str(sys.exc_info()[0]) == str(Mexcept.DebuggerQuit):
                 break
             raise
         pass

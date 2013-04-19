@@ -28,12 +28,12 @@ test-unit:
 
 #: Run unit (white-box) tests
 test-unit-short:
-	$(PYTHON) ./setup.py nosetests --quiet | \
+	$(PYTHON) ./setup.py nosetests --quiet 2>&1 | \
 	$(PYTHON) ./make-check-filter.py
 
 #: Run functional tests
 test-functional:
-	(cd test/functional && $(PYTHON) ./setup.py nosetests)
+	(cd test/functional && $(PYTHON) ./setup.py nosetests 2>&1)
 
 #: Run functional tests
 test-functional-short:
@@ -46,7 +46,7 @@ test-integration:
 
 #: Run integration (black-box) tests
 test-integration-short:
-	(cd test/integration && $(PYTHON) ./setup.py nosetests) | \
+	(cd test/integration && $(PYTHON) ./setup.py nosetests) 2>&1 | \
 	$(PYTHON) ./make-check-filter.py
 
 #: Clean up temporary files

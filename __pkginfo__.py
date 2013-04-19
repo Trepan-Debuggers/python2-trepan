@@ -64,7 +64,20 @@ short_desc         = 'Modular Python Debugger'
 
 import os
 import os.path, sys
-from import_relative import get_srcdir
+
+def get_srcdir():
+    """Get directory of caller as an absolute file name. *level* is
+    the number of frames to look back.  So for import file which is
+    really doing work on behalf of *its* caller, we go back 2.
+
+    NB: f_code.co_filenames and thus this code kind of broken for
+    zip'ed eggs circa Jan 2009
+    """
+
+    caller = sys._getframe(1)
+    filename = caller.f_code.co_filename
+    filename = os.path.normcase(os.path.dirname(os.path.abspath(filename)))
+    return os.path.realpath(filename)
 
 # VERSION.py sets variable VERSION.
 execfile(os.path.join(get_srcdir(), 'trepan', 'VERSION.py'))

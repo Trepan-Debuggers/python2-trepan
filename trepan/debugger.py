@@ -342,7 +342,7 @@ class Debugger:
             results = self.core.processor.completer(str, state)
             return results[state]
         else:
-            return ['', None]
+            return [None]
     pass
 
 # Demo it

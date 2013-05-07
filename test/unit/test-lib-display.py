@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 'Unit test for trepan.lib.display'
 
 import inspect, unittest

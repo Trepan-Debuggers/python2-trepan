@@ -15,7 +15,7 @@ from import_relative import import_relative
 
 # Our local modules
 Mupcmd   = import_relative('up', '.', 'trepan')
-Mcmdfns  = import_relative('cmdfns', '..', 'trepan')
+Mframe    = import_relative('frame',   '..', 'trepan')
 
 class DownCommand(Mupcmd.UpCommand):
 
@@ -29,9 +29,9 @@ class DownCommand(Mupcmd.UpCommand):
 Move the current frame down in the stack trace (to a newer frame). 0
 is the most recent frame. If no count is given, move down 1.
 
-See also 'up' and 'frame'."""
+See also `up` and `frame`."""
 
-        self.adjust_relative(args, -1)
+        Mframe.adjust_relative(self.proc, self.name, args, self.signum)
         return False
 
 if __name__ == '__main__':

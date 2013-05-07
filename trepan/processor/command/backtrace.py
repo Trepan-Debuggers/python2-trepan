@@ -20,6 +20,7 @@ from import_relative import import_relative
 Mbase_cmd = import_relative('base_cmd', top_name='trepan')
 Mstack    = import_relative('stack',  '...lib', 'trepan')
 Mcmdfns   = import_relative('cmdfns', '..',     'trepan')
+Mframe    = import_relative('frame', '..',     'trepan')
 
 class BacktraceCommand(Mbase_cmd.DebuggerCommand):
     """**backtrace** [*count*]
@@ -47,6 +48,10 @@ evaluation or source-line listing.
     name          = os.path.basename(__file__).split('.')[0]
     need_stack    = True
     short_help   = 'Print backtrace of stack frames'
+
+    def complete(self, prefix):
+        proc_obj = self.proc
+        return Mframe.frame_complete(proc_obj, prefix, self.signum)
 
     def run(self, args):
         if len(args) > 1:

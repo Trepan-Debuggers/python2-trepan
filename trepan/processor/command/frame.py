@@ -19,8 +19,9 @@ from import_relative import import_relative
 
 # Our local modules
 Mbase_cmd = import_relative('base_cmd', '.', 'trepan')
-Mcmdproc  = import_relative('cmdproc', '..', 'trepan')
-Mthread   = import_relative('thread', '...lib', 'trepan')
+Mcmdproc  = import_relative('cmdproc',  '..', 'trepan')
+Mthread   = import_relative('thread',   '...lib', 'trepan')
+Mframe    = import_relative('frame',    '..', 'trepan')
 
 class FrameCommand(Mbase_cmd.DebuggerCommand):
     """**frame** [*thread-Name*|*thread-number*] [*frame-number*]
@@ -62,6 +63,13 @@ See also `up`, `down`, `backtrace`, and `info thread`.
     name          = os.path.basename(__file__).split('.')[0]
     need_stack    = True
     short_help    = 'Select and print a stack frame'
+
+    def complete(self, prefix):
+        proc_obj = self.proc
+        low, high = Mframe.frame_low_high(proc_obj, direction)
+        ary = [str(low+i) for i in range(high-low+1)]
+        # FIXME: add in Thread names
+        return Mcomplete.complete_token(ary, prefix)
 
     def find_and_set_debugged_frame(self, frame, thread_id):
         '''The dance we have to do to set debugger frame state to

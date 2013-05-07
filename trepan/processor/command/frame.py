@@ -66,7 +66,7 @@ See also `up`, `down`, `backtrace`, and `info thread`.
 
     def complete(self, prefix):
         proc_obj = self.proc
-        low, high = Mframe.frame_low_high(proc_obj, direction)
+        low, high = Mframe.frame_low_high(proc_obj, None)
         ary = [str(low+i) for i in range(high-low+1)]
         # FIXME: add in Thread names
         return Mcomplete.complete_token(ary, prefix)

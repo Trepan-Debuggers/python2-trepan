@@ -51,7 +51,7 @@ evaluation or source-line listing.
 
     def complete(self, prefix):
         proc_obj = self.proc
-        return Mframe.frame_complete(proc_obj, prefix, self.signum)
+        return Mframe.frame_complete(proc_obj, prefix, None)
 
     def run(self, args):
         if len(args) > 1:
@@ -59,7 +59,7 @@ evaluation or source-line listing.
             if at_most == 0:
                 self.errmsg("Stack is empty.")
                 return False
-            min_value = - at_most + 1
+            min_value = - (at_most + 1)
             count = self.proc.get_int(args[1], min_value = min_value,
                                       cmdname = 'backtrace',
                                       default=0, at_most = at_most)

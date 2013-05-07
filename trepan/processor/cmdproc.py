@@ -300,6 +300,8 @@ class CommandProcessor(Mprocessor.Processor):
         self.preloop_hooks.insert(position, hook)
         return True
 
+    #######################################################
+    ## FIXME: put into frame processor function
     def adjust_frame(self, pos, absolute_pos):
         """Adjust stack frame by pos positions. If absolute_pos then
         pos is an absolute number. Otherwise it is a relative number.
@@ -315,7 +317,7 @@ class CommandProcessor(Mprocessor.Processor):
             if pos >= 0:
                 pos = len(self.stack)-pos-1
             else:
-                pos = -pos-1
+                pos = -pos+1
         else:
             pos += self.curindex
 
@@ -331,6 +333,8 @@ class CommandProcessor(Mprocessor.Processor):
         self.location()
         self.list_lineno = None
         return
+    ## FIXME: put above frame processor function
+    #######################################################
 
     # To be overridden in derived debuggers
     def defaultFile(self):

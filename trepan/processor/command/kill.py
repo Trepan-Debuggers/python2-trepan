@@ -18,7 +18,8 @@ import os
 from import_relative import import_relative
 
 # Our local modules
-Mbase_cmd  = import_relative('base_cmd', top_name='trepan')
+Mbase_cmd = import_relative('base_cmd', top_name='trepan')
+Mcomplete = import_relative('complete', '...lib', 'trepan')
 import signal
 
 class KillCommand(Mbase_cmd.DebuggerCommand):
@@ -29,6 +30,14 @@ class KillCommand(Mbase_cmd.DebuggerCommand):
     name          = os.path.basename(__file__).split('.')[0]
     need_stack    = False
     short_help    = 'Send this process a POSIX signal ("9" for "kill -9")'
+
+    def complete(self, prefix):
+        names = [sig for sig in signal.__dict__.keys() if sig.startswith('SIG')]
+        nums  = [str(eval("signal."+name)) for name in names]
+        lnames = [sig.lower() for sig in names]
+        completions = lnames + nums + ['unconditionally']
+        return Mcomplete.complete_token(completions, prefix.lower())
+
 
     def run(self, args):
         """**kill** [**unconditionally**]
@@ -61,6 +70,7 @@ we are in interactive mode, we'll prompt to make sure.
 
         if confirmed:
             import os
+            # FIXME: check validity of signo.
             os.kill(os.getpid(), signo)
             pass
         return False # Possibly not reached
@@ -75,6 +85,7 @@ if __name__ == '__main__':
     mock = import_relative('mock')
     d, cp = mock.dbg_setup()
     command = KillCommand(cp)
+    print(command.complete(''))
     command.run(['kill', 'wrong', 'number', 'of', 'args'])
     command.run(['kill', '28'])
     command.run(['kill'])

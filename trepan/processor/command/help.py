@@ -70,8 +70,9 @@ See also `examine` and `whatis`.
 
     def complete(self, prefix):
         proc_obj = self.proc
-        matches = Mcomplete.complete_token(categories.keys() + ['*', 'all'] +
-                                           proc_obj.commands.keys(),
+        matches = Mcomplete.complete_token(list(categories.keys())
+                                           + ['*', 'all'] +
+                                           list(proc_obj.commands.keys()),
                                            prefix)
         # aliases = Mcomplete.complete_token_filtered(proc_obj.aliases, prefix,
         #                                            matches)

@@ -24,6 +24,7 @@ import_relative('processor', '....trepan')
 
 Mbase_cmd  = import_relative('base_cmd', top_name='trepan')
 Mcmdproc   = import_relative('cmdproc', '..', 'trepan')
+Mcomplete  = import_relative('complete', '...lib')
 Mmisc      = import_relative('misc',    '...', 'trepan')
 
 categories = {
@@ -66,6 +67,16 @@ See also `examine` and `whatis`.
     name          = os.path.basename(__file__).split('.')[0]
     need_stack    = False
     short_help    = 'Print commands or give help for command(s)'
+
+    def complete(self, prefix):
+        proc_obj = self.proc
+        matches = Mcomplete.complete_token(categories.keys() + ['*', 'all'] +
+                                           proc_obj.commands.keys(),
+                                           prefix)
+        # aliases = Mcomplete.complete_token_filtered(proc_obj.aliases, prefix,
+        #                                            matches)
+        # return sorted(matches + aliases)
+        return sorted(matches)
 
     def run(self, args):
         # It does not make much sense to repeat the last help

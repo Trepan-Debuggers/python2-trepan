@@ -1,3 +1,8 @@
+trepan 0.2.7 2013-05-12
+
+- Fill out command completion more
+- Fix bug in removing a display.
+
 trepan 0.2.6 2013-04-19
 
 - Rename egg from pydbgr to trepan. Script to run is trepan2.
@@ -105,5 +110,3 @@ trepan 0.2.6 2013-04-19
 0.1.0 03-15-09 - Ron Frankel Release
 
 - Initial release
-
-

@@ -16,6 +16,7 @@
 from import_relative import import_relative
 # Our local modules
 Mbase_cmd = import_relative('base_cmd', top_name='trepan')
+Mcomplete = import_relative('complete', '...lib', 'trepan')
 
 class UnaliasCommand(Mbase_cmd.DebuggerCommand):
     """**unalias** *alias-name*
@@ -32,9 +33,8 @@ See also 'alias'.
     need_stack    = True
     short_help    = 'Remove an alias'
 
-    # def complete(self, prefix):
-    #     Trepan::Complete.complete_token(self, proc.aliases.keys, prefix)
-    #     return
+    def complete(self, prefix):
+        return Mcomplete.complete_token(self.proc.aliases.keys(), prefix)
 
     # Run command.
     def run(self, args):
@@ -59,4 +59,5 @@ if __name__ == '__main__':
     command.run(['unalias', 's'])
     command.run(['unalias', 's'])
     command.run(['unalias', 'foo', 'n'])
+    print(command.complete(''))
     pass

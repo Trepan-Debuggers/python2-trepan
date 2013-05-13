@@ -47,7 +47,7 @@ class TestCompletion(unittest.TestCase):
 
                 # Completion when word is complete with space.
                 ['info ',
-                 ['args', 'break', 'display', 'file', 'globals', 'line',
+                 ['args', 'break', 'display', 'files', 'globals', 'line',
                   'locals', 'macro', 'program', 'return', 'signals', 'source',
                   'threads']],
 
@@ -70,6 +70,9 @@ class TestCompletion(unittest.TestCase):
         got = self.run_complete('')
         self.assertTrue(len(got) > 30,
                         'Initial completion should return more than 30 commands')
+        got = self.run_complete('info files ')
+        self.assertTrue(len(got) > 0,
+                        'info files completion should return a file')
         return
     pass
 

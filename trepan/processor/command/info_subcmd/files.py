@@ -44,7 +44,7 @@ current stack entry is used. Sub options which can be shown about a file are:
 
     def file_list(self):
        return list(set(pyficache.cached_files() +
-                               pyficache.file2file_remap.keys()))
+                               list(pyficache.file2file_remap.keys())))
 
     def complete(self, prefix):
         completions = sorted(['.'] + self.file_list())

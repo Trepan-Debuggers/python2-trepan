@@ -145,5 +145,6 @@ if __name__ == '__main__':
         print(sub.run([]))
         pass
     sub.run(['file.py', 'all'])
+    print(sub.complete(''))
     # sub.run(['file.py', 'lines', 'sha1'])
     pass

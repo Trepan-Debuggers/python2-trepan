@@ -20,7 +20,7 @@ import_relative('processor', '....')
 Mbase_subcmd = import_relative('base_subcmd', '..', 'trepan')
 
 class SetSkip(Mbase_subcmd.DebuggerSetBoolSubcommand):
-    """Set stopping before *def* or *class*' (function or class) statements.
+    """Set stopping before *def* or *class* (function or class) statements.
 
 Classes may have many methods and stand-alone programs may have many
 functions. Often there isn't much value to stopping before defining a

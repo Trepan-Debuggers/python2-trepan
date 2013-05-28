@@ -330,7 +330,7 @@ class CommandProcessor(Mprocessor.Processor):
                     'strip_nl': False}
             line = pyficache.getline(filename, lineno, opts)
         self.current_source_text = line
-        if self.settings('skip') is not None:
+        if self.settings('skip'):
             if Mbytecode.is_def_stmt(line, frame):
                 return True
             if Mbytecode.is_class_def(line, frame):

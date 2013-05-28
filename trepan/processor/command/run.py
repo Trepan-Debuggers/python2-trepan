@@ -18,7 +18,7 @@ from import_relative import import_relative
 
 # Our local modules
 Mbase_cmd  = import_relative('base_cmd', top_name='trepan')
-Mexcept    = import_relative('exception', '...', 'trepan')
+Mexcept    = import_relative('exception', '...')  # No "trepan" to get name right
 
 class RunCommand(Mbase_cmd.DebuggerCommand):
     """run

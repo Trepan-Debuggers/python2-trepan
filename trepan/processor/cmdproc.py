@@ -711,12 +711,12 @@ class CommandProcessor(Mprocessor.Processor):
                             raise
                         except:
                             ## FIXME: Should be handled above without this mess
-                            if (str(sys.exc_info()[0]) ==
-                                str(Mexcept.DebuggerQuit)):
+                            exception_name = str(sys.exc_info()[0])
+                            if (exception_name == str(Mexcept.DebuggerQuit) or
+                                exception_name == str(Mexcept.DebuggerRestart)):
                                 raise
                             self.errmsg("INTERNAL ERROR: " +
                                         traceback.format_exc())
-                            raise Mexcept.DebuggerQuit
                             pass
                         pass
                     pass

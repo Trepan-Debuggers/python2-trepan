@@ -154,9 +154,21 @@ def main(dbg=None, sys_argv=list(sys.argv)):
             break
         except:
             ## FIXME: Should be handled above without this mess
-            if str(sys.exc_info()[0]) == str(Mexcept.DebuggerQuit):
+            exception_name = str(sys.exc_info()[0])
+            if exception_name == str(Mexcept.DebuggerQuit):
                 break
-            raise
+            elif exception_name == str(Mexcept.DebuggerRestart):
+                dbg.core.execution_status = 'Restart requested'
+                if dbg.program_sys_argv:
+                    sys.argv = list(dbg.program_sys_argv)
+                    part1 = ('Restarting %s with arguments:' %
+                             dbg.core.filename(mainpyfile))
+                    args  = ' '.join(dbg.program_sys_argv[1:])
+                    dbg.intf[-1].msg(Mmisc.wrapped_lines(part1, args,
+                                                         dbg.settings['width']))
+                    pass
+            else:
+                raise
         pass
 
     # Restore old sys.argv

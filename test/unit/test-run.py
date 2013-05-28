@@ -7,7 +7,8 @@ from import_relative import import_relative
 # FIXME: until import_relative is fixed
 import_relative('trepan', '...', 'trepan')
 
-Mexcept  = import_relative('exception', '...trepan', 'trepan')
+# Note No 'trepan' at the end as the top to get namespace right
+Mexcept  = import_relative('exception', '...trepan')
 Mrun     = import_relative('trepan.processor.command.run', '...', 'trepan')
 
 from cmdhelper import dbg_setup

@@ -18,7 +18,7 @@
 import types, sys, StringIO
 
 from import_relative import import_relative
-Mbase  = import_relative('io.base', '...trepan')
+Mbase  = import_relative('base', top_name='trepan')
 
 class DebuggerUserOutput(Mbase.DebuggerOutputBase):
     """Debugger output shown directly to what we think of as end-user

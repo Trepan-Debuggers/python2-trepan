@@ -19,7 +19,7 @@ import sys, types, StringIO
 
 from import_relative import import_relative
 Mmisc  = import_relative('misc', '..')
-Mbase  = import_relative('io.base', '..')
+Mbase  = import_relative('base', top_name='trepan')
 
 def readline_importable():
     try:

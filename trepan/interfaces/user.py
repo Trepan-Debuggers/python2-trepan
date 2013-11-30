@@ -20,8 +20,8 @@ import atexit, os
 # Our local modules
 from import_relative import import_relative
 Minterface = import_relative('interface',  '...trepan')
-Minput     = import_relative('io.input', '...trepan')
-Moutput    = import_relative('io.output', '...trepan')
+Minput     = import_relative('input', '..io', 'trepan')
+Moutput    = import_relative('output', '..io', 'trepan')
 Mmisc    = import_relative('misc', '...trepan')
 
 histfile = os.path.expanduser('~/.trepan_hist')

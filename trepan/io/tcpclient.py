@@ -17,7 +17,7 @@
 
 import socket
 from import_relative import import_relative
-Mbase    = import_relative('io.base', '...trepan')
+Mbase  = import_relative('base', top_name='trepan')
 Mdefault = import_relative('default', '..lib', 'trepan')
 Mmisc    = import_relative('misc', '..', 'trepan')
 Mtcpfns  = import_relative('tcpfns', '.', 'trepan')

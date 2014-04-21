@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009, 2013 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2009, 2013-2014 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -82,7 +82,7 @@ class FIFOClient(Mbase.DebuggerInOutBase):
        self.state     = 'active'
        return
 
-    def readline(self):
+    def read_msg(self):
         """Read a line of input. EOFError will be raised on EOF.
 
         Note that we don't support prompting"""
@@ -96,7 +96,7 @@ class FIFOClient(Mbase.DebuggerInOutBase):
             if not line:
                 self.state = 'disconnected'
                 raise EOFError
-            return line.rstrip("\n")
+            return line.encode("utf-8")
         else:
             raise IOError("readline called in state: %s." % self.state)
         return # Not reached

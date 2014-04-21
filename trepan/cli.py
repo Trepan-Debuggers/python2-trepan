@@ -14,7 +14,7 @@
 #
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
-''' Thecommand-line interface to the debugger.
+'''The command-line interface to the debugger.
 '''
 import os, os.path, sys
 

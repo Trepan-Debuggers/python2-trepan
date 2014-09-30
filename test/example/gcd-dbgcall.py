@@ -30,7 +30,7 @@ def gcd(a,b):
        (a, b) = (b, a)
 
     if a <= 0:
-        trepan.api.debug({step_ignore=0)
+        trepan.api.debug(step_ignore=0)
         return None
     if a == 1 or b-a == 0:
         trepan.api.debug()

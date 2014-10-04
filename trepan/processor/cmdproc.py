@@ -27,7 +27,7 @@ Mdisplay   = import_relative('display', '..lib', 'trepan')
 Mmisc      = import_relative('misc', '..', 'trepan')
 Mfile      = import_relative('file', '..lib', 'trepan')
 Mstack     = import_relative('stack', '..lib', 'trepan')
-Mthread    = import_relative('thread', '..lib', 'trepan')
+Mthread    = import_relative('thred', '..lib', 'trepan')
 Mcomplete  = import_relative('processor.complete', '...trepan')
 
 # arg_split culled from ipython's routine

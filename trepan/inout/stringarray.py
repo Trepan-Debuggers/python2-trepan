@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009, 2013 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2009, 2013-2014 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
 
 import types
 from import_relative import import_relative
-Mbase  = import_relative('io.base', '...trepan')
+Mbase  = import_relative('inout.base', '...trepan')
 
 class StringArrayInput(Mbase.DebuggerInputBase):
     """Simulate I/O using an array of strings. Sort of like StringIO, but
@@ -126,14 +126,12 @@ if __name__=='__main__':
         pass
     out = StringArrayOutput()
     print(out.output)
-#    line = io.readline("Type some more characters: ")
     out.writeline("Hello, world!")
     print(out.output)
     out.write("Hello")
     print(out.output)
     out.writeline(", again.")
     print(out.output)
-#     io.open_write(sys.stdout)
     out.flush_after_write = True
     out.write("Last hello")
     out.close()

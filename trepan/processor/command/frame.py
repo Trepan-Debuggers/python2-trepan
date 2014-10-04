@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2009, 2013 Rocky Bernstein
+#  Copyright (C) 2009, 2013-2014 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@ from import_relative import import_relative
 # Our local modules
 Mbase_cmd = import_relative('base_cmd', '.', 'trepan')
 Mcmdproc  = import_relative('cmdproc',  '..', 'trepan')
-Mthread   = import_relative('thread',   '...lib', 'trepan')
+Mthread   = import_relative('thred',    '...lib', 'trepan')
 Mframe    = import_relative('frame',    '..', 'trepan')
 
 class FrameCommand(Mbase_cmd.DebuggerCommand):

@@ -22,7 +22,7 @@ Mdebugger  = import_relative('debugger', '.')
 Mapi       = import_relative('api',      '.')
 Mclifns    = import_relative('clifns',   '.')
 Mfile      = import_relative('file',     '.lib')
-Moutput    = import_relative('output',   '.io')
+Moutput    = import_relative('output',   '.inout')
 
 def process_options(debugger_name, pkg_version, sys_argv, option_list=None):
     """Handle debugger options. Set `option_list' if you are writing

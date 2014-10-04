@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2008-2009, 2013 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008-2009, 2013-2014 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ def find_debugged_frame(frame):
         f_prev = f
         f = f.f_back
         pass
-    if f_prev: 
+    if f_prev:
         val = f_prev.f_locals.get('tracer_func_frame')
         if val == f_prev:
             if f_prev.f_back:
@@ -52,7 +52,7 @@ def map_thread_names():
     name2id = {}
     for thread_id in list(threading._active.keys()):
         thread = threading._active[thread_id]
-        name = thread.getName() 
+        name = thread.getName()
         if name not in list(name2id.keys()):
             name2id[name] = thread_id
             pass
@@ -67,7 +67,7 @@ if __name__ == '__main__':
         print('Current thread: %s' % current_thread_name())
         print('All threads:')
         for thread_id, f in list(sys._current_frames().items()):
-            print('  %s %s' % (id2thread_name(thread_id), 
+            print('  %s %s' % (id2thread_name(thread_id),
                                find_debugged_frame(f)))
             pass
         print('-' * 10)
@@ -85,10 +85,8 @@ if __name__ == '__main__':
             showit()
             return
         pass
-    
+
     background = BgThread()
     background.start()
     background.join()    # Wait for the background task to finish
     pass
-
-

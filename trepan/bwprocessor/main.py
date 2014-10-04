@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2008-2010, 2013 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008-2010, 2013-2014 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ Mfile      = import_relative('file', '..lib', 'trepan')
 Mlocation  = import_relative('location', '.', 'trepan')
 Mmsg       = import_relative('msg',      '.', 'trepan')
 Mstack     = import_relative('stack', '..lib', 'trepan')
-Mthread    = import_relative('thread', '..lib', 'trepan')
+Mthread    = import_relative('thred', '..lib', 'trepan')
 
 def get_stack(f, t, botframe, proc_obj=None):
     """Return a stack of frames which the debugger will use for in

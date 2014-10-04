@@ -1,4 +1,4 @@
-# Copyright (C) 2008-2010, 2013 Rocky Bernstein <rocky@gnu.org>
+# Copyright (C) 2008-2010, 2013-2014 Rocky Bernstein <rocky@gnu.org>
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -49,7 +49,7 @@ namespace_packages = [
     'trepan',
     'trepan.bwprocessor',
     'trepan.interfaces',
-    'trepan.io',
+    'trepan.inout',
     'trepan.lib',
     'trepan.processor',
     'trepan.processor.command',

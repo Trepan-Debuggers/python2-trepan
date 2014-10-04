@@ -1,11 +1,11 @@
 #!/usr/bin/env python
-'Unit test for trepan.io.tcp*'
+'Unit test for trepan.inout.tcp*'
 import unittest
 
 from import_relative import import_relative
-import_relative('io', '...trepan', 'trepan')
-Mserver   = import_relative('io.tcpserver', '...trepan', 'trepan')
-Mclient   = import_relative('io.tcpclient', '...trepan', 'trepan')
+import_relative('inout', '...trepan', 'trepan')
+Mserver   = import_relative('inout.tcpserver', '...trepan', 'trepan')
+Mclient   = import_relative('inout.tcpclient', '...trepan', 'trepan')
 import_relative('interfaces', '...trepan', 'trepan')
 Mcomcodes = import_relative('interfaces.comcodes', '...trepan', 'trepan')
 

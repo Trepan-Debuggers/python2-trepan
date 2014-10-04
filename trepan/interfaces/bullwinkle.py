@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2013 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2013-2014 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -21,8 +21,8 @@ import atexit, pprint
 from import_relative import *
 import_relative('interfaces',             '..',   'trepan')
 Minterface = import_relative('interface', '..',   'trepan')
-Minput     = import_relative('input',     '..io', 'trepan')
-Moutput    = import_relative('output',    '..io', 'trepan')
+Minput     = import_relative('input',     '..inout', 'trepan')
+Moutput    = import_relative('output',    '..inout', 'trepan')
 
 class BWInterface(Minterface.DebuggerInterface):
     """Interface when communicating with the user in the same

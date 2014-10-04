@@ -18,7 +18,7 @@
 import tempfile, os
 
 from import_relative import import_relative
-Mbase    = import_relative('base', '..io', top_name='trepan')
+Mbase    = import_relative('base', top_name='trepan')
 Mdefault = import_relative('lib.default', '..')
 Mfile    = import_relative('file', '..lib')
 Mmisc    = import_relative('misc', '..')

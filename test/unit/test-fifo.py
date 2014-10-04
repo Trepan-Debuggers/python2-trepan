@@ -1,13 +1,13 @@
 #!/usr/bin/env python
-'Unit test for trepan.io.fifo*'
+'Unit test for trepan.inout.fifo*'
 import os
 if hasattr(os, 'mkfifo'):
 
     import unittest
 
     from import_relative import import_relative
-    Mserver = import_relative('trepan.io.fifoserver', '...')
-    Mclient = import_relative('trepan.io.fifoclient', '...')
+    Mserver = import_relative('trepan.inout.fifoserver', '...')
+    Mclient = import_relative('trepan.inout.fifoclient', '...')
 
     class TestFIFO(unittest.TestCase):
         """Tests FIFOServer and FIFOClient"""

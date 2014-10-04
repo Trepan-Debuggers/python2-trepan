@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-'Unit test for trepan.io.input'
+'Unit test for trepan.inout.input'
 import os, unittest
 from import_relative import import_relative, get_srcdir
 
-Minput = import_relative('trepan.io.input', '...')
+Minput = import_relative('trepan.inout.input', '...')
 
 class TestDebuggerInput(unittest.TestCase):
 

@@ -27,6 +27,10 @@ import os, sys, threading
 # External Egg packages
 import tracer
 
+import trepan.processor
+import trepan.lib
+import trepan.bwprocessor
+
 # Our local modules
 from import_relative import import_relative
 breakpoint = import_relative('breakpoint')

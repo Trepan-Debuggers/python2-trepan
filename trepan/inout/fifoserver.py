@@ -21,12 +21,12 @@ if hasattr(os, 'mkfifo'):
     import atexit, tempfile
 
     from import_relative import import_relative
-    Mbase    = import_relative('base', '..inout')
+    from trepan.inout.base import DebuggerInOutBase
     Mdefault = import_relative('lib.default', '..')
     Mmisc    = import_relative('misc', '..')
 
     ## FIXME: Consider using Python's socketserver/SocketServer?
-    class FIFOServer(Mbase.DebuggerInOutBase):
+    class FIFOServer(DebuggerInOutBase):
         """Debugger Server Input/Output Socket."""
 
         DEFAULT_INIT_OPTS = {'open': True}

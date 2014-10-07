@@ -1,8 +1,11 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 'Unit test for debugger command completion'
 
 import unittest
 from import_relative import import_relative
+import trepan.inout
+import trepan.processor.command
+import trepan.interfaces
 Mdebugger = import_relative('debugger', '...trepan')
 
 line_buffer = ''

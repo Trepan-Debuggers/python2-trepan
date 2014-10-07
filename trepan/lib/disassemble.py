@@ -2,11 +2,12 @@
 #   Modification of Python's Lib/dis.py
 '''Disassembly Routines'''
 
-import inspect, sys, types
+import inspect, sys, struct, time, types, marshal
 from dis import distb, findlabels, findlinestarts
 from opcode import cmp_op, hasconst, hascompare, hasfree, hasname, hasjrel, \
     haslocal, opname, EXTENDED_ARG, HAVE_ARGUMENT
 
+import trepan.lib.format
 from import_relative import import_relative
 Mformat   = import_relative('lib.format', '...trepan')
 format_token = Mformat.format_token

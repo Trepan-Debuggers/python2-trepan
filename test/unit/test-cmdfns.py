@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 'Unit test for trepan.processor.command.cmdfns'
 import unittest
+import trepan
 from import_relative import import_relative
 
 Mcmdfns = import_relative('processor.cmdfns', '...trepan')

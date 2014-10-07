@@ -3,6 +3,11 @@
 import inspect, os, sys, types, unittest
 from import_relative import import_relative
 
+import trepan.lib
+import trepan.processor.command
+import trepan.inout
+import trepan.interfaces
+
 Mcmdproc = import_relative('processor.cmdproc', '...trepan')
 Mmock    = import_relative('processor.command.mock', '...trepan')
 

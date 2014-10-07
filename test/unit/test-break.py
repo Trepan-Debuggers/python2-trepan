@@ -1,5 +1,11 @@
 #!/usr/bin/env python
 'Unit test for trepan.processor.command.break'
+
+import trepan.processor.command
+import trepan.lib
+import trepan.inout
+import trepan.interfaces
+
 import os, unittest
 
 from import_relative import import_relative

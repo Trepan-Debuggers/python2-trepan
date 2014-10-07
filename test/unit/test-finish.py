@@ -3,6 +3,10 @@
 import sys, unittest
 
 from import_relative import import_relative
+import trepan.inout
+import trepan.interfaces
+import trepan.lib
+import trepan.processor.command
 Mfinish = import_relative('processor.command.finish', '...trepan')
 
 from cmdhelper import dbg_setup

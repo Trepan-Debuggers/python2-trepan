@@ -18,12 +18,12 @@
 import tempfile, os
 
 from import_relative import import_relative
-Mbase    = import_relative('base', top_name='trepan')
+from trepan.inout.base import DebuggerInOutBase
 Mdefault = import_relative('lib.default', '..')
 Mfile    = import_relative('file', '..lib')
 Mmisc    = import_relative('misc', '..')
 
-class FIFOClient(Mbase.DebuggerInOutBase):
+class FIFOClient(DebuggerInOutBase):
     """Debugger Client Input/Output Socket."""
 
     DEFAULT_INIT_OPTS = {'open': True}

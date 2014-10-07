@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009, 2013 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2009, 2013-2014 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -21,7 +21,6 @@
 #
 #
 import signal
-
 def YN(b):
     """Return 'Yes' for True and 'No' for False, and ?? for anything
     else."""
@@ -475,6 +474,9 @@ class SigHandler:
 
 # When invoked as main program, do some basic tests of a couple of functions
 if __name__=='__main__':
+    import trepan.inout
+    import trepan.processor.command
+    import trepan.interfaces
     for b in (True, False,):
         print('YN of %s is %s' % (repr(b), YN(b)))
         pass

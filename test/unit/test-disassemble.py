@@ -4,6 +4,10 @@ import inspect, unittest
 from import_relative import import_relative
 
 import_relative('trepan', '...', 'trepan')
+import trepan.inout
+import trepan.interfaces
+import trepan.lib
+import trepan.processor.command
 Mdis = import_relative('processor.command.disassemble', '...trepan')
 
 from cmdhelper import dbg_setup

@@ -13,22 +13,23 @@
 #
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
-"""Debugger Socket Input/Output Interface. """
+"""Debugger Socket Input/Output Interface."""
 
 import socket
 from import_relative import import_relative
-Mbase  = import_relative('base', top_name='trepan')
+import trepan.lib
+from trepan.inout.base import DebuggerInOutBase
 Mdefault = import_relative('default', '..lib', 'trepan')
-Mmisc    = import_relative('misc', '..', 'trepan')
+from trepan.misc import option_set
 Mtcpfns  = import_relative('tcpfns', '.', 'trepan')
 
-class TCPClient(Mbase.DebuggerInOutBase):
+class TCPClient(DebuggerInOutBase):
     """Debugger Client Input/Output Socket."""
 
     DEFAULT_INIT_OPTS = {'open': True}
     def __init__(self, inout=None, opts=None):
-        get_option = lambda key: Mmisc.option_set(opts, key,
-                                                  Mdefault.CLIENT_SOCKET_OPTS)
+        get_option = lambda key: option_set(opts, key,
+                                            Mdefault.CLIENT_SOCKET_OPTS)
         self.inout     = None
         self.addr      = None
         self.buf       = ''
@@ -51,8 +52,8 @@ class TCPClient(Mbase.DebuggerInOutBase):
 
     def open(self, opts=None):
 
-       get_option = lambda key: Mmisc.option_set(opts, key,
-                                                 Mdefault.CLIENT_SOCKET_OPTS)
+       get_option = lambda key: option_set(opts, key,
+                                           Mdefault.CLIENT_SOCKET_OPTS)
 
        HOST = get_option('HOST')
        PORT = get_option('PORT')

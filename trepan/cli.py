@@ -25,6 +25,9 @@ if not package in sys.modules:
 
 # Our local modules
 from import_relative import import_relative, get_srcdir
+import trepan.interfaces
+import trepan.inout
+import trepan.processor.command
 Minterface = import_relative('interface', '.',   package)
 Mapi       = import_relative('api',       '.',   package)
 Mclient    = import_relative('client',    '.',   package)

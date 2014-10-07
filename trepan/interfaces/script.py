@@ -18,6 +18,7 @@ import atexit
 
 # Our local modules
 from import_relative import *
+import trepan.inout
 import_relative('inout', '...trepan')
 Minterface = import_relative('interface', '..')
 Mscriptin  = import_relative('scriptin',  '..inout')

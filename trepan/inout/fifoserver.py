@@ -22,7 +22,6 @@ if hasattr(os, 'mkfifo'):
 
     from import_relative import import_relative
     from trepan.inout.base import DebuggerInOutBase
-    Mdefault = import_relative('lib.default', '..')
     Mmisc    = import_relative('misc', '..')
 
     ## FIXME: Consider using Python's socketserver/SocketServer?

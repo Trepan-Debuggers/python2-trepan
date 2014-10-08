@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009, 2013 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2009, 2013-2014 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -16,11 +16,12 @@
 # Post-Mortem interface
 
 import inspect, os, sys, re, traceback
+import trepan.inout
 
 # Our local modules
 from import_relative import import_relative
 Mdebugger = import_relative('debugger', '.', 'trepan')
-Mexcept   = import_relative('exception', '.', 'trepan')
+from exception import DebuggerQuit, DebuggerRestart
 
 def get_last_or_frame_exception():
     """Intended to be used going into post mortem routines.  If
@@ -50,8 +51,8 @@ def pm(frameno=1, dbg=None):
     return
 
 def post_mortem_excepthook(exc_type, exc_value, exc_tb):
-    if exc_type == Mexcept.DebuggerQuit: return
-    if exc_type == Mexcept.DebuggerRestart:
+    if exc_type == DebuggerQuit: return
+    if exc_type == DebuggerRestart:
         if ( exc_value and exc_value.sys_argv and
              len(exc_value.sys_argv) > 0 ):
             print("No restart handler - trying restart via execv(%s)" %
@@ -143,7 +144,7 @@ def post_mortem(exc=None, frameno=1, dbg=None):
         f = exc_tb.tb_frame
         if f and f.f_lineno != exc_tb.tb_lineno : f = f.f_back
         dbg.core.processor.event_processor(f, 'exception', exc, 'trepan2:pm')
-    except Mexcept.DebuggerRestart:
+    except DebuggerRestart:
         while True:
             sys.argv = list(dbg._program_sys_argv)
             dbg.msg("Restarting %s with arguments:\n\t%s"
@@ -151,18 +152,18 @@ def post_mortem(exc=None, frameno=1, dbg=None):
                      " ".join(dbg._program_sys_argv[1:])))
             try:
                 dbg.run_script(dbg.mainpyfile)
-            except Mexcept.DebuggerRestart:
+            except DebuggerRestart:
                 pass
             pass
-    except Mexcept.DebuggerQuit:
+    except DebuggerQuit:
         pass
     return
 
 def uncaught_exception(dbg):
     exc = sys.exc_info()
     exc_type, exc_value, exc_tb = exc
-    if exc_type == Mexcept.DebuggerQuit: return
-    if exc_type == Mexcept.DebuggerRestart:
+    if exc_type == DebuggerQuit: return
+    if exc_type == DebuggerRestart:
         print("restart not done yet - entering post mortem debugging")
     elif exc_tb is None:
         print("You don't seem to have an exception traceback, yet.")

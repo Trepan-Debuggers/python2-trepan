@@ -1,3 +1,8 @@
+trepan 0.3.0 2014-10-08
+
+-  make "quit" really quit rather than go into post-mortem.
+-  reduce warnings
+
 trepan 0.2.9 2014-10-04
 
 - fixes to reduce namespace clashes until this can be rewritten better

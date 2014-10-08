@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009-2010, 2013 Rocky Bernstein
+#   Copyright (C) 2009-2010, 2013-2014 Rocky Bernstein
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -15,6 +15,11 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ''' Not a command. A stub class used by a command in its 'main' for
 demonstrating how the command works.'''
+
+import trepan.lib
+import trepan.inout
+import trepan.interfaces
+import trepan.processor.command
 
 import os, sys
 from import_relative import import_relative

@@ -21,7 +21,7 @@ import trepan.inout
 # Our local modules
 from import_relative import import_relative
 Mdebugger = import_relative('debugger', '.', 'trepan')
-from exception import DebuggerQuit, DebuggerRestart
+from trepan.exception import DebuggerQuit, DebuggerRestart
 
 def get_last_or_frame_exception():
     """Intended to be used going into post mortem routines.  If

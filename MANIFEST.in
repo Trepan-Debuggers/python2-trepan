@@ -1,6 +1,7 @@
 include COPYING
 include Makefile
 include NEWS
+include README.md
 include __pkginfo__.py
 include make-check-filter.py
 recursive-include test/data *.cmd

@@ -18,7 +18,7 @@ NotImplementedMessage = "This method must be overriden in a subclass"
 from pygments.console import colorize
 from import_relative import import_relative
 
-Mformat = import_relative('lib.format',  '..trepan')
+import trepan.lib.format as Mformat
 
 __all__ = ['Processor']
 

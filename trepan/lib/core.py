@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2008-2010, 2013 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008-2010, 2013-2014 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -21,15 +21,15 @@ debugger for top-level Debugger class and module routine which
 ultimately will call this. An event processor is responsible of
 handling what to do when an event is triggered."""
 
+import trepan.processor
+import trepan.lib
+import trepan.bwprocessor
+
 # Common Python packages
 import os, sys, threading
 
 # External Egg packages
 import tracer
-
-import trepan.processor
-import trepan.lib
-import trepan.bwprocessor
 
 # Our local modules
 from import_relative import import_relative

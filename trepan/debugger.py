@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2008-2010, 2013 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008-2010, 2013-2014 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -30,10 +30,9 @@ user or client-side code for connecting to server'd debugged program.
 # Our local modules
 from import_relative import import_relative
 
-import_relative('processor', '.')
+Mcore   = import_relative('core', '.lib', 'trepan')
 
-Mcore   = import_relative('core', '.lib')
-Mexcept = import_relative('exception', '.')
+from trepan.exception import DebuggerQuit, DebuggerRestart
 
 # Default settings used here
 Mdefault  = import_relative('lib.default', '.')
@@ -94,12 +93,12 @@ class Debugger:
         except SyntaxError:
             try:
                 exec(cmd, globals_, locals_)
-            except Mexcept.DebuggerQuit:
+            except DebuggerQuit:
                 pass
-            except Mexcept.DebuggerQuit:
+            except DebuggerQuit:
                 pass
             pass
-        except Mexcept.DebuggerQuit:
+        except DebuggerQuit:
             pass
         self.core.stop()
         return retval
@@ -129,7 +128,7 @@ class Debugger:
         self.core.start(start_opts)
         try:
             exec(cmd, globals_, locals_)
-        except Mexcept.DebuggerQuit:
+        except DebuggerQuit:
             pass
         self.core.stop()
         return
@@ -144,7 +143,7 @@ class Debugger:
         self.core.start(opts=start_opts)
         try:
             res = func(*args, **kwds)
-        except Mexcept.DebuggerQuit:
+        except DebuggerQuit:
             pass
         self.core.stop()
         return res
@@ -172,7 +171,7 @@ class Debugger:
         self.core.start(start_opts)
         try:
             retval = eval(expr, globals_, locals_)
-        except Mexcept.DebuggerQuit:
+        except DebuggerQuit:
             pass
         self.core.stop()
         return retval
@@ -219,12 +218,12 @@ class Debugger:
             pass
         except IOError:
             print(sys.exc_info()[1])
-        except Mexcept.DebuggerQuit:
+        except DebuggerQuit:
             retval = False
             pass
-        except Mexcept.DebuggerRestart:
+        except DebuggerRestart:
             self.core.execution_status = 'Restart requested'
-            raise Mexcept.DebuggerRestart
+            raise DebuggerRestart
         self.core.stop(options={'remove': True})
         return retval
 
@@ -385,10 +384,10 @@ if __name__=='__main__':
                 def square(x): return x*x
                 print('calling: run_call(square,2)')
                 d.run_call(square, 2)
-            except Mexcept.DebuggerQuit:
+            except DebuggerQuit:
                 print("That's all Folks!...")
                 break
-            except Mexcept.DebuggerRestart:
+            except DebuggerRestart:
                 print('Restarting...')
                 pass
             pass

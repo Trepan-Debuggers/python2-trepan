@@ -1,3 +1,7 @@
+trepan 0.3.1 2014-10-08
+
+-  botched release 0.3.0
+
 trepan 0.3.0 2014-10-08
 
 -  make "quit" really quit rather than go into post-mortem.

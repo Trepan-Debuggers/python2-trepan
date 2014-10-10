@@ -35,11 +35,10 @@ Mcore   = import_relative('core', '.lib', 'trepan')
 from trepan.exception import DebuggerQuit, DebuggerRestart
 
 # Default settings used here
-Mdefault  = import_relative('lib.default', '.')
-
-Muser     = import_relative('interfaces.user', '.')
-Mmisc     = import_relative('misc', '.')
-Msig      = import_relative('sighandler', '.lib')
+import trepan.lib.default as Mdefault
+import trepan.interfaces.user as Muser
+from trepan.misc import option_set
+import trepan.lib.sighandler as Msig
 
 # Common Python packages
 import sys, types
@@ -278,8 +277,8 @@ class Debugger:
         self.mainpyfile  = None
         self.thread      = None
         self.eval_string = None
-        get_option = lambda key: Mmisc.option_set(opts, key,
-                                                  self.DEFAULT_INIT_OPTS)
+        get_option = lambda key: option_set(opts, key,
+                                            self.DEFAULT_INIT_OPTS)
         completer  = lambda text, state: self.complete(text, state)
 
         # set the instance variables that come directly from options.

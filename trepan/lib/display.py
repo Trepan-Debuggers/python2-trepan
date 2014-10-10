@@ -21,7 +21,6 @@
 # Our local modules
 from import_relative import import_relative
 import trepan
-import_relative('processor', '...trepan')
 Mstack     = import_relative('stack')
 
 def signature(frame):

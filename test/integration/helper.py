@@ -1,6 +1,7 @@
 import difflib, os, re, sys, time
 from import_relative import get_srcdir
 
+
 def run_debugger(testname, python_file, dbgr_opts='', args='',
                  outfile=None):
     srcdir    = get_srcdir()

@@ -14,6 +14,6 @@
 """ Copyright (C) 2008-2009, 2014 Rocky Bernstein <rocky@gnu.org>"""
 __import__('pkg_resources').declare_namespace(__name__)
 
-from import_relative import import_relative
 from trepan.misc import pyfiles
 __all__ = [ pyfiles() ]
+__package__ = 'trepan.lib'

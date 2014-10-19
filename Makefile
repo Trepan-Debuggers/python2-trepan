@@ -6,9 +6,12 @@
 
 GIT2CL ?= git2cl
 PYTHON ?= python
+PYTHON3 ?= python3
+RM      ?= rm
+LINT    = flake8
 
 #EXTRA_DIST=ipython/ipy_trepan.py trepan
-PHONY=check clean dist distclean test test-unit test-functional rmChangeLog
+PHONY=check clean dist distclean test test-unit test-functional rmChangeLog clean_pyc
 
 #: Default target - same as "check"
 all: check
@@ -49,8 +52,8 @@ test-integration-short:
 	(cd test/integration && $(PYTHON) ./setup.py nosetests) 2>&1 | \
 	$(PYTHON) ./make-check-filter.py
 
-#: Clean up temporary files
-clean:
+#: Clean up temporary files and .pyc files
+clean: clean_pyc
 	$(PYTHON) ./setup.py $@
 
 #: Create source (tarball) and binary (egg) distribution
@@ -60,6 +63,11 @@ dist:
 #: Create source tarball
 sdist:
 	$(PYTHON) ./setup.py sdist
+
+
+#: Style check. Set env var LINT to pyflakes, flake, or flake8
+lint:
+	$(LINT)
 
 #: Create binary egg distribution
 bdist_egg:

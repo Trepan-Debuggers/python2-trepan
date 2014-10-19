@@ -17,8 +17,8 @@ import os, threading
 from import_relative import import_relative
 
 # Our local modules
-Mbase_cmd  = import_relative('base_cmd', '.')
-Mexcept    = import_relative('exception', '...')
+Mbase_cmd  = import_relative('base_cmd', '.', 'trepan')
+Mexcept    = import_relative('exception', '...', 'trepan')
 
 class QuitCommand(Mbase_cmd.DebuggerCommand):
     """**quit** [**unconditionally**]

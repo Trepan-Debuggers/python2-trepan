@@ -35,12 +35,13 @@ if necessary, first.
 import sys
 from import_relative import import_relative
 
+import trepan.lib
 import trepan.interfaces
 import trepan.inout
 import trepan.processor.command
 
-Mdebugger    = import_relative('debugger', '.')
-Mpost_mortem = import_relative('post_mortem', '.')
+Mdebugger    = import_relative('debugger', '.', 'trepan')
+Mpost_mortem = import_relative('post_mortem', '.', 'trepan')
 
 def debugger_on_post_mortem():
     '''Call debugger on an exeception that terminates a program'''

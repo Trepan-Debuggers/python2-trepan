@@ -22,13 +22,14 @@ from tracer import EVENT2SHORT
 
 Mprocessor = import_relative('vprocessor', '..', 'trepan')
 Mbytecode  = import_relative('bytecode', '..lib', 'trepan')
-Mexcept    = import_relative('exception', '...trepan')
+Mexcept    = import_relative('exception', '...trepan', 'trepan')
 Mdisplay   = import_relative('display', '..lib', 'trepan')
 Mmisc      = import_relative('misc', '..', 'trepan')
 Mfile      = import_relative('file', '..lib', 'trepan')
 Mstack     = import_relative('stack', '..lib', 'trepan')
 Mthread    = import_relative('thred', '..lib', 'trepan')
 Mcomplete  = import_relative('complete', '..processor', 'trepan')
+import trepan
 
 # arg_split culled from ipython's routine
 def arg_split(s,posix=False):
@@ -711,11 +712,6 @@ class CommandProcessor(Mprocessor.Processor):
                             # Let these exceptions propagate through
                             raise
                         except:
-                            ## FIXME: Should be handled above without this mess
-                            exception_name = str(sys.exc_info()[0])
-                            if (exception_name == str(Mexcept.DebuggerQuit) or
-                                exception_name == str(Mexcept.DebuggerRestart)):
-                                raise
                             self.errmsg("INTERNAL ERROR: " +
                                         traceback.format_exc())
                             pass

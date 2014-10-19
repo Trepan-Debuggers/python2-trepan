@@ -10,8 +10,8 @@ from file __pkginfo__.py.
 
 # Get the package information used in setup().
 from __pkginfo__ import \
-    author,           author_email,       classifiers,      ftp_url,      \
-    install_requires, license,            long_description, mailing_list, \
+    author,           author_email,       classifiers,                    \
+    install_requires, license,                                            \
     modname,          namespace_packages, packages,         py_modules,   \
     short_desc,       version,            web,              zip_safe
 

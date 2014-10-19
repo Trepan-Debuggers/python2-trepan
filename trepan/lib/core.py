@@ -21,8 +21,8 @@ debugger for top-level Debugger class and module routine which
 ultimately will call this. An event processor is responsible of
 handling what to do when an event is triggered."""
 
-import trepan.processor
 import trepan.lib
+import trepan.processor
 import trepan.bwprocessor
 
 # Common Python packages

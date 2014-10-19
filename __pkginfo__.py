@@ -22,7 +22,10 @@
 # still is some room for improvement.
 
 # Things that change more often go here.
-copyright   = '''Copyright (C) 2008-2010, 2013 Rocky Bernstein <rocky@gnu.org>.'''
+copyright   = """
+Copyright (C) 2008-2010, 2013-2014 Rocky Bernstein <rocky@gnu.org>.
+"""
+
 classifiers =  ['Development Status :: 4 - Beta',
                 'Environment :: Console',
                 'Intended Audience :: Developers',
@@ -65,6 +68,7 @@ short_desc         = 'Modular Python Debugger'
 import os
 import os.path, sys
 
+
 def get_srcdir():
     """Get directory of caller as an absolute file name. *level* is
     the number of frames to look back.  So for import file which is
@@ -81,11 +85,12 @@ def get_srcdir():
 
 # VERSION.py sets variable VERSION.
 execfile(os.path.join(get_srcdir(), 'trepan', 'VERSION.py'))
-version            = VERSION
-web                = 'http://code.google.com/p/pydbgr/'
+version            = VERSION  # NOQA
+web                = 'http://github.com/rocky/python-trepan2/'
 
 # tracebacks in zip files are funky and not debuggable
 zip_safe = False
+
 
 def read(*rnames):
     return open(os.path.join(os.path.dirname(__file__), *rnames)).read()

@@ -2,21 +2,14 @@
 'Unit test for trepan.processor.command.step'
 import sys, unittest
 
-from import_relative import import_relative
-import trepan.inout
-import trepan.interfaces
-import trepan.lib
-import trepan.processor.command
-Mfinish = import_relative('processor.command.finish', '...trepan')
-
-from cmdhelper import dbg_setup
-
 class TestFinishCommand(unittest.TestCase):
     """Tests FinishCommand class"""
 
     def test_finish(self):
         """Test processor.command.finish.FinishCommand.run()"""
+        from cmdhelper import dbg_setup
         d, cp = dbg_setup()
+        import trepan.processor.command.finish as Mfinish
         command = Mfinish.FinishCommand(cp)
         for c in ((['finish', '5'], True,),
                   (['finish', '0*5+1'], True)):

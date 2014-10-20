@@ -9,6 +9,8 @@ import trepan.interfaces
 Mdebugger = import_relative('debugger', '...trepan')
 
 line_buffer = ''
+
+
 def get_line_buffer():
     return line_buffer
 

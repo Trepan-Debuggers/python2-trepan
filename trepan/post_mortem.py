@@ -51,8 +51,8 @@ def pm(frameno=1, dbg=None):
     return
 
 def post_mortem_excepthook(exc_type, exc_value, exc_tb):
-    if exc_type == DebuggerQuit: return
-    if exc_type == DebuggerRestart:
+    if str(exc_type) == str(DebuggerQuit): return
+    if str(exc_type) == str(DebuggerRestart):
         if ( exc_value and exc_value.sys_argv and
              len(exc_value.sys_argv) > 0 ):
             print("No restart handler - trying restart via execv(%s)" %

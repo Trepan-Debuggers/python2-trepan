@@ -1,3 +1,8 @@
+trepan 0.3.4 2014-10-19
+
+- Reduce import_relative, quit and restart should work better
+- More linting.
+
 trepan 0.3.3 2014-10-10
 
 -  Another attempt to make this pip install cleanly

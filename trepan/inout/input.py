@@ -15,7 +15,6 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Debugger input possibly attached to a user or interactive. """
 
-import trepan.inout
 import sys, types, StringIO
 
 from import_relative import import_relative

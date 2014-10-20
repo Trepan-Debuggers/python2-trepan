@@ -20,8 +20,6 @@ import atexit, os
 # Our local modules
 from import_relative import import_relative
 Minterface = import_relative('interface',  '...trepan')
-Minput     = import_relative('input', '..inout', 'trepan')
-Moutput    = import_relative('output', '..inout', 'trepan')
 Mmisc    = import_relative('misc', '...trepan')
 
 histfile = os.path.expanduser('~/.trepan_hist')
@@ -43,6 +41,9 @@ class UserInterface(Minterface.DebuggerInterface):
     def __init__(self, inp=None, out=None, opts={}):
         get_option = lambda key: Mmisc.option_set(opts, key,
                                                   DEFAULT_USER_SETTINGS)
+
+        from trepan.inout import input as Minput
+        from trepan.inout import output as Moutput
 
         atexit.register(self.finalize)
         self.interactive = True # Or at least so we think initially

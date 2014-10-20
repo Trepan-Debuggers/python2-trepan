@@ -30,8 +30,6 @@ user or client-side code for connecting to server'd debugged program.
 # Our local modules
 from import_relative import import_relative
 
-Mcore   = import_relative('core', '.lib', 'trepan')
-
 from trepan.exception import DebuggerQuit, DebuggerRestart
 
 # Default settings used here
@@ -273,6 +271,8 @@ class Debugger:
 
         See also Debugger.start and Debugger.stop.
         """
+
+        import trepan.lib.core as Mcore
 
         self.mainpyfile  = None
         self.thread      = None

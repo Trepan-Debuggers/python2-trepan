@@ -2,6 +2,7 @@
 import os, signal, unittest
 from fn_helper import strarray_setup, compare_output, get_lineno
 
+
 class TestSigHandler(unittest.TestCase):
 
     def test_handle(self):
@@ -29,7 +30,7 @@ class TestSigHandler(unittest.TestCase):
         kill_line = get_lineno() - 4          # +4
         out = ['-- x = 5',
                ('''?! os.kill(os.getpid(), signal.SIGUSR1)
-     called from file 'test-sig.py' at line %d''' % 
+     called from file 'test-sig.py' at line %d''' %
                 kill_line)]
         compare_output(self, out, d, cmds)
 
@@ -39,7 +40,7 @@ class TestSigHandler(unittest.TestCase):
         cmds = ['handle usr1 stop ignore', 'continue', 'where', 'continue']
         d.intf[-1].output.output = ['']
         d.core.step_ignore = 0
-        d.intf[-1].input.input = cmds 
+        d.intf[-1].input.input = cmds
 
         def signal_handler2(num, f):
             print('signal %d received' % num)
@@ -56,17 +57,16 @@ class TestSigHandler(unittest.TestCase):
         kill_line = get_lineno() - 4          # +4
         out = ['-- x = 7',
                ('''?! os.kill(os.getpid(), signal.SIGUSR1)
-     called from file 'test-sig.py' at line %d''' % 
+     called from file 'test-sig.py' at line %d''' %
                 kill_line)]
         compare_output(self, out, d, cmds)
 
-
         # How about USR2 signal with 'ignore' and 'noprint' actions?
-        cmds = ['handle usr2 ignore nostop noprint', 
+        cmds = ['handle usr2 ignore nostop noprint',
                 'continue', 'info signal usr2', 'continue']
         d.intf[-1].output.output = ['']
         d.core.step_ignore = 0
-        d.intf[-1].input.input = cmds 
+        d.intf[-1].input.input = cmds
 
         def signal_handler3(num, f):
             print('signal %d received' % num)
@@ -75,9 +75,9 @@ class TestSigHandler(unittest.TestCase):
 
         d.core.start()
         ##############################
-        x = 9
+        x = 9  # NOQA
         os.kill(os.getpid(), signal.SIGUSR2)
-        y = 10
+        y = 10  # NOQA
         ##############################
         d.core.stop()
         out = ['-- x = 9']
@@ -90,8 +90,3 @@ class TestSigHandler(unittest.TestCase):
 if __name__ == '__main__':
     unittest.main()
     pass
-
-
-
-
-

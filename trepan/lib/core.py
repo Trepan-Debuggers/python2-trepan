@@ -21,9 +21,6 @@ debugger for top-level Debugger class and module routine which
 ultimately will call this. An event processor is responsible of
 handling what to do when an event is triggered."""
 
-import trepan.lib
-import trepan.processor
-import trepan.bwprocessor
 
 # Common Python packages
 import os, sys, threading
@@ -38,7 +35,6 @@ default    = import_relative('default')
 Mmisc      = import_relative('misc', '..', 'trepan')
 Mtrace     = import_relative('trace', '..processor', 'trepan')
 Mcmdproc   = import_relative('cmdproc', '..processor', 'trepan')
-Mbwproc    = import_relative('main', '..bwprocessor')
 Mstack     = import_relative('stack')
 Mclifns    = import_relative('clifns', '...trepan')
 
@@ -61,6 +57,10 @@ class DebuggerCore:
 
         See also `start' and `stop'.
         """
+
+        import trepan.processor
+        import trepan.bwprocessor as Mbwproc
+
         get_option       = lambda key: Mmisc.option_set(opts, key,
                                                         self.DEFAULT_INIT_OPTS)
 

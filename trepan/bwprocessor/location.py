@@ -2,6 +2,7 @@
 ''' Location routines'''
 
 import pyficache, linecache, tempfile
+1/0
 from import_relative import import_relative, get_srcdir
 Mstack = import_relative('stack', '..lib', 'trepan')
 

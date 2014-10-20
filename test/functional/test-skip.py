@@ -14,10 +14,10 @@ class TestSkip(unittest.TestCase):
         ##############################
         x = 4
         x = 5
-        y = 7
+        y = 7  # NOQA
         ##############################
         d.core.stop()
-        out = ['-- x = 4', # x = 4 is shown in prompt, but not *run*.
+        out = ['-- x = 4',   # x = 4 is shown in prompt, but not *run*.
                '-- x = 5']
         compare_output(self, out, d, cmds)
         self.assertEqual(5, x)  # Make sure lines were skipped.
@@ -31,10 +31,10 @@ class TestSkip(unittest.TestCase):
         ##############################
         x = 10
         x = 9
-        z = 7
+        z = 7  # NOQA
         ##############################
         d.core.stop(options={'remove': True})
-        out = ['-- x = 10', # x = 10 is shown in prompt, but not run.
+        out = ['-- x = 10',   # x = 10 is shown in prompt, but not run.
                '-- z = 7']
         compare_output(self, out, d, cmds)
         self.assertEqual(5, x)  # Make sure x = 10, 9 were skipped.

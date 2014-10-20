@@ -18,8 +18,6 @@ NotImplementedMessage = "This method must be overriden in a subclass"
 from pygments.console import colorize
 from import_relative import import_relative
 
-import trepan.lib.format as Mformat
-
 __all__ = ['Processor']
 
 class Processor:
@@ -58,9 +56,10 @@ class Processor:
 
     def rst_msg(self, text, opts={}):
         """Convert ReStructuredText and run through msg()"""
-        text = Mformat.rst_text(text,
-                                'plain' == self.debugger.settings['highlight'],
-                                self.debugger.settings['width'])
+        from trepan.lib.format import rst_text
+        text = rst_text(text,
+                        'plain' == self.debugger.settings['highlight'],
+                        self.debugger.settings['width'])
         return self.msg(text)
 
     def section(self, message, opts={}):

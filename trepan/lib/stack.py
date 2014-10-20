@@ -17,6 +17,7 @@
 import re, types
 
 from import_relative import import_relative
+import trepan.lib
 Mbytecode = import_relative('lib.bytecode', '...trepan')
 Mprint    = import_relative('lib.print', '...trepan')
 Mformat   = import_relative('lib.format', '...trepan')

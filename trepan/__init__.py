@@ -112,9 +112,9 @@ Many of the things listed below doesn't directly effect end-users, but it does e
 * There is an experimental Python-friendly interface for front-ends
 * more testable. Much more unit and functional tests. More of _pydb_'s integration test will eventually be added.
 
-Copyright (C) 2008-2009, 2013 Rocky Bernstein <rocky@gnu.org>
+Copyright (C) 2008-2009, 2013-2014 Rocky Bernstein <rocky@gnu.org>
 """
 __docformat__ = 'restructuredtext'
 __import__('pkg_resources').declare_namespace(__name__)
-__all__ = ['api', 'client', 'exception', 'interfaces', 'interface',
-           'inout', 'lib', 'processor', 'bwprocessor', 'clifns', 'misc']
+from misc import pyfiles
+__all__ = pyfiles() + ['lib', 'inout', 'processor', 'interfaces' ]

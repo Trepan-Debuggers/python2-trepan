@@ -6,6 +6,7 @@ from import_relative import import_relative
 
 Mcmdfns = import_relative('processor.cmdfns', '...trepan')
 
+
 class TestCommandHelper(unittest.TestCase):
 
     def setUp(self):
@@ -46,9 +47,11 @@ class TestCommandHelper(unittest.TestCase):
             self.assertEqual(False, Mcmdfns.get_onoff(self.errmsg, arg))
             pass
         for result in (True, False,):
-            self.assertEqual(result, Mcmdfns.get_onoff(self.errmsg, None, result))
+            self.assertEqual(result, Mcmdfns.get_onoff(self.errmsg, None,
+                                                       result))
             pass
-        self.assertRaises(ValueError, Mcmdfns.get_onoff, *(self.errmsg, 'Foo',))
+        self.assertRaises(ValueError, Mcmdfns.get_onoff, *(self.errmsg,
+                                                           'Foo',))
         return
 
     def test_want_different_line(self):
@@ -56,7 +59,7 @@ class TestCommandHelper(unittest.TestCase):
             ('s+', False, True,),
             ('s-', True,  False,),
             ('s',  False, False,),
-            ('n',  True,  True,),]:
+            ('n',  True,  True,), ]:
             self.assertEqual(expected,
                              Mcmdfns.want_different_line(cmd, default),
                              cmd)

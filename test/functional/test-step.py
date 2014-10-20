@@ -15,7 +15,7 @@ class TestStep(unittest.TestCase):
         d = strarray_setup(cmds)
         d.core.start()
         ##############################
-        x = 5
+        x = 5  # NOQA
         y = 6  # NOQA
         ##############################
         d.core.stop()
@@ -157,8 +157,9 @@ class TestStep(unittest.TestCase):
         return
 
         def boom(x):
-            y = 0/x
+            y = 0/x  # NOQA
             return
+
         def bad(x):
             boom(x)
             return x * x
@@ -167,23 +168,23 @@ class TestStep(unittest.TestCase):
         d = strarray_setup(cmds)
         try:
             d.core.start()
-            x = bad(0)
+            x = bad(0)  # NOQA
             self.assertTrue(False, 'should have raised an exception')
         except ZeroDivisionError:
             self.assertTrue(True, 'Got the exception')
             pass
         d.core.stop(options={'remove': True})
 
-        out = ['-- x = bad(0)',  # line event
-               '-> def bad(x):', # call event
-               '-- boom(x)',     # line event
-               '-> def boom(x):',# call event
-               '-- y = 0/x',     # line event
-               '!! y = 0/x',     # exception event
-               '<- y = 0/x',     # return event
-               '!! boom(x)',     # exception event
-               '<- boom(x)',     # return event
-               '!! x = bad(0)',  # return event
+        out = ['-- x = bad(0)',    # line event
+               '-> def bad(x):',   # call event
+               '-- boom(x)',       # line event
+               '-> def boom(x):',  # call event
+               '-- y = 0/x',       # line event
+               '!! y = 0/x',       # exception event
+               '<- y = 0/x',       # return event
+               '!! boom(x)',       # exception event
+               '<- boom(x)',       # return event
+               '!! x = bad(0)',    # return event
                '-- except ZeroDivisionError:']
         compare_output(self, out, d, cmds)
         return

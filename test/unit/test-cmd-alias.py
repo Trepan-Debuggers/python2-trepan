@@ -10,6 +10,7 @@ from import_relative import import_relative
 
 Malias    = import_relative('processor.command.alias', '...trepan')
 
+
 class TestAliasCommand(unittest.TestCase):
     '''Test 'alias' and 'unalias' commands'''
 

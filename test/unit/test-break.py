@@ -13,6 +13,7 @@ from import_relative import import_relative
 Mcmdbreak = import_relative('processor.cmdbreak', '...trepan')
 Mbreak    = import_relative('processor.command.break', '...trepan')
 
+
 class TestBreakCommand(unittest.TestCase):
 
     def setUp(self):
@@ -69,7 +70,8 @@ class TestBreakCommand(unittest.TestCase):
         self.assertEqual((None, True, 6),
                          (fn, isinstance(fi, types.StringType), li))
 
-        fn, fi, li, cond = Mcmdbreak.parse_break_cmd(self.cmd, ['os.path.join'])
+        fn, fi, li, cond = Mcmdbreak.parse_break_cmd(self.cmd,
+                                                     ['os.path.join'])
         self.assertEqual((os.path.join, True, True),
                          (fn, isinstance(fi, types.StringType), li > 1))
 

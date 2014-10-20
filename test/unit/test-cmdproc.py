@@ -11,6 +11,7 @@ import trepan.interfaces
 Mcmdproc = import_relative('processor.cmdproc', '...trepan')
 Mmock    = import_relative('processor.command.mock', '...trepan')
 
+
 class TestCmdProc(unittest.TestCase):
 
     def setUp(self):
@@ -99,8 +100,7 @@ class TestCmdProc(unittest.TestCase):
              [['Now', 'is', 'the', 'time'], ['for', 'all', 'good', 'men']],),
             ("Now is the time ';;' for all good men",
              [['Now', 'is', 'the', 'time', "';;'",
-               'for', 'all', 'good', 'men']],)
-            ):
+               'for', 'all', 'good', 'men']],) ):
             self.assertEqual(expect, Mcmdproc.arg_split(test))
             pass
         return
@@ -119,7 +119,6 @@ class TestCmdProc(unittest.TestCase):
         self.assertEqual(None, f, 'file should not work')
         return
 
-
     def test_parse_position_one_arg(self):
         self.assertEqual((None, None, None),
                          self.cp.parse_position_one_arg('4+1'))
@@ -136,7 +135,8 @@ class TestCmdProc(unittest.TestCase):
                         'Module name, e.g. os.path bolixed')
 
         def foo(): pass
-        for name in ('os.path.join', 'foo', 'self.test_parse_position_one_arg'):
+        for name in ('os.path.join', 'foo',
+                     'self.test_parse_position_one_arg'):
             modfunc, f, l = self.cp.parse_position_one_arg(name)
             self.assertTrue(inspect.isfunction(modfunc),
                             'function name %s bolixed' % name)

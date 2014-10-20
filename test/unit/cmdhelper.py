@@ -5,7 +5,7 @@ trepan.processor.command.mock """
 import trepan.lib
 from import_relative import import_relative
 
-default   = import_relative('lib.default', '...trepan') # Default settings
+default   = import_relative('lib.default', '...trepan')  # Default settings
 mock      = import_relative('processor.command.mock', '...trepan')
 
 dbg_setup = mock.dbg_setup

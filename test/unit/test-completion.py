@@ -12,6 +12,7 @@ line_buffer = ''
 def get_line_buffer():
     return line_buffer
 
+
 class TestCompletion(unittest.TestCase):
 
     def run_complete(self, line):
@@ -57,15 +58,17 @@ class TestCompletion(unittest.TestCase):
                 ['help sta', ['stack', 'status']],
                 [' unalias c',  ['c', 'chdir', 'cond']],
 
-                # ['set auto eval ', '', ['off', 'on']], # Many 3-word completions
-                # ['set auto ', ['eval', 'irb', 'list']], # Many two-word completions
+                # ['set auto eval ', '', ['off', 'on']],
+                                          # Many 3-word completions
+                # ['set auto ', ['eval', 'irb', 'list']],
+                                          # Many two-word completions
                 # ['set auto e', ['eval']],
                 # ['disas', ['disassemble']], # Another single completion
                 # ['help syn', ['syntax']],
                 # ## FIXME:
                 # ## ['help syntax co', ['command']],
                 # ['help br', ['break', 'breakpoints']],
-                ]:
+            ]:
             got = self.run_complete(line)
             self.assertEqual(expect_completion, got,
                              "Completion of '%s', expecting %s, got %s" %
@@ -73,7 +76,8 @@ class TestCompletion(unittest.TestCase):
             pass
         got = self.run_complete('')
         self.assertTrue(len(got) > 30,
-                        'Initial completion should return more than 30 commands')
+                        'Initial completion should return more '
+                        'than 30 commands')
         got = self.run_complete('info files ')
         self.assertTrue(len(got) > 0,
                         'info files completion should return a file')

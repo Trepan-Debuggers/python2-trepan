@@ -37,5 +37,4 @@ setup(
        test_suite         = 'nose.collector',
        url                = web,
        version            = version,
-       zip_safe           = zip_safe
-       )
+       zip_safe           = zip_safe)

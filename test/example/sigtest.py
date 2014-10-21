@@ -2,8 +2,9 @@
 """Something to use to test signal handling. Basically we just need
 a program that installs a signal handler and sends it a signal.
 """
-import sys, os, signal, time
+import os, signal, time
 from trepan.api import debug; debug()
+
 def signal_handler(num, f):
     print 'signal %d received' % num
     return

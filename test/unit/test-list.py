@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 'Unit test for trepan.processor.command.list'
-import os, sys, unittest
+import os, sys  # NOQA
+import unittest
 
 from import_relative import import_relative
 
 Mlist = import_relative('processor.command.list', '...trepan')
 
-import signal
 
 class TestListCommand(unittest.TestCase):
 
@@ -58,7 +58,6 @@ class TestListCommand(unittest.TestCase):
 
     def test_list_command(self):
         import inspect
-        cmdproc     = import_relative('processor.cmdproc', '...trepan', 'trepan')
         debugger        = import_relative('debugger', '...trepan', 'trepan')
         d               = debugger.Debugger()
         cp              = d.core.processor
@@ -95,6 +94,7 @@ class TestListCommand(unittest.TestCase):
         # Function
         self.clear_run_checksize(['list', 'os.path.join'])
         self.clear_run_checksize(['list', 'self.setUp'])
+
         def foo(): pass
         self.clear_run_checksize(['list', 'foo'])
 

@@ -5,6 +5,7 @@ from import_relative import import_relative
 
 Mthread = import_relative('lib.thred', '...trepan')
 
+
 class BgThread(threading.Thread):
     def __init__(self, id_name_checker):
         threading.Thread.__init__(self)
@@ -15,6 +16,7 @@ class BgThread(threading.Thread):
         self.id_name_checker()
         return
     pass
+
 
 class TestLibThread(unittest.TestCase):
 

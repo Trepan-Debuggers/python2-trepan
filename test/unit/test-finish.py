@@ -2,6 +2,7 @@
 'Unit test for trepan.processor.command.step'
 import sys, unittest
 
+
 class TestFinishCommand(unittest.TestCase):
     """Tests FinishCommand class"""
 

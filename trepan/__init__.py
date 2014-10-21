@@ -17,15 +17,18 @@ Abstract
 A gdb-like debugger for Python 2.
 
 
-This is Python of 2.4 to 2.7. Use *trepan*: <http://code.google.com/p/trepan> for Python 3.2 to 3.3.
+This is Python of 2.4 to 2.7.
+Use *trepan*: <http://code.google.com/p/trepan> for Python 3.2 to 3.3.
 
 A command-line interface (CLI) is provided.
 
-See the _Tutorial: <http://code.google.com/p/trepan/wiki/Tutorial for how to use.
+See the _Tutorial: <http://code.google.com/p/trepan/wiki/Tutorial for
+how to use.
 
 Features
 ========
-There's a lot of cool stuff here that's not in *pydb* or the stock Python debugger *pdb*.
+There's a lot of cool stuff here that's not in *pydb* or the stock
+Python debugger *pdb*.
 
 Source-code Syntax Colorization
 -------------------------------

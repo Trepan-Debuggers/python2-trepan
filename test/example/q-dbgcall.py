@@ -7,9 +7,10 @@ from threading import *
 import Queue
 from trepan.api import debug
 
+
 class Producer(Thread):
 
-    def __init__(self,itemq):
+    def __init__(self, itemq):
         Thread.__init__(self)
         self.itemq=itemq
         return
@@ -20,8 +21,8 @@ class Producer(Thread):
         i=0
         for j in range(10):
             debug()
-            print currentThread(),"Produced One Item:",i
-            itemq.put(i,1)
+            print(currentThread(), "Produced One Item:", i)
+            itemq.put(i, 1)
             i+=1
             time.sleep(1)
             pass
@@ -30,7 +31,7 @@ class Producer(Thread):
 
 class Consumer(Thread):
 
-    def __init__(self,itemq):
+    def __init__(self, itemq):
         Thread.__init__(self)
         self.itemq=itemq
         return
@@ -41,7 +42,7 @@ class Consumer(Thread):
         for j in range(4):
             time.sleep(2)
             it=itemq.get(1)
-            print currentThread(),"Consumed One Item:",it
+            print(currentThread(), "Consumed One Item:", it)
             pass
         return
 

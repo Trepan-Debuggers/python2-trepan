@@ -12,6 +12,7 @@ Mcmdproc = import_relative('processor.cmdproc', '...trepan', 'trepan')
 
 Mmock = import_relative('processor.command.mock', '...trepan')
 
+
 class TestHelp(unittest.TestCase):
     """Tests HelpCommand class"""
 

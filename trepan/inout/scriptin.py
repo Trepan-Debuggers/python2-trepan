@@ -20,6 +20,7 @@ import types
 from import_relative import import_relative, get_srcdir
 Mbase = import_relative('base', top_name='trepan')
 
+
 # Do we need this?
 class ScriptInput(Mbase.DebuggerInputBase):
     """Debugger Script input - largely the same as DebuggerInput."""
@@ -27,7 +28,7 @@ class ScriptInput(Mbase.DebuggerInputBase):
     def __init__(self, inp, opts=None):
 
         self.input     = None
-        self.line_edit = False # Our name for GNU readline capability
+        self.line_edit = False  # Our name for GNU readline capability
         self.name      = None
         self.open(inp, opts)
         return
@@ -46,7 +47,7 @@ class ScriptInput(Mbase.DebuggerInputBase):
             self.name  = inp
             self.input = open(inp, 'r')
         else:
-            raise IOError, ("Invalid input type (%s) for %s" % (type(inp),
+            raise IOError("Invalid input type (%s) for %s" % (type(inp),
                                                                 inp))
         return
 

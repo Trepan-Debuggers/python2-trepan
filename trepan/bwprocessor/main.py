@@ -170,8 +170,8 @@ class BWProcessor(Mprocessor.Processor):
                         "Adjusting would put us beyond the oldest frame.")
             return
         elif pos >= len(self.stack):
-            Mmsgs.errmsg(self,
-                         "Adjusting would put us beyond the newest frame.")
+            Mmsg.errmsg(self,
+                        "Adjusting would put us beyond the newest frame.")
             return
 
         self.curindex = pos
@@ -237,7 +237,7 @@ class BWProcessor(Mprocessor.Processor):
                 exc_type_name = t
                 pass
             else: exc_type_name = t.__name__
-            Mmsgs.errmsg(self, str("%s: %s" % (exc_type_name, arg)))
+            Mmsg.errmsg(self, str("%s: %s" % (exc_type_name, arg)))
             raise
         return None # Not reached
 
@@ -260,7 +260,7 @@ class BWProcessor(Mprocessor.Processor):
             if isinstance(t, types.StringType):
                 exc_type_name = t
             else: exc_type_name = t.__name__
-            Mmsgs.errmsg(self, '%s: %s' % (str(exc_type_name), str(v)))
+            Mmsg.errmsg(self, '%s: %s' % (str(exc_type_name), str(v)))
             pass
         return
 
@@ -271,9 +271,11 @@ class BWProcessor(Mprocessor.Processor):
         '''
         if hasattr(cmd_obj, 'execution_set'):
             if not (self.core.execution_status in cmd_obj.execution_set):
-                part1 = ("Command '%s' is not available for execution status:"
-                         % name)
-                Mmsgs.errmsg(self, Mmisc.wrapped_lines(part1, self.core.execution_status,
+                part1 = ("Command '%s' is not available for execution "
+                         "status:" % name)
+                Mmsg.errmsg(self,
+                            Mmisc.wrapped_lines(part1,
+                                                self.core.execution_status,
                                                 self.debugger.settings['width']))
                 return False
             pass

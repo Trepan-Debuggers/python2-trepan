@@ -20,6 +20,7 @@ import types, sys, StringIO
 from import_relative import import_relative
 Mbase  = import_relative('base', top_name='trepan')
 
+
 class DebuggerUserOutput(Mbase.DebuggerOutputBase):
     """Debugger output shown directly to what we think of as end-user
     ouptut as opposed to a relay mechanism to another process. Output
@@ -45,8 +46,8 @@ class DebuggerUserOutput(Mbase.DebuggerOutputBase):
         elif isinstance(output, types.StringType):
             output = open(output, 'w')
         else:
-            raise IOError, ("Invalid output type (%s) for %s" % (type(output),
-                                                                 output))
+            raise IOError("Invalid output type (%s) for %s" % (type(output),
+                                                               output))
         self.output = output
         return
 
@@ -63,8 +64,8 @@ class DebuggerUserOutput(Mbase.DebuggerOutputBase):
 if __name__=='__main__':
     out = DebuggerUserOutput()
     out.writeline("Hello, world!")
-    out.write("Hello");
-    out.writeline(", again.");
+    out.write("Hello")
+    out.writeline(", again.")
 
     out.open(sys.stdout)
     out.flush_after_write = True

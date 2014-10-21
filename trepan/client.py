@@ -44,7 +44,7 @@ def process_options(pkg_version, sys_argv, option_list=None):
 
     Client connection to an out-of-process trepan3k debugger session"""
 
-    ## serverChoices = ('TCP','FIFO', None) # we use PID for now.
+    # serverChoices = ('TCP','FIFO', None) # we use PID for now.
 
     optparser = OptionParser(usage=usage_str, option_list=option_list,
                              version="%%prog version %s" % pkg_version)
@@ -54,10 +54,12 @@ def process_options(pkg_version, sys_argv, option_list=None):
                          help="connect IP or host name.")
     optparser.add_option("-P", "--port", dest="port", default=1027,
                          action="store", type='int', metavar='NUMBER',
-                         help="Use TCP port number NUMBER for out-of-process connections.")
+                         help="Use TCP port number NUMBER for "
+                         "out-of-process connections.")
     optparser.add_option("--pid", dest="pid", default=0,
                          action="store", type='int', metavar='NUMBER',
-                         help="Use PID to get FIFO names for out-of-process connections.")
+                         help="Use PID to get FIFO names for "
+                         "out-of-process connections.")
 
     optparser.disable_interspersed_args()
 
@@ -71,15 +73,17 @@ def process_options(pkg_version, sys_argv, option_list=None):
 # Connects to a debugger in server mode
 #
 
-#DEFAULT_CLIENT_CONNECTION_OPTS = {'open': True, 'IO': 'FIFO'}
+# DEFAULT_CLIENT_CONNECTION_OPTS = {'open': True, 'IO': 'FIFO'}
 DEFAULT_CLIENT_CONNECTION_OPTS = {'open': True, 'IO': 'TCP',
                                   'HOST': '127.0.0.1', 'PORT': 1027}
+
+
 def start_client(connection_opts):
-      intf = Mclient.ClientInterface(connection_opts=connection_opts)
-      # debugger.interface.append(intf)
-      intf.msg("Connected.")
-      done=False
-      while not done:
+    intf = Mclient.ClientInterface(connection_opts=connection_opts)
+    # debugger.interface.append(intf)
+    intf.msg("Connected.")
+    done=False
+    while not done:
             control, remote_msg = intf.read_remote()
             # print 'c, r', control, remote_msg
             if Mcomcodes.PRINT == control:
@@ -119,8 +123,8 @@ def start_client(connection_opts):
                 print(remote_msg,)
                 pass
             pass
-      intf.close()
-      pass
+    intf.close()
+    return
 
 def main(opts, sys_argv):
     # print(opts)

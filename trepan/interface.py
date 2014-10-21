@@ -21,11 +21,12 @@ NotImplementedMessage = "This method must be overriden in a subclass"
 
 __all__ = ['DebuggerInterface']
 
+
 class DebuggerInterface:
     """
 A debugger interface handles the communication or interaction with between
 the program and the outside portion which could be
-    - a user, 
+    - a user,
     - a front-end that talks to a user, or
     - another interface in another process or computer
     """
@@ -33,26 +34,26 @@ the program and the outside portion which could be
     def __init__(self, inp=None, out=None):
         self.input  = inp or sys.stdin
         self.output = out or sys.stdout
-        self.interactive = False 
+        self.interactive = False
         return
 
     def close(self):
         """ Closes all input and/or output """
-        raise NotImplementedError, NotImplementedMessage
+        raise NotImplementedError(NotImplementedMessage)
         return
 
     def confirm(self, prompt, default):
         """ Called when a dangerous action is about to be done to make sure
         it's okay. `prompt' is printed; user response is returned."""
-        raise NotImplementedError, NotImplementedMessage
+        raise NotImplementedError(NotImplementedMessage)
 
     def errmsg(self, str, prefix="** "):
         """Common routine for reporting debugger error messages.
            """
-        raise NotImplementedError, NotImplementedMessage
+        raise NotImplementedError(NotImplementedMessage)
 
     def finalize(self, last_wishes=None):
-        raise NotImplementedError, NotImplementedMessage
+        raise NotImplementedError(NotImplementedMessage)
 
     def msg(self, msg):
         """ used to write to a debugger that is connected to this
@@ -77,5 +78,5 @@ the program and the outside portion which could be
 
     def readline(self, prompt, add_to_history=True):
         raise NotImplementedError, NotImplementedMessage
-    
+
     pass

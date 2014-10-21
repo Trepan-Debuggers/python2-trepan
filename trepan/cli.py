@@ -47,7 +47,8 @@ __title__ = package + '2'
 
 # VERSION.py sets variable VERSION.
 VERSION='??'
-exec(compile(open(os.path.join(get_srcdir(), 'VERSION.py')).read(), os.path.join(get_srcdir(), 'VERSION.py'), 'exec'))
+exec(compile(open(os.path.join(get_srcdir(), 'VERSION.py')).read(),
+             os.path.join(get_srcdir(), 'VERSION.py'), 'exec'))
 __version__ = VERSION
 
 
@@ -111,7 +112,8 @@ def main(dbg=None, sys_argv=list(sys.argv)):
         mainpyfile_noopt = Mfile.file_pyc2py(mainpyfile)
         if mainpyfile != mainpyfile_noopt \
                and Mfile.readable(mainpyfile_noopt):
-            print("%s: Compiled Python script given and we can't use that." % __title__)
+            print("%s: Compiled Python script given and we can't use that."
+                  % __title__)
             print("%s: Substituting non-compiled name: %s" % (
                 __title__, mainpyfile_noopt,))
             mainpyfile = mainpyfile_noopt

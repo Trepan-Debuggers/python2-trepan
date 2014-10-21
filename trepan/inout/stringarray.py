@@ -19,6 +19,7 @@ import types
 from import_relative import import_relative
 Mbase  = import_relative('inout.base', '...trepan')
 
+
 class StringArrayInput(Mbase.DebuggerInputBase):
     """Simulate I/O using an array of strings. Sort of like StringIO, but
     even simplier. """
@@ -54,6 +55,7 @@ class StringArrayInput(Mbase.DebuggerInputBase):
         del self.input[0]
         return line
     pass
+
 
 class StringArrayOutput(Mbase.DebuggerOutputBase):
     """Simulate I/O using an array of strings. Sort of like StringIO, but

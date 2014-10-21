@@ -14,9 +14,12 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 __package__ = 'trepan.exception'
+
+
 class DebuggerQuit(Exception):
     """An exception to signal a graceful termination of the program"""
     pass
+
 
 class DebuggerRestart(Exception):
     """An exception to signal a (soft) program restart.

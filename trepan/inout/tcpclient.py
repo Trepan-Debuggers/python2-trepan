@@ -23,17 +23,19 @@ Mdefault = import_relative('default', '..lib', 'trepan')
 from trepan.misc import option_set
 Mtcpfns  = import_relative('tcpfns', '.', 'trepan')
 
+
 class TCPClient(DebuggerInOutBase):
     """Debugger Client Input/Output Socket."""
 
     DEFAULT_INIT_OPTS = {'open': True}
+
     def __init__(self, inout=None, opts=None):
         get_option = lambda key: option_set(opts, key,
                                             Mdefault.CLIENT_SOCKET_OPTS)
         self.inout     = None
         self.addr      = None
         self.buf       = ''
-        self.line_edit = False # Our name for GNU readline capability
+        self.line_edit = False  # Our name for GNU readline capability
         self.state     = 'disconnected'
         if inout:
             self.inout = inout
@@ -52,34 +54,33 @@ class TCPClient(DebuggerInOutBase):
 
     def open(self, opts=None):
 
-       get_option = lambda key: option_set(opts, key,
-                                           Mdefault.CLIENT_SOCKET_OPTS)
+        get_option = lambda key: option_set(opts, key,
+                                            Mdefault.CLIENT_SOCKET_OPTS)
 
-       HOST = get_option('HOST')
-       PORT = get_option('PORT')
-       self.inout = None
-       for res in socket.getaddrinfo(HOST, PORT, socket.AF_UNSPEC,
-                                     socket.SOCK_STREAM):
-           af, socktype, proto, canonname, sa = res
-           try:
-               self.inout = socket.socket(af, socktype, proto)
-               self.state = 'connected'
-           except socket.error:
-               self.inout = None
-               self.state = 'disconnected'
-               continue
-           try:
-               self.inout.connect(sa)
-           except socket.error:
-               self.inout.close()
-               self.inout = None
-               continue
-           break
-       if self.inout is None:
-           raise IOError('could not open client socket on port %s' %
-                           PORT)
-
-       return
+        HOST = get_option('HOST')
+        PORT = get_option('PORT')
+        self.inout = None
+        for res in socket.getaddrinfo(HOST, PORT, socket.AF_UNSPEC,
+                                      socket.SOCK_STREAM):
+            af, socktype, proto, canonname, sa = res
+            try:
+                self.inout = socket.socket(af, socktype, proto)
+                self.state = 'connected'
+            except socket.error:
+                self.inout = None
+                self.state = 'disconnected'
+                continue
+            try:
+                self.inout.connect(sa)
+            except socket.error:
+                self.inout.close()
+                self.inout = None
+                continue
+                break
+        if self.inout is None:
+            raise IOError('could not open client socket on port %s' %
+                          PORT)
+        return
 
     def read_msg(self):
         """Read one message unit. It's possible however that

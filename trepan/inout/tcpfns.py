@@ -15,11 +15,14 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Subsidiary routines used to "pack" and "unpack" TCP messages. """
 
-TCP_MAX_PACKET = 8192 # Largest size for a recv
-LOG_MAX_MSG    = 4    # int(log(TCP_MAX_PACKET)
+TCP_MAX_PACKET = 8192  # Largest size for a recv
+LOG_MAX_MSG    = 4     # int(log(TCP_MAX_PACKET)
+
+
 def pack_msg(msg):
-    fmt = '%%0%dd' % LOG_MAX_MSG # A funny way of writing: '%04d'
+    fmt = '%%0%dd' % LOG_MAX_MSG  # A funny way of writing: '%04d'
     return ( fmt % len(msg)) + msg
+
 
 def unpack_msg(buf):
     length  = int(buf[0:LOG_MAX_MSG])

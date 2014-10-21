@@ -79,7 +79,7 @@ class DebuggerUserInput(Mbase.DebuggerInputBase):
                 pass
             inp = open(inp, 'r')
         else:
-            raise IOError, ("Invalid input type (%s) for %s" % (type(inp),
+            raise IOError("Invalid input type (%s) for %s" % (type(inp),
                                                                 inp))
         self.input     = inp
         self.line_edit = get_option('try_readline') and readline_importable()

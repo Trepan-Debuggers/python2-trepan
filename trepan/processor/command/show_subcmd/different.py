@@ -19,7 +19,8 @@
 from import_relative import import_relative
 Mbase_subcmd  = import_relative('base_subcmd', '..', 'trepan')
 
+
 class ShowDifferent(Mbase_subcmd.DebuggerShowBoolSubcommand):
     """Show consecutive stops on different file/line positions"""
-    min_abbrev = 3 # Min: "show dif"
+    min_abbrev = 3  # Min: "show dif"
     pass

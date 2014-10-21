@@ -67,7 +67,7 @@ sdist:
 
 #: Style check. Set env var LINT to pyflakes, flake, or flake8
 lint:
-	$(LINT)
+	$(LINT) trepan
 
 #: Create binary egg distribution
 bdist_egg:

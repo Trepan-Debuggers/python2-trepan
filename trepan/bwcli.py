@@ -45,6 +45,7 @@ __title__ = package
 exec(compile(open(os.path.join(get_srcdir(), 'VERSION.py')).read(), os.path.join(get_srcdir(), 'VERSION.py'), 'exec'))
 __version__ = VERSION
 
+
 def process_options(debugger_name, pkg_version, sys_argv, option_list=None):
     """Handle debugger options. Set `option_list' if you are writing
     another main program and want to extend the existing set of debugger
@@ -81,6 +82,7 @@ def process_options(debugger_name, pkg_version, sys_argv, option_list=None):
 
     return opts, dbg_opts, sys.argv
 
+
 def _postprocess_options(dbg, opts):
     ''' Handle options (`opts') that feed into the debugger (`dbg')'''
     # Set dbg.settings['printset']
@@ -99,6 +101,7 @@ def _postprocess_options(dbg, opts):
 
     Mdebugger.debugger_obj = dbg
     return
+
 
 def main(dbg=None, sys_argv=list(sys.argv)):
     """Routine which gets run if we were invoked directly"""
@@ -126,16 +129,16 @@ def main(dbg=None, sys_argv=list(sys.argv)):
         # anyway
         mainpyfile = None
     else:
-        mainpyfile = sys_argv[0] # Get script filename.
+        mainpyfile = sys_argv[0]  # Get script filename.
         if not os.path.isfile(mainpyfile):
             mainpyfile=Mclifns.whence_file(mainpyfile)
             is_readable = Mfile.readable(mainpyfile)
             if is_readable is None:
-                print("%s: Python script file '%s' does not exist" \
+                print("%s: Python script file '%s' does not exist"
                       % (__title__, mainpyfile,))
                 sys.exit(1)
             elif not is_readable:
-                print("%s: Can't read Python script file '%s'" \
+            print("%s: Can't read Python script file '%s'"
                     % (__title__, mainpyfile,))
                 sys.exit(1)
                 return
@@ -145,7 +148,8 @@ def main(dbg=None, sys_argv=list(sys.argv)):
         mainpyfile_noopt = Mfile.file_pyc2py(mainpyfile)
         if mainpyfile != mainpyfile_noopt \
                and Mfile.readable(mainpyfile_noopt):
-            print("%s: Compiled Python script given and we can't use that." % __title__)
+            print("%s: Compiled Python script given and we can't use that."
+                  % __title__)
             print("%s: Substituting non-compiled name: %s" % (
                 __title__, mainpyfile_noopt,))
             mainpyfile = mainpyfile_noopt

@@ -43,10 +43,12 @@ import trepan.processor.command
 Mdebugger    = import_relative('debugger', '.', 'trepan')
 Mpost_mortem = import_relative('post_mortem', '.', 'trepan')
 
+
 def debugger_on_post_mortem():
     '''Call debugger on an exeception that terminates a program'''
     sys.excepthook = Mpost_mortem.post_mortem_excepthook
     return
+
 
 def run_eval(expression, debug_opts=None, start_opts=None, globals_=None,
              locals_=None):
@@ -60,7 +62,6 @@ def run_eval(expression, debug_opts=None, start_opts=None, globals_=None,
     When run_eval() returns, it returns the value of the expression.
     Otherwise this function is similar to run()."""
 
-
     dbg = Mdebugger.Debugger(opts=debug_opts)
     try:
         return dbg.run_eval(expression, start_opts=start_opts,
@@ -69,6 +70,7 @@ def run_eval(expression, debug_opts=None, start_opts=None, globals_=None,
         Mpost_mortem.uncaught_exception(dbg)
         pass
     return
+
 
 def run_call(func, debug_opts=None, start_opts=None, *args, **kwds):
 
@@ -87,6 +89,7 @@ def run_call(func, debug_opts=None, start_opts=None, *args, **kwds):
         Mpost_mortem.uncaught_exception(dbg)
         pass
     return
+
 
 def run_exec(statement, debug_opts=None, start_opts=None, globals_=None,
              locals_=None):
@@ -113,6 +116,7 @@ def run_exec(statement, debug_opts=None, start_opts=None, globals_=None,
         Mpost_mortem.uncaught_exception(dbg)
         pass
     return
+
 
 def debug(dbg_opts=None, start_opts=None, post_mortem=True,
           step_ignore=1):
@@ -198,9 +202,10 @@ debug() call. 0 means don't even wait for the debug() call to finish.
         core.processor.event_processor(frame, 'line', None)
         core.trace_hook_suspend = old_trace_hook_suspend
     else:
-        core.step_ignore = step_ignore-1;
+        core.step_ignore = step_ignore-1
         pass
     return
+
 
 def stop(opts=None):
     if Mdebugger.Debugger == type(Mdebugger.debugger_obj):

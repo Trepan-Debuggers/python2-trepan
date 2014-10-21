@@ -21,6 +21,8 @@ from import_relative import *
 
 Mbase_subcmd = import_relative('base_subcmd', os.path.pardir, 'trepan')
 Mcmdfns      = import_relative('cmdfns', '...', 'trepan')
+
+
 class ShowEvents(Mbase_subcmd.DebuggerSubcommand):
     '''Show trace events we may stop on.'''
     min_abbrev = 2

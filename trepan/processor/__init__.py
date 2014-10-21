@@ -15,4 +15,4 @@ __package__='trepan.processor'
 from import_relative import import_relative
 __import__('pkg_resources').declare_namespace(__name__)
 Mmisc = import_relative('misc', '..', 'trepan')
-__all__ = [ Mmisc.pyfiles() ]
+__all__ = [ Mmisc.pyfiles() ] + ['command']

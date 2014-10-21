@@ -1,5 +1,7 @@
-import sys
-from import_relative import import_relative
+import os, sys
+from import_relative import import_relative, get_srcdir
+
+sys.path.insert(0, os.path.join(get_srcdir(), '../..'))
 
 Mdebugger    = import_relative('debugger', '...trepan')
 Mstringarray = import_relative('inout.stringarray', '...trepan')

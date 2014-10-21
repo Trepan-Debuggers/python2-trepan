@@ -18,9 +18,10 @@ import re, types
 
 from import_relative import import_relative
 import trepan.lib
-Mbytecode = import_relative('lib.bytecode', '...trepan')
-Mprint    = import_relative('lib.print', '...trepan')
-Mformat   = import_relative('lib.format', '...trepan')
+
+Mbytecode = import_relative('bytecode', '..lib', 'trepan')
+Mprint    = import_relative('print', '..lib', 'trepan')
+Mformat   = import_relative('format', '..lib', 'trepan')
 format_token = Mformat.format_token
 
 def count_frames(frame, count_start=0):

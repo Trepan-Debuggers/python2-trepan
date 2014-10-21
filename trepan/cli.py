@@ -19,7 +19,7 @@
 import os, os.path, sys
 
 package='trepan'
-if not package in sys.modules:
+if package not in sys.modules:
     __import__('pkg_resources').declare_namespace(package)
     pass
 
@@ -50,13 +50,15 @@ VERSION='??'
 exec(compile(open(os.path.join(get_srcdir(), 'VERSION.py')).read(), os.path.join(get_srcdir(), 'VERSION.py'), 'exec'))
 __version__ = VERSION
 
+
 def main(dbg=None, sys_argv=list(sys.argv)):
     """Routine which gets run if we were invoked directly"""
     global __title__
 
     # Save the original just for use in the restart that works via exec.
     orig_sys_argv = list(sys_argv)
-    opts, dbg_opts, sys_argv  = Moptions.process_options(__title__, __version__,
+    opts, dbg_opts, sys_argv  = Moptions.process_options(__title__,
+                                                         __version__,
                                                          sys_argv)
 
     if opts.server:
@@ -66,7 +68,8 @@ def main(dbg=None, sys_argv=list(sys.argv)):
         if 'FIFO' == intf.server_type:
             print('Starting FIFO server for process %s.' % os.getpid())
         elif 'TCP' == intf.server_type:
-            print('Starting TCP server listening on port %s.' % intf.inout.PORT)
+            print('Starting TCP server listening on port %s.' %
+                  intf.inout.PORT)
             pass
     elif opts.client:
         Mclient.main(opts, sys_argv)
@@ -89,17 +92,17 @@ def main(dbg=None, sys_argv=list(sys.argv)):
         # anyway
         mainpyfile = None
     else:
-        mainpyfile = sys_argv[0] # Get script filename.
+        mainpyfile = sys_argv[0]  # Get script filename.
         if not os.path.isfile(mainpyfile):
             mainpyfile=Mclifns.whence_file(mainpyfile)
             is_readable = Mfile.readable(mainpyfile)
             if is_readable is None:
-                print("%s: Python script file '%s' does not exist" \
+                print("%s: Python script file '%s' does not exist"
                       % (__title__, mainpyfile,))
                 sys.exit(1)
             elif not is_readable:
-                print("%s: Can't read Python script file '%s'" \
-                    % (__title__, mainpyfile,))
+                print("%s: Can't read Python script file '%s'"
+                      % (__title__, mainpyfile, ))
                 sys.exit(1)
                 return
 
@@ -160,7 +163,7 @@ def main(dbg=None, sys_argv=list(sys.argv)):
             # In most cases SystemExit does not warrant a post-mortem session.
             break
         except:
-            ## FIXME: Should be handled above without this mess
+            # FIXME: Should be handled above without this mess
             exception_name = str(sys.exc_info()[0])
             if exception_name == str(Mexcept.DebuggerQuit):
                 break

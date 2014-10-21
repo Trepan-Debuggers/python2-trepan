@@ -215,6 +215,7 @@ def stop(opts=None):
 # Demo it
 if __name__=='__main__':
     import sys, tracer
+
     def foo(n):
         y = n
         for i in range(n):

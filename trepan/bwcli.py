@@ -19,7 +19,7 @@
 import os, os.path, sys
 
 package='trepan'
-if not package in sys.modules:
+if package not in sys.modules:
     __import__('pkg_resources').declare_namespace(package)
     pass
 
@@ -42,7 +42,8 @@ Mmisc       = import_relative('misc', '.', package)
 __title__ = package
 
 # VERSION.py sets variable VERSION.
-exec(compile(open(os.path.join(get_srcdir(), 'VERSION.py')).read(), os.path.join(get_srcdir(), 'VERSION.py'), 'exec'))
+exec(compile(open(os.path.join(get_srcdir(), 'VERSION.py')).read(),
+             os.path.join(get_srcdir(), 'VERSION.py'), 'exec'))
 __version__ = VERSION
 
 
@@ -57,8 +58,7 @@ def process_options(debugger_name, pkg_version, sys_argv, option_list=None):
 
        Runs the extended python debugger"""
 
-    ## serverChoices = ('TCP','FIFO', None)
-
+    # serverChoices = ('TCP','FIFO', None)
 
     optparser = OptionParser(usage=usage_str, option_list=option_list,
                              version="%%prog version %s" % pkg_version)
@@ -69,11 +69,12 @@ def process_options(debugger_name, pkg_version, sys_argv, option_list=None):
                          "This option also sets --batch")
     optparser.add_option("--basename", dest="basename",
                          action="store_true", default=False,
-                         help="Filenames strip off basename, (e.g. for regression tests)"
-                         )
+                         help="Filenames strip off basename, "
+                         "(e.g. for regression tests)")
     optparser.add_option("--different", dest="different",
                          action="store_true", default=True,
-                         help="Consecutive stops should have different positions")
+                         help="Consecutive stops should have different "
+                         "positions")
     optparser.disable_interspersed_args()
 
     sys.argv = list(sys_argv)
@@ -138,8 +139,8 @@ def main(dbg=None, sys_argv=list(sys.argv)):
                       % (__title__, mainpyfile,))
                 sys.exit(1)
             elif not is_readable:
-            print("%s: Can't read Python script file '%s'"
-                    % (__title__, mainpyfile,))
+                print("%s: Can't read Python script file '%s'"
+                      % (__title__, mainpyfile,))
                 sys.exit(1)
                 return
 

@@ -817,7 +817,7 @@ class CommandProcessor(Mprocessor.Processor):
         DebuggerCommand class instances form set of possible debugger
         commands."""
         cmd_instances = []
-        Mcommand = import_relative('command')
+        import trepan.processor.command as Mcommand
         eval_cmd_template = 'command_mod.%s(self)'
         srcdir = get_srcdir()
         sys.path.insert(0, srcdir)

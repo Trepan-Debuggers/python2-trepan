@@ -44,7 +44,7 @@ __title__ = package
 # VERSION.py sets variable VERSION.
 exec(compile(open(os.path.join(get_srcdir(), 'VERSION.py')).read(),
              os.path.join(get_srcdir(), 'VERSION.py'), 'exec'))
-__version__ = VERSION
+__version__ = VERSION  # NOQA
 
 
 def process_options(debugger_name, pkg_version, sys_argv, option_list=None):

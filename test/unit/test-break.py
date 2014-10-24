@@ -1,14 +1,17 @@
 #!/usr/bin/env python
 'Unit test for trepan.processor.command.break'
 
+import os, sys, unittest
+from import_relative import import_relative, get_srcdir
+
+srcdir = get_srcdir()
+sys.path.insert(0, os.path.join(srcdir, '..', '..'))
+
 import trepan.processor.command
 import trepan.lib
 import trepan.inout
 import trepan.interfaces
 
-import os, unittest
-
-from import_relative import import_relative
 
 Mcmdbreak = import_relative('processor.cmdbreak', '...trepan')
 Mbreak    = import_relative('processor.command.break', '...trepan')

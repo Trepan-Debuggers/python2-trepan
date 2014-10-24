@@ -74,9 +74,9 @@ the program and the outside portion which could be
         return
 
     def read_command(self, prompt):
-        raise NotImplementedError, NotImplementedMessage
+        raise NotImplementedError(NotImplementedMessage)
 
     def readline(self, prompt, add_to_history=True):
-        raise NotImplementedError, NotImplementedMessage
+        raise NotImplementedError(NotImplementedMessage)
 
     pass

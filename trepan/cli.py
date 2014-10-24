@@ -28,7 +28,7 @@ from import_relative import import_relative, get_srcdir
 try:
     import trepan.interfaces
     import trepan.inout
-    import trepan.processor.command
+    import trepan.processor.command  # NOQA
 except:
     pass
 Minterface = import_relative('interface', '.',   package)
@@ -176,8 +176,9 @@ def main(dbg=None, sys_argv=list(sys.argv)):
                     part1 = ('Restarting %s with arguments:' %
                              dbg.core.filename(mainpyfile))
                     args  = ' '.join(dbg.program_sys_argv[1:])
-                    dbg.intf[-1].msg(Mmisc.wrapped_lines(part1, args,
-                                                         dbg.settings['width']))
+                    dbg.intf[-1].msg(
+                        Mmisc.wrapped_lines(part1, args,
+                                            dbg.settings['width']))
                     pass
             else:
                 raise

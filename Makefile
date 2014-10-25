@@ -60,6 +60,10 @@ clean: clean_pyc
 dist:
 	$(PYTHON) ./setup.py sdist bdist_egg
 
+#: Remove .pyc files
+clean_pyc:
+	$(RM) -f */*.pyc */*/*.pyc
+
 #: Create source tarball
 sdist:
 	$(PYTHON) ./setup.py sdist

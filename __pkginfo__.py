@@ -50,16 +50,6 @@ mailing_list       = 'python-debugger@googlegroups.com'
 modname            = 'trepan'
 namespace_packages = [
     'trepan',
-    'trepan.bwprocessor',
-    'trepan.interfaces',
-    'trepan.inout',
-    'trepan.lib',
-    'trepan.processor',
-    'trepan.processor.command',
-#   'trepan.processor.command.ipython_magic',
-    'trepan.processor.command.info_subcmd',
-    'trepan.processor.command.set_subcmd',
-    'trepan.processor.command.show_subcmd'
 ]
 packages           = namespace_packages
 py_modules         = None

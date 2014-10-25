@@ -84,6 +84,7 @@ if __name__ == '__main__':
         sys.stdout.write(m)
         return
     import sys
+
     def msg(m): print(m)
     pprint_simple_array(range(50), 50, msg_nocr, msg)
     pp([i for i in range(10)], 50, msg_nocr, msg)

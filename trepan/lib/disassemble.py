@@ -77,7 +77,7 @@ def dis(msg, msg_nocr, section, errmsg, x=None, start_line=-1, end_line=None,
                 pass
             pass
         pass
-    elif hasattr(x, 'co_code'): # Code object
+    elif hasattr(x, 'co_code'):  # Code object
         section("Disassembly of %s: " % x)
         disassemble(msg, msg_nocr, section, x, lasti=lasti,
                     start_line=start_line, end_line=end_line,

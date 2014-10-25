@@ -68,7 +68,7 @@ def print_obj(arg, frame, format=None, short=False):
                 if inspect.isclass(obj):
                     s += 'Class constructor information:\n\t'
                     obj = obj.__init__
-                elif type(obj) is types.InstanceType:
+                elif isinstance(obj, types.InstanceType):
                     obj = obj.__call__
                     pass
                 s+= argspec
@@ -83,14 +83,15 @@ def print_obj(arg, frame, format=None, short=False):
             pass
     return s
 
-pconvert = {'c':chr, 'x': hex, 'o': oct, 'f': float, 's': str}
+pconvert = {'c': chr, 'x': hex, 'o': oct, 'f': float, 's': str}
 twos = ('0000', '0001', '0010', '0011', '0100', '0101', '0110', '0111',
         '1000', '1001', '1010', '1011', '1100', '1101', '1110', '1111')
+
 
 def printf(val, fmt):
     global pconvert, twos
     if not fmt:
-        fmt = ' ' # not 't' nor in pconvert
+        fmt = ' '  # not 't' nor in pconvert
     # Strip leading '/'
     if fmt[0] == '/':
         fmt = fmt[1:]
@@ -120,6 +121,7 @@ if __name__ == '__main__':
     print print_obj('Exception', None)
     print '-' * 30
     print print_argspec('Exception', None)
+
     class Foo:
         def __init__(self, bar=None): pass
         pass

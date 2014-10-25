@@ -17,8 +17,10 @@
 
 import threading
 
+
 def current_thread_name():
     return threading.currentThread().getName()
+
 
 def find_debugged_frame(frame):
     """Find the first frame that is a debugged frame. We do this
@@ -44,8 +46,10 @@ def find_debugged_frame(frame):
         return frame
     return f_prev
 
+
 def id2thread_name(thread_id):
     return threading.Thread.getName(threading._active[thread_id])
+
 
 def map_thread_names():
     '''Invert threading._active'''

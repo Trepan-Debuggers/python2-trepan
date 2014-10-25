@@ -11,6 +11,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # """ Copyright (C) 2008-2009, 2013, 2014 Rocky Bernstein <rocky@gnu.org> """
+__import__('pkg_resources').declare_namespace(__name__)
 
 import glob, os
 

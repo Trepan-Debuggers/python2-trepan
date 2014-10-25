@@ -19,7 +19,6 @@ from os import environ as ENV
 
 # External Egg packages
 import os, tracer
-from tracer import *
 
 width = 80
 if 'COLUMNS' in ENV:

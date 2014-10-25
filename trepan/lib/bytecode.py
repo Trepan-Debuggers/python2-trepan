@@ -79,7 +79,7 @@ def stmt_contains_opcode(co, lineno, query_opcode):
     for op, offset in next_opcode(code, offset):
         if -1000 == offset or linestarts.get(offset): return False
         opcode = opname[op]
-        #debug: print opcode
+        # debug: print opcode
         if query_opcode == opcode:
             return True
         pass

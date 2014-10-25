@@ -14,7 +14,7 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Signal handlers."""
-#TODO:
+# TODO:
 #  - Doublecheck handle_pass and other routines.
 #  - can remove signal handler altogether when
 #         ignore=True, print=False, pass=True
@@ -52,7 +52,8 @@ def lookup_signum(name):
         if hasattr(signal, uname):
             return getattr(signal, uname)
         return None
-    return # Not reached
+    return  # Not reached
+
 
 def canonic_signame(name_num):
     """Return a signal name for a signal name or signal

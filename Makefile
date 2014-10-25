@@ -62,7 +62,7 @@ dist:
 
 #: Remove .pyc files
 clean_pyc:
-	$(RM) -f */*.pyc */*/*.pyc
+	$(RM) -f */*.pyc */*/*.pyc */*/*/*.pyc */*/*/*/*.pyc
 
 #: Create source tarball
 sdist:

@@ -2,6 +2,7 @@
 *.egg-info
 *.py?
 *~
+.python-version
 /*.egg
 /build
 /dist

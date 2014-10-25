@@ -36,8 +36,7 @@ def process_options(debugger_name, pkg_version, sys_argv, option_list=None):
 
     Runs the extended python debugger"""
 
-    ## serverChoices = ('TCP','FIFO', None)
-
+    # serverChoices = ('TCP','FIFO', None)
 
     optparser = OptionParser(usage=usage_str, option_list=option_list,
                              version="%%prog version %s" % pkg_version)
@@ -123,7 +122,8 @@ def process_options(debugger_name, pkg_version, sys_argv, option_list=None):
                          + "to FILE")
     optparser.add_option("-P", "--port", dest="port", default=1027,
                          action="store", type='int',
-                         help="Use TCP port number NUMBER for out-of-process connections.")
+                         help="Use TCP port number NUMBER for "
+                         "out-of-process connections.")
     optparser.add_option("--server", dest="server",
                          action='store_true',
                          help="Out-of-process server connection mode")
@@ -170,7 +170,7 @@ def process_options(debugger_name, pkg_version, sys_argv, option_list=None):
         if 'HOME' in os.environ:
             startup_home_file = os.path.join(os.environ['HOME'], startup_file)
             expanded_startup_home = \
-                                  Mclifns.path_expanduser_abs(startup_home_file)
+              Mclifns.path_expanduser_abs(startup_home_file)
             if Mfile.readable(expanded_startup_home):
                 dbg_initfiles.append(startup_home_file)
                 pass

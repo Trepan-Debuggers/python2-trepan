@@ -134,14 +134,13 @@ DEBUGGER_SETTINGS = {
 
 CLIENT_SOCKET_OPTS = {
     'HOST': '127.0.0.1',
-    'PORT': 1027          # Arbitrary non-privileged port
-    }
+    'PORT': 1027  }      # Arbitrary non-privileged port
 
 
 SERVER_SOCKET_OPTS = {
     'HOST':  None,   # Symbolic name meaning all available interfaces
     'PORT':  1027,   # Arbitrary non-privileged port
-    'reuse': 'posix' == os.name # Allow port to be resued on close?
+    'reuse': 'posix' == os.name  # Allow port to be resued on close?
     }
 
 # Default settings on the Debugger#start() method call

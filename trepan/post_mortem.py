@@ -23,6 +23,7 @@ from import_relative import import_relative
 Mdebugger = import_relative('debugger', '.', 'trepan')
 from trepan.exception import DebuggerQuit, DebuggerRestart
 
+
 def get_last_or_frame_exception():
     """Intended to be used going into post mortem routines.  If
     sys.last_traceback is set, we will return that and assume that
@@ -39,6 +40,7 @@ def get_last_or_frame_exception():
         pass
     return sys.exc_info()
 
+
 def pm(frameno=1, dbg=None):
     """Set up post-mortem debugging using the last traceback.  But if
     there is no traceback, we'll assume that sys.exc_info() contains
@@ -49,6 +51,7 @@ def pm(frameno=1, dbg=None):
     """
     post_mortem(get_last_or_frame_exception(), frameno, dbg=dbg)
     return
+
 
 def post_mortem_excepthook(exc_type, exc_value, exc_tb):
     if str(exc_type) == str(DebuggerQuit): return
@@ -68,6 +71,7 @@ def post_mortem_excepthook(exc_type, exc_value, exc_tb):
     post_mortem((exc_type, exc_value, exc_tb))
     print("Post-mortem debugger finished.")
     return
+
 
 def post_mortem(exc=None, frameno=1, dbg=None):
     """Enter debugger read loop after your program has crashed.
@@ -98,7 +102,7 @@ def post_mortem(exc=None, frameno=1, dbg=None):
         # in get_last_or_frame_exception
         exc = get_last_or_frame_exception()
         if exc[0] is None:
-            print("Can't find traceback for post_mortem " + \
+            print("Can't find traceback for post_mortem "
                   "in sys.last_traceback or sys.exec_info()")
             return
         pass
@@ -112,7 +116,8 @@ def post_mortem(exc=None, frameno=1, dbg=None):
     if exc_tb is not None:
         while exc_tb.tb_next is not None:
             filename = exc_tb.tb_frame.f_code.co_filename
-            if (dbg.mainpyfile and 0 == len(dbg.mainpyfile) and not re_bogus_file.match(filename)):
+            if (dbg.mainpyfile and 0 == len(dbg.mainpyfile)
+                and not re_bogus_file.match(filename)):
                 dbg.mainpyfile = filename
                 pass
             exc_tb = exc_tb.tb_next
@@ -132,12 +137,12 @@ def post_mortem(exc=None, frameno=1, dbg=None):
 
     try:
 
-#         # FIXME: This can be called from except hook in which case we
-#         # need this. Dunno why though.
-#         try:
-#             _pydb_trace.set_trace(t.tb_frame)
-#         except:
-#             pass
+        # # FIXME: This can be called from except hook in which case we
+        # # need this. Dunno why though.
+        # try:
+        #     _pydb_trace.set_trace(t.tb_frame)
+        # except:
+        #     pass
 
         # Possibly a bug in Python 2.5. Why f.f_lineno is
         # not always equal to t.tb_lineno, I don't know.
@@ -158,6 +163,7 @@ def post_mortem(exc=None, frameno=1, dbg=None):
     except DebuggerQuit:
         pass
     return
+
 
 def uncaught_exception(dbg):
     exc = sys.exc_info()

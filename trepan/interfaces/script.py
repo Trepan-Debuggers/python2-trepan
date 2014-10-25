@@ -25,14 +25,14 @@ Mscriptin  = import_relative('scriptin',  '..inout')
 Moutput    = import_relative('output',    '..inout')
 Mmisc      = import_relative('misc',      '..')
 
+
 class ScriptInterface(Minterface.DebuggerInterface):
     """Interface when reading debugger scripts"""
 
     DEFAULT_INIT_OPTS = {
         'abort_on_error' : True,
         'confirm_val'    : False,
-        'verbose'        : False
-        }
+        'verbose'        : False }
 
     def __init__(self, script_name, out=None, opts=None):
         get_option = lambda key: Mmisc.option_set(opts, key,

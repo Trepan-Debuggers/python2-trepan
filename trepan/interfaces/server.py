@@ -14,15 +14,16 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Module for Server (i.e. program to communication-device) interaction"""
-import atexit, os
+import atexit
 
 # Our local modules
-from import_relative import *
+from import_relative import import_relative
 Minterface  = import_relative('interface',  '..',   'trepan')
 Mtcpserver  = import_relative('tcpserver', '..inout', 'trepan')
 Mfifoserver = import_relative('fifoserver', '..inout', 'trepan')
 Mmisc       = import_relative('misc', '..', 'trepan')
 Mcomcodes   = import_relative('comcodes', '.', 'trepan')
+
 
 class ServerInterface(Minterface.DebuggerInterface):
     """Interface for debugging a program but having user control
@@ -30,12 +31,13 @@ class ServerInterface(Minterface.DebuggerInterface):
     computer."""
 
     DEFAULT_INIT_CONNECTION_OPTS = {'IO': 'TCP'}
+
     def __init__(self, inout=None, out=None, connection_opts=None):
         get_option = lambda key: \
             Mmisc.option_set(connection_opts, key,
                              self.DEFAULT_INIT_CONNECTION_OPTS)
         atexit.register(self.finalize)
-        self.inout = None # initialize in case assignment below fails
+        self.inout = None  # initialize in case assignment below fails
         if inout:
             self.inout = inout
         else:
@@ -49,7 +51,7 @@ class ServerInterface(Minterface.DebuggerInterface):
         # For Compatability
         self.output = inout
         self.input  = inout
-        self.interactive = True # Or at least so we think initially
+        self.interactive = True  # Or at least so we think initially
         self.histfile = None
         return
 

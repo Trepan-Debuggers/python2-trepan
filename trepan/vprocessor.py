@@ -16,9 +16,9 @@
 NotImplementedMessage = "This method must be overriden in a subclass"
 
 from pygments.console import colorize
-from import_relative import import_relative
 
 __all__ = ['Processor']
+
 
 class Processor:
     """A processor is the thing that handles the events that come to

@@ -13,7 +13,7 @@
 #
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import inspect, linecache, sys, tempfile, traceback, types
+import inspect, linecache, sys, traceback, types
 import pyficache
 from repr import Repr
 
@@ -92,8 +92,6 @@ DEFAULT_PROC_OPTS = {
 class BWProcessor(Mprocessor.Processor):
 
     def __init__(self, core_obj, opts=None):
-        get_option = lambda key: \
-            Mmisc.option_set(opts, key, DEFAULT_PROC_OPTS)
         Mprocessor.Processor.__init__(self, core_obj)
 
         self.response = {'errs': [], 'msg': []}
@@ -239,7 +237,7 @@ class BWProcessor(Mprocessor.Processor):
             else: exc_type_name = t.__name__
             Mmsg.errmsg(self, str("%s: %s" % (exc_type_name, arg)))
             raise
-        return None # Not reached
+        return None  # Not reached
 
     def exec_line(self, line):
         if self.curframe:

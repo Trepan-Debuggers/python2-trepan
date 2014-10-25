@@ -15,7 +15,6 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import os
 from import_relative import import_relative
-import tracer
 
 # Our local modules
 Mbase_cmd  = import_relative('base_cmd')
@@ -46,7 +45,7 @@ is not given, 1 is used, i.e. stop at the next statement.
     need_stack    = True
 
     def run(self, cmd_hash):
-        
+
         if 'step_count' in cmd_hash:
             step_count = cmd_hash['step_count'] - 1
         else:
@@ -56,7 +55,7 @@ is not given, 1 is used, i.e. stop at the next statement.
         self.core.stop_level       = None
         self.core.last_frame       = None
         self.core.stop_on_finish   = False
-        self.proc.continue_running = True # Break out of command read loop
+        self.proc.continue_running = True  # Break out of command read loop
         self.proc.response['step_count'] = step_count + 1
         return True
     pass
@@ -75,7 +74,7 @@ if __name__ == '__main__':
     #     print 'step_ignore %s' % repr(d.core.step_ignore)
     #     print 'continue_running: %s' % cmd.proc.continue_running
     #     pass
-    # for c in (['s'], ['step+'], ['s-'], ['s!'], ['s>'], ['s<']): 
+    # for c in (['s'], ['step+'], ['s-'], ['s!'], ['s>'], ['s<']):
     #     d.core.step_ignore = 0
     #     cmd.continue_running = False
     #     result = cmd.run(c)

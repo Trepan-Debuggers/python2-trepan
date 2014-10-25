@@ -16,6 +16,7 @@
 
 import inspect, types
 
+
 def print_dict(s, obj, title):
     if hasattr(obj, "__dict__"):
         obj = obj.__dict__
@@ -30,27 +31,29 @@ def print_dict(s, obj, title):
         pass
     return s
 
+
 def print_argspec(obj, obj_name):
     '''A slightly decorated version of inspect.format_argspec'''
     try:
         return obj_name + inspect.formatargspec(*inspect.getargspec(obj))
     except:
         return None
-    return # Not reached
+    return  # Not reached
+
 
 def print_obj(arg, frame, format=None, short=False):
     """Return a string representation of an object """
     try:
         if not frame:
             # ?? Should we have set up a dummy globals
-            # to have persistence? 
+            # to have persistence?
             obj = eval(arg, None, None)
         else:
             obj = eval(arg, frame.f_globals, frame.f_locals)
             pass
     except:
         return 'No symbol "' + arg + '" in current context.'
-    #format and print
+    # format and print
     what = arg
     if format:
         what = format + ' ' + arg
@@ -60,7 +63,7 @@ def print_obj(arg, frame, format=None, short=False):
         s += '\ntype = %s' % type(obj)
         if callable(obj):
             argspec = print_argspec(obj, arg)
-            if argspec: 
+            if argspec:
                 s += ':\n\t'
                 if inspect.isclass(obj):
                     s += 'Class constructor information:\n\t'

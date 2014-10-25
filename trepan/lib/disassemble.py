@@ -14,6 +14,7 @@ format_token = Mformat.format_token
 
 _have_code = (types.MethodType, types.FunctionType, types.CodeType, type)
 
+
 def _try_compile(source, name):
     """Attempts to compile the given source, first as an expression and
        then as a statement if the first approach fails.
@@ -27,8 +28,10 @@ def _try_compile(source, name):
         c = compile(source, name, 'exec')
     return c
 
-# Modified from dis. Changed output to use msg, msg_nocr, section, and pygments.
-# Added first_line and last_line parameters
+# Modified from dis. Changed output to use msg, msg_nocr, section, and
+# pygments.  Added first_line and last_line parameters
+
+
 def dis(msg, msg_nocr, section, errmsg, x=None, start_line=-1, end_line=None,
         relative_pos = False, color=True):
     """Disassemble classes, methods, functions, or code.
@@ -40,7 +43,7 @@ def dis(msg, msg_nocr, section, errmsg, x=None, start_line=-1, end_line=None,
     if x is None:
         distb()
         return
-    if type(x) is types.InstanceType:
+    if isinstance(x, types.InstanceType):
         x = x.__class__
     if hasattr(x, 'im_func'):
         section("Disassembly of %s: " % x)
@@ -57,7 +60,7 @@ def dis(msg, msg_nocr, section, errmsg, x=None, start_line=-1, end_line=None,
         pass
     elif inspect.iscode(x):
         pass
-    if hasattr(x, '__dict__'): # Class or module
+    if hasattr(x, '__dict__'):  # Class or module
         items = sorted(x.__dict__.items())
         for name, x1 in items:
             if isinstance(x1, _have_code):
@@ -82,12 +85,13 @@ def dis(msg, msg_nocr, section, errmsg, x=None, start_line=-1, end_line=None,
     elif isinstance(x, str):    # Source code
         disassemble_string(msg, msg_nocr, x,)
     else:
-       errmsg("Don't know how to disassemble %s objects." %
-              type(x).__name__)
+        errmsg("Don't know how to disassemble %s objects." %
+               type(x).__name__)
     return
 
-def disassemble(msg, msg_nocr, section, co, lasti=-1, start_line=-1, end_line=None,
-                relative_pos=False, color='light'):
+
+def disassemble(msg, msg_nocr, section, co, lasti=-1, start_line=-1,
+                end_line=None, relative_pos=False, color='light'):
     """Disassemble a code object."""
     disassemble_bytes(msg, msg_nocr, co.co_code, lasti, co.co_firstlineno,
                       start_line, end_line, relative_pos,
@@ -96,10 +100,12 @@ def disassemble(msg, msg_nocr, section, co, lasti=-1, start_line=-1, end_line=No
                       dict(findlinestarts(co)), color)
     return
 
+
 def disassemble_string(source):
     """Compile the source string, then disassemble the code object."""
     disassemble(_try_compile(source, '<dis>'))
     return
+
 
 def disassemble_bytes(orig_msg, orig_msg_nocr, code, lasti=-1, cur_line=0,
                       start_line=-1, end_line=None, relative_pos=False,
@@ -206,6 +212,8 @@ def disassemble_bytes(orig_msg, orig_msg_nocr, code, lasti=-1, cur_line=0,
 
 # Inspired by show_file from:
 # http://nedbatchelder.com/blog/200804/the_structure_of_pyc_files.html
+
+
 def pyc2code(fname):
     '''Return a code object from a Python compiled file'''
     f = open(fname, "rb")
@@ -221,12 +229,15 @@ if __name__ == '__main__':
     def msg(msg_str):
         print(msg_str)
         return
+
     def msg_nocr(msg_str):
         sys.stdout.write(msg_str)
         return
+
     def errmsg(msg_str):
         msg('*** ' + msg_str)
         return
+
     def section(msg_str):
         msg('=== ' + msg_str + ' ===')
         return

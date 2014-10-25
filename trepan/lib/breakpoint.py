@@ -7,6 +7,7 @@ __all__ = ["BreakpointManager", "Breakpoint"]
 
 import os.path
 
+
 class BreakpointManager:
     """Manages the list of Breakpoints.
 
@@ -25,8 +26,8 @@ class BreakpointManager:
             try:
                 i = int(i)
             except ValueError:
-                return  (False, 'Breakpoint value %r is not a number.' % i,
-                         None)
+                return(False, 'Breakpoint value %r is not a number.' % i,
+                       None)
             pass
         if 1 == len(self.bpbynumber):
             return (False, 'No breakpoints set.', None)
@@ -114,7 +115,7 @@ class BreakpointManager:
         that indicates if it is ok to delete a temporary breakpoint.
 
         """
-        possibles = self.bplist[filename,line]
+        possibles = self.bplist[filename, line]
         for i in range(0, len(possibles)):
             b = possibles[i]
             if not b.enabled:
@@ -132,7 +133,7 @@ class BreakpointManager:
                 else:
                     # breakpoint and marker that's ok to delete if
                     # temporary
-                    return (b,True)
+                    return (b, True)
             else:
                 # Conditional bp.
                 # Ignore count applies only to those bpt hits where the
@@ -171,7 +172,8 @@ class BreakpointManager:
 
         return
 
-    pass # BreakpointManager
+    pass  # BreakpointManager
+
 
 class Breakpoint:
 
@@ -242,19 +244,20 @@ class Breakpoint:
         'b': disabled breakpoint
         """
         if self.temporary : return 't'
-        elif self.enabled:  return 'B'
+        elif self.enabled: return 'B'
         else: return 'b'
         return
 
-    pass # end of Breakpoint class
+    pass  # end of Breakpoint class
+
 
 def checkfuncname(b, frame):
     """Check whether we should break here because of `b.funcname`."""
     if not b.funcname:
         # Breakpoint was set via line number.
         if b.line != frame.f_lineno:
-            # Breakpoint was set at a line with a def statement and the function
-            # defined is called: don't break.
+            # Breakpoint was set at a line with a def statement and
+            # the function defined is called: don't break.
             return False
         return True
 
@@ -269,7 +272,7 @@ def checkfuncname(b, frame):
         # The function is entered for the 1st time.
         b.func_first_executable_line = frame.f_lineno
 
-    if  b.func_first_executable_line != frame.f_lineno:
+    if b.func_first_executable_line != frame.f_lineno:
         # But we are not at the first line number: don't break.
         return False
     return True

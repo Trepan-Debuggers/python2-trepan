@@ -18,11 +18,13 @@
 import atexit, pprint
 
 # Our local modules
-from import_relative import *
+from import_relative import import_relative
+import_relative('inout',                  '..',   'trepan')
 import_relative('interfaces',             '..',   'trepan')
 Minterface = import_relative('interface', '..',   'trepan')
 Minput     = import_relative('input',     '..inout', 'trepan')
 Moutput    = import_relative('output',    '..inout', 'trepan')
+
 
 class BWInterface(Minterface.DebuggerInterface):
     """Interface when communicating with the user in the same
@@ -61,7 +63,7 @@ class BWInterface(Minterface.DebuggerInterface):
         try:
             command = eval(line)
         except:
-            return "eval error";
+            return "eval error"
         pass
         return command
 

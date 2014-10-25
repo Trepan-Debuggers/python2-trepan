@@ -22,11 +22,13 @@
 from import_relative import import_relative
 Mstack     = import_relative('stack')
 
+
 def signature(frame):
     '''return suitable frame signature to key display expressions off of.'''
     if not frame: return None
     code = frame.f_code
     return (code.co_name, code.co_filename, code.co_firstlineno)
+
 
 class DisplayMgr:
     '''Manage a list of display expressions.'''
@@ -94,6 +96,7 @@ Num Enb Expression""")
 
     pass
 
+
 class Display:
     def __init__(self, frame, arg, fmt, number):
         self.signature = signature(frame)
@@ -141,7 +144,6 @@ if __name__=='__main__':
     mgr.add(frame, 'x')
     print("Deleted recent insert:", mgr.delete_index(2))
     for line in mgr.all(): print(line)
-    import sys
     mgr.enable_disable(1, False)
     for line in mgr.all(): print(line)
     print(mgr.display(frame))

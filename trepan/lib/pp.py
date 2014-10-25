@@ -19,6 +19,7 @@
 import pprint, types
 from columnize import columnize
 
+
 def pp(val, display_width, msg_nocr, msg, prefix=None):
     if prefix is not None:
         val_len = len(repr(val))
@@ -34,8 +35,9 @@ def pp(val, display_width, msg_nocr, msg, prefix=None):
         pass
     return
 
-## Actually... code like this should go in pformat.
-## Possibly some will go into columnize.
+
+# Actually... code like this should go in pformat.
+# Possibly some will go into columnize.
 def pprint_simple_array(val, displaywidth, msg_nocr, msg, lineprefix=''):
     '''Try to pretty print a simple case where a list is not nested.
     Return True if we can do it and False if not. '''

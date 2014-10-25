@@ -34,6 +34,7 @@ try:
 except ImportError:
     pass
 
+
 class UserInterface(Minterface.DebuggerInterface):
     """Interface when communicating with the user in the same
     process as the debugged program."""
@@ -46,7 +47,7 @@ class UserInterface(Minterface.DebuggerInterface):
         Moutput = import_relative('output', '..inout', 'trepan')
 
         atexit.register(self.finalize)
-        self.interactive = True # Or at least so we think initially
+        self.interactive = True  # Or at least so we think initially
         self.input       = inp or Minput.DebuggerUserInput()
         self.output      = out or Moutput.DebuggerUserOutput()
 

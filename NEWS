@@ -1,3 +1,8 @@
+trepan 0.3.7 2014-10-25
+
+- More flake8 linting. Another attempt to get this to install cleanly with
+  pip and easy_install. This time, for sure!
+
 trepan 0.3.6 2014-10-25
 
 - More flake8 linting. Another attempt to get this to install cleanly with

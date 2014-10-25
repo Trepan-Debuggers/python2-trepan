@@ -18,19 +18,21 @@
 # extract the "expression" part of a line of source code.
 #
 import re
+
+
 def extract_expression(text):
     if re.search('^\s*(?:if|elif)\s+', text):
-        text = re.sub('^\s*(?:if|elsif)\s+','', text)
+        text = re.sub('^\s*(?:if|elsif)\s+', '', text)
         text = re.sub(':(?:\s+.*$|$)', '', text)
     elif re.search('^\s*(?:while)\s+', text):
-        text = re.sub('^\s*(?:while)\s+','', text) 
+        text = re.sub('^\s*(?:while)\s+', '', text)
         text = re.sub(':(?:\s+.*$|$)', '', text)
     elif re.search('^\s*return\s+', text):
         # EXPRESION in: return EXPRESSION
-        text = re.sub('^\s*return\s+','', text)
+        text = re.sub('^\s*return\s+', '', text)
     elif re.search('\s*[A-Za-z_][A-Za-z0-9_\[\]]*\s*=[^=>]', text):
         # RHS of an assignment statement.
-        text = re.sub('^\s*[A-Za-z_][A-Za-z0-9_\[\]]*\s*=','', text)
+        text = re.sub('^\s*[A-Za-z_][A-Za-z0-9_\[\]]*\s*=', '', text)
         pass
     return text
 
@@ -38,11 +40,10 @@ def extract_expression(text):
 # Demo it
 if __name__=='__main__':
     for stmt in (
-        'if condition(x):', 
+        'if condition(x):',
         'while expression:',
         'return return_value',
-        'nothing_to_be.done'
-        ):
+        'nothing_to_be.done'):
         print(extract_expression(stmt))
         pass
     pass

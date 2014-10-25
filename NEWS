@@ -1,3 +1,13 @@
+trepan 0.3.6 2014-10-25
+
+- More flake8 linting. Another attempt to get this to install cleanly with
+  pip and easy_install.
+
+trepan 0.3.5 2014-10-21
+
+- More flake8 linting. Another attempt to get this to install cleanly with
+  pip and easy_install.
+
 trepan 0.3.4 2014-10-19
 
 - Reduce import_relative, quit and restart should work better

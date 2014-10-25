@@ -28,7 +28,6 @@ user or client-side code for connecting to server'd debugged program.
 """
 
 # Our local modules
-from import_relative import import_relative
 
 from trepan.exception import DebuggerQuit, DebuggerRestart
 
@@ -53,10 +52,11 @@ except ImportError:
         return None
     pass
 
+
 class Debugger:
 
-    # The following functions have to be defined before DEFAULT_INIT_OPTS which
-    # includes references to these.
+    # The following functions have to be defined before
+    # DEFAULT_INIT_OPTS which includes references to these.
 
     # FIXME DRY run, run_exec, run_eval.
 
@@ -129,6 +129,7 @@ class Debugger:
             pass
         self.core.stop()
         return
+
     def run_call(self, func, start_opts=None, *args, **kwds):
         """ Run debugger on function call: `func(*args, **kwds)'
 
@@ -196,20 +197,21 @@ class Debugger:
         # that it's being run as __main__ to avoid scripts being able to access
         # the pydb.py namespace.
         if globals_ is None:
-            import __main__
+            import __main__  # NOQA
             globals_ = {"__name__" : "__main__",
                        "__file__" : self.mainpyfile,
                        "__builtins__" : __builtins__
-                       }
+                        }
         if locals_ is None:
             locals_ = globals_
         self.core.start(start_opts)
         retval = False
         self.core.execution_status = 'Running'
         try:
-            exec(compile(open(self.mainpyfile).read(), self.mainpyfile, 'exec'), globals_, locals_)
+            exec(compile(open(self.mainpyfile).read(), self.mainpyfile,
+                         'exec'), globals_, locals_)
             retval = True
-        except  SyntaxError:
+        except SyntaxError:
             print(sys.exc_info()[1])
             retval = False
             pass
@@ -261,8 +263,7 @@ class Debugger:
         'settings'    : Mdefault.DEBUGGER_SETTINGS,
 
         'start_opts'  : Mdefault.START_OPTS,
-        'step_ignore' : 0,
-        }
+        'step_ignore' : 0, }
 
     def __init__(self, opts=None):
         """Create a debugger object. But depending on the value of
@@ -380,6 +381,7 @@ if __name__=='__main__':
                     print("%d" % (i+1)*10)
                     pass
                 d.core.stop()
+
                 def square(x): return x*x
                 print('calling: run_call(square,2)')
                 d.run_call(square, 2)

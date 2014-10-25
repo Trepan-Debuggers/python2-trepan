@@ -214,7 +214,7 @@ def stop(opts=None):
 
 # Demo it
 if __name__=='__main__':
-    import sys, tracer
+    import tracer
 
     def foo(n):
         y = n

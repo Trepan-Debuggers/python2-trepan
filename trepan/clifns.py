@@ -47,7 +47,7 @@ def file2module(filename):
         pos = basename.rfind('.')
         return basename[:pos]
     else:
-         return basename
+        return basename
     return None
 
 

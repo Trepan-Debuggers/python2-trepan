@@ -42,8 +42,8 @@ class UserInterface(Minterface.DebuggerInterface):
         get_option = lambda key: Mmisc.option_set(opts, key,
                                                   DEFAULT_USER_SETTINGS)
 
-        from trepan.inout import input as Minput
-        from trepan.inout import output as Moutput
+        Minput = import_relative('input', '..inout', 'trepan')
+        Moutput = import_relative('output', '..inout', 'trepan')
 
         atexit.register(self.finalize)
         self.interactive = True # Or at least so we think initially

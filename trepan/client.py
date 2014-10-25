@@ -19,19 +19,18 @@
 
 import os, sys, time
 # Our local modules
-from import_relative import import_relative
+from import_relative import import_relative, get_srcdir
 Mmisc = import_relative('misc', '.', 'trepan')
 Mclient   = import_relative('client', '.interfaces')
 Mcomcodes = import_relative('comcodes', '.interfaces')
 
 from optparse import OptionParser
 
-# Our local modules
-from import_relative import import_relative, get_srcdir
-
 # VERSION.py sets variable VERSION.
-exec(compile(open(os.path.join(get_srcdir(), 'VERSION.py')).read(), os.path.join(get_srcdir(), 'VERSION.py'), 'exec'))
-__version__ = VERSION
+exec(compile(open(os.path.join(get_srcdir(), 'VERSION.py')).read(),
+             os.path.join(get_srcdir(), 'VERSION.py'), 'exec'))
+__version__ = VERSION  # NOQA
+
 
 def process_options(pkg_version, sys_argv, option_list=None):
     """Handle debugger options. Set `option_list' if you are writing
@@ -126,6 +125,7 @@ def start_client(connection_opts):
     intf.close()
     return
 
+
 def main(opts, sys_argv):
     # print(opts)
     if opts.pid > 0:
@@ -138,6 +138,6 @@ def main(opts, sys_argv):
     return
 
 if __name__ == '__main__':
-      opts, sys_argv  = process_options(__version__, sys.argv)
-      main(opts, sys_argv)
-      pass
+    opts, sys_argv  = process_options(__version__, sys.argv)
+    main(opts, sys_argv)
+    pass

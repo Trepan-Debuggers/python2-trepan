@@ -826,6 +826,7 @@ class CommandProcessor(Mprocessor.Processor):
         cmd_instances = []
         eval_cmd_template = 'command_mod.%s(self)'
         for mod_name in Mcommand.__dict__.keys():
+            if mod_name.startswith('__'): continue
             import_name = "trepan.processor.command." + mod_name
             imp = __import__(import_name)
             if imp.__name__ == 'trepan':

@@ -347,7 +347,8 @@ suffix may be omitted in the file name.
 
    break              # Break where we are current stopped at
    break if i < j     # Break at current line if i < j
-   break 10           # Break on line 10 of the file we are currently stopped at
+   break 10           # Break on line 10 of the file we are
+                      #  currently stopped at
    break os.path.join # Break in function os.path.join
    break os.path:45   # Break on line 45 of os.path
    break myfile:5 if i < j # Same as above but only if i < j

@@ -24,7 +24,7 @@ if hasattr(os, 'mkfifo'):
     from trepan.inout.base import DebuggerInOutBase
     Mmisc    = import_relative('misc', '..')
 
-    ## FIXME: Consider using Python's socketserver/SocketServer?
+    # FIXME: Consider using Python's socketserver/SocketServer?
     class FIFOServer(DebuggerInOutBase):
         """Debugger Server Input/Output Socket."""
 

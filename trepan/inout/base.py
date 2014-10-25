@@ -27,6 +27,8 @@ Code project.
 
 NotImplementedMessage = "This method must be overriden in a subclass"
 
+
+
 # FIXME: In 2.6 we can really use an Absctract Class (ABC). But for now,
 # we want 2.5.x compatibility.
 class DebuggerInputBase(object):
@@ -47,7 +49,7 @@ class DebuggerInputBase(object):
 
     def open(self, inp, opts=None):
         """Use this to set where to read from. """
-        raise NotImplementedError, NotImplementedMessage
+        raise NotImplementedError(NotImplementedMessage)
 
     def readline(self, use_raw=None):
         """Read a line of input. EOFError will be raised on EOF.
@@ -59,9 +61,10 @@ class DebuggerInputBase(object):
         normally expected the value from the class initialization is
         used.
         """
-        raise NotImplementedError, NotImplementedMessage
+        raise NotImplementedError(NotImplementedMessage)
 
     pass
+
 
 # FIXME: In 2.6 we can really use an Abstract Class (ABC). But for now,
 # we want 2.5.x compatibility.
@@ -79,7 +82,7 @@ class DebuggerOutputBase(object):
         return
 
     def flush(self):
-        raise NotImplementedError, NotImplementedMessage
+        raise NotImplementedError(NotImplementedMessage)
 
     def write(self, output):
         """Use this to set where to write to. output can be a
@@ -94,6 +97,7 @@ class DebuggerOutputBase(object):
         self.write("%s\n" % msg)
         return
     pass
+
 
 class DebuggerInOutBase(object):
     """ This is an abstract class that specifies debugger input output when
@@ -111,12 +115,11 @@ class DebuggerInOutBase(object):
         return
 
     def flush(self):
-        raise NotImplementedError, NotImplementedMessage
+        raise NotImplementedError(NotImplementedMessage)
 
     def open(self, inp, opts=None):
         """Use this to set where to read from. """
-        raise NotImplementedError, NotImplementedMessage
-
+        raise NotImplementedError(NotImplementedMessage)
 
     def readline(self, use_raw=None):
         """Read a line of input. EOFError will be raised on EOF.
@@ -128,13 +131,13 @@ class DebuggerInOutBase(object):
         normally expected the value from the class initialization is
         used.
         """
-        raise NotImplementedError, NotImplementedMessage
+        raise NotImplementedError(NotImplementedMessage)
 
     def write(self, output):
         """Use this to set where to write to. output can be a
         file object or a string. This code raises IOError on error.
         """
-        raise NotImplementedError, NotImplementedMessage
+        raise NotImplementedError(NotImplementedMessage)
 
     def writeline(self, msg):
         """ used to write to a debugger that is connected to this
@@ -152,6 +155,7 @@ if __name__=='__main__':
             print("open(%s) called" % inp)
             pass
         pass
+
     class MyOutput(DebuggerOutputBase):
         def writeline(self, s):
             print "writeline:", s

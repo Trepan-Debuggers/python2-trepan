@@ -188,7 +188,8 @@ def print_stack_trace(proc_obj, count=None, color='plain'):
 def print_dict(s, obj, title):
     if hasattr(obj, "__dict__"):
         d=obj.__dict__
-        if type(d) == types.DictType or type(d) == types.DictProxyType:
+        if (isinstance(d, types.DictType) or
+            isinstance(d, types.DictProxyType)):
             keys = list(d.keys())
             if len(keys) == 0:
                 s += "\n  No %s" % title

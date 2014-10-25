@@ -19,6 +19,7 @@ import inspect, os, pyficache
 from import_relative import import_relative
 Mmisc = import_relative('misc', '..')
 
+
 def set_break(cmd_obj, func, filename, lineno, condition, temporary, args):
     if lineno is None:
         part1 = ("I don't understand '%s' as a line number, function name,"
@@ -35,22 +36,22 @@ def set_break(cmd_obj, func, filename, lineno, condition, temporary, args):
         ok_linenos = pyficache.trace_line_numbers(filename)
         if not ok_linenos or lineno not in ok_linenos:
             part1 = ('File %s' % cmd_obj.core.filename(filename))
-            msg = Mmisc.wrapped_lines(part1, 
+            msg = Mmisc.wrapped_lines(part1,
                                       "is not stoppable at line %d." %
                                       lineno, cmd_obj.settings['width'])
             cmd_obj.errmsg(msg)
             return False
         pass
-    bp =  cmd_obj.core.bpmgr.add_breakpoint(filename, lineno, temporary, 
+    bp =  cmd_obj.core.bpmgr.add_breakpoint(filename, lineno, temporary,
                                          condition, func)
     if func:
-        cmd_obj.msg('Breakpoint %d set on calling function %s()' 
+        cmd_obj.msg('Breakpoint %d set on calling function %s()'
                  % (bp.number, func.func_name))
         part1 = 'Currently this is line %d of file'  % lineno
         msg = Mmisc.wrapped_lines(part1, cmd_obj.core.filename(filename),
                                   cmd_obj.settings['width'])
     else:
-        part1 = ( 'Breakpoint %d set at line %d of file' 
+        part1 = ( 'Breakpoint %d set at line %d of file'
                   % (bp.number, lineno))
         msg = Mmisc.wrapped_lines(part1, cmd_obj.core.filename(filename),
                                   cmd_obj.settings['width'])
@@ -72,8 +73,8 @@ def parse_break_cmd(cmd_obj, args):
         condition_pos = 1
         pass
     if inspect.ismodule(modfunc) and lineno is None and len(args) > 1:
-        val = cmd_obj.proc.get_an_int(args[1], 
-                                   'Line number expected, got %s.' % 
+        val = cmd_obj.proc.get_an_int(args[1],
+                                   'Line number expected, got %s.' %
                                    args[1])
         if val is None: return (None, None, None, None)
         lineno = val
@@ -89,4 +90,3 @@ def parse_break_cmd(cmd_obj, args):
     else:
         func = None
     return (func, filename, lineno, condition)
-

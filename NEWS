@@ -1,3 +1,7 @@
+trepan 0.3.9 2014-10-25
+
+Add/fix --client option
+
 trepan 0.3.8 2014-10-25
 
 - Put back namespace packages. pip works as long as --egg option is used

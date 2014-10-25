@@ -21,6 +21,8 @@
 #
 #
 import signal
+
+
 def YN(b):
     """Return 'Yes' for True and 'No' for False, and ?? for anything
     else."""
@@ -29,6 +31,7 @@ def YN(b):
     if b:
         return "Yes"
     return "No"
+
 
 def lookup_signame(num):
     """Find the corresponding signal name for 'num'. Return None
@@ -40,6 +43,7 @@ def lookup_signame(num):
         pass
     # Something went wrong. Should have returned above
     return None
+
 
 def lookup_signum(name):
     """Find the corresponding signal number for 'name'. Return None
@@ -146,7 +150,9 @@ class SignalManager:
         self.dbgr    = dbgr
         # dbgr.core.add_ignore(SigHandler.handle)
         self.sigs    = {}
-        self.siglist = [] # List of signals. Dunno why signal doesn't provide.
+
+        # List of signals. Dunno why signal doesn't provide.
+        self.siglist = []
 
         # Ignore signal handling initially for these known signals.
         if ignore_list is None:
@@ -207,11 +213,11 @@ class SignalManager:
         return True
 
     def set_signal_replacement(self, signum, handle):
-        '''A replacement for signal.signal which chains the signal behind
-        the debugger's handler'''
+        """A replacement for signal.signal which chains the signal behind
+        the debugger's handler"""
         signame = lookup_signame(signum)
         if signame is None:
-            self.dbgr.intf[-1].errmsg(("%s is not a signal number" +
+            self.dbgr.intf[-1].errmsg(("%s is not a signal number"
                                        " I know about.")  % signum)
             return False
         # Since the intent is to set a handler, we should pass this
@@ -223,11 +229,16 @@ class SignalManager:
         return False
 
     def check_and_adjust_sighandler(self, signame, sigs):
-        """Check to see if a single signal handler that we are interested in
-        has changed or has not been set initially. On return self.sigs[signame]
-        should have our signal handler. True is returned if the same or adjusted,
-        False or None if error or not found."""
+        """
+        Check to see if a single signal handler that we are interested
+        in has changed or has not been set initially. On return
+        self.sigs[signame] should have our signal handler. True is
+        returned if the same or adjusted, False or None if error or
+        not found.
+        """
+
         signum = lookup_signum(signame)
+
         try:
             old_handler = signal.getsignal(signum)
         except ValueError:
@@ -244,8 +255,8 @@ class SignalManager:
                 pass
             # set/restore _our_ signal handler
             try:
-#                signal.signal(signum, self.sigs[signame].handle)
-               self._orig_set_signal(signum, self.sigs[signame].handle)
+                # signal.signal(signum, self.sigs[signame].handle)
+                self._orig_set_signal(signum, self.sigs[signame].handle)
             except ValueError:
                 # Probably not in main thread
                 return False
@@ -414,6 +425,7 @@ class SignalManager:
             pass
         return set_print
     pass
+
 
 class SigHandler:
     """Store information about what we do when we handle a signal,

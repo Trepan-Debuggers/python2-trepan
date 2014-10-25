@@ -24,11 +24,13 @@ Mdefault = import_relative('default', '..lib', top_name='trepan')
 Mmisc    = import_relative('misc', '..', 'trepan')
 Mtcpfns  = import_relative('tcpfns', '.', 'trepan')
 
+
 ## FIXME: Consider using Python's socketserver/SocketServer?
 class TCPServer(DebuggerInOutBase):
     """Debugger Server Input/Output Socket."""
 
     DEFAULT_INIT_OPTS = {'open': True}
+
     def __init__(self, inout=None, opts=None):
         get_option = lambda key: Mmisc.option_set(opts, key,
                                                   self.DEFAULT_INIT_OPTS)
@@ -67,7 +69,8 @@ class TCPServer(DebuggerInOutBase):
         self.PORT = get_option('PORT')
         self.inout = None
         for res in socket.getaddrinfo(self.HOST, self.PORT, socket.AF_UNSPEC,
-                                      socket.SOCK_STREAM, 0, socket.AI_PASSIVE):
+                                      socket.SOCK_STREAM, 0,
+                                      socket.AI_PASSIVE):
             af, socktype, proto, canonname, sa = res
             try:
                 self.inout = socket.socket(af, socktype, proto)

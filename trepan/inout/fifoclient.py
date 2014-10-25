@@ -23,10 +23,12 @@ Mdefault = import_relative('default', '..lib', 'trepan')
 Mfile    = import_relative('file', '..lib', 'trepan')
 Mmisc    = import_relative('misc', '..', 'trepan')
 
+
 class FIFOClient(DebuggerInOutBase):
     """Debugger Client Input/Output Socket."""
 
     DEFAULT_INIT_OPTS = {'open': True}
+
     def __init__(self, inp=None, opts=None):
         get_option = lambda key: Mmisc.option_set(opts, key,
                                                   Mdefault.CLIENT_SOCKET_OPTS)
@@ -34,7 +36,7 @@ class FIFOClient(DebuggerInOutBase):
         self.flush_after_write = True
         self.input  = None
         self.output = None
-        self.line_edit = False # Our name for GNU readline capability
+        self.line_edit = False  # Our name for GNU readline capability
         self.state    = 'disconnected'
         open_pid = get_option('open')
         if open_pid:
@@ -59,28 +61,30 @@ class FIFOClient(DebuggerInOutBase):
 
     def open(self, pid, opts=None):
 
-       # Not in/out are reversed from server side
-       d              = tempfile.gettempdir()
-       self.out_name  = os.path.join(d, ('trepan-%s.in' % pid))
-       self.in_name   = os.path.join(d, ('trepan-%s.out' % pid))
-       is_readable = Mfile.readable(self.out_name)
-       if not is_readable:
-           if is_readable is None:
-               raise IOError("output FIFO %s doesn't exist" %
-                               self.out_name)
-           else:
-               raise IOError("output FIFO %s is not readable" %
-                               self.out_name)
-       is_readable = Mfile.readable(self.in_name)
-       if not is_readable:
-           if is_readable is None:
-               raise IOError("input FIFO %s doesn't exist" %
-                               self.in_name)
-           else:
-               raise IOError("output FIFO %s is not readable" %
-                               self.out_name)
-       self.state     = 'active'
-       return
+        # Not in/out are reversed from server side
+        d              = tempfile.gettempdir()
+        self.out_name  = os.path.join(d, ('trepan-%s.in' % pid))
+        self.in_name   = os.path.join(d, ('trepan-%s.out' % pid))
+        is_readable = Mfile.readable(self.out_name)
+        if not is_readable:
+            if is_readable is None:
+                raise IOError("output FIFO %s doesn't exist" %
+                              self.out_name)
+            else:
+                raise IOError("output FIFO %s is not readable" %
+                              self.out_name)
+            pass
+        is_readable = Mfile.readable(self.in_name)
+        if not is_readable:
+            if is_readable is None:
+                raise IOError("input FIFO %s doesn't exist" %
+                              self.in_name)
+            else:
+                raise IOError("output FIFO %s is not readable" %
+                              self.out_name)
+            self.state     = 'active'
+            pass
+        return
 
     def read_msg(self):
         """Read a line of input. EOFError will be raised on EOF.

@@ -24,6 +24,7 @@ Mprint    = import_relative('print', '..lib', 'trepan')
 Mformat   = import_relative('format', '..lib', 'trepan')
 format_token = Mformat.format_token
 
+
 def count_frames(frame, count_start=0):
     "Return a count of the number of frames"
     count = -count_start
@@ -36,6 +37,7 @@ import repr as Mrepr
 import inspect
 
 _re_pseudo_file = re.compile(r'^<.+>')
+
 
 def format_stack_entry(dbg_obj, frame_lineno, lprefix=': ',
                        include_location=True, color='plain'):
@@ -118,8 +120,10 @@ def format_stack_entry(dbg_obj, frame_lineno, lprefix=': ',
             )
     return s
 
+
 def frame2file(core_obj, frame):
     return core_obj.filename(core_obj.canonic_filename(frame))
+
 
 def is_exec_stmt(frame):
     """Return True if we are looking at an exec statement"""
@@ -127,6 +131,8 @@ def is_exec_stmt(frame):
         Mbytecode.op_at_frame(frame.f_back)=='EXEC_STMT'
 
 import dis
+
+
 def get_call_function_name(frame, color='plain'):
     """If f_back is looking at a call function, return
     the name for it. Otherwise return None"""
@@ -151,6 +157,7 @@ def get_call_function_name(frame, color='plain'):
         pass
     return None
 
+
 def print_stack_entry(proc_obj, i_stack, color='plain'):
     frame_lineno = proc_obj.stack[len(proc_obj.stack)-i_stack-1]
     frame, lineno = frame_lineno
@@ -162,6 +169,7 @@ def print_stack_entry(proc_obj, i_stack, color='plain'):
     proc_obj.intf[-1].msg("%d %s" %
              (i_stack, format_stack_entry(proc_obj.debugger, frame_lineno,
                                           color=color)))
+
 
 def print_stack_trace(proc_obj, count=None, color='plain'):
     "Print count entries of the stack trace"
@@ -175,6 +183,7 @@ def print_stack_trace(proc_obj, count=None, color='plain'):
     except KeyboardInterrupt:
         pass
     return
+
 
 def print_dict(s, obj, title):
     if hasattr(obj, "__dict__"):
@@ -193,6 +202,7 @@ def print_dict(s, obj, title):
         pass
     return s
 
+
 def eval_print_obj(arg, frame, format=None, short=False):
     """Return a string representation of an object """
     try:
@@ -207,6 +217,7 @@ def eval_print_obj(arg, frame, format=None, short=False):
         return 'No symbol "' + arg + '" in current context.'
 
     return print_obj(arg, val, format, short)
+
 
 def print_obj(arg, val, format=None, short=False):
     """Return a string representation of an object """
@@ -231,11 +242,14 @@ def print_obj(arg, val, format=None, short=False):
 # Demo stuff above
 if __name__=='__main__':
     class MockDebuggerCore:
+
         def canonic_filename(self, frame):
             return frame.f_code.co_filename
+
         def filename(self, name):
             return name
         pass
+
     class MockDebugger:
         def __init__(self):
             self.core = MockDebuggerCore()
@@ -252,10 +266,13 @@ if __name__=='__main__':
     print("frame count: %d" % count_frames(frame))
     print("frame count: %d" % count_frames(frame.f_back))
     print("frame count: %d" % count_frames(frame, 1))
-    print("def statement: x=5?: %s" % repr(Mbytecode.is_def_stmt('x=5', frame)))
+    print("def statement: x=5?: %s" %
+          repr(Mbytecode.is_def_stmt('x=5', frame)))
     # Not a "def" statement because frame is wrong spot
     print(Mbytecode.is_def_stmt('def foo():', frame))
+
     def sqr(x): x * x
+
     def fn(x):
         frame = inspect.currentframe()
         print(get_call_function_name(frame))

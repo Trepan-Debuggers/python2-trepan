@@ -25,7 +25,7 @@ Mmisc    = import_relative('misc', '...trepan')
 histfile = os.path.expanduser('~/.trepan_hist')
 
 DEFAULT_USER_SETTINGS = {
-    'histfile'     : histfile, # Where do we save the history?
+    'histfile'     : histfile,  # Where do we save the history?
 }
 
 try:

@@ -17,7 +17,8 @@
 import atexit
 
 # Our local modules
-from import_relative import *
+from import_relative import import_relative
+
 import trepan.inout
 import_relative('inout', '...trepan')
 Minterface = import_relative('interface', '..')

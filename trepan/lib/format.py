@@ -15,7 +15,7 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''Pygments-related terminal formatting'''
 
-import re
+import re, sys
 from pygments                     import highlight, lex
 from pygments.console             import ansiformat
 from pygments.filter              import Filter
@@ -23,8 +23,10 @@ from pygments.formatter           import Formatter
 from pygments.formatters          import TerminalFormatter
 from pygments.formatters.terminal import TERMINAL_COLORS
 from pygments.lexers              import RstLexer
-from pygments.token               import *
+from pygments.token               import Comment, Generic, Keyword, Name, \
+     Number, Operator, String, Token
 from pygments.util                import get_choice_opt
+
 
 def format_token(ttype, token, colorscheme=TERMINAL_COLORS,
                  highlight='light' ):
@@ -59,6 +61,7 @@ color_scheme[Generic.Emph]   = TERMINAL_COLORS[Comment.Preproc]
 # Should come last since "Name" is used above
 Name = Comment.Preproc
 
+
 class RstFilter(Filter):
 
     def __init__(self, **options):
@@ -81,6 +84,7 @@ class RstFilter(Filter):
             pass
         return
     pass
+
 
 class RSTTerminalFormatter(Formatter):
     r"""
@@ -156,7 +160,6 @@ class RSTTerminalFormatter(Formatter):
         self.column = 0
         return self.column
 
-
     def reflow_text(self, text, color):
         # print '%r' % text
         # from trepan.api import debug
@@ -221,7 +224,6 @@ class RSTTerminalFormatter(Formatter):
             pass
         return
 
-
     def format_unencoded(self, tokensource, outfile):
         for ttype, text in tokensource:
             color = self.colorscheme.get(ttype)
@@ -234,6 +236,7 @@ class RSTTerminalFormatter(Formatter):
             pass
         return
     pass
+
 
 class MonoRSTTerminalFormatter(RSTTerminalFormatter):
     def format_unencoded(self, tokensource, outfile):
@@ -254,6 +257,7 @@ class MonoRSTTerminalFormatter(RSTTerminalFormatter):
             pass
         return
     pass
+
 
 class MonoTerminalFormatter(TerminalFormatter):
     def format_unencoded(self, tokensource, outfile):
@@ -281,6 +285,7 @@ rst_lex.add_filter(rst_filt)
 color_tf = RSTTerminalFormatter(colorscheme=color_scheme)
 mono_tf  = MonoRSTTerminalFormatter()
 
+
 def rst_text(text, mono, width=80):
     if mono:
         tf = mono_tf
@@ -307,18 +312,18 @@ if __name__ == '__main__':
 #    show_it(string, mono_tf)
 #
 #    test_string ='''
-#This is an example to show off *reformatting.*
-#We have several lines
-#here which should be reflowed.
+# This is an example to show off *reformatting.*
+# We have several lines
+# here which should be reflowed.
 #
-#But paragraphs should be respected.
+# But paragraphs should be respected.
 #
 #    And verbatim
 #    text should not be
 #    touched
 #
-#End of test.
-#'''
+# End of test.
+# '''
 #
 #    rst_tf = RSTTerminalFormatter(colorscheme=color_scheme)
 #    show_it(test_string, rst_tf)

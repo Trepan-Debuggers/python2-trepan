@@ -94,20 +94,28 @@ class MockDebuggerCore:
         self.last_filename  = None
         self.different_line = None
         return
+
     def set_next(self, frame, step_events=None):
         pass
+
     def stop(self): pass
+
     def canonic(self, filename):
         return filename
+
     def canonic_filename(self, frame):
         return frame.f_code.co_filename
+
     def filename(self, name):
         return name
+
     def is_running(self):
         return 'Running' == self.execution_status
+
     def get_file_breaks(self, filename):
         return []
     pass
+
 
 class MockDebugger:
     def __init__(self):

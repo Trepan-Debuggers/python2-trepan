@@ -41,7 +41,6 @@ def get_stack(f, t, botframe, proc_obj=None):
     exists."""
     exclude_frame = lambda f: False
     if proc_obj:
-        dbg = proc_obj.debugger
         settings = proc_obj.debugger.settings
         if not settings['dbg_trepan']:
             exclude_frame = lambda f: \

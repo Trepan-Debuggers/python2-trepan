@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2010, 2012-2013 Rocky Bernstein
+#  Copyright (C) 2010, 2012-2014 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -78,7 +78,8 @@ environment."""
             cmd = 'self.proc.%s = old_%s' % (attr, attr)
             exec(cmd)
             pass
-        self.proc.print_location()
+        if hasattr(self.proc, 'print_location'):
+            self.proc.print_location()
         return False
     pass
 

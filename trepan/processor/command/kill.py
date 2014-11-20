@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009, 2013 Rocky Bernstein
+#   Copyright (C) 2009, 2013-2014 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@ import signal
 
 class KillCommand(Mbase_cmd.DebuggerCommand):
 
+    aliases       = ('kill!',)
     category      = 'running'
     min_args      = 0
     max_args      = 1
@@ -55,7 +56,10 @@ we are in interactive mode, we'll prompt to make sure.
         signo =  signal.SIGKILL
         confirmed = False
         if len(args) <= 1:
-            confirmed = self.confirm('Really do a hard kill', False)
+           if '!' != args[0][-1]:
+               confirmed = self.confirm('Really do a hard kill', False)
+           else:
+               confirmed = True
         elif 'unconditionally'.startswith(args[1]):
             confirmed = True
         else:
@@ -89,3 +93,4 @@ if __name__ == '__main__':
     command.run(['kill', 'wrong', 'number', 'of', 'args'])
     command.run(['kill', '28'])
     command.run(['kill'])
+    command.run(['kill!'])

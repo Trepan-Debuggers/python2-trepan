@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2009, 2013 Rocky Bernstein
+#  Copyright (C) 2009, 2013-2014 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -37,6 +37,7 @@ program."""
     # until that frame. However the same provisions regarding stopping,
     # exceptions, 'yield'ing and so on still apply.
 
+    aliases       = ('fin',)
     category      = 'running'
     execution_set = ['Running']
     min_args      = 0

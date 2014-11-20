@@ -1,6 +1,7 @@
 trepan 0.3.9 2014-10-25
 
-Add/fix --client option
+- Add/fix --client option. code.google.com issue #17.
+- More lint warnings removed.
 
 trepan 0.3.8 2014-10-25
 

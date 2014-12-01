@@ -22,13 +22,15 @@ import os, sys
 from import_relative import import_relative
 import_relative('lib', '...', 'trepan')
 breakpoint = import_relative('breakpoint', '...lib', 'trepan')
-default    = import_relative('default', '...lib', 'trepan') # Default settings
+default    = import_relative('default', '...lib', 'trepan')  # Default settings
+
 
 class MockIO:
     def readline(self, prompt='', add_to_history=False):
         print prompt
         return 'quit'
     pass
+
 
 class MockUserInterface:
     def __init__(self):

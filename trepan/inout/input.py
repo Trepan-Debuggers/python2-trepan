@@ -21,13 +21,15 @@ from import_relative import import_relative
 Mmisc  = import_relative('misc', '..')
 Mbase  = import_relative('base', top_name='trepan')
 
+
 def readline_importable():
     try:
         import readline
         return True
     except ImportError:
         return False
-    return # Not reached
+    return  # Not reached
+
 
 class DebuggerUserInput(Mbase.DebuggerInputBase):
     """Debugger input connected to what we think of as a end-user input
@@ -36,7 +38,7 @@ class DebuggerUserInput(Mbase.DebuggerInputBase):
 
     def __init__(self, inp=None, opts=None):
         self.input     = inp or sys.stdin
-        self.line_edit = None # Our name for GNU readline capability
+        self.line_edit = None  # Our name for GNU readline capability
         self.open(self.input, opts)
         return
 

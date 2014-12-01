@@ -28,7 +28,6 @@ Code project.
 NotImplementedMessage = "This method must be overriden in a subclass"
 
 
-
 # FIXME: In 2.6 we can really use an Absctract Class (ABC). But for now,
 # we want 2.5.x compatibility.
 class DebuggerInputBase(object):
@@ -88,7 +87,7 @@ class DebuggerOutputBase(object):
         """Use this to set where to write to. output can be a
         file object or a string. This code raises IOError on error.
         """
-        raise NotImplementedError, NotImplementedMessage
+        raise NotImplementedError(NotImplementedMessage)
 
     def writeline(self, msg):
         """ used to write to a debugger that is connected to this

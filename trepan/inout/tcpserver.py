@@ -25,7 +25,7 @@ Mmisc    = import_relative('misc', '..', 'trepan')
 Mtcpfns  = import_relative('tcpfns', '.', 'trepan')
 
 
-## FIXME: Consider using Python's socketserver/SocketServer?
+# FIXME: Consider using Python's socketserver/SocketServer?
 class TCPServer(DebuggerInOutBase):
     """Debugger Server Input/Output Socket."""
 

@@ -104,8 +104,8 @@ To get the full stack trace for a specific thread pass in the thread name.
             thread = threading._active[thread_id]
             name = thread.getName()
             if name not in list(self.name2id.keys()):
-               self.name2id[name] = thread_id
-               pass
+                self.name2id[name] = thread_id
+                pass
             pass
 
         all_verbose = False

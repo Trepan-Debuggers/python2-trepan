@@ -62,7 +62,7 @@ class StringArrayOutput(Mbase.DebuggerOutputBase):
     even simplier. """
 
     def __init__(self, out=[], opts=None):
-        self.flush_after_write = False # For compatibility
+        self.flush_after_write = False  # For compatibility
         self.closed = False
         self.output = out
         return
@@ -139,9 +139,9 @@ if __name__=='__main__':
     out.close()
     print(out.output)
     try:
-         out.writeline("You won't see me")
+        out.writeline("You won't see me")
     except:
-         pass
+        pass
     # Closing after already closed is okay
     out.close()
     inp.close()

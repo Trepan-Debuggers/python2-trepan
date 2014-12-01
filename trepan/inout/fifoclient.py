@@ -103,7 +103,7 @@ class FIFOClient(DebuggerInOutBase):
             return line.encode("utf-8")
         else:
             raise IOError("readline called in state: %s." % self.state)
-        return # Not reached
+        return  # Not reached
 
     def write(self, msg):
         """ This method the debugger uses to write. In contrast to

@@ -67,6 +67,7 @@ def map_thread_names():
 if __name__ == '__main__':
     import sys
     print('=' * 10)
+
     def showit():
         print('Current thread: %s' % current_thread_name())
         print('All threads:')

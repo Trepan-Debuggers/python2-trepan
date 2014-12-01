@@ -19,6 +19,7 @@ import re
 from import_relative import import_relative
 Mcomplete = import_relative('complete', '..lib', 'trepan')
 
+
 def complete_token_filtered(aliases, prefix, expanded):
 
     """Find all starting matches in dictionary *aliases* that start
@@ -31,6 +32,7 @@ def complete_token_filtered(aliases, prefix, expanded):
                    cmd in aliases and expanded not in aliases[cmd])
     return sorted(results, key=lambda pair: pair[0])
 
+
 def completer(self, str, state, last_token=''):
     next_blank_pos, token = Mcomplete.next_token(str, 0)
     if len(token) == 0 and not 0 == len(last_token):
@@ -38,11 +40,12 @@ def completer(self, str, state, last_token=''):
     match_pairs = Mcomplete.complete_token_with_next(self.commands, token)
     match_hash = {}
     for pair in match_pairs:
-      match_hash[pair[0]] = pair[1]
-      pass
+        match_hash[pair[0]] = pair[1]
+        pass
 
     alias_pairs = Mcomplete.complete_token_filtered_with_next(self.aliases,
-                                                              token, match_hash,
+                                                              token,
+                                                              match_hash,
                                                               list(self.commands.keys()))
     match_pairs += alias_pairs
 
@@ -64,14 +67,12 @@ def completer(self, str, state, last_token=''):
         pass
 
     if len(match_pairs) > 1:
-      # FIXME: figure out what to do here.
-      # Matched multiple items in the middle of the string
-      # We can't handle this so do nothing.
-      return [None]
-      # return match_pairs.map do |name, cmd|
-      #   ["#{name} #{args[1..-1].join(' ')}"]
-      # end
-      pass
+        # FIXME: figure out what to do here.
+        # Matched multiple items in the middle of the string
+        # We can't handle this so do nothing.
+        return [None]
+        # return match_pairs.map do |name, cmd|
+        #   ["#{name} #{args[1..-1].join(' ')}"]
 
     # len(match_pairs) == 1
     if str[-1] == ' ' and str.rstrip().endswith(token):
@@ -79,6 +80,7 @@ def completer(self, str, state, last_token=''):
         pass
     return next_complete(str, next_blank_pos, match_pairs[0][1],
                          token) + [None]
+
 
 def next_complete(str, next_blank_pos, cmd, last_token):
     next_blank_pos, token = Mcomplete.next_token(str, next_blank_pos)
@@ -113,7 +115,7 @@ def next_complete(str, next_blank_pos, cmd, last_token):
 if __name__=='__main__':
     print(Mcomplete.complete_token(['ba', 'aa', 'ab'], 'a'))
     print(Mcomplete.complete_token(['cond', 'condition', 'continue'], 'cond'))
-    h = {'ab':1, 'aac':2, 'aa':3, 'b':4}
+    h = {'ab': 1, 'aac': 2, 'aa': 3, 'b': 4}
     print(Mcomplete.complete_token(h.keys(), 'a'))
     print(Mcomplete.complete_token_with_next(h, 'a'))
     pass

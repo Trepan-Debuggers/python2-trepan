@@ -59,6 +59,7 @@ def set_break(cmd_obj, func, filename, lineno, condition, temporary, args):
     cmd_obj.msg(msg)
     return True
 
+
 def parse_break_cmd(cmd_obj, args):
     curframe = cmd_obj.proc.curframe
     if 0 == len(args) or args[0] == 'if':

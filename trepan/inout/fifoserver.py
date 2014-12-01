@@ -29,16 +29,17 @@ if hasattr(os, 'mkfifo'):
         """Debugger Server Input/Output Socket."""
 
         DEFAULT_INIT_OPTS = {'open': True}
+
         def __init__(self, opts=None):
             get_option = lambda key: Mmisc.option_set(opts, key,
                                                       self.DEFAULT_INIT_OPTS)
             atexit.register(self.close)
             self.flush_after_write = True
-            self.line_edit = False # Our name for GNU readline capability
-            self.in_name   = None  # String: input file name
-            self.input     = None  # File Descriptor
-            self.out_name  = None  # String: output file name
-            self.output    = None  # String: output file name
+            self.line_edit = False  # Our name for GNU readline capability
+            self.in_name   = None   # String: input file name
+            self.input     = None   # File Descriptor
+            self.out_name  = None   # String: output file name
+            self.output    = None   # String: output file name
             self.state     = 'disconnected'
             if get_option('open'):
                 self.open(opts)
@@ -97,7 +98,7 @@ if hasattr(os, 'mkfifo'):
                 return line.rstrip("\n")
             else:
                 raise EOFError
-            return # Not reached
+            return  # Not reached
 
         def write(self, msg):
             """ This method the debugger uses to write. In contrast to

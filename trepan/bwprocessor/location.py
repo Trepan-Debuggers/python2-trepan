@@ -5,6 +5,7 @@ import pyficache, linecache, tempfile
 from import_relative import import_relative, get_srcdir
 Mstack = import_relative('stack', '..lib', 'trepan')
 
+
 def format_location(proc_obj):
     """Show where we are. GUI's and front-end interfaces often
     use this to update displays. So it is helpful to make sure

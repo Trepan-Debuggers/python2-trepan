@@ -2,7 +2,7 @@
 
 This is a rewrite of the Python debugger, [pydb](http://bashdb.sf.net/pydb), itself a derivative of the stock Python debugger *pdb*.
 
-See also [wiki](https://code.google.com/p/pydbgr/w/list) for
+See this [wiki](https://code.google.com/p/pydbgr/w/list) for
 more information.
 
 This code makes assumes Python in the version range of 2.5 up to and

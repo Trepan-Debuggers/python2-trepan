@@ -1,4 +1,4 @@
-![Downloads](https://pypip.in/d/trepan/badge.png) [![Build Status](https://travis-ci.org/rocky/python2-trepan.svg?branch=master)](https://travis-ci.org/rocky/python2-trepan)
+![Downloads](https://pypip.in/d/trepan/badge.png) [![Build Status](https://travis-ci.org/rocky/python2-trepan.svg)](https://travis-ci.org/rocky/python2-trepan)
 
 This is a rewrite of the Python debugger, [pydb](http://bashdb.sf.net/pydb), itself a derivative of the stock Python debugger *pdb*.
 

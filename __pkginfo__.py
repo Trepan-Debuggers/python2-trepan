@@ -86,7 +86,7 @@ def get_srcdir():
 # VERSION.py sets variable VERSION.
 execfile(os.path.join(get_srcdir(), 'trepan', 'VERSION.py'))
 version            = VERSION  # NOQA
-web                = 'http://github.com/rocky/python-trepan2/'
+web                = 'http://github.com/rocky/python2-trepan/'
 
 # tracebacks in zip files are funky and not debuggable
 zip_safe = False

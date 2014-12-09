@@ -167,7 +167,6 @@ if __name__ == '__main__':
         print "** ", msg
         return
 
-
     def msg(m):
         print m
     print get_int(errmsg, '1+2')  # 3

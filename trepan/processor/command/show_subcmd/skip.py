@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009 Rocky Bernstein
+#   Copyright (C) 2009, 2014 Rocky Bernstein
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -21,7 +21,5 @@ Mbase_subcmd  = import_relative('base_subcmd', '..')
 
 class ShowSkip(Mbase_subcmd.DebuggerShowBoolSubcommand):
     """Show step over lines which define functions and classes"""
-    min_abbrev = len('sk') 
+    min_abbrev = len('sk')
     pass
-
-

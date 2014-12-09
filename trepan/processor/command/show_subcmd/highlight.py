@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2012, 2013 Rocky Bernstein
+#   Copyright (C) 2012-2014 Rocky Bernstein
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -24,18 +24,20 @@ Mcmdfns = import_relative('cmdfns', '...')
 Mbase_subcmd  = import_relative('base_subcmd', '..')
 
 class ShowHighlight(Mbase_subcmd.DebuggerSubcommand):
-    '''**show highlight**
+    """**show highlight**
 
-Show whether we use terminal highlighting.'''
+Show whether we use terminal highlighting."""
 
     def run(self, args):
         val = self.settings['highlight']
         if 'plain' == val:
             mess = 'output set to not use terminal escape sequences'
         elif 'light' == val:
-            mess = 'output set for terminal with escape sequences for a light background'
+            mess = ('output set for terminal with escape sequences '
+                    'for a light background')
         elif 'dark' == val:
-            mess = 'output set for terminal with escape sequences a dark background'
+            mess = ('output set for terminal with escape sequences '
+                    'for a dark background')
         else:
             self.errmsg('Internal error: incorrect highlight setting %s' % val)
             return

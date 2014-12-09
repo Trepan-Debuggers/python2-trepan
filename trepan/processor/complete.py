@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2013 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2013,2014 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -43,15 +43,17 @@ def completer(self, str, state, last_token=''):
         match_hash[pair[0]] = pair[1]
         pass
 
-    alias_pairs = Mcomplete.complete_token_filtered_with_next(self.aliases,
-                                                              token,
-                                                              match_hash,
-                                                              list(self.commands.keys()))
+    alias_pairs = Mcomplete \
+      .complete_token_filtered_with_next(self.aliases,
+                                         token,
+                                         match_hash,
+                                         list(self.commands.keys()))
     match_pairs += alias_pairs
 
-    macro_pairs = Mcomplete.complete_token_filtered_with_next(self.macros,
-                                                              token, match_hash,
-                                                              self.commands.keys())
+    macro_pairs = Mcomplete \
+      .complete_token_filtered_with_next(self.macros,
+                                         token, match_hash,
+                                         self.commands.keys())
     match_pairs += macro_pairs
 
     if len(str) == next_blank_pos:

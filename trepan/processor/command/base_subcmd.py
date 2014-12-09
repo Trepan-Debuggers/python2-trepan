@@ -24,6 +24,7 @@ NotImplementedMessage = "This method must be overriden in a subclass"
 import columnize, re
 from pygments.console import colorize
 
+
 # Note: don't end classname with Command (capital C) since cmdproc
 # will think this a command name like QuitCommand
 #                                         ^
@@ -121,6 +122,7 @@ from import_relative import import_relative
 Mcmdfns    = import_relative('cmdfns', '..', 'trepan')
 Mcomplete  = import_relative('complete', '...lib', 'trepan')
 
+
 class DebuggerSetBoolSubcommand(DebuggerSubcommand):
 
     def complete(self, prefix):
@@ -145,6 +147,7 @@ class DebuggerSetBoolSubcommand(DebuggerSubcommand):
         return self.msg_nocr("%-12s: " % self.short_help)
     pass
 
+
 class DebuggerShowIntSubcommand(DebuggerSubcommand):
     def run(self, args):
         if hasattr(self, 'short_help'):
@@ -154,6 +157,7 @@ class DebuggerShowIntSubcommand(DebuggerSubcommand):
             pass
         Mcmdfns.run_show_int(self, short_help)
         return
+
 
 class DebuggerShowBoolSubcommand(DebuggerSubcommand):
     def run(self, args):

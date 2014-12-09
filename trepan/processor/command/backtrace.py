@@ -22,6 +22,7 @@ Mstack    = import_relative('stack',  '...lib', 'trepan')
 Mcmdfns   = import_relative('cmdfns', '..',     'trepan')
 Mframe    = import_relative('frame', '..',     'trepan')
 
+
 class BacktraceCommand(Mbase_cmd.DebuggerCommand):
     """**backtrace** [*count*]
 
@@ -39,7 +40,6 @@ evaluation or source-line listing.
    backtrace 2  # Print only the top two entries
    backtrace -1 # Print a stack trace except the initial (least recent) call.
 """
-
 
     aliases       = ('bt', 'where')
     category      = 'stack'
@@ -75,7 +75,8 @@ evaluation or source-line listing.
         if not self.proc.curframe:
             self.errmsg("No stack.")
             return False
-        Mstack.print_stack_trace(self.proc, count, color=self.settings['highlight'])
+        Mstack.print_stack_trace(self.proc, count,
+                                 color=self.settings['highlight'])
         return False
 
     pass
@@ -101,6 +102,7 @@ if __name__ == '__main__':
         else:
             nest_me(cp, command, i+1)
         return
+
     def ignore_me(cp, command, i):
         print('=' * 10)
         nest_me(cp, command, 1)

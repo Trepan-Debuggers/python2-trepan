@@ -29,6 +29,7 @@ Mformat = import_relative('lib.format',  '....trepan')
 
 __all__ = ['DebuggerCommand']
 
+
 class DebuggerCommand:
     """Base Class for Debugger commands. We pull in some helper
     functions for command from module cmdfns."""

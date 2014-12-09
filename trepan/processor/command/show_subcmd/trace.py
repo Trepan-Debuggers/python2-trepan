@@ -24,4 +24,4 @@ class ShowTrace(Mbase_subcmd.DebuggerShowBoolSubcommand):
 
 See also 'set events'."""
 
-    min_abbrev = 2 # Need at least "show tr"
+    min_abbrev = 2  # Need at least "show tr"

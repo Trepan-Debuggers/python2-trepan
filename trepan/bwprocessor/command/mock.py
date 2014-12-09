@@ -70,6 +70,7 @@ class MockProcessor:
         self.last_command = None
         self.stack        = []
         return
+
     def get_int(self, arg, min_value=0, default=1, cmdname=None,
                     at_most=None):
         return None

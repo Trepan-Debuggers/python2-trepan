@@ -16,7 +16,7 @@
 #    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 #    02110-1301 USA.
 
-from import_relative import *
+from import_relative import import_relative
 # Our local modules
 
 Mbase_subcmd  = import_relative('base_subcmd', '..', 'trepan')
@@ -24,7 +24,7 @@ Mcmdfns       = import_relative('cmdfns', '...', 'trepan')
 class ShowWidth(Mbase_subcmd.DebuggerSubcommand):
     "Show the number of characters the debugger thinks are in a line"
 
-    min_abbrev = 2 # Need at least "show wi"
+    min_abbrev = 2  # Need at least "show wi"
 
     def run(self, args):
         Mcmdfns.run_show_int(self, self.__doc__[5:].capitalize())

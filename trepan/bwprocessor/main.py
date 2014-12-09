@@ -94,16 +94,16 @@ class BWProcessor(Mprocessor.Processor):
         Mprocessor.Processor.__init__(self, core_obj)
 
         self.response = {'errs': [], 'msg': []}
-        self.continue_running = False  # True if we should leave command loop
+        self.continue_running = False   # True if we should leave command loop
 
         self.cmd_instances    = self._populate_commands()
-        self.cmd_name         = ''     # command name before alias or
-                                       # macro resolution
-        self.current_command  = ''     # Current command getting run
+        self.cmd_name         = ''      # command name before alias or
+                                        # macro resolution
+        self.current_command  = ''      # Current command getting run
         self.debug_nest       = 1
         self.display_mgr      = Mdisplay.DisplayMgr()
         self.intf             = core_obj.debugger.intf
-        self.last_command     = None   # Initially a no-op
+        self.last_command     = None    # Initially a no-op
         self.precmd_hooks     = []
 
         # If not:
@@ -325,7 +325,7 @@ class BWProcessor(Mprocessor.Processor):
         cmd_hash = self.intf[-1].read_command()
 
         # FIXME: put this into a routine
-        if type(cmd_hash) is not types.DictionaryType:
+        if isinstancetype(cmd_hash, DictionaryType):
             Mmsg.errmsg(self, "invalid input, expecting a hash: %s" % cmd_hash,
                         {'set_name': True})
             self.intf[-1].msg(self.response)

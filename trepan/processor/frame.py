@@ -17,7 +17,7 @@
 # Call-frame-oriented helper function for Processor. Put here so we
 # can use this in a couple of processors.
 
-from import_relative import *
+from import_relative import import_relative
 Mcmdfns = import_relative('cmdfns',   '.')
 Mcomplete = import_relative('complete', '..lib')
 

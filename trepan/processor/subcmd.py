@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2006-2010, 2013 Rocky Bernstein
+#   Copyright (C) 2006-2010, 2013-2014 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Handles gdb-like subcommand processing."""
 
+
 class Subcmd:
     """Gdb-like subcommand handling """
     def __init__(self, name, cmd_obj):
@@ -28,7 +29,8 @@ class Subcmd:
         """Find subcmd in self.subcmds"""
         for subcmd_name in list(self.subcmds.keys()):
             if subcmd_name.startswith(subcmd_prefix) \
-               and len(subcmd_prefix) >= self.subcmds[subcmd_name].__class__.min_abbrev:
+               and len(subcmd_prefix) >= \
+               self.subcmds[subcmd_name].__class__.min_abbrev:
                 return self.subcmds[subcmd_name]
             pass
         return None
@@ -89,7 +91,7 @@ class Subcmd:
 List of %s subcommands:
 """ % (self.name))
             for subcmd_name in self.list():
-                self._subcmd_helper(subcmd_name, obj, True, True)
+                self._subcmd_helper(subcmd_name, self, True, True)
             return
 
         entry = self.lookup(subcmd_prefix)
@@ -106,7 +108,7 @@ List of %s subcommands:
 
     def undefined_subcmd(self, cmd, subcmd):
         """Error message when a subcommand doesn't exist"""
-        self.cmd_obj.errmsg('Undefined "%s" command: "%s". Try "help".' % 
+        self.cmd_obj.errmsg('Undefined "%s" command: "%s". Try "help".' %
                          (cmd, subcmd,))
         return
     pass
@@ -142,6 +144,7 @@ if __name__ == '__main__':
         short_help = 'This is short help for test testing'
         min_abbrev = 4
         in_list    = True
+
         def run(self, args): print('test testing run')
         pass
 
@@ -152,8 +155,8 @@ if __name__ == '__main__':
     testcmdMgr = Subcmd('test', testcmd)
     testsub = TestTestingSubcommand()
     testcmdMgr.add(testsub)
-    
-    for prefix in ['tes', 'test', 'testing', 'testing1']: 
+
+    for prefix in ['tes', 'test', 'testing', 'testing1']:
         x = testcmdMgr.lookup(prefix)
         if x: print(x.name)
         else: print('None')

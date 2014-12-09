@@ -24,7 +24,7 @@ class SubcommandMgr(Mbase_cmd.DebuggerCommand):
     category      = 'status'
     min_args      = 0
     max_args      = None
-    name          = '???' # Need to define this!
+    name          = '???'  # Need to define this!
     need_stack    = False
 
     def __init__(self, proc, name=None):
@@ -58,7 +58,7 @@ class SubcommandMgr(Mbase_cmd.DebuggerCommand):
         # Initialization
         cmd_instances     = []
         module_dir        = name + '_subcmd'
-        class_prefix      = string.capitalize(name) # e.g. Info, Set, or Show
+        class_prefix      = string.capitalize(name)  # e.g. Info, Set, or Show
         mod               = import_relative(module_dir)
         eval_cmd_template = 'command_mod.%s(self)'
         srcdir            = get_srcdir()
@@ -78,7 +78,6 @@ class SubcommandMgr(Mbase_cmd.DebuggerCommand):
                 print("Error importing name %s module %s: %s" %
                       (import_name, module_name, sys.exc_info()[0]))
                 continue
-
 
             # Even though we tend not to do this, it is possible to
             # put more than one class into a module/file.  So look for
@@ -140,17 +139,17 @@ class SubcommandMgr(Mbase_cmd.DebuggerCommand):
             if doc:
                 self.proc.rst_msg(doc.rstrip('\n'))
             else:
-                self.proc.intf[-1].errmsg('Sorry - author mess up. ' +
-                                          'No help registered for subcommand: ' +
-                                          subcmd_name + ', of command: ' +
-                                          self.name)
+                self.proc.intf[-1] \
+                  .errmsg('Sorry - author mess up. No help registered for '
+                          'subcommand %s of command %s' %
+                          (subcmd_name, self.name))
                 pass
         else:
-            cmds = [cmd for cmd in self.cmds.list()
+            cmds = [c for c in self.cmds.list()
                     if re.match('^' + subcmd_name, cmd) ]
             if cmds == []:
-                self.errmsg("No %s subcommands found matching /^%s/. Try \"help\"." %
-                            (self.name, subcmd_name,))
+                self.errmsg("No %s subcommands found matching /^%s/. "
+                            "Try \"help\"." % (self.name, subcmd_name))
             else:
                 self.section("Subcommand(s) of \"%s\" matching /^%s/:" %
                          (self.name, subcmd_name,))
@@ -193,7 +192,7 @@ class SubcommandMgr(Mbase_cmd.DebuggerCommand):
             return subcmd.run(args[2:])
         else:
             return self.undefined_subcmd(self.name, subcmd_prefix)
-        return # Not reached
+        return  # Not reached
 
     def summary_help(self, subcmd_name, subcmd):
         self.msg_nocr('%s (%d) %-11s -- ' %

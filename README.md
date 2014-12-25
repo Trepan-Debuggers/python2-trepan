@@ -6,5 +6,5 @@ See this [wiki](https://code.google.com/p/pydbgr/w/list) for
 more information.
 
 Works with Python 2.6 and 2.7. It might also work with Python 2.5.
-See [this](https://code.google.com/p/python3-trepan/) for codee that
-works Python 3. Use *pydb* for Python 2.5 and earlier.
+See [this](https://code.google.com/p/python3-trepan/) for the same thing
+that works with Python 3. Use *pydb* for Python 2.5 and earlier.

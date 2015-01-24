@@ -1,3 +1,6 @@
+.. This file appears on the pypi view page. It is also a
+   duplicate copy of README.rst in the project itself and has to
+   be manually kept in sync.
 |Downloads| |Build Status| |Latest Version| |Supported Python versions|
 
 Overview

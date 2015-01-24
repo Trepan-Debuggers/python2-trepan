@@ -1,3 +1,11 @@
+trepan 0.4.1 2015-12-23 Late SW
+
+- Get computed_displaywidth from updated columnize. Should work on OSX
+- Sections get an underline when we syntax highlight is not in effect
+- Add README.rst for pypi
+- flake8 lint warning/error reduction
+
+
 trepan 0.4.0 2014-12-24 Ph. Mad.
 
 - Add fin and kill! aliases

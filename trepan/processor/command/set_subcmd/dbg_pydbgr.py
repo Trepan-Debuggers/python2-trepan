@@ -39,7 +39,6 @@ variable "debugger" contains the top-level debugger object.
             # something to inspect.
             frame = inspect.currentframe()
             # Also give access to the top-level debugger
-            debugger = self.debugger
             self.proc.stack, self.proc.curindex = \
                 Mcmdproc.get_stack(frame, None, self.proc)
             self.proc.curframe = self.proc.stack[self.proc.curindex][0]

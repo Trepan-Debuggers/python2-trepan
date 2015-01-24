@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009, 2013 Rocky Bernstein
+#   Copyright (C) 2009, 2013, 2015 Rocky Bernstein
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@ Mbase_subcmd = import_relative('base_subcmd', '..', 'trepan')
 class SetFlush(Mbase_subcmd.DebuggerSetBoolSubcommand):
     """Set flushing output after each write"""
     in_list    = True
-    min_abbrev = len('flu') # Need at least "set flu"
+    min_abbrev = len('flu')  # Need at least "set flu"
     pass
 
 if __name__ == '__main__':

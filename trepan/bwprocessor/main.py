@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2008-2010, 2013-2014 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008-2010, 2013-2015 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -271,9 +271,10 @@ class BWProcessor(Mprocessor.Processor):
                 part1 = ("Command '%s' is not available for execution "
                          "status:" % name)
                 Mmsg.errmsg(self,
-                            Mmisc.wrapped_lines(part1,
-                                                self.core.execution_status,
-                                                self.debugger.settings['width']))
+                            Mmisc.
+                            wrapped_lines(part1,
+                                            self.core.execution_status,
+                                            self.debugger.settings['width']))
                 return False
             pass
         if self.frame is None and cmd_obj.need_stack:
@@ -325,7 +326,7 @@ class BWProcessor(Mprocessor.Processor):
         cmd_hash = self.intf[-1].read_command()
 
         # FIXME: put this into a routine
-        if isinstancetype(cmd_hash, DictionaryType):
+        if isinstance(cmd_hash, types.DictType):
             Mmsg.errmsg(self, "invalid input, expecting a hash: %s" % cmd_hash,
                         {'set_name': True})
             self.intf[-1].msg(self.response)

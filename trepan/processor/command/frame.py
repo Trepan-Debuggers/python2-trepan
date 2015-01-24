@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2009, 2013-2014 Rocky Bernstein
+#  Copyright (C) 2009, 2013-2015 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@ from import_relative import import_relative
 # Our local modules
 Mbase_cmd = import_relative('base_cmd', '.', 'trepan')
 Mcmdproc  = import_relative('cmdproc',  '..', 'trepan')
+Mcomplete = import_relative('complete',  '...lib', 'trepan')
 Mthread   = import_relative('thred',    '...lib', 'trepan')
 Mframe    = import_relative('frame',    '..', 'trepan')
 
@@ -99,7 +100,6 @@ See also `up`, `down`, `backtrace`, and `info thread`.
         self.proc.frame_thread_name = thread_name
         return
 
-
     def one_arg_run(self, position_str):
         '''The simple case: thread frame switching has been done or is
         not needed and we have an explicit position number as a string'''
@@ -120,9 +120,10 @@ See also `up`, `down`, `backtrace`, and `info thread`.
                                                frame_num, position_str))
             return False
         else:
-            Mframe.adjust_frame(self.proc, 'frame', pos=frame_num, absolute_pos=True)
+            Mframe.adjust_frame(self.proc, 'frame', pos=frame_num,
+                                absolute_pos=True)
             return True
-        return # Not reached
+        return  # Not reached
 
     def get_from_thread_name_or_id(self, name_or_id, report_error=True):
         '''See if *name_or_id* is either a thread name or a thread id.
@@ -198,6 +199,7 @@ if __name__ == '__main__':
     cp.curframe = inspect.currentframe()
     cp.stack, cp.curindex = Mcmdproc.get_stack(cp.curframe, None, None,
                                                cp)
+
     def showit(cmd):
         print('=' * 20)
         cmd.run(['frame'])

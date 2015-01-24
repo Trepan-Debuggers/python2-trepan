@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2009, 2013-2014 Rocky Bernstein
+#  Copyright (C) 2009, 2013-2015 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -51,7 +51,6 @@ program."""
         if len(args) <= 1:
             levels = 1
         else:
-            max_levels = len(self.proc.stack)
             levels = self.proc.get_int(args[1], default=1, cmdname='finish')
             if levels is None: return False
             pass
@@ -59,9 +58,10 @@ program."""
         # print "+++ %d" % levels
         self.core.step_events      = ['return']
         self.core.stop_on_finish   = True
-        self.core.stop_level       = Mstack.count_frames(self.proc.frame)-levels
+        self.core.stop_level       = \
+          Mstack.count_frames(self.proc.frame)-levels
         self.core.last_frame       = self.proc.frame
-        self.proc.continue_running = True # Break out of command read loop
+        self.proc.continue_running = True   # Break out of command read loop
         return True
     pass
 
@@ -70,6 +70,7 @@ if __name__ == '__main__':
     d = MockDebugger()
     cmd = FinishCommand(d.core.processor)
     # Need to have a subroutine to get at least one frame f_back.
+
     def demo_finish(cmd):
         for c in (['finish', '1'],
                   ['finish', 'wrong', 'number', 'of', 'args'],

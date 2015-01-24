@@ -24,7 +24,7 @@ class SetAnnotate(Mbase_subcmd.DebuggerSubcommand):
     """Set GNU Emacs 'annotation' level."""
 
     in_list    = True
-    min_abbrev = len('an') # Need at least "set an"
+    min_abbrev = len('an')  # Need at least "set an"
 
     def run(self, args):
         Mcmdfns.run_set_int(self, ' '.join(args),

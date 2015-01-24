@@ -23,5 +23,5 @@ Mbase_subcmd  = import_relative('base_subcmd', '..', 'trepan')
 
 class ShowAnnotate(Mbase_subcmd.DebuggerShowIntSubcommand):
     "Show GNU Emacs 'annotation' level"
-    min_abbrev = len('an') # Need at least "show an"
+    min_abbrev = len('an')  # Need at least "show an"
     pass

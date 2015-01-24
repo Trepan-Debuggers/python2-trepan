@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2013 Rocky Bernstein <rocky@gnu.org>
+# Copyright (C) 2013, 2015 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@ Mbase_cmd  = import_relative('base_cmd', top_name='trepan')
 Mdebugger  = import_relative('debugger', '...', 'trepan')
 
 class MacroCommand(Mbase_cmd.DebuggerCommand):
-  """**macro** *macro-name* *lambda-object*
+    """**macro** *macro-name* *lambda-object*
 
 Define *macro-name* as a debugger macro. Debugger macros get a list of
 arguments which you supply without parenthesis or commas. See below
@@ -75,46 +75,47 @@ rather than `fin+(3,2)` or `fin+ 3, 2`.
 See also `alias` and `info macro`.
   """
 
-  category   = 'support'
-  min_args   = 2  # Need at least this many: macro_name
-  max_args   = None
-  name       = os.path.basename(__file__).split('.')[0]
-  need_stack  = False
-  short_help  = 'Define a macro'
+    category   = 'support'
+    min_args   = 2  # Need at least this many: macro_name
+    max_args   = None
+    name       = os.path.basename(__file__).split('.')[0]
+    need_stack  = False
+    short_help  = 'Define a macro'
 
-  def run(self, args):
+    def run(self, args):
 
-    cmd_name = args[1]
-    cmd_argstr = self.proc.cmd_argstr[len(cmd_name):].lstrip()
-    proc_obj = None
-    try:
-      proc_obj = eval(cmd_argstr)
-    except (SyntaxError, NameError, ValueError):
-      self.errmsg("Expecting a Python lambda expression; got %s" % cmd_argstr)
-      pass
-    if proc_obj:
-      if type(proc_obj) == types.FunctionType:
-        self.proc.macros[cmd_name] = [proc_obj, cmd_argstr]
-        self.msg("Macro \"%s\" defined." % cmd_name)
-      else:
-        self.errmsg("Expecting a Python lambda expression; got: %s" %
-                    cmd_argstr)
-        pass
-      pass
-    return
-  pass
+        cmd_name = args[1]
+        cmd_argstr = self.proc.cmd_argstr[len(cmd_name):].lstrip()
+        proc_obj = None
+        try:
+            proc_obj = eval(cmd_argstr)
+        except (SyntaxError, NameError, ValueError):
+            self.errmsg("Expecting a Python lambda expression; got %s" %
+                        cmd_argstr)
+            pass
+        if proc_obj:
+            if isinstance(proc_obj, types.FunctionType):
+                self.proc.macros[cmd_name] = [proc_obj, cmd_argstr]
+                self.msg("Macro \"%s\" defined." % cmd_name)
+            else:
+                self.errmsg("Expecting a Python lambda expression; got: %s" %
+                            cmd_argstr)
+                pass
+            pass
+        return
+    pass
 
 # Demo it
 if __name__ == '__main__':
-  Mmock = import_relative('mock')
-  dbgr, cmd = Mmock.dbg_setup()
-  command = MacroCommand(cmd)
-  for cmdline in ["macro foo lambda a,y: x+y",
-                  "macro bad2 1+2"]:
-    args = cmdline.split()
-    cmd_argstr = cmdline[len(args[0]):].lstrip()
-    cmd.cmd_argstr = cmd_argstr
-    command.run(args)
+    Mmock = import_relative('mock')
+    dbgr, cmd = Mmock.dbg_setup()
+    command = MacroCommand(cmd)
+    for cmdline in ["macro foo lambda a,y: x+y",
+                    "macro bad2 1+2"]:
+        args = cmdline.split()
+        cmd_argstr = cmdline[len(args[0]):].lstrip()
+        cmd.cmd_argstr = cmd_argstr
+        command.run(args)
+        pass
+    print(cmd.macros)
     pass
-  print(cmd.macros)
-  pass

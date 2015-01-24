@@ -4,7 +4,8 @@
 *~
 .python-version
 /*.egg
+/.eggs
+/ChangeLog
 /build
 /dist
-/ChangeLog
 __pycache__

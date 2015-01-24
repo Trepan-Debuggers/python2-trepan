@@ -1,7 +1,7 @@
 import os, sys
 from import_relative import import_relative
 
-# FIXME: DRY with other demo_helper's 
+# FIXME: DRY with other demo_helper's
 
 def get_name():
     """Get the name caller's caller.

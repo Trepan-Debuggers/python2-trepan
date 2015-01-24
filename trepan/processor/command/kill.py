@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009, 2013-2014 Rocky Bernstein
+#   Copyright (C) 2009, 2013-2015 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -33,12 +33,12 @@ class KillCommand(Mbase_cmd.DebuggerCommand):
     short_help    = 'Send this process a POSIX signal ("9" for "kill -9")'
 
     def complete(self, prefix):
-        names = [sig for sig in signal.__dict__.keys() if sig.startswith('SIG')]
+        names = [sig for sig in signal.__dict__.keys() if
+                 sig.startswith('SIG')]
         nums  = [str(eval("signal."+name)) for name in names]
         lnames = [sig.lower() for sig in names]
         completions = lnames + nums + ['unconditionally']
         return Mcomplete.complete_token(completions, prefix.lower())
-
 
     def run(self, args):
         """**kill** [**unconditionally**]
@@ -56,10 +56,10 @@ we are in interactive mode, we'll prompt to make sure.
         signo =  signal.SIGKILL
         confirmed = False
         if len(args) <= 1:
-           if '!' != args[0][-1]:
-               confirmed = self.confirm('Really do a hard kill', False)
-           else:
-               confirmed = True
+            if '!' != args[0][-1]:
+                confirmed = self.confirm('Really do a hard kill', False)
+            else:
+                confirmed = True
         elif 'unconditionally'.startswith(args[1]):
             confirmed = True
         else:
@@ -77,7 +77,7 @@ we are in interactive mode, we'll prompt to make sure.
             # FIXME: check validity of signo.
             os.kill(os.getpid(), signo)
             pass
-        return False # Possibly not reached
+        return False  # Possibly not reached
     pass
 
 if __name__ == '__main__':

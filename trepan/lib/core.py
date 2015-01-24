@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2008-2010, 2013-2014 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008-2010, 2013-2015 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -34,9 +34,9 @@ breakpoint = import_relative('breakpoint')
 default    = import_relative('default')
 Mmisc      = import_relative('misc', '..', 'trepan')
 Mtrace     = import_relative('trace', '..processor', 'trepan')
-Mcmdproc   = import_relative('cmdproc', '..processor', 'trepan')
 Mstack     = import_relative('stack')
 Mclifns    = import_relative('clifns', '...trepan')
+import trepan.processor.cmdproc as Mcmdproc
 
 
 class DebuggerCore:

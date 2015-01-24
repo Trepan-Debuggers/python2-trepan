@@ -52,7 +52,7 @@ See also `pydocX`."""
         if inspect.isclass(obj):
             self.msg('Class constructor information:')
             obj = obj.__init__
-        elif type(obj) is types.InstanceType:
+        elif isinstance(type(obj), types.InstanceType):
             obj = obj.__call__
             pass
 

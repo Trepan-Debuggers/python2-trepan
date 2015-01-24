@@ -36,3 +36,4 @@ bar:
 foo:
 ----
   lambda: 'list'
+trepan2: sThat's all, folks...

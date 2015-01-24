@@ -1,16 +1,11 @@
-.. This file appears on the pypi view page. It is also a
-   duplicate copy of README.rst in the project itself and has to
-   be manually kept in sync.
 |Downloads| |Build Status| |Latest Version| |Supported Python versions|
-
-.. contents::
 
 Overview
 ========
 
 This is a gdb-like debugger for Python. It is a rewrite of pydb_ from the ground up.
 
-This code assumes Python in the version range of 2.4 up to and not including 3K. Use *pydb* for Python earlier than 2.4. Use python3-trepan_ for Python 3.2 and up.
+This code assumes Python in the version range of 2.4 up to and not including 3K. Use *pydb* for Python earlier than 2.4. Use trepan3_ for Python 3.2 and up.
 
 A command-line interface (CLI) is provided as well as an remote access interface over TCP/IP.
 
@@ -44,7 +39,7 @@ Sometimes you want small steps, and sometimes large stepping.
 This fundamental issue is handled in a couple ways:
 
 Step Granularity
-...............
+................
 
 There are now `step` _event_ and `next`  _event_ commands with aliases to `s+`, `s>` and so on. The plus-suffixed commands force a different line on a subsequent stop, the dash-suffixed commands don't.
 Suffixes `>`, `<`, and `!` specify `call`, `return` and `exception` events respectively. And without a suffix you get the default; this is set by the `set different` command.
@@ -136,7 +131,7 @@ Of course, I think *pydb* has a number of cool things that are not in
 the stock Python debugger, *pdb*. See this_ for those features.
 
 .. _pydb:  http://bashdb.sf.net/pydb
-.. _trepan: http://code.google.com/p/python3-trepan
+.. _trepan3: http://code.google.com/p/python3-trepan
 .. _this: http://bashdb.sourceforge.net/pydb/features.html
 .. _Tutorial: http://code.google.com/p/pydbgr/wiki/Tutorial
 .. |Downloads| image:: https://pypip.in/download/trepan/badge.svg

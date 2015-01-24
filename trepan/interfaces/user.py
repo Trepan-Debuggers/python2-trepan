@@ -106,7 +106,7 @@ class UserInterface(Minterface.DebuggerInterface):
         return self.msg("%s%s" %(prefix, msg))
 
     def finalize(self, last_wishes=None):
-        self.msg("trepan2: sThat's all, folks...")
+        self.msg("trepan2: That's all, folks...")
         # save history
         self.close()
         return

@@ -40,7 +40,7 @@ classifiers =  ['Development Status :: 4 - Beta',
 author             = "Rocky Bernstein"
 author_email       = "rocky@gnu.org"
 ftp_url            = None
-install_requires   = ['columnize >= 0.3.7',
+install_requires   = ['columnize >= 0.3.8',
                       'import_relative >= 0.2.3',
                       'pyficache >= 0.2.3',
                       'pygments',
@@ -94,4 +94,5 @@ zip_safe = False
 
 def read(*rnames):
     return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
-long_description   = ( read("README.md") + '\n\n' +  read("NEWS") )
+
+long_description   = ( read("README.rst") + '\n' )

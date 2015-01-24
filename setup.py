@@ -11,9 +11,9 @@ from file __pkginfo__.py.
 # Get the package information used in setup().
 from __pkginfo__ import \
     author,           author_email,       classifiers,                    \
-    install_requires, license,                                            \
+    install_requires, license,            long_description,               \
     modname,          namespace_packages, packages,         py_modules,   \
-    short_desc,       version,            web,              zip_safe
+    short_desc,       VERSION,            web,              zip_safe
 
 __import__('pkg_resources')
 from setuptools import setup
@@ -30,11 +30,13 @@ setup(
         ]},
        install_requires   = install_requires,
        license            = license,
+       long_description   = long_description,
        py_modules         = py_modules,
        name               = modname,
        namespace_packages = namespace_packages,
        packages           = packages,
        test_suite         = 'nose.collector',
        url                = web,
-       version            = version,
+       setup_requires     = ['nose>=1.0'],
+       version            = VERSION,
        zip_safe           = zip_safe)

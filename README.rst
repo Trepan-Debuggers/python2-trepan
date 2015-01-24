@@ -145,4 +145,4 @@ the stock Python debugger, *pdb*. See this_ for those features.
 .. |Latest Version| image:: https://pypip.in/version/columnize/badge.svg?text=version
    :target: https://pypi.python.org/pypi/trepan/
 .. |Supported Python versions| image:: https://pypip.in/py_versions/trepan/badge.svg
-   :target: https://pypi.python.org/pypi/ptrepan/
+   :target: https://pypi.python.org/pypi/trepan/

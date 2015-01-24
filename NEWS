@@ -1,3 +1,8 @@
+trepan 0.4.0 2014-12-24 Ph. Mad.
+
+- Add fin and kill! aliases
+- Fix bug in eval? elif
+
 trepan 0.3.9 2014-10-25
 
 - Add/fix --client option. code.google.com issue #17.

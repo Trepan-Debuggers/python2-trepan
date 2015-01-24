@@ -5,5 +5,6 @@ This is a rewrite of the Python debugger, [pydb](http://bashdb.sf.net/pydb), its
 See this [wiki](https://code.google.com/p/pydbgr/w/list) for
 more information.
 
-This code assumes Python in the version range of 2.5 up to and not
-including 3K. Use *pydb* for Python 2.5 and earlier.
+Works with Python 2.6 and 2.7. It might also work with Python 2.5.
+See [this](https://code.google.com/p/python3-trepan/) for the same thing
+that works with Python 3. Use *pydb* for Python 2.5 and earlier.

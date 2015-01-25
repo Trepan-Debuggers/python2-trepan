@@ -26,7 +26,7 @@ copyright   = """
 Copyright (C) 2008-2010, 2013-2015 Rocky Bernstein <rocky@gnu.org>.
 """
 
-classifiers =  ['Development Status :: 4 - Beta',
+classifiers =  ['Development Status :: 5 - Production/Stable',
                 'Environment :: Console',
                 'Intended Audience :: Developers',
                 'License :: OSI Approved :: GNU General Public License (GPL)',
@@ -42,7 +42,7 @@ author_email       = "rocky@gnu.org"
 ftp_url            = None
 install_requires   = ['columnize >= 0.3.8',
                       'import_relative >= 0.2.3',
-                      'pyficache >= 0.2.3',
+                      'pyficache >= 0.2.4',
                       'pygments',
                       'tracer >= 0.3.2']
 license            = 'GPL'

@@ -164,22 +164,17 @@ def process_options(debugger_name, pkg_version, sys_argv, option_list=None):
     # Handle debugger startup command files: --nx (-n) and --command.
     dbg_initfiles = []
     if not opts.noexecute:
-        # Read debugger startup file(s), e.g. $HOME/.trepan2rc and ./.trepan2rc
-        startup_file = ".%s2rc" % debugger_name
-        # expanded_startup_file = Mclifns.path_expanduser_abs(startup_file)
-        if 'HOME' in os.environ:
-            startup_home_file = os.path.join(os.environ['HOME'], startup_file)
-            expanded_startup_home = \
-              Mclifns.path_expanduser_abs(startup_home_file)
+        # Read debugger startup file(s), e.g. $HOME/.trepan2rc and ~/.trepan2rc
+        startup_file = ".%src" % debugger_name
+        if Mfile.readable(os.path.join('.' , startup_file)):
+            dbg_initfiles.append(startup_home_file)
+        else:
+            startup_home_file = os.path.join(os.environ.get('HOME', '~'), startup_file)
+            expanded_startup_home = Mclifns.path_expanduser_abs(startup_home_file)
             if Mfile.readable(expanded_startup_home):
                 dbg_initfiles.append(startup_home_file)
                 pass
             pass
-        #         if Mfile.readable(expanded_startup_file) and \
-        #                 expanded_startup_file != expanded_startup_home:
-        #             dbg_initfiles.append(debugger_startup)
-        #             pass
-        pass
 
     # As per gdb, first we execute user initialization files and then
     # we execute any file specified via --command.

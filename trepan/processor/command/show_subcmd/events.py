@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009 Rocky Bernstein
+#   Copyright (C) 2009, 2015 Rocky Bernstein
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -16,6 +16,7 @@
 #    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 #    02110-1301 USA.
 
+import columnize
 from import_relative import *
 # Our local modules
 
@@ -24,11 +25,27 @@ Mcmdfns      = import_relative('cmdfns', '...', 'trepan')
 
 
 class ShowEvents(Mbase_subcmd.DebuggerSubcommand):
-    '''Show trace events we may stop on.'''
-    min_abbrev = 2
-    run_cmd    = False
+    """**show events**
 
-    run = Mcmdfns.run_show_val
+The the kinds of event the debugger will stop on.
+
+See also:
+---------
+
+`set events`. `help step` lists of event names.
+"""
+    min_abbrev = 2
+
+    def run(self, args):
+        events = list(self.debugger.settings['printset'])
+        if events != []:
+            events.sort()
+            self.section('Trace events we may stop on:')
+            self.msg(columnize.columnize(events, lineprefix='    '))
+        else:
+            msg('No events trapped.')
+            return
+        return
     pass
 
 if __name__ == '__main__':

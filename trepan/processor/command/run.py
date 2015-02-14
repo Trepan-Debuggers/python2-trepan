@@ -21,7 +21,7 @@ Mbase_cmd  = import_relative('base_cmd', top_name='trepan')
 Mexcept    = import_relative('exception', '...')  # No "trepan" to get name right
 
 class RunCommand(Mbase_cmd.DebuggerCommand):
-    """run
+    """**run**
 
 Soft restart debugger and program via a *DebuggerRestart*
 exception."""

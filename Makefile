@@ -11,13 +11,16 @@ RM      ?= rm
 LINT    = flake8
 
 #EXTRA_DIST=ipython/ipy_trepan.py trepan
-PHONY=check clean dist distclean test test-unit test-functional rmChangeLog clean_pyc
+PHONY=check clean dist distclean test test-unit test-functional rmChangeLog clean_pyc nosetests
 
 #: Default target - same as "check"
 all: check
 
 #: Same as "check"
 test: check
+
+#: Same as "check"
+nosetests: check
 
 #: Run all tests: unit, functional and integration
 check-short: test-unit-short test-functional-short test-integration-short

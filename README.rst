@@ -95,16 +95,14 @@ have embedded blanks.)
 Egg and PIP Installable
 -----------------------
 
-To use *pip*, you need to give the `--egg` option. Or you can use `easy_install`:
-
-    pip install --egg trepan
+    pip install trepan
 
 or:
 
    easy_install trepan
 
 
-See also `How To Install https://code.google.com/p/pydbgr/wiki/HowToInstall`
+See also `How To Install https://code.google.com/p/pydbgr/wiki/HowToInstall` for installing from git.
 
 Command Completion
 ------------------

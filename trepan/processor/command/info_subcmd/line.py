@@ -15,12 +15,10 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import inspect, os, re
 
-from import_relative import import_relative
 # Our local modules
-Mbase_subcmd  = import_relative('base_subcmd', '..')
-Mclifns       = import_relative('clifns', '.....trepan')
-Mmisc         = import_relative('misc', '.....trepan')
-Mfile         = import_relative('lib.file', '.....trepan')
+from trepan.processor.command import base_subcmd as Mbase_subcmd
+from trepan import clifns as Mclifns, misc as Mmisc
+
 
 def find_function(funcname, filename):
     cre = re.compile(r'def\s+%s\s*[(]' % re.escape(funcname))
@@ -120,9 +118,8 @@ class InfoLine(Mbase_subcmd.DebuggerSubcommand):
     pass
 
 if __name__ == '__main__':
-    mock = import_relative('mock', '..')
-    Minfo = import_relative('info', '..')
-    Mdebugger = import_relative('debugger', '....')
+    from trepan.processor.command import mock, info as Minfo
+    from trepan import debugger as Mdebugger
     d = Mdebugger.Debugger()
     d, cp = mock.dbg_setup(d)
     i = Minfo.InfoCommand(cp)

@@ -24,32 +24,26 @@ if package not in sys.modules:
     pass
 
 # Our local modules
-from import_relative import import_relative, get_srcdir
-try:
-    import trepan.interfaces
-    import trepan.inout
-    import trepan.processor.command  # NOQA
-except:
-    pass
-Minterface = import_relative('interface', '.',   package)
-Mapi       = import_relative('api',       '.',   package)
-Mclient    = import_relative('client',    '.',   package)
-Mclifns    = import_relative('clifns',    '.',   package)
-Mdebugger  = import_relative('debugger',  '.',   package)
-Mexcept    = import_relative('exception', '..trepan')
-Moptions   = import_relative('options',   '.',   package)
-Mserver    = import_relative('server', '.interfaces', package)
-Mfile      = import_relative('file',   '.lib',   package)
-Mmisc      = import_relative('misc',   '.',      package)
+import trepan.interfaces
+import trepan.inout
+import trepan.processor.command  # NOQA
+
+from trepan import interface as Minterface
+from trepan import api as Mapi
+from trepan import client as Mclient
+from trepan import clifns as Mclifns
+from trepan import debugger as Mdebugger
+from trepan import exception as Mexcept
+from trepan import options as Moptions
+from trepan.interfaces import server as Mserver
+from trepan.lib import file as Mfile
+from trepan import misc as Mmisc
 
 # The name of the debugger we are currently going by.
 __title__ = package + '2'
 
 # VERSION.py sets variable VERSION.
-VERSION='??'
-exec(compile(open(os.path.join(get_srcdir(), 'VERSION.py')).read(),
-             os.path.join(get_srcdir(), 'VERSION.py'), 'exec'))
-__version__ = VERSION
+from trepan.VERSION import VERSION as __version__
 
 
 def main(dbg=None, sys_argv=list(sys.argv)):

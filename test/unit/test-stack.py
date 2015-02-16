@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 'Unit test for trepan.frame'
 import inspect, sys, unittest
-from import_relative import import_relative
 
-Mstack = import_relative('lib.stack', '...trepan')
+from trepan.lib import stack as Mstack
+
 
 class TestStack(unittest.TestCase):
 

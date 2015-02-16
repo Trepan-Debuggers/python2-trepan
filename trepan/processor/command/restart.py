@@ -14,14 +14,11 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import atexit, os
-from import_relative import import_relative
 
 # Our local modules
-Mdebugger  = import_relative('debugger', '...', 'trepan')
-Mbase_cmd  = import_relative('base_cmd', top_name='trepan')
-Mcomcodes  = import_relative('comcodes', '...interfaces', 'trepan')
-debugger   = import_relative('debugger', '...')
-Mmisc      = import_relative('misc', '...', 'trepan')
+from trepan.processor.command import base_cmd as Mbase_cmd
+from trepan import misc as Mmisc
+
 
 class RestartCommand(Mbase_cmd.DebuggerCommand):
     """**restart**
@@ -59,7 +56,7 @@ and new copy of the debugger is used."""
     pass
 
 if __name__ == '__main__':
-    mock = import_relative('mock')
+    from trepan.processor.command import mock
     d, cp = mock.dbg_setup()
     command = RestartCommand(cp)
     command.run([])

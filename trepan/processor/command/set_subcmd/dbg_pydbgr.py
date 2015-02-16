@@ -15,11 +15,11 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import inspect
-from import_relative import import_relative
+
 # Our local modules
-Mbase_subcmd  = import_relative('base_subcmd', '..', 'trepan')
-Mcmdfns       = import_relative('cmdfns', '...', 'trepan')
-Mcmdproc      = import_relative('cmdproc', '...', 'trepan')
+from trepan.processor.command import base_subcmd as Mbase_subcmd
+from trepan.processor import cmdfns as Mcmdfns, cmdproc as Mcmdproc
+
 
 class SetCmdDbgPydb(Mbase_subcmd.DebuggerSetBoolSubcommand):
     """Set the ability to debug the debugger.

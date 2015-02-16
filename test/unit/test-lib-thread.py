@@ -1,9 +1,8 @@
 #!/usr/bin/env python
 'Unit test for trepan.lib.thred'
 import sys, thread, threading, unittest
-from import_relative import import_relative
 
-Mthread = import_relative('lib.thred', '...trepan')
+from trepan.lib import thred as Mthread
 
 
 class BgThread(threading.Thread):

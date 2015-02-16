@@ -15,12 +15,11 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
-from import_relative import import_relative
 
 # Our local modules
-base_cmd   = import_relative('base_cmd', top_name='trepan')
-Mcmdfns    = import_relative('cmdfns', '..', 'trepan')
-Mstack     = import_relative('stack',  '...lib', 'trepan')
+from trepan.processor.command import base_cmd
+from trepan.processor import cmdfns as Mcmdfns
+
 
 class NextCommand(base_cmd.DebuggerCommand):
 

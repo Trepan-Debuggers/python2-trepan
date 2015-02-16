@@ -1,10 +1,10 @@
 import difflib, os, re, sys, time
-from import_relative import get_srcdir
+
+srcdir = os.path.abspath(os.path.dirname(__file__))
 
 
 def run_debugger(testname, python_file, dbgr_opts='', args='',
                  outfile=None):
-    srcdir    = get_srcdir()
     datadir   = os.path.join(srcdir, '..', 'data')
     progdir   = os.path.join(srcdir, '..', 'example')
     dbgrdir   = os.path.join(srcdir, '..', '..', 'trepan')
@@ -13,8 +13,8 @@ def run_debugger(testname, python_file, dbgr_opts='', args='',
 
     rightfile = os.path.join(datadir, "%s.right" % testname)
 
-    sys.path.insert(0, os.path.join(get_srcdir(), '../..'))
-    os.environ['PYTHONPATH']=os.pathsep.join(sys.path)
+    sys.path.insert(0, os.path.join(srcdir, '..', '..'))
+    os.environ['PYTHONPATH'] = os.pathsep.join(sys.path)
     cmdfile     = os.path.join(datadir, "%s.cmd"   % testname)
     outfile     = os.path.join(srcdir, "%s.out" % testname)
     if python_file:

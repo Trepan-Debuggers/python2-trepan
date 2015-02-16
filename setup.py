@@ -13,7 +13,7 @@ from __pkginfo__ import \
     author,           author_email,       classifiers,                    \
     install_requires, license,            long_description,               \
     modname,          namespace_packages, packages,         py_modules,   \
-    short_desc,       VERSION,            web,              zip_safe
+    short_desc,       version,            web,              zip_safe
 
 __import__('pkg_resources')
 from setuptools import setup
@@ -26,7 +26,6 @@ setup(
        entry_points = {
         'console_scripts': [
             'trepan2  = trepan.cli:main',
-            'trepan2-client = trepan.client:main',
         ]},
        install_requires   = install_requires,
        license            = license,
@@ -38,5 +37,5 @@ setup(
        test_suite         = 'nose.collector',
        url                = web,
        setup_requires     = ['nose>=1.0'],
-       version            = VERSION,
+       version            = version,
        zip_safe           = zip_safe)

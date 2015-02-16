@@ -41,14 +41,13 @@ author             = "Rocky Bernstein"
 author_email       = "rocky@gnu.org"
 ftp_url            = None
 install_requires   = ['columnize >= 0.3.8',
-                      'import_relative >= 0.2.3',
                       'pyficache >= 0.2.4',
                       'pygments',
                       'tracer >= 0.3.2']
 license            = 'GPL'
 mailing_list       = 'python-debugger@googlegroups.com'
 modname            = 'trepan'
-namespace_packages = [
+packages = [
     'trepan',
     'trepan.bwprocessor',
     'trepan.interfaces',
@@ -61,7 +60,10 @@ namespace_packages = [
     'trepan.processor.command.set_subcmd',
     'trepan.processor.command.show_subcmd'
 ]
-packages           = namespace_packages
+namespace_packages = [
+    'trepan',
+    'trepan.processor',
+]
 py_modules         = None
 short_desc         = 'Modular Python Debugger'
 
@@ -70,22 +72,13 @@ import os.path, sys
 
 
 def get_srcdir():
-    """Get directory of caller as an absolute file name. *level* is
-    the number of frames to look back.  So for import file which is
-    really doing work on behalf of *its* caller, we go back 2.
-
-    NB: f_code.co_filenames and thus this code kind of broken for
-    zip'ed eggs circa Jan 2009
-    """
-
-    caller = sys._getframe(1)
-    filename = caller.f_code.co_filename
-    filename = os.path.normcase(os.path.dirname(os.path.abspath(filename)))
+    filename = os.path.normcase(os.path.dirname(os.path.abspath(__file__)))
     return os.path.realpath(filename)
 
 # VERSION.py sets variable VERSION.
-execfile(os.path.join(get_srcdir(), 'trepan', 'VERSION.py'))
-version            = VERSION  # NOQA
+ns = {}
+exec(open(os.path.join(get_srcdir(), 'trepan', 'VERSION.py')).read(), ns)
+version            = ns['VERSION']
 web                = 'http://github.com/rocky/python2-trepan/'
 
 # tracebacks in zip files are funky and not debuggable

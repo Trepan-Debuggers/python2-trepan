@@ -17,8 +17,7 @@
 
 import types, sys, StringIO
 
-from import_relative import import_relative
-Mbase  = import_relative('base', top_name='trepan')
+from trepan.inout import base as Mbase
 
 
 class DebuggerUserOutput(Mbase.DebuggerOutputBase):

@@ -16,14 +16,11 @@
 #    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 #    02110-1301 USA.
 
-from import_relative import *
 # Our local modules
+from trepan.processor.command import base_subcmd as Mbase_subcmd
 
-Mbase_subcmd  = import_relative('base_subcmd', '..')
 
 class ShowCmdtrace(Mbase_subcmd.DebuggerShowBoolSubcommand):
     "Show debugger commands before running them"
     min_abbrev = 4    # Need at least "show cmdt"
     pass
-
-

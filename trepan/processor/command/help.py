@@ -17,15 +17,13 @@
 #    02110-1301 USA.
 import os, re
 
+
 # Our local modules
-from import_relative import import_relative
+from trepan.processor.command import base_cmd as Mbase_cmd
+from trepan.processor import cmdproc as Mcmdproc
+from trepan.lib import complete as Mcomplete
+from trepan import misc as Mmisc
 
-import_relative('processor', '....trepan')
-
-Mbase_cmd  = import_relative('base_cmd', top_name='trepan')
-Mcmdproc   = import_relative('cmdproc', '..', 'trepan')
-Mcomplete  = import_relative('complete', '...lib')
-Mmisc      = import_relative('misc',    '...', 'trepan')
 
 categories = {
     'breakpoints' : 'Making the program stop at certain points',
@@ -173,7 +171,7 @@ Type `help` followed by command name for full documentation.
     pass
 
 if __name__ == '__main__':
-    mock = import_relative('mock')
+    from trepan.processor.command import mock
     d, cp = mock.dbg_setup()
     command = HelpCommand(cp)
     print('-' * 20)

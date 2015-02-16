@@ -14,10 +14,8 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from import_relative import *
 # Our local modules
-
-Mbase_subcmd  = import_relative('base_subcmd', os.path.pardir)
+from trepan.processor.command import base_subcmd as Mbase_subcmd
 
 
 class ShowConfirm(Mbase_subcmd.DebuggerShowBoolSubcommand):
@@ -26,6 +24,6 @@ class ShowConfirm(Mbase_subcmd.DebuggerShowBoolSubcommand):
     pass
 
 if __name__ == '__main__':
-    Mhelper = import_relative('__demo_helper__', '.', 'trepan')
+    from trepan.processor.command.show_subcmd import __demo_helper__ as Mhelper
     Mhelper.demo_run(ShowConfirm)
     pass

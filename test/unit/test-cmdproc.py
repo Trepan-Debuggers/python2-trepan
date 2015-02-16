@@ -1,15 +1,9 @@
 #!/usr/bin/env python
 'Unit test for trepan.processor.cmdproc'
 import inspect, os, sys, types, unittest
-from import_relative import import_relative
 
-import trepan.lib
-import trepan.processor.command
-import trepan.inout
-import trepan.interfaces
-
-Mcmdproc = import_relative('processor.cmdproc', '...trepan')
-Mmock    = import_relative('processor.command.mock', '...trepan')
+from trepan.processor import cmdproc as Mcmdproc
+from trepan.processor.command import mock as Mmock
 
 
 class TestCmdProc(unittest.TestCase):

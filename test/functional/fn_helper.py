@@ -1,10 +1,10 @@
 import os, sys
-from import_relative import import_relative, get_srcdir
 
-sys.path.insert(0, os.path.join(get_srcdir(), '../..'))
+srcdir = os.path.abspath(os.path.dirname(__file__))
+sys.path.insert(0, os.path.join(srcdir, '..', '..'))
 
-Mdebugger    = import_relative('debugger', '...trepan')
-Mstringarray = import_relative('inout.stringarray', '...trepan')
+from trepan import debugger as Mdebugger
+from trepan.inout import stringarray as Mstringarray
 
 
 def strarray_setup(debugger_cmds):

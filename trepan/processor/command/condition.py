@@ -15,12 +15,8 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
-from import_relative import import_relative
 
-Mbase_cmd  = import_relative('base_cmd', top_name='trepan')
-Mcmdfns    = import_relative('cmdfns', '..', 'trepan')
-Mfile      = import_relative('file', '...lib', 'trepan')
-Mmisc      = import_relative('misc', '...', 'trepan')
+from trepan.processor.command import base_cmd as Mbase_cmd
 
 
 class ConditionCommand(Mbase_cmd.DebuggerCommand):
@@ -61,8 +57,8 @@ made unconditional.
 
 if __name__ == '__main__':
     import sys
-    Mdebugger = import_relative('debugger', '...')
-    Mbreak    = import_relative('break', '.')
+    from trepan import debugger as Mdebugger
+    Mbreak = __import__('trepan.processor.command.break', None, None, ['*'])
     d = Mdebugger.Debugger()
     brkcmd = Mbreak.BreakCommand(d.core.processor)
     command = ConditionCommand(d.core.processor)

@@ -11,11 +11,10 @@
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
 import os
-from import_relative import import_relative
 
-# Our local modules
-Mupcmd   = import_relative('up', '.', 'trepan')
-Mframe    = import_relative('frame',   '..', 'trepan')
+from trepan.processor import frame as Mframe
+from trepan.processor.command import up as Mupcmd
+
 
 class DownCommand(Mupcmd.UpCommand):
 
@@ -36,8 +35,8 @@ See also `up` and `frame`."""
 
 if __name__ == '__main__':
     import inspect
-    Mcmdproc     = import_relative('cmdproc', '..')
-    Mdebugger    = import_relative('debugger', '...')
+    from trepan.processor import cmdproc as Mcmdproc
+    from trepan import debugger as Mdebugger
     d            = Mdebugger.Debugger()
     cp           = d.core.processor
     command = DownCommand(cp)

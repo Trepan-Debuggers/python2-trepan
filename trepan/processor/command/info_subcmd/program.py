@@ -14,10 +14,10 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from import_relative import import_relative
 # Our local modules
-Mbase_subcmd  = import_relative('base_subcmd', '..')
-Mmisc         = import_relative('misc', '....', 'trepan')
+from trepan.processor.command import base_subcmd as Mbase_subcmd
+from trepan import misc as Mmisc
+
 
 class InfoProgram(Mbase_subcmd.DebuggerSubcommand):
     'Execution status of the program.'
@@ -78,9 +78,7 @@ class InfoProgram(Mbase_subcmd.DebuggerSubcommand):
     pass
 
 if __name__ == '__main__':
-    mock = import_relative('mock', '..')
-    Minfo = import_relative('info', '..')
-    Mdebugger = import_relative('debugger', '....')
+    from trepan.processor.command import mock, info as Minfo
     d, cp = mock.dbg_setup()
     i = Minfo.InfoCommand(cp)
     sub = InfoProgram(i)

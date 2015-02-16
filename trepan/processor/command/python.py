@@ -16,11 +16,8 @@
 import code, os, sys
 
 # Our local modules
-from import_relative import import_relative
+from trepan.processor.command import base_cmd as Mbase_cmd
 
-Mbase_cmd  = import_relative('base_cmd', top_name='trepan')
-Mcmdfns    = import_relative('cmdfns', '..', 'trepan')
-Mmisc      = import_relative('misc',   '...', 'trepan')
 
 class PythonCommand(Mbase_cmd.DebuggerCommand):
     """**python** [**-d**]
@@ -165,7 +162,7 @@ def runcode(obj, code_obj):
 
 
 if __name__ == '__main__':
-    Mdebugger = import_relative('debugger', '...')
+    from trepan import debugger as Mdebugger
     d = Mdebugger.Debugger()
     command = PythonCommand(d.core.processor)
     command.proc.frame = sys._getframe()

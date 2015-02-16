@@ -17,11 +17,9 @@
 #    02110-1301 USA.
 
 import columnize
-from import_relative import *
-# Our local modules
 
-Mbase_subcmd = import_relative('base_subcmd', os.path.pardir, 'trepan')
-Mcmdfns      = import_relative('cmdfns', '...', 'trepan')
+# Our local modules
+from trepan.processor.command import base_subcmd as Mbase_subcmd
 
 
 class ShowEvents(Mbase_subcmd.DebuggerSubcommand):
@@ -49,9 +47,8 @@ See also:
     pass
 
 if __name__ == '__main__':
-    mock = import_relative('mock', '..')
-    Mshow = import_relative('show', '..')
-    Mdebugger = import_relative('debugger', '....')
+    from trepan.processor.command import mock, show as Mshow
+    from trepan import debugger as Mdebugger
     d = Mdebugger.Debugger()
     d, cp = mock.dbg_setup(d)
     i = Mshow.ShowCommand(cp)

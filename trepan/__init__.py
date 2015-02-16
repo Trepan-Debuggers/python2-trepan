@@ -17,8 +17,9 @@ Abstract
 A gdb-like debugger for Python 2.
 
 
-This is Python of 2.4 to 2.7.
-Use *trepan*: <http://code.google.com/p/trepan> for Python 3.2 to 3.3.
+This is Python of 2.6 to 2.7.
+Use *python3-trepan*: <http://code.google.com/p/python3-trepan> for Python
+3.2 to 3.4.
 
 A command-line interface (CLI) is provided.
 
@@ -172,6 +173,8 @@ keeping developers happy is a good thing.(TM)
 Copyright (C) 2008-2009, 2013-2014 Rocky Bernstein <rocky@gnu.org>
 """
 __docformat__ = 'restructuredtext'
+
 __import__('pkg_resources').declare_namespace(__name__)
-from misc import pyfiles
-__all__ = pyfiles() + ['lib', 'inout', 'processor', 'interfaces' ]
+
+from trepan.misc import pyfiles
+__all__ = pyfiles(__file__) + ['lib', 'inout', 'processor', 'interfaces']

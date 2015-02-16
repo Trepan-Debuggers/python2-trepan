@@ -16,10 +16,9 @@
 #    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 #    02110-1301 USA.
 
-from import_relative import *
 # Our local modules
+from trepan.processor.command import base_subcmd as Mbase_subcmd
 
-Mbase_subcmd  = import_relative('base_subcmd', '..')
 
 class ShowAutoEval(Mbase_subcmd.DebuggerShowBoolSubcommand):
     "Show Python evaluation of unrecognized debugger commands"
@@ -27,6 +26,6 @@ class ShowAutoEval(Mbase_subcmd.DebuggerShowBoolSubcommand):
     pass
 
 if __name__ == '__main__':
-    Mhelper = import_relative('__demo_helper__', '.', 'trepan')
+    from trepan.processor.command.show_subcmd import __demo_helper__ as Mhelper
     Mhelper.demo_run(ShowAutoEval)
     pass

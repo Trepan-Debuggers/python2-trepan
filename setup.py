@@ -26,7 +26,6 @@ setup(
        entry_points = {
         'console_scripts': [
             'trepan2  = trepan.cli:main',
-            'trepan2-client = trepan.client:main',
         ]},
        install_requires   = install_requires,
        license            = license,

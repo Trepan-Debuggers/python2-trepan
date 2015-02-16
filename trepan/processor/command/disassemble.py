@@ -23,8 +23,7 @@ from trepan.processor import cmdfns as Mcmdfns
 
 
 class DisassembleCommand(Mbase_cmd.DebuggerCommand):
-    """**disassemble** [*thing*] """ + \
-"""[[**+**|**-**]*start-line*|**.** [[**+**|**-**]*end-line*|**.**]]
+    """**disassemble** [*thing*] [[**+**|**-**]*start-line*|**.** [[**+**|**-**]*end-line*|**.**]]
 
 With no argument, disassemble the current frame.  With an integer
 start-line, the disassembly is narrowed to show lines starting

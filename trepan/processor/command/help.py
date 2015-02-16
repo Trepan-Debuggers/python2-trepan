@@ -99,6 +99,7 @@ See also `examine` and `whatis`.
                 if hasattr(instance, 'help'):
                     return instance.help(args)
                 else:
+                    print "+++%s" % cmd_name
                     doc = instance.__doc__ or instance.run.__doc__
                     doc = doc.rstrip('\n')
                     self.rst_msg(doc.rstrip("\n"))

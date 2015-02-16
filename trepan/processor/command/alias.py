@@ -1,4 +1,4 @@
-#  Copyright (C) 2013 Rocky Bernstein
+#  Copyright (C) 2013, 2015 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -22,18 +22,25 @@ class AliasCommand(Mbase_cmd.DebuggerCommand):
 
 Add alias *alias-name* for a debugger command *debugger-comand*.
 
-Add an alias when you want to use a command abbreviation for a command
-that would otherwise be ambigous. For example, by default we make `s`
-be an alias of `step` to force it to be used. Without the alias, `s`
-might be `step`, `show`, or `set` among others
+An alias is also useful when you want to use a command abbreviation
+for a command that would otherwise be ambigous. For example, by
+default we make `s` be an alias of `step` to force it to be
+used. Without the alias, `s` might be `step`, `show`, or `set` among
+others
 
-**Example:**
+Example:
+-------
 
     alias cat list   # "cat prog.py" is the same as "list prog.py"
     alias s   step   # "s" is now an alias for "step".
                      # The above example is done by default.
 
-See also `unalias` and `show alias`."""
+See also:
+---------
+
+`unalias` and `show alias`.
+
+    """
 
     category      = 'support'
     min_args      = 0

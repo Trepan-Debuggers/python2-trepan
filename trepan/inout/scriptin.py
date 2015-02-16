@@ -62,7 +62,8 @@ class ScriptInput(Mbase.DebuggerInputBase):
 # Demo
 if __name__=='__main__':
     import os
-    my_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'scriptin.py')
+    my_file = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                           'scriptin.py')
     inp = ScriptInput(my_file)
     line = inp.readline()
     print(line)

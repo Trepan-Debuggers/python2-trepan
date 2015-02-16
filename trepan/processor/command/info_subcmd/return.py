@@ -40,8 +40,8 @@ statement."""
             val = self.proc.event_arg
             Mpp.pp(val, self.settings['width'], self.msg_nocr, self.msg)
         else:
-            self.errmsg("Must be in a 'return' or 'exception' event rather than a %s event."
-                        % self.proc.event)
+            self.errmsg("Must be in a 'return' or 'exception' event "
+                        "rather than a %s event." % self.proc.event)
             pass
         return
 

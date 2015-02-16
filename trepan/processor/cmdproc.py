@@ -573,8 +573,10 @@ class CommandProcessor(Mprocessor.Processor):
             if not (self.core.execution_status in cmd_obj.execution_set):
                 part1 = ("Command '%s' is not available for execution status:"
                          % name)
-                self.errmsg(Mmisc.wrapped_lines(part1, self.core.execution_status,
-                                                self.debugger.settings['width']))
+                mess = Mmisc.wrapped_lines(part1,
+                                        self.core.execution_status,
+                                        self.debugger.settings['width'])
+                self.errmsg(mess)
                 return False
             pass
         if self.frame is None and cmd_obj.need_stack:
@@ -664,15 +666,17 @@ class CommandProcessor(Mprocessor.Processor):
                     macro_cmd_name = args[0]
                     if macro_cmd_name not in self.macros: break
                     try:
-                        current_command = self.macros[macro_cmd_name][0](*args[1:])
+                        current_command = \
+                          self.macros[macro_cmd_name][0](*args[1:])
                     except TypeError:
                         t, v = sys.exc_info()[:2]
-                        self.errmsg("Error expanding macro %s" % macro_cmd_name)
+                        self.errmsg("Error expanding macro %s" %
+                                    macro_cmd_name)
                         return False
                     if self.settings('debugmacro'):
                         print(current_command)
                         pass
-                    if type(current_command) == types.ListType:
+                    if isinstance(types.ListType, type(current_command)):
                         for x in current_command:
                             if bytes != type(x):
                                 self.errmsg(("macro %s should return a List " +
@@ -748,7 +752,7 @@ class CommandProcessor(Mprocessor.Processor):
         if self.event in ['exception', 'c_exception']:
             exc_type, exc_value, exc_traceback = self.event_arg
         else:
-            _, _, exc_traceback = (None, None, None,)
+            _, _, exc_traceback = (None, None, None,)  # NOQA
             pass
         if self.frame or exc_traceback:
             self.stack, self.curindex = \

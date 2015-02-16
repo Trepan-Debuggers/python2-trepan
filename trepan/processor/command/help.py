@@ -86,7 +86,8 @@ See also `examine` and `whatis`.
             cmd_name = args[1]
             if cmd_name == '*':
                 self.section("List of all debugger commands:")
-                self.msg_nocr(self.columnize_commands(list(self.proc.commands.keys())))
+                m = self.columnize_commands(list(self.proc.commands.keys()))
+                self.msg_nocr(m)
                 return
             elif cmd_name in list(categories.keys()):
                 self.show_category(cmd_name, args[2:])

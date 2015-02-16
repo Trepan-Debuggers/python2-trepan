@@ -29,7 +29,6 @@ from optparse import OptionParser
 from trepan.VERSION import VERSION as __version__
 
 
-
 def process_options(pkg_version, sys_argv, option_list=None):
     """Handle debugger options. Set `option_list' if you are writing
     another main program and want to extend the existing set of debugger

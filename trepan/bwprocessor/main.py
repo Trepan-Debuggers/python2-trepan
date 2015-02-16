@@ -377,7 +377,7 @@ class BWProcessor(Mprocessor.Processor):
         if self.event in ['exception', 'c_exception']:
             exc_type, exc_value, exc_traceback = self.event_arg
         else:
-            exc_type, _, exc_traceback = (None, None, None,)
+            _, _, exc_traceback = (None, None, None,)  # NOQA
             pass
         if self.frame or exc_traceback:
             self.stack, self.curindex = \

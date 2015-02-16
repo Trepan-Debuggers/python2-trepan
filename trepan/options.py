@@ -165,10 +165,12 @@ def process_options(debugger_name, pkg_version, sys_argv, option_list=None):
         # Read debugger startup file(s), e.g. $HOME/.trepan2rc and ~/.trepan2rc
         startup_file = ".%src" % debugger_name
         if Mfile.readable(os.path.join('.' , startup_file)):
-            dbg_initfiles.append(startup_home_file)
+            dbg_initfiles.append(startup_file)
         else:
-            startup_home_file = os.path.join(os.environ.get('HOME', '~'), startup_file)
-            expanded_startup_home = Mclifns.path_expanduser_abs(startup_home_file)
+            startup_home_file = os.path.join(os.environ.get('HOME', '~'),
+                                             startup_file)
+            expanded_startup_home = \
+              Mclifns.path_expanduser_abs(startup_home_file)
             if Mfile.readable(expanded_startup_home):
                 dbg_initfiles.append(startup_home_file)
                 pass

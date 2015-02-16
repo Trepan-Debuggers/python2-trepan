@@ -41,7 +41,7 @@ See also:
             self.section('Trace events we may stop on:')
             self.msg(columnize.columnize(events, lineprefix='    '))
         else:
-            msg('No events trapped.')
+            self.msg('No events trapped.')
             return
         return
     pass

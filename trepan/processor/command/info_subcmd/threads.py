@@ -39,7 +39,7 @@ terse listing, for each thread we give:
 
 To get the full stack trace for a specific thread pass in the thread name.
 """
-    min_abbrev = 2 # Min is "info th"
+    min_abbrev = 2  # Min is "info th"
     need_stack = True
     short_help = "List thread info"
 

@@ -27,7 +27,8 @@ class SetAnnotate(Mbase_subcmd.DebuggerSubcommand):
 
     def run(self, args):
         Mcmdfns.run_set_int(self, ' '.join(args),
-                            "The 'annotation' command requires an annotation level.",
+                            "The 'annotation' command requires an "
+                            "annotation level.",
                             0, 3)
         return
     pass

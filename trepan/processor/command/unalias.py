@@ -13,10 +13,10 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from import_relative import import_relative
 # Our local modules
-Mbase_cmd = import_relative('base_cmd', top_name='trepan')
-Mcomplete = import_relative('complete', '...lib', 'trepan')
+from trepan.processor.command import base_cmd as Mbase_cmd
+from trepan.lib import complete as Mcomplete
+
 
 class UnaliasCommand(Mbase_cmd.DebuggerCommand):
     """**unalias** *alias-name*
@@ -54,8 +54,7 @@ See also:
 
 if __name__ == '__main__':
     # Demo it.
-    cmdproc      = import_relative('cmdproc', '..')
-    debugger     = import_relative('debugger', '...')
+    from trepan import debugger
     d            = debugger.Debugger()
     cp           = d.core.processor
     command      = UnaliasCommand(cp)

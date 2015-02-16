@@ -14,10 +14,11 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import inspect, os, re, string, sys
-from import_relative import get_srcdir, import_relative
-Mbase_cmd  = import_relative('base_cmd')
-Msubcmd    = import_relative('subcmd', os.path.pardir)
-Mcomplete  = import_relative('complete', '...lib', 'trepan')
+
+from trepan.processor.command import base_cmd as Mbase_cmd
+from trepan.processor import subcmd as Msubcmd
+from trepan.lib import complete as Mcomplete
+
 
 class SubcommandMgr(Mbase_cmd.DebuggerCommand):
 
@@ -57,23 +58,17 @@ class SubcommandMgr(Mbase_cmd.DebuggerCommand):
 
         # Initialization
         cmd_instances     = []
-        module_dir        = name + '_subcmd'
         class_prefix      = string.capitalize(name)  # e.g. Info, Set, or Show
-        mod               = import_relative(module_dir)
-        eval_cmd_template = 'command_mod.%s(self)'
-        srcdir            = get_srcdir()
-        sys.path.insert(0, srcdir)
-        sub_srcdir = os.path.join(srcdir, module_dir)
-        sys.path.insert(0, sub_srcdir)
+        module_dir        = 'trepan.processor.command.%s_subcmd' % name
+        mod               = __import__(module_dir, None, None, ['*'])
 
         # Import, instantiate, and add classes for each of the
         # modules found in module_dir imported above.
         for module_name in mod.__modules__:
             import_name = module_dir + '.' + module_name
 
-            command_mod = getattr(__import__(import_name), module_name)
             try:
-                command_mod = getattr(__import__(import_name), module_name)
+                command_mod = __import__(import_name, None, None, ['*'])
             except ImportError:
                 print("Error importing name %s module %s: %s" %
                       (import_name, module_name, sys.exc_info()[0]))
@@ -88,17 +83,14 @@ class SubcommandMgr(Mbase_cmd.DebuggerCommand):
                                classname.startswith(class_prefix)) ]
 
             for classname in classnames:
-                eval_cmd = eval_cmd_template % classname
                 try:
-                    instance = eval(eval_cmd)
+                    instance = getattr(command_mod, classname)(self)
                     self.cmds.add(instance)
                 except:
-                    print "Error eval'ing class %s" % classname
+                    print "Error loading class %s" % classname
                     pass
                 pass
             pass
-        sys.path.remove(srcdir)
-        sys.path.remove(sub_srcdir)
         return cmd_instances
 
     def help(self, args):

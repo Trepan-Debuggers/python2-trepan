@@ -1,7 +1,6 @@
-from import_relative import *
 # Our local modules
+from trepan.processor.command import base_subcmd as Mbase_subcmd
 
-Mbase_subcmd  = import_relative('base_subcmd', os.path.pardir)
 
 class ShowDbgTrepan(Mbase_subcmd.DebuggerShowBoolSubcommand):
     """Show debugging the debugger"""

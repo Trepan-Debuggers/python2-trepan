@@ -15,9 +15,10 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
-from import_relative import import_relative
+
 # Our local modules
-Mbase_subcmd  = import_relative('base_subcmd', os.path.pardir)
+from trepan.processor.command import base_subcmd as Mbase_subcmd
+
 
 class InfoBreak(Mbase_subcmd.DebuggerSubcommand):
     """Show breakpoints."""
@@ -70,8 +71,8 @@ class InfoBreak(Mbase_subcmd.DebuggerSubcommand):
     pass
 
 if __name__ == '__main__':
-    Mdebugger = import_relative('debugger', '....', 'trepan')
-    Minfo = import_relative('info', '..', 'trepan')
+    from trepan import debugger as Mdebugger
+    from trepan.processor.command import info as Minfo
     d = Mdebugger.Debugger()
     i = Minfo.InfoCommand(d.core.processor)
     sub = InfoBreak(i)

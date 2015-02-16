@@ -2,11 +2,10 @@
 #   Copyright (C) 2009, 2012-2013, 2015 Rocky Bernstein
 #
 
-from import_relative import import_relative
 # Our local modules
+from trepan.processor.command import base_subcmd as Mbase_subcmd
+from trepan.processor import cmdfns as Mcmdfns
 
-Mbase_subcmd = import_relative('base_subcmd', '..', 'trepan')
-Mcmdfns      = import_relative('cmdfns', '...', 'trepan')
 
 class SetWidth(Mbase_subcmd.DebuggerSubcommand):
     """
@@ -31,7 +30,7 @@ See also:
     pass
 
 if __name__ == '__main__':
-    Mhelper = import_relative('__demo_helper__', '.', 'trepan')
+    from trepan.processor.command.set_subcmd import __demo_helper__ as Mhelper
     sub = Mhelper.demo_run(SetWidth)
     d = sub.proc.debugger
     sub.run(['100'])

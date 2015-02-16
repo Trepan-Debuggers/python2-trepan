@@ -15,12 +15,12 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
-from import_relative import import_relative
+import signal
 
 # Our local modules
-Mbase_cmd = import_relative('base_cmd', top_name='trepan')
-Mcomplete = import_relative('complete', '...lib', 'trepan')
-import signal
+from trepan.processor.command import base_cmd as Mbase_cmd
+from trepan.lib import complete as Mcomplete
+
 
 class KillCommand(Mbase_cmd.DebuggerCommand):
 
@@ -91,7 +91,7 @@ if __name__ == '__main__':
         pass
     signal.signal(28, handle)
 
-    mock = import_relative('mock')
+    from trepan.processor.command import mock
     d, cp = mock.dbg_setup()
     command = KillCommand(cp)
     print(command.complete(''))

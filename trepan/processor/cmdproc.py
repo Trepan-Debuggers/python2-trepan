@@ -17,19 +17,18 @@ import inspect, linecache, os, sys, shlex, tempfile, traceback, types
 import pyficache
 from repr import Repr
 
-from import_relative import import_relative, get_srcdir
 from tracer import EVENT2SHORT
 
-Mprocessor = import_relative('vprocessor', '..', 'trepan')
-Mbytecode  = import_relative('bytecode', '..lib', 'trepan')
-Mexcept    = import_relative('exception', '...trepan', 'trepan')
-Mdisplay   = import_relative('display', '..lib', 'trepan')
-Mmisc      = import_relative('misc', '..', 'trepan')
-Mfile      = import_relative('file', '..lib', 'trepan')
-Mstack     = import_relative('stack', '..lib', 'trepan')
-Mthread    = import_relative('thred', '..lib', 'trepan')
-Mcomplete  = import_relative('complete', '..processor', 'trepan')
-import trepan
+from trepan import vprocessor as Mprocessor
+from trepan.lib import bytecode as Mbytecode
+from trepan import exception as Mexcept
+from trepan.lib import display as Mdisplay
+from trepan import misc as Mmisc
+from trepan.lib import file as Mfile
+from trepan.lib import stack as Mstack
+from trepan.lib import thred as Mthread
+from trepan.processor import complete as Mcomplete
+
 
 # arg_split culled from ipython's routine
 def arg_split(s, posix=False):
@@ -867,23 +866,17 @@ class CommandProcessor(Mprocessor.Processor):
 
     def populate_commands_easy_install(self, Mcommand):
         cmd_instances = []
-        eval_cmd_template = 'command_mod.%s(self)'
-        srcdir = get_srcdir()
-        sys.path.insert(0, srcdir)
 
         for mod_name in Mcommand.__modules__:
             if mod_name in ('info_sub', 'set_sub', 'show_sub',):
                 pass
-            import_name = "command." + mod_name
+            import_name = 'trepan.processor.command.' + mod_name
             if False:
-                # Sometimes we want this
-                command_mod = getattr(__import__(import_name), mod_name)
+                command_mod = __import__(import_name, None, None, ['*'])
             else:
                 # FIXME give more info like the above when desired
-                # For debugging:
-                command_mod = getattr(__import__(import_name), mod_name)
                 try:
-                    command_mod = getattr(__import__(import_name), mod_name)
+                    command_mod = __import__(import_name, None, None, ['*'])
                 except:
                     print('Error importing %s: %s' %
                           (mod_name, sys.exc_info()[0]))
@@ -895,13 +888,12 @@ class CommandProcessor(Mprocessor.Processor):
                            if ('DebuggerCommand' != tup[0] and
                                tup[0].endswith('Command')) ]
             for classname in classnames:
-                eval_cmd = eval_cmd_template % classname
                 if False:
-                    instance = eval(eval_cmd)
+                    instance = getattr(command_mod, classname)(self)
                     cmd_instances.append(instance)
                 else:
                     try:
-                        instance = eval(eval_cmd)
+                        instance = getattr(command_mod, classname)(self)
                         cmd_instances.append(instance)
                     except:
                         print('Error loading %s from %s: %s' %
@@ -910,7 +902,6 @@ class CommandProcessor(Mprocessor.Processor):
                     pass
                 pass
             pass
-        sys.path.remove(srcdir)
         return cmd_instances
 
     def _populate_cmd_lists(self):
@@ -949,7 +940,7 @@ class CommandProcessor(Mprocessor.Processor):
 
 # Demo it
 if __name__=='__main__':
-    Mmock = import_relative('command.mock')
+    from trepan.processor.command import mock as Mmock
     d = Mmock.MockDebugger()
     cmdproc = CommandProcessor(d.core)
     print('commands:')

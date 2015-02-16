@@ -24,8 +24,8 @@ NotImplementedMessage = "This method must be overriden in a subclass"
 
 import columnize
 from pygments.console import colorize
-from import_relative import import_relative
-Mformat = import_relative('lib.format',  '....trepan')
+
+from trepan.lib import format as Mformat
 
 __all__ = ['DebuggerCommand']
 
@@ -123,8 +123,7 @@ class DebuggerCommand:
         self.msg(message)
 
 if __name__ == '__main__':
-    from import_relative import import_relative
-    mock = import_relative('mock')
+    from trepan.processor.command import mock
     d, cp = mock.dbg_setup()
     dd = DebuggerCommand(cp)
     dd.msg("hi")

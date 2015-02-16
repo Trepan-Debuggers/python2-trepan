@@ -514,8 +514,7 @@ if __name__=='__main__':
         print('canonic_signame(%s): %s' % (i, canonic_signame(i)))
         pass
 
-    from import_relative import import_relative
-    Mdebugger = import_relative('debugger', '..', 'trepan')
+    from trepan import debugger as Mdebugger
     dbgr = Mdebugger.Debugger()
     h = SignalManager(dbgr)
     h.info_signal(["TRAP"])

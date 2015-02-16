@@ -16,10 +16,9 @@
 #    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 #    02110-1301 USA.
 
-from import_relative import *
-
 # Our local modules
-Mbase_subcmd  = import_relative('base_subcmd', '..', 'trepan')
+from trepan.processor.command import base_subcmd as Mbase_subcmd
+
 
 class ShowAnnotate(Mbase_subcmd.DebuggerShowIntSubcommand):
     "Show GNU Emacs 'annotation' level"

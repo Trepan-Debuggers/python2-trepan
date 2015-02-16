@@ -2,10 +2,9 @@
 'Unit test for trepan.lib.file'
 import unittest
 from pygments.lexers import RstLexer
-from import_relative import import_relative
 
-import_relative('lib', '...trepan')
-Mformat = import_relative('lib.format', '...trepan')
+from trepan.lib import format as Mformat
+
 
 class TestLibFile(unittest.TestCase):
 

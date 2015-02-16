@@ -15,8 +15,10 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import inspect, os
-from import_relative import import_relative
-Mbase_cmd  = import_relative('base_cmd', top_name='trepan')
+
+# Our local modules
+from trepan.processor.command import base_cmd as Mbase_cmd
+
 
 class EditCommand(Mbase_cmd.DebuggerCommand):
     """**edit** *position*
@@ -68,7 +70,7 @@ With no argument, edits file containing most recent line listed.
     pass
 
 if __name__ == '__main__':
-    Mdebugger = import_relative('debugger', '...')
+    from trepan import debugger as Mdebugger
     d = Mdebugger.Debugger()
     cmd = EditCommand(d.core.processor)
     for c in (['edit'],

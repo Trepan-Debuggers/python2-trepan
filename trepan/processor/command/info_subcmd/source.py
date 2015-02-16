@@ -14,10 +14,9 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from import_relative import import_relative
 # Our local modules
-import_relative('processor', '....')
-Mbase_subcmd  = import_relative('base_subcmd', '..')
+from trepan.processor.command import base_subcmd as Mbase_subcmd
+
 
 class InfoSource(Mbase_subcmd.DebuggerSubcommand):
     """Information about the current Python file."""
@@ -34,5 +33,3 @@ class InfoSource(Mbase_subcmd.DebuggerSubcommand):
         self.msg('Current Python file is %s' % self.core.filename(filename))
         return False
     pass
-
-

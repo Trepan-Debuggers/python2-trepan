@@ -15,12 +15,9 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # Our local modules
-from import_relative import import_relative
+from trepan.processor.command import base_subcmd as Mbase_subcmd
+from trepan.lib import pp as Mpp
 
-Mbase_subcmd = import_relative('base_subcmd', '..', top_name='trepan')
-Mfile        = import_relative('file', '....lib', 'trepan')
-Mmisc        = import_relative('misc', '....', 'trepan')
-Mpp          = import_relative('pp', '....lib', 'trepan')
 
 class InfoReturn(Mbase_subcmd.DebuggerSubcommand):
     """return value
@@ -49,8 +46,7 @@ statement."""
         return
 
 if __name__ == '__main__':
-    mock = import_relative('mock', '..')
-    Minfo = import_relative('info', '..')
+    from trepan.processor.command import mock, info as Minfo
     d, cp = mock.dbg_setup()
     i = Minfo.InfoCommand(cp)
     sub = InfoReturn(i)

@@ -17,14 +17,8 @@
 import atexit
 
 # Our local modules
-from import_relative import import_relative
-
-import trepan.inout
-import_relative('inout', '...trepan')
-Minterface = import_relative('interface', '..')
-Mscriptin  = import_relative('scriptin',  '..inout')
-Moutput    = import_relative('output',    '..inout')
-Mmisc      = import_relative('misc',      '..')
+from trepan import interface as Minterface, misc as Mmisc
+from trepan.inout import scriptin as Mscriptin, output as Moutput
 
 
 class ScriptInterface(Minterface.DebuggerInterface):

@@ -16,12 +16,10 @@
 #    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 #    02110-1301 USA.
 import inspect, os, sys, types
-from import_relative import import_relative
 
 # Our local modules
-Mbase_cmd = import_relative('base_cmd', top_name='trepan')
-Mstack    = import_relative('stack',  '...lib', 'trepan')
-Mcmdfns   = import_relative('cmdfns', '..', 'trepan')
+from trepan.processor.command import base_cmd as Mbase_cmd
+
 
 class WhatisCommand(Mbase_cmd.DebuggerCommand):
     '''**whatis** *arg*
@@ -78,8 +76,8 @@ Prints the type of the argument which can be a Python expression.'''
     pass
 
 if __name__ == '__main__':
-    Mcmdproc    = import_relative('cmdproc', '..')
-    Mmock       = import_relative('mock')
+    from trepan.processor import cmdproc as Mcmdproc
+    from trepan.processor.command import mock as Mmock
     d, cp       = Mmock.dbg_setup()
     command     = WhatisCommand(cp)
     cp.curframe = inspect.currentframe()

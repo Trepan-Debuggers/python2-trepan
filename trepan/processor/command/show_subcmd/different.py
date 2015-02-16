@@ -16,8 +16,8 @@
 #    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 #    02110-1301 USA.
 
-from import_relative import import_relative
-Mbase_subcmd  = import_relative('base_subcmd', '..', 'trepan')
+# Our local modules
+from trepan.processor.command import base_subcmd as Mbase_subcmd
 
 
 class ShowDifferent(Mbase_subcmd.DebuggerShowBoolSubcommand):

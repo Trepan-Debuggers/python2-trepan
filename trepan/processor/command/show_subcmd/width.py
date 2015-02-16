@@ -16,11 +16,11 @@
 #    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 #    02110-1301 USA.
 
-from import_relative import import_relative
 # Our local modules
+from trepan.processor.command import base_subcmd as Mbase_subcmd
+from trepan.processor import cmdfns as Mcmdfns
 
-Mbase_subcmd  = import_relative('base_subcmd', '..', 'trepan')
-Mcmdfns       = import_relative('cmdfns', '...', 'trepan')
+
 class ShowWidth(Mbase_subcmd.DebuggerSubcommand):
     "Show the number of characters the debugger thinks are in a line"
 

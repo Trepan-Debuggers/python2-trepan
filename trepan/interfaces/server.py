@@ -17,12 +17,9 @@
 import atexit
 
 # Our local modules
-from import_relative import import_relative
-Minterface  = import_relative('interface',  '..',   'trepan')
-Mtcpserver  = import_relative('tcpserver', '..inout', 'trepan')
-Mfifoserver = import_relative('fifoserver', '..inout', 'trepan')
-Mmisc       = import_relative('misc', '..', 'trepan')
-Mcomcodes   = import_relative('comcodes', '.', 'trepan')
+from trepan import interface as Minterface, misc as Mmisc
+from trepan.inout import tcpserver as Mtcpserver, fifoserver as Mfifoserver
+from trepan.interfaces import comcodes as Mcomcodes
 
 
 class ServerInterface(Minterface.DebuggerInterface):

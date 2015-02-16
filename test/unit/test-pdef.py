@@ -2,9 +2,8 @@
 'Unit test for trepan.processor.command.pdef'
 import unittest
 
-from import_relative import import_relative
-
-Mp = import_relative('processor.command.pdef', '...trepan')
+from trepan import debugger
+from trepan.processor.command import pdef as Mp
 
 
 class TestPDef(unittest.TestCase):
@@ -25,7 +24,6 @@ class TestPDef(unittest.TestCase):
 
     def test_pdef(self):
         import inspect
-        debugger    = import_relative('debugger', '...trepan', 'trepan')
         d           = debugger.Debugger()
         cp          = d.core.processor
         cp.curframe = inspect.currentframe()

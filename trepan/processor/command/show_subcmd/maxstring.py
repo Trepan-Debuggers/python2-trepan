@@ -16,10 +16,9 @@
 #    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 #    02110-1301 USA.
 
-from import_relative import *
 # Our local modules
+from trepan.processor.command import base_subcmd as Mbase_subcmd
 
-Mbase_subcmd  = import_relative('base_subcmd', '..', 'trepan')
 
 class ShowMaxString(Mbase_subcmd.DebuggerShowIntSubcommand):
     "Show maximum string length to use in string-oriented output"

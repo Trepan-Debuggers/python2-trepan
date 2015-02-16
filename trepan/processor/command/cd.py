@@ -14,8 +14,8 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import os, sys
-from import_relative import import_relative
-Mbase_cmd  = import_relative('base_cmd', top_name='trepan')
+
+from trepan.processor.command import base_cmd as Mbase_cmd
 
 
 class CDCommand(Mbase_cmd.DebuggerCommand):
@@ -44,7 +44,7 @@ being debugged. """
     pass
 
 if __name__ == '__main__':
-    Mdebugger = import_relative('debugger', '...')
+    from trepan import debugger as Mdebugger
     d = Mdebugger.Debugger()
     cmd = CDCommand(d.core.processor)
     for c in (['cd', 'wrong', 'number', 'of', 'args'],

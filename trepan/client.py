@@ -18,18 +18,16 @@
 #    02110-1301 USA.
 
 import os, sys, time
+
 # Our local modules
-from import_relative import import_relative, get_srcdir
-Mmisc = import_relative('misc', '.', 'trepan')
-Mclient   = import_relative('client', '.interfaces')
-Mcomcodes = import_relative('comcodes', '.interfaces')
+from trepan.interfaces import client as Mclient
+from trepan.interfaces import comcodes as Mcomcodes
 
 from optparse import OptionParser
 
 # VERSION.py sets variable VERSION.
-exec(compile(open(os.path.join(get_srcdir(), 'VERSION.py')).read(),
-             os.path.join(get_srcdir(), 'VERSION.py'), 'exec'))
-__version__ = VERSION  # NOQA
+from trepan.VERSION import VERSION as __version__
+
 
 
 def process_options(pkg_version, sys_argv, option_list=None):

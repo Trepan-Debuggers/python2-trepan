@@ -2,15 +2,8 @@
 'Unit test for trepan.processor.command.help'
 import unittest
 
-from import_relative import import_relative
-
-# FIXME: until import_relative is fixed
-import_relative('trepan', '...', 'trepan')
-
-Mhelp    = import_relative('processor.command.help', '...trepan', 'trepan')
-Mcmdproc = import_relative('processor.cmdproc', '...trepan', 'trepan')
-
-Mmock = import_relative('processor.command.mock', '...trepan')
+from trepan.processor.command import help as Mhelp, mock as Mmock
+from trepan.processor import cmdproc as Mcmdproc
 
 
 class TestHelp(unittest.TestCase):

@@ -15,11 +15,10 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import re
 
-from import_relative import import_relative
-
 # Our local modules
-Mbase_subcmd  = import_relative('base_subcmd', '..', 'trepan')
-Mpp           = import_relative('pp', '....lib', 'trepan')
+from trepan.processor.command import base_subcmd as Mbase_subcmd
+from trepan.lib import pp as Mpp
+
 
 # when the "with" statement is used we seem to get variables having names
 # _[1], _[2], etc.
@@ -55,9 +54,8 @@ class InfoLocals(Mbase_subcmd.DebuggerSubcommand):
     pass
 
 if __name__ == '__main__':
-    mock = import_relative('mock', '..')
-    Minfo = import_relative('info', '..')
-    Mdebugger = import_relative('debugger', '....')
+    from trepan.processor.command import mock, info as Minfo
+    from trepan import debugger as Mdebugger
     d = Mdebugger.Debugger()
     d, cp = mock.dbg_setup(d)
     i = Minfo.InfoCommand(cp)

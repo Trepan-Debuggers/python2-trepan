@@ -1,9 +1,8 @@
 #!/usr/bin/env python
 'Unit test for trepan.lib.print'
 import unittest
-from import_relative import import_relative
 
-Mprint = import_relative('lib.print', '...trepan')
+from trepan.lib import printing as Mprint
 
 
 class TestLibPrint(unittest.TestCase):

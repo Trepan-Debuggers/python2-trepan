@@ -15,9 +15,10 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
-from import_relative import import_relative
 
-Mbase_cmd  = import_relative('base_cmd', top_name='trepan')
+# Our local modules
+from trepan.processor.command import base_cmd as Mbase_cmd
+
 
 class DisplayCommand(Mbase_cmd.DebuggerCommand):
     """**display** [*format*] *expression*
@@ -74,11 +75,10 @@ requests previously made."""
     pass
 
 if __name__ == '__main__':
-    Mdebugger = import_relative('debugger', '...')
+    from trepan.processor import cmdproc as Mcmdproc
+    from trepan import debugger as Mdebugger
     d = Mdebugger.Debugger()
     import inspect
-    Mcmdproc     = import_relative('cmdproc', '..')
-    Mdebugger    = import_relative('debugger', '...')
     d            = Mdebugger.Debugger()
     cp           = d.core.processor
     command = DisplayCommand(d.core.processor)

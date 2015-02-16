@@ -13,4 +13,4 @@ install:
 
 script:
 - make test
-- flake8 trepan
+# - flake8 trepan

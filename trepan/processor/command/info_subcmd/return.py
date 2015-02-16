@@ -32,10 +32,10 @@ statement."""
 
     def run(self, args):
         # Not sure if this __return__ stuff works.
-#         if '__return__' in self.proc.curframe.f_locals:
-#             val = self.proc.curframe.f_locals['__return__']
-#             Mpp.pp(val, self.settings['width'], self.msg_nocr, self.msg)
-#         elif self.proc.event == 'return':
+        # if '__return__' in self.proc.curframe.f_locals:
+        #     val = self.proc.curframe.f_locals['__return__']
+        #     Mpp.pp(val, self.settings['width'], self.msg_nocr, self.msg)
+        # elif self.proc.event == 'return':
         if self.proc.event in ['return', 'exception']:
             val = self.proc.event_arg
             Mpp.pp(val, self.settings['width'], self.msg_nocr, self.msg)

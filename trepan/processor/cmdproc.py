@@ -191,8 +191,6 @@ def print_location(proc_obj):
         fn_name = frame.f_code.co_name
         print_source_location_info(intf_obj.msg, filename, lineno, fn_name,
                                    remapped_file = remapped_file)
-                                   # proc_obj.curframe.f_lasti)
-
         opts = {
             'reload_on_change' : proc_obj.settings('reload'),
             'output'           : proc_obj.settings('highlight')
@@ -243,11 +241,13 @@ class CommandProcessor(Mprocessor.Processor):
         self.event2short['brkpt']  = 'xx'
 
         self.cmd_instances    = self._populate_commands()
-        self.cmd_argstr       = ''     # command argument string. Is
-                                       # like current_command, but the part
-                                       # after cmd_name has been removed.
-        self.cmd_name         = ''     # command name before alias or
-                                       # macro resolution
+
+        # command argument string. Is like current_command, but the part
+        # after cmd_name has been removed.
+        self.cmd_argstr       = ''
+
+        # command name before alias or macro resolution
+        self.cmd_name         = ''
         self.cmd_queue        = []     # Queued debugger commands
         self.completer        = lambda text, state: \
           Mcomplete.completer(self, text, state)

@@ -20,7 +20,7 @@ There's a lot of cool stuff here that's not in *pydb* or the stock Python debugg
 Command Completion
 ------------------
 
-Starting version 2.8 readline command completion has been added. Command completion is not just a simple static list, but varies depending on the context. For example, for frame-changing commands which take optional numbers, on the list of *valid numbers* is considered.
+Starting with release 2.8, readline command completion has been added. Command completion is not just a simple static list, but varies depending on the context. For example, for frame-changing commands which take optional numbers, on the list of *valid numbers* is considered.
 
 Smart Eval
 ----------
@@ -57,7 +57,7 @@ Because we're really handling return events, we can show you the return value. (
 Debugger Macros via Python Lambda expressions
 ---------------------------------------------
 
-Starting with version 0.2.3 there are debugger macros.  In *gdb*,
+Starting with release 0.2.3, there are debugger macros.  In *gdb*,
 there is a *macro* debugger command to extend debugger commands.
 
 However Python has its own rich programming language so it seems silly to recreate the macro language that is in *gdb*. Simpler and more powerful is just to use Python here. A debugger macro here is just a lambda expression which returns a string or a list of strings. Each string returned should be a debugger command.
@@ -82,7 +82,7 @@ We do more in the way of looking at the byte codes to give better information. T
 Source-code Syntax Colorization
 -------------------------------
 
-Starting with version 0.2.0 terminal source code is colorized via `pygments <http://pygments.org>`_ and we make use of terminal bold and emphasized text in debugger output and help text. Of course, you can also turn this off.
+Starting with release 0.2.0, terminal source code is colorized via `pygments <http://pygments.org>`_ and we make use of terminal bold and emphasized text in debugger output and help text. Of course, you can also turn this off.
 
 Debugger Command Arguments can be Variables and Expressions
 -----------------------------------------------------------

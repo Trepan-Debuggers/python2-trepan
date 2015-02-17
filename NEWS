@@ -1,4 +1,13 @@
-trepan 0.4.1 2015-12-23 Late SW
+trepan 0.4.2 2015-02-17
+
+- Should work with pip without needing --egg. Thanks to Georg Brandl
+- Go over set/show help
+- Go over docs and increase docstring RsT use
+- Finish removing flake8 warnings
+- Fix bugs in startup-file loading
+- Fix bug in signal-name lookup. From Georg Brandl
+
+trepan 0.4.1 2014-12-23 Late SF
 
 - Get computed_displaywidth from updated columnize. Should work on OSX
 - Sections get an underline when we syntax highlight is not in effect

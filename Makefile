@@ -35,7 +35,7 @@ test-unit:
 #: Run unit (white-box) tests
 test-unit-short:
 	$(PYTHON) ./setup.py nosetests --quiet 2>&1 | \
-	$(PYTHON) ./make-check-filter.py
+	$(PYTHON) ./test/make-check-filter.py
 
 #: Run functional tests
 test-functional:
@@ -44,7 +44,7 @@ test-functional:
 #: Run functional tests
 test-functional-short:
 	(cd test/functional && $(PYTHON) ./setup.py nosetests --quiet) | \
-	$(PYTHON) ./make-check-filter.py
+	$(PYTHON) ./test/make-check-filter.py
 
 #: Run integration (black-box) tests
 test-integration:
@@ -53,7 +53,7 @@ test-integration:
 #: Run integration (black-box) tests
 test-integration-short:
 	(cd test/integration && $(PYTHON) ./setup.py nosetests) 2>&1 | \
-	$(PYTHON) ./make-check-filter.py
+	$(PYTHON) ./test/make-check-filter.py
 
 #: Clean up temporary files and .pyc files
 clean: clean_pyc

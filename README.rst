@@ -96,7 +96,7 @@ have embedded blanks.)
 Egg and PIP Installable
 -----------------------
 
-Can be installed via the usual *pip* or *easy_install*. `How To Install <https://code.google.com/p/pydbgr/wiki/HowToInstall>` has full instructions and installing from git.
+Can be installed via the usual *pip* or *easy_install*. `How To Install <https://code.google.com/p/pydbgr/wiki/HowToInstall>`_ has full instructions and installing from git.
 
 Command Completion
 ------------------

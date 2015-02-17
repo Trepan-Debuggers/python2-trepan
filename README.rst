@@ -129,7 +129,7 @@ the stock Python debugger, *pdb*. See this_ for those features.
 .. _Tutorial: https://github.com/rocky/python2-trepan/wiki/Tutorial
 .. |Downloads| image:: https://pypip.in/download/trepan/badge.svg
 .. |Build Status| image:: https://travis-ci.org/rocky/python2-trepan.svg
-   :target: https://travis-ci.org/rocky/columnize/
+   :target: https://travis-ci.org/rocky/python2-trepan/
 .. |Latest Version| image:: https://pypip.in/version/columnize/badge.svg?text=version
    :target: https://pypi.python.org/pypi/trepan/
 .. |Supported Python versions| image:: https://pypip.in/py_versions/trepan/badge.svg

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009, 2010, 2013 Rocky Bernstein
+#   Copyright (C) 2009-2010, 2013, 2015 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,6 +19,8 @@ from trepan.processor.command import base_cmd as Mbase_cmd
 from trepan.processor import subcmd as Msubcmd
 from trepan.lib import complete as Mcomplete
 
+def abbrev_stringify(name, min_abbrev):
+    return ("(%s)%s" % (name[:min_abbrev], name[min_abbrev:],))
 
 class SubcommandMgr(Mbase_cmd.DebuggerCommand):
 
@@ -187,9 +189,8 @@ class SubcommandMgr(Mbase_cmd.DebuggerCommand):
         return  # Not reached
 
     def summary_help(self, subcmd_name, subcmd):
-        self.msg_nocr('%s (%d) %-11s -- ' %
-                      (self.name, subcmd.min_abbrev,
-                       subcmd_name))
+        self.msg_nocr('  %-12s -- ' %
+                      abbrev_stringify(subcmd_name, subcmd.min_abbrev))
         self.rst_msg(subcmd.short_help.rstrip("\n"))
         return
     pass

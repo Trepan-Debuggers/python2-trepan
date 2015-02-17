@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2012-2014 Rocky Bernstein
+#   Copyright (C) 2012-2015 Rocky Bernstein
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@ class ShowHighlight(Mbase_subcmd.DebuggerSubcommand):
     """**show highlight**
 
 Show whether we use terminal highlighting."""
+    short_help = 'Show if we use terminal highlight'
 
     def run(self, args):
         val = self.settings['highlight']

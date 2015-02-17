@@ -21,7 +21,7 @@ from trepan.processor.command import base_subcmd as Mbase_subcmd
 from trepan.processor import cmdfns as Mcmdfns, cmdproc as Mcmdproc
 
 
-class SetCmdDbgPydb(Mbase_subcmd.DebuggerSetBoolSubcommand):
+class SetCmdDbgTrepan(Mbase_subcmd.DebuggerSetBoolSubcommand):
     """Set the ability to debug the debugger.
 
 Setting this allows visibility and access to some of the debugger's

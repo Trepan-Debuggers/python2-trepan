@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009, 2012-2013 Rocky Bernstein
+#   Copyright (C) 2009, 2012-2013, 2015 Rocky Bernstein
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -22,10 +22,17 @@ from trepan.processor import cmdfns as Mcmdfns, cmdproc as Mcmdproc
 class SetAutoPython(Mbase_subcmd.DebuggerSetBoolSubcommand):
     """**set** **autopython** [**on**|**off**]
 
-Go into Python on debugger entry."""
+Go into a Python shell on debugger entry.
+
+See also:
+---------
+
+`python`
+"""
 
     in_list    = True
     min_abbrev = len('autopy')  # Need at least "set autopy"
+    short_help = "Go into a python on debugger entry."
 
     python_cmd = None
 

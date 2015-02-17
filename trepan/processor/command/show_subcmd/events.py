@@ -25,7 +25,7 @@ from trepan.processor.command import base_subcmd as Mbase_subcmd
 class ShowEvents(Mbase_subcmd.DebuggerSubcommand):
     """**show events**
 
-The the kinds of event the debugger will stop on.
+Show the kinds of events the debugger will stop on.
 
 See also:
 ---------
@@ -33,6 +33,7 @@ See also:
 `set events`. `help step` lists of event names.
 """
     min_abbrev = 2
+    short_help = 'Show the kinds of events the debugger will stop on'
 
     def run(self, args):
         events = list(self.debugger.settings['printset'])

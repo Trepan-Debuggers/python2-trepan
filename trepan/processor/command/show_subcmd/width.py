@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009 Rocky Bernstein
+#   Copyright (C) 2009, 2015 Rocky Bernstein
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -24,7 +24,8 @@ from trepan.processor import cmdfns as Mcmdfns
 class ShowWidth(Mbase_subcmd.DebuggerSubcommand):
     "Show the number of characters the debugger thinks are in a line"
 
-    min_abbrev = 2  # Need at least "show wi"
+    min_abbrev = len('wi')
+    short_help = 'Show terminal width'
 
     def run(self, args):
         Mcmdfns.run_show_int(self, self.__doc__[5:].capitalize())

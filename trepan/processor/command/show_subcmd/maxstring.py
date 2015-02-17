@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009, 2010, 2012 Rocky Bernstein
+#   Copyright (C) 2009-2010, 2012, 2015 Rocky Bernstein
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -22,5 +22,6 @@ from trepan.processor.command import base_subcmd as Mbase_subcmd
 
 class ShowMaxString(Mbase_subcmd.DebuggerShowIntSubcommand):
     "Show maximum string length to use in string-oriented output"
-    min_abbrev = 2
+    min_abbrev = len('maxs')
+    short_help = 'Show max string length printed'
     pass

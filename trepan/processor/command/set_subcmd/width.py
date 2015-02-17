@@ -8,8 +8,7 @@ from trepan.processor import cmdfns as Mcmdfns
 
 
 class SetWidth(Mbase_subcmd.DebuggerSubcommand):
-    """
-**set width** *number*
+    """**set width** *number*
 
 Set the number of characters the debugger thinks are in a line.
 
@@ -21,6 +20,7 @@ See also:
 
     in_list    = True
     min_abbrev = len('wid')
+    short_help = 'Set the width of the terminal'
 
     def run(self, args):
         Mcmdfns.run_set_int(self, ' '.join(args),

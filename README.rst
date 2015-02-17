@@ -114,7 +114,7 @@ Many of the things listed below doesn't directly effect end-users, but it does e
 * Commands and subcommands are individual classes now, not methods in a class. This means they now have properties like the context in which they can be run, minimum abbreviation name or alias names. To add a new command you basically add a file in a directory.
 * I/O is it's own layer. This simplifies interactive readline behavior from reading commands over a TCP socket.
 * An interface is it's own layer. Local debugging, remote debugging, running debugger commands from a file (`source`) are different interfaces. This means, for example, that we are able to give better error reporting if a debugger command file has an error.
-p* There is an experimental Python-friendly interface for front-ends
+* There is an experimental Python-friendly interface for front-ends
 * more testable. Much more unit and functional tests. More of *pydb*'s integration test will eventually be added.
 
 Etc.

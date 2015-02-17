@@ -16,20 +16,16 @@ Features
 
 There's a lot of cool stuff here that's not in *pydb* or the stock Python debugger *pdb*.
 
-Source-code Syntax Colorization
--------------------------------
 
-Starting with version 0.2.0 terminal source code is colorized and we make use of terminal bold and emphasized text in debugger output and help text. Of course, you can also turn this off.
+Command Completion
+------------------
+
+Starting version 2.8 readline command completion has been added. Command completion is not just a simple static list, but varies depending on the context. For example, for frame-changing commands which take optional numbers, on the list of *valid numbers* is considered.
 
 Smart Eval
 ----------
 
 Starting with release 0.2.0, if you want to evaluate the current source line before it is run in the code, use ``eval``. To evaluate text of a common fragment of line, such as the expression part of an *if* statement, you can do that with ``eval?``. See the help for ``eval`` for more information.
-
-Out-of-Process Debugging
-------------------------
-
-You can now debug your program in a different process or even a different computer on a different network!
 
 More Stepping Control
 ---------------------
@@ -83,6 +79,11 @@ We do more in the way of looking at the byte codes to give better information. T
 * Check that breakpoints are set only where they make sense.
 * A more accurate determination of if you are at a function-defining *def* statement (because the caller instruction contains ``MAKE_FUNCTION``.)
 
+Source-code Syntax Colorization
+-------------------------------
+
+Starting with version 0.2.0 terminal source code is colorized via `pygments <http://pygments.org>`_ and we make use of terminal bold and emphasized text in debugger output and help text. Of course, you can also turn this off.
+
 Debugger Command Arguments can be Variables and Expressions
 -----------------------------------------------------------
 
@@ -93,15 +94,15 @@ eliminates the need in *gdb* for special "dollar" debugger
 variables. (Note however because of *shlex* parsing ,expressions can't
 have embedded blanks.)
 
+Out-of-Process Debugging
+------------------------
+
+You can now debug your program in a different process or even a different computer on a different network!
+
 Egg and PIP Installable
 -----------------------
 
 Can be installed via the usual *pip* or *easy_install*. `How To Install <https://code.google.com/p/pydbgr/wiki/HowToInstall>`_ has full instructions and installing from git.
-
-Command Completion
-------------------
-
-Starting version 2.8 readline command completion has been added. Command completion is not just a simple static list, but varies depending on the context. For example, for frame-changing commands which take optional numbers, on the list of *valid numbers* is considered.
 
 Modularity
 ----------

@@ -1,4 +1,4 @@
-#  Copyright (C) 2008-2009, 2013 Rocky Bernstein <rocky@gnu.org>
+#  Copyright (C) 2008-2009, 2013, 2015 Rocky Bernstein <rocky@gnu.org>
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
 #  the Free Software Foundation, either version 3 of the License, or
@@ -170,11 +170,11 @@ keeping developers happy is a good thing.(TM)
 * more testable. Much more unit and functional tests. More of _pydb_'s
   integration test will eventually be added.
 
-Copyright (C) 2008-2009, 2013-2014 Rocky Bernstein <rocky@gnu.org>
+Copyright (C) 2008-2009, 2013-2015 Rocky Bernstein <rocky@gnu.org>
 """
 __docformat__ = 'restructuredtext'
 
 __import__('pkg_resources').declare_namespace(__name__)
 
 from trepan.misc import pyfiles
-__all__ = pyfiles(__file__) + ['lib', 'inout', 'processor', 'interfaces']
+__all__ = pyfiles(__file__) + ['bwprocessor', 'lib', 'inout', 'processor', 'interfaces']

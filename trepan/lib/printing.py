@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2007, 2008, 2009, 2010 Rocky Bernstein
+#  Copyright (C) 2007-2010, 2015 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -114,20 +114,20 @@ def printf(val, fmt):
     return str(val)
 
 if __name__ == '__main__':
-    print print_dict('', globals(), 'my globals')
-    print '-' * 40
-    print print_obj('print_obj', None)
-    print '-' * 30
-    print print_obj('Exception', None)
-    print '-' * 30
-    print print_argspec('Exception', None)
+    print(print_dict('', globals(), 'my globals'))
+    print('-' * 40)
+    print(print_obj('print_obj', None))
+    print('-' * 30)
+    print(print_obj('Exception', None))
+    print('-' * 30)
+    print(print_argspec('Exception', None))
 
     class Foo:
         def __init__(self, bar=None): pass
         pass
-    print print_obj('Foo.__init__', None)
-    print '-' * 30
-    print print_argspec(Foo.__init__, '__init__')
+    print(print_obj('Foo.__init__', None))
+    print('-' * 30)
+    print(print_argspec(Foo.__init__, '__init__'))
     assert printf(31, "/o") == '037'
     assert printf(31, "/t") == '00011111'
     assert printf(33, "/c") == '!'

@@ -102,7 +102,7 @@ You can now debug your program in a different process or even a different comput
 Egg and PIP Installable
 -----------------------
 
-Can be installed via the usual *pip* or *easy_install*. `How To Install <https://code.google.com/p/pydbgr/wiki/HowToInstall>`_ has full instructions and installing from git.
+Can be installed via the usual *pip* or *easy_install*. `How To Install <https://github.com/rocky/python2-trepan/wiki/How-to-Install>`_ has full instructions and installing from git.
 
 Modularity
 ----------
@@ -130,7 +130,7 @@ the stock Python debugger, *pdb*. See this_ for those features.
 .. |Downloads| image:: https://pypip.in/download/trepan/badge.svg
 .. |Build Status| image:: https://travis-ci.org/rocky/python2-trepan.svg
    :target: https://travis-ci.org/rocky/python2-trepan/
-.. |Latest Version| image:: https://pypip.in/version/columnize/badge.svg?text=version
+.. |Latest Version| image:: https://pypip.in/version/trepan/badge.svg?text=version
    :target: https://pypi.python.org/pypi/trepan/
 .. |Supported Python versions| image:: https://pypip.in/py_versions/trepan/badge.svg
    :target: https://pypi.python.org/pypi/trepan/

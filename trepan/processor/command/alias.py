@@ -20,13 +20,13 @@ from trepan.processor.command import base_cmd as Mbase_cmd
 class AliasCommand(Mbase_cmd.DebuggerCommand):
     """**alias** *alias-name* *debugger-command*
 
-Add alias *alias-name* for a debugger command *debugger-comand*.
+Add alias *alias-name* for a debugger command *debugger-command*.
 
 An alias is also useful when you want to use a command abbreviation
-for a command that would otherwise be ambigous. For example, by
+for a command that would otherwise be ambiguous. For example, by
 default we make `s` be an alias of `step` to force it to be
 used. Without the alias, `s` might be `step`, `show`, or `set` among
-others
+others.
 
 Example:
 -------
@@ -39,7 +39,6 @@ See also:
 ---------
 
 `unalias` and `show alias`.
-
     """
 
     category      = 'support'

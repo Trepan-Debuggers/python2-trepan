@@ -181,8 +181,10 @@ def print_location(proc_obj):
                 fd = tempfile.NamedTemporaryFile(suffix='.py',
                                                  prefix='eval_string',
                                                  delete=False)
-                fd.write(dbgr_obj.eval_string)
-                fd.close()
+                with fd:
+                    fd.write(dbgr_obj.eval_string)
+                    fd.close()
+                    pass
                 pyficache.remap_file(fd.name, '<string>')
                 filename = fd.name
                 pass
@@ -331,7 +333,7 @@ class CommandProcessor(Mprocessor.Processor):
                     'strip_nl': False}
             line = pyficache.getline(filename, lineno, opts)
         self.current_source_text = line
-        if self.settings('skip'):
+        if self.settings('skip') is not None:
             if Mbytecode.is_def_stmt(line, frame):
                 return True
             if Mbytecode.is_class_def(line, frame):

@@ -9,4 +9,5 @@
 /ChangeLog
 /build
 /dist
+/test/integration/*.out
 __pycache__

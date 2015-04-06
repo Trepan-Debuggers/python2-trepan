@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-'Unit test for trepan.lib.print'
+'Unit test for trepan.lib.printing'
 import unittest
 
 from trepan.lib import printing as Mprint

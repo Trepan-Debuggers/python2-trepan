@@ -24,8 +24,8 @@ class TestStep(unittest.TestCase):
         compare_output(self, out, d, cmds)
         return
 
-    @unittest.skip("Need to fix")
     def test_step_computed_valued(self):
+        raise unittest.SkipTest('need to fix')
         # See that we can step with a computed count value
         cmds = ['step 5-3', 'continue']
         d = strarray_setup(cmds)
@@ -122,8 +122,8 @@ class TestStep(unittest.TestCase):
 
         return
 
-    @unittest.skip("Need to fix")
     def test_step_between_fn(self):
+        raise unittest.SkipTest("Need to fix")
 
         # Step into and out of a function
         def sqr(x):
@@ -153,8 +153,8 @@ class TestStep(unittest.TestCase):
             pass
         return
 
-    @unittest.skip("Need to fix")
     def test_step_in_exception(self):
+        raise unittest.SkipTest("Need to fix")
 
         def boom(x):
             y = 0/x  # NOQA

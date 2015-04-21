@@ -1,10 +1,5 @@
 import os, sys
 
-if (sys.version_info >= (2, 7, 0)):
-    import unittest   # NOQA
-else:
-    import unittest2 as unittest  # NOQA
-
 srcdir = os.path.abspath(os.path.dirname(__file__))
 sys.path.insert(0, os.path.join(srcdir, '..', '..'))
 

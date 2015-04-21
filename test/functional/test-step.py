@@ -3,6 +3,11 @@ import unittest
 import tracer
 from fn_helper import strarray_setup, compare_output
 
+if (sys.version_info >= (2, 7, 0)):
+    import unittest   # NOQA
+else:
+    import unittest2 as unittest  # NOQA
+
 
 class TestStep(unittest.TestCase):
     print("test ", __file__, "skipped")

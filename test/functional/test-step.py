@@ -2,6 +2,7 @@
 import unittest
 import tracer
 from fn_helper import strarray_setup, compare_output
+import sys
 
 if (sys.version_info >= (2, 7, 0)):
     import unittest   # NOQA

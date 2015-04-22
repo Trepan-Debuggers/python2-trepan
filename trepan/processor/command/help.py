@@ -17,7 +17,6 @@
 #    02110-1301 USA.
 import os, re
 
-
 # Our local modules
 from trepan.processor.command import base_cmd as Mbase_cmd
 from trepan.processor import cmdproc as Mcmdproc

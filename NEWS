@@ -1,3 +1,9 @@
+trepan 0.4.3 2015-02-17
+
+- If help regexp matches a single command, give help for that.
+- Doc fixes
+- Sync with python3 code
+
 trepan 0.4.2 2015-02-17
 
 - Should work with pip without needing --egg. Thanks to Georg Brandl

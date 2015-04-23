@@ -109,7 +109,7 @@ def start_client(connection_opts):
                 print("Don't know how to hard-restart FIFO...")
                 done=True
                 pass
-	    break
+            break
         else:
             print("!! Weird status code received '%s'" % control)
             print(remote_msg,)

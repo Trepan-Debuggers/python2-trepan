@@ -1,7 +1,11 @@
 #!/usr/bin/env python
-import unittest
+import sys
 from fn_helper import compare_output, strarray_setup
 
+if (sys.version_info >= (2, 7, 0)):
+    import unittest   # NOQA
+else:
+    import unittest2 as unittest  # NOQA
 
 class TestNext(unittest.TestCase):
     print("test ", __file__, "skipped")

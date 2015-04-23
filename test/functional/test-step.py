@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-import unittest
 import tracer
 from fn_helper import strarray_setup, compare_output
 import sys

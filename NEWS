@@ -1,3 +1,6 @@
+trepan 0.4.4 2015-04-23
+- Fix bug in "next" command
+
 trepan 0.4.3 2015-02-17
 
 - If help regexp matches a single command, give help for that.

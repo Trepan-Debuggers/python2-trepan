@@ -17,7 +17,7 @@
 #    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 #    02110-1301 USA.
 
-import os, sys, time
+import sys, time
 
 # Our local modules
 from trepan.interfaces import client as Mclient
@@ -109,7 +109,7 @@ def start_client(connection_opts):
                 print("Don't know how to hard-restart FIFO...")
                 done=True
                 pass
-                break
+            break
         else:
             print("!! Weird status code received '%s'" % control)
             print(remote_msg,)

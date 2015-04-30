@@ -861,6 +861,8 @@ class CommandProcessor(Mprocessor.Processor):
                     try:
                         instance = eval(eval_cmd)
                         cmd_instances.append(instance)
+                    except ImportError:
+                        pass
                     except:
                         print('Error loading %s from %s: %s' %
                               (classname, mod_name, sys.exc_info()[0]))
@@ -883,6 +885,8 @@ class CommandProcessor(Mprocessor.Processor):
                 # FIXME give more info like the above when desired
                 try:
                     command_mod = __import__(import_name, None, None, ['*'])
+                except ImportError:
+                    pass
                 except:
                     print('Error importing %s: %s' %
                           (mod_name, sys.exc_info()[0]))

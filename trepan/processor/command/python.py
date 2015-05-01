@@ -93,12 +93,8 @@ Use dbgr(*string*) to issue debugger command: *string*'''
 
         # restore our history if we can do so.
         if have_line_edit:
+            self.proc.read_history_file()
             pass
-#             try:
-#                 self.readline.read_history_file(self.histfile)
-#             except ioerror:
-#                 pass
-#             return
         return
     pass
 

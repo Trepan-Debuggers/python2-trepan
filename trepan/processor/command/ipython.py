@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2009-2010, 2013 Rocky Bernstein
+#  Copyright (C) 2009-2010, 2013, 2015 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -64,11 +64,11 @@ To issue a debugger command use function *dbgr()*. For example:
         cfg = Config()
         banner_tmpl='''IPython trepan2 shell%s
 
-Use self.dbgr(*string*) to issue non-continuing debugger command: *string*'''
+Use dbgr(*string*) to issue non-continuing debugger command: *string*'''
 
         debug = len(args) > 1 and args[1] == '-d'
         if debug:
-            banner_tmpl += ("\nVariable 'self.debugger' contains a trepan "
+            banner_tmpl += ("\nVariable 'debugger' contains a trepan "
                             "debugger object.")
             pass
         try:
@@ -97,8 +97,10 @@ Use self.dbgr(*string*) to issue non-continuing debugger command: *string*'''
         # Give IPython and the user a way to get access to the debugger.
         if debug: my_locals['debugger'] = self.debugger
         my_locals['dbgr'] = self.dbgr
+        cfg.TerminalInteractiveShell.confirm_exit = False
 
-        sys.ps1 = 'trepan2 >>> '
+
+        # sys.ps1 = 'trepan2 >>> '
         if len(my_locals):
             banner=(banner_tmpl % ' with locals')
         else:
@@ -106,16 +108,13 @@ Use self.dbgr(*string*) to issue non-continuing debugger command: *string*'''
             pass
 
         InteractiveShellEmbed(config=cfg, banner1=banner,
-                              local_ns = my_locals,
-                              global_ns = my_globals,
-                              exit_msg='Quitting IPython')()
+                              user_ns = my_locals,
+                              module = my_globals,
+                              exit_msg='IPython exiting to trepan2...')()
         # restore our history if we can do so.
-        # if have_line_edit:
-        #     try:
-        #         self.readline.read_history_file(self.histfile)
-        #     except IOError:
-        #         pass
-        #     return
+        if have_line_edit:
+            self.proc.read_history_file()
+            pass
         return
     pass
 

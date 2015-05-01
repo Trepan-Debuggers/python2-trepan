@@ -23,8 +23,7 @@ from IPython.config.loader import Config
 class IPythonCommand(Mbase_cmd.DebuggerCommand):
     """**ipython** [**-d**]
 
-Run IPython as a command subshell. The *sys.ps1* prompt will be set to
-`trepan2 >>> `.
+Run IPython as a command subshell.
 
 If *-d* is passed, you can access debugger state via local variable *debugger*.
 
@@ -98,7 +97,6 @@ Use dbgr(*string*) to issue non-continuing debugger command: *string*'''
         if debug: my_locals['debugger'] = self.debugger
         my_locals['dbgr'] = self.dbgr
         cfg.TerminalInteractiveShell.confirm_exit = False
-
 
         # sys.ps1 = 'trepan2 >>> '
         if len(my_locals):

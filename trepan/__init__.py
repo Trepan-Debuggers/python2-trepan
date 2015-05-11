@@ -17,14 +17,9 @@ Abstract
 A gdb-like debugger for Python 2.
 
 
-This is Python of 2.6 to 2.7.
-Use *python3-trepan*: <http://code.google.com/p/python3-trepan> for Python
-3.2 to 3.4.
-
 A command-line interface (CLI) is provided.
 
-See the _Tutorial: <http://code.google.com/p/trepan/wiki/Tutorial for
-how to use.
+See the `Tutorial <https://github.com/rocky/python2-trepan/wiki/Tutorial>`_ for how to use.
 
 Features
 ========

@@ -5,8 +5,6 @@ from fn_helper import compare_output, strarray_setup
 
 class TestBreak(unittest.TestCase):
     def test_break_on_function(self):
-        print("test ", __file__, "break_on_function skipped")
-        return
 
         ##############################
         # We had a bug where 'next' (no number) after
@@ -25,11 +23,16 @@ class TestBreak(unittest.TestCase):
         ##############################
         d.core.stop()
 
-        out = ['xx def foo():\n(test-break.py:18): foo',
-               "-- print 'foo here'\n"]
+        out = ['-- foo()',
+               'xx def foo():',
+               "-- print('foo here')"]
         compare_output(self, out, d, cmds)
 
-        # Try a break with a module name
+        return
+
+    def test_break_on_os_function(self):
+        # Try a break with a module.function name
+        return
         import os
         cmds = ['break os.path.join', 'continue']
         d = strarray_setup(cmds)
@@ -43,9 +46,8 @@ class TestBreak(unittest.TestCase):
         return
 
     def test_break_at_line_number(self):
-        print("test", __file__, "break_at_line_number skipped")
-        return
         import inspect
+        from trepan.api import debug; debug()
         curframe = inspect.currentframe()
         cmds = ['break %d' % (curframe.f_lineno+7),
                 'continue', 'c']              # 1
@@ -57,8 +59,8 @@ class TestBreak(unittest.TestCase):
         z = 7  # NOQA
         ##############################
         d.core.stop()
-        out = ["-- x = 5\nBreakpoint 1 set at line 53 of file test-break.py",
-               'xx z = 7\n']
+        out = ["-- x = 5  # NOQA",
+               'xx z = 7  # NOQA']
         compare_output(self, out, d, cmds)
         return
     pass

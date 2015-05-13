@@ -67,8 +67,8 @@ class UserInterface(Minterface.DebuggerInterface):
 
     def close(self):
         """ Closes both input and output """
-        self.input.close()
-        self.output.close()
+        if not self.input.closed: self.input.close()
+        if not self.output.closed: self.output.close()
         return
 
     def confirm(self, prompt, default):
@@ -103,9 +103,13 @@ class UserInterface(Minterface.DebuggerInterface):
         return self.msg("%s%s" %(prefix, msg))
 
     def finalize(self, last_wishes=None):
-        self.msg("trepan2: That's all, folks...")
-        # save history
+        try:
+            self.msg("trepan2: That's all, folks...")
+        except IOError:
+            pass
         self.close()
+        # import pdb; pdb.set_trace()
+        # save history
         return
 
     def read_command(self, prompt=''):

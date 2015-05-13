@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009, 2013-2014 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2009, 2013-2015 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -48,12 +48,15 @@ class DebuggerUserOutput(Mbase.DebuggerOutputBase):
             raise IOError("Invalid output type (%s) for %s" % (type(output),
                                                                output))
         self.output = output
+        self.closed = False
         return
 
     def write(self, msg):
         """ This method the debugger uses to write. In contrast to
         writeline, no newline is added to the end to `str'.
         """
+        if self.output.closed:
+            raise IOError, "writing %s on a closed file" % msg
         self.output.write(msg)
         if self.flush_after_write: self.flush()
         return

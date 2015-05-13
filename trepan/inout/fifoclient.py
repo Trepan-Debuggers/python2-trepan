@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009, 2013-2014 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2009, 2013-2015 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -52,6 +52,7 @@ class FIFOClient(DebuggerInOutBase):
             self.output.close()
             pass
         self.state = 'disconnnected'
+        self.closed = True
         return
 
     def flush(self):
@@ -82,6 +83,7 @@ class FIFOClient(DebuggerInOutBase):
                               self.out_name)
             self.state     = 'active'
             pass
+        self.closed = False
         return
 
     def read_msg(self):

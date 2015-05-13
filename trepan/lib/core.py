@@ -229,7 +229,7 @@ class DebuggerCore:
             # Has tracer been started?
             if not tracer.is_started():
                 # FIXME: should filter out opts not for tracer
-                # Also, if we ouse opts.copy we need to check for 'None'.
+                # Also, if we use opts.copy we need to check for 'None'.
                 tracer_start_opts = default.START_OPTS.copy()
                 tracer_start_opts['trace_fn'] = self.trace_dispatch
                 tracer_start_opts['add_hook_opts'] = add_hook_opts
@@ -245,7 +245,7 @@ class DebuggerCore:
 
     def stop(self, options=None):
         # Our version of:
-        #    sys.settrace(None)
+        #    pdb.set_trace(None)
         try:
             self.trace_hook_suspend = True
             get_option = lambda key: Mmisc.option_set(options, key,

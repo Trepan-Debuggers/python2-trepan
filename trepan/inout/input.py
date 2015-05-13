@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009-2010, 2013-2014 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2009-2010, 2013-2015 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -43,6 +43,7 @@ class DebuggerUserInput(Mbase.DebuggerInputBase):
 
     def close(self):
         self.input.close()
+        self.closed = True
         return
 
     DEFAULT_OPEN_READ_OPTS = {
@@ -84,6 +85,7 @@ class DebuggerUserInput(Mbase.DebuggerInputBase):
                                                                 inp))
         self.input     = inp
         self.line_edit = get_option('try_readline') and readline_importable()
+        self.closed = False
         return
 
     def readline(self, use_raw=None, prompt=''):

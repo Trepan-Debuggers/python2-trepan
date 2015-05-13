@@ -2,7 +2,7 @@
 
 .. contents:: :local:
 
-Overview
+Abstract
 ========
 
 This is a gdb-like debugger for Python. It is a rewrite of *pydb* from the ground up.
@@ -126,7 +126,7 @@ Of course, I think *pydb* has a number of cool things that are not in
 the stock Python debugger, *pdb*. See this_ for those features.
 
 .. _pydb:  http://bashdb.sf.net/pydb
-.. _trepan3: http://code.google.com/p/python3-trepan
+.. _trepan3: http://github.com/rocky/python3-trepan
 .. _this: http://bashdb.sourceforge.net/pydb/features.html
 .. _Tutorial: https://github.com/rocky/python2-trepan/wiki/Tutorial
 .. |Downloads| image:: https://pypip.in/download/trepan/badge.svg

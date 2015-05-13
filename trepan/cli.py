@@ -19,14 +19,7 @@
 import os, os.path, sys
 
 package='trepan'
-if package not in sys.modules:
-    __import__('pkg_resources').declare_namespace(package)
-    pass
-
-# Our local modules
-import trepan.interfaces
-import trepan.inout
-import trepan.processor.command  # NOQA
+__import__('pkg_resources').declare_namespace(package)
 
 from trepan import interface as Minterface
 from trepan import api as Mapi

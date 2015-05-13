@@ -1,5 +1,7 @@
 |Downloads| |Build Status| |Latest Version| |Supported Python versions|
 
+.. contents:: :local:
+
 Overview
 ========
 

@@ -264,7 +264,10 @@ class Debugger:
         'settings'    : Mdefault.DEBUGGER_SETTINGS,
 
         'start_opts'  : Mdefault.START_OPTS,
-        'step_ignore' : 0, }
+        'step_ignore' : 0,
+
+        'from_ipython' : False
+        }
 
     def __init__(self, opts=None):
         """Create a debugger object. But depending on the value of
@@ -284,7 +287,7 @@ class Debugger:
         completer  = lambda text, state: self.complete(text, state)
 
         # set the instance variables that come directly from options.
-        for opt in ['settings', 'orig_sys_argv']:
+        for opt in ('settings', 'orig_sys_argv', 'from_ipython'):
             setattr(self, opt, get_option(opt))
             pass
 

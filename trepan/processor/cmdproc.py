@@ -16,6 +16,8 @@
 import inspect, linecache, os, sys, shlex, tempfile, traceback, types
 import pyficache
 from repr import Repr
+from pygments.console import colorize
+
 
 from tracer import EVENT2SHORT
 
@@ -266,6 +268,10 @@ class CommandProcessor(Mprocessor.Processor):
         self.postcmd_hooks    = []
 
         self._populate_cmd_lists()
+
+        # Note: prompt_str's value set below isn't used. It is
+        # computed dynamically. The value is suggestive of what it
+        # looks like.
         self.prompt_str     = '(trepan2) '
 
         # Stop only if line/file is different from last time
@@ -344,9 +350,12 @@ class CommandProcessor(Mprocessor.Processor):
         if self.thread_name != 'MainThread':
             prompt += ':' + self.thread_name
             pass
-        self.prompt_str = '%s%s%s ' % ('(' * self.debug_nest,
+        self.prompt_str = '%s%s%s' % ('(' * self.debug_nest,
                                        prompt,
                                        ')' * self.debug_nest)
+        if self.debugger.settings['highlight']:
+            self.prompt_str =  colorize('underline', self.prompt_str)
+        self.prompt_str += ' '
         self.process_commands()
         return True
 
@@ -761,6 +770,8 @@ class CommandProcessor(Mprocessor.Processor):
                 get_stack(self.frame, exc_traceback, None, self)
             self.curframe = self.stack[self.curindex][0]
             self.thread_name = Mthread.current_thread_name()
+            if exc_traceback:
+                self.list_lineno = traceback.extract_tb(exc_traceback, 1)[0][1]
 
         else:
             self.stack = self.curframe = \

@@ -48,7 +48,6 @@ def main(dbg=None, sys_argv=list(sys.argv)):
     opts, dbg_opts, sys_argv  = Moptions.process_options(__title__,
                                                          __version__,
                                                          sys_argv)
-
     if opts.server:
         connection_opts={'IO': 'TCP', 'PORT': opts.port}
         intf = Mserver.ServerInterface(connection_opts=connection_opts)

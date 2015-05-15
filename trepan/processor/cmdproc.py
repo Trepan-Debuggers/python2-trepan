@@ -216,7 +216,7 @@ def print_location(proc_obj):
                 print_source_line(intf_obj.msg, lineno, line,
                                   proc_obj.event2short[proc_obj.event])
             pass
--        if '<string>' != filename: break
+        if '<string>' != filename: break
         pass
 
     if proc_obj.event in ['return', 'exception']:

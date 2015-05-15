@@ -187,7 +187,8 @@ def print_location(proc_obj):
                     fd.write(dbgr_obj.eval_string)
                     fd.close()
                     pass
-                pyficache.remap_file(fd.name, '<string>')
+                pyficache.remap_file(fd.name, '<string %s>' %
+                                     dbgr_obj.eval_string)
                 filename = fd.name
                 pass
             pass
@@ -215,7 +216,7 @@ def print_location(proc_obj):
                 print_source_line(intf_obj.msg, lineno, line,
                                   proc_obj.event2short[proc_obj.event])
             pass
-        if '<string>' != filename: break
+-        if '<string>' != filename: break
         pass
 
     if proc_obj.event in ['return', 'exception']:

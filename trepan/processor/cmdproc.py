@@ -187,8 +187,7 @@ def print_location(proc_obj):
                     fd.write(dbgr_obj.eval_string)
                     fd.close()
                     pass
-                pyficache.remap_file(fd.name, '<string %s>' %
-                                     dbgr_obj.eval_string)
+                pyficache.remap_file(fd.name, '<string>')
                 filename = fd.name
                 pass
             pass
@@ -358,6 +357,7 @@ class CommandProcessor(Mprocessor.Processor):
             self.prompt_str =  colorize('underline', self.prompt_str)
         self.prompt_str += ' '
         self.process_commands()
+        if filename == '<string>': pyficache.remove_remap_file('<string>')
         return True
 
     def forget(self):

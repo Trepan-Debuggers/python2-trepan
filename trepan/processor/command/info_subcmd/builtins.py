@@ -20,7 +20,9 @@ from trepan.processor.command import base_subcmd as Mbase_subcmd
 
 
 class InfoBuiltins(Mbase_subcmd.DebuggerSubcommand):
-    """Show the builtins for the current stack frame."""
+    """**info builtins**
+
+Show the builtin-functions for the current stack frame."""
 
     min_abbrev = 2
     need_stack = True

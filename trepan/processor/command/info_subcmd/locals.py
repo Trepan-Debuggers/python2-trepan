@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2008-2009, 2013 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008-2009, 2013, 2015 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -25,7 +25,13 @@ from trepan.lib import pp as Mpp
 _with_local_varname = re.compile(r'_\[[0-9+]\]')
 
 class InfoLocals(Mbase_subcmd.DebuggerSubcommand):
-    """Show the local variables of current stack frame."""
+    """**info locals**
+
+Show the local variables of the current stack frame.
+
+See also:
+---------
+`info globals`, `info args`, `info frame`"""
 
     min_abbrev = 2
     need_stack = True

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009, 2013-2014 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2009, 2013-2015 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -327,9 +327,11 @@ class SignalManager:
             pass
 
         signame = self.is_name_or_number(signame)
-        self.dbgr.core.processor.section(self.header)
-        self.print_info_signal_entry(signame)
-        return True
+        if signame:
+            self.dbgr.core.processor.section(self.header)
+            self.print_info_signal_entry(signame)
+            return True
+        return False
 
     def action(self, arg):
         """Delegate the actions specified in 'arg' to another

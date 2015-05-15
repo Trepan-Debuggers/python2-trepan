@@ -119,6 +119,17 @@ if __name__=='__main__':
     print('contains MAKE_FUNCTION %s' % stmt_contains_opcode(co, lineno,
                                                              'MAKE_FUNCTION'))
 
+    def double(x):
+        dis.dis(double)
+        eval('1+2')
+        frame = inspect.currentframe()
+        co = frame.f_code
+        lineno = frame.f_lineno
+        print('contains CALL_FUNCTION %s' %
+              stmt_contains_opcode(co, lineno-2,
+                                   'CALL_FUNCTION'))
+        return x+x
+    double(2)
     print("op at frame: %s" % op_at_frame(frame))
     print("op at frame, position 2: %s" % op_at_frame(frame, 2))
     print("def statement: x=5?: %s" % is_def_stmt('x=5', frame))

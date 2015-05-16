@@ -22,7 +22,7 @@ from trepan.lib import complete as Mcomplete
 
 
 class InfoFiles(Mbase_subcmd.DebuggerSubcommand):
-    '''**info file** [*filename* [**all** | **lines** | **sha1** | **size**]]
+    '''**info files** [*filename* [**all** | **brkpts** | **lines** | **sha1** | **size**]]
 
 Show information about the current file. If no filename is given and
 the program is running then the current file associated with the

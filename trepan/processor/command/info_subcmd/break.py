@@ -22,7 +22,7 @@ from trepan.lib import complete as Mcomplete
 
 
 class InfoBreak(Mbase_subcmd.DebuggerSubcommand):
-    """**info breakpoints**
+    """**info breakpoints** [ *bp-number...* ]
 
 Show breakpoints.
 

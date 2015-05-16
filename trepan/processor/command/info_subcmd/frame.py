@@ -31,7 +31,8 @@ class InfoFrame(Mbase_subcmd.DebuggerSubcommand):
             self.errmsg("No frame selected.")
             return False
         self.section('Frame %d' % self.proc.curindex)
-        self.msg('  restricted execution: %s' % frame.f_restricted)
+        if hasattr(frame, f_restricted):
+            self.msg('  restricted execution: %s' % frame.f_restricted)
         self.msg('  tracing function: %s' % frame.f_trace)
         self.msg('  line number: %d' % frame.f_lineno)
         self.msg('  last instruction: %d' % frame.f_lasti)

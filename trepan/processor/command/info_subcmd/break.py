@@ -18,6 +18,7 @@ import os
 
 # Our local modules
 from trepan.processor.command import base_subcmd as Mbase_subcmd
+from trepan.lib import complete as Mcomplete
 
 
 class InfoBreak(Mbase_subcmd.DebuggerSubcommand):
@@ -32,6 +33,9 @@ See also:
     min_abbrev = 1  # Min is info b
     need_stack = False
     short_help = "Status of user-settable breakpoints"
+
+    def complete(self, prefix):
+        return Mcomplete.complete_brkpts(self.core.bpmgr, prefix)
 
     def bpprint(self, bp):
         if bp.temporary:
@@ -62,11 +66,24 @@ See also:
 
     def run(self, args):
         bpmgr = self.core.bpmgr
-        if len(bpmgr.bplist) > 0:  # There's at least one
-            self.section("Num Type          Disp Enb    Where")
-            for bp in bpmgr.bpbynumber:
-                if bp:
-                    self.bpprint(bp)
+        bpnums = bpmgr.bpnumbers()
+        if len(bpnums) > 0:  # There's at least one
+            if len(args) > 0:
+                list_bpnums = list(set(bpnums) & set(args))
+                if len(list_bpnums) == 0:
+                    self.msg("No breakpoints in list given.")
+                else:
+                    for num_str in list_bpnums:
+                        self.bpprint(bpmgr.get_breakpoint(num_str)[2])
+                        pass
+                    pass
+                pass
+            else:
+                self.section("Num Type          Disp Enb    Where")
+                for bp in bpmgr.bpbynumber:
+                    if bp:
+                        self.bpprint(bp)
+                        pass
                     pass
                 pass
             pass

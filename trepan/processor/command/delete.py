@@ -18,7 +18,7 @@ import os
 
 # Our local modules
 from trepan.processor.command import base_cmd as Mbase_cmd
-from trepan.lib import complete as Mcomplete
+from trepan.processor import complete as Mcomplete
 
 
 class DeleteCommand(Mbase_cmd.DebuggerCommand):
@@ -39,8 +39,7 @@ number."""
     need_stack    = False
     short_help    = 'Delete some breakpoints or auto-display expressions'
 
-    def complete(self, prefix):
-        return Mcomplete.complete_brkpts(self.core.bpmgr, prefix)
+    complete = Mcomplete.complete_bpnumber
 
     def run(self, args):
         if len(args) <= 1:

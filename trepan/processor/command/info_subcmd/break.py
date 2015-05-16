@@ -18,7 +18,7 @@ import os
 
 # Our local modules
 from trepan.processor.command import base_subcmd as Mbase_subcmd
-from trepan.lib import complete as Mcomplete
+from trepan.processor import complete as Mcomplete
 
 
 class InfoBreak(Mbase_subcmd.DebuggerSubcommand):
@@ -34,8 +34,7 @@ See also:
     need_stack = False
     short_help = "Status of user-settable breakpoints"
 
-    def complete(self, prefix):
-        return Mcomplete.complete_brkpts(self.core.bpmgr, prefix)
+    complete = Mcomplete.complete_bpnumber
 
     def bpprint(self, bp):
         if bp.temporary:

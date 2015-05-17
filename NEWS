@@ -8,7 +8,6 @@ trepan 0.4.7 2015-05-16
 - add "info signals * to show a list of signals
 - fix misc bugs
 
-
 trepan 0.4.6 2015-05-15
 
 - Support for getting called from within ipython (--from_ipython)

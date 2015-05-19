@@ -51,6 +51,7 @@ See also:
 `info program`, `info frame`'''
 
     min_abbrev = 2
+    max_args = 0
     need_stack = True
     short_help = 'Show current-line information'
 

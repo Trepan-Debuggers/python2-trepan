@@ -83,6 +83,15 @@ Use dbgr(*string*) to issue debugger command: *string*'''
         if debug: my_locals['debugger'] = self.debugger
         my_locals['dbgr'] = self.dbgr
 
+        # Change from debugger completion to python completion
+        try:
+            import readline
+        except ImportError:
+            pass
+        else:
+            import rlcompleter
+            readline.parse_and_bind("tab: complete")
+
         sys.ps1 = 'trepan2 >>> '
         if len(my_locals):
             interact(banner=(banner_tmpl % ' with locals'),

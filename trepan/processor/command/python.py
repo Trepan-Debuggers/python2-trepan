@@ -91,7 +91,16 @@ Use dbgr(*string*) to issue debugger command: *string*'''
             interact(banner=(banner_tmpl % ''))
             pass
 
-        # restore our history if we can do so.
+        # restore completion and our history if we can do so.
+        if hasattr(self.proc.intf[-1], 'complete'):
+            try:
+                from readline import set_completer, parse_and_bind
+                parse_and_bind("tab: complete")
+                set_completer(self.proc.intf[-1].complete)
+            except ImportError:
+                pass
+            pass
+
         if have_line_edit:
             self.proc.read_history_file()
             pass

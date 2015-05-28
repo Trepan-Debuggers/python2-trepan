@@ -89,12 +89,16 @@ Use dbgr(*string*) to issue debugger command: *string*'''
             pass
 
         sys.ps1 = 'trepan2 >>> '
+        print banner
         try:
-            import bpython
-            bpython.embed(my_locals, ['-i'], banner=banner)
+            from bpython.curtsies import main as main_bpython
         except ImportError:
             return
 
+        try:
+            main_bpython([], my_locals)
+        except SystemExit:
+            pass
 
         # restore completion and our history if we can do so.
         if hasattr(self.proc.intf[-1], 'complete'):

@@ -146,3 +146,8 @@ the stock Python debugger, *pdb*. See this_ for those features.
 .. |Supported Python versions| image:: https://pypip.in/py_versions/trepan/badge.svg
    :target: https://pypi.python.org/pypi/trepan/
 .. _ipython-trepan: https://github.com/rocky/ipython-trepan
+
+
+.. image:: https://badges.gitter.im/Join%20Chat.svg
+   :alt: Join the chat at https://gitter.im/rocky/python2-trepan
+   :target: https://gitter.im/rocky/python2-trepan?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge

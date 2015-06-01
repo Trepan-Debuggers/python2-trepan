@@ -71,7 +71,8 @@ class DebuggerUserInput(Mbase.DebuggerInputBase):
         get_option = lambda key: Mmisc.option_set(opts, key,
                                                   self.DEFAULT_OPEN_READ_OPTS)
         if isinstance(inp, types.FileType) or \
-           isinstance(inp, StringIO.StringIO):
+           isinstance(inp, StringIO.StringIO) or \
+           (hasattr(inp, 'isatty') and inp.isatty()):
             self.use_raw = get_option('use_raw')
         elif isinstance(inp, types.StringType):
             if opts is None:

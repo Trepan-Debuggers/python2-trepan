@@ -55,7 +55,7 @@ class DebuggerUserOutput(Mbase.DebuggerOutputBase):
         """ This method the debugger uses to write. In contrast to
         writeline, no newline is added to the end to `str'.
         """
-        if self.output.closed:
+        if hasattr(self.output, 'closed') and self.output.closed:
             raise IOError("writing %s on a closed file" % msg)
         self.output.write(msg)
         if self.flush_after_write: self.flush()

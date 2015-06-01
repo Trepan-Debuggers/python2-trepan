@@ -1,0 +1,7 @@
+# -*- python -*-
+import inspect
+from trepan.api import run_eval
+def debug(str):
+    frame = inspect.currentframe()
+    return run_eval(str, globals_=frame.f_globals, locals_=frame.f_locals)
+print("pythonrc loaded")

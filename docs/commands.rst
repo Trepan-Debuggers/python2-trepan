@@ -30,7 +30,9 @@ name and a colon. Files is searched for using *sys.path*, and the `.py`
 suffix may be omitted in the file name.
 
 Examples:
-++++++++
++++++++++
+
+::
 
    break              # Break where we are current stopped at
    break if i < j     # Break at current line if i < j
@@ -60,6 +62,8 @@ made unconditional.
 Examples:
 +++++++++
 
+::
+
    condition 5 x > 10  # Breakpoint 5 now has condition x > 10
    condition 5         # Remove above condition
 
@@ -67,8 +71,6 @@ See also:
 +++++++++
 
 `break`, `tbreak`."""
-
-
 
 
 Data
@@ -93,6 +95,8 @@ disassemble that.
 
 Examples:
 +++++++++
+
+::
 
        disassemble    # Possibly lots of stuff dissassembled
        disassemble .  # Disassemble lines starting at current stopping point.
@@ -220,9 +224,9 @@ Files
 List (show me the code!)
 ------------------------
 
-The list command will show you your source code.
+The list command will show you your source code::
 
-.. code:: python
+::
 
         (trepan2) list 2
           1     #!/usr/bin/python

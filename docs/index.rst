@@ -6,12 +6,10 @@
 Welcome to trepan's documentation!
 ==================================
 
-Contents:
-
 .. toctree::
    :maxdepth: 2
 
-See :doc:`commands` for a the debugger command reference.
+See :doc:`commands` for the debugger command reference.
 
 Indices and tables
 ==================

@@ -15,6 +15,8 @@ position before continuing.
 Examples:
 ---------
 
+::
+
     continue          # Continue execution
     continue 5        # Continue with a one-time breakpoint at line 5
     continue basename # Go to os.path.basename if we have basename imported

@@ -1,7 +1,7 @@
 .. _show_autopython:
 
 Show Autopython
--------------
+---------------
 
 **show autopython**
 

@@ -1,7 +1,7 @@
 .. _show_args:
 
 Show Args (show arguments when program is started)
--------------------------------------------------
+--------------------------------------------------
 
 **show args**
 

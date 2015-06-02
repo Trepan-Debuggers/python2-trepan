@@ -6,9 +6,6 @@
 Welcome to trepan's documentation!
 ==================================
 
-.. toctree::
-   :maxdepth: 2
-
 See :doc:`commands` for the debugger command reference.
 
 Indices and tables

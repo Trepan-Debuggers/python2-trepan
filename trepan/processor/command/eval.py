@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2012-2013 Rocky Bernstein
+#  Copyright (C) 2012-2013, 2015 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -39,14 +39,18 @@ The above is done via regular expression matching. No fancy parsing is
 done, say, to look to see if *expr* is split across a line or whether
 var an assignment might have multiple variables on the left-hand side.
 
-**Examples:**
+Examples:
+---------
 
     eval 1+2  # 3
     eval      # Run current source-code line
     eval?     # but strips off leading 'if', 'while', ..
               # from command
 
-See also `set autoeval`, `pr`, `pp` and `examine`.
+See also:
+---------
+
+`set autoeval`, `pr`, `pp` and `examine`.
 """
     aliases       = ('eval?', '?')
     category      = 'data'

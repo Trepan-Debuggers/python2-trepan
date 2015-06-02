@@ -6,6 +6,7 @@ Support
 
    support/alias
    support/bpython
+   support/debug
    support/help
    support/ipython
    support/macro

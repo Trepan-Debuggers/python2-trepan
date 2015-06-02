@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009 Rocky Bernstein
+#   Copyright (C) 2009, 2015 Rocky Bernstein
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -21,7 +21,17 @@ from trepan.processor.command import base_subcmd as Mbase_subcmd
 
 
 class ShowAutoEval(Mbase_subcmd.DebuggerShowBoolSubcommand):
-    "Show Python evaluation of unrecognized debugger commands"
+    """"Show Python evaluation of unrecognized debugger commands
+
+**show autoeval**
+
+Show Python evaluation of unrecognized debugger commands.
+
+See also:
++++++++++
+
+`set autoeval`
+""""
     min_abbrev = len('autoe')
     pass
 

@@ -10,4 +10,6 @@ Following *gdb*, we classify commands into the following categories:
    commands/data
    commands/files
    commands/running
+   commands/stack
+   commands/status
    commands/support

@@ -1,0 +1,24 @@
+.. _set_events:
+
+Set Events
+----------
+**set events** [*event* ...]
+
+Sets the events that the debugger will stop on. `all` can be used as
+an abbreviation for listing all event names.
+
+Changing trace event filters works independently of turning on or off
+tracing-event printing.
+
+Examples:
++++++++++
+
+  set events line        # Set trace filter for line events only.
+  set events call return # Trace calls and returns only
+  set events all         # Set trace filter to all events.
+
+See also:
++++++++++
+
+`set trace`, `show trace`, and `show events`. `help step` lists event names.
+    

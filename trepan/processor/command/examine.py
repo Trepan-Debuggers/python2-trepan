@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009, 2013-2014 Rocky Bernstein
+#   Copyright (C) 2009, 2013-2015 Rocky Bernstein
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -29,12 +29,16 @@ Examine value, type and object attributes of an expression.
 In contrast to normal Python expressions, expressions should not have
 blanks which would cause shlex to see them as different tokens.
 
-**Examples:**
+Examples:
+---------
 
     examine x+1   # ok
     examine x + 1 # not ok
 
-See also `pr`, `pp`, and `whatis`.
+See also:
+---------
+
+`pr`, `pp`, and `whatis`.
 """
 
     aliases       = ('x',)

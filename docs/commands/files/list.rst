@@ -1,7 +1,4 @@
-Files
-=====
-
-Specifying and examining files.
+.. _list:
 
 List (show me the code!)
 ------------------------

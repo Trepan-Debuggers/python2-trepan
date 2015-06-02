@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2009, 2013 Rocky Bernstein
+#  Copyright (C) 2009, 2013, 2015 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -25,7 +25,14 @@ class SkipCommand(Mbase_cmd.DebuggerCommand):
     """**skip** [*count*]
 
 Set the next line that will be executed. The line must be within the
-stopped or bottom-most execution frame."""
+stopped or bottom-most execution frame.
+
+See also:
+---------
+
+`next`, `step`, `jump`, `continue`, `return` and
+`finish` for other ways to progress execution.
+"""
 
     aliases       = ('sk',)
     category      = 'running'

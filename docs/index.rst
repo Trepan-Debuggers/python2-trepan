@@ -6,11 +6,7 @@
 Welcome to trepan's documentation!
 ==================================
 
-See :doc:`commands` for the debugger command reference.
+.. toctree::
+   :maxdepth: 2
 
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   commands

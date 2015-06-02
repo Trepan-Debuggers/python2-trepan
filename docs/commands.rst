@@ -19,6 +19,7 @@ Following *gdb*, we classify commands into the following categories:
    data
    files
    support
+   running
 
 Stack
 ======

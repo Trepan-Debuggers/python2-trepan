@@ -3,12 +3,11 @@ Breakpoints
 
 Making the program stop at certain points
 
-.. toctree::
-   :maxdepth: 1
-
+.. _break:
 
 Break
 -----
+
 **break** [*location*] [if *condition*]]
 
 With a line number argument, set a break there in the current file.
@@ -39,7 +38,9 @@ Examples:
 See also:
 +++++++++
 
-`tbreak`.
+:ref:`tbreak <tbreak>`.
+
+.. _condition:
 
 Condition
 ---------
@@ -62,7 +63,9 @@ Examples:
 See also:
 +++++++++
 
-`break`, `tbreak`.
+:ref:`break <break>`, :ref:`tbreak <tbreak>`.
+
+.. _delete:
 
 Delete
 ------
@@ -74,8 +77,7 @@ Arguments are breakpoint numbers with spaces in between.  To delete
 all breakpoints, give no argument.  those breakpoints.  Without
 argument, clear all breaks (but first ask confirmation).
 
-See also the `clear` command which clears breakpoints by line/file
-number.
+.. _disable:
 
 Disable
 -------
@@ -84,12 +86,24 @@ Disable
 Disables the breakpoints given as a space separated list of breakpoint
 numbers. See also `info break` to get a list.
 
+See also:
++++++++++
+:ref:`enable <enable>`
+
+.. _enable:
+
 Enable
 -------
 **enable** *bpnumber* [*bpnumber* ...]
 
 Enables the breakpoints given as a space separated list of breakpoint
 numbers. See also `info break` to get a list.
+
+See also:
++++++++++
+:ref:`disable <disable>`
+
+.. _tbreak:
 
 Tbreak
 -------
@@ -117,4 +131,5 @@ Examples:
 
 See also:
 +++++++++
-`break`.
+
+:ref:`break <break>`.

@@ -122,6 +122,8 @@ suffix may be omitted in the file name.
 Examples:
 +++++++++
 
+::
+
    tbreak     # Break where we are current stopped at
    tbreak 10  # Break on line 10 of the file we are currently stopped at
    tbreak os.path.join # Break in function os.path.join

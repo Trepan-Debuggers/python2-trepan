@@ -16,6 +16,10 @@ PHONY=check clean dist distclean test test-unit test-functional rmChangeLog clea
 #: Default target - same as "check"
 all: check
 
+#: Make HTML docs
+html:
+	cd docs && $(MAKE) html
+
 #: Same as "check"
 test: check
 

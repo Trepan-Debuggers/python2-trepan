@@ -1,17 +1,11 @@
-Until a more detailed guide is written, we'll give an overview of
-*trepan2* here. You can find where we're going by comparing with the
-manuals for *pydb* and *ruby-debug*.
-
-.. contents::
-
-Breakpoints
-===========
+Command Reference
+=================
 
 Data
-====
+----
 
 Disassemble
-------------
+************
 
 *disassemble* [*thing*] [*start-line* [*end-line*]]
 
@@ -45,7 +39,7 @@ disassemble that.
 
 
 Set Auto Eval
--------------
+*************
 
 *set* *autoeval* [*on*\ \|\ *off*]
 
@@ -87,7 +81,7 @@ because by default, ``s`` is an alias for the debugger ``step`` command.
 It is possible to remove that alias if this causes constant problem.
 
 Set Auto List
--------------
+*************
 
 *set* *autolist* [*on*\ \|\ *off*]
 
@@ -99,7 +93,7 @@ you will get output like:
     -> 1 from subprocess import Popen, PIPE
     (trepan2) next
     (/users/fbicknel/Projects/disk_setup/sqlplus.py:2): <module>
-    -- 2 import os
+    ** 2 import os
       1     from subprocess import Popen, PIPE
       2  -> import os
       3     import re
@@ -112,7 +106,7 @@ you will get output like:
      10             self.stderr = None
     (trepan2) next
     (/users/fbicknel/Projects/disk_setup/sqlplus.py:3): <module>
-    -- 3 import re
+    ** 3 import re
       1     from subprocess import Popen, PIPE
       2     import os
       3  -> import re
@@ -129,7 +123,7 @@ You may also want to put this this in your debugger startup file. See
 [#Startup\_Profile]
 
 Set Different
--------------
+*************
 
 Set consecutive stops must be on different file/line positions.
 
@@ -152,10 +146,10 @@ suffixes if you wan to override this setting on a per-command basis.
 See also ``set trace`` to change what events you want to filter.
 
 Files
-=====
+-----
 
 List (show me the code!)
-------------------------
+************************
 
 The list command will show you your source code.
 
@@ -228,10 +222,10 @@ front-end <http://github.com/rocky/emacs-dbgr>`__. Also see
 [#Set\_Auto\_List] below.
 
 Running
-=======
+-------
 
 Step, Next, Finish, Skip, Retval
---------------------------------
+********************************
 
 Here's a sample session using these commands:
 
@@ -245,7 +239,7 @@ Here's a sample session using these commands:
         line - gcd.py:40
         line - gcd.py:41
         (gcd.py:41): <module>
-        -- 41     check_args()
+        ** 41     check_args()
         (trepan2) s # 's' is an abbreviation for step
         call - gcd.py:13
         (gcd.py:13): check_args
@@ -265,10 +259,10 @@ Here's a sample session using these commands:
         (trepan2) set trace off # That's enough tracing
         (trepan2) next  # like step but skips over function calls
         (gcd.py:43): <module>
-        -- 43     (a, b) = sys.argv[1:3]
+        ** 43     (a, b) = sys.argv[1:3]
         (trepan2) # A carriage-return or empty command runs the last step/next
         (gcd.py:44): <module>
-        -- 44     print "The GCD of %d and %d is %d" % (a, b, gcd(a, b))
+        ** 44     print "The GCD of %d and %d is %d" % (a, b, gcd(a, b))
         (trepan2) s<  # step until the next call
         (gcd.py:26): gcd
         -> 26 def gcd(a,b):
@@ -280,16 +274,16 @@ Here's a sample session using these commands:
         (trepan2)
 
 Stack
-=====
+-----
 
 Status
-======
+------
 
 Support
-=======
+-------
 
 Alias
------
+*****
 
 **alias** *alias-name* *debugger-command*
 
@@ -311,7 +305,7 @@ might be ``step``, ``show``, or ``set`` among others
 See also ``unalias`` and ``show alias``.
 
 Help!
------
+*****
 
 The help system has been reworked from *pydb* and *pdb* and it is more
 extensive now. Play around with it. Starting with a plain help
@@ -321,15 +315,15 @@ extensive now. Play around with it. Starting with a plain help
       (trepan2) help
       Classes of commands:
 
-      breakpoints   -- Making the program stop at certain points
-      data          -- Examining data
+      breakpoints   ** Making the program stop at certain points
+      data          ** Examining data
       ...
 
       (trepan2) help breakpoints
       List of commands:
 
-      break         -- Set breakpoint at specified line or function
-      condition     -- Specify breakpoint number N ...
+      break         ** Set breakpoint at specified line or function
+      condition     ** Specify breakpoint number N ...
       ...
       (trepan2) help *
       List of all debugger commands:
@@ -342,7 +336,7 @@ the command: ``set width``. To see the current line width, initially
 taken from the *COLUMNS* environment variable, type: ``show width``.
 
 Macro
------
+*****
 
 *macro* *macro-name* *lambda-object*
 
@@ -408,7 +402,7 @@ rather than ``fin+(3,2)`` or ``fin+ 3, 2``.
 See also ``alias``, and ``info macro``.
 
 Python
-------
+******
 
 *python* [*-d* ]
 
@@ -424,7 +418,7 @@ To issue a debugger command use function *dbgr()*. For example:
 
       dbgr('info program')
 Unalias
--------
+*******
 
 **unalias** *alias-name*
 

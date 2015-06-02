@@ -1,5 +1,5 @@
-Command Reference
-*****************
+Trepan Command Reference
+************************
 
 Following *gdb*, we classify commands into the following categories:
 

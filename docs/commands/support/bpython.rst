@@ -1,6 +1,6 @@
 .. _bpython:
 
-IPython
+BPython
 -------
 
 **bpython** [*-d* ]
@@ -22,4 +22,4 @@ To issue a debugger command use function *dbgr()*. For example:
 See also:
 +++++++++
 
-`python`, and `ipython`.
+:ref:`python <python>`, and :ref:`ipython <ipython>`.

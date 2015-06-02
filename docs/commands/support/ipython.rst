@@ -22,4 +22,4 @@ To issue a debugger command use function *dbgr()*. For example:
 See also:
 +++++++++
 
-`python`, and `bpython`.
+:ref:`python <python>`, and :ref:`bpython <bpython>`.

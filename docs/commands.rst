@@ -1,11 +1,81 @@
 Command Reference
-=================
+*****************
+
+Following *gdb*, we classify commands into the following categories:
+
+* breakpoints -- Making program stop at certain points
+* data -- Examining data
+* files -- Specifying and examining files
+* running -- Running the program
+* stack -- Examining the stack
+* status -- Status inquiries
+* support -- Support facilities
+
+
+Breakpoints
+===========
+
+Break
+-----
+**break** [*location*] [if *condition*]]
+
+With a line number argument, set a break there in the current file.
+With a function name, set a break at first executable line of that
+function.  Without argument, set a breakpoint at current location.  If
+a second argument is `if`, subsequent arguments given an expression
+which must evaluate to true before the breakpoint is honored.
+
+The location line number may be prefixed with a filename or module
+name and a colon. Files is searched for using *sys.path*, and the `.py`
+suffix may be omitted in the file name.
+
+Examples:
+++++++++
+
+   break              # Break where we are current stopped at
+   break if i < j     # Break at current line if i < j
+   break 10           # Break on line 10 of the file we are
+                      # currently stopped at
+   break os.path.join # Break in function os.path.join
+   break os.path:45   # Break on line 45 of os.path
+   break myfile:5 if i < j # Same as above but only if i < j
+   break myfile.py:45 # Break on line 45 of myfile.py
+   break myfile:45    # Same as above.
+
+See also:
++++++++++
+
+`tbreak`.
+
+Condition
+---------
+
+**condition** *bp_number* *condition*
+
+*bp_number* is a breakpoint number. *condition* is an expression which
+must evaluate to *True* before the breakpoint is honored.  If *condition*
+is absent, any existing condition is removed; i.e., the breakpoint is
+made unconditional.
+
+Examples:
++++++++++
+
+   condition 5 x > 10  # Breakpoint 5 now has condition x > 10
+   condition 5         # Remove above condition
+
+See also:
++++++++++
+
+`break`, `tbreak`."""
+
+
+
 
 Data
-----
+====
 
 Disassemble
-************
+-----------
 
 *disassemble* [*thing*] [*start-line* [*end-line*]]
 
@@ -21,9 +91,8 @@ a number, then the line number is relative to the current frame number.
 With a class, method, function, pyc-file, code or string argument
 disassemble that.
 
-*Examples:*
-
-::
+Examples:
++++++++++
 
        disassemble    # Possibly lots of stuff dissassembled
        disassemble .  # Disassemble lines starting at current stopping point.
@@ -39,7 +108,7 @@ disassemble that.
 
 
 Set Auto Eval
-*************
+-------------
 
 *set* *autoeval* [*on*\ \|\ *off*]
 
@@ -81,7 +150,7 @@ because by default, ``s`` is an alias for the debugger ``step`` command.
 It is possible to remove that alias if this causes constant problem.
 
 Set Auto List
-*************
+-------------
 
 *set* *autolist* [*on*\ \|\ *off*]
 
@@ -123,7 +192,7 @@ You may also want to put this this in your debugger startup file. See
 [#Startup\_Profile]
 
 Set Different
-*************
+-------------
 
 Set consecutive stops must be on different file/line positions.
 
@@ -146,10 +215,10 @@ suffixes if you wan to override this setting on a per-command basis.
 See also ``set trace`` to change what events you want to filter.
 
 Files
------
+=====
 
 List (show me the code!)
-************************
+------------------------
 
 The list command will show you your source code.
 
@@ -222,10 +291,10 @@ front-end <http://github.com/rocky/emacs-dbgr>`__. Also see
 [#Set\_Auto\_List] below.
 
 Running
--------
+=======
 
 Step, Next, Finish, Skip, Retval
-********************************
+--------------------------------
 
 Here's a sample session using these commands:
 
@@ -274,16 +343,16 @@ Here's a sample session using these commands:
         (trepan2)
 
 Stack
------
+======
 
 Status
-------
+=======
 
 Support
--------
+=======
 
 Alias
-*****
+-----
 
 **alias** *alias-name* *debugger-command*
 
@@ -304,8 +373,8 @@ might be ``step``, ``show``, or ``set`` among others
 
 See also ``unalias`` and ``show alias``.
 
-Help!
-*****
+Help
+----
 
 The help system has been reworked from *pydb* and *pdb* and it is more
 extensive now. Play around with it. Starting with a plain help
@@ -336,7 +405,7 @@ the command: ``set width``. To see the current line width, initially
 taken from the *COLUMNS* environment variable, type: ``show width``.
 
 Macro
-*****
+-----
 
 *macro* *macro-name* *lambda-object*
 
@@ -402,7 +471,7 @@ rather than ``fin+(3,2)`` or ``fin+ 3, 2``.
 See also ``alias``, and ``info macro``.
 
 Python
-******
+------
 
 *python* [*-d* ]
 
@@ -417,8 +486,9 @@ To issue a debugger command use function *dbgr()*. For example:
 ::
 
       dbgr('info program')
+
 Unalias
-*******
+-------
 
 **unalias** *alias-name*
 

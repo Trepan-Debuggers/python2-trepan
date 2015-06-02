@@ -128,7 +128,7 @@ Many of the things listed below doesn't directly effect end-users, but it does e
 Documentation
 -------------
 
-Documentation: http://trepan.readthedocs.org
+Documentation: http://python2-trepan.readthedocs.org
 
 .. _pydb:  http://bashdb.sf.net/pydb
 .. _trepan3: https://github.com/rocky/python3-trepan

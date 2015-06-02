@@ -28,7 +28,7 @@ numbers. See also `info break` to get a list.
 
 See also:
 ---------
-`disable`
+`enable`
 """
 
     category      = 'breakpoints'

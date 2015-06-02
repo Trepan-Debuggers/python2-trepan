@@ -7,6 +7,6 @@ Welcome to trepan's documentation!
 ==================================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    commands

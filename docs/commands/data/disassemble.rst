@@ -1,7 +1,7 @@
 .. _disassemble:
 
-Disassemble
------------
+Disassemble (CPython disassembly)
+---------------------------------
 
 *disassemble* [*thing*] [*start-line* [*end-line*]]
 

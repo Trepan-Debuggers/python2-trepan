@@ -1,7 +1,7 @@
 .. _finish:
 
-Finish (AKA step out)
---------------------
+Finish (step out)
+-----------------
 
 **finish** [*level*]
 

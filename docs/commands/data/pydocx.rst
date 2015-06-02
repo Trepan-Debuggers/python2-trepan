@@ -1,5 +1,5 @@
-Pydocx
-------
+Pydocx (show pydoc)
+-------------------
 
 **pydocx** *name* ...
 

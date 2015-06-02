@@ -1,7 +1,8 @@
 .. _delete:
 
-Delete
-------
+Delete (remove breakpoints)
+---------------------------
+
 **delete** [*bpnumber* [*bpnumber*...]]
 
 Delete some breakpoints.

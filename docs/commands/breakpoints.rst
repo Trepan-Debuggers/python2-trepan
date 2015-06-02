@@ -8,6 +8,7 @@ Making the program stop at certain points
 
    breakpoints/break
    breakpoints/condition
+   breakpoints/delete
    breakpoints/disable
    breakpoints/enable
    breakpoints/tbreak

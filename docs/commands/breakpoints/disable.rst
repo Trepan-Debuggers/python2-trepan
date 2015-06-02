@@ -1,7 +1,8 @@
 .. _disable:
 
-Disable
--------
+Disable (disable breakpoints)
+-----------------------------
+
 **disable** *bpnumber* [*bpnumber* ...]
 
 Disables the breakpoints given as a space separated list of breakpoint

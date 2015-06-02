@@ -1,7 +1,7 @@
 .. _break:
 
-Break
------
+Break (set a breakpoint)
+------------------------
 
 **break** [*location*] [if *condition*]]
 

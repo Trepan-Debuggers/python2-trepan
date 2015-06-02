@@ -1,7 +1,8 @@
 .. _eval:
 
-Eval
-----
+Eval (evaluate Python code)
+---------------------------
+
 **eval** *python-statement*
 
 Run *python-statement* in the context of the current frame.

@@ -1,7 +1,7 @@
 .. _condition:
 
-Condition
----------
+Condition (add condition to breakpoint)
+---------------------------------------
 
 **condition** *bp_number* *condition*
 

@@ -1,5 +1,5 @@
-Pp
----
+Pp (pretty print expression)
+----------------------------
 
 **pp** *expression*
 

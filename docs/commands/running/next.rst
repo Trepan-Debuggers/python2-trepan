@@ -1,9 +1,9 @@
 .. _next:
 
-Next (AKA Step over)
---------------------
+Next (step over)
+----------------
 
-**next**[**+**|**-**] [*count*]
+**next** [ **+** | **-** ] [ *count* ]
 
 Step one statement ignoring steps into function calls at this level.
 

@@ -1,5 +1,5 @@
-Pr
----
+Pr (print expression)
+---------------------
 
 **pr** *expression*
 

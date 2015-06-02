@@ -70,9 +70,9 @@ Use dbgr(*string*) to issue debugger command: *string*'''
                             "debugger object.")
             pass
         my_locals  = {}
-        my_globals = None
+        # my_globals = None
         if self.proc.curframe:
-            my_globals = self.proc.curframe.f_globals
+            # my_globals = self.proc.curframe.f_globals
             if self.proc.curframe.f_locals:
                 my_locals = self.proc.curframe.f_locals
                 pass

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2009-2010, 2013 Rocky Bernstein
+#  Copyright (C) 2009-2010, 2013, 2015 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -30,6 +30,11 @@ If *-d* is passed, you can access debugger state via local variable *debugger*.
 To issue a debugger command use function *dbgr()*. For example:
 
   dbgr('info program')
+
+See also:
+---------
+
+`ipython`, `bpython`
 """
 
     aliases      = ('py', 'shell')

@@ -12,6 +12,9 @@ Following *gdb*, we classify commands into the following categories:
 * support -- Support facilities
 
 
+.. toctree::
+   :maxdepth: 2
+
 Breakpoints
 ===========
 
@@ -70,7 +73,7 @@ Examples:
 See also:
 +++++++++
 
-`break`, `tbreak`."""
+`break`, `tbreak`.
 
 
 Data

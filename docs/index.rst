@@ -9,4 +9,5 @@ Welcome to trepan's documentation!
 .. toctree::
    :maxdepth: 1
 
+   entry-exit
    commands

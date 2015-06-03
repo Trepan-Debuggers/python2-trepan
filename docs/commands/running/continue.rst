@@ -3,7 +3,7 @@
 Continue
 --------
 
-**continue** [[*file*:]*lineno* | *function*]
+**continue** [[ *file* :] *lineno* | *function* ]
 
 Leave the debugger read-eval print loop and continue
 execution. Subsequent entry to the debugger however may occur via
@@ -13,7 +13,7 @@ If a line position or function is given, a temporary breakpoint is set at that
 position before continuing.
 
 Examples:
----------
++++++++++
 
 ::
 
@@ -27,6 +27,5 @@ Examples:
 See also:
 +++++++++
 
-:ref:`step <step>` :ref:`jump <jump>`, :ref:`next
-:ref::ref:<next>`, and `finish <finish>` provide other ways to
-:ref:progress execution.
+:ref:`step <step>` :ref:`jump <jump>`, :ref:`next <next>`, and
+:ref:`finish <finish>` provide other ways to progress execution.

@@ -13,14 +13,14 @@ There are a couple ways you can enter the debugger:
 Invoking the Debugger Initially
 ===============================
 
-The simplest way to debug your program is to call run ``trepan2``
-specifying the name of your program and its options and any debugger
-options:
+The simplest way to debug your program is to call run `trepan2` (or
+`trepan3k` for Python). Give the name of your program and its options
+and any debugger options:
 
 .. code:: console
 
         $ cat test.py
-        print 'Hello, World!'
+        print('Hello, World!')
 
         $ trepan2 test.py
 
@@ -209,12 +209,12 @@ and call the debugger on signal *USR1*:
 
 .. code:: python
 
-        import signal
-        def signal_handler(num, f):
-            from trepan.api import debug; debug()
-           return
-        signal.signal(signal.SIGUSR1, signal_handler)
-        # Go about your business...
+          import signal
+          def signal_handler(num, f):
+	    from trepan.api import debug; debug()
+	    return
+          signal.signal(signal.SIGUSR1, signal_handler)
+          # Go about your business...
 
 However, if you have entered the debugger either by running intially or
 previously via a debug() call trepan2 has already set up such default

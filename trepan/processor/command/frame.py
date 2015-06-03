@@ -56,7 +56,7 @@ while `(5 * 3) - 1)` isn't.
 See also:
 ---------
 
-`up`, `down`, `backtrace`, and `info thread`.
+`up`, `down`, `backtrace`, and `info threads`.
 """
 
     category      = 'stack'

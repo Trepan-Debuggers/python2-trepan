@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009, 2013 Rocky Bernstein
+#   Copyright (C) 2009, 2013, 2015 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -24,7 +24,15 @@ class RunCommand(Mbase_cmd.DebuggerCommand):
     """**run**
 
 Soft restart debugger and program via a *DebuggerRestart*
-exception."""
+exception.
+
+See also:
+---------
+
+`restart` for another way to restart the debugged program.
+
+See `quit`, `exit` or `kill` for termination commands.
+"""
 
     aliases       = ('R',)
     category      = 'support'

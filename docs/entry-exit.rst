@@ -1,4 +1,7 @@
-.. contents::
+Entering the Trepan Debugger
+****************************
+
+.. toctree::
 
 There are a couple ways you can enter the debugger:
 
@@ -21,11 +24,11 @@ options:
 
         $ trepan2 test.py
 
-For help on trepan2's options add the ``==help`` option.
+For help on trepan2's options add the ``--help`` option.
 
 .. code:: console
 
-        $ trepan2 ==help
+        $ trepan2 --help
         Usage: trepan2 [debugger-options] [python-script [script-options...]]
         ...
 
@@ -34,23 +37,23 @@ options put == after the debugger's options:
 
 .. code:: console
 
-      $ trepan2 ==trace == test.py ==test-option1 b c
+      $ trepan2 --trace -- test.py --test-option1 b c
 
 If you have previously set up remote debugging using
-``trepan2 ==server``, you'll want to run the client version of *trepan2*
+``trepan2 --server``, you'll want to run the client version of *trepan2*
 which is a separate program ``trepan2c``.
 
 Calling the debugger from IPython
 =================================
 
 Installing the IPython extension
-*********************************
+--------------------------------
 
 Use the `trepan IPython extension <https://pypi.python.org/pypi?:action=display&name=trepan>`_.
 
 To install execute the the following code snippet in an IPython shell or IPython notebook cell:
 
-.. code:: console
+.. code:: ipython
 
     %install_ext https://raw.github.com/rocky/ipython-trepan/master/trepanmagic.py
     %load_ext trepanmagic
@@ -64,7 +67,7 @@ or put *trepanmagic.py* in `$HOME/.python/profile_default/startup`:
     wget https://raw.github.com/rocky/ipython-trepan/master/trepanmagic.py
 
 Trepan IPython Magic Functions
-*******************************
+------------------------------
 
 After installing the trepan extension, the following IPython magic functions are added:
 
@@ -73,9 +76,9 @@ After installing the trepan extension, the following IPython magic functions are
 * `%trepan_pm`  do post-mortem debugging
 
 Example
-*******
++++++++
 
-.. code:: console
+.. code:: ipython
 
        $ ipython
        Python 2.7.8 (default, Apr  6 2015, 16:25:30)
@@ -92,7 +95,7 @@ Example
        -> 68 def join(a, *p):
        (trepan2) s
        (/home/rocky/.pyenv/versions/2.7.8/lib/python2.7/posixpath.py:73): join
-       == 73     path = a
+       -- 73     path = a
        (trepan2) c
        Out[3]: 'foo/bar'
        In [4]:
@@ -106,8 +109,6 @@ Calling the debugger from an Interactive Python Shell
 *Note: by "interactive python shell" I mean running "python" or "python -i" and this is distinct from going into IPython which was covered in the last section.*
 
 Put these lines in a file::
-
-.. code:: python
 
 	  import inspect
 	  from trepan.api import run_eval
@@ -130,7 +131,7 @@ After doing this, when you run `python -i` you should see on entry the *print* m
 
 If you see the above "pythonrc" message, great! If not, it might be that *PYTHONSTARTUP* is not defined. Here run:
 
-.. code:: console
+.. code:: ipython
 
 	  >>> path="pythonrc" # customize to location of file
           >>> exec(open(path).read())

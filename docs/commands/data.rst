@@ -14,6 +14,5 @@ Examining data.
    data/pp
    data/pr
    data/pydocx
-   data/set
    data/undisplay
    data/whatis

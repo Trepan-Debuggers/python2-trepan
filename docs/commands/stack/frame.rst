@@ -40,4 +40,4 @@ See also:
 +++++++++
 
 :ref:`down <down>`, :ref:`up <up>`, :ref:`backtrace <backtrace>`, and
-:ref:`info thread <info_thread>`.
+:ref:`info threads <info_threads>`.

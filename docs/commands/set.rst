@@ -1,5 +1,10 @@
-Modifies parts of the debugger environment.
-You can see these environment settings with the "show" command.
+.. _set:
+
+Set
+===
+
+Modifies parts of the debugger environment.  You can see these
+environment settings with the :ref:`show <show>` command.
 
 .. toctree::
    :maxdepth: 1

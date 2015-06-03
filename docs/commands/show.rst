@@ -1,5 +1,7 @@
-Status
-======
+.. _show:
+
+Show
+====
 
 .. toctree::
    :maxdepth: 1

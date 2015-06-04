@@ -1,6 +1,6 @@
 .. _set:
 
-**set* [ *set-subcommand* ]
+**set** [ *set-subcommand* ]
 
 Modifies parts of the debugger environment.
 

@@ -119,7 +119,7 @@ Put these lines in a file::
 
 A copy of the above can be found `here <https://github.com/rocky/python2-trepan/blob/master/PYTHONSTARTUP/pythonrc>`_. I usually put these line in `$HOME/.pythonrc`. Set the environment variable *PYTHONSTARTUP* to `$HOME/.pythonrc`.
 
-After doing this, when you run `python -i` you should see on entry the *print* message from the file. For example;
+After doing this, when you run `python -i` you should see on entry the *print* message from the file. For example:
 
 .. code:: console
 

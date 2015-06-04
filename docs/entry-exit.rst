@@ -14,7 +14,7 @@ Invoking the Debugger Initially
 ===============================
 
 The simplest way to debug your program is to call run `trepan2` (or
-`trepan3k` for Python). Give the name of your program and its options
+`trepan3k` for Python 3). Give the name of your program and its options
 and any debugger options:
 
 .. code:: console
@@ -33,7 +33,7 @@ For help on trepan2's options add the ``--help`` option.
         ...
 
 To separate options to the program you want to debug from trepan2's
-options put == after the debugger's options:
+options put `--` after the debugger's options:
 
 .. code:: console
 
@@ -49,7 +49,7 @@ Calling the debugger from IPython
 Installing the IPython extension
 --------------------------------
 
-Use the `trepan IPython extension <https://pypi.python.org/pypi?:action=display&name=trepan>`_.
+Use the `trepan IPython extension <https://github.com/rocky/ipython-trepan>`_.
 
 To install execute the the following code snippet in an IPython shell or IPython notebook cell:
 

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2009, 2013 Rocky Bernstein
+#  Copyright (C) 2009, 2013, 2015 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@ from trepan.processor.command import base_submgr
 
 
 class SetCommand(base_submgr.SubcommandMgr):
-    """**set** *set subcommand*
+    """**set** *set-subcommand*
 
 Modifies parts of the debugger environment.
 
@@ -29,6 +29,8 @@ information about just that subcommand.
 
 Type `set` for a list of *set* subcommands and what they do.
 Type `help set *` for just the list of *set* subcommands.
+
+All of the `set` commands have a corresponding `show` command.
 """
 
     category      = 'data'

@@ -35,7 +35,7 @@ See `quit`, `exit` or `kill` for termination commands.
 """
 
     aliases       = ('R',)
-    category      = 'support'
+    category      = 'running'
     min_args      = 0
     max_args      = 0
     name          = os.path.basename(__file__).split('.')[0]

@@ -26,7 +26,7 @@ class RestartCommand(Mbase_cmd.DebuggerCommand):
 Restart debugger and program via an *exec()* call. All state is lost,
 and new copy of the debugger is used."""
 
-    category      = 'support'
+    category      = 'running'
     min_args      = 0
     max_args      = 0
     name          = os.path.basename(__file__).split('.')[0]

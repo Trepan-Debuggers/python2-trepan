@@ -28,6 +28,8 @@ about just that subcommand.
 
 Type `show` for a list of *show* subcommands and what they do.
 Type `help show *` for just a list of *show* subcommands.
+
+Many of the `show` commands have a corresponding `set` command.
 """
 
     category      = 'status'

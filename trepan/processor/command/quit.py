@@ -48,7 +48,7 @@ See `exit` or `kill` for more forceful termination commands.
 """
 
     aliases       = ('q',)
-    category      = 'support'
+    category      = 'running'
     min_args      = 0
     max_args      = 0
     name          = os.path.basename(__file__).split('.')[0]

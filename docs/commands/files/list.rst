@@ -3,8 +3,6 @@
 List (show me the code!)
 ------------------------
 
-::
-
 **list** [*module] [*first* [*num*]]
 **list** *location* [*num*]
 
@@ -40,6 +38,8 @@ just something that evaluates to a positive integer.
 Examples:
 +++++++++
 
+::
+
     list 5            # List starting from line 5
     list 4+1          # Same as above.
     list foo.py:5     # List starting from line 5 of foo.py
@@ -55,4 +55,5 @@ Examples:
 See also:
 +++++++++
 
-`set listize` or `show listsize` to see or set the value.
+:ref:`set listize <set_listsize>` or :ref:`show listsize
+<show_listsize>` to see or set the number of source-code lines to list.

@@ -2,7 +2,7 @@
 
 Set Autopython
 --------------
-**set** **autopython** [**on**|**off**]
+**set autopython** [ **on** | **off** ]
 
 Go into a Python shell on debugger entry.
 

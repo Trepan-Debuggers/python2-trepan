@@ -3,7 +3,7 @@
 Set Auto Eval
 -------------
 
-*set* *autoeval* [*on* | *off*]
+**set autoeval** [ **on** | **off** ]
 
 Evaluate unrecognized debugger commands.
 
@@ -41,3 +41,8 @@ which produces when *autoeval* is on:
 
 because by default, ``s`` is an alias for the debugger ``step`` command.
 It is possible to remove that alias if this causes constant problem.
+
+See also:
++++++++++
+
+:ref:`show autoeval <show_autoeval>`

@@ -9,4 +9,4 @@ Set the number of characters the debugger thinks are in a line.
 See also:
 +++++++++
 
-`show width`
+:ref:`show width <show_width>`

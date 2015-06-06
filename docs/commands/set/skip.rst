@@ -10,3 +10,8 @@ new function or class into Python's symbol table. (More to the point,
 it can be an annoyance.) However if you do want this, for example
 perhaps you want to debug methods is over-writing one another, then
 set this off.
+
+See also:
++++++++++
+
+:ref:`show skip <show_skip>`

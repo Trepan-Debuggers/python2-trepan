@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2009 Rocky Bernstein
+#  Copyright (C) 2009, 2015 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,8 +19,12 @@ from trepan.processor.command import base_subcmd as Mbase_subcmd
 
 
 class ShowTrace(Mbase_subcmd.DebuggerShowBoolSubcommand):
-    """Show event tracing.
+    """**show trace**
 
-See also 'set events'."""
+Show event tracing.
+
+See also:
+---------
+`set events`."""
 
     min_abbrev = 2  # Need at least "show tr"

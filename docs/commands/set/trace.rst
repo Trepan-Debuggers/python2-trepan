@@ -2,6 +2,13 @@
 
 Set Trace
 ---------
+
+**set trace** [ **on** | **off** ]
+
 Set event tracing.
 
-See also "set events","set trace", and "show trace".
+See also:
++++++++++
+
+:ref:`set events <set_events>`, :ref:`set trace <set_trace>`, and
+:ref:`show trace <show_trace>`

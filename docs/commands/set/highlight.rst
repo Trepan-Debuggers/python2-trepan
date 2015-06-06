@@ -2,7 +2,7 @@
 
 Set Highlight
 -------------
-**set highlight** [**reset**] {**plain**|**light**|**dark**|**off**}
+**set highlight** [ **reset** ] {**plain** | **light** | **dark** | **off**}
 
 Set whether we use terminal highlighting. Permissable values are:
 
@@ -13,3 +13,8 @@ Set whether we use terminal highlighting. Permissable values are:
 
 If the first argument is *reset*, we clear any existing color formatting
 and recolor all source code output.
+
+See also:
++++++++++
+
+:ref:`show highlight <show_highlight>`

@@ -1,7 +1,7 @@
 .. _edit:
 
-Edit (show me the code!)
-------------------------
+Edit
+----
 
 **edit** *position*
 

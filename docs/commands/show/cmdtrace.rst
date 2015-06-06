@@ -2,4 +2,7 @@
 
 Show Cmdtrace
 -------------
+
+**show cmdtrace**
+
 Show debugger commands before running them

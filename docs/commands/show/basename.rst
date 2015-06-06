@@ -7,7 +7,6 @@ Show Basename
 
 Show Python evaluation of unrecognized debugger commands.
 
-See also:
-+++++++++
+.. seealso::
 
-:ref:`set basename <set_basename>`
+   :ref:`set basename <set_basename>`

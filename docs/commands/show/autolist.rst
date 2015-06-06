@@ -7,7 +7,6 @@ Show Autolist
 
 Run a debugger ref:`list <list>` command automatically on debugger entry.
 
-See also:
-+++++++++
+.. seealso::
 
 :ref:`set autolist <set_autolist>`

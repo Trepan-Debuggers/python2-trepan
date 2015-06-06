@@ -7,7 +7,6 @@ Show Autoeval
 
 Show Python evaluation of unrecognized debugger commands.
 
-See also:
-+++++++++
+.. seealso::
 
-:ref:`set autoeval <set_autoeval>`
+   :ref:`set autoeval <set_autoeval>`

@@ -12,7 +12,6 @@ attached to.  If instead of an alias "*" appears anywhere as an alias
 then just a list of aliases is printed, not what commands they are
 attached to.
 
-See also:
-+++++++++
+.. seealso::
 
-:ref:`alias <alias>`
+   :ref:`alias <alias>`

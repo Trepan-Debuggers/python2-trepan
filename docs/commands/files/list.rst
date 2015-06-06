@@ -55,5 +55,4 @@ Examples:
 
 .. seealso::
 
-   :ref:`set listize <set_listsize>`, or :ref:`show listsize
-<show_listsize>` to see or set the number of source-code lines to list.
+   :ref:`set listize <set_listsize>`, or :ref:`show listsize <show_listsize>` to see or set the number of source-code lines to list.

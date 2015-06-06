@@ -20,7 +20,20 @@ from trepan import misc as Mmisc
 
 
 class InfoProgram(Mbase_subcmd.DebuggerSubcommand):
-    'Execution status of the program.'
+    """**info program**
+
+Execution status of the program. Listed are:
+
+* Program name
+
+* Instruction PC
+
+* Reason the program is stopped.
+
+See also:
+---------
+
+`info line`, `info args`, `info frame`"""
 
     min_abbrev = 1  # Need at least info p
     max_args   = 0
@@ -28,7 +41,6 @@ class InfoProgram(Mbase_subcmd.DebuggerSubcommand):
     short_help = 'Execution status of the program'
 
     def run(self, args):
-        """Execution status of the program."""
         mainfile = self.core.filename(None)
         if self.core.is_running():
             if mainfile:

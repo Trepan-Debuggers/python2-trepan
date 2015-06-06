@@ -22,7 +22,28 @@ from trepan.processor import frame as Mframe
 
 
 class InfoFrame(Mbase_subcmd.DebuggerSubcommand):
-    '''Show the detailed information about the current frame'''
+    """**info frame** [ *frame-number* ]
+
+Show the detailed information *frame-number* or the current frame if
+*frame-number* is not specified.
+
+Specific information includes:
+
+* the frame number
+
+* the source-code line number that this frame is stopped in
+
+* the last instruction executed; -1 if the program are before the first instruction
+
+* a function that tracing this frame or `None`
+
+* Whether the frame is in restricted execution
+
+See also:
+---------
+
+`info locals`, `info globals`, `info args`"""
+
     min_abbrev = 2
     max_args = 1
     need_stack = True
@@ -60,14 +81,14 @@ class InfoFrame(Mbase_subcmd.DebuggerSubcommand):
             frame_num = len(proc.stack)-1-proc.curindex
 
         self.section('Frame %d' % frame_num)
-        if hasattr(frame, 'f_restricted'):
-            self.msg('  restricted execution: %s' % frame.f_restricted)
-        self.msg('  tracing function: %s' % frame.f_trace)
         self.msg('  line number: %d' % frame.f_lineno)
         self.msg('  last instruction: %d' % frame.f_lasti)
         if frame.f_exc_type:
             self.msg('  exception type: %s' % frame.f_exc_type)
             self.msg('  exception value: %s'% frame.f_exc_value)
+        self.msg('  tracing function: %s' % frame.f_trace)
+        if hasattr(frame, 'f_restricted'):
+            self.msg('  restricted execution: %s' % frame.f_restricted)
         return False
     pass
 

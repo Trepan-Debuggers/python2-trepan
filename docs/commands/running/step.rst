@@ -3,7 +3,7 @@
 Step (step into)
 ----------------
 
-**step**[**+**|**-**|**<**|**>**|**!**] [*event*...] [*count*]
+**step** [ **+** | **-** | **<** | **>** | **!** ] [*event*...] [*count*]
 
 Execute the current line, stopping at the next event.
 
@@ -36,11 +36,11 @@ Examples:
   step>       # same as above
   step call line # Step line *and* call events
 
-Related and similar is the `next` command.
-
 See also:
 +++++++++
 
-:ref:`skip <step>`, :ref:`jump <jump>` (there's no `hop` yet),
+Related and similar is the :ref:`next <next>` command.
+
+:ref:`skip <skip>`, :ref:`jump <jump>` (there's no `hop` yet),
 :ref:`continue <continue>`, and
 :ref:`finish <finish>` provide other ways to progress execution.

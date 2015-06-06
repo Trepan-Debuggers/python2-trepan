@@ -40,6 +40,7 @@ suffixes if you wan to override this setting on a per-command basis.
 
 See also:
 ---------
+
 `set trace` to change what events you want to filter.
 `show trace`
 """

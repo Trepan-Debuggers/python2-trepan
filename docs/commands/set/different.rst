@@ -1,5 +1,7 @@
 .. _set_different:
 
+**set** **different** [ **on** | **off** ]
+
 Set Different
 -------------
 
@@ -25,3 +27,4 @@ See also:
 +++++++++
 
 :ref:`set trace <set_trace>` to change what events you want to filter.
+:ref:`show trace <show trace>`.

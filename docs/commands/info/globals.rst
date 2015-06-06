@@ -2,6 +2,7 @@
 
 Info Globals
 ------------
+
 **info globals**
 
 Show the global variables of the current stack frame.

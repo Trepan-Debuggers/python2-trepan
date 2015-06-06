@@ -4,14 +4,19 @@ Set Events
 ----------
 **set events** [*event* ...]
 
-Sets the events that the debugger will stop on. `all` can be used as
-an abbreviation for listing all event names.
+Sets the events that the debugger will stop on. Event names are:
+`c_call`, `c_exception`, `c_return`, `call`, `exception`, `line`,
+or `return`.
+
+`all` can be used as an abbreviation for listing all event names.
 
 Changing trace event filters works independently of turning on or off
 tracing-event printing.
 
 Examples:
 +++++++++
+
+::
 
   set events line        # Set trace filter for line events only.
   set events call return # Trace calls and returns only
@@ -20,5 +25,4 @@ Examples:
 See also:
 +++++++++
 
-`set trace`, `show trace`, and `show events`. `help step` lists event names.
-    
+`set trace`, `show trace`, and `show events`

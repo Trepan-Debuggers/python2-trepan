@@ -6,7 +6,6 @@ Set Maxstring
 
 Set the number of characters allowed in showing string values
 
-See also:
-+++++++++
+.. seealso::
 
-:ref:`show maxstring <show_maxstring>`
+   :ref:`show maxstring <show_maxstring>`

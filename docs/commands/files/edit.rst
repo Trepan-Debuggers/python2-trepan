@@ -8,7 +8,6 @@ Edit
 Edit specified file or module.
 With no argument, edits file containing most recent line listed.
 
-See also:
-+++++++++
+.. seealso::
 
-:ref:`list <list>`
+   :ref:`list <list>`

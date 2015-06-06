@@ -1,3 +1,5 @@
+.. _pp:
+
 Pp (pretty print expression)
 ----------------------------
 

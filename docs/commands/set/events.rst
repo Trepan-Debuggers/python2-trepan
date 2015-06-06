@@ -5,8 +5,17 @@ Set Events
 **set events** [*event* ...]
 
 Sets the events that the debugger will stop on. Event names are:
-`c_call`, `c_exception`, `c_return`, `call`, `exception`, `line`,
-or `return`.
+
+.. hlist::
+   :columns: 3
+
+   * `c_call`
+   * `c_exception`
+   * `c_return`
+   * `call`
+   * `exception`
+   * `line`
+   * `return`
 
 `all` can be used as an abbreviation for listing all event names.
 
@@ -22,8 +31,7 @@ Examples:
   set events call return # Trace calls and returns only
   set events all         # Set trace filter to all events.
 
-See also:
-+++++++++
+.. seealso::
 
-:ref:`set trace <set_trace>`, :ref:`show trace <show_trace>`, and
-:ref:`show events <show_events>`
+   :ref:`set trace <set_trace>`, :ref:`show trace <show_trace>`, and
+   :ref:`show events <show_events>`

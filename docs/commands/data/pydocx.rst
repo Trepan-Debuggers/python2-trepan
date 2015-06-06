@@ -1,3 +1,5 @@
+.. _pydocx:
+
 Pydocx (show pydoc)
 -------------------
 
@@ -10,8 +12,6 @@ package.  If *name* contains a '/', it is used as the path to a Python
 source file to document. If name is *keywords*, *topics*, or
 *modules*, a listing of these things is displayed.
 
-See also:
-+++++++++
-:ref:`whatis <whatis>`
+.. seealso::
 
-.. _undisplay:
+   :ref:`whatis <whatis>`, :ref:`undisplay <undisplay>`

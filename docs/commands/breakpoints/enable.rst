@@ -8,9 +8,6 @@ Enable (enable breakpoints)
 Enables the breakpoints given as a space separated list of breakpoint
 numbers. See also `info break` to get a list.
 
-See also:
-+++++++++
+.. seealso::
 
-:ref:`disable <disable>`
-
-.. _tbreak:
+   :ref:`disable <disable>`, :ref:`tbreak <tbreak>`

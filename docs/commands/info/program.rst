@@ -11,8 +11,7 @@ Execution status of the program. Listed are:
 * Instruction PC
 * Reason the program is stopped.
 
-See also:
-+++++++++
+.. seealso::
 
-:ref:`info line <info_line>`, :ref:`info args <info_args>`,
-:ref:`info frame <info_frame>`
+   :ref:`info line <info_line>`, :ref:`info args <info_args>`,
+   :ref:`info frame <info_frame>`

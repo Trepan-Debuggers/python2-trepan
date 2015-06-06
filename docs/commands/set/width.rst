@@ -6,7 +6,6 @@ Set Width
 
 Set the number of characters the debugger thinks are in a line.
 
-See also:
-+++++++++
+.. seealso::
 
-:ref:`show width <show_width>`
+   :ref:`show width <show_width>`

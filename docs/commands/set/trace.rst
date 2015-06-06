@@ -7,8 +7,7 @@ Set Trace
 
 Set event tracing.
 
-See also:
-+++++++++
+.. seealso::
 
-:ref:`set events <set_events>`, :ref:`set trace <set_trace>`, and
-:ref:`show trace <show_trace>`
+   :ref:`set events <set_events>`, :ref:`set trace <set_trace>`, and
+   :ref:`show trace <show_trace>`

@@ -42,7 +42,6 @@ which produces when *autoeval* is on:
 because by default, ``s`` is an alias for the debugger ``step`` command.
 It is possible to remove that alias if this causes constant problem.
 
-See also:
-+++++++++
+.. seealso::
 
-:ref:`show autoeval <show_autoeval>`
+   :ref:`show autoeval <show_autoeval>`

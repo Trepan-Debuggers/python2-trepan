@@ -36,8 +36,7 @@ Examples:
    frame MainThread   # Same as above
    frame -2434343 0   # Use a thread number instead of name
 
-See also:
-+++++++++
+.. seealso::
 
-:ref:`down <down>`, :ref:`up <up>`, :ref:`backtrace <backtrace>`, and
-:ref:`info threads <info_threads>`.
+   :ref:`down <down>`, :ref:`up <up>`, :ref:`backtrace <backtrace>`, and
+   :ref:`info threads <info_threads>`.

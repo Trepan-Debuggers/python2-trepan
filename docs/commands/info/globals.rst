@@ -7,6 +7,7 @@ Info Globals
 
 Show the global variables of the current stack frame.
 
-See also:
-+++++++++
-`info locals`, `info args`, `info frame`
+.. seealso::
+
+   :ref:`info locals <info_locals>`, :ref:`info args <info_args>`,
+   :ref:`info frame <info_frame>`

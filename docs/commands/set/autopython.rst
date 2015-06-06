@@ -6,7 +6,6 @@ Set Autopython
 
 Go into a Python shell on debugger entry.
 
-See also:
-+++++++++
+.. seealso::
 
-`python`
+   :ref:`python <python>`

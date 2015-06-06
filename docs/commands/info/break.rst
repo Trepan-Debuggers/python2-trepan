@@ -7,6 +7,6 @@ Info Break
 
 Show breakpoints.
 
-See also:
-+++++++++
-`break`, `delete`
+.. seealso::
+
+   :ref:`break <break>`, :ref:`delete <delete>`

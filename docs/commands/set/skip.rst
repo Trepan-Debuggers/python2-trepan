@@ -11,7 +11,6 @@ it can be an annoyance.) However if you do want this, for example
 perhaps you want to debug methods is over-writing one another, then
 set this off.
 
-See also:
-+++++++++
+.. seealso::
 
-:ref:`show skip <show_skip>`
+   :ref:`show skip <show_skip>`

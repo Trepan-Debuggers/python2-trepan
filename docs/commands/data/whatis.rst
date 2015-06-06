@@ -15,7 +15,6 @@ When possible, we give information about:
 
 We get this most of this information via the *inspect* module.
 
-See also:
-+++++++++
+.. seealso::
 
-:ref:`pydocx <pydocx>`, the :py:mod:`inspect` module.
+   :ref:`pydocx <pydocx>`, the :py:mod:`inspect` module.

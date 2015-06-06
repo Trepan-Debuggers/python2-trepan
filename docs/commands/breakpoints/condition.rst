@@ -18,7 +18,6 @@ Examples:
    condition 5 x > 10  # Breakpoint 5 now has condition x > 10
    condition 5         # Remove above condition
 
-See also:
-+++++++++
+.. seealso::
 
-:ref:`break <break>`, :ref:`tbreak <tbreak>`.
+   :ref:`break <break>`, :ref:`tbreak <tbreak>`.

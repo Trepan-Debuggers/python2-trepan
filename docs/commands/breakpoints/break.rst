@@ -30,7 +30,6 @@ Examples:
    break myfile.py:45 # Break on line 45 of myfile.py
    break myfile:45    # Same as above.
 
-See also:
-+++++++++
+.. seealso::
 
-:ref:`tbreak <tbreak>`.
+   :ref:`tbreak <tbreak>`.

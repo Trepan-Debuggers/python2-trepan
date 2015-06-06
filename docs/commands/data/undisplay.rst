@@ -1,3 +1,5 @@
+.. _undisplay:
+
 Undisplay
 ---------
 
@@ -9,9 +11,8 @@ Arguments are the code numbers of the expressions to stop displaying.
 No argument cancels all automatic-display expressions and is
 the same as `delete display`.
 
-See also:
-+++++++++
+.. seealso::
 
-:ref:`info display <info_display>` to see current list of code numbers.
+   :ref:`info display <info_display>` to see current list of code numbers.
 
 .. _whatis:

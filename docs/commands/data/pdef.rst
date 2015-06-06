@@ -7,9 +7,6 @@ Pdef
 Print the definition header for a callable object *obj*.
 If the object is a class, print the constructor information.
 
-See also:
-+++++++++
+.. seealso::
 
-:ref:`pydocX <pydocX>`.
-
-.. _pp:
+   :ref:`pydocX <pydocX>`, :ref:`pp <pp>`

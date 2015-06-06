@@ -2,7 +2,7 @@
 
 Display
 -------
-**display** [*format*] *expression*
+**display** [ *format* ] *expression*
 
 Print value of expression *expression* each time the program stops.
 *format* may be used before *expression* and may be one of `/c` for
@@ -15,5 +15,5 @@ flexibility in the future to specify whether this should be the
 case or not.
 
 With no argument, evaluate and display all currently requested
-auto-display expressions.  Use `undisplay` to cancel display
-requests previously made.
+auto-display expressions.  Use :ref:`undisplay <undisplay>` to cancel
+display requests previously made.

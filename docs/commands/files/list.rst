@@ -19,13 +19,13 @@ then that is start the line after we last one previously shown.
 
 A *location* is either:
 
-  - a number, e.g. 5,
-  - a function, e.g. join or os.path.join
-  - a module, e.g. os or os.path
-  - a filename, colon, and a number, e.g. foo.py:5,
-  - or a module name and a number, e.g,. os.path:5.
-  - a '.' for the current line number
-  - a '-' for the lines before the current linenumber
+* a number, e.g. 5,
+* a function, e.g. `join` or `os.path.join`
+* a module, e.g. os or os.path
+* a filename, colon, and a number, e.g. `foo.py:5`,
+* a module name and a number, e.g,. `os.path:5`.
+* a "." for the current line number
+* a "-" for the lines before the current linenumber
 
 If the location form is used with a subsequent parameter, the
 parameter is the starting line number is used. When there two numbers
@@ -53,8 +53,7 @@ Examples:
     list .            # List lines centered from where we currently are stopped
     list -            # List lines previous to those just shown
 
-See also:
-+++++++++
+.. seealso::
 
-:ref:`set listize <set_listsize>` or :ref:`show listsize
+   :ref:`set listize <set_listsize>`, or :ref:`show listsize
 <show_listsize>` to see or set the number of source-code lines to list.

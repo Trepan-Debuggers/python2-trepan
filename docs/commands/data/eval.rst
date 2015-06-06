@@ -33,8 +33,7 @@ Examples:
     eval?     # but strips off leading 'if', 'while', ..
               # from command
 
-See also:
-+++++++++
+.. seealso::
 
-:ref:`set autoeval <set_autoeval>`, :ref:`pr <pr>`,
-:ref:`pp <pp>` and :ref:`examine <examine>`.
+   :ref:`set autoeval <set_autoeval>`, :ref:`pr <pr>`,
+   :ref:`pp <pp>` and :ref:`examine <examine>`.

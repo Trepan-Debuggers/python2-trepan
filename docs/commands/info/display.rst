@@ -7,6 +7,6 @@ Info Display
 
 Show the display expression evaluated when the program stops.
 
-See also:
-+++++++++
-:ref:`display <display>`, :ref:`undisplay <undisplay>`
+.. seealso::
+
+   :ref:`display <display>`, :ref:`undisplay <undisplay>`

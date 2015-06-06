@@ -44,7 +44,6 @@ With this, you will get output like:
 You may also want to put this this in your debugger startup file. See
 :ref:`Startup Profile <http://python2-trepan.readthedocs.org/en/latest/entry-exit.html#startup-profile>`
 
-See also:
-+++++++++
+.. seealso::
 
-:ref:`show autolist <show_autolist>`
+   :ref:`show autolist <show_autolist>`

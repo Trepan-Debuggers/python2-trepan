@@ -23,8 +23,7 @@ that you won't miss anything important.
 Note that the `step` and `next` debugger commands have '+' and '-'
 suffixes if you wan to override this setting on a per-command basis.
 
-See also:
-+++++++++
+.. seealso::
 
-:ref:`set trace <set_trace>` to change what events you want to filter.
-:ref:`show trace <show trace>`.
+   :ref:`set trace <set_trace>` to change what events you want to filter.
+   :ref:`show trace <show trace>`.

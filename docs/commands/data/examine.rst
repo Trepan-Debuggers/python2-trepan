@@ -17,6 +17,6 @@ Examples:
     examine x+1   # ok
     examine x + 1 # not ok
 
-See also:
-+++++++++
-:ref:`pr <pr>`, :ref:`pp <pp>`, and :ref:`whatis <whatis>`.
+.. seealso::
+
+   :ref:`pr <pr>`, :ref:`pp <pp>`, and :ref:`whatis <whatis>`.

@@ -1,6 +1,9 @@
+.. _tbreak:
+
 Tbreak
 -------
-**tbreak** [*location*] [**if** *condition*]
+
+**tbreak** [ *location* ] [**if** *condition*]
 
 With a line number argument, set a break there in the current file.
 With a function name, set a break at first executable line of that
@@ -24,7 +27,6 @@ Examples:
    tbreak myfile.py:45 # Break on line 45 of myfile.py
    tbreak myfile:45    # Same as above.
 
-See also:
-+++++++++
+.. seealso::
 
-:ref:`break <break>`.
+   :ref:`break <break>`.

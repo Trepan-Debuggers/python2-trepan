@@ -7,7 +7,6 @@ Info Line
 
 Show information about the current line
 
-See also:
-+++++++++
+.. seealso::
 
-:ref:`info program <info_program>`, :ref:`info frame <info_line>`
+   :ref:`info program <info_program>`, :ref:`info frame <info_line>`

@@ -17,6 +17,7 @@ Specific information includes:
 * a function that tracing this frame or `None` See :ref:`https://docs.python.org/2/reference/datamodel.html?highlight=f_tracing`
 * Whether the frame is in restricted execution See :ref:`f_restricted <https://docs.python.org/2/reference/datamodel.html?highlight=f_restricted>`
 
+.. seealso::
 
-:ref:`info locals <info_locals>`, :ref:`info globals <info_globals>`,
-:ref:`info args <info_args>`
+   :ref:`info locals <info_locals>`, :ref:`info globals <info_globals>`,
+   :ref:`info args <info_args>`

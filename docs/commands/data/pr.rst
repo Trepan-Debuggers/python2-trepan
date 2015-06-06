@@ -1,3 +1,5 @@
+.. _pr:
+
 Pr (print expression)
 ---------------------
 
@@ -13,10 +15,7 @@ float or str respectively.
 If the length output string large, the first part of the value is
 shown and `...` indicates it has been truncated.
 
-See also:
-+++++++++
+.. seealso::
 
-:ref:`pp <pp>` and :ref:`examine <examine>` for commands which do more
-in the way of formatting.
-
-.. _pydocx:
+   :ref:`pp <pp>` and :ref:`examine <examine>` for commands which do more
+   in the way of formatting; :ref:`pydocx <pydocx>`

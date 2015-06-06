@@ -7,8 +7,7 @@ Info Args
 
 Show parameters of the current stack frame.
 
-See also:
-+++++++++
+.. seealso::
 
-:ref:`info locals <info_locals>`, :ref:`info globals <info_globals>`,
-:ref:`info frame <info_frame>`
+   :ref:`info locals <info_locals>`, :ref:`info globals <info_globals>`,
+   :ref:`info frame <info_frame>`

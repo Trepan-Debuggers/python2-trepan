@@ -1,9 +1,9 @@
 .. _set_different:
 
-**set** **different** [ **on** | **off** ]
-
 Set Different
 -------------
+
+**set** **different** [ **on** | **off** ]
 
 Set consecutive stops must be on different file/line positions.
 

@@ -14,5 +14,5 @@ Execution status of the program. Listed are:
 See also:
 +++++++++
 
-:ref:`info line <info_line>`_, :ref:`info args <info_args>`_,
-:ref:`info frame <info_frame>`_
+:ref:`info line <info_line>`, :ref:`info args <info_args>`,
+:ref:`info frame <info_frame>`

@@ -33,7 +33,7 @@ Starting with release 2.8, readline command completion has been added. Command c
 Smart Eval
 ----------
 
-Starting with release 0.2.0, if you want to evaluate the current source line before it is run in the code, use ``eval``. To evaluate text of a common fragment of line, such as the expression part of an *if* statement, you can do that with ``eval?``. See the help for `eval <https://python2-trepan.readthedocs.org/en/latest/commands/data/eval.html>`_ for more information.
+Starting with release 0.2.0, if you want to evaluate the current source line before it is run in the code, use ``eval``. To evaluate text of a common fragment of line, such as the expression part of an *if* statement, you can do that with ``eval?``. See the `eval <https://python2-trepan.readthedocs.org/en/latest/commands/data/eval.html>`_ for more information.
 
 More Stepping Control
 ---------------------
@@ -70,7 +70,7 @@ there is a *macro* debugger command to extend debugger commands.
 
 However Python has its own rich programming language so it seems silly to recreate the macro language that is in *gdb*. Simpler and more powerful is just to use Python here. A debugger macro here is just a lambda expression which returns a string or a list of strings. Each string returned should be a debugger command.
 
-We also have *aliases* for the extremely simple situation where you want to give an alias to an existing debugger command. But beware: some commands, like`step <https://python2-trepan.readthedocs.org/en/latest/commands/running/step.html>`_. inspect command suffixes and change their behavior accordingly.
+We also have *aliases* for the extremely simple situation where you want to give an alias to an existing debugger command. But beware: some commands, like `step <https://python2-trepan.readthedocs.org/en/latest/commands/running/step.html>`_. inspect command suffixes and change their behavior accordingly.
 
 We also envision a number of other ways to allow extension of this debugger either through additional modules, or user-supplied debugger command directories.
 

@@ -42,7 +42,7 @@ With this, you will get output like:
     (trepan2)
 
 You may also want to put this this in your debugger startup file. See
-[#Startup\_Profile]
+:ref:`Startup Profile <http://python2-trepan.readthedocs.org/en/latest/entry-exit.html#startup-profile>`
 
 See also:
 +++++++++

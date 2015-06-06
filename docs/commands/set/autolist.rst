@@ -3,10 +3,12 @@
 Set Auto List
 -------------
 
-*set* *autolist* [*on*\ \|\ *off*]
+**set autolist** [*on* | *off*]
 
-Run the *list* command every time you stop in the debugger. With this,
-you will get output like:
+Run the :ref:`list <list>` command every time you stop in the
+debugger.
+
+With this, you will get output like:
 
 ::
 

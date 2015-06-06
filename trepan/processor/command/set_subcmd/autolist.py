@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009, 2012-2013 Rocky Bernstein
+#   Copyright (C) 2009, 2012-2013, 2015 Rocky Bernstein
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -21,7 +21,9 @@ from trepan.lib import stack as Mstack
 
 
 class SetAutoList(Mbase_subcmd.DebuggerSetBoolSubcommand):
-    """Run a *list* command every time we enter the debugger."""
+    """**set autolist** [*on* | *off*]
+
+Run the `list` command every time we enter the debugger."""
 
     in_list    = True
     min_abbrev = len('autol')

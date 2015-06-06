@@ -3,7 +3,7 @@
 List (show me the code!)
 ------------------------
 
-**list** [*module] [ *first* [*num*]]
+**list** [*module] [ *first* [ *num* ]]
 
 **list** *location* [*num*]
 

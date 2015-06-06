@@ -3,7 +3,7 @@
 Set Auto List
 -------------
 
-**set autolist** [*on* | *off*]
+**set autolist** [ **on** | **off** ]
 
 Run the :ref:`list <list>` command every time you stop in the
 debugger.
@@ -43,3 +43,8 @@ With this, you will get output like:
 
 You may also want to put this this in your debugger startup file. See
 [#Startup\_Profile]
+
+See also:
++++++++++
+
+:ref:`show autolist <show_autolist>`

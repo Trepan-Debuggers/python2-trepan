@@ -33,7 +33,7 @@ Starting with release 2.8, readline command completion has been added. Command c
 Smart Eval
 ----------
 
-Starting with release 0.2.0, if you want to evaluate the current source line before it is run in the code, use ``eval``. To evaluate text of a common fragment of line, such as the expression part of an *if* statement, you can do that with ``eval?``. See the `eval <https://python2-trepan.readthedocs.org/en/latest/commands/data/eval.html>`_ for more information.
+Starting with release 0.2.0, if you want to evaluate the current source line before it is run in the code, use ``eval``. To evaluate text of a common fragment of line, such as the expression part of an *if* statement, you can do that with ``eval?``. See `eval <https://python2-trepan.readthedocs.org/en/latest/commands/data/eval.html>`_ for more information.
 
 More Stepping Control
 ---------------------
@@ -145,8 +145,3 @@ Documentation: http://python2-trepan.readthedocs.org
 .. |Supported Python versions| image:: https://pypip.in/py_versions/trepan/badge.svg
    :target: https://pypi.python.org/pypi/trepan/
 .. _ipython-trepan: https://github.com/rocky/ipython-trepan
-
-
-.. image:: https://badges.gitter.im/Join%20Chat.svg
-   :alt: Join the chat at https://gitter.im/rocky/python2-trepan
-   :target: https://gitter.im/rocky/python2-trepan?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge

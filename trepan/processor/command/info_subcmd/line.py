@@ -48,6 +48,7 @@ Show information about the current line
 
 See also:
 ---------
+
 `info program`, `info frame`'''
 
     min_abbrev = 2

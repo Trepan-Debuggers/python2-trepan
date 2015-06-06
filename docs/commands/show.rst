@@ -31,3 +31,4 @@ Show
    show/listsize
    show/maxstring
    show/skip
+   show/trace

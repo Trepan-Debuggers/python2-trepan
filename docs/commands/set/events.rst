@@ -25,4 +25,5 @@ Examples:
 See also:
 +++++++++
 
-`set trace`, `show trace`, and `show events`
+:ref:`set trace <set_trace>`, :ref:`show trace <show_trace>`, and
+:ref:`show events <show_events>`

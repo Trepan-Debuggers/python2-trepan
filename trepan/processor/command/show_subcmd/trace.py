@@ -25,6 +25,8 @@ Show event tracing.
 
 See also:
 ---------
-`set events`."""
+
+`set trace`, `show events`."""
 
     min_abbrev = 2  # Need at least "show tr"
+    short_help = 'Show event tracing'

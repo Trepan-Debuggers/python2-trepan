@@ -5,7 +5,9 @@ BPython
 
 **bpython** [*-d* ]
 
-*Note: this command is available only if bpython is installed*
+.. note::
+
+   this command is available only if bpython is installed
 
 Run Python as a command subshell. The *sys.ps1* prompt will be set to
 ``trepan2 >>>``.
@@ -19,7 +21,6 @@ To issue a debugger command use function *dbgr()*. For example:
 
       dbgr('info program')
 
-See also:
-+++++++++
+.. seealso::
 
-:ref:`python <python>`, and :ref:`ipython <ipython>`.
+   :ref:`python <python>`, and :ref:`ipython <ipython>`.

@@ -11,3 +11,4 @@ Welcome to trepan's documentation!
 
    entry-exit
    commands
+   manpages

@@ -41,12 +41,10 @@ def process_options(debugger_name, pkg_version, sys_argv, option_list=None):
 
     optparser.add_option("-X", "--trace", dest="linetrace",
                          action="store_true", default=False,
-                         help="Show lines before executing them. " +
-                         "This option also sets --batch")
+                         help="Show lines before executing them.")
     optparser.add_option("-F", "--fntrace", dest="fntrace",
                          action="store_true", default=False,
-                         help="Show functions before executing them. " +
-                         "This option also sets --batch")
+                         help="Show functions before executing them.")
     optparser.add_option("--basename", dest="basename",
                          action="store_true", default=False,
                          help="Filenames strip off basename, " +

@@ -7,7 +7,6 @@ Unalias
 
 Remove alias *alias-name*.
 
-See also:
-+++++++++
+.. seealso::
 
-`alias`.
+   :ref:`alias <alias>`.

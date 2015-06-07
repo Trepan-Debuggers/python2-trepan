@@ -64,7 +64,6 @@ invocation might be:
 
 rather than ``fin+(3,2)`` or ``fin+ 3, 2``.
 
-See also:
-+++++++++
+.. seealso::
 
-`alias`, and `info macro`.
+   `alias`, and `info macro`.

@@ -23,7 +23,6 @@ additional subcommand to give help just about that particular
 subcommand. For example `help info line` give help about the
 info line command.
 
-See also:
-+++++++++
+.. seealso::
 
-:ref:`examine <examine>` and :ref:`whatis <whatis>`.
+   :ref:`examine <examine>` and :ref:`whatis <whatis>`.

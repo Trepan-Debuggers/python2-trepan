@@ -17,7 +17,6 @@ To issue a debugger command use function *dbgr()*. For example:
 
       dbgr('info program')
 
-See also:
-+++++++++
+.. seealso::
 
-:ref:`ipython <ipython>`, and :ref:`bpython <bpython>`.
+   :ref:`ipython <ipython>`, and :ref:`bpython <bpython>`.

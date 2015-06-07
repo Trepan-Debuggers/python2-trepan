@@ -12,7 +12,8 @@ that would otherwise be ambigous. For example, by default we make ``s``
 be an alias of ``step`` to force it to be used. Without the alias, ``s``
 might be ``step``, ``show``, or ``set`` among others
 
-**Example:**
+Example:
+++++++++
 
 ::
 
@@ -20,7 +21,6 @@ might be ``step``, ``show``, or ``set`` among others
         alias s   step   # "s" is now an alias for "step".
                          # The above example is done by default.
 
-See also:
-+++++++++
+.. seealso::
 
-`unalias` and `show alias`.
+   :ref:`unalias <unalias>` and :ref:`show alias <show_aliases>`.

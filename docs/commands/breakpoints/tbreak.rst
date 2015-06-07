@@ -1,7 +1,7 @@
 .. _tbreak:
 
-Tbreak
--------
+Tbreak (temporary breakpoint)
+-----------------------------
 
 **tbreak** [ *location* ] [**if** *condition*]
 

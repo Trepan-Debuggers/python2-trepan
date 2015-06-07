@@ -1,7 +1,8 @@
 .. _display:
 
-Display
--------
+Display (set display expression)
+--------------------------------
+
 **display** [ *format* ] *expression*
 
 Print value of expression *expression* each time the program stops.
@@ -15,5 +16,8 @@ flexibility in the future to specify whether this should be the
 case or not.
 
 With no argument, evaluate and display all currently requested
-auto-display expressions.  Use :ref:`undisplay <undisplay>` to cancel
-display requests previously made.
+auto-display expressions.
+
+.. seealso::
+
+   ref:`undisplay <undisplay>` to cancel display requests previously made.

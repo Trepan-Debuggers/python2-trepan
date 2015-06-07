@@ -1,7 +1,7 @@
 .. _undisplay:
 
-Undisplay
----------
+Undisplay (cancel a display expression)
+---------------------------------------
 
 **undisplay** *display-number*...
 
@@ -14,5 +14,4 @@ the same as `delete display`.
 .. seealso::
 
    :ref:`info display <info_display>` to see current list of code numbers.
-
-.. _whatis:
+   :ref:`whatis <whatis>`

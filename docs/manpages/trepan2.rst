@@ -6,7 +6,7 @@ trepan2
 Synopsis
 --------
 
-trepan2 [debugger-options] [--] [python-script [script-options...]]
+**trepan2** [ *debugger-options* ] [ \-- ] [ *python-script* [ *script-options* ...]]
 
 
 Description

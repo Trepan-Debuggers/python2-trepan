@@ -6,7 +6,7 @@ trepan3kc
 Synopsis
 --------
 
-trepan3kc [debugger-options] [--] [python-script [script-options...]]
+**trepan3kc** [ *debugger-options* ] [ \-- ] [ *python-script* [ *script-options* ...]]
 
 
 Description
@@ -22,12 +22,12 @@ Options
    Show the help message and exit
 
 :-x, \--trace:
-   Show lines before executing them. This option also sets `--batch`
+   Show lines before executing them.
 
-:-H *IP-OR-HOST*, \--host=*IP-OR-HOST*:
+:-H *IP-OR-HOST*, \--host= *IP-OR-HOST*:
    connect to *IP* or *HOST*
 
-:-P *NUMBER, \--port=*NUMBER*:
+:-P *NUMBER, \--port= *NUMBER*:
    Use TCP port number NUMBER for out-of-process connections.
 
 :\--pid=*NUMBER*:

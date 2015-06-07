@@ -32,3 +32,4 @@ Show
    show/maxstring
    show/skip
    show/trace
+   show/width

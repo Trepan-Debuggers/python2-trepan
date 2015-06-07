@@ -6,7 +6,6 @@ Show Events
 
 Show the kinds of events the debugger will stop on.
 
-See also:
-+++++++++
+.. seealso::
 
-:ref:`set events <set_events>`
+   :ref:`set events <set_events>`

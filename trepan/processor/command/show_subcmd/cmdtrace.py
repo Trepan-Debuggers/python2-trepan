@@ -21,6 +21,13 @@ from trepan.processor.command import base_subcmd as Mbase_subcmd
 
 
 class ShowCmdtrace(Mbase_subcmd.DebuggerShowBoolSubcommand):
-    "Show debugger commands before running them"
+    """*show cmdtrace**
+
+Show debugger commands before running them
+See also:
+---------
+
+`set cmdtrace`"""
     min_abbrev = 4    # Need at least "show cmdt"
+    short_help = "Show debugger commands before running them"
     pass

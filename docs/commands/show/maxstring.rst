@@ -7,7 +7,6 @@ Show Maxstring
 
 Show maximum string length to use in string-oriented output
 
-See also:
-+++++++++
+.. seealso::
 
-:ref:`set maxstring <set_maxstring>`
+   :ref:`set maxstring <set_maxstring>`

@@ -7,7 +7,6 @@ Show Trace
 
 Show event tracing.
 
-See also:
-+++++++++
+.. seealso::
 
-:ref:`set trace <set_trace>`, :ref:`show events <show_events>`
+   :ref:`set trace <set_trace>`, :ref:`show events <show_events>`

@@ -9,4 +9,4 @@ Run a debugger ref:`list <list>` command automatically on debugger entry.
 
 .. seealso::
 
-:ref:`set autolist <set_autolist>`
+   :ref:`set autolist <set_autolist>`

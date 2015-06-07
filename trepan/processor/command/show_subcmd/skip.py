@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009, 2014 Rocky Bernstein
+#   Copyright (C) 2009, 2014, 2015 Rocky Bernstein
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -19,6 +19,14 @@ from trepan.processor.command import base_subcmd as Mbase_subcmd
 
 
 class ShowSkip(Mbase_subcmd.DebuggerShowBoolSubcommand):
-    """Show step over lines which define functions and classes"""
+    """**show skip**
+
+Show whether debugger steps over lines which define functions and classes
+
+See also:
+--------
+
+`set skip`"""
     min_abbrev = len('sk')
+    short_help = 'Show whether debugger steps over lines which define functions and classes'
     pass

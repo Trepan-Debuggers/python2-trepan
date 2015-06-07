@@ -36,8 +36,6 @@ tracing-event printing.
 Examples:
 ---------
 
-::
-
   set events line        # Set trace filter for line events only.
   set events call return # Trace calls and returns only
   set events all         # Set trace filter to all events.

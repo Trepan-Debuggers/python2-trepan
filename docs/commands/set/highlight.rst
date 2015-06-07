@@ -7,10 +7,14 @@ Set Highlight
 
 Set whether we use terminal highlighting. Permissable values are:
 
-*  `plain`  no terminal highlighting
-*  `off`    same as plain
-*  `light`  terminal background is light (the default)
-*  `dark`   terminal background is dark
+:plain:
+   no terminal highlighting
+:off:
+   same as plain
+:light:
+   terminal background is light (the default)
+:dark:
+   terminal background is dark
 
 If the first argument is *reset*, we clear any existing color formatting
 and recolor all source code output.

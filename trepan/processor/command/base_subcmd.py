@@ -100,7 +100,7 @@ class DebuggerSubcommand:
         """ Convenience short-hand for self.debugger.intf[-1].msg_nocr """
         return(self.debugger.intf[-1].msg_nocr(msg))
 
-    aliases = ('alias1', 'alias2..',)
+    aliases = ()
     name    = 'YourCommandName'
 
     def rst_msg(self, text):

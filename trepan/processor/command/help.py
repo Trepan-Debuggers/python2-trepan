@@ -98,7 +98,7 @@ See also:
                 self.show_aliases()
                 return
             elif cmd_name == 'macros':
-                self.show_aliases()
+                self.show_macros()
                 return
             elif cmd_name == 'syntax':
                 self.show_command_syntax(args)

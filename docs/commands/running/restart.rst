@@ -10,7 +10,7 @@ and new copy of the debugger is used.
 See also:
 +++++++++
 
-:ref:`restart <restart>` for another way to restart the debugged program.
+:ref:`run <run>` for another way to restart the debugged program.
 
 See :ref:`quit <quit>`, :ref:`exit <exit>` or :ref:`kill <kill>` for
 termination commands.

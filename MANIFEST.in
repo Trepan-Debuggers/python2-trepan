@@ -4,6 +4,7 @@ include NEWS
 include README.rst
 include __pkginfo__.py
 include test/make-check-filter.py
+recursive-include trepan/processor/command/help *.rst
 recursive-include test/data *.cmd
 recursive-include test/data *.right
 recursive-include test/data Makefile

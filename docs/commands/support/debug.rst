@@ -1,7 +1,7 @@
 .. _debug:
 
-Debug
------
+Debug (recursively debug an expression)
+---------------------------------------
 
 **debug** *python-expression*
 

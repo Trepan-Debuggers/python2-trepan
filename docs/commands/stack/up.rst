@@ -1,7 +1,7 @@
 .. _up:
 
-Up
---
+Up (relative frame motion towards a less-recent frame)
+------------------------------------------------------
 
 **up** [*count*]
 

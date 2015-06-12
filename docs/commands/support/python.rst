@@ -1,7 +1,7 @@
 .. _python:
 
-Python
-------
+Python (go into a Python shell)
+-------------------------------
 
 **python** [*-d* ]
 

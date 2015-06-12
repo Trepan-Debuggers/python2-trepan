@@ -1,7 +1,7 @@
 .. _alias:
 
-Alias
------
+Alias (add debugger command alias)
+----------------------------------
 
 **alias** *alias-name* *debugger-command*
 

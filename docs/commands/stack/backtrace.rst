@@ -1,7 +1,7 @@
 .. _backtrace:
 
-Backtrace
----------
+Backtrace (show call-stack)
+---------------------------
 
 **backtrace** [*count*]
 

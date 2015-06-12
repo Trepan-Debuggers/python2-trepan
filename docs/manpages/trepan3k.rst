@@ -1,7 +1,7 @@
 .. _trepan3k:
 
-trepan3k
-########
+trepan3k (Python3 debugger)
+###########################
 
 Synopsis
 --------

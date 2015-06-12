@@ -1,7 +1,7 @@
 .. _macro:
 
-Macro
------
+Macro (add a debugger macro)
+----------------------------
 
 *macro* *macro-name* *lambda-object*
 

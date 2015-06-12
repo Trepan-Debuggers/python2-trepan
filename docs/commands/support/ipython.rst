@@ -1,7 +1,7 @@
 .. _ipython:
 
-IPython
--------
+IPython (go into an IPython shell)
+----------------------------------
 
 **ipython** [*-d* ]
 

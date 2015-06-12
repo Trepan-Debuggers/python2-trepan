@@ -1,7 +1,7 @@
 .. _trepan2:
 
-trepan2
-#######
+trepan2 (Python2 debugger)
+##########################
 
 Synopsis
 --------

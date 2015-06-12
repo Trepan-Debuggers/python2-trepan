@@ -1,7 +1,7 @@
 .. _trepan2c:
 
-trepan2c
-########
+trepan2c (Python2 client to connect to remote trepan session)
+#############################################################
 
 Synopsis
 --------

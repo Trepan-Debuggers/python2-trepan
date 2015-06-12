@@ -1,7 +1,7 @@
 .. _unalias:
 
-Unalias
--------
+Unalias (remove debugger command alias)
+---------------------------------------
 
 **unalias** *alias-name*
 

@@ -10,5 +10,6 @@ Welcome to trepan's documentation!
    :maxdepth: 1
 
    entry-exit
+   syntax
    commands
    manpages

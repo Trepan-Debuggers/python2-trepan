@@ -1,7 +1,8 @@
 .. _down:
 
-Down
-----
+Down (relative frame motion towards a more-recent frame)
+--------------------------------------------------------
+
 **down** [*count*]
 
 Move the current frame down in the stack trace (to a newer frame). 0

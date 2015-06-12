@@ -1,7 +1,7 @@
 .. _help:
 
-Help
-----
+Help (Won't you please help me if you can)
+------------------------------------------
 
 **help** [*command* [*subcommand*]|*expression*]
 

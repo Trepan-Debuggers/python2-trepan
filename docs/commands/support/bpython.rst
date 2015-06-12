@@ -1,7 +1,7 @@
 .. _bpython:
 
-BPython
--------
+BPython (go into a bpython shell)
+---------------------------------
 
 **bpython** [*-d* ]
 

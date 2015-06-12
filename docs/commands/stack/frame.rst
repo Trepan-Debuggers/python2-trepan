@@ -1,7 +1,7 @@
 .. _frame:
 
-Frame
------
+Frame (absolute frame positioning)
+----------------------------------
 
 **frame** [*thread-Name*|*thread-number*] [*frame-number*]
 

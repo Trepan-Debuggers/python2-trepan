@@ -1,7 +1,7 @@
 .. _trepan3kc:
 
-trepan3kc
-#########
+trepan3kc (Python3 client to connect to remote trepan session)
+##############################################################
 
 Synopsis
 --------

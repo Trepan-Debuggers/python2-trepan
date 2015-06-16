@@ -66,4 +66,4 @@ rather than ``fin+(3,2)`` or ``fin+ 3, 2``.
 
 .. seealso::
 
-   `alias`, and `info macro`.
+   :ref:`alias <alias>`, and :ref:`info macro <info_macro>`.

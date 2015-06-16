@@ -10,5 +10,4 @@ stopped or bottom-most execution frame frame.
 
 .. seealso::
 
-   :ref:`step <step>` :ref:`skip <skip>`, :ref:`next <next>`, :ref:`continue
-<continue>`, and :ref:`finish <finish>` provide other ways to progress
+   :ref:`step <step>` :ref:`skip <skip>`, :ref:`next <next>`, :ref:`continue <continue>`, and :ref:`finish <finish>` provide other ways to progress

@@ -15,5 +15,4 @@ particular point in a program.
 
 .. seealso::
 
-   :ref:`step <step>` :ref:`skip <skip>`, :ref:`jump <jump>`, :ref:`continue
-<continue>`, and :ref:`finish <finish>` provide other ways to progress
+   :ref:`step <step>` :ref:`skip <skip>`, :ref:`jump <jump>`, :ref:`continue <continue>`, and :ref:`finish <finish>` provide other ways to progress

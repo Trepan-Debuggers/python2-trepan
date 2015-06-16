@@ -7,10 +7,8 @@ Run
 Soft restart debugger and program via a *DebuggerRestart*
 exception.
 
-See also:
-+++++++++
+.. seealso::
 
-:ref:`restart <restart>` for another way to restart the debugged program.
-
-See :ref:`quit <quit>`, :ref:`exit <exit>` or :ref:`kill <kill>` for
+   :ref:`restart <restart>` for another way to restart the debugged program.
+   :ref:`quit <quit>`, or :ref:`kill <kill>` for
 termination commands.

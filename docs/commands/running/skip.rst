@@ -8,9 +8,8 @@ Skip
 Set the next line that will be executed. The line must be within the
 stopped or bottom-most execution frame.
 
-See also:
-+++++++++
+.. seealso::
 
 :ref:`step <step>` :ref:`jump <jump>`, :ref:`continue
-:ref::ref:<continue>`, and `finish <finish>` provide other ways to
-:ref:progress execution.
+<continue>`, and :ref:`finish <finish>` provide other ways to
+progress execution.

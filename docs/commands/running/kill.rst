@@ -14,10 +14,8 @@ this command to terminate the program.
 However other signals, such as those that allow for the debugged to
 handle them can be sent.
 
-See also:
-+++++++++
+.. seealso::
 
-See :ref:`quit <quit>` for less a forceful termination command.
-
-:ref:`run <run>` and :ref:`restart <restart>` are ways to restart the
+   :ref:`quit <quit>` for less a forceful termination command.
+   :ref:`run <run>` and :ref:`restart <restart>` are ways to restart the
 debugged program.

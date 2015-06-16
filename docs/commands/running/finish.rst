@@ -13,9 +13,7 @@ thread is switched, we stop ignoring levels.
 See the :ref:`break <break>` command if you want to stop at a
 particular point in a program.
 
-See also:
-+++++++++
+.. seealso::
 
-:ref:`step <step>` :ref:`skip <skip>`, :ref:`jump <jump>`, :ref:`continue
-:ref:<continue>`, and `finish <finish>` provide other ways to progress
-:ref:execution.
+   :ref:`step <step>` :ref:`skip <skip>`, :ref:`jump <jump>`, :ref:`continue
+<continue>`, and :ref:`finish <finish>` provide other ways to progress

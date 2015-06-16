@@ -21,7 +21,6 @@ environment settings with the :ref:`show <show>` command.
 .. toctree::
    :maxdepth: 1
 
-   set/annotate
    set/autoeval
    set/autolist
    set/autopython

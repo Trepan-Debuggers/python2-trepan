@@ -22,6 +22,8 @@ and recolor all source code output.
 Examples:
 +++++++++
 
+::
+
     set highlight off   # no highlight
     set highlight plain # same as above
     set highlight       # same as above

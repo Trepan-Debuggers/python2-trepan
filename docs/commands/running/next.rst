@@ -16,8 +16,7 @@ move to another line, while a suffix of `-` does the opposite and
 disables the requiring a move to a new line. If no suffix is given,
 the debugger setting 'different-line' determines this behavior.
 
-See also:
-+++++++++
+.. seealso::
 
-:ref:`skip <step>`, :ref:`jump <jump>`, :ref:`continue <continue>`, and
-:ref:`finish <finish>` provide other ways to progress execution.
+   :ref:`skip <step>`, :ref:`jump <jump>`, :ref:`continue <continue>`, and
+   :ref:`finish <finish>` provide other ways to progress execution.

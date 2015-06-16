@@ -28,16 +28,17 @@ determines this behavior.
 Examples:
 +++++++++
 
-  step        # step 1 event, *any* event
-  step 1      # same as above
-  step 5/5+0  # same as above
-  step line   # step only line events
-  step call   # step only call events
-  step>       # same as above
-  step call line # Step line *and* call events
+::
 
-See also:
-+++++++++
+    step        # step 1 event, *any* event
+    step 1      # same as above
+    step 5/5+0  # same as above
+    step line   # step only line events
+    step call   # step only call events
+    step>       # same as above
+    step call line # Step line *and* call events
+
+.. seealso::
 
 Related and similar is the :ref:`next <next>` command.
 

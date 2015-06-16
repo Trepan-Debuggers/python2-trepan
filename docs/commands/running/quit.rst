@@ -20,11 +20,9 @@ If the debugged program is threaded or worse threaded and deadlocked,
 raising an exception in one thread isn't going to quit the
 program.
 
-See also:
-+++++++++
+.. seealso::
 
-See ref:`exit <exit>` or ref:`kill <kill>` for more forceful
+   :ref:`kill <kill>` for more forceful
 termination commands.
-
-:ref:`run <run>` and :ref:`restart <restart>` for other ways to
+   :ref:`run <run>` and :ref:`restart <restart>` for other ways to
 restart the debugged program.

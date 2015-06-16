@@ -41,7 +41,7 @@ may be evaluated as a Python statement in the current context of the
 program at the point it is stoppped. However this is done only if
 "auto evaluation" is on.  It is on by default.
 
-If :ref:`auto eval <set_auto_eval>` is not set on, or if running the
+If :ref:`auto eval <set_autoeval>` is not set on, or if running the
 Python statement produces an error, we display an error message that
 the entered string is "undefined".
 

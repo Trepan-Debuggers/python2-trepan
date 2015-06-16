@@ -1,3 +1,5 @@
+.. _syntax_suffixes:
+
 Command suffixes which have special meaning
 ===========================================
 

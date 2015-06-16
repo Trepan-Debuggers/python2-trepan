@@ -22,7 +22,4 @@ program.
 
 .. seealso::
 
-   :ref:`kill <kill>` for more forceful
-termination commands.
-   :ref:`run <run>` and :ref:`restart <restart>` for other ways to
-restart the debugged program.
+   :ref:`kill <kill>` for more forceful termination commands. :ref:`run <run>` and :ref:`restart <restart>` for other ways to restart the debugged program.

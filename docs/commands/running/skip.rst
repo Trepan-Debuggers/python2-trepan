@@ -10,6 +10,4 @@ stopped or bottom-most execution frame.
 
 .. seealso::
 
-:ref:`step <step>` :ref:`jump <jump>`, :ref:`continue
-<continue>`, and :ref:`finish <finish>` provide other ways to
-progress execution.
+   :ref:`step <step>` :ref:`jump <jump>`, :ref:`continue <continue>`, and :ref:`finish <finish>` provide other ways to progress execution.

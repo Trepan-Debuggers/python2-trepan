@@ -24,8 +24,6 @@ Examples:
                                                  # the above using file
                                                  # and line number
 
-See also:
-+++++++++
+.. seealso::
 
-:ref:`step <step>` :ref:`jump <jump>`, :ref:`next <next>`, and
-:ref:`finish <finish>` provide other ways to progress execution.
+   :ref:`step <step>` :ref:`jump <jump>`, :ref:`next <next>`, and :ref:`finish <finish>` provide other ways to progress execution.

@@ -17,5 +17,4 @@ handle them can be sent.
 .. seealso::
 
    :ref:`quit <quit>` for less a forceful termination command.
-   :ref:`run <run>` and :ref:`restart <restart>` are ways to restart the
-debugged program.
+   :ref:`run <run>` and :ref:`restart <restart>` are ways to restart the debugged program.

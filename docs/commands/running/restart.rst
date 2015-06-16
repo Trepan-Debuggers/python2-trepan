@@ -9,6 +9,4 @@ and new copy of the debugger is used.
 
 .. seealso::
 
-   :ref:`run <run>` for another way to restart the debugged program.
-   :ref:`quit <quit>`, :ref:`exit <exit>` or :ref:`kill <kill>` for
-termination commands.
+   :ref:`run <run>` for another way to restart the debugged program. :ref:`quit <quit>`, or :ref:`kill <kill>` for termination commands.

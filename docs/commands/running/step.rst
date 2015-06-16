@@ -40,8 +40,4 @@ Examples:
 
 .. seealso::
 
-Related and similar is the :ref:`next <next>` command.
-
-:ref:`skip <skip>`, :ref:`jump <jump>` (there's no `hop` yet),
-:ref:`continue <continue>`, and
-:ref:`finish <finish>` provide other ways to progress execution.
+   :ref:`next <next>` command. :ref:`skip <skip>`, :ref:`jump <jump>` (there's no `hop` yet), :ref:`continue <continue>`, and :ref:`finish <finish>` provide other ways to progress execution.

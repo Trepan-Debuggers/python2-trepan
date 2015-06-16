@@ -32,7 +32,23 @@ Set whether we use terminal highlighting. Permissable values are:
        dark:   terminal background is dark
 
 If the first argument is *reset*, we clear any existing color formatting
-and recolor all source code output."""
+and recolor all source code output.
+
+Examples:
+--------
+
+    set highlight off   # no highlight
+    set highlight plain # same as above
+    set highlight       # same as above
+    set highlight dark  # terminal has dark background
+    set highlight light # terminal has light background
+    set highlight reset light # clear source-code cache and
+                              # set for light background
+    set highlight reset # clear source-code cache
+
+See also:
+---------
+`show highlight`"""
 
     in_list    = True
     min_abbrev = len('hi')
@@ -56,7 +72,10 @@ and recolor all source code output."""
 
     def run(self, args):
         if len(args) >= 1 and 'reset' == args[0]:
-            highlight_type = self.get_highlight_type(args[1])
+            if len(args) >= 2:
+                highlight_type = self.get_highlight_type(args[1])
+            else:
+                highlight_type = self.debugger.settings['highlight']
             if not highlight_type: return
             clear_file_format_cache()
         elif len(args) == 0:

@@ -19,6 +19,18 @@ Set whether we use terminal highlighting. Permissable values are:
 If the first argument is *reset*, we clear any existing color formatting
 and recolor all source code output.
 
+Examples:
++++++++++
+
+    set highlight off   # no highlight
+    set highlight plain # same as above
+    set highlight       # same as above
+    set highlight dark  # terminal has dark background
+    set highlight light # terminal has light background
+    set highlight reset light # clear source-code cache and
+                              # set for light background
+    set highlight reset # clear source-code cache
+
 .. seealso::
 
    :ref:`show highlight <show_highlight>`

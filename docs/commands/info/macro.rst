@@ -14,3 +14,7 @@ in column format.
 In the second form, all macro names and their definitions are shown.
 
 In the last form the only definitions of the given macro names is shown.
+
+.. seealso::
+
+   :ref:`show alias <show_alias>`

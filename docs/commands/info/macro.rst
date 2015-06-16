@@ -17,4 +17,4 @@ In the last form the only definitions of the given macro names is shown.
 
 .. seealso::
 
-   :ref:`show alias <show_alias>`
+   :ref:`show aliases <show_aliases>`

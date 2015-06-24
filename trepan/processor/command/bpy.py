@@ -13,12 +13,10 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import code, os, sys
+import os, sys
 
 # Our local modules
 from trepan.processor.command import base_cmd as Mbase_cmd
-
-import bpython
 
 class PythonCommand(Mbase_cmd.DebuggerCommand):
     """**bpython** [**-d**]

@@ -246,6 +246,7 @@ class CommandProcessor(Mprocessor.Processor):
         self.event2short['signal'] = '?!'
         self.event2short['brkpt']  = 'xx'
 
+        self.optional_modules = ('ipython',)
         self.cmd_instances    = self._populate_commands()
 
         # command argument string. Is like current_command, but the part
@@ -873,8 +874,11 @@ class CommandProcessor(Mprocessor.Processor):
                 try:
                     command_mod = getattr(__import__(import_name), mod_name)
                 except:
-                    print('Error importing %s: %s' %
-                          (mod_name, sys.exc_info()[0]))
+                    # Don't need to warn about optional modules
+                    if mod_name not in self.optional_modules:
+                        print('Error importing %s: %s' %
+                              (mod_name, sys.exc_info()[0]))
+                        pass
                     continue
                 pass
 
@@ -884,19 +888,14 @@ class CommandProcessor(Mprocessor.Processor):
                                tup[0].endswith('Command')) ]
             for classname in classnames:
                 eval_cmd = eval_cmd_template % classname
-                if False:
+                try:
                     instance = eval(eval_cmd)
                     cmd_instances.append(instance)
-                else:
-                    try:
-                        instance = eval(eval_cmd)
-                        cmd_instances.append(instance)
-                    except ImportError:
-                        pass
-                    except:
-                        print('Error loading %s from %s: %s' %
-                              (classname, mod_name, sys.exc_info()[0]))
-                        pass
+                except ImportError:
+                    pass
+                except:
+                    print('Error loading %s from %s: %s' %
+                          (classname, mod_name, sys.exc_info()[0]))
                     pass
                 pass
             pass
@@ -909,19 +908,14 @@ class CommandProcessor(Mprocessor.Processor):
             if mod_name in ('info_sub', 'set_sub', 'show_sub',):
                 pass
             import_name = 'trepan.processor.command.' + mod_name
-            if False:
+            try:
                 command_mod = __import__(import_name, None, None, ['*'])
-            else:
-                # FIXME give more info like the above when desired
-                try:
-                    command_mod = __import__(import_name, None, None, ['*'])
-                except ImportError:
-                    pass
-                except:
+            except:
+                if mod_name not in self.optional_modules:
                     print('Error importing %s: %s' %
                           (mod_name, sys.exc_info()[0]))
-                    continue
-                pass
+                    pass
+                continue
 
             classnames = [ tup[0] for tup in
                            inspect.getmembers(command_mod, inspect.isclass)

@@ -123,7 +123,22 @@ def run_exec(statement, debug_opts=None, start_opts=None, globals_=None,
 def debug(dbg_opts=None, start_opts=None, post_mortem=True,
           step_ignore=1, level=0):
     """
-Enter the debugger. Use like this:
+Enter the debugger.
+
+Parameters
+----------
+level : how many stack frames go back. Usually it will be
+the default 0. But sometimes though there may be calls in setup to the debugger
+that you may want to skip.
+
+step_ignore : how many line events to ignore after the
+debug() call. 0 means don't even wait for the debug() call to finish.
+
+param dbg_opts : is an optional "options" dictionary that gets fed
+trepan.Debugger(); `start_opts' are the optional "options"
+dictionary that gets fed to trepan.Debugger.core.start().
+
+Use like this::
 
     ... # Possibly some Python code
     import trepan.api # Needed only once
@@ -136,26 +151,19 @@ Enter the debugger. Use like this:
     # want to debug any more, but want to remove debugger trace overhead:
     trepan.api.stop()
 
-:param level: how many stack frames go back. Usually it will be
-the default 0. But sometimes though there may be calls in setup to the debugger
-that you may want to skip.
-
-:param step_ignore: how many line events to ignore after the
-debug() call. 0 means don't even wait for the debug() call to finish.
-
 In situations where you want an immediate stop in the "debug" call
 rather than the statement following it ("pass" above), add parameter
-step_ignore=0 to debug() like this:
+step_ignore=0 to debug() like this::
 
     import trepan.api  # Needed only once
     # ... as before
     trepan.api.debug(step_ignore=0)
     # ... as before
 
-Module variable debugger_obj from module trepan.debugger is used as
+Module variable _debugger_obj_ from module trepan.debugger is used as
 the debugger instance variable; it can be subsequently used to change
 settings or alter behavior. It should be of type Debugger (found in
-module trepan). If not, it will get changed to that type.
+module trepan). If not, it will get changed to that type::
 
    $ python
    >>> from trepan.debugger import debugger_obj
@@ -171,18 +179,14 @@ module trepan). If not, it will get changed to that type.
    >>>
 
 If however you want your own separate debugger instance, you can
-create it from the debugger class Debugger() from module
-trepan.debugger.
+create it from the debugger _class Debugger()_ from module
+trepan.debugger::
 
   $ python
   >>> from trepan.debugger import Debugger
   >>> dbgr = Debugger()  # Add options as desired
   >>> dbgr
   <trepan.debugger.Debugger instance at 0x2e25320>
-
-:param dbg_opts is an optional "options" dictionary that gets fed
-trepan.Debugger(); `start_opts' are the optional "options"
-dictionary that gets fed to trepan.Debugger.core.start().
 """
     if Mdebugger.Debugger != type(Mdebugger.debugger_obj):
         Mdebugger.debugger_obj = Mdebugger.Debugger(dbg_opts)

@@ -33,6 +33,7 @@ sys.path.insert(0, os.path.join(os.path.abspath('..'), 'trepan'))
 # ones.
 extensions = [
     'sphinx.ext.autodoc',
+    'numpydoc',
 ]
 
 # Add any paths that contain templates here, relative to this directory.

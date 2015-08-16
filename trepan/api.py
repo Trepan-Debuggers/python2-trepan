@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2008-2009, 2013-2014 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008-2009, 2013-2015 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -58,7 +58,8 @@ def run_eval(expression, debug_opts=None, start_opts=None, globals_=None,
     This is a wrapper to Debugger.run_eval(), so see that.
 
     When run_eval() returns, it returns the value of the expression.
-    Otherwise this function is similar to run()."""
+    Otherwise this function is similar to run().
+    """
 
     dbg = Mdebugger.Debugger(opts=debug_opts)
     try:
@@ -120,7 +121,7 @@ def run_exec(statement, debug_opts=None, start_opts=None, globals_=None,
 
 
 def debug(dbg_opts=None, start_opts=None, post_mortem=True,
-          step_ignore=1):
+          step_ignore=1, level=0):
     """
 Enter the debugger. Use like this:
 
@@ -135,6 +136,13 @@ Enter the debugger. Use like this:
     # want to debug any more, but want to remove debugger trace overhead:
     trepan.api.stop()
 
+:param level: how many stack frames go back. Usually it will be
+the default 0. But sometimes though there may be calls in setup to the debugger
+that you may want to skip.
+
+:param step_ignore: how many line events to ignore after the
+debug() call. 0 means don't even wait for the debug() call to finish.
+
 In situations where you want an immediate stop in the "debug" call
 rather than the statement following it ("pass" above), add parameter
 step_ignore=0 to debug() like this:
@@ -144,19 +152,17 @@ step_ignore=0 to debug() like this:
     trepan.api.debug(step_ignore=0)
     # ... as before
 
-
 Module variable debugger_obj from module trepan.debugger is used as
-the debugger instance variable; it can be subsequenly used to change
+the debugger instance variable; it can be subsequently used to change
 settings or alter behavior. It should be of type Debugger (found in
 module trepan). If not, it will get changed to that type.
 
-   Example:
    $ python
    >>> from trepan.debugger import debugger_obj
    >>> type(debugger_obj)
    <type 'NoneType'>
-   >>>  import trepan.api
-   >>>  trepan.api.debug()
+   >>> import trepan.api
+   >>> trepan.api.debug()
    ...
    (Trepan) c
    >>> from trepan.debugger import debugger_obj
@@ -168,26 +174,22 @@ If however you want your own separate debugger instance, you can
 create it from the debugger class Debugger() from module
 trepan.debugger.
 
-Example:
   $ python
   >>> from trepan.debugger import Debugger
   >>> dbgr = Debugger()  # Add options as desired
   >>> dbgr
   <trepan.debugger.Debugger instance at 0x2e25320>
 
-`dbg_opts' is an optional "options" dictionary that gets fed
+:param dbg_opts is an optional "options" dictionary that gets fed
 trepan.Debugger(); `start_opts' are the optional "options"
 dictionary that gets fed to trepan.Debugger.core.start().
-
-Parameter "step_ignore" specifies how many line events to ignore after the
-debug() call. 0 means don't even wait for the debug() call to finish.
 """
     if Mdebugger.Debugger != type(Mdebugger.debugger_obj):
         Mdebugger.debugger_obj = Mdebugger.Debugger(dbg_opts)
         Mdebugger.debugger_obj.core.add_ignore(debug, stop)
         pass
     core = Mdebugger.debugger_obj.core
-    frame = sys._getframe(0)
+    frame = sys._getframe(0+level)
     core.set_next(frame)
     if not core.is_started():
         core.start(start_opts)
@@ -196,7 +198,7 @@ debug() call. 0 means don't even wait for the debug() call to finish.
         debugger_on_post_mortem()
         pass
     if 0 == step_ignore:
-        frame                   = sys._getframe(1)
+        frame                   = sys._getframe(1+level)
         core.stop_reason        = 'at a debug() call'
         old_trace_hook_suspend  = core.trace_hook_suspend
         core.trace_hook_suspend = True
@@ -209,7 +211,7 @@ debug() call. 0 means don't even wait for the debug() call to finish.
 
 
 def stop(opts=None):
-    if Mdebugger.Debugger == type(Mdebugger.debugger_obj):
+    if isinstance(Mdebugger.Debugger, Mdebugger.debugger_obj):
         return Mdebugger.debugger_obj.stop(opts)
     return None
 

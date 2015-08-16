@@ -99,17 +99,17 @@ class UserInterface(Minterface.DebuggerInterface):
 
     def errmsg(self, msg, prefix="** "):
         """Common routine for reporting debugger error messages.
-           """
+        """
         return self.msg("%s%s" %(prefix, msg))
 
     def finalize(self, last_wishes=None):
-        try:
+        # This routine gets called multiple times.
+        # We hard-code the close() function here.
+        if not self.output.closed:
             self.msg("trepan2: That's all, folks...")
-        except IOError:
-            pass
-        self.close()
-        # import pdb; pdb.set_trace()
-        # save history
+            self.output.close()
+        if not self.input.closed: self.input.close()
+        # save history?
         return
 
     def read_command(self, prompt=''):

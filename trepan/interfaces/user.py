@@ -105,11 +105,12 @@ class UserInterface(Minterface.DebuggerInterface):
     def finalize(self, last_wishes=None):
         # This routine gets called multiple times.
         # We hard-code the close() function here.
-        if not self.output.closed:
-            self.msg("trepan2: That's all, folks...")
-            self.output.close()
-        if not self.input.closed: self.input.close()
-        # save history?
+        try:
+            self.msg("trepan3k: That's all, folks...")
+            self.close()
+        except IOError:
+            pass
+        # save history
         return
 
     def read_command(self, prompt=''):

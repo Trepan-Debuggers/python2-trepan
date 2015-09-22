@@ -106,7 +106,7 @@ class UserInterface(Minterface.DebuggerInterface):
         # This routine gets called multiple times.
         # We hard-code the close() function here.
         try:
-            self.msg("trepan3k: That's all, folks...")
+            self.msg("trepan2: That's all, folks...")
             self.close()
         except IOError:
             pass

@@ -14,6 +14,8 @@ interface over TCP/IP.
 See the Tutorial_ for how to use. See ipython-trepan_ for using this
 in *ipython* or an *ipython notebook*.
 
+This package is for Python2.6 and 2.7. See trepan3_ for the same code modified to work with Python 3.
+
 Features
 ========
 

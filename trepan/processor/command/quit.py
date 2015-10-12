@@ -96,7 +96,6 @@ See `exit` or `kill` for more forceful termination commands.
                 pass
             pass
         raise Mexcept.DebuggerQuit
-        return False
 
     def run(self, args):
         threading_list = threading.enumerate()

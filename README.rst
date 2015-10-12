@@ -5,8 +5,7 @@
 Abstract
 ========
 
-This is a gdb-like debugger for Python. It is a rewrite of pydb_ or
-*pdb* from the ground up.
+This is a gdb-like debugger for Python. It is a rewrite of *pdb* from the ground up.
 
 A command-line interface (CLI) is provided as well as an remote access
 interface over TCP/IP.
@@ -14,7 +13,7 @@ interface over TCP/IP.
 See the Tutorial_ for how to use. See ipython-trepan_ for using this
 in *ipython* or an *ipython notebook*.
 
-This package is for Python2.6 and 2.7. See trepan3_ for the same code modified to work with Python 3.
+This package is for Python 2.6 and 2.7. See trepan3_ for the same code modified to work with Python 3.
 
 Features
 ========
@@ -139,11 +138,9 @@ Documentation: http://python2-trepan.readthedocs.org
 .. _debuggers: https://metacpan.org/pod/Devel::Trepan
 .. _this: http://bashdb.sourceforge.net/pydb/features.html
 .. _Tutorial: https://github.com/rocky/python2-trepan/wiki/Tutorial
-.. |Downloads| image:: https://pypip.in/download/trepan/badge.svg
+.. |Downloads| image:: https://pypip.in/download/trepan3k/badge.svg
+   :target: https://travis-ci.org/rocky/python3-trepan/
 .. |Build Status| image:: https://travis-ci.org/rocky/python2-trepan.svg
-   :target: https://travis-ci.org/rocky/python2-trepan/
 .. |Latest Version| image:: https://pypip.in/version/trepan/badge.svg?text=version
-   :target: https://pypi.python.org/pypi/trepan/
-.. |Supported Python versions| image:: https://pypip.in/py_versions/trepan/badge.svg
    :target: https://pypi.python.org/pypi/trepan/
 .. _ipython-trepan: https://github.com/rocky/ipython-trepan

@@ -19,6 +19,8 @@ positive value.
 Examples:
 +++++++++
 
+::
+
     kill                # non-interuptable, nonmaskable kill
     kill 9              # same as above
     kill -9             # same as above

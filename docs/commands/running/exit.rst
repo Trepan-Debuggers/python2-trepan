@@ -12,4 +12,4 @@ return code that will be passed back to the OS.
 
 .. seealso::
 
-   :ref:`quit <quit>` and `kill <kill>`
+   :ref:`quit <quit>` and ref:`kill <kill>`

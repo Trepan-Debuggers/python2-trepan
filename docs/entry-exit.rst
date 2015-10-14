@@ -176,7 +176,7 @@ example:
 
 .. code:: python
 
-        # Code run here trepan2 doesn't even see at all.
+        # Code run here trepan2/trepan3k doesn't even see at all.
         # ...
         from trepan.api import debug
         # trepan is accessible but inactive.
@@ -217,7 +217,7 @@ and call the debugger on signal *USR1*:
           # Go about your business...
 
 However, if you have entered the debugger either by running intially or
-previously via a debug() call trepan2 has already set up such default
+previously via a debug() call, trepan has already set up such default
 handlers for many of the popular signals, like *SIGINT*. To see what
 *trepan2* has installed use the ``info signals`` command:
 
@@ -244,7 +244,7 @@ example it might look like this:
 
 .. code:: console
 
-      $ cat ~/.trepan2rc
+      $ cat ~/.trepan2rc # or cat ~/.trepan3krc
       set autolist
       set different on
       set autoeval on

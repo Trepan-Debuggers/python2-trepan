@@ -22,9 +22,9 @@ and any debugger options:
         $ cat test.py
         print('Hello, World!')
 
-        $ trepan2 test.py
+        $ trepan2 test.py # or trepan3k test.py
 
-For help on trepan2's options add the ``--help`` option.
+For help on trepan2's or trepan3k's options, use the ``--help`` option.
 
 .. code:: console
 

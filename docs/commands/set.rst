@@ -26,6 +26,7 @@ environment settings with the :ref:`show <show>` command.
    set/autopython
    set/basename
    set/cmdtrace
+   set/confirm
    set/dbg_trepan
    set/different
    set/events

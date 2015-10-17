@@ -3,7 +3,7 @@
 Set Confirm
 ------------
 
-**show confirm** [ **on** | **off** ]
+**set confirm** [ **on** | **off** ]
 
 Set confirmation of potentially dangerous operations.
 

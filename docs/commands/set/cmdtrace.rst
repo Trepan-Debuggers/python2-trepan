@@ -1,17 +1,12 @@
-.. _set_confirm:
+.. _set_cmdtrace:
 
-Set Confirm
+Set Cmdtrace
 ------------
 
-**set confirm** [ **on** | **off** ]
+**set cmdtrace** [ **on** | **off** ]
 
-Set confirmation of potentially dangerous operations.
-
-Some operations are a bit disruptive like terminating the program.
-To guard against running this accidentally, by default we ask for
-confirmation. Commands can also be exempted from confirmation by suffixing
-them with an exclamation mark (!).
+Set echoing lines read from debugger command files
 
 .. seealso::
 
-   :ref:`show confirm <show_confirm>`
+   :ref:`show cmdtrace <show_cmdtrace>`

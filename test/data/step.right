@@ -3,6 +3,7 @@
 Set basename (short filenames) in debugger output is on.
 Set event tracing is on.
 Set stopping before def or class statements is off.
+Set confirmation of potentially dangerous operations is off.
 line - gcd.py:10
 line - gcd.py:11
 (gcd.py:11):

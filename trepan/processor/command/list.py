@@ -13,7 +13,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import inspect, os, linecache, pyficache, sys
+import inspect, os, linecache, pyficache, sys, re
 
 # Our local modules
 from pygments.console import colorize
@@ -174,7 +174,7 @@ See also:
         filename, first, last = self.parse_list_cmd(args[1:])
         curframe = self.proc.curframe
         if filename is None: return
-        filename = pyc2py(filename)
+        filename = pyficache.unmap_file(pyc2py(filename))
 
         # We now have range information. Do the listing.
         max_line = pyficache.size(filename)
@@ -183,6 +183,7 @@ See also:
             return
 
         canonic_filename = os.path.realpath(os.path.normcase(filename))
+
         if first > max_line:
             self.errmsg('Bad start line %d - file "%s" has only %d lines'
                         % (first, filename, max_line))
@@ -221,8 +222,7 @@ See also:
                         s    += ' '
                         a_pad = '  '
                         pass
-                    if curframe and lineno == inspect.getlineno(curframe) \
-                       and filename == curframe.f_code.co_filename:
+                    if curframe and lineno == inspect.getlineno(curframe):
                         s += '->'
                         if 'plain' != self.settings['highlight']:
                             s = colorize('bold', s)

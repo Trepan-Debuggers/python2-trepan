@@ -133,9 +133,10 @@ def print_source_location_info(print_fn, filename, lineno, fn_name=None,
         L -- 2 import sys,os
         (trepan2)
     """
-    mess = '(%s:%s' % (filename, lineno)
     if remapped_file:
-        mess += ' remapped %s' % remapped_file
+        mess = '(%s:%s remapped %s' % (remapped_file, lineno, filename)
+    else:
+        mess = '(%s:%s' % (filename, lineno)
     if f_lasti and f_lasti != -1:
         mess += ' @%d' % f_lasti
         pass
@@ -191,6 +192,10 @@ def print_location(proc_obj):
                 filename = fd.name
                 pass
             pass
+        else:
+            if filename in pyficache.file2file_remap:
+                remapped_file = pyficache.unmap_file(filename)
+
 
         fn_name = frame.f_code.co_name
         last_i  = frame.f_lasti

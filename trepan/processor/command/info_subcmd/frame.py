@@ -47,7 +47,7 @@ See also:
     min_abbrev = 2
     max_args = 1
     need_stack = True
-    short_help = '''Show detailed info abotu the current frame'''
+    short_help = '''Show detailed info about the current frame'''
 
     def complete(self, prefix):
         proc_obj = self.proc

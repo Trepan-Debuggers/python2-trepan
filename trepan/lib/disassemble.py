@@ -31,7 +31,7 @@ def _try_compile(source, name):
 
 
 def dis(msg, msg_nocr, section, errmsg, x=None, start_line=-1, end_line=None,
-        relative_pos = False, color=True):
+        relative_pos = False, highlight='light'):
     """Disassemble classes, methods, functions, or code.
 
     With no argument, disassemble the last traceback.
@@ -79,7 +79,8 @@ def dis(msg, msg_nocr, section, errmsg, x=None, start_line=-1, end_line=None,
         section("Disassembly of %s: " % x)
         disassemble(msg, msg_nocr, section, x, lasti=lasti,
                     start_line=start_line, end_line=end_line,
-                    relative_pos = relative_pos)
+                    relative_pos = relative_pos,
+                    highlight = highlight)
     elif isinstance(x, str):    # Source code
         disassemble_string(msg, msg_nocr, x,)
     else:
@@ -89,13 +90,13 @@ def dis(msg, msg_nocr, section, errmsg, x=None, start_line=-1, end_line=None,
 
 
 def disassemble(msg, msg_nocr, section, co, lasti=-1, start_line=-1,
-                end_line=None, relative_pos=False, color='light'):
+                end_line=None, relative_pos=False, highlight='light'):
     """Disassemble a code object."""
     disassemble_bytes(msg, msg_nocr, co.co_code, lasti, co.co_firstlineno,
                       start_line, end_line, relative_pos,
                       co.co_varnames, co.co_names, co.co_consts,
                       co.co_cellvars, co.co_freevars,
-                      dict(findlinestarts(co)), color)
+                      dict(findlinestarts(co)), highlight)
     return
 
 
@@ -108,7 +109,7 @@ def disassemble_string(source):
 def disassemble_bytes(orig_msg, orig_msg_nocr, code, lasti=-1, cur_line=0,
                       start_line=-1, end_line=None, relative_pos=False,
                       varnames=(), names=(), consts=(), cellvars=(),
-                      freevars=(), linestarts={}, color='light'):
+                      freevars=(), linestarts={}, highlight='light'):
     """Disassemble byte string of code. If end_line is negative
     it counts the number of statement linestarts to use."""
     statement_count = 10000
@@ -148,21 +149,21 @@ def disassemble_bytes(orig_msg, orig_msg_nocr, code, lasti=-1, cur_line=0,
             if cur_line > end_line: break
             msg_nocr(format_token(Mformat.LineNumber,
                                   "%3d" % cur_line,
-                                  highlight=color))
+                                  highlight=highlight))
         else:
             msg_nocr('   ')
 
         if i == lasti: msg_nocr(format_token(Mformat.Arrow, '-->',
-                                             highlight=color))
+                                             highlight=highlight))
         else: msg_nocr('   ')
         if i in labels: msg_nocr(format_token(Mformat.Arrow, '>>',
-                                              highlight=color))
+                                              highlight=highlight))
         else: msg_nocr('  ')
         msg_nocr(repr(i).rjust(4))
         msg_nocr(' ')
         msg_nocr(format_token(Mformat.Opcode,
                               opname[op].ljust(20),
-                              highlight=color))
+                              highlight=highlight))
         i += 1
         if op >= HAVE_ARGUMENT:
             oparg = ord(code[i]) + ord(code[i+1])*256 + extended_arg
@@ -176,29 +177,29 @@ def disassemble_bytes(orig_msg, orig_msg_nocr, code, lasti=-1, cur_line=0,
                 msg_nocr('(' +
                          format_token(Mformat.Const,
                                       repr(consts[oparg]),
-                                      highlight=color)
+                                      highlight=highlight)
                          + ')')
                 pass
             elif op in hasname:
                 msg_nocr('(' +
                          format_token(Mformat.Name,
                                       names[oparg],
-                                      highlight=color)
+                                      highlight=highlight)
                          + ')')
             elif op in hasjrel:
                 msg_nocr(format_token(Mformat.Label,
                                       '(to ' + repr(i + oparg) + ')',
-                                      highlight=color))
+                                      highlight=highlight))
             elif op in haslocal:
                 msg_nocr('(' +
                          format_token(Mformat.Var,
                                       varnames[oparg],
-                                      highlight=color) + ')')
+                                      highlight=highlight) + ')')
             elif op in hascompare:
                 msg_nocr('(' +
                          format_token(Mformat.Compare,
                                       cmp_op[oparg],
-                                      highlight=color) + ')')
+                                      highlight=highlight) + ')')
             elif op in hasfree:
                 if free is None:
                     free = cellvars + freevars
@@ -217,7 +218,7 @@ def pyc2code(fname):
     f = open(fname, "rb")
     magic = f.read(4)
     moddate = f.read(4)
-    modtime = time.localtime(struct.unpack('L', moddate)[0])
+    modtime = time.localtime(struct.unpack('I', moddate)[0])
     code = marshal.load(f)
     f.close()
     return magic, moddate, modtime, code
@@ -241,7 +242,7 @@ if __name__ == '__main__':
         return
     curframe = inspect.currentframe()
     dis(msg, msg_nocr, errmsg, section, curframe,
-        start_line=10, end_line=40)
+        start_line=10, end_line=40, highlight='dark')
     print('-' * 40)
     dis(msg, msg_nocr, section, errmsg, disassemble)
     print('-' * 40)

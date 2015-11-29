@@ -244,9 +244,10 @@ example it might look like this:
 
 .. code:: console
 
-      $ cat ~/.trepan2rc # or cat ~/.trepan3krc
+      $ cat ~/.configi/profile
       set autolist
       set different on
       set autoeval on
-      print("My trepan2 startup file loaded")
+      set style colorful
+      print("My trepan startup file loaded")
       $

@@ -40,4 +40,4 @@ Examples:
 
 .. seealso::
 
-   :ref:`show highlight <show_highlight>` :ref:`set style <set_style>`
+   :ref:`show highlight <show_highlight>` and :ref:`set style <set_style>`

@@ -1,4 +1,4 @@
-|Downloads| |Build Status| |Latest Version|
+|downloads| |Build Status| |license|
 
 .. contents:: :local:
 
@@ -139,9 +139,14 @@ Documentation: http://python2-trepan.readthedocs.org
 .. _debuggers: https://metacpan.org/pod/Devel::Trepan
 .. _this: http://bashdb.sourceforge.net/pydb/features.html
 .. _Tutorial: https://github.com/rocky/python2-trepan/wiki/Tutorial
-.. |Downloads| image:: https://pypip.in/download/trepan2/badge.svg
+.. |downloads| image:: https://img.shields.io/pypi/dd/trepan.svg
+    :target: https://pypi.python.org/pypi/trepan
+    :alt: Daily PyPI downloads
    :target: https://travis-ci.org/rocky/python3-trepan/
 .. |Build Status| image:: https://travis-ci.org/rocky/python2-trepan.svg
 .. |Latest Version| image:: https://pypip.in/version/trepan/badge.svg?text=version
    :target: https://pypi.python.org/pypi/trepan/
 .. _ipython-trepan: https://github.com/rocky/ipython-trepan
+.. |license| image:: https://img.shields.io/pypi/l/trepan.svg
+    :target: https://pypi.python.org/pypi/trepan
+    :alt: License

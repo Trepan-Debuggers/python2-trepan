@@ -1,4 +1,4 @@
-|downloads| |Build Status| |license|
+|downloads| |buildstatus| |license|
 
 .. contents:: :local:
 
@@ -143,7 +143,7 @@ Documentation: http://python2-trepan.readthedocs.org
     :target: https://pypi.python.org/pypi/trepan
     :alt: Daily PyPI downloads
    :target: https://travis-ci.org/rocky/python2-trepan/
-.. |Build Status| image:: https://travis-ci.org/rocky/python2-trepan.svg
+.. |buildstatus| image:: https://travis-ci.org/rocky/python2-trepan.svg
 .. |Latest Version| image:: https://pypip.in/version/trepan/badge.svg?text=version
    :target: https://pypi.python.org/pypi/trepan/
 .. _ipython-trepan: https://github.com/rocky/ipython-trepan

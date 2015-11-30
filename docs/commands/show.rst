@@ -31,5 +31,6 @@ Show
    show/listsize
    show/maxstring
    show/skip
+   show/style
    show/trace
    show/width

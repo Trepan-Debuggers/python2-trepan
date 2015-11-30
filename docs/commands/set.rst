@@ -35,5 +35,6 @@ environment settings with the :ref:`show <show>` command.
    set/listsize
    set/maxstring
    set/skip
+   set/style
    set/trace
    set/width

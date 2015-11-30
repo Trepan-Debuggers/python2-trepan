@@ -15,9 +15,9 @@ def complete(self, prefix):
     return Mcomplete.complete_token(style_names)
 
 class ShowStyle(Mbase_subcmd.DebuggerSubcommand):
-    """**show style* *name*
+    """**show style* *pygments-style*
 
-Show the pygments style used in formatting text
+Show the pygments style used in formatting 256-color terminal text.
 
 See also:
 --------

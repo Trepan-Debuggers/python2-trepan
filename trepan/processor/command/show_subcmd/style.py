@@ -22,7 +22,7 @@ Show the pygments style used in formatting 256-color terminal text.
 See also:
 --------
 
-`set style`
+`set style`, `show highlight`
 """
 
     in_list    = True

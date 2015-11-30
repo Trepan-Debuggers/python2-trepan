@@ -1,4 +1,4 @@
-.. _set_style:
+.. _show_style:
 
 Show Style
 ---------

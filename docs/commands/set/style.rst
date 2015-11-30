@@ -12,4 +12,4 @@ Giving an invalid name will list all available pygments styles.
 
 .. seealso::
 
-   :ref:`show style <show_style>` and :ref:`set highlight <set_highlght>`
+   :ref:`show style <show_style>` and :ref:`set highlight <set_highlight>`

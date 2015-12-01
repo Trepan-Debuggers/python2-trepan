@@ -25,6 +25,10 @@ class ClearCommand(Mbase_cmd.DebuggerCommand):
     """**clear** [*linenumber*]
 
 Clear some breakpoints by line number.
+
+See also:
+---------
+`delete`
 """
     category      = 'breakpoints'
     min_args      = 0

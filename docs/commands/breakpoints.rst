@@ -49,6 +49,7 @@ changed at any time with the :ref:`condition <condition>` command.
    :maxdepth: 1
 
    breakpoints/break
+   breakpoints/clear
    breakpoints/condition
    breakpoints/delete
    breakpoints/disable

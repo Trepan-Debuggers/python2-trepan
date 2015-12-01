@@ -19,7 +19,7 @@ class SetStyle(Mbase_subcmd.DebuggerSubcommand):
     using `--highlight=plain` or `--highlight=dark` instead. To turn off styles
     use `set style none`.
 
-    To list the avialable pygments styles inside the debugger, use command
+    To list the available pygments styles inside the debugger, use command
     completion on `set style`. Or Give an invalid name, and a list of the
     available pygments styles also shown.
 

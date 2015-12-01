@@ -31,7 +31,7 @@ Clear some breakpoints by line number.
     max_args      = None
     name          = os.path.basename(__file__).split('.')[0]
     need_stack    = True
-    short_help    = 'Delete some breakpoints or auto-display expressions'
+    short_help    = 'Remove all breakpoints on a line'
 
     complete = Mcomplete.complete_bpnumber
 

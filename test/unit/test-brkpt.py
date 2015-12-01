@@ -35,7 +35,20 @@ class TestBreakpoint(unittest.TestCase):
         self.assertEqual('t', bp2.icon_char())
         self.assertEqual(['2'], bpmgr.bpnumbers(),
                          "Extracting breakpoint-numbers")
+
+        count = 3
+        for i in range(count):
+            bp = bpmgr.add_breakpoint('bar', 6)
+        filename = bp.filename
+        self.assertEqual(count, len(bpmgr.delete_breakpoints_by_lineno(filename, 6)),
+                         "delete_breakpoints_by_line when there are some")
+        self.assertEqual(0, len(bpmgr.delete_breakpoints_by_lineno(filename, 6)),
+                         "delete_breakpoints_by_line when there are none")
+        self.assertNotEqual(0, len(bpmgr.bplist),
+                            "There should still be some breakpoints before reset")
         bpmgr.reset()
+        self.assertEqual(0, len(bpmgr.bplist),
+                         "reset should remove all breakpoints")
         return
 
     def test_checkfuncname(self):

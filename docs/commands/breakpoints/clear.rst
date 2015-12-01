@@ -1,7 +1,7 @@
 .. _clear:
 
-Remove all breakpoints on a line
---------------------------------
+Clear (Remove all breakpoints on a line)
+----------------------------------------
 
 **clear** [*linenumber*]
 

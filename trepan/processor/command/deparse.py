@@ -34,13 +34,12 @@ we use the current frame offset.
     short_help    = 'Deparse source via uncompyle'
 
     def run(self, args):
-        from trepan_deparse import deparser
         # Can't do anything if we don't have python deparse
-        # try:
-        #     from deparse import deparser
-        # except ImportError:
-        #     self.errmsg("deparse needs to be installed to run this command")
-        #     return
+        try:
+            from trepan_deparse import deparser
+        except ImportError:
+            self.errmsg("deparse needs to be installed to run this command")
+            return
 
         co = self.proc.curframe.f_code
 

@@ -32,4 +32,4 @@ Examples:
 
 .. seealso::
 
-   :ref:`tbreak <tbreak>`.
+   :ref:`tbreak <tbreak>`, and :ref:`condition <condition>`.

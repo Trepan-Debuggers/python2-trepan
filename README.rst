@@ -40,7 +40,7 @@ Starting with release 2.8, readline command completion has been added. Command c
 Terminal Handling
 -----------------
 
-We can adjust debugger output depending on the line width of your terminal. If it changes, or you want to adjust it, see `set width <https://python2-trepan.readthedocs.org/en/latest/commands/set/width.html>`_
+We can adjust debugger output depending on the line width of your terminal. If it changes, or you want to adjust it, see `set width <https://python2-trepan.readthedocs.org/en/latest/commands/set/width.html>`_.
 
 Smart Eval
 ----------

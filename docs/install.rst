@@ -17,7 +17,7 @@ If you need root access you may insert `sudo` in front or become root:
 
 .. code:: console
 
-	  $ sudo pip trepan
+	  $ sudo pip install trepan
 
 or:
 

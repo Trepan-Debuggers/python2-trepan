@@ -99,7 +99,7 @@ We do more in the way of looking at the byte codes to give better information. T
 * Check that breakpoints are set only where they make sense.
 * A more accurate determination of if you are at a function-defining *def* statement (because the caller instruction contains ``MAKE_FUNCTION``.)
 
-  In the future we may add the ablity to deparse Python code at the instruction you are stopped at, thereby giving you a way to see *exactly* where you are. (Python reports location only at the level of granularity of a line.) But even without this feature, using the instruction offset and disassembly you can determine exactly where you are. See `this article <http://blogs.perl.org/users/rockyb/2015/11/exact-perl-location-with-bdeparse-and-develcallsite.html>`
+  In the future we may add the ablity to deparse Python code at the instruction you are stopped at, thereby giving you a way to see *exactly* where you are. (Python reports location only at the level of granularity of a line.) But even without this feature, using the instruction offset and disassembly you can determine exactly where you are. See `this article <http://blogs.perl.org/users/rockyb/2015/11/exact-perl-location-with-bdeparse-and-develcallsite.html>`_.
 
 Debugger Command Arguments can be Variables and Expressions
 -----------------------------------------------------------

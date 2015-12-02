@@ -42,6 +42,7 @@ we use the current frame offset.
             return
 
         co = self.proc.curframe.f_code
+        name = co.co_name
 
         if len(args) == 2:
             last_i = self.proc.get_an_int(args[1],
@@ -52,8 +53,8 @@ we use the current frame offset.
             last_i = self.proc.curframe.f_lasti
 
         if last_i == -1:
-            if co.co_name:
-                self.msg("At beginning of %s " % co.co_name)
+            if name:
+                self.msg("At beginning of %s " % name)
                 return
             elif self.core.filename(None):
                 self.msg("At beginning of program %s" % self.core.filename(None))
@@ -68,8 +69,8 @@ we use the current frame offset.
         except:
             self.errmsg("error in deparsing code at %d" % last_i)
             return
-        if last_i in sorted(walk.offsets.keys()):
-            extractInfo = walk.extract_line_info(last_i)
+        if (name, last_i) in sorted(walk.offsets.keys()):
+            extractInfo = walk.extract_line_info(name, last_i)
             print extractInfo
             self.msg(extractInfo.selectedLine)
             self.msg(extractInfo.markerLine)

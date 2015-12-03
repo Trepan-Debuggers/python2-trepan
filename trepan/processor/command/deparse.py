@@ -13,7 +13,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import os, sys
+import os
 from sys import version_info
 
 # Our local modules
@@ -44,7 +44,7 @@ we use the current frame offset.
         co = self.proc.curframe.f_code
         name = co.co_name
 
-        if len(args) == 2:
+        if len(args) >= 2 and args[1] != '-p':
             last_i = self.proc.get_an_int(args[1],
                                           ("The 'deparse' command when given an argument requires an"
                                            " instruction offset. Got: %s") %
@@ -66,6 +66,7 @@ we use the current frame offset.
         sys_version = version_info.major + (version_info.minor / 10.0)
         try:
             walk = deparser.deparse(sys_version, co)
+
         except:
             self.errmsg("error in deparsing code at %d" % last_i)
             return
@@ -74,6 +75,20 @@ we use the current frame offset.
             print extractInfo
             self.msg(extractInfo.selectedLine)
             self.msg(extractInfo.markerLine)
+            if args[-1] == '-p':
+                nodeInfo = walk.offsets[name, last_i]
+                node = nodeInfo.node
+                if hasattr(node, 'parent'):
+                    p = node.parent
+                    # if hasattr(p, 'offset'):
+                    #     extractInfo = walk.extract_line_info(name, p.offfset)
+                    #     print extractInfo
+                    #     self.msg(extractInfo.selectedLine)
+                    #     self.msg(extractInfo.markerLine)
+                    print("PARENT: ", p)
+                pass
+
+
         else:
             self.errmsg("cant find %d" % last_i)
             print sorted(walk.offsets.keys())

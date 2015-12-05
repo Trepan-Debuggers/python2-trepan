@@ -44,11 +44,14 @@ we use the current frame offset.
         co = self.proc.curframe.f_code
         name = co.co_name
 
-        if len(args) >= 2 and args[1] != '-p':
+        if ( (len(args) == 2 and args[1] != '-p')
+             or len(args) == 3 and args[2] == '-p'):
             last_i = self.proc.get_an_int(args[1],
                                           ("The 'deparse' command when given an argument requires an"
                                            " instruction offset. Got: %s") %
                                           args[1])
+            if last_i is None:
+                return
         else:
             last_i = self.proc.curframe.f_lasti
 
@@ -71,29 +74,24 @@ we use the current frame offset.
             self.errmsg("error in deparsing code at %d" % last_i)
             return
         if (name, last_i) in sorted(walk.offsets.keys()):
-            extractInfo = walk.extract_line_info(name, last_i)
+            nodeInfo =  walk.offsets[name, last_i]
+            extractInfo = walk.extract_node_info(nodeInfo)
             # print extractInfo
-            self.msg(extractInfo.selectedLine)
-            self.msg(extractInfo.markerLine)
-            if args[-1] == '-p':
-                nodeInfo = walk.offsets[name, last_i]
-                node = nodeInfo.node
-                if hasattr(node, 'parent'):
-                    p = node.parent
-                    while (hasattr(p, 'parent') and p.start == node.start and p.finish == node.finish):
-                        if  p == node: break
-                        node = p
-                        p = p.parent
-                    print("PARENT: ", p)
-                    extractInfo = walk.extract_line_info(name, p)
+            if extractInfo:
+                self.msg(extractInfo.selectedLine)
+                self.msg(extractInfo.markerLine)
+                if args[-1] == '-p':
+                    extractInfo = walk.extract_parent_info(nodeInfo.node)
                     if extractInfo:
+                        self.msg("Contained in...")
                         self.msg(extractInfo.selectedLine)
                         self.msg(extractInfo.markerLine)
+                    pass
                 pass
-
-
+            pass
         else:
-            self.errmsg("cant find %d" % last_i)
+            self.errmsg("haven't recorded info for offset %d. Offsets I know: are"
+                        % last_i)
             print sorted(walk.offsets.keys())
         return
     pass

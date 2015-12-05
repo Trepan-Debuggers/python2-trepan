@@ -72,7 +72,7 @@ we use the current frame offset.
             return
         if (name, last_i) in sorted(walk.offsets.keys()):
             extractInfo = walk.extract_line_info(name, last_i)
-            print extractInfo
+            # print extractInfo
             self.msg(extractInfo.selectedLine)
             self.msg(extractInfo.markerLine)
             if args[-1] == '-p':
@@ -80,12 +80,15 @@ we use the current frame offset.
                 node = nodeInfo.node
                 if hasattr(node, 'parent'):
                     p = node.parent
-                    # if hasattr(p, 'offset'):
-                    #     extractInfo = walk.extract_line_info(name, p.offfset)
-                    #     print extractInfo
-                    #     self.msg(extractInfo.selectedLine)
-                    #     self.msg(extractInfo.markerLine)
+                    while (hasattr(p, 'parent') and p.start == node.start and p.finish == node.finish):
+                        if  p == node: break
+                        node = p
+                        p = p.parent
                     print("PARENT: ", p)
+                    extractInfo = walk.extract_line_info(name, p)
+                    if extractInfo:
+                        self.msg(extractInfo.selectedLine)
+                        self.msg(extractInfo.markerLine)
                 pass
 
 

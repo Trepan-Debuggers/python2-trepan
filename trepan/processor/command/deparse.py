@@ -20,10 +20,10 @@ from sys import version_info
 from trepan.processor.command import base_cmd as Mbase_cmd
 
 class PythonCommand(Mbase_cmd.DebuggerCommand):
-    """**deparse** [offset]
+    """**deparse** [offset] [-p]
 
 deparse around where the program is currently stopped. If no offset is given
-we use the current frame offset.
+we use the current frame offset. If `-p` is given, include parent information.
 """
 
     category      = 'data'
@@ -56,15 +56,16 @@ we use the current frame offset.
             last_i = self.proc.curframe.f_lasti
 
         if last_i == -1:
-            if name:
-                self.msg("At beginning of %s " % name)
-                return
-            elif self.core.filename(None):
-                self.msg("At beginning of program %s" % self.core.filename(None))
-                return
-            else:
-                self.msg("At beginning")
-                return
+            last_i = 0
+            # if name:
+            #     self.msg("At beginning of %s " % name)
+            #     return
+            # elif self.core.filename(None):
+            #     self.msg("At beginning of program %s" % self.core.filename(None))
+            #     return
+            # else:
+            #     self.msg("At beginning")
+            #     return
 
         sys_version = version_info.major + (version_info.minor / 10.0)
         try:

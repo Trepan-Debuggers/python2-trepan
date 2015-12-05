@@ -176,7 +176,7 @@ def print_location(proc_obj):
 #             if self.run == frame.f_locals['breadcrumb']:
 #                 break
 
-        filename = Mstack.frame2file(core_obj, frame)
+        filename = Mstack.frame2file(core_obj, frame, canonic=False)
         if '<string>' == filename and dbgr_obj.eval_string:
             remapped_file = filename
             filename = pyficache.unmap_file(filename)
@@ -195,7 +195,12 @@ def print_location(proc_obj):
         else:
             if filename in pyficache.file2file_remap:
                 remapped_file = pyficache.unmap_file(filename)
-
+                # FIXME: a remapped_file shouldn't be the same as its unmapped version
+                if remapped_file == filename:
+                    remapped_file = None
+                    pass
+                pass
+            pass
 
         fn_name = frame.f_code.co_name
         last_i  = frame.f_lasti

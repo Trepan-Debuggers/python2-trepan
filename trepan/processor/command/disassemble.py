@@ -117,7 +117,7 @@ disassemble that.
                         finish, relative_pos, is_offset = self.parse_arg(args[3])
                         if finish is None:
                             self.errmsg = ('End %s should be a number. ' +
-                                           ' Got %s.' % (ikk, args[3]))
+                                           ' Got %s.' % (ilk, args[3]))
                             return
                         else:
                             opts['end_offset' if is_offset else 'end_line'] = finish

@@ -260,7 +260,7 @@ class CommandProcessor(Mprocessor.Processor):
         self.event2short['signal'] = '?!'
         self.event2short['brkpt']  = 'xx'
 
-        self.optional_modules = ('ipython', 'bpython')
+        self.optional_modules = ('ipython', 'bpy')
         self.cmd_instances    = self._populate_commands()
 
         # command argument string. Is like current_command, but the part

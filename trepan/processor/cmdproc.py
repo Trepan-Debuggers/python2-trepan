@@ -129,7 +129,7 @@ def print_source_location_info(print_fn, filename, lineno, fn_name=None,
                                f_lasti=None, remapped_file=None):
     """Print out a source location , e.g. the first line in
     line in:
-        (/tmp.py:2):  <module>
+        (/tmp.py:2 @21):  <module>
         L -- 2 import sys,os
         (trepan2)
     """
@@ -243,7 +243,7 @@ def print_location(proc_obj):
 # Default settings for command processor method call
 DEFAULT_PROC_OPTS = {
     # A list of debugger initialization files to read on first command
-    # loop entry.  Often this something like [~/.trepan2rc] which the
+    # loop entry.  Often this something like [~/.config/trepanpy/profile] which the
     # front-end sets.
     'initfile_list' : []
 }
@@ -260,7 +260,7 @@ class CommandProcessor(Mprocessor.Processor):
         self.event2short['signal'] = '?!'
         self.event2short['brkpt']  = 'xx'
 
-        self.optional_modules = ('ipython',)
+        self.optional_modules = ('ipython', 'bpython')
         self.cmd_instances    = self._populate_commands()
 
         # command argument string. Is like current_command, but the part

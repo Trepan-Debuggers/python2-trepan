@@ -339,10 +339,10 @@ class DebuggerCore:
         # do we have one?
         lineno = frame.f_lineno
         filename = frame.f_code.co_filename
-        if self.different_line and event == 'line':
-            if self.last_lineno == lineno and self.last_filename == filename:
-                return False
-            pass
+        # if self.different_line and event == 'line':
+        #     if self.last_lineno == lineno and self.last_filename == filename:
+        #         return False
+        #     pass
         self.last_lineno   = lineno
         self.last_filename = filename
 

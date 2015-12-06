@@ -15,15 +15,34 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import os
 from sys import version_info
+from pyficache import highlight_string
 
 # Our local modules
 from trepan.processor.command import base_cmd as Mbase_cmd
 
 class PythonCommand(Mbase_cmd.DebuggerCommand):
     """**deparse** [offset] [-p]
+       **deparse** .
 
 deparse around where the program is currently stopped. If no offset is given
 we use the current frame offset. If `-p` is given, include parent information.
+
+In the second form, deparse the entire function or main program you are in.
+Output is colorized the same as source listing. Use `set highlight plain` to turn
+that off.
+
+Examples:
+--------
+
+    deparse  # deparse current location
+    deparse -p # deparse current location enclosing context
+    deparse .  # deparse current function or main
+
+
+See also:
+---------
+
+`disassemble`, 'list', and `set highlight`
 """
 
     category      = 'data'
@@ -32,6 +51,17 @@ we use the current frame offset. If `-p` is given, include parent information.
     name          = os.path.basename(__file__).split('.')[0]
     need_stack    = True
     short_help    = 'Deparse source via uncompyle'
+
+
+    def print_text(self, text):
+        if self.settings['highlight'] == 'plain':
+            self.msg(text)
+            return
+        opts = {'bg': self.settings['highlight']}
+        if 'style' in self.settings:
+            opts['style'] = self.settings['style']
+        self.msg(highlight_string(text, opts).strip("\n"))
+
 
     def run(self, args):
         # Can't do anything if we don't have python deparse
@@ -44,7 +74,18 @@ we use the current frame offset. If `-p` is given, include parent information.
         co = self.proc.curframe.f_code
         name = co.co_name
 
-        if ( (len(args) == 2 and args[1] != '-p')
+        sys_version = version_info.major + (version_info.minor / 10.0)
+        if len(args) == 2 and args[1] == '.':
+            try:
+                walk = deparser.deparse(sys_version, co)
+            except:
+                self.errmsg("error in deparsing code")
+                return
+
+            self.print_text(walk.text)
+            return
+
+        elif ( (len(args) == 2 and args[1] != '-p')
              or len(args) == 3 and args[2] == '-p'):
             last_i = self.proc.get_an_int(args[1],
                                           ("The 'deparse' command when given an argument requires an"
@@ -56,21 +97,18 @@ we use the current frame offset. If `-p` is given, include parent information.
             last_i = self.proc.curframe.f_lasti
 
         if last_i == -1:
-            last_i = 0
-            # if name:
-            #     self.msg("At beginning of %s " % name)
-            #     return
-            # elif self.core.filename(None):
-            #     self.msg("At beginning of program %s" % self.core.filename(None))
-            #     return
-            # else:
-            #     self.msg("At beginning")
-            #     return
+            if name:
+                self.msg("At beginning of %s " % name)
+                return
+            elif self.core.filename(None):
+                self.msg("At beginning of program %s" % self.core.filename(None))
+                return
+            else:
+                self.msg("At beginning")
+                return
 
-        sys_version = version_info.major + (version_info.minor / 10.0)
         try:
             walk = deparser.deparse(sys_version, co)
-
         except:
             self.errmsg("error in deparsing code at %d" % last_i)
             return
@@ -79,13 +117,13 @@ we use the current frame offset. If `-p` is given, include parent information.
             extractInfo = walk.extract_node_info(nodeInfo)
             # print extractInfo
             if extractInfo:
-                self.msg(extractInfo.selectedLine)
+                self.print_text(extractInfo.selectedLine)
                 self.msg(extractInfo.markerLine)
                 if args[-1] == '-p':
                     extractInfo = walk.extract_parent_info(nodeInfo.node)
                     if extractInfo:
                         self.msg("Contained in...")
-                        self.msg(extractInfo.selectedLine)
+                        self.print_text(extractInfo.selectedLine)
                         self.msg(extractInfo.markerLine)
                     pass
                 pass

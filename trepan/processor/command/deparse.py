@@ -22,7 +22,8 @@ from trepan.processor.command import base_cmd as Mbase_cmd
 
 class PythonCommand(Mbase_cmd.DebuggerCommand):
     """**deparse** [offset] [-p]
-       **deparse** .
+
+**deparse** .
 
 deparse around where the program is currently stopped. If no offset is given
 we use the current frame offset. If `-p` is given, include parent information.
@@ -42,7 +43,7 @@ Examples:
 See also:
 ---------
 
-`disassemble`, 'list', and `set highlight`
+`disassemble`, `list`, and `set highlight`
 """
 
     category      = 'data'

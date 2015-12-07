@@ -97,23 +97,12 @@ See also:
         else:
             last_i = self.proc.curframe.f_lasti
 
-        if last_i == -1:
-            if name:
-                self.msg("At beginning of %s " % name)
-                return
-            elif self.core.filename(None):
-                self.msg("At beginning of program %s" % self.core.filename(None))
-                return
-            else:
-                self.msg("At beginning")
-                return
-
         try:
             walk = deparser.deparse(sys_version, co)
         except:
             self.errmsg("error in deparsing code at %d" % last_i)
             return
-        if (name, last_i) in sorted(walk.offsets.keys()):
+        if (name, last_i) in walk.offsets.keys():
             nodeInfo =  walk.offsets[name, last_i]
             extractInfo = walk.extract_node_info(nodeInfo)
             # print extractInfo
@@ -129,10 +118,18 @@ See also:
                     pass
                 pass
             pass
+        elif last_i == -1:
+            if name:
+                self.msg("At beginning of %s " % name)
+            elif self.core.filename(None):
+                self.msg("At beginning of program %s" % self.core.filename(None))
+            else:
+                self.msg("At beginning")
         else:
-            self.errmsg("haven't recorded info for offset %d. Offsets I know: are"
+            self.errmsg("haven't recorded info for offset %d. Offsets I know are:"
                         % last_i)
-            print sorted(walk.offsets.keys())
+            m = self.columnize_commands(list(sorted(walk.offsets.keys())))
+            self.msg_nocr(m)
         return
     pass
 

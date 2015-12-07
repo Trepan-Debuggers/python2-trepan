@@ -171,7 +171,9 @@ class DebuggerCore:
                 canonic = Mclifns.search_file(filename, self.search_path,
                                               self.main_dirname)
                 # FIXME: is this is right for utter failure?
-                if not canonic: canonic = filename
+                if not canonic:
+                    self.filename_cache[filename] = filename
+                    return filename
                 pass
             canonic = os.path.realpath(os.path.normcase(canonic))
             self.filename_cache[filename] = canonic

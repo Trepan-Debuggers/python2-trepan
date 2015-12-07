@@ -129,7 +129,7 @@ def print_source_location_info(print_fn, filename, lineno, fn_name=None,
                                f_lasti=None, remapped_file=None):
     """Print out a source location , e.g. the first line in
     line in:
-        (/tmp.py:2):  <module>
+        (/tmp.py:2 @21):  <module>
         L -- 2 import sys,os
         (trepan2)
     """
@@ -217,13 +217,8 @@ def print_location(proc_obj):
 
         line = pyficache.getline(filename, lineno, opts)
         if not line:
-            if sys.version_info[1] <= 4:
-                # Python 2.4 and before doesn't have 3-arg getline
-                line = linecache.getline(filename, lineno)
-            else:
-                line = linecache.getline(filename, lineno,
-                                         proc_obj.curframe.f_globals)
-                pass
+            line = linecache.getline(filename, lineno,
+                                     proc_obj.curframe.f_globals)
             pass
 
         if line and len(line.strip()) != 0:
@@ -243,7 +238,7 @@ def print_location(proc_obj):
 # Default settings for command processor method call
 DEFAULT_PROC_OPTS = {
     # A list of debugger initialization files to read on first command
-    # loop entry.  Often this something like [~/.trepan2rc] which the
+    # loop entry.  Often this something like [~/.config/trepanpy/profile] which the
     # front-end sets.
     'initfile_list' : []
 }
@@ -261,6 +256,7 @@ class CommandProcessor(Mprocessor.Processor):
         self.event2short['brkpt']  = 'xx'
 
         self.optional_modules = ('ipython', 'bpy', 'deparse')
+        self.optional_modules = ('ipython', 'bpy')
         self.cmd_instances    = self._populate_commands()
 
         # command argument string. Is like current_command, but the part

@@ -13,7 +13,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import inspect, os, linecache, pyficache, sys, re, tempfile
+import inspect, os, linecache, pyficache, sys, re
 
 # Our local modules
 from pygments.console import colorize
@@ -179,25 +179,8 @@ See also:
         # We now have range information. Do the listing.
         max_line = pyficache.size(filename)
         if max_line is None:
-            # FIXME:
-            # try with good ol linecache and consider fixing pyficache
-            lines = linecache.getlines(filename)
-            if not lines:
-                self.errmsg('No file %s found' % filename)
-            else:
-                # FIXME: DRY code with version in cmdproc.py print_location
-                prefix = os.path.basename(filename).split('.')[0]
-                fd = tempfile.NamedTemporaryFile(suffix='.py',
-                                                 prefix=prefix,
-                                                 delete=False)
-                with fd:
-                    fd.write(''.join(lines))
-                    max_line = len(lines)
-                    unmapped_filename = fd.name
-                    pyficache.remap_file(unmapped_filename, filename)
-                fd.close()
-                pass
-                max_line = pyficache.size(filename)
+            self.errmsg('No file %s found' % filename)
+            return
 
         canonic_filename = os.path.realpath(os.path.normcase(filename))
 

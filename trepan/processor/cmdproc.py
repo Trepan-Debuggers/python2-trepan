@@ -202,11 +202,6 @@ def print_location(proc_obj):
                 pass
             pass
 
-        fn_name = frame.f_code.co_name
-        last_i  = frame.f_lasti
-        print_source_location_info(intf_obj.msg, filename, lineno, fn_name,
-                                   remapped_file = remapped_file,
-                                   f_lasti = last_i)
         opts = {
             'reload_on_change' : proc_obj.settings('reload'),
             'output'           : proc_obj.settings('highlight')
@@ -215,12 +210,35 @@ def print_location(proc_obj):
         if 'style' in proc_obj.debugger.settings:
             opts['style'] = proc_obj.settings('style')
 
+        pyficache.update_cache(filename)
         line = pyficache.getline(filename, lineno, opts)
         if not line:
+            # FIXME:
+            # try with good ol linecache and consider fixing pyficache
+            lines = linecache.getlines(filename)
+            if lines:
+                # FIXME: DRY code with version in cmdproc.py print_location
+                prefix = os.path.basename(filename).split('.')[0]
+                fd = tempfile.NamedTemporaryFile(suffix='.py',
+                                                 prefix=prefix,
+                                                 delete=False)
+                with fd:
+                    fd.write(''.join(lines))
+                    max_line = len(lines)
+                    remapped_file = fd.name
+                    print("XXX", filename)
+                    pyficache.remap_file(remapped_file, filename)
+                fd.close()
+                pass
             line = linecache.getline(filename, lineno,
                                      proc_obj.curframe.f_globals)
             pass
 
+        fn_name = frame.f_code.co_name
+        last_i  = frame.f_lasti
+        print_source_location_info(intf_obj.msg, filename, lineno, fn_name,
+                                   remapped_file = remapped_file,
+                                   f_lasti = last_i)
         if line and len(line.strip()) != 0:
             if proc_obj.event:
                 print_source_line(intf_obj.msg, lineno, line,

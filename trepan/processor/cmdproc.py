@@ -217,13 +217,8 @@ def print_location(proc_obj):
 
         line = pyficache.getline(filename, lineno, opts)
         if not line:
-            if sys.version_info[1] <= 4:
-                # Python 2.4 and before doesn't have 3-arg getline
-                line = linecache.getline(filename, lineno)
-            else:
-                line = linecache.getline(filename, lineno,
-                                         proc_obj.curframe.f_globals)
-                pass
+            line = linecache.getline(filename, lineno,
+                                     proc_obj.curframe.f_globals)
             pass
 
         if line and len(line.strip()) != 0:

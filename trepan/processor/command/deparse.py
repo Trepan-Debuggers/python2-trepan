@@ -97,6 +97,7 @@ See also:
         else:
             last_i = self.proc.curframe.f_lasti
 
+        walk = deparser.deparse(sys_version, co)
         try:
             walk = deparser.deparse(sys_version, co)
         except:
@@ -107,14 +108,16 @@ See also:
             extractInfo = walk.extract_node_info(nodeInfo)
             # print extractInfo
             if extractInfo:
+                self.msg("opcode: %s" % nodeInfo.node.type)
                 self.print_text(extractInfo.selectedLine)
                 self.msg(extractInfo.markerLine)
                 if args[-1] == '-p':
-                    extractInfo = walk.extract_parent_info(nodeInfo.node)
+                    extractInfo, p = walk.extract_parent_info(nodeInfo.node)
                     if extractInfo:
                         self.msg("Contained in...")
                         self.print_text(extractInfo.selectedLine)
                         self.msg(extractInfo.markerLine)
+                        self.msg("parsed type: %s" % p.type)
                     pass
                 pass
             pass

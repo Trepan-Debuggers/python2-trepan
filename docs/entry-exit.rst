@@ -365,7 +365,7 @@ example it might look like this:
 
 .. code:: console
 
-      $ cat ~/.configi/profile
+      $ cat ~/.config/profile
       set autolist
       set different on
       set autoeval on

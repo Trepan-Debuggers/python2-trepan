@@ -205,7 +205,7 @@ inside the *debug()* call:
 Calling the debugger from pytest
 ================================
 
-Install `trepan-pytest <https://pypi.python.org/pypi/pytest-trepan>`_::
+Install `pytest-trepan <https://pypi.python.org/pypi/pytest-trepan>`_::
 
     pip install pytest-trepan
 

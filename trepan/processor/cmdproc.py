@@ -224,9 +224,7 @@ def print_location(proc_obj):
                                                  delete=False)
                 with fd:
                     fd.write(''.join(lines))
-                    max_line = len(lines)
                     remapped_file = fd.name
-                    print("XXX", filename)
                     pyficache.remap_file(remapped_file, filename)
                 fd.close()
                 pass

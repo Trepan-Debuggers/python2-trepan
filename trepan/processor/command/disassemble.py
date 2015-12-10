@@ -80,10 +80,12 @@ disassemble that.
         return None, None, is_offset
 
     def run(self, args):
-        start_line = -1
-        end_line = None
         relative_pos = False
-        opts = {'highlight': self.settings['highlight']}
+        opts = {'highlight': self.settings['highlight'],
+                'start_line': -1,
+                'end_line': None
+                }
+
         if len(args) > 1:
             start, opts['relative_pos'], is_offset = self.parse_arg(args[1])
             if start is None:

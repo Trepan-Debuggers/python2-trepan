@@ -6,7 +6,8 @@ Entering the Trepan Debugger
 There are a couple ways you can enter the debugger:
 
 -  Run the debugger initially
--  Add a call to the debugger inside your code
+-  Run the debugger from inside IPython or `python -i`
+-  Add a call to the debugger inside your code or pytest
 -  Run post-mortem debugging when an unexpected exception occurs
 -  Set up an exception handler to enter the debugger on a signal
 
@@ -201,6 +202,42 @@ inside the *debug()* call:
              debug(step_ignore=0) # Stop before even returning from the debug() call
           foo()  # Note there's no statement following foo()
 
+Calling the debugger from pytest
+================================
+
+Install `trepan-pytest <https://pypi.python.org/pypi/pytest-trepan>`_::
+
+    pip install pytest-trepan
+
+After installing, to set a breakpoint to enter the trepan debugger::
+
+    import pytest
+    def test_function():
+        ...
+        pytest.trepan()    # get thee into the debugger!
+        x = 1
+        ...
+
+The above will look like it is stopped at the *pytest.trepan()*
+call. This is most useful when this is the last statement of a
+scope. If you want to stop instead before ``x = 1`` pass ``immediate=False`` or just ``False``::
+
+    import pytest
+    def test_function():
+        ...
+        pytest.trepan(immediate=False)
+	# same as py.trepan(False)
+	x = 1
+	...
+
+You can also pass as keyword arguments any parameter accepted by *trepan.api.debug()*.
+
+To have the debugger entered on error, use the ``--trepan`` option::
+
+    $ py.test --trepan ...
+
+
+
 Set up an exception handler to enter the debugger on a signal
 =============================================================
 
@@ -244,7 +281,7 @@ example it might look like this:
 
 .. code:: console
 
-      $ cat ~/.configi/profile
+      $ cat ~/.config/profile
       set autolist
       set different on
       set autoeval on

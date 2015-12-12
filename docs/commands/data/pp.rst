@@ -15,5 +15,3 @@ See also:
 
 :ref:`pr <pr>` and :ref:`examine <examine>` for commands which do more
 in the way of formatting.
-
-.. _pr:

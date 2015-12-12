@@ -26,6 +26,15 @@ There's a lot of cool stuff here that's not in the stock
 Python debugger *pdb*.
 
 
+Exact location information
+--------------------------
+
+Python reports line information on the granularity of a line. To get more precise informaiton, we can (de)parse into Python the byte code arrond a bytecode offset such as
+the place you are stopped at.
+
+So far as I know, there is no other debugger that can do this.
+
+
 Source-code Syntax Colorization
 -------------------------------
 

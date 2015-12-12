@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2008-2009, 2013 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008-2009, 2013, 2015 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -20,10 +20,15 @@ def file_list():
     return list(set(pyficache.cached_files() +
                     list(pyficache.file2file_remap.keys())))
 
+def is_compiled_py(filename):
+    """Given a file name, if the suffix is pyo or pyc (an optimized bytecode
+    file), change that to the py equivalent"""
+    return True if filename[-4:].lower() in ('.pyc', '.pyo') else False
+
 def file_pyc2py(filename):
     """Given a file name, if the suffix is pyo or pyc (an optimized bytecode
     file), change that to the py equivalent"""
-    if filename[-4:].lower() in ('.pyc', '.pyo'):
+    if is_compiled_py(filename):
         return filename[:-1]
     return filename
 

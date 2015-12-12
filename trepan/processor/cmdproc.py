@@ -225,6 +225,7 @@ def print_location(proc_obj):
                 with fd:
                     fd.write(''.join(lines))
                     remapped_file = fd.name
+                    max_line = len(lines)
                     pyficache.remap_file(remapped_file, filename)
                 fd.close()
                 pass
@@ -271,6 +272,7 @@ class CommandProcessor(Mprocessor.Processor):
         self.event2short['signal'] = '?!'
         self.event2short['brkpt']  = 'xx'
 
+        self.optional_modules = ('ipython', 'bpy', 'deparse')
         self.optional_modules = ('ipython', 'bpy')
         self.cmd_instances    = self._populate_commands()
 

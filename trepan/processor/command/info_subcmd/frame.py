@@ -22,7 +22,7 @@ from trepan.processor import frame as Mframe
 
 
 class InfoFrame(Mbase_subcmd.DebuggerSubcommand):
-    """**info frame** [ *frame-number* ]
+    """**info frame** [-c] [ *frame-number* ]
 
 Show the detailed information *frame-number* or the current frame if
 *frame-number* is not specified.
@@ -33,11 +33,15 @@ Specific information includes:
 
 * the source-code line number that this frame is stopped in
 
-* the last instruction executed; -1 if the program are before the first instruction
+* the last instruction executed; -1 if the program are before the first
+instruction
 
 * a function that tracing this frame or `None`
 
 * Whether the frame is in restricted execution
+
+If `-c` is given we show some information on the associated Python code object
+for this frame.
 
 See also:
 ---------
@@ -45,7 +49,7 @@ See also:
 `info locals`, `info globals`, `info args`"""
 
     min_abbrev = 2
-    max_args = 1
+    max_args = 2
     need_stack = True
     short_help = '''Show detailed info about the current frame'''
 
@@ -62,6 +66,11 @@ See also:
         if not frame:
             self.errmsg("No frame selected.")
             return False
+
+        show_code = False
+        if len(args) >= 1 and args[0] == '-c':
+            args.pop(0)
+            show_code = True
 
         if len(args) == 1:
             frame_num = self.proc.get_an_int(args[0],
@@ -89,6 +98,22 @@ See also:
         self.msg('  tracing function: %s' % frame.f_trace)
         if hasattr(frame, 'f_restricted'):
             self.msg('  restricted execution: %s' % frame.f_restricted)
+
+        # FIXME: we have an info code that has everything?
+        if show_code:
+            code = frame.f_code
+            self.section('Associated code')
+            self.msg("  name: %s" % code.co_name)
+            self.msg('  number of arguments: %d' % code.co_argcount)
+            self.msg('  number of locals: %d' % code.co_nlocals)
+            self.msg("  stacksize %s" % code.co_stacksize)
+            self.msg("  first line number: %s" % code.co_firstlineno)
+            self.msg("  is%s optimized" % ("" if (code.co_flags & 1) == 1 else " not"))
+            self.msg("  has%s newlocals" % ("" if (code.co_flags & 2) == 1 else " no"))
+            self.msg("  has%s *args" % ("" if (code.co_flags & 4) == 1 else " no"))
+            self.msg("  has%s **args" % ("" if (code.co_flags & 8) == 1 else " no"))
+            print(code.co_varnames)
+
         return False
     pass
 

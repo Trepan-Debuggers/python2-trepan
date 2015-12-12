@@ -244,6 +244,7 @@ if __name__ == '__main__':
     from mock import MockDebugger
     d = MockDebugger()
     command = ListCommand(d.core.processor)
+    command.proc.list_filename  = __file__
     command.run(['list'])
     from trepan.processor import cmdproc
     command.proc = d.core.processor = cmdproc.CommandProcessor(d.core)

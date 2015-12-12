@@ -16,7 +16,8 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''The command-line interface to the debugger.
 '''
-import os, os.path, sys
+from __future__ import print_function
+import os, os.path, sys, tempfile
 
 package='trepan'
 __import__('pkg_resources').declare_namespace(package)
@@ -41,7 +42,6 @@ from trepan.VERSION import VERSION as __version__
 
 def main(dbg=None, sys_argv=list(sys.argv)):
     """Routine which gets run if we were invoked directly"""
-    global __title__
 
     # Save the original just for use in the restart that works via exec.
     orig_sys_argv = list(sys_argv)
@@ -85,13 +85,34 @@ def main(dbg=None, sys_argv=list(sys.argv)):
             is_readable = Mfile.readable(mainpyfile)
             if is_readable is None:
                 print("%s: Python script file '%s' does not exist"
-                      % (__title__, mainpyfile,))
+                      % (__title__, mainpyfile,), file=sys.stderr)
                 sys.exit(1)
             elif not is_readable:
                 print("%s: Can't read Python script file '%s'"
-                      % (__title__, mainpyfile, ))
+                      % (__title__, mainpyfile, ), file=sys.stderr)
                 sys.exit(1)
                 return
+
+        if Mfile.is_compiled_py(mainpyfile):
+            try:
+                from uncompyle2 import uncompyle_file
+            except ImportError:
+                print("%s: Compiled python file '%s', but uncompyle2 not found"
+                    % (__title__, mainpyfile), file=sys.stderr)
+                sys.exit(1)
+
+            short_name = os.path.basename(mainpyfile).strip('.pyc')
+            fd = tempfile.NamedTemporaryFile(suffix='.py',
+                                             prefix=short_name + "_",
+                                             delete=False)
+            try:
+                uncompyle_file(mainpyfile, fd)
+            except:
+                print("%s: error uncompyling '%s'"
+                      % (__title__, mainpyfile), file=sys.stderr)
+                sys.exit(1)
+            mainpyfile = fd.name
+            fd.close()
 
         # If mainpyfile is an optimized Python script try to find and
         # use non-optimized alternative.
@@ -99,9 +120,9 @@ def main(dbg=None, sys_argv=list(sys.argv)):
         if mainpyfile != mainpyfile_noopt \
                and Mfile.readable(mainpyfile_noopt):
             print("%s: Compiled Python script given and we can't use that."
-                  % __title__)
+                  % __title__, file=sys.stderr)
             print("%s: Substituting non-compiled name: %s" % (
-                __title__, mainpyfile_noopt,))
+                __title__, mainpyfile_noopt,), file=sys.stderr)
             mainpyfile = mainpyfile_noopt
             pass
 

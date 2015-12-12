@@ -1,3 +1,7 @@
+trepan 0.6.2 2015-12-11
+
+- Add "deparse" command. Requires uncompyle2 to be activated
+
 trepan 0.6.1 2015-12-10 - Dr Gecko
 
 - add gdb-like clear command

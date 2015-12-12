@@ -96,8 +96,8 @@ See also:
                 return
         else:
             last_i = self.proc.curframe.f_lasti
+            if last_i == -1: last_i = 0
 
-        walk = deparser.deparse(sys_version, co)
         try:
             walk = deparser.deparse(sys_version, co)
         except:

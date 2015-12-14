@@ -29,8 +29,9 @@ Python debugger *pdb*.
 Exact location information
 --------------------------
 
-Python reports line information on the granularity of a line. To get more precise information, we can (de)parse into Python the byte code around a bytecode offset such as
-the place you are stopped at.
+Python reports line information on the granularity of a line. To get
+more precise information, we can (de)parse into Python the byte code
+around a bytecode offset such as the place you are stopped at.
 
 So far as I know, there is no other debugger that can do this.
 
@@ -38,7 +39,13 @@ So far as I know, there is no other debugger that can do this.
 Source-code Syntax Colorization
 -------------------------------
 
-Starting with release 0.2.0, terminal source code is colorized via `pygments <http://pygments.org>`_ and we make use of terminal bold and emphasized text in debugger output and help text. Of course, you can also turn this off. Starting with release 0.6.0, you can use your own `pygments style <http://pygments.org/docs/styles/>`_, provided you have a terminal that supports 256 colors. If your terminal supports the basic ANSI color sequences only, we support that too in both dark and light themes.
+Starting with release 0.2.0, terminal source code is colorized via
+pygments_ and we make use of terminal bold and emphasized text in
+debugger output and help text. Of course, you can also turn this
+off. Starting with release 0.6.0, you can use your own
+pygments_style_, provided you have a terminal that supports 256
+colors. If your terminal supports the basic ANSI color sequences only,
+we support that too in both dark and light themes.
 
 
 Command Completion
@@ -49,12 +56,12 @@ Starting with release 2.8, readline command completion has been added. Command c
 Terminal Handling
 -----------------
 
-We can adjust debugger output depending on the line width of your terminal. If it changes, or you want to adjust it, see `set width <https://python2-trepan.readthedocs.org/en/latest/commands/set/width.html>`_.
+We can adjust debugger output depending on the line width of your terminal. If it changes, or you want to adjust it, see set_width_ .
 
 Smart Eval
 ----------
 
-Starting with release 0.2.0, if you want to evaluate the current source line before it is run in the code, use ``eval``. To evaluate text of a common fragment of line, such as the expression part of an *if* statement, you can do that with ``eval?``. See `eval <https://python2-trepan.readthedocs.org/en/latest/commands/data/eval.html>`_ for more information.
+Starting with release 0.2.0, if you want to evaluate the current source line before it is run in the code, use ``eval``. To evaluate text of a common fragment of line, such as the expression part of an *if* statement, you can do that with ``eval?``. See eval_ for more information.
 
 More Stepping Control
 ---------------------
@@ -67,14 +74,14 @@ Step Granularity
 ................
 
 There are now ``step`` *event* and ``next``  *event* commands with aliases to ``s+``, ``s>`` and so on. The plus-suffixed commands force a different line on a subsequent stop, the dash-suffixed commands don't.
-Suffixes ``>``, ``<``, and ``!`` specify ``call``, ``return`` and ``exception`` events respectively. And without a suffix you get the default; this is set by the `set different <https://python2-trepan.readthedocs.org/en/latest/commands/set/different.html>`_ command.
+Suffixes ``>``, ``<``, and ``!`` specify ``call``, ``return`` and ``exception`` events respectively. And without a suffix you get the default; this is set by the `set different` command.
 
 Event Filtering and Tracing
 ...........................
 
 By default the debugger stops at every event: ``call``, ``return``, ``line``, ``exception``, ``c-call``, ``c-exception``. If you just want to stop at ``line`` events (which is largely what you happens in *pdb*) you can. If however you just want to stop at calls and returns, that's possible too. Or pick some combination.
 
-In conjunction with handling *all* events by default, the event status is shown when stopped. The reason for stopping is also available via `info program <https://python2-trepan.readthedocs.org/en/latest/commands/info/program.html>`_.
+In conjunction with handling *all* events by default, the event status is shown when stopped. The reason for stopping is also available via `info program`.
 
 Event Tracing of Calls and Returns
 ----------------------------------
@@ -91,7 +98,7 @@ there is a *macro* debugger command to extend debugger commands.
 
 However Python has its own rich programming language so it seems silly to recreate the macro language that is in *gdb*. Simpler and more powerful is just to use Python here. A debugger macro here is just a lambda expression which returns a string or a list of strings. Each string returned should be a debugger command.
 
-We also have *aliases* for the extremely simple situation where you want to give an alias to an existing debugger command. But beware: some commands, like `step <https://python2-trepan.readthedocs.org/en/latest/commands/running/step.html>`_. inspect command suffixes and change their behavior accordingly.
+We also have *aliases* for the extremely simple situation where you want to give an alias to an existing debugger command. But beware: some commands, like step_ inspect command suffixes and change their behavior accordingly.
 
 We also envision a number of other ways to allow extension of this debugger either through additional modules, or user-supplied debugger command directories.
 
@@ -128,7 +135,7 @@ You can now debug your program in a different process or even a different comput
 Egg, Wheel, and Tarballs
 ------------------------
 
-Can be installed via the usual *pip* or *easy_install*. There is a source tarball. `How To Install <https://python2-trepan.readthedocs.org/en/latest/commands/set/width.html>`_ has full instructions and installing from git and by other means.
+Can be installed via the usual *pip* or *easy_install*. There is a source tarball;. install_ has full instructions for installing.
 
 Modularity
 ----------
@@ -148,6 +155,8 @@ Documentation
 
 Documentation: http://python2-trepan.readthedocs.org
 
+.. _pygments:  http://pygments.org
+.. _pygments_style:  http://pygments.org/docs/styles/
 .. _pydb:  http://bashdb.sf.net/pydb
 .. _trepan3k: https://pypip.in/trepan3k
 .. _other: https://www.npmjs.com/package/trepanjs
@@ -165,3 +174,7 @@ Documentation: http://python2-trepan.readthedocs.org
 .. |license| image:: https://img.shields.io/pypi/l/trepan.svg
     :target: https://pypi.python.org/pypi/trepan
     :alt: License
+.. _set_width:  https://python2-trepan.readthedocs.org/en/latest/commands/set/width.html
+.. _eval: https://python2-trepan.readthedocs.org/en/latest/commands/data/eval.html
+.. _step: https://python2-trepan.readthedocs.org/en/latest/commands/running/step.html
+.. _install: http://python2-trepan.readthedocs.org/en/latest/install.html

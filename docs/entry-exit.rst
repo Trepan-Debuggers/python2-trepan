@@ -110,9 +110,9 @@ Put these lines in a file::
 	  def debug(str):
 	    frame = inspect.currentframe()
 	    return run_eval(str, globals_=frame.f_globals, locals_=frame.f_locals)
-	  print("pythonrc loaded") # customize or remove this
+	  print(".pythonrc.py loaded") # customize or remove this
 
-A copy of the above can be found `here <https://github.com/rocky/python2-trepan/blob/master/PYTHONSTARTUP/pythonrc>`_. I usually put these line in `$HOME/.pythonrc`. Set the environment variable *PYTHONSTARTUP* to `$HOME/.pythonrc`.
+A copy of the above can be found `here <https://github.com/rocky/python2-trepan/blob/master/PYTHONSTARTUP/pythonrc>`_. I usually put these line in `$HOME/.pythonrc.py`. Set the environment variable *PYTHONSTARTUP* to `$HOME/.pythonrc.py`.
 
 After doing this, when you run `python -i` you should see on entry the *print* message from the file. For example:
 
@@ -121,19 +121,19 @@ After doing this, when you run `python -i` you should see on entry the *print* m
    	  $ python -i
 	  Python ...
 	  Type "help", "copyright", "credits" or "license" for more information.
-	  pythonrc loaded
+	  .pythonrc.py loaded
 	  >>>
 
-If you see the above "pythonrc" message, great! If not, it might be that *PYTHONSTARTUP* is not defined. Here run:
+If you see the above ".pythonrc.py" message, great! If not, it might be that *PYTHONSTARTUP* is not defined. Here run:
 
 .. code:: ipython
 
-	  >>> path="pythonrc" # customize to location of file
+	  >>> path=".pythonrc.py" # customize to location of file
           >>> exec(open(path).read())
 	  pythonrc loaded
 	  >>>
 
-and you should see the "pythonrc" message as shown above.
+and you should see the ".pythonrc.py" message as shown above.
 
 Once that code is loaded, the *debug()* function is defined. To debug some python code, you can call that function. Here is an example:
 

@@ -200,7 +200,8 @@ If you want your startup profile to get run, perhaps you want to
 set your pygments style, add `start_opts={'startup-profile': True}`. For example:
 
 .. code:: python
-        trepan.api.debug(start_opts={'startup-profile': True})
+
+          trepan.api.debug(start_opts={'startup-profile': True})
 
 
 Calling the debugger from pytest

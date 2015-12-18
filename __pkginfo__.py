@@ -34,6 +34,8 @@ classifiers =  ['Development Status :: 5 - Production/Stable',
                 'Programming Language :: Python',
                 'Topic :: Software Development :: Debuggers',
                 'Topic :: Software Development :: Libraries :: Python Modules',
+                'Programming Language :: Python :: 2.6',
+                'Programming Language :: Python :: 2.7',
                 ]
 
 # The rest in alphabetic order

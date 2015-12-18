@@ -201,7 +201,7 @@ set your pygments style, add `start_opts={'startup-profile': True}`. For example
 
 .. code:: python
 
-          trepan.api.debug(start_opts={'startup-profile': True})
+          debug(start_opts={'startup-profile': True})
 
 
 Calling the debugger from pytest

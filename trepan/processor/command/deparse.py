@@ -67,7 +67,7 @@ See also:
     def run(self, args):
         # Can't do anything if we don't have python deparse
         try:
-            from trepan_deparse import deparser
+            from uncompyle6.semantics.fragments import deparse_code
         except ImportError:
             self.errmsg("deparse needs to be installed to run this command")
             return
@@ -78,7 +78,7 @@ See also:
         sys_version = version_info.major + (version_info.minor / 10.0)
         if len(args) == 2 and args[1] == '.':
             try:
-                walk = deparser.deparse(sys_version, co)
+                walk = deparse_code(sys_version, co)
             except:
                 self.errmsg("error in deparsing code")
                 return
@@ -99,7 +99,7 @@ See also:
             if last_i == -1: last_i = 0
 
         try:
-            walk = deparser.deparse(sys_version, co)
+            walk = deparse_code(sys_version, co)
         except:
             self.errmsg("error in deparsing code at %d" % last_i)
             return
@@ -131,7 +131,8 @@ See also:
         else:
             self.errmsg("haven't recorded info for offset %d. Offsets I know are:"
                         % last_i)
-            m = self.columnize_commands(list(sorted(walk.offsets.keys())))
+            m = self.columnize_commands(list(sorted(walk.offsets.keys(),
+                                                    key=lambda x: str(x[0]))))
             self.msg_nocr(m)
         return
     pass

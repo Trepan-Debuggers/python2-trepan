@@ -175,6 +175,3 @@ Copyright (C) 2008-2009, 2013-2015 Rocky Bernstein <rocky@gnu.org>
 __docformat__ = 'restructuredtext'
 
 __import__('pkg_resources').declare_namespace(__name__)
-
-from trepan.misc import pyfiles
-__all__ = pyfiles(__file__) + ['bwprocessor', 'lib', 'inout', 'processor', 'interfaces']

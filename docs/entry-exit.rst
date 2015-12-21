@@ -176,7 +176,7 @@ example:
         from trepan.api import debug
         # trepan is accessible but inactive.
         # work, work, work...
-        debug() # Get me into the debugger!
+        debug() # Get thee to thyne debugger!
 
 Since *debug()* is a function, call it can be nested inside some sort of
 conditional statement allowing one to be very precise about the
@@ -196,6 +196,14 @@ inside the *debug()* call:
              debug(step_ignore=0) # Stop before even returning from the debug() call
           foo()  # Note there's no statement following foo()
 
+If you want your startup profile to get run, perhaps you want to
+set your pygments style, add `start_opts={'startup-profile': True}`. For example:
+
+.. code:: python
+
+          debug(start_opts={'startup-profile': True})
+
+
 Calling the debugger from pytest
 ================================
 
@@ -208,7 +216,7 @@ After installing, to set a breakpoint to enter the trepan debugger::
     import pytest
     def test_function():
         ...
-        pytest.trepan()    # get thee into the debugger!
+        pytest.trepan()    # get thee to thyne debugger!
         x = 1
         ...
 

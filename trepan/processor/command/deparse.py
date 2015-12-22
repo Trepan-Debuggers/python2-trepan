@@ -63,9 +63,8 @@ See also:
             opts['style'] = self.settings['style']
         self.msg(highlight_string(text, opts).strip("\n"))
 
-
     def run(self, args):
-        # Can't do anything if we don't have python deparse
+        # Can't do anything if we don't have uncompyle6 deparse
         try:
             from uncompyle6.semantics.fragments import deparse_code
         except ImportError:

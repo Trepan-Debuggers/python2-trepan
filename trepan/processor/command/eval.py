@@ -30,6 +30,7 @@ If no string is given, we run the string from the current source code
 about to be run. If the command ends `?` (via an alias) and no string is
 given, the following translations occur:
 
+   assert = <expr>       => <expr>
    {if|elif} <expr> :    => <expr>
    while <expr> :        => <expr>
    return <expr>         => <expr>

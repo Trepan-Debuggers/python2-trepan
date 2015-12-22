@@ -13,6 +13,7 @@ given, the following translations occur:
 
 ::
 
+   assert = <expr>       => <expr>
    {if|elif} <expr> :    => <expr>
    while <expr> :        => <expr>
    return <expr>         => <expr>

@@ -22,9 +22,9 @@ from trepan.processor import frame as Mframe
 
 
 class InfoFrame(Mbase_subcmd.DebuggerSubcommand):
-    """**info frame** [-c] [ *frame-number* ]
+    """**info frame** [ *frame-number* ]
 
-Show the detailed information *frame-number* or the current frame if
+Show the detailed information for *frame-number* or the current frame if
 *frame-number* is not specified.
 
 Specific information includes:
@@ -39,9 +39,6 @@ instruction
 * a function that tracing this frame or `None`
 
 * Whether the frame is in restricted execution
-
-If `-c` is given we show some information on the associated Python code object
-for this frame.
 
 See also:
 ---------
@@ -67,10 +64,8 @@ See also:
             self.errmsg("No frame selected.")
             return False
 
-        show_code = False
         if len(args) >= 1 and args[0] == '-c':
             args.pop(0)
-            show_code = True
 
         if len(args) == 1:
             frame_num = self.proc.get_an_int(args[0],
@@ -98,21 +93,6 @@ See also:
         self.msg('  tracing function: %s' % frame.f_trace)
         if hasattr(frame, 'f_restricted'):
             self.msg('  restricted execution: %s' % frame.f_restricted)
-
-        # FIXME: we have an info code that has everything?
-        if show_code:
-            code = frame.f_code
-            self.section('Associated code')
-            self.msg("  name: %s" % code.co_name)
-            self.msg('  number of arguments: %d' % code.co_argcount)
-            self.msg('  number of locals: %d' % code.co_nlocals)
-            self.msg("  stacksize %s" % code.co_stacksize)
-            self.msg("  first line number: %s" % code.co_firstlineno)
-            self.msg("  is%s optimized" % ("" if (code.co_flags & 1) == 1 else " not"))
-            self.msg("  has%s newlocals" % ("" if (code.co_flags & 2) == 1 else " no"))
-            self.msg("  has%s *args" % ("" if (code.co_flags & 4) == 1 else " no"))
-            self.msg("  has%s **args" % ("" if (code.co_flags & 8) == 1 else " no"))
-            print(code.co_varnames)
 
         return False
     pass

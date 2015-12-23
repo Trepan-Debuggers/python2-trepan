@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2013 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2013, 2015 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
 counts, to parse a string for an integer, or check a string for an
 on/off setting value.
 '''
-import sys, types
+import sys
 
 
 def get_an_int(errmsg, arg, msg_on_error, min_value=None, max_value=None):

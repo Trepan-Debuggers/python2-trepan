@@ -66,7 +66,7 @@ class TestCompletion(unittest.TestCase):
 
                 # Completion when word is complete with space.
                 ['info ',
-                 ['args', 'break', 'builtins', 'display', 'files', 'frame',
+                 ['args', 'break', 'builtins', 'code', 'display', 'files', 'frame',
                   'globals', 'line',
                   'locals', 'macro', 'program', 'return', 'signals', 'source',
                   'threads']],

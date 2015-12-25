@@ -1,6 +1,6 @@
 .. _info_frame:
 
-**info frame** [ *frame-number* | *frame-object* ]
+**info frame** [-v] [ *frame-number* | *frame-object* ]
 
 
 Info Frame
@@ -17,6 +17,9 @@ Specific information includes:
 * the last instruction executed; -1 if the program are before the first instruction
 * a function that tracing this frame or `None`
 * Whether the frame is in restricted execution
+* Exception type and value if there is one
+
+If `-v` is given we show builtin and global names the frame sees.
 
 .. seealso::
 

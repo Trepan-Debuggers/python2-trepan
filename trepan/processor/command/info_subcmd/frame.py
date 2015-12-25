@@ -22,7 +22,7 @@ from trepan.processor import frame as Mframe
 
 
 class InfoFrame(Mbase_subcmd.DebuggerSubcommand):
-    """**info frame** [ *frame-number* | *frame-object* ]
+    """**info frame** [-v] [ *frame-number* | *frame-object* ]
 
 Show the detailed information for *frame-number* or the current frame if
 *frame-number* is not specified. You can also give a frame object instead of
@@ -40,6 +40,8 @@ instruction
 * a function that tracing this frame or `None`
 
 * Whether the frame is in restricted execution
+
+If `-v` is given we show builtin and global names the frame sees.
 
 See also:
 ---------
@@ -67,6 +69,11 @@ See also:
             self.errmsg("No frame selected.")
             return False
 
+        show_lists = False
+        if len(args) >= 1 and args[0] == '-v':
+            args.pop(0)
+            show_lists = True
+
         frame_num = None
         if len(args) == 1:
             try:
@@ -93,14 +100,26 @@ See also:
 
         mess = 'Frame %d' % frame_num if frame_num is not None else 'Frame Info'
         self.section(mess)
-        self.msg('  line number: %d' % frame.f_lineno)
+        self.msg('  current line number: %d' % frame.f_lineno)
         self.msg('  last instruction: %d' % frame.f_lasti)
+        self.msg('  code: %s' % frame.f_code)
+        self.msg('  previous frame: %s' % frame.f_back)
         if frame.f_exc_type:
             self.msg('  exception type: %s' % frame.f_exc_type)
             self.msg('  exception value: %s'% frame.f_exc_value)
         self.msg('  tracing function: %s' % frame.f_trace)
         if hasattr(frame, 'f_restricted'):
             self.msg('  restricted execution: %s' % frame.f_restricted)
+
+        if show_lists:
+            for name, field in [('Globals', 'f_globals'),
+                                ('Builtins', 'f_builtins'),
+                                ]:
+                vals = getattr(frame, field).keys()
+                if vals:
+                    self.section(name)
+                    m = self.columnize_commands(vals)
+                    self.msg_nocr(m)
 
         return False
     pass
@@ -109,8 +128,6 @@ if __name__ == '__main__':
     from trepan.processor.command import mock, info as Minfo
     d, cp = mock.dbg_setup()
     cp.setup()
-    from trepan.api import debug
-    debug(start_opts={'startup-profile': True})
     i = Minfo.InfoCommand(cp)
 
     sub = InfoFrame(i)

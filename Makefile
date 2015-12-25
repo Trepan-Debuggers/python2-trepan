@@ -29,6 +29,10 @@ nosetests: check
 #: Run all tests: unit, functional and integration
 check-short: test-unit-short test-functional-short test-integration-short
 
+# Check StructuredText long description formatting
+check-rst:
+	$(PYTHON) setup.py --long-description | rst2html.py > python2-trepan.html
+
 #: Run all tests: unit, functional and integration verbosely
 check: test-unit test-functional test-integration
 
@@ -64,7 +68,7 @@ clean: clean_pyc
 	$(PYTHON) ./setup.py $@
 
 #: Create source (tarball) and binary (egg) distribution
-dist:
+dist: check-rst
 	$(PYTHON) ./setup.py sdist bdist_egg
 
 #: Remove .pyc files
@@ -72,7 +76,7 @@ clean_pyc:
 	$(RM) -f */*.pyc */*/*.pyc */*/*/*.pyc */*/*/*/*.pyc
 
 #: Create source tarball
-sdist:
+sdist: check-rst
 	$(PYTHON) ./setup.py sdist
 
 

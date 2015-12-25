@@ -1,17 +1,18 @@
 .. _info_frame:
 
-**info frame** [ *frame-number* ]
+**info frame** [ *frame-number* | *frame-object* ]
 
 
 Info Frame
 ----------
 
-Show the detailed information *frame-number* or the current frame if
-*frame-number* is not specified.
+Show the detailed information for *frame-number* or the current frame if
+*frame-number* is not specified. You can also give a frame object instead of
+a frame number
 
 Specific information includes:
 
-* the frame number
+* the frame number (if not an object)
 * the source-code line number that this frame is stopped in
 * the last instruction executed; -1 if the program are before the first instruction
 * a function that tracing this frame or `None`

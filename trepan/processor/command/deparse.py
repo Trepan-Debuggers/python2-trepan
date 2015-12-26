@@ -85,11 +85,11 @@ See also:
         if len(args) >= 2 and args[1] == '.':
             try:
                 if args[-1] == '-u':
-                    walk = deparse_code(sys_version, co)
-                    text = walk.text
+                    deparsed = deparse_code(sys_version, co)
+                    text = deparsed.text
                 else:
                     out = StringIO()
-                    walk = deparse_code_pretty(sys_version, co, out)
+                    deparsed = deparse_code_pretty(sys_version, co, out)
                     text = out.getvalue()
                     pass
             except:
@@ -112,20 +112,20 @@ See also:
             if last_i == -1: last_i = 0
 
         try:
-            walk = deparse_code(sys_version, co)
+            deparsed = deparse_code(sys_version, co)
         except:
             self.errmsg("error in deparsing code at %d" % last_i)
             return
-        if (name, last_i) in walk.offsets.keys():
-            nodeInfo =  walk.offsets[name, last_i]
-            extractInfo = walk.extract_node_info(nodeInfo)
+        if (name, last_i) in deparsed.offsets.keys():
+            nodeInfo =  deparsed.offsets[name, last_i]
+            extractInfo = deparsed.extract_node_info(nodeInfo)
             # print extractInfo
             if extractInfo:
                 self.msg("opcode: %s" % nodeInfo.node.type)
                 self.print_text(extractInfo.selectedLine)
                 self.msg(extractInfo.markerLine)
                 if args[-1] == '-p':
-                    extractInfo, p = walk.extract_parent_info(nodeInfo.node)
+                    extractInfo, p = deparsed.extract_parent_info(nodeInfo.node)
                     if extractInfo:
                         self.msg("Contained in...")
                         self.print_text(extractInfo.selectedLine)
@@ -144,7 +144,7 @@ See also:
         else:
             self.errmsg("haven't recorded info for offset %d. Offsets I know are:"
                         % last_i)
-            m = self.columnize_commands(list(sorted(walk.offsets.keys(),
+            m = self.columnize_commands(list(sorted(deparsed.offsets.keys(),
                                                     key=lambda x: str(x[0]))))
             self.msg_nocr(m)
         return

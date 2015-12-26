@@ -324,7 +324,6 @@ class CommandProcessor(Mprocessor.Processor):
         self._repr.maxset      = 10
         self._repr.maxfrozen   = 10
         self._repr.array       = 10
-        self._saferepr         = self._repr.repr
         self.stack             = []
         self.thread_name       = None
         self.frame_thread_name = None
@@ -332,6 +331,11 @@ class CommandProcessor(Mprocessor.Processor):
         for init_cmdfile in initfile_list:
             self.queue_startfile(init_cmdfile)
         return
+
+    def _saferepr(self, str, maxwidth=None):
+        if maxwidth is None:
+            maxwidth = self.debugger.settings['width']
+        return self._repr.repr(str)[:maxwidth]
 
     def add_preloop_hook(self, hook, position=-1, nodups = True):
         if hook in self.preloop_hooks: return False

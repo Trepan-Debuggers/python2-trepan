@@ -100,6 +100,8 @@ See also:
 
         mess = 'Frame %d' % frame_num if frame_num is not None else 'Frame Info'
         self.section(mess)
+        if hasattr(frame, 'f_restricted'):
+            self.msg('  restricted execution: %s' % frame.f_restricted)
         self.msg('  current line number: %d' % frame.f_lineno)
         self.msg('  last instruction: %d' % frame.f_lasti)
         self.msg('  code: %s' % frame.f_code)
@@ -108,8 +110,6 @@ See also:
             self.msg('  exception type: %s' % frame.f_exc_type)
             self.msg('  exception value: %s'% frame.f_exc_value)
         self.msg('  tracing function: %s' % frame.f_trace)
-        if hasattr(frame, 'f_restricted'):
-            self.msg('  restricted execution: %s' % frame.f_restricted)
 
         if show_lists:
             for name, field in [('Globals', 'f_globals'),

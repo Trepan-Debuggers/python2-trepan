@@ -45,6 +45,7 @@ Examples:
     deparse -p   # deparse current location enclosing context
     deparse .    # deparse current function or main
     deparse . -u # " but give a more literal translation
+    deparse 6    # deparse starting at offset 6
 
 
 See also:

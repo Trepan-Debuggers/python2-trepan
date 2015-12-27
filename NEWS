@@ -1,3 +1,12 @@
+trepan 0.6.3 2015-12-27 - Late Christmas
+
+- deparses now via uncompyle6 package
+- add "info code" command to show Python code properties
+- add "assert" to "eval?" command
+- add "trepan.api.debug(start_opts={'startup-profile': True})" to get your
+  startup profile sourced
+- Allow a frame object instead of a frame number in "frame" command
+
 trepan 0.6.2 2015-12-11
 
 - Add "deparse" command. Requires uncompyle2 to be activated

@@ -72,7 +72,6 @@ short_desc         = 'GDB-like Python Debugger in the Trepan family'
 
 import os
 
-
 def get_srcdir():
     filename = os.path.normcase(os.path.dirname(os.path.abspath(__file__)))
     return os.path.realpath(filename)

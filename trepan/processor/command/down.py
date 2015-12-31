@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009, 2013 Rocky Bernstein
+#   Copyright (C) 2009, 2013, 2015 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@ from trepan.processor.command import up as Mupcmd
 
 class DownCommand(Mupcmd.UpCommand):
 
-    signum        = -1
+    signum        = +1
     name          = os.path.basename(__file__).split('.')[0]
     short_help    = 'Move stack frame to a more recent selected frame'
 

@@ -98,7 +98,8 @@ See also:
         else:
             frame_num = proc.curindex
 
-        mess = 'Frame %d' % frame_num if frame_num is not None else 'Frame Info'
+        mess = 'Frame %d' % Mframe.frame_num(proc, frame_num) \
+          if frame_num is not None else 'Frame Info'
         self.section(mess)
         self.msg('  current line number: %d' % frame.f_lineno)
         self.msg('  last instruction: %d' % frame.f_lasti)

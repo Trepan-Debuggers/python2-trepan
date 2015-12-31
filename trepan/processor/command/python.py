@@ -71,7 +71,7 @@ Use dbgr(*string*) to issue debugger command: *string*'''
 
         debug = len(args) > 1 and args[1] == '-d'
         if debug:
-            banner_tmpl += ("\nVariable 'debugger' contains a trepan" +
+            banner_tmpl += ("\nVariable 'debugger' contains a trepan "
                             "debugger object.")
             pass
 
@@ -90,7 +90,7 @@ Use dbgr(*string*) to issue debugger command: *string*'''
 
         # Change from debugger completion to python completion
         try:
-            import rlcompleter, readline
+            import readline
         except ImportError:
             pass
         else:

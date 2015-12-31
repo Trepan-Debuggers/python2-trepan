@@ -33,7 +33,7 @@ In the second form, deparse the entire function or main program you are in.
 The `-u` parameter determines whether to show the prettified as you would
 find in source code, or in a form that more closely matches a literal reading
 of the bytecode with hidden (often extraneous) instructions added. In some
-casse this may even result in invalid Python code.
+cases this may even result in invalid Python code.
 
 Output is colorized the same as source listing. Use `set highlight plain` to turn
 that off.

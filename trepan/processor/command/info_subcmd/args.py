@@ -54,7 +54,7 @@ See also:
                 name = co.co_varnames[i]
                 self.msg_nocr("%d: %s = " % (i+1, name))
                 if name in d:
-                    self.msg(d[name])
+                    self.msg(str(d[name]))
                 else:
                     self.ermsg("undefined")
                     pass

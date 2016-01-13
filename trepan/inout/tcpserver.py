@@ -137,7 +137,12 @@ class TCPServer(DebuggerInOutBase):
             self.wait_for_connect()
             pass
         # FIXME: do we have to check the size of msg and split output?
-        return self.conn.send(Mtcpfns.pack_msg(msg))
+        # FIXED: mv 13.01.16
+        buffer = Mtcpfns.pack_msg(msg)
+        while len(buffer) > Mtcpfns.TCP_MAX_PACKET:
+            self.conn.send(buffer[:Mtcpfns.TCP_MAX_PACKET])
+            buffer = buffer[Mtcpfns.TCP_MAX_PACKET:]
+        return self.conn.send(buffer)
 
 # Demo
 if __name__=='__main__':

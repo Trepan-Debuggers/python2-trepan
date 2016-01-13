@@ -94,7 +94,16 @@ class TCPClient(DebuggerInOutBase):
                     self.state = 'disconnected'
                     raise EOFError
                 pass
-            self.buf, data = Mtcpfns.unpack_msg(self.buf)
+            self.buf, data, length = Mtcpfns.unpack_msg_segment(self.buf)
+            if len(data) == length:
+                return data
+            while len(data) < length:
+                data += self.inout.recv(Mtcpfns.TCP_MAX_PACKET)
+                if 0 == (self.buf):
+                    self.state = 'disconnected'
+                    raise EOFError
+            self.buf = data[length:]
+            data = data[:length]
             return data
         else:
             raise IOError("read_msg called in state: %s." % self.state)

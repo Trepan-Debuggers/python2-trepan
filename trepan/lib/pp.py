@@ -31,7 +31,6 @@ def pp(val, display_width, msg_nocr, msg, prefix=None):
         pass
     if not pprint_simple_array(val, display_width, msg_nocr, msg,
                                '  '):
-        print("Can't print_simple_array")
         msg('  ' + pprint.pformat(val))
         pass
     return

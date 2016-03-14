@@ -350,8 +350,16 @@ class DebuggerCore:
 
         if self.stop_level is not None:
             if frame != self.last_frame:
-                # Recompute stack_depth
-                self.last_level = Mstack.count_frames(frame)
+                # Recompute stack_depth:
+                if self.last_frame:
+                    if frame.f_back == self.last_frame:
+                        self.last_level += 1
+                    elif self.last_frame.f_back == frame:
+                        self.last_level -= 1
+                    else:
+                        self.last_level = Mstack.count_frames(frame)
+                else:
+                    self.last_level = Mstack.count_frames(frame)
                 self.last_frame = frame
                 pass
             if self.last_level > self.stop_level:

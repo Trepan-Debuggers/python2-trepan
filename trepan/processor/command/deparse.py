@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2015 Rocky Bernstein
+#  Copyright (C) 2015-2016 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,6 +17,9 @@ import os
 from sys import version_info
 from StringIO import StringIO
 from pyficache import highlight_string
+
+from uncompyle6.semantics.fragments import deparse_code
+from uncompyle6.semantics.pysource import deparse_code as deparse_code_pretty
 
 # Our local modules
 from trepan.processor.command import base_cmd as Mbase_cmd
@@ -59,7 +62,7 @@ See also:
     max_args      = 2
     name          = os.path.basename(__file__).split('.')[0]
     need_stack    = True
-    short_help    = 'Deparse source via uncompyle'
+    short_help    = 'Deparse source via uncompyle6'
 
     def print_text(self, text):
         if self.settings['highlight'] == 'plain':
@@ -71,14 +74,6 @@ See also:
         self.msg(highlight_string(text, opts).strip("\n"))
 
     def run(self, args):
-        # Can't do anything if we don't have uncompyle6 deparse
-        try:
-            from uncompyle6.semantics.fragments import deparse_code
-            from uncompyle6.semantics.pysource import deparse_code as deparse_code_pretty
-        except ImportError:
-            self.errmsg("deparse needs to be installed to run this command")
-            return
-
         co = self.proc.curframe.f_code
         name = co.co_name
 

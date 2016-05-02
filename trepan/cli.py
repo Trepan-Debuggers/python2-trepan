@@ -95,9 +95,9 @@ def main(dbg=None, sys_argv=list(sys.argv)):
 
         if Mfile.is_compiled_py(mainpyfile):
             try:
-                from uncompyle2 import uncompyle_file
+                from uncompyle6 import uncompyle_file
             except ImportError:
-                print("%s: Compiled python file '%s', but uncompyle2 not found"
+                print("%s: Compiled python file '%s', but uncompyle6 not found"
                     % (__title__, mainpyfile), file=sys.stderr)
                 sys.exit(1)
 

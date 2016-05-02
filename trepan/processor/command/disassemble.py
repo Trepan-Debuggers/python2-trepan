@@ -14,13 +14,40 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import os
+import os, sys
+import uncompyle6
 
 # Our local modules
 from trepan.processor.command import base_cmd as Mbase_cmd
 from trepan.lib import disassemble as Mdis, file as Mfile
 from trepan.processor import cmdfns as Mcmdfns
 
+# From Python3's importlib.util
+DEBUG_BYTECODE_SUFFIXES = ['.pyc']
+OPTIMIZED_BYTECODE_SUFFIXES = ['.pyo']
+def cache_from_source(path, debug_override=None):
+    """Given the path to a .py file, return the path to its .pyc/.pyo file.
+
+    The .py file does not need to exist; this simply returns the path to the
+    .pyc/.pyo file calculated as if the .py file were imported.  The extension
+    will be .pyc unless sys.flags.optimize is non-zero, then it will be .pyo.
+
+    If debug_override is not None, then it must be a boolean and is used in
+    place of sys.flags.optimize.
+
+    If sys.implementation.cache_tag is None then NotImplementedError is raised.
+
+    """
+    debug = not sys.flags.optimize if debug_override is None else debug_override
+    if debug:
+        suffixes = DEBUG_BYTECODE_SUFFIXES
+    else:
+        suffixes = OPTIMIZED_BYTECODE_SUFFIXES
+        pass
+    head, tail = os.path.split(path)
+    base_filename, sep, _ = tail.partition('.')
+    filename = ''.join([base_filename, suffixes[0]])
+    return os.path.join(head, filename)
 
 class DisassembleCommand(Mbase_cmd.DebuggerCommand):
     """**disassemble** [*thing*] [[**+**|**-**|**.**|**@**]*start* [[**+**|**-***|**.**|**@**]*end]]
@@ -60,11 +87,13 @@ disassemble that.
     min_args      = 0
     max_args      = 2
     name          = os.path.basename(__file__).split('.')[0]
-    need_stack    = True
+    need_stack    = False
     short_help    = 'Disassemble Python bytecode'
 
     def parse_arg(self, arg):
         is_offset = False
+        if not self.proc.curframe:
+            return None, None, False
         if arg in ['+', '-', '.']:
             return self.proc.curframe.f_lineno, True, is_offset
         if arg[0:1] == '@':
@@ -91,8 +120,15 @@ disassemble that.
             if start is None:
                 # First argument should be an evaluatable object
                 # or a filename
-                if args[1].endswith('.pyc') and Mfile.readable(args[1]):
-                    magic, moddate, modtime, obj = Mdis.pyc2code(args[1])
+                bytecode_file = args[1]
+                have_code = False
+                if not (bytecode_file.endswith('.pyo') or
+                        bytecode_file.endswith('pyc')):
+                    bytecode_file = cache_from_source(bytecode_file)
+                if bytecode_file and Mfile.readable(bytecode_file):
+                    print("Reading %s ..." % bytecode_file)
+                    version, timestamp, magic_int, obj = uncompyle6.load.load_module(bytecode_file)
+                    have_code = True
                 elif not self.proc.curframe:
                         self.errmsg("No frame selected.")
                         return
@@ -129,7 +165,7 @@ disassemble that.
                                     len(args)-1)
                         return
                     pass
-                else:
+                elif not have_code:
                     try:
                         obj=Mcmdfns.get_val(self.proc.curframe,
                                             self.errmsg, args[1])
@@ -174,18 +210,25 @@ if __name__ == '__main__':
     prefix = '-' * 20 + ' disassemble '
     print(prefix + 'cp.errmsg')
     command.run(['dissassemble', 'cp.errmsg'])
-    print(prefix)
-    command.run(['disassemble'])
-    print(prefix + 'me')
-    command.run(['disassemble', 'me'])
-    print(prefix + '+0 2')
-    command.run(['disassemble', '+0', '2'])
-    print(prefix + '+ 2-1')
-    command.run(['disassemble', '+', '2-1'])
-    print(prefix + '- 1')
-    command.run(['disassemble', '-', '1'])
-    print(prefix + '.')
-    command.run(['disassemble', '.'])
-    print(prefix + 'disassemble.pyc 30 70')
-    command.run(['disassemble', './disassemble.pyc', '10', '100'])
+    # print(prefix)
+    # command.run(['disassemble'])
+    # print(prefix + 'me')
+    # command.run(['disassemble', 'me'])
+    # print(prefix + '+0 2')
+    # command.run(['disassemble', '+0', '2'])
+    # print(prefix + '+ 2-1')
+    # command.run(['disassemble', '+', '2-1'])
+    # print(prefix + '- 1')
+    # command.run(['disassemble', '-', '1'])
+    # print(prefix + '.')
+    # command.run(['disassemble', '.'])
+    __file__ = './disassemble.py'
+    print(prefix + __file__ + ' 30 40')
+    # command.run(['disassemble', __file__, '30', '40'])
+    bytecode_file = cache_from_source(__file__)
+    print(bytecode_file)
+    if bytecode_file:
+        print(prefix + bytecode_file + ' 30 40')
+        command.run(['disassemble', bytecode_file, '30', '40'])
+    command.run(['disassemble', '@15', '@25'])
     pass

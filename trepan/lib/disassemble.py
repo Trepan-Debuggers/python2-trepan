@@ -241,20 +241,6 @@ def disassemble_bytes(orig_msg, orig_msg_nocr, code, lasti=-1, cur_line=0,
         msg("")
     return
 
-# Inspired by show_file from:
-# http://nedbatchelder.com/blog/200804/the_structure_of_pyc_files.html
-
-
-def pyc2code(fname):
-    '''Return a code object from a Python compiled file'''
-    f = open(fname, "rb")
-    magic = f.read(4)
-    moddate = f.read(4)
-    modtime = time.localtime(struct.unpack('I', moddate)[0])
-    code = marshal.load(f)
-    f.close()
-    return magic, moddate, modtime, code
-
 # Demo it
 if __name__ == '__main__':
     def msg(msg_str):

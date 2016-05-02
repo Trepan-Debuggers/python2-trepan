@@ -26,8 +26,8 @@ def pack_msg(msg):
 
 def unpack_msg(buf):
     length  = int(buf[0:LOG_MAX_MSG])
-    data    = buf[LOG_MAX_MSG:LOG_MAX_MSG+length]
-    buf     = buf[LOG_MAX_MSG+length:]
+    data = buf[LOG_MAX_MSG:LOG_MAX_MSG+length]
+    buf = buf[LOG_MAX_MSG+length:]
     return buf, data
 
 def unpack_msg_segment(buf):

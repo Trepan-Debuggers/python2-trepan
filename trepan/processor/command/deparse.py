@@ -110,7 +110,7 @@ See also:
         try:
             deparsed = deparse_code(sys_version, co)
         except:
-            self.errmsg("error in deparsing code at %d" % last_i)
+            self.errmsg("error in deparsing code at offset %d" % last_i)
             return
         if (name, last_i) in deparsed.offsets.keys():
             nodeInfo =  deparsed.offsets[name, last_i]

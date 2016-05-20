@@ -3,7 +3,7 @@
 Macro (add a debugger macro)
 ----------------------------
 
-*macro* *macro-name* *lambda-object*
+**macro** *macro-name* *lambda-object*
 
 Define *macro-name* as a debugger macro. Debugger macros get a list of
 arguments which you supply without parenthesis or commas. See below for

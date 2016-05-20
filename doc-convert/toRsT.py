@@ -100,5 +100,5 @@ def subCmdDoc2RsT():
 
 d = Mmock.MockDebugger()
 d, cp = Mmock.dbg_setup()
-cmdDoc2RsT('kill')
+cmdDoc2RsT('source')
 # subCmdDoc2RsT()

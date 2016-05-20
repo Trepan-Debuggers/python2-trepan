@@ -60,6 +60,8 @@ class UserInterface(Minterface.DebuggerInterface):
                     read_history_file(histfile)
                 except IOError:
                     pass
+                except:
+                    return
                 set_history_length(50)
                 atexit.register(write_history_file, self.histfile)
                 pass

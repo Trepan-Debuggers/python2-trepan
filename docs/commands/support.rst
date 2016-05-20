@@ -10,7 +10,6 @@ Support
    support/help
    support/ipython
    support/macro
-   support/macro
    support/python
    support/source
    support/unalias

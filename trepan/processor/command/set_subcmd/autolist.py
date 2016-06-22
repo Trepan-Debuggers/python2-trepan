@@ -43,9 +43,11 @@ See also:
                 self.list_cmd = self.proc.commands['list'].run
                 pass
             self.proc.add_preloop_hook(self.run_list, 0)
+
         else:
             self.proc.remove_preloop_hook(self.run_list)
             pass
+        Mcmdfns.run_show_bool(self, 'Show `list` on debugger entry')
         return
 
     def run_list(self, args):

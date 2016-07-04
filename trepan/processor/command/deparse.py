@@ -115,7 +115,7 @@ See also:
             pass
         pass
 
-        sys_version = version_info.major + (version_info.minor / 10.0)
+        sys_version = version_info[0] + (version_info[1] / 10.0)
         if len(args) >= 1 and args[0] == '.':
             try:
                 if pretty:

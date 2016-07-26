@@ -19,7 +19,7 @@ class TestLibPrint(unittest.TestCase):
         self.msgs = [msg]
         return
 
-    def test_lib_pprint_simple_array(self):
+    def notest_lib_pprint_simple_array(self):
         Mpp.pprint_simple_array(list(range(50)), 53, self.msg_nocr, self.msg)
         self.assertEqual(
             ['[ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11,\n'

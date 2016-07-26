@@ -61,6 +61,7 @@ class UserInterface(Minterface.DebuggerInterface):
                 except IOError:
                     pass
                 except:
+                    # PyPy read_history_file fails
                     return
                 set_history_length(50)
                 atexit.register(write_history_file, self.histfile)

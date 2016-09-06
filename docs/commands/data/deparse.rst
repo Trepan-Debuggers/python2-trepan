@@ -33,4 +33,4 @@ Examples:
 See also:
 +++++++++
 
-:ref:`disassemble <disassemble>`, :ref:`list <list>`, and :ref:`set_highlight <set_highlight>`
+:ref:`disassemble <disassemble>`, :ref:`list <list>`, and :ref:`set highlight <set_highlight>`

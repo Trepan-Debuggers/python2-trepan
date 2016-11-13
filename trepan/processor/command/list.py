@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009, 2012-2015 Rocky Bernstein
+#   Copyright (C) 2009, 2012-2016 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -13,7 +13,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import inspect, os, linecache, pyficache, sys, re
+import inspect, os, linecache, pyficache, sys
 
 # Our local modules
 from pygments.console import colorize
@@ -21,11 +21,6 @@ from pygments.console import colorize
 # Our local modules
 from trepan.processor.command import base_cmd as Mbase_cmd
 
-
-def pyc2py(filename):
-    if '.pyc' == filename[-4:]:
-        return filename[:-1]
-    return filename
 
 class ListCommand(Mbase_cmd.DebuggerCommand):
     """**list** [ *module* ] [ *first* [ *num* ]]
@@ -174,7 +169,7 @@ See also:
         filename, first, last = self.parse_list_cmd(args[1:])
         curframe = self.proc.curframe
         if filename is None: return
-        filename = pyficache.unmap_file(pyc2py(filename))
+        filename = pyficache.unmap_file(pyficache.pyc2py(filename))
 
         # We now have range information. Do the listing.
         max_line = pyficache.size(filename)

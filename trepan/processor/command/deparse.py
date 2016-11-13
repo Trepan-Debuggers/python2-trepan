@@ -143,6 +143,7 @@ See also:
             last_i = self.proc.curframe.f_lasti
             if last_i == -1: last_i = 0
 
+        deparsed = deparse_code(sys_version, co)
         try:
             deparsed = deparse_code(sys_version, co)
         except:

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: iso-8859-1 -*-
-#   Copyright (C) 2008-2010, 2013-2014 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008-2010, 2013-2014, 2016
+#   Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -17,13 +18,8 @@
 '''The command-line interface to the debugger.
 '''
 from __future__ import print_function
-import os, os.path, sys, tempfile
+import pyficache, os, os.path, sys, tempfile
 
-package='trepan'
-__import__('pkg_resources').declare_namespace(package)
-
-from trepan import interface as Minterface
-from trepan import api as Mapi
 from trepan import client as Mclient
 from trepan import clifns as Mclifns
 from trepan import debugger as Mdebugger
@@ -34,7 +30,7 @@ from trepan.lib import file as Mfile
 from trepan import misc as Mmisc
 
 # The name of the debugger we are currently going by.
-__title__ = package + '2'
+__title__ = 'trepan2'
 
 # VERSION.py sets variable VERSION.
 from trepan.VERSION import VERSION as __version__
@@ -116,7 +112,7 @@ def main(dbg=None, sys_argv=list(sys.argv)):
 
         # If mainpyfile is an optimized Python script try to find and
         # use non-optimized alternative.
-        mainpyfile_noopt = Mfile.file_pyc2py(mainpyfile)
+        mainpyfile_noopt = pyficache.pyc2py(mainpyfile)
         if mainpyfile != mainpyfile_noopt \
                and Mfile.readable(mainpyfile_noopt):
             print("%s: Compiled Python script given and we can't use that."

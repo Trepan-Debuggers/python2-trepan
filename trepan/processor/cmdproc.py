@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2008-2010, 2013-2015 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008-2010, 2013-2016 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -504,7 +504,7 @@ class CommandProcessor(Mprocessor.Processor):
                 if inspect.isfunction(modfunc):
                     pass
                 elif inspect.ismodule(modfunc):
-                    filename = Mfile.file_pyc2py(modfunc.__file__)
+                    filename = pyficache.pyc2py(modfunc.__file__)
                     filename = self.core.canonic(filename)
                     return(modfunc, filename, None)
                 elif hasattr(modfunc, 'im_func'):
@@ -614,10 +614,10 @@ class CommandProcessor(Mprocessor.Processor):
         return
 
     def ok_for_running(self, cmd_obj, name, nargs):
-        '''We separate some of the common debugger command checks here:
+        """We separate some of the common debugger command checks here:
         whether it makes sense to run the command in this execution state,
         if the command has the right number of arguments and so on.
-        '''
+        """
         if hasattr(cmd_obj, 'execution_set'):
             if not (self.core.execution_status in cmd_obj.execution_set):
                 part1 = ("Command '%s' is not available for execution status:"
@@ -827,8 +827,8 @@ class CommandProcessor(Mprocessor.Processor):
         return False
 
     def queue_startfile(self, cmdfile):
-        '''Arrange for file of debugger commands to get read in the
-        process-command loop.'''
+        """Arrange for file of debugger commands to get read in the
+        process-command loop."""
         expanded_cmdfile = os.path.expanduser(cmdfile)
         is_readable = Mfile.readable(expanded_cmdfile)
         if is_readable:

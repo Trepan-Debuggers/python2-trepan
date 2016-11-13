@@ -1,0 +1,12 @@
+machine:
+    python:
+        version: 2.7.12
+
+dependencies:
+    override:
+        - pip install -r requirements.txt
+        - pip install -r requirements-dev.txt
+test:
+    override:
+        - pyenv local 2.7.12
+        - python ./setup.py develop && make test-unit test-functional

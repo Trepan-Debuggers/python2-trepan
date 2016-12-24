@@ -57,13 +57,13 @@ def cmdDoc2RsT(mod_name):
 def subCmdDoc2RsT():
     for mod_name in 'info set show'.split():
         exec("import trepan.processor.command.%s as mod" %
-             (mod_name, mod))
+             (mod_name))
         classnames = [ tup[0] for tup in
                        inspect.getmembers(mod, inspect.isclass)
                        if ('DebuggerCommand' != tup[0] and
                            tup[0].endswith('Command')) ]
         cmd_instances  = []
-        eval_cmd_template = mod_name + '.%s(cp)'
+        eval_cmd_template = 'mod.%s(cp)'
         for classname in classnames:
             eval_cmd = eval_cmd_template % classname
             try:
@@ -100,5 +100,5 @@ def subCmdDoc2RsT():
 
 d = Mmock.MockDebugger()
 d, cp = Mmock.dbg_setup()
-cmdDoc2RsT('source')
-# subCmdDoc2RsT()
+cmdDoc2RsT('set')
+subCmdDoc2RsT()

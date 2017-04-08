@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009, 2013-2015 Rocky Bernstein
+#   Copyright (C) 2009, 2013-2015, 2017 Rocky Bernstein
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -79,7 +79,7 @@ def start_client(connection_opts):
         control, remote_msg = intf.read_remote()
         # print 'c, r', control, remote_msg
         if Mcomcodes.PRINT == control:
-            print(remote_msg)
+            print(remote_msg.rstrip())
             pass
         elif control in [Mcomcodes.CONFIRM_TRUE, Mcomcodes.CONFIRM_FALSE]:
             default = (Mcomcodes.CONFIRM_TRUE == control)
@@ -94,7 +94,7 @@ def start_client(connection_opts):
             msg = intf.read_command('(trepan2*) ').strip()
             intf.write_remote(Mcomcodes.CONFIRM_REPLY, msg)
         elif Mcomcodes.QUIT == control:
-            print('Quitting...')
+            print("trepan2c: That's all, folks...")
             done = True
             break
         elif Mcomcodes.RESTART == control:

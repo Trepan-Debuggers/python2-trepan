@@ -40,12 +40,14 @@ Source-code Syntax Colorization
 -------------------------------
 
 Starting with release 0.2.0, terminal source code is colorized via
-pygments_ and we make use of terminal bold and emphasized text in
-debugger output and help text. Of course, you can also turn this
-off. Starting with release 0.6.0, you can use your own
-pygments_style_, provided you have a terminal that supports 256
-colors. If your terminal supports the basic ANSI color sequences only,
-we support that too in both dark and light themes.
+pygments_ . And with that you can set the pygments color style,
+e.g. colorful, paraiso-dark. See set_style_ . Furthermore, we make use
+of terminal bold and emphasized text in debugger output and help
+text. Of course, you can also turn this off. Starting with release
+0.6.0, you can use your own pygments_style_, provided you have a
+terminal that supports 256 colors. If your terminal supports the basic
+ANSI color sequences only, we support that too in both dark and light
+themes.
 
 
 Command Completion
@@ -135,7 +137,7 @@ You can now debug your program in a different process or even a different comput
 Egg, Wheel, and Tarballs
 ------------------------
 
-Can be installed via the usual *pip* or *easy_install*. There is a source tarball;. install_ has full instructions for installing.
+Can be installed via the usual *pip* or *easy_install*. There is a source tarball. `How To Install <https://python2-trepan.readthedocs.io/en/latest/install.html>`_ has full instructions and installing from git and by other means.
 
 Modularity
 ----------
@@ -174,7 +176,8 @@ Documentation: http://python2-trepan.readthedocs.org
 .. _ipython-trepan: https://github.com/rocky/ipython-trepan
 .. |license| image:: https://img.shields.io/pypi/l/trepan.svg
     :target: https://pypi.python.org/pypi/trepan
-    :alt: License
+   :alt: License
+.. _set_style:  https://python2-trepan.readthedocs.org/en/latest/commands/set/style.html
 .. _set_width:  https://python2-trepan.readthedocs.org/en/latest/commands/set/width.html
 .. _eval: https://python2-trepan.readthedocs.org/en/latest/commands/data/eval.html
 .. _step: https://python2-trepan.readthedocs.org/en/latest/commands/running/step.html

@@ -14,7 +14,7 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """ Functions for working with Python frames"""
-import os, re, types, xdis
+import re, types
 
 from trepan.lib import bytecode as Mbytecode, printing as Mprint
 from trepan.lib import format as Mformat
@@ -125,40 +125,12 @@ def frame2file(core_obj, frame, canonic=True):
     else:
         return core_obj.filename(frame.f_code.co_filename)
 
-
-def frame2filesize(frame):
-    if '__cached__' in frame.f_globals:
-        bc_path = frame.f_globals['__cached__']
-    else:
-        bc_path = None
-    path = frame.f_globals['__file__']
-    fs_size = os.stat(path).st_size
-    if bc_path:
-        (version, timestamp, magic_int, co, is_pypy,
-         bc_source_size) =  xdis.load_module(bc_path, fast_load=True, get_code=False)
-        return fs_size, bc_source_size
-    elif os.path.exists(path):
-        return fs_size, None
-    else:
-        return None, None
-
-def check_path_with_frame(frame, path):
-    my_size = os.stat(path).st_size
-    fs_size, bc_size = frame2filesize(frame)
-    if bc_size and bc_size != my_size:
-        return False, "bytecode and local files mismatch"
-    if fs_size and fs_size != my_size:
-        return False, "debugger file and local files mismatch"
-    return True, None
-
-
 def is_exec_stmt(frame):
     """Return True if we are looking at an exec statement"""
     return hasattr(frame, 'f_back') and frame.f_back is not None and \
         Mbytecode.op_at_frame(frame.f_back)=='EXEC_STMT'
 
 import dis
-
 
 def get_call_function_name(frame, color='plain'):
     """If f_back is looking at a call function, return

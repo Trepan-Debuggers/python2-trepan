@@ -1,4 +1,4 @@
-|buildstatus| |license| |Supported Python Versions|
+|buildstatus| |appveyor| |license| |Supported Python Versions|
 
 .. contents:: :local:
 
@@ -171,6 +171,8 @@ Documentation: http://python2-trepan.readthedocs.org
     :alt: Daily PyPI downloads
 .. |buildstatus| image:: https://travis-ci.org/rocky/python2-trepan.svg
 		 :target: https://travis-ci.org/rocky/python2-trepan
+.. |appveyor| image:: https://ci.appveyor.com/api/projects/status/github/python2-trepan
+		:target: https://ci.appveyor.com/project/rocky/python2-trepan
 .. |Latest Version| image:: https://pypip.in/version/trepan/badge.svg?text=version
    :target: https://pypi.python.org/pypi/trepan/
 .. _ipython-trepan: https://github.com/rocky/ipython-trepan

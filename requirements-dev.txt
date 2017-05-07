@@ -1,3 +1,4 @@
 nose
 flake8
+unittest2
 # rst2html

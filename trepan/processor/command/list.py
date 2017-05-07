@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009, 2012-2016 Rocky Bernstein
+#   Copyright (C) 2009, 2012-2017 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,6 +19,8 @@ import inspect, os, linecache, pyficache, sys
 from pygments.console import colorize
 
 # Our local modules
+from trepan.lib import stack as Mstack
+from trepan.processor import cmdproc as Mcmdproc
 from trepan.processor.command import base_cmd as Mbase_cmd
 
 
@@ -197,6 +199,15 @@ See also:
 
         if 'style' in self.settings:
             opts['style'] = self.settings['style']
+
+        try:
+            match, reason = Mstack.check_path_with_frame(curframe, filename)
+            if not match:
+                if filename not in Mcmdproc.warned_file_mismatches:
+                    self.errmsg(reason)
+                    Mcmdproc.warned_file_mismatches.add(filename)
+        except:
+            pass
 
         try:
             for lineno in range(first, last+1):

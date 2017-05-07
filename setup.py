@@ -44,6 +44,5 @@ setup(
        packages           = packages,
        test_suite         = 'nose.collector',
        url                = web,
-       test_requires     = ['nose>=1.0'],
        version            = version,
        zip_safe           = zip_safe)

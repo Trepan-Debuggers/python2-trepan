@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2015 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2015, 2017 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # Our local modules
+import sys
 from trepan.processor.command import base_subcmd as Mbase_subcmd
 from trepan.lib import complete as Mcomplete
 from trepan.processor import frame as Mframe
@@ -101,12 +102,17 @@ See also:
         self.msg("  new local namespace? %s" % ("yes" if (code.co_flags & 2) == 1 else " no"))
         self.msg("  has%s *args" % ("" if (code.co_flags & 4) == 1 else " no"))
         self.msg("  has%s **args" % ("" if (code.co_flags & 8) == 1 else " no"))
+
         maxwidth = self.settings['width'] // 2
+        if sys.version_info[:2] < (2,7):
+            saferepr = lambda x, maxwidth : proc._saferepr(x)
+        else:
+            saferepr = lambda x, maxwidth: proc._saferepr(x,  maxwidth)
         for name, field in [('Constants', 'co_consts'),
                             ('Variable names', 'co_varnames'),
                             ('Local Variables', 'co_names')
                             ]:
-            vals = [proc._saferepr(x, maxwidth) for x in getattr(code, field)]
+            vals = [saferepr(x, maxwidth) for x in getattr(code, field)]
             if vals:
                 self.section(name)
                 m = self.columnize_commands(vals)

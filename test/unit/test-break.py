@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 'Unit test for trepan.processor.command.break'
 
-import os, sys, unittest
+import os, unittest
 
 from trepan import debugger
 from trepan.processor import cmdbreak as Mcmdbreak

@@ -1,15 +1,15 @@
+include README.rst
+include ChangeLog
 include COPYING
 include Makefile
-include NEWS
-include README.rst
+include requirements.txt
+include requirements-dev.txt
 include __pkginfo__.py
-include test/make-check-filter.py
-recursive-include trepan/processor/command/help *.rst
-recursive-include test/data *.cmd
-recursive-include test/data *.right
-recursive-include test/data Makefile
+recursive-include trepan *.py
+include test/Makefile
+recursive-include test/data
 recursive-include test/example *.py
-recursive-include test/example Makefile
 recursive-include test/functional *.py
 recursive-include test/integration *.py
 recursive-include test/unit *.py
+recursive-include test/Makefile

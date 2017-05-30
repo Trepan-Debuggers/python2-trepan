@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2015-2016 Rocky Bernstein
+#  Copyright (C) 2015-2017 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -15,6 +15,8 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import os
 from getopt import getopt, GetoptError
+from uncompyle6.semantics.fragments import deparse_code, deparse_code_around_offset
+from uncompyle6.semantics.pysource import deparse_code as deparse_code_pretty
 from sys import version_info
 from StringIO import StringIO
 from pyficache import highlight_string
@@ -118,7 +120,7 @@ See also:
         sys_version = version_info[0] + (version_info[1] / 10.0)
         if len(args) >= 1 and args[0] == '.':
             try:
-                if pretty:
+                if not pretty:
                     deparsed = deparse_code(sys_version, co)
                     text = deparsed.text
                 else:
@@ -143,12 +145,11 @@ See also:
             last_i = self.proc.curframe.f_lasti
             if last_i == -1: last_i = 0
 
-        deparsed = deparse_code(sys_version, co)
         try:
             deparsed = deparse_code(sys_version, co)
         except:
             self.errmsg("error in deparsing code at offset %d" % last_i)
-            return
+            deparsed = deparse_code_around_offset(co.co_name, last_i, sys_version, co),
         if (name, last_i) in deparsed.offsets.keys():
             nodeInfo =  deparsed.offsets[name, last_i]
             extractInfo = deparsed.extract_node_info(nodeInfo)
@@ -191,8 +192,9 @@ See also:
     pass
 
 # if __name__ == '__main__':
+#     import sys
 #     from trepan import debugger as Mdebugger
-#     d = Mdebugger.Debugger()
+#     d = Mdebugger.Trepan()
 #     command = PythonCommand(d.core.processor)
 #     command.proc.frame = sys._getframe()
 #     command.proc.setup()

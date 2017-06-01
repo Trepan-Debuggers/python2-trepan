@@ -5,7 +5,7 @@ include Makefile
 include requirements.txt
 include requirements-dev.txt
 include __pkginfo__.py
-recursive-include trepan *.py
+recursive-include trepan trepan *.py
 include test/Makefile
 recursive-include test/data
 recursive-include test/example *.py

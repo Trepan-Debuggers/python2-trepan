@@ -11,4 +11,4 @@ and disassemble the instructions around that.
 
 .. seealso::
 
-   :ref:`info line <info line>`, :ref:`info program <info_program>`
+   :ref:`info line <info_line>`, :ref:`info program <info_program>`

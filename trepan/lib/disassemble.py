@@ -7,7 +7,7 @@ from dis import distb, findlabels, findlinestarts
 
 from xdis import IS_PYPY, PYTHON_VERSION
 from xdis.main import get_opcode
-from xdis.bytecode import get_instructions_bytes
+from xdis.bytecode import get_instructions_bytes, Bytecode
 
 
 from trepan.lib import format as Mformat
@@ -59,19 +59,22 @@ def dis(msg, msg_nocr, section, errmsg, x=None, start_line=-1, end_line=None,
         x = x.__class__
     if hasattr(x, 'im_func'):
         section("Disassembly of %s: %s" % (x, mess))
+        print("FOO")
         sectioned = True
         x = x.im_func
     if hasattr(x, 'func_code'):
         section("Disassembly of %s: %s" % (x, mess))
         sectioned = True
-        x = x.func_code
     elif hasattr(x, 'f_code'):
         section("Disassembly of %s: %s" % (x, mess))
         sectioned = True
         if hasattr(x, 'f_lasti'):
             lasti = x.f_lasti
             pass
+        opc = get_opcode(PYTHON_VERSION, IS_PYPY)
         x = x.f_code
+        header = Bytecode(x, opc).info()
+        msg(header)
         pass
     elif inspect.iscode(x):
         pass

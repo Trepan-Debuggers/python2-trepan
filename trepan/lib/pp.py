@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009, 2016 Rocky Bernstein
+#   Copyright (C) 2009, 2016-2017 Rocky Bernstein
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -62,6 +62,7 @@ def pprint_simple_array(val, displaywidth, msg_nocr, msg, lineprefix=''):
                            'ljust': not numeric})
     msg_nocr(mess)
     return True
+
 
 if __name__ == '__main__':
     def msg_nocr(m):

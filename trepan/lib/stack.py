@@ -239,6 +239,7 @@ def print_obj(arg, val, format=None, short=False):
         pass
     return s
 
+
 # Demo stuff above
 if __name__=='__main__':
     class MockDebuggerCore:

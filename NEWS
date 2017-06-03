@@ -1,3 +1,27 @@
+trepan 0.7.3 2017-06-03 Marilyn Frankel
+- Package name is now trepan2!
+- Add version test in setup to avoid possible install from Python 3
+- Resync version number with Python 3 trepan3k
+- Add "info pc" command
+- Show list of styles with "set style" (no style given)
+- Add MS Windows kill with Python 2.6 tolerance
+- Bugs in remote debugging tcpfns.py: handle "kill" better client.py: remove extra "\n"s
+- Document "set substitute"
+- Document "set style"
+- "deparse" changes:
+  * add --offset/-O option to show exact deparsable offsets
+  * allow fuzzy offset deparsing via uncompyle6 deparse_around_offset
+- "list" changes:
+  * deparse when no source is available (e.g. on an exec or eval string)
+- "set highlight" changes:
+  * clear source-code cache after setting highlight
+- "show display changes"
+  * show display expression after setting it
+- Update MANIFEST.in which should provide more reliable packaging
+- "disassemble" changes:
+  * better output using routines from xdis package
+- force deparse improvements by bumping uncompyle6 minimum version
+
 trepan 0.6.5 2016-07-26
 
 - PyPy tolerance

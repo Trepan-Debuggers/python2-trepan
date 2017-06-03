@@ -10,4 +10,5 @@
 /build
 /dist
 /test/integration/*.out
+/tmp
 __pycache__

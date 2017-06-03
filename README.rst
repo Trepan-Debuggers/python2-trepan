@@ -14,6 +14,7 @@ See the Tutorial_ for how to use. See ipython-trepan_ for using this
 in *ipython* or an *ipython notebook*.
 
 This package is for Python 2.6 and 2.7. See trepan3k_ for the same code modified to work with Python 3.
+For Python before 2.6, pydbgr_
 
 Features
 ========
@@ -160,7 +161,8 @@ Documentation: http://python2-trepan.readthedocs.org
 .. _pygments:  http://pygments.org
 .. _pygments_style:  http://pygments.org/docs/styles/
 .. _pydb:  http://bashdb.sf.net/pydb
-.. _trepan3k: https://pypip.in/trepan3k
+.. _trepan3k: https://pypi.python.org/pypi/trepan3k
+.. _pydbgr: https://pypi.python.org/pypi/pydbgr
 .. _other: https://www.npmjs.com/package/trepanjs
 .. _trepanning: https://rubygems.org/gems/trepanning
 .. _debuggers: https://metacpan.org/pod/Devel::Trepan

@@ -90,9 +90,13 @@ class TestCompletion(unittest.TestCase):
                 # ['help br', ['break', 'breakpoints']],
             ]:
             got = self.run_complete(line)
-            self.assertEqual(expect_completion, got,
-                             "Completion of '%s', expecting %s, got %s" %
-                             (line, expect_completion, got))
+            try:
+                self.assertEqual(expect_completion, got,
+                                 "Completion of '%s', expecting %s, got %s" %
+                                 (line, expect_completion, got))
+            except:
+                from trepan.api import debug; debug()
+                x = 1
             pass
 
         got = self.run_complete('')

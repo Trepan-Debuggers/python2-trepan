@@ -23,7 +23,7 @@ from trepan.lib.disassemble import disassemble_bytes
 from trepan import misc as Mmisc
 
 class InfoPC(Mbase_subcmd.DebuggerSubcommand):
-    """info pc**
+    """**info pc**
 
 List the current program counter or bytecode offset,
 and disassemble the instructions around that.

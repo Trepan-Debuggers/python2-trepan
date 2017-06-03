@@ -33,7 +33,7 @@ Execution status of the program. Listed are:
 See also:
 ---------
 
-`info line`, `info args`, `info frame`"""
+`info line`, `info args`, `info frame`, `info pc`"""
 
     min_abbrev = 1  # Need at least info p
     max_args   = 0

@@ -3,9 +3,9 @@
 Info Macro
 ----------
 
-| **macro**
-| **macro** **\***
-| **macro** *macro1* [*macro2* ..]
+| **info macro**
+| **info macro** **\***
+| **info macro** *macro1* [*macro2* ..]
 |
 
 In the first form a list of the existing macro names are shown

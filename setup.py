@@ -8,6 +8,10 @@ from code as much as possible. The customizable information really comes
 from file __pkginfo__.py.
 """
 
+import sys
+if not ((2, 6) <= sys.version_info < (3, 0)):
+    raise Exception("Python Versions 2.6 and 2.7 are supported only")
+
 # Get the package information used in setup().
 from __pkginfo__ import \
     author,           author_email,       classifiers,                    \

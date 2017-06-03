@@ -24,6 +24,7 @@ Type `info` for a list of info subcommands and what they do. Type help
    info/line
    info/locals
    info/macro
+   info/pc
    info/program
    info/return
    info/signals

@@ -53,7 +53,7 @@ install_requires   = ['columnize >= 0.3.8',
                       ]
 license            = 'GPL'
 mailing_list       = 'python-debugger@googlegroups.com'
-modname            = 'trepan'
+modname            = 'trepan2'
 packages = [
     'trepan',
     'trepan.bwprocessor',

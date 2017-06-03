@@ -174,7 +174,9 @@ See also:
         # We now have range information. Do the listing.
         max_line = pyficache.size(filename)
         if max_line is None:
-            self.errmsg('No file %s found' % filename)
+            self.errmsg('No file %s found; using "deparse" command instead to show source' %
+                        filename)
+            self.proc.commands['deparse'].run(['deparse'])
             return
 
         canonic_filename = os.path.realpath(os.path.normcase(filename))

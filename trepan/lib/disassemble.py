@@ -225,11 +225,12 @@ if __name__ == '__main__':
     curframe = inspect.currentframe()
     # dis(msg, msg_nocr, errmsg, section, curframe,
     #     start_line=10, end_line=40, highlight='dark')
-    print('-' * 40)
-    dis(msg, msg_nocr, errmsg, section, curframe,
-        start_offset=10, end_offset=20, highlight='dark')
     # print('-' * 40)
-    # dis(msg, msg_nocr, section, errmsg, disassemble)
+    # does nothing because start_offset is too high:
+    # dis(msg, msg_nocr, errmsg, section, curframe,
+    #     start_offset=10, end_offset=20, highlight='dark')
+    print('-' * 40)
+    dis(msg, msg_nocr, section, errmsg, disassemble)
     # print('-' * 40)
     # magic, moddate, modtime, co = pyc2code(sys.modules['types'].__file__)
     # disassemble(msg, msg_nocr, section, co, -1, 1, 70)

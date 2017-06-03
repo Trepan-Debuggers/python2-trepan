@@ -21,13 +21,10 @@ from sys import version_info
 from StringIO import StringIO
 from pyficache import highlight_string
 
-from uncompyle6.semantics.fragments import deparse_code
-from uncompyle6.semantics.pysource import deparse_code as deparse_code_pretty
-
 # Our local modules
 from trepan.processor.command import base_cmd as Mbase_cmd
 
-class PythonCommand(Mbase_cmd.DebuggerCommand):
+class DeparseCommand(Mbase_cmd.DebuggerCommand):
     """**deparse** [options] [ . ]
 
 Options are:
@@ -88,9 +85,9 @@ See also:
         name = co.co_name
 
         try:
-            opts, args = getopt(args[1:], "hpAPo:",
+            opts, args = getopt(args[1:], "hpAPo:O",
                                 ["help", "parent", "pretty", "tree", "AST",
-                                 "offset"])
+                                 "offset", "offsets"])
         except GetoptError as err:
             # print help information and exit:
             print(str(err))  # will print something like "option -a not recognized"
@@ -100,10 +97,13 @@ See also:
         show_parent = False
         show_ast = False
         offset = None
+        show_offsets = False
         for o, a in opts:
             if o in ("-h", "--help"):
                 self.proc.commands['help'].run(['help', 'deparse'])
                 return
+            elif o in ("-O", "--offsets"):
+                show_offsets = True
             elif o in ("-p", "--parent"):
                 show_parent = True
             elif o in ("-P", "--pretty"):
@@ -134,7 +134,13 @@ See also:
                 return
             self.print_text(text)
             return
-
+        elif show_offsets:
+            deparsed = deparse_code(sys_version, co)
+            self.section("Offsets known:")
+            m = self.columnize_commands(list(sorted(deparsed.offsets.keys(),
+                                                    key=lambda x: str(x[0]))))
+            self.msg_nocr(m)
+            return
         elif offset:
             mess = ("The 'deparse' command when given an argument requires an"
                     " instruction offset. Got: %s" % offset)
@@ -146,10 +152,13 @@ See also:
             if last_i == -1: last_i = 0
 
         try:
-            deparsed = deparse_code(sys_version, co)
+           deparsed = deparse_code(sys_version, co)
+           if not (name, last_i) in  deparsed.offsets.keys():
+               self.errmsg("Can't find exact offset %d; giving inexact results" % last_i)
+               deparsed = deparse_code_around_offset(co.co_name, last_i, sys_version, co)
         except:
             self.errmsg("error in deparsing code at offset %d" % last_i)
-            deparsed = deparse_code_around_offset(co.co_name, last_i, sys_version, co),
+            return
         if (name, last_i) in deparsed.offsets.keys():
             nodeInfo =  deparsed.offsets[name, last_i]
             extractInfo = deparsed.extract_node_info(nodeInfo)
@@ -191,20 +200,21 @@ See also:
         return
     pass
 
-# if __name__ == '__main__':
-#     import sys
-#     from trepan import debugger as Mdebugger
-#     d = Mdebugger.Trepan()
-#     command = PythonCommand(d.core.processor)
-#     command.proc.frame = sys._getframe()
-#     command.proc.setup()
-#     if len(sys.argv) > 1:
-#         print("Type Python commands and exit to quit.")
-#         print(sys.argv[1])
-#         if sys.argv[1] == '-d':
-#             print(command.run(['bpy', '-d']))
-#         else:
-#             print(command.run(['bpy']))
-#             pass
-#         pass
-#     pass
+if __name__ == '__main__':
+    import sys
+    from trepan import debugger as Mdebugger
+    d = Mdebugger.Debugger()
+    command = DeparseCommand(d.core.processor)
+    command.proc.frame = sys._getframe()
+    command.proc.setup()
+    if len(sys.argv) > 1:
+        print("Type Python commands and exit to quit.")
+        print(sys.argv[1])
+        print(command.run(['bpy', '--offsets']))
+        if sys.argv[1] == '-d':
+            print(command.run(['bpy', '-d']))
+        else:
+            print(command.run(['bpy']))
+            pass
+        pass
+    pass

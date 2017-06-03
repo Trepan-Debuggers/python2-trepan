@@ -1,4 +1,4 @@
-#  Copyright (C) 2008-2009, 2014 Rocky Bernstein <rocky@gnu.org>
+#  Copyright (C) 2008-2009, 2014, 2017 Rocky Bernstein <rocky@gnu.org>
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
 #  the Free Software Foundation, either version 3 of the License, or
@@ -12,8 +12,3 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """ Copyright (C) 2008-2009, 2014 Rocky Bernstein <rocky@gnu.org>"""
-__import__('pkg_resources').declare_namespace(__name__)
-
-from trepan.misc import pyfiles
-__all__ = pyfiles(__file__)
-__package__ = 'trepan.lib'

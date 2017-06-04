@@ -29,7 +29,7 @@ Copyright (C) 2008-2010, 2013-2017 Rocky Bernstein <rocky@gnu.org>.
 classifiers =  ['Development Status :: 5 - Production/Stable',
                 'Environment :: Console',
                 'Intended Audience :: Developers',
-                'License :: OSI Approved :: GNU General Public License (GPL)',
+                'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
                 'Operating System :: OS Independent',
                 'Programming Language :: Python',
                 'Topic :: Software Development :: Debuggers',
@@ -51,7 +51,7 @@ install_requires   = ['columnize >= 0.3.8',
                       'unittest2',
                       'xdis >= 3.3.1',
                       ]
-license            = 'GPL'
+license            = 'GPL3'
 mailing_list       = 'python-debugger@googlegroups.com'
 modname            = 'trepan2'
 packages = [

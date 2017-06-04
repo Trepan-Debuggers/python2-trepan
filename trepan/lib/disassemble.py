@@ -59,7 +59,6 @@ def dis(msg, msg_nocr, section, errmsg, x=None, start_line=-1, end_line=None,
         x = x.__class__
     if hasattr(x, 'im_func'):
         section("Disassembly of %s: %s" % (x, mess))
-        print("FOO")
         sectioned = True
         x = x.im_func
     if hasattr(x, 'func_code'):
@@ -73,7 +72,8 @@ def dis(msg, msg_nocr, section, errmsg, x=None, start_line=-1, end_line=None,
             pass
         opc = get_opcode(PYTHON_VERSION, IS_PYPY)
         x = x.f_code
-        header = Bytecode(x, opc).info()
+        header_lines = Bytecode(x, opc).info().split("\n")
+        header = '\n'.join([format_token(Mformat.Comment, h) for h in header_lines])
         msg(header)
         pass
     elif inspect.iscode(x):

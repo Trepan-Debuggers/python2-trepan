@@ -10,7 +10,8 @@ from file __pkginfo__.py.
 
 import sys
 if not ((2, 6) <= sys.version_info < (3, 0)):
-    raise Exception("Python Versions 2.6 and 2.7 are supported only")
+    raise Exception("Python Versions 2.6 and 2.7 are supported only.\n"
+                    "For older Python, see pydbgr; for newer see trepan3k")
 
 # Get the package information used in setup().
 from __pkginfo__ import \

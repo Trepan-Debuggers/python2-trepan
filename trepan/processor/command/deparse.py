@@ -17,12 +17,29 @@ import os
 from getopt import getopt, GetoptError
 from uncompyle6.semantics.fragments import deparse_code, deparse_code_around_offset
 from uncompyle6.semantics.pysource import deparse_code as deparse_code_pretty
+from trepan.lib.bytecode import op_at_code_loc
 from sys import version_info
 from StringIO import StringIO
 from pyficache import highlight_string
+from xdis import IS_PYPY
 
 # Our local modules
 from trepan.processor.command import base_cmd as Mbase_cmd
+
+# FIXME: put this in uncompyle6 fragments
+def deparsed_find(tup, deparsed, code):
+    nodeInfo = None
+    name, last_i = tup
+    if (name, last_i) in deparsed.offsets.keys():
+        nodeInfo =  deparsed.offsets[name, last_i]
+    else:
+        co = code.co_code
+        if op_at_code_loc(co, last_i) == 'DUP_TOP':
+            offset = deparsed.scanner.next_offset(co[last_i], last_i)
+            if (name, offset) in deparsed.offsets:
+                nodeInfo =  deparsed.offsets[name, offset]
+
+    return nodeInfo
 
 class DeparseCommand(Mbase_cmd.DebuggerCommand):
     """**deparse** [options] [ . ]
@@ -86,9 +103,9 @@ See also:
         name = co.co_name
 
         try:
-            opts, args = getopt(args[1:], "hpAPto:O",
-                                ["help", "parent", "pretty", "tree", "AST",
-                                 "offset=", "offsets"])
+            opts, args = getopt(args[1:], "hpPAto:O",
+                                ["help", "parent", "pretty", "AST",
+                                 'tree', "offset=", "offsets"])
         except GetoptError as err:
             # print help information and exit:
             print(str(err))  # will print something like "option -a not recognized"
@@ -117,16 +134,17 @@ See also:
                 self.errmsg("unhandled option '%s'" % o)
             pass
         pass
+        nodeInfo = None
 
         sys_version = version_info[0] + (version_info[1] / 10.0)
         if len(args) >= 1 and args[0] == '.':
             try:
                 if not pretty:
-                    deparsed = deparse_code(sys_version, co)
+                    deparsed = deparse_code(sys_version, co, is_pypy=IS_PYPY)
                     text = deparsed.text
                 else:
                     out = StringIO()
-                    deparsed = deparse_code_pretty(sys_version, co, out)
+                    deparsed = deparse_code_pretty(sys_version, co, out, is_pypy=IS_PYPY)
                     text = out.getvalue()
                     pass
             except:
@@ -136,7 +154,7 @@ See also:
             self.print_text(text)
             return
         elif show_offsets:
-            deparsed = deparse_code(sys_version, co)
+            deparsed = deparse_code(sys_version, co, is_pypy=IS_PYPY)
             self.section("Offsets known:")
             m = self.columnize_commands(list(sorted(deparsed.offsets.keys(),
                                                     key=lambda x: str(x[0]))))
@@ -154,14 +172,16 @@ See also:
 
         try:
            deparsed = deparse_code(sys_version, co)
-           if not (name, last_i) in  deparsed.offsets.keys():
+           nodeInfo = deparsed_find((name, last_i), deparsed, co)
+           if not nodeInfo:
                self.errmsg("Can't find exact offset %d; giving inexact results" % last_i)
                deparsed = deparse_code_around_offset(co.co_name, last_i, sys_version, co)
         except:
             self.errmsg("error in deparsing code at offset %d" % last_i)
             return
-        if (name, last_i) in deparsed.offsets.keys():
-            nodeInfo =  deparsed.offsets[name, last_i]
+        if not nodeInfo:
+            nodeInfo = deparsed_find((name, last_i), deparsed, co)
+        if nodeInfo:
             extractInfo = deparsed.extract_node_info(nodeInfo)
             parentInfo = None
             # print extractInfo

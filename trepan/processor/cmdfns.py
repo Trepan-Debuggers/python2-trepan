@@ -40,7 +40,7 @@ def deparse_fn(code):
     sys_version = sys.version_info[0] + (sys.version_info[1] / 10.0)
     try:
         deparsed = deparse_code(sys_version, code, is_pypy=IS_PYPY)
-        return deparsed.text
+        return deparsed.text.strip()
     except:
         raise
     return None

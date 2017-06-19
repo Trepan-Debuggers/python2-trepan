@@ -192,11 +192,10 @@ def print_location(proc_obj):
                 filename = fd.name
                 pass
             pass
-        # elif '<string>' == filename:
-        #     source_text = deparse_fn(frame.f_code)
-        #     if source_text:
-        #         filename = ("<string: %s>" % source_text)
-        #     pass
+        elif '<string>' == filename:
+            source_text = deparse_fn(frame.f_code)
+            filename = "<string: '%s'>" % source_text
+            pass
         else:
             if filename in pyficache.file2file_remap:
                 remapped_file = pyficache.unmap_file(filename)

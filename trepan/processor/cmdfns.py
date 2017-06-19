@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2013, 2015 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2013, 2015, 2017 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -17,8 +17,9 @@
 counts, to parse a string for an integer, or check a string for an
 on/off setting value.
 '''
-import io, os, sys, tempfile
+import os, sys, tempfile
 import pyficache
+from xdis import IS_PYPY
 
 def source_tempfile_remap(prefix, text):
     fd = tempfile.NamedTemporaryFile(suffix='.py',
@@ -33,13 +34,12 @@ def source_tempfile_remap(prefix, text):
 
 def deparse_fn(code):
     try:
-        from uncompyle6.semantics.pysource import deparse_code
+        from uncompyle6.semantics.fragments import deparse_code
     except ImportError:
         return None
-    sys_version = sys.version_info.major + (sys.version_info.minor / 10.0)
+    sys_version = sys.version_info[0] + (sys.version_info[1] / 10.0)
     try:
-        out = io.StringIO()
-        deparsed = deparse_code(sys_version, code, out)
+        deparsed = deparse_code(sys_version, code, is_pypy=IS_PYPY)
         return deparsed.text
     except:
         raise

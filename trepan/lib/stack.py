@@ -35,6 +35,22 @@ import inspect
 
 _re_pseudo_file = re.compile(r'^<.+>')
 
+def deparse_source_from_code(code):
+    source_text = ''
+    try:
+        source_lines = deparse_fn(code).split("\n")
+        source_text = ''
+        for i, source_text in enumerate(source_lines):
+            if len(source_text) > 0:
+                break
+        if len(source_lines) > 1:
+            source_text += '...'
+        source_text = '"%s"' % source_text
+    except:
+        pass
+    return source_text
+
+
 
 def format_stack_entry(dbg_obj, frame_lineno, lprefix=': ',
                        include_location=True, color='plain'):
@@ -57,20 +73,15 @@ def format_stack_entry(dbg_obj, frame_lineno, lprefix=': ',
         is_module = True
         if is_exec_stmt(frame):
             fn_name = format_token(Mformat.Function, 'exec', highlight=color)
-            try:
-                source_lines = deparse_fn(frame.f_code).split("\n")
-                source_text = source_lines[0]
-                if len(source_lines) > 1:
-                    source_text += '...'
-                source_text = '"%s"' % source_text
-            except:
-                source_text = ''
+            source_text = deparse_source_from_code(frame.f_code)
             s += ' %s(%s)' % (format_token(Mformat.Function, fn_name,
                                            highlight=color), source_text)
         else:
-            fn_name = get_call_function_name(frame, color=color)
-            if fn_name: s += ' %s()' % format_token(Mformat.Function, fn_name,
-                                                    highlight=color)
+            fn_name = get_call_function_name(frame)
+            if fn_name:
+                source_text = deparse_source_from_code(frame.f_code)
+                if fn_name: s += ' %s(%s)' % (format_token(Mformat.Function, fn_name,
+                                                           highlight=color), source_text)
             pass
     else:
         is_module = False
@@ -141,7 +152,7 @@ def is_exec_stmt(frame):
 
 import dis
 
-def get_call_function_name(frame, color='plain'):
+def get_call_function_name(frame):
     """If f_back is looking at a call function, return
     the name for it. Otherwise return None"""
     f_back = frame.f_back
@@ -159,8 +170,7 @@ def get_call_function_name(frame, color='plain'):
         if inst in linestarts:
             inst += 1
             oparg = ord(code[inst]) + (ord(code[inst+1]) << 8)
-            return format_token(Mformat.Function, co.co_names[oparg],
-                                highlight=color)
+            return co.co_names[oparg]
         inst -= 1
         pass
     return None

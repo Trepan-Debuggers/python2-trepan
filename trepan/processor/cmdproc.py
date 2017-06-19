@@ -30,7 +30,7 @@ from trepan.lib import file as Mfile
 from trepan.lib import stack as Mstack
 from trepan.lib import thred as Mthread
 from trepan.processor import complete as Mcomplete
-
+from trepan.processor.cmdfns import deparse_fn
 
 # arg_split culled from ipython's routine
 def arg_split(s, posix=False):
@@ -192,6 +192,11 @@ def print_location(proc_obj):
                 filename = fd.name
                 pass
             pass
+        # elif '<string>' == filename:
+        #     source_text = deparse_fn(frame.f_code)
+        #     if source_text:
+        #         filename = ("<string: %s>" % source_text)
+        #     pass
         else:
             if filename in pyficache.file2file_remap:
                 remapped_file = pyficache.unmap_file(filename)

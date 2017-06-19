@@ -18,6 +18,7 @@ import re, types
 
 from trepan.lib import bytecode as Mbytecode, printing as Mprint
 from trepan.lib import format as Mformat
+from trepan.processor.cmdfns import deparse_fn
 format_token = Mformat.format_token
 
 
@@ -56,8 +57,16 @@ def format_stack_entry(dbg_obj, frame_lineno, lprefix=': ',
         is_module = True
         if is_exec_stmt(frame):
             fn_name = format_token(Mformat.Function, 'exec', highlight=color)
-            s += ' %s()' % format_token(Mformat.Function, fn_name,
-                                        highlight=color)
+            try:
+                source_lines = deparse_fn(frame.f_code).split("\n")
+                source_text = source_lines[0]
+                if len(source_lines) > 1:
+                    source_text += '...'
+                source_text = '"%s"' % source_text
+            except:
+                source_text = ''
+            s += ' %s(%s)' % (format_token(Mformat.Function, fn_name,
+                                           highlight=color), source_text)
         else:
             fn_name = get_call_function_name(frame, color=color)
             if fn_name: s += ' %s()' % format_token(Mformat.Function, fn_name,
@@ -127,8 +136,8 @@ def frame2file(core_obj, frame, canonic=True):
 
 def is_exec_stmt(frame):
     """Return True if we are looking at an exec statement"""
-    return hasattr(frame, 'f_back') and frame.f_back is not None and \
-        Mbytecode.op_at_frame(frame.f_back)=='EXEC_STMT'
+    return (hasattr(frame, 'f_back') and frame.f_back is not None and
+            Mbytecode.op_at_frame(frame.f_back)=='EXEC_STMT')
 
 import dis
 

@@ -221,21 +221,20 @@ See also:
         return
     pass
 
-if __name__ == '__main__':
-    import sys
-    from trepan import debugger as Mdebugger
-    d = Mdebugger.Debugger()
-    command = DeparseCommand(d.core.processor)
-    command.proc.frame = sys._getframe()
-    command.proc.setup()
-    if len(sys.argv) > 1:
-        print("Type Python commands and exit to quit.")
-        print(sys.argv[1])
-        print(command.run(['bpy', '--offsets']))
-        if sys.argv[1] == '-d':
-            print(command.run(['bpy', '-d']))
-        else:
-            print(command.run(['bpy']))
-            pass
-        pass
-    pass
+# if __name__ == '__main__':
+#     import sys
+#     from trepan import debugger as Mdebugger
+#     d = Mdebugger.Trepan()
+#     command = PythonCommand(d.core.processor)
+#     command.proc.frame = sys._getframe()
+#     command.proc.setup()
+#     if len(sys.argv) > 1:
+#         print("Type Python commands and exit to quit.")
+#         print(sys.argv[1])
+#         if sys.argv[1] == '-d':
+#             print(command.run(['bpy', '-d']))
+#         else:
+#             print(command.run(['bpy']))
+#             pass
+#         pass
+#     pass

@@ -26,7 +26,7 @@ from trepan.interfaces import comcodes as Mcomcodes
 from optparse import OptionParser
 
 # VERSION.py sets variable VERSION.
-from trepan.VERSION import VERSION as __version__
+from trepan.version import VERSION as __version__
 
 
 def process_options(pkg_version, sys_argv, option_list=None):

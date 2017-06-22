@@ -82,7 +82,7 @@ def get_srcdir():
 
 # VERSION.py sets variable VERSION.
 ns = {}
-exec(open(os.path.join(get_srcdir(), 'trepan', 'VERSION.py')).read(), ns)
+exec(open(os.path.join(get_srcdir(), 'trepan', 'version.py')).read(), ns)
 version            = ns['VERSION']
 web                = 'http://github.com/rocky/python2-trepan/'
 

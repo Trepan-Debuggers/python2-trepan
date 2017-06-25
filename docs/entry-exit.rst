@@ -281,7 +281,8 @@ Set up an exception handler allow remote connections
 The extends the example before to set to allow remote debugging when
 the process gets a `USR1` signal
 
-::
+.. code:: python
+
     import signal
 
     def signal_handler(num, f):
@@ -306,21 +307,22 @@ the process gets a `USR1` signal
 Now run that:
 
 ::
-   $ python /tmp/foo.py
-   8530
-   Starting TCP server listening on port 1955.
 
-From above output we helpfully listed the pid of the
-Python process we want to debug.
+    $ python /tmp/foo.py
+    8530
+    Starting TCP server listening on port 1955.
+
+From above output we helpfully listed the pid of the Python process we want to debug.
 
 Now in a shell we attach to this. You will have to adjust the
 process id.
 
-::
-   $ kill -USR1 8530   # Adjust the pid to what you see above
-   $ trepan2 --client --port 1955
-   Connected.
-   (/tmp/foo.py:11 @101): signal_handler
+.. code:: console
+
+    $ kill -USR1 8530   # Adjust the pid to what you see above
+    $ trepan2 --client --port 1955
+    Connected.
+    (/tmp/foo.py:11 @101): signal_handler
     -- 11     return
     (trepan2*) list
       6    	    connection_opts={'IO': 'TCP', 'PORT': 1955}
@@ -333,9 +335,9 @@ process id.
      13    	signal.signal(signal.SIGUSR1, signal_handler)
      14    	# Go about your business...
     (trepan2*) list
-    ->   0 signal_handler(num=10, f=<frame object at 0x7f9036796050>)
-         called from file '/tmp/foo.py' at line 11
-    ##   1 <module> file '/tmp/foo.py' at line 20
+     ->   0 signal_handler(num=10, f=<frame object at 0x7f9036796050>)
+          called from file '/tmp/foo.py' at line 11
+     ##   1 <module> file '/tmp/foo.py' at line 20
 
 
 Startup Profile

@@ -326,8 +326,8 @@ the new output:
 .. code:: console
 
    $ python /tmp/foo.py
-    8530
-    Starting TCP server listening on port 1955. # This is new
+   8530
+   Starting TCP server listening on port 1955. # This is new
 
 Back to the shell where we issued the `kill -USR1`:
 

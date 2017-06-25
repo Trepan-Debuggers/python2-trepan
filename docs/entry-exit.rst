@@ -320,36 +320,37 @@ process id.
 
     $ kill -USR1 8530   # Adjust the pid to what you see above
 
-And in the shell where we now ran `/tmp/foo.py` you should see
-new output:
+And in the shell where we ran `/tmp/foo.py` you should now see
+the new output:
 
 .. code:: console
-    $ python /tmp/foo.py
+
+   $ python /tmp/foo.py
     8530
     Starting TCP server listening on port 1955. # This is new
 
-Now back to the shell where we issued the `kill -USR1`:
+Back to the shell where we issued the `kill -USR1`:
 
 .. code:: console
 
    $ trepan2 --client --port 1955
-      Connected.
-    (/tmp/foo.py:11 @101): signal_handler
-    -- 11     return
-    (trepan2*) list
-      6    	    connection_opts={'IO': 'TCP', 'PORT': 1955}
-      7    	    intf = Mserver.ServerInterface(connection_opts=connection_opts)
-      8    	    dbg_opts = {'interface': intf}
-      9    	    print('Starting TCP server listening on port 1955.')
-     10    	    debug(dbg_opts=dbg_opts)
-     11  ->	    return
-     12
-     13    	signal.signal(signal.SIGUSR1, signal_handler)
-     14    	# Go about your business...
-    (trepan2*) list
-     ->   0 signal_handler(num=10, f=<frame object at 0x7f9036796050>)
-          called from file '/tmp/foo.py' at line 11
-     ##   1 <module> file '/tmp/foo.py' at line 20
+   Connected.
+   (/tmp/foo.py:11 @101): signal_handler
+   -- 11     return
+   (trepan2*) list
+     6    	    connection_opts={'IO': 'TCP', 'PORT': 1955}
+     7    	    intf = Mserver.ServerInterface(connection_opts=connection_opts)
+     8    	    dbg_opts = {'interface': intf}
+     9    	    print('Starting TCP server listening on port 1955.')
+    10    	    debug(dbg_opts=dbg_opts)
+    11  ->	    return
+    12
+    13    	signal.signal(signal.SIGUSR1, signal_handler)
+    14    	# Go about your business...
+   (trepan2*) list
+    ->   0 signal_handler(num=10, f=<frame object at 0x7f9036796050>)
+         called from file '/tmp/foo.py' at line 11
+    ##   1 <module> file '/tmp/foo.py' at line 20
 
 
 Startup Profile

@@ -320,7 +320,7 @@ process id.
 
     $ kill -USR1 8530   # Adjust the pid to what you see above
 
-And in the shell where we now ran `/tmp/foo.py you should see
+And in the shell where we now ran `/tmp/foo.py` you should see
 new output:
 
 .. code:: console
@@ -328,7 +328,7 @@ new output:
     8530
     Starting TCP server listening on port 1955. # This is new
 
-Now back to the shell where we issued the `kill -USR1`
+Now back to the shell where we issued the `kill -USR1`:
 
 .. code:: console
     $ trepan2 --client --port 1955

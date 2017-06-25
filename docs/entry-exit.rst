@@ -313,7 +313,7 @@ Now run that:
 
 From above output we helpfully listed the pid of the Python process we want to debug.
 
-Now in a shell we attach to this. You will have to adjust the
+Now in a shell we send the signal to go into the debugger listening for commands on port 1955. You will have to adjust the
 process id.
 
 .. code:: console
@@ -326,10 +326,11 @@ the new output:
 .. code:: console
 
    $ python /tmp/foo.py
-    8530
-    Starting TCP server listening on port 1955. # This is new
+   8530
+   Starting TCP server listening on port 1955. # This is new
 
-Back to the shell where we issued the `kill -USR1`:
+Back to the shell where we issued the `kill -USR1` we can now
+attach to the debugger on port 1955:
 
 .. code:: console
 

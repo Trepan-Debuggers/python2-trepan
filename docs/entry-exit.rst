@@ -331,7 +331,8 @@ new output:
 Now back to the shell where we issued the `kill -USR1`:
 
 .. code:: console
-    $ trepan2 --client --port 1955
+
+   $ trepan2 --client --port 1955
       Connected.
     (/tmp/foo.py:11 @101): signal_handler
     -- 11     return

@@ -310,7 +310,6 @@ Now run that:
 
     $ python /tmp/foo.py
     8530
-    Starting TCP server listening on port 1955.
 
 From above output we helpfully listed the pid of the Python process we want to debug.
 
@@ -320,8 +319,20 @@ process id.
 .. code:: console
 
     $ kill -USR1 8530   # Adjust the pid to what you see above
+
+And in the shell where we now ran `/tmp/foo.py you should see
+new output:
+
+.. code:: console
+    $ python /tmp/foo.py
+    8530
+    Starting TCP server listening on port 1955. # This is new
+
+Now back to the shell where we issued the `kill -USR1`
+
+.. code:: console
     $ trepan2 --client --port 1955
-    Connected.
+      Connected.
     (/tmp/foo.py:11 @101): signal_handler
     -- 11     return
     (trepan2*) list

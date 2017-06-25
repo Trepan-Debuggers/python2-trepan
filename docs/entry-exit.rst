@@ -338,7 +338,7 @@ attach to the debugger on port 1955:
    Connected.
    (/tmp/foo.py:11 @101): signal_handler
    -- 11     return
-   (trepan2*) list
+   (trepan2*) backtrace
      6    	    connection_opts={'IO': 'TCP', 'PORT': 1955}
      7    	    intf = Mserver.ServerInterface(connection_opts=connection_opts)
      8    	    dbg_opts = {'interface': intf}

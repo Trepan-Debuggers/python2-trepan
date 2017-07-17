@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2008-2009, 2013-2015 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008-2009, 2013-2015, 2017 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -37,7 +37,6 @@ import sys
 import trepan.lib
 import trepan.interfaces
 import trepan.inout
-import trepan.processor.command
 from trepan import debugger as Mdebugger, post_mortem as Mpost_mortem
 
 def debugger_on_post_mortem():

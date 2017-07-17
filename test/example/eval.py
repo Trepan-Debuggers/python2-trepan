@@ -1,6 +1,7 @@
 def five():
     return 5
-eval_str = '1+2'
+a = '1'
+eval_str = a + '*2'
 x = eval(eval_str)
 x = eval('five()')
 exec_str = 'x = 30'

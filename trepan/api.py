@@ -124,6 +124,7 @@ Enter the debugger.
 
 Parameters
 ----------
+
 level : how many stack frames go back. Usually it will be
 the default 0. But sometimes though there may be calls in setup to the debugger
 that you may want to skip.
@@ -135,7 +136,9 @@ param dbg_opts : is an optional "options" dictionary that gets fed
 trepan.Debugger(); `start_opts' are the optional "options"
 dictionary that gets fed to trepan.Debugger.core.start().
 
-Use like this::
+Use like this:
+
+.. code-block:: python
 
     ... # Possibly some Python code
     import trepan.api # Needed only once

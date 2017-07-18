@@ -46,10 +46,10 @@ install_requires   = ['columnize >= 0.3.8',
                       'nose>=1.0',
                       'pyficache >= 0.3.0',
                       'pygments  >= 2.0.2',
-                      'uncompyle6 >= 2.11.0',
+                      'uncompyle6 >= 2.11.1',
                       'tracer >= 0.3.2',
                       'unittest2',
-                      'xdis >= 3.3.1',
+                      'xdis >= 3.5.1',
                       ]
 license            = 'GPL3'
 mailing_list       = 'python-debugger@googlegroups.com'

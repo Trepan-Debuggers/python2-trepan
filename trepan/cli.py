@@ -91,24 +91,43 @@ def main(dbg=None, sys_argv=list(sys.argv)):
 
         if Mfile.is_compiled_py(mainpyfile):
             try:
-                from uncompyle6 import uncompyle_file
-            except ImportError:
-                print("%s: Compiled python file '%s', but uncompyle6 not found"
-                    % (__title__, mainpyfile), file=sys.stderr)
-                sys.exit(1)
-
-            short_name = os.path.basename(mainpyfile).strip('.pyc')
-            fd = tempfile.NamedTemporaryFile(suffix='.py',
-                                             prefix=short_name + "_",
-                                             delete=False)
-            try:
-                uncompyle_file(mainpyfile, fd)
+                from xdis import load_module, PYTHON_VERSION, IS_PYPY
+                (python_version, timestamp, magic_int, co, is_pypy,
+                 source_size) = load_module(mainpyfile, code_objects=None,
+                                            fast_load=True)
+                assert is_pypy == IS_PYPY
+                assert python_version == PYTHON_VERSION, \
+                    "bytecode is for version %s but we are version %s" % (
+                        python_version, PYTHON_VERSION)
+                # Should we check version magic_int
+                py_file = co.co_filename
+                if os.path.isfile(py_file):
+                    # FIXME check if relpath and adjust name.
+                    mainpyfile = py_file
+                    pass
             except:
-                print("%s: error uncompyling '%s'"
-                      % (__title__, mainpyfile), file=sys.stderr)
-                sys.exit(1)
-            mainpyfile = fd.name
-            fd.close()
+                try:
+                    from uncompyle6 import uncompyle_file
+                except ImportError:
+                    print("%s: Compiled python file '%s', but uncompyle6 not found"
+                        % (__title__, mainpyfile), file=sys.stderr)
+                    sys.exit(1)
+                    return
+
+                short_name = os.path.basename(mainpyfile).strip('.pyc')
+                fd = tempfile.NamedTemporaryFile(suffix='.py',
+                                                 prefix=short_name + "_",
+                                                 delete=False)
+                try:
+                    uncompyle_file(mainpyfile, fd)
+                except:
+                    print("%s: error uncompyling '%s'"
+                          % (__title__, mainpyfile), file=sys.stderr)
+                    sys.exit(1)
+                    return
+                mainpyfile = fd.name
+                fd.close()
+                pass
 
         # If mainpyfile is an optimized Python script try to find and
         # use non-optimized alternative.

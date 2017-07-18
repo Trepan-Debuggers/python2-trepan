@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: iso-8859-1 -*-
-#   Copyright (C) 2008-2010, 2013-2014, 2016
+#   Copyright (C) 2008-2010, 2013-2014, 2016-2017
 #   Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
@@ -18,7 +18,8 @@
 '''The command-line interface to the debugger.
 '''
 from __future__ import print_function
-import pyficache, os, os.path, sys, tempfile
+import pyficache, os, sys, tempfile
+import os.path as osp
 
 from trepan import client as Mclient
 from trepan import clifns as Mclifns
@@ -76,7 +77,7 @@ def main(dbg=None, sys_argv=list(sys.argv)):
         mainpyfile = None
     else:
         mainpyfile = sys_argv[0]  # Get script filename.
-        if not os.path.isfile(mainpyfile):
+        if not osp.isfile(mainpyfile):
             mainpyfile=Mclifns.whence_file(mainpyfile)
             is_readable = Mfile.readable(mainpyfile)
             if is_readable is None:
@@ -99,12 +100,22 @@ def main(dbg=None, sys_argv=list(sys.argv)):
                 assert python_version == PYTHON_VERSION, \
                     "bytecode is for version %s but we are version %s" % (
                         python_version, PYTHON_VERSION)
-                # Should we check version magic_int
+                # We should we check version magic_int
+
                 py_file = co.co_filename
-                if os.path.isfile(py_file):
-                    # FIXME check if relpath and adjust name.
-                    mainpyfile = py_file
+                # FIXME check if relpath and adjust name.
+                if osp.isabs(py_file):
+                    try_file = py_file
+                else:
+                    mainpydir = osp.dirname(mainpyfile)
+                    try_file = osp.join(mainpydir, py_file)
+
+                if osp.isfile(try_file):
+                    mainpyfile = try_file
                     pass
+                else:
+                    # Move onto the except branch
+                    raise IOError("Python file name embedded in code %s not found" % try_file)
             except:
                 try:
                     from uncompyle6 import uncompyle_file
@@ -114,7 +125,7 @@ def main(dbg=None, sys_argv=list(sys.argv)):
                     sys.exit(1)
                     return
 
-                short_name = os.path.basename(mainpyfile).strip('.pyc')
+                short_name = osp.basename(mainpyfile).strip('.pyc')
                 fd = tempfile.NamedTemporaryFile(suffix='.py',
                                                  prefix=short_name + "_",
                                                  delete=False)
@@ -143,7 +154,7 @@ def main(dbg=None, sys_argv=list(sys.argv)):
 
         # Replace trepan's dir with script's dir in front of
         # module search path.
-        sys.path[0] = dbg.main_dirname = os.path.dirname(mainpyfile)
+        sys.path[0] = dbg.main_dirname = osp.dirname(mainpyfile)
 
     # XXX If a signal has been received we continue in the loop, otherwise
     # the loop exits for some reason.

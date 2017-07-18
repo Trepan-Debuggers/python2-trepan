@@ -9,6 +9,7 @@ Welcome to trepan's documentation!
 .. toctree::
    :maxdepth: 1
 
+   overview
    install
    entry-exit
    syntax

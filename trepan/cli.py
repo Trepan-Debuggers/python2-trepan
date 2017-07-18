@@ -103,12 +103,12 @@ def main(dbg=None, sys_argv=list(sys.argv)):
                 # We should we check version magic_int
 
                 py_file = co.co_filename
-                # FIXME check if relpath and adjust name.
                 if osp.isabs(py_file):
                     try_file = py_file
                 else:
                     mainpydir = osp.dirname(mainpyfile)
-                    try_file = osp.join(mainpydir, py_file)
+                    dirnames = [mainpydir] + os.environ['PATH'].split(os.pathsep) + ['.']
+                    try_file = Mclifns.whence_file(py_file, dirnames)
 
                 if osp.isfile(try_file):
                     mainpyfile = try_file

@@ -7,11 +7,13 @@ Deparse (CPython bytecode deparser)
 
 Options are:
 
-  -p | --parent        show parent node
-  -P | --pretty        show pretty output
-  -A | --tree | --AST  show abstract syntax tree (AST)
-  -o | --offset [num]  show deparse of offset NUM
-  -h | --help          give this help
+::
+
+    -p | --parent        show parent node
+    -P | --pretty        show pretty output
+    -A | --tree | --AST  show abstract syntax tree (AST)
+    -o | --offset [num]  show deparse of offset NUM
+    -h | --help          give this help
 
 deparse around where the program is currently stopped. If no offset is given,
 we use the current frame offset. If `-p` is given, include parent information.

@@ -1,3 +1,7 @@
+trepan python-2.4-0.7.6 2017-07-01
+
+- Retrofit back to Python 2.4
+
 trepan 0.7.6 2017-06-03
 - Fix botched release and sync version numbers with trepan3k
 - Corrected setup.py code, cheking and better error messaging

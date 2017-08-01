@@ -29,8 +29,11 @@ def add_startup_file(dbg_initfiles):
     startup_python_file = default_configfile('profile.py')
 
     if Mfile.readable(startup_python_file):
-        with codecs.open(startup_python_file, 'r', encoding='utf8') as fp:
-                exec(fp.read())
+        fp = codecs.open(startup_python_file, 'r', encoding='utf8')
+        try:
+            exec(fp.read())
+        finally:
+            fp.close()
 
     startup_trepan_file = default_configfile('profile')
     if Mfile.readable(startup_trepan_file):
@@ -47,7 +50,7 @@ def default_configfile(base_filename):
     file_dir = Mclifns.path_expanduser_abs(file_dir)
 
     if not os.path.isdir(file_dir):
-        os.makedirs(file_dir, mode=0o755)
+        os.makedirs(file_dir, mode=0755)
     return os.path.join(file_dir, base_filename)
 
 def process_options(debugger_name, pkg_version, sys_argv, option_list=None):

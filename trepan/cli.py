@@ -17,7 +17,6 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''The command-line interface to the debugger.
 '''
-from __future__ import print_function
 import pyficache, os, sys, tempfile
 import os.path as osp
 
@@ -81,12 +80,12 @@ def main(dbg=None, sys_argv=list(sys.argv)):
             mainpyfile=Mclifns.whence_file(mainpyfile)
             is_readable = Mfile.readable(mainpyfile)
             if is_readable is None:
-                print("%s: Python script file '%s' does not exist"
-                      % (__title__, mainpyfile,), file=sys.stderr)
+                sys.stderr.write("%s: Python script file '%s' does not exist\n"
+                                 % (__title__, mainpyfile))
                 sys.exit(1)
             elif not is_readable:
-                print("%s: Can't read Python script file '%s'"
-                      % (__title__, mainpyfile, ), file=sys.stderr)
+                sys.stderr.write("%s: Can't read Python script file '%s'\n"
+                                 % (__title__, mainpyfile, ))
                 sys.exit(1)
                 return
 
@@ -120,8 +119,8 @@ def main(dbg=None, sys_argv=list(sys.argv)):
                 try:
                     from uncompyle6 import uncompyle_file
                 except ImportError:
-                    print("%s: Compiled python file '%s', but uncompyle6 not found"
-                        % (__title__, mainpyfile), file=sys.stderr)
+                    sys.stderr.write("%s: Compiled python file '%s', but uncompyle6 not found\n"
+                                     % (__title__, mainpyfile))
                     sys.exit(1)
                     return
 
@@ -132,8 +131,8 @@ def main(dbg=None, sys_argv=list(sys.argv)):
                 try:
                     uncompyle_file(mainpyfile, fd)
                 except:
-                    print("%s: error uncompyling '%s'"
-                          % (__title__, mainpyfile), file=sys.stderr)
+                    sys.stderr.write("%s: error uncompyling '%s'\n"
+                                     % (__title__, mainpyfile))
                     sys.exit(1)
                     return
                 mainpyfile = fd.name
@@ -145,10 +144,10 @@ def main(dbg=None, sys_argv=list(sys.argv)):
         mainpyfile_noopt = pyficache.pyc2py(mainpyfile)
         if mainpyfile != mainpyfile_noopt \
                and Mfile.readable(mainpyfile_noopt):
-            print("%s: Compiled Python script given and we can't use that."
-                  % __title__, file=sys.stderr)
-            print("%s: Substituting non-compiled name: %s" % (
-                __title__, mainpyfile_noopt,), file=sys.stderr)
+            sys.stderr.write("%s: Compiled Python script given and we can't use that.\n"
+                             % __title__)
+            sys.stderr.write("%s: Substituting non-compiled name: %s\n" %
+                             (__title__, mainpyfile_noopt))
             mainpyfile = mainpyfile_noopt
             pass
 

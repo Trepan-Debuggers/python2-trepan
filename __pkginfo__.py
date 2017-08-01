@@ -45,10 +45,10 @@ ftp_url            = None
 install_requires   = ['columnize >= 0.3.8',
                       'nose>=1.0',
                       'pyficache >= 0.3.0',
-                      'pygments  >= 2.0.2',
+                      'pygments  == 1.4',
                       'uncompyle6 >= 2.11.1',
                       'tracer >= 0.3.2',
-                      'unittest2',
+                      # 'unittest2',
                       'xdis >= 3.5.1',
                       ]
 license            = 'GPL3'

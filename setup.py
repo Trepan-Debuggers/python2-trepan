@@ -9,12 +9,12 @@ from file __pkginfo__.py.
 """
 
 import sys
-if not ((2, 6) <= sys.version_info[0:2] < (3, 0)):
-    mess = "Python Versions 2.6 and 2.7 are supported only in this package."
+if not ((2, 4) <= sys.version_info[0:2] < (3, 0)):
+    mess = "Python Versions 2.4 and 2.5 are supported only in this package."
     if ((3, 2) <= sys.version_info[0:2] < (3, 7)):
         mess += ("\nFor your Python, version %s, see trepan3k" % sys.version[0:3])
-    elif sys.version_info[0:2] < (2, 6):
-        mess += ("\nFor your Python, version %s, see pydbgr" % sys.version[0:3])
+    elif sys.version_info[0:2] < (2, 4):
+        mess += ("\nFor your Python, version %s, see pydb" % sys.version[0:3])
     raise Exception(mess)
 
 # Get the package information used in setup().

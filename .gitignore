@@ -9,6 +9,7 @@
 /ChangeLog
 /build
 /dist
+/python2-trepan.html
 /test/integration/*.out
 /tmp
 __pycache__

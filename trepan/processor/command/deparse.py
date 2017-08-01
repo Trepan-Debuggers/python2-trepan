@@ -107,7 +107,7 @@ See also:
             opts, args = getopt(args[1:], "hpPAto:O",
                                 ["help", "parent", "pretty", "AST",
                                  'tree', "offset=", "offsets"])
-        except GetoptError as err:
+        except GetoptError(err):
             # print help information and exit:
             print(str(err))  # will print something like "option -a not recognized"
             return

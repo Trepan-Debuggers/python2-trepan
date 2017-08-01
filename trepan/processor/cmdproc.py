@@ -184,8 +184,9 @@ def print_location(proc_obj):
                 fd = tempfile.NamedTemporaryFile(suffix='.py',
                                                  prefix='eval_string',
                                                  delete=False)
-                with fd:
+                try:
                     fd.write(dbgr_obj.eval_string)
+                finally:
                     fd.close()
                     pass
                 pyficache.remap_file(fd.name, '<string>')
@@ -226,12 +227,14 @@ def print_location(proc_obj):
                 fd = tempfile.NamedTemporaryFile(suffix='.py',
                                                  prefix=prefix,
                                                  delete=False)
-                with fd:
+                try:
                     fd.write(''.join(lines))
-                    remapped_file = fd.name
-                    pyficache.remap_file(remapped_file, filename)
-                fd.close()
+                finally:
+                    fd.close()
+                remapped_file = fd.name
+                pyficache.remap_file(remapped_file, filename)
                 pass
+
             line = linecache.getline(filename, lineno,
                                      proc_obj.curframe.f_globals)
             pass

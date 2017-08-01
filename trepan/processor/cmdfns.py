@@ -22,13 +22,15 @@ import pyficache
 from xdis import IS_PYPY
 
 def source_tempfile_remap(prefix, text):
+
     fd = tempfile.NamedTemporaryFile(suffix='.py',
                                      prefix=prefix,
                                      delete=False)
-    with fd:
+    try:
         fd.write(bytes(text, 'UTF-8'))
         fd.close()
-        pass
+    finally:
+        fd.close()
     return fd.name
 
 

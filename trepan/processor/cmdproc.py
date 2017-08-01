@@ -227,6 +227,7 @@ def print_location(proc_obj):
         pyficache.update_cache(filename)
         line = pyficache.getline(filename, lineno, opts)
         if not line:
+<<<<<<< HEAD
             if (
                 not source_text
                 and filename.startswith("<string: ")
@@ -266,6 +267,27 @@ def print_location(proc_obj):
                     fd.close()
                     pass
                 line = linecache.getline(filename, lineno, proc_obj.curframe.f_globals)
+=======
+            # FIXME:
+            # try with good ol linecache and consider fixing pyficache
+            lines = linecache.getlines(filename)
+            if lines:
+                # FIXME: DRY code with version in cmdproc.py print_location
+                prefix = os.path.basename(filename).split('.')[0]
+                fd = tempfile.NamedTemporaryFile(suffix='.py',
+                                                 prefix=prefix,
+                                                 delete=False)
+                try:
+                    fd.write(''.join(lines))
+                finally:
+                    fd.close()
+                remapped_file = fd.name
+                pyficache.remap_file(remapped_file, filename)
+                pass
+
+            line = linecache.getline(filename, lineno,
+                                     proc_obj.curframe.f_globals)
+>>>>>>> 7b0c5b9 (Pythonn 2.4-2.5 tolerance)
             pass
 
         fn_name = frame.f_code.co_name

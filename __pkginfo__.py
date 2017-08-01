@@ -23,7 +23,7 @@
 
 # Things that change more often go here.
 copyright = """
-Copyright (C) 2008-2010, 2013-2018, 2020-2021 Rocky Bernstein <rocky@gnu.org>.
+Copyright (C) 2008-2010, 2013-2018, 2020-2022 Rocky Bernstein <rocky@gnu.org>.
 """
 
 classifiers = [
@@ -93,7 +93,6 @@ py_modules = None
 short_desc = "GDB-like Python Debugger in the Trepan family"
 
 import os.path as osp
-
 
 def get_srcdir():
     filename = osp.normcase(osp.dirname(osp.abspath(__file__)))

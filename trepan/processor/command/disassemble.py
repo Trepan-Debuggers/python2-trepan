@@ -38,7 +38,10 @@ def cache_from_source(path, debug_override=None):
     If sys.implementation.cache_tag is None then NotImplementedError is raised.
 
     """
-    debug = not sys.flags.optimize if debug_override is None else debug_override
+    if debug_override is None:
+        debug = not sys.flags.optimize
+    else:
+        debug = debug_override
     if debug:
         suffixes = DEBUG_BYTECODE_SUFFIXES
     else:
@@ -145,13 +148,19 @@ disassemble that.
                 if len(args) > 2:
                     start, opts['relative_pos'], is_offset = self.parse_arg(args[2])
                     if start is None:
-                        ilk = 'line' if is_offset else 'offset'
+                        if is_offset:
+                            ilk = 'line'
+                        else:
+                            ilk = 'offset'
 
                         self.errmsg = ('Start %s should be a number. Got %s.'
                                        % (ilk, args[2]))
                         return
                     else:
-                        opts['start_offset' if is_offset else 'start_line'] = start
+                        if is_offset:
+                            opts['start_offset'] = start
+                        else:
+                            opts['start_line'] = start
                     if len(args) == 4:
                         finish, relative_pos, is_offset = self.parse_arg(args[3])
                         if finish is None:
@@ -159,7 +168,10 @@ disassemble that.
                                            ' Got %s.' % (ilk, args[3]))
                             return
                         else:
-                            opts['end_offset' if is_offset else 'end_line'] = finish
+                            if is_offset:
+                                opts['end_offset'] = finish
+                            else:
+                                opts['end_line'] = finish
                         pass
                     elif len(args) > 4:
                         self.errmsg("Expecting 0-3 parameters. Got %d" %
@@ -177,7 +189,10 @@ disassemble that.
                          obj, **opts)
                 return False
             else:
-                opts['start_offset' if is_offset else 'start_line'] = start
+                if is_offset:
+                    opts['start_offset'] = start
+                else:
+                    opts['start_line'] = start
                 if len(args) == 3:
                     finish, not_used, is_offset = self.parse_arg(args[2])
                     if finish is None:
@@ -185,7 +200,10 @@ disassemble that.
                                        ' Got %s.' % args[2])
                         return
                     else:
-                        opts['end_offset' if is_offset else 'end_line'] = finish
+                        if is_offset:
+                            opts['end_offset'] = finish
+                        else:
+                            opts['end_line'] = finish
                     pass
                 elif len(args) > 3:
                     self.errmsg("Expecting 1-2 line parameters. Got %d." %

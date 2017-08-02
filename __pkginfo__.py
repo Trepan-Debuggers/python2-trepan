@@ -1,4 +1,4 @@
-# Copyright (C) 2008-2010, 2013-2018, 2021 Rocky Bernstein <rocky@gnu.org>
+# Copyright (C) 2008-2010, 2013-2018, 2021, 2022 Rocky Bernstein <rocky@gnu.org>
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -49,8 +49,41 @@ classifiers = [
 # 2.7            | pip     | 19.2.3       |
 
 # The rest in alphabetic order
-author = "Rocky Bernstein"
-author_email = "rocky@gnu.org"
+author             = "Rocky Bernstein"
+author_email       = "rocky@gnu.org"
+ftp_url            = None
+install_requires   = ['columnize >= 0.3.9',
+                      'nose==1.0.0',
+                      'pyficache >= 0.3.1',
+                      'pygments  == 1.4',
+                      'uncompyle6 >= 2.11.1',
+                      'tracer >= 0.3.2',
+                      # 'unittest2',
+                      'xdis >= 3.5.1',
+                      ]
+license            = 'GPL3'
+mailing_list       = 'python-debugger@googlegroups.com'
+modname            = 'trepan2'
+packages = [
+    'trepan',
+    'trepan.bwprocessor',
+    'trepan.interfaces',
+    'trepan.inout',
+    'trepan.lib',
+    'trepan.processor',
+    'trepan.processor.command',
+#   'trepan.processor.command.ipython_magic',
+    'trepan.processor.command.info_subcmd',
+    'trepan.processor.command.set_subcmd',
+    'trepan.processor.command.show_subcmd'
+]
+namespace_packages = [
+    'trepan',
+    'trepan.processor',
+]
+py_modules         = None
+short_desc         = 'GDB-like Python Debugger in the Trepan family'
+>>>>>>> d57a991 (colummnize 0.3.9 has fixes for Python 2.4-2.5)
 
 entry_points = {
     "console_scripts": [

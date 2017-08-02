@@ -24,7 +24,10 @@ def file_list():
 def is_compiled_py(filename):
     """Given a file name, if the suffix is pyo or pyc (an optimized bytecode
     file), change that to the py equivalent"""
-    return True if filename[-4:].lower() in ('.pyc', '.pyo') else False
+    if filename[-4:].lower() in ('.pyc', '.pyo'):
+        return True
+    else:
+        return False
 
 READABLE_MASK = (stat.S_IRUSR | stat.S_IRGRP | stat.S_IROTH)
 

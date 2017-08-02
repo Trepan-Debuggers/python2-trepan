@@ -13,8 +13,8 @@ if not ((2, 4) <= sys.version_info[0:2] < (3, 0)):
     mess = "Only Python Versions 2.4 to 2.7 are supported in this package."
     if ((3, 2) <= sys.version_info[0:2] < (3, 7)):
         mess += ("\nFor your Python, version %s, see trepan3k" % sys.version[0:3])
-    elif sys.version_info[0:2] < (2, 6):
-        mess += ("\nFor your Python, version %s, see pydbgr" % sys.version[0:3])
+    elif sys.version_info[0:2] < (2, 4):
+        mess += ("\nFor your Python, version %s, see pydb" % sys.version[0:3])
     raise Exception(mess)
 elif ((2, 4) <= sys.version_info[0:2] < (2, 6)) and not os.path.exists('gitbranch-master'):
     raise Exception("You have the wrong code or git branch for Python 2.4, 2.5")

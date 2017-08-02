@@ -80,7 +80,7 @@ else:
                 try:
                     t = time.time()
                     time.sleep(interval)
-                except IOError as e:
+                except IOError(e):
                     if e.errno != errno.EINTR:
                         raise
                 interval -= time.time() - t

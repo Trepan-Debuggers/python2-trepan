@@ -60,15 +60,16 @@ def run_eval(expression, debug_opts=None, start_opts=None, globals_=None,
 
     dbg = Mdebugger.Debugger(opts=debug_opts)
     try:
-        return dbg.run_eval(expression, start_opts=start_opts,
-                            globals_=globals_, locals_=locals_)
+        val = dbg.run_eval(expression, start_opts=start_opts,
+                           globals_=globals_, locals_=locals_)
+        dbg.core.trace_hook_suspend = False
+        return val
     except:
         dbg.core.trace_hook_suspend = True
         if start_opts and 'tb_fn' in start_opts: tb_fn = start_opts['tb_fn']
         Mpost_mortem.uncaught_exception(dbg, tb_fn)
-    finally:
-        dbg.core.trace_hook_suspend = False
-    return
+    dbg.core.trace_hook_suspend = False
+    return None
 
 
 def run_call(func, debug_opts=None, start_opts=None, *args, **kwds):

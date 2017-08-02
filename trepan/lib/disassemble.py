@@ -93,7 +93,7 @@ def dis(
         section("Disassembly of %s: %s" % (x, mess))
         sectioned = True
         x = x.im_func
-    elif inspect.isfunction(x) or hasattr(inspect, "isgeneratorfunction" and inspect.isgeneratorfunction(x)):
+    elif inspect.isfunction(x) or hasattr(inspect, "isgeneratorfunction") and inspect.isgeneratorfunction(x):
         section("Disassembly of %s: %s" % (x, mess))
         x = x.func_code
         sectioned = True

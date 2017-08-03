@@ -193,11 +193,17 @@ def print_location(proc_obj):
             remapped_file = filename
             filename = pyficache.unmap_file(filename)
             if "<string>" == filename:
-                remapped = source_tempfile_remap("eval_string", dbgr_obj.eval_string,
-                                                 tempdir=proc_obj.settings("tempdir"))
-                pyficache.remap_file(filename, remapped)
-                filename = remapped
-                lineno = pyficache.unmap_file_line(filename, lineno)
+                # Yeah I know I should use mkstemp. But I don't now how
+                # to set the "name" attribute witht that.
+                temp_path = tempfile.mktemp(prefix='eval_string', suffix='.py')
+                fd = open(temp_path, 'w')
+                try:
+                    fd.write(dbgr_obj.eval_string)
+                finally:
+                    fd.close()
+                    pass
+                pyficache.remap_file(fd.name, '<string>')
+                filename = fd.name
                 pass
             pass
         elif "<string>" == filename:

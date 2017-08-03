@@ -14,7 +14,7 @@ See the Tutorial_ for how to use. See ipython-trepan_ for using this
 in *ipython* or an *ipython notebook*.
 
 This package is for Python 2.6 and 2.7. See trepan3k_ for the same code modified to work with Python 3.
-For Python before 2.6, use pydbgr_ .
+For Python before 2.4, use pydb_ .
 
 Features
 ========
@@ -35,6 +35,26 @@ more precise information, we can (de)parse into Python the byte code
 around a bytecode offset such as the place you are stopped at.
 
 So far as I know, there is no other debugger that can do this.
+
+
+Debugging Python bytecode (no source available)
+-----------------------------------------------
+
+You can pass the debugger the name of Pytnon bytecode and many times,
+the debugger will merrily proceed.  This debugger tries very hard find
+the source code. Either by using the current executable search path
+(e.g. `PATH`) or for some by looking inside the bytecode for a
+filename in the main code object (`co_filename`) and applying that
+with a search path which takes into account directory where the
+bytecode lives.
+
+Failing to find source code this way, and in other situations where
+source code can't be found, the debugger will decompile the bytecode
+and use that for showing source test.
+
+But if you happen to know where the source code is located, you can
+associate a file source code with the current name listed in the
+bytecode. See the set_substitute_ command for details here.
 
 
 Debugging Python bytecode (no source available)
@@ -237,8 +257,8 @@ Documentation: http://python2-trepan.readthedocs.org
 .. |Latest Version| image:: https://pypip.in/version/trepan/badge.svg?text=version
    :target: https://pypi.python.org/pypi/trepan/
 .. _ipython-trepan: https://github.com/rocky/ipython-trepan
-.. |license| image:: https://img.shields.io/pypi/l/trepan.svg
-   :target: https://pypi.python.org/pypi/trepan
+.. |license| image:: https://img.shields.io/pypi/l/trepan2.svg
+   :target: https://pypi.python.org/pypi/trepan2
    :alt: License
 .. _set_substitute:  https://python2-trepan.readthedocs.org/en/latest/commands/set/substitute.html
 .. _set_style:  https://python2-trepan.readthedocs.org/en/latest/commands/set/style.html

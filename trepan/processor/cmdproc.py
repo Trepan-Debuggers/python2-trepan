@@ -181,9 +181,10 @@ def print_location(proc_obj):
             remapped_file = filename
             filename = pyficache.unmap_file(filename)
             if '<string>' == filename:
-                fd = tempfile.NamedTemporaryFile(suffix='.py',
-                                                 prefix='eval_string',
-                                                 delete=False)
+                # Yeah I know I should use mkstemp. But I don't now how
+                # to set the "name" attribute witht that.
+                temp_path = tempfile.mktemp(prefix='eval_string', suffix='.py')
+                fd = open(temp_path, 'w')
                 try:
                     fd.write(dbgr_obj.eval_string)
                 finally:
@@ -224,9 +225,11 @@ def print_location(proc_obj):
             if lines:
                 # FIXME: DRY code with version in cmdproc.py print_location
                 prefix = os.path.basename(filename).split('.')[0]
-                fd = tempfile.NamedTemporaryFile(suffix='.py',
-                                                 prefix=prefix,
-                                                 delete=False)
+
+                # Yeah I know I should use mkstemp. But I don't now how
+                # to set the "name" attribute witht that.
+                temp_path = tempfile.mktemp(prefix=prefix, suffix='.py')
+                fd = open(temp_path, 'w')
                 try:
                     fd.write(''.join(lines))
                 finally:

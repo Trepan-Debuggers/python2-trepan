@@ -24,9 +24,7 @@ from trepan.interfaces import client as Mclient
 from trepan.interfaces import comcodes as Mcomcodes
 
 from optparse import OptionParser
-
-# VERSION.py sets variable VERSION.
-from trepan.version import VERSION as __version__
+from trepan.version import VERSION
 
 
 def process_options(pkg_version, sys_argv, option_list=None):
@@ -119,7 +117,8 @@ def start_client(connection_opts):
     return
 
 
-def main(opts, sys_argv):
+def main():
+    opts, sys_argv  = process_options(VERSION, sys.argv)
     # print(opts)
     if hasattr(opts, 'pid') and opts.pid > 0:
         remote_opts = {'open': opts.pid, 'IO': 'FIFO'}
@@ -131,6 +130,5 @@ def main(opts, sys_argv):
     return
 
 if __name__ == '__main__':
-    opts, sys_argv  = process_options(__version__, sys.argv)
-    main(opts, sys_argv)
+    main()
     pass

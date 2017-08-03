@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009-2010, 2013-2015 Rocky Bernstein
+#   Copyright (C) 2009-2010, 2013-2015, 2017 Rocky Bernstein
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -16,12 +16,7 @@
 ''' Not a command. A stub class used by a command in its 'main' for
 demonstrating how the command works.'''
 
-import trepan.lib
-import trepan.inout
-import trepan.interfaces
-import trepan.processor.command
-
-import os, sys
+import sys
 from trepan.lib import breakpoint, default
 
 class MockIO:
@@ -127,6 +122,7 @@ class MockDebugger:
         self.intf             = [MockUserInterface()]
         self.core             = MockDebuggerCore(self)
         self.settings         = default.DEBUGGER_SETTINGS
+        self.from_ipython     = False
         self.orig_sys_argv    = None
         self.program_sys_argv = []
         return

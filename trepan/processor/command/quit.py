@@ -14,34 +14,39 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import os, threading
-import ctypes  # Calm down, this has become standard library since 2.5
 
 # Our local modules
 from trepan.processor.command import base_cmd as Mbase_cmd
 from trepan import exception as Mexcept
 
-def ctype_async_raise(thread_obj, exception):
-    found = False
-    target_tid = 0
-    for tid, tobj in threading._active.items():
-        if tobj is thread_obj:
-            found = True
-            target_tid = tid
-            break
+try:
+    import ctypes  # Calm down, this has become standard library since 2.5
+    def ctype_async_raise(thread_obj, exception):
+        found = False
+        target_tid = 0
+        for tid, tobj in threading._active.items():
+            if tobj is thread_obj:
+                found = True
+                target_tid = tid
+                break
 
-    if not found:
-        raise ValueError("Invalid thread object")
+        if not found:
+            raise ValueError("Invalid thread object")
 
-    ret = ctypes.pythonapi.PyThreadState_SetAsyncExc(target_tid, ctypes.py_object(exception))
-    # ref: http://docs.python.org/c-api/init.html#PyThreadState_SetAsyncExc
-    if ret == 0:
-        raise Mexcept.DebuggerQuit
-    elif ret > 1:
-        # Huh? Why would we notify more than one threads?
-        # Because we punch a hole into C level interpreter.
-        # So it is better to clean up the mess.
-        ctypes.pythonapi.PyThreadState_SetAsyncExc(target_tid, 0)
-        raise SystemError("PyThreadState_SetAsyncExc failed")
+        ret = ctypes.pythonapi.PyThreadState_SetAsyncExc(target_tid, ctypes.py_object(exception))
+        # ref: http://docs.python.org/c-api/init.html#PyThreadState_SetAsyncExc
+        if ret == 0:
+            raise Mexcept.DebuggerQuit
+        elif ret > 1:
+            # Huh? Why would we notify more than one threads?
+            # Because we punch a hole into C level interpreter.
+            # So it is better to clean up the mess.
+            ctypes.pythonapi.PyThreadState_SetAsyncExc(target_tid, 0)
+            raise SystemError("PyThreadState_SetAsyncExc failed")
+except ImportError:
+    def ctype_async_raise(thread_obj, exception):
+        return
+    pass
 
 
 class QuitCommand(Mbase_cmd.DebuggerCommand):

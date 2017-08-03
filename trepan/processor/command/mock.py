@@ -16,12 +16,7 @@
 ''' Not a command. A stub class used by a command in its 'main' for
 demonstrating how the command works.'''
 
-import trepan.lib
-import trepan.inout
-import trepan.interfaces
-import trepan.processor.command
-
-import os, sys
+import sys
 from trepan.lib import breakpoint, default
 
 class MockIO:
@@ -127,6 +122,7 @@ class MockDebugger:
         self.intf             = [MockUserInterface()]
         self.core             = MockDebuggerCore(self)
         self.settings         = default.DEBUGGER_SETTINGS
+        self.from_ipython     = False
         self.orig_sys_argv    = None
         self.program_sys_argv = []
         return

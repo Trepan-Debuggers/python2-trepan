@@ -52,7 +52,7 @@ Examples:
 See also:
 ---------
 
-`set autoeval`, `pr`, `pp` and `examine`.
+`deval`, `set autoeval`, `pr`, `pp` and `examine`.
 """
     aliases       = ('eval?', '?')
     category      = 'data'

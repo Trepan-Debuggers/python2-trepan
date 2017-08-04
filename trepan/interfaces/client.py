@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009, 2013-2014 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2009, 2013-2014, 2017 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ class ClientInterface(Muser.UserInterface):
     This could be on the same computer in a different process or on
     a remote computer."""
 
-    def __init__(self, inp=None, out=None, inout=None, user_opts=None,
+    def __init__(self, inp=None, out=None, inout=None, user_opts={},
                  connection_opts={}):
 
         opts = DEFAULT_INIT_CONNECTION_OPTS.copy()

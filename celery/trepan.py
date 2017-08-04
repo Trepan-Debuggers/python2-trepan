@@ -67,7 +67,7 @@ else:
 
 NO_AVAILABLE_PORT = """\
 {self.ident}: Couldn't find an available port.
-
+g
 Please specify one using the CELERY_TREPAN_PORT environment variable.
 """
 
@@ -188,5 +188,5 @@ def debug(frame=None):
     dbg.say(BANNER.format(self=dbg))
     dbg.say(SESSION_STARTED.format(self=dbg))
     trepan.api.debug(dbg_opts=dbg.dbg_opts)
-    dbg._handle = sys.stdin = sys.stdout = dbg._client.makefile('rw')
+    # dbg._handle = sys.stdin = sys.stdout = dbg._client.makefile('rw')
     # return debugger().set_trace(frame)

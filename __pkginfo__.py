@@ -34,6 +34,8 @@ classifiers =  ['Development Status :: 5 - Production/Stable',
                 'Programming Language :: Python',
                 'Topic :: Software Development :: Debuggers',
                 'Topic :: Software Development :: Libraries :: Python Modules',
+                'Programming Language :: Python :: 2.4',
+                'Programming Language :: Python :: 2.5',
                 'Programming Language :: Python :: 2.6',
                 'Programming Language :: Python :: 2.7',
                 ]
@@ -44,7 +46,7 @@ author_email       = "rocky@gnu.org"
 ftp_url            = None
 install_requires   = ['columnize >= 0.3.8',
                       'nose>=1.0',
-                      'pyficache >= 0.3.0',
+                      'pyficache >= 0.3.2',
                       'pygments  >= 2.0.2',
                       'uncompyle6 >= 2.11.1',
                       'tracer >= 0.3.2',

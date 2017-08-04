@@ -46,8 +46,8 @@ class ServerInterface(Minterface.DebuggerInterface):
                 pass
             pass
         # For Compatability
-        self.output = inout
-        self.input  = inout
+        self.output = self.inout
+        self.input  = self.inout
         self.interactive = True  # Or at least so we think initially
         self.histfile = None
         return

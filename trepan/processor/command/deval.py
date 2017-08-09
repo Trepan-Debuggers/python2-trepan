@@ -29,7 +29,10 @@ class DEvalCommand(Mbase_cmd.DebuggerCommand):
     **deval?**
 
 Run a the current deparsed expression *python-statement* in the
-context of the current frame.
+context of the current frame. Normally we are stopped before
+an expression so the thing that corresponds to the `eval` command
+is running the parent construct. `deval?` will run just
+the command associated with the next piece of code to be run.
 
 Examples:
 ---------
@@ -49,7 +52,7 @@ See also:
     max_args      = 0
     name          = os.path.basename(__file__).split('.')[0]
     need_stack    = True
-    short_help    = 'Print value of expression EXP'
+    short_help    = 'Print value of deparsed expression'
 
     def run(self, args):
         co = self.proc.curframe.f_code

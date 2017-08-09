@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009-2010, 2013-2015 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2009-2010, 2013-2015, 2017 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -70,9 +70,9 @@ class DebuggerUserInput(Mbase.DebuggerInputBase):
         """
         get_option = lambda key: Mmisc.option_set(opts, key,
                                                   self.DEFAULT_OPEN_READ_OPTS)
-        if isinstance(inp, types.FileType) or \
-           isinstance(inp, StringIO.StringIO) or \
-           (hasattr(inp, 'isatty') and inp.isatty()):
+        if (isinstance(inp, types.FileType) or
+            isinstance(inp, StringIO.StringIO) or
+            hasattr(inp, 'isatty') and inp.isatty()):
             self.use_raw = get_option('use_raw')
         elif isinstance(inp, types.StringType):
             if opts is None:

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 'Unit test for trepan.interfaces.user'
-import os, sys, unittest
+import unittest
 
 from trepan.interfaces import user as Muser
 

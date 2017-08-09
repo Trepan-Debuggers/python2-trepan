@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2008-2009, 2013, 2015-2016
+#   Copyright (C) 2008-2009, 2013, 2015-2017
 #   Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,9 @@ def file_list():
                     list(pyficache.file2file_remap.keys())))
 
 def is_compiled_py(filename):
-    """Given a file name, if the suffix is pyo or pyc (an optimized bytecode
+    """
+    Given a file name, return True if the suffix is pyo or pyc (an
+    optimized bytecode file).
     file), change that to the py equivalent"""
     if filename[-4:].lower() in ('.pyc', '.pyo'):
         return True

@@ -131,13 +131,16 @@ def main(dbg=None, sys_argv=list(sys.argv)):
                                                  delete=False)
                 try:
                     uncompyle_file(mainpyfile, fd)
+                    mainpyfile = fd.name
+                    fd.close()
                 except:
-                    print("%s: error uncompyling '%s'"
+                    print("%s: error uncompiling '%s'"
                           % (__title__, mainpyfile), file=sys.stderr)
+                    fd.close()
+                    os.unlink(fd.name)
+                    # FIXME: remove the below line and continue with just the
+                    # bytecode
                     sys.exit(1)
-                    return
-                mainpyfile = fd.name
-                fd.close()
                 pass
 
         # If mainpyfile is an optimized Python script try to find and

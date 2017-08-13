@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 'Unit test for trepan.frame'
 import inspect, sys, unittest
+from xdis import IS_PYPY
 
 from trepan.lib import stack as Mstack
 
@@ -17,8 +18,10 @@ class TestStack(unittest.TestCase):
 
     def test_stack_misc(self):
         f = inspect.currentframe()
-        if sys.version_info[0] == 2 and sys.version_info[1] <= 4:
+        if sys.version_info[0:2] <= (2, 4):
             expect = 'defaultTestResult'
+        elif IS_PYPY:
+            expect = '_testMethodName'
         else:
             expect = 'startTest'
             pass

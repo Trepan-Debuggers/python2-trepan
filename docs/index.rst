@@ -7,7 +7,7 @@ Welcome to trepan2's documentation!
 ==================================
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
    overview
    install
@@ -21,4 +21,3 @@ Indices and tables
 
 * :ref:`genindex`
 * :ref:`search`
-.. * :ref:`modindex`

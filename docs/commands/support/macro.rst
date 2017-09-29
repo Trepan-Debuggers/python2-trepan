@@ -1,3 +1,4 @@
+.. index:: macro
 .. _macro:
 
 Macro (add a debugger macro)

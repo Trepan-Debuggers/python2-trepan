@@ -1,3 +1,4 @@
+.. index:: jump
 .. _jump:
 
 Jump

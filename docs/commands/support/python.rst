@@ -1,3 +1,4 @@
+.. index:: python
 .. _python:
 
 Python (go into a Python shell)

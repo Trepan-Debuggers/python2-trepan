@@ -1,3 +1,4 @@
+.. index:: info; display
 .. _info_display:
 
 Info Display

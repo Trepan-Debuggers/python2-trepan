@@ -1,3 +1,4 @@
+.. index:: clear
 .. _clear:
 
 Clear (Remove all breakpoints on a line)

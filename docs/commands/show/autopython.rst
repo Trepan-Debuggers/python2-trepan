@@ -1,3 +1,4 @@
+.. index:: show; autopython
 .. _show_autopython:
 
 Show Autopython

@@ -1,3 +1,4 @@
+.. index:: info; macro
 .. _info_macro:
 
 Info Macro

@@ -1,3 +1,4 @@
+.. index:: ipython
 .. _ipython:
 
 IPython (go into an IPython shell)

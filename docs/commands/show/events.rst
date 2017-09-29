@@ -1,3 +1,4 @@
+.. index:: show; events
 .. _show_events:
 
 Show Events

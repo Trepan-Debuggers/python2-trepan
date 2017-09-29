@@ -1,3 +1,4 @@
+.. index:: info; signals
 .. _info_signals:
 
 Info Signals

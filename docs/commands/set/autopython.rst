@@ -1,3 +1,4 @@
+.. index:: set; autopython
 .. _set_autopython:
 
 Set Autopython

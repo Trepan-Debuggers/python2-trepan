@@ -1,3 +1,4 @@
+.. index:: show; autolist
 .. _show_autolist:
 
 Show Autolist

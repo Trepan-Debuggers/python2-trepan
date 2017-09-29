@@ -1,3 +1,4 @@
+.. index:: show; autoeval
 .. _show_autoeval:
 
 Show Autoeval

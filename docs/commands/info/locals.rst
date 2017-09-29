@@ -1,3 +1,4 @@
+.. index:: info; locals
 .. _info_locals:
 
 Info Locals

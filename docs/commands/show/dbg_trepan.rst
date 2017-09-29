@@ -1,3 +1,4 @@
+.. index:: show; dbg_trepan
 .. _show_dbg_trepan:
 
 Show Dbg_trepan

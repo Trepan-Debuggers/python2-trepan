@@ -1,3 +1,4 @@
+.. index:: debug
 .. _debug:
 
 Debug (recursively debug an expression)

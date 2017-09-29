@@ -1,3 +1,4 @@
+.. index:: show; trace
 .. _show_trace:
 
 Show Trace

@@ -1,3 +1,4 @@
+.. index:: info; args
 .. _info_args:
 
 Info Args

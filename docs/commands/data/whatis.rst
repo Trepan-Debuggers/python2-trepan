@@ -1,3 +1,4 @@
+.. index:: whatis
 .. _whatis:
 
 Whatis

@@ -1,20 +1,4 @@
-|buildstatus| |appveyor| |license| |Supported Python Versions|
-
 .. contents:: :local:
-
-Abstract
-========
-
-This is a gdb-like debugger for Python. It is a rewrite of *pdb* from the ground up.
-
-A command-line interface (CLI) is provided as well as an remote access
-interface over TCP/IP.
-
-See the Tutorial_ for how to use. See ipython-trepan_ for using this
-in *ipython* or an *ipython notebook*.
-
-This package is for Python 2.6 and 2.7. See trepan3k_ for the same code modified to work with Python 3.
-For Python before 2.6, use pydbgr_ .
 
 Features
 ========

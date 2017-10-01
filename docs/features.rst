@@ -202,13 +202,10 @@ Documentation: http://python2-trepan.readthedocs.org
 .. _pygments:  http://pygments.org
 .. _pygments_style:  http://pygments.org/docs/styles/
 .. _pydb:  http://bashdb.sf.net/pydb
-.. _trepan3k: https://pypi.python.org/pypi/trepan3k
-.. _pydbgr: https://pypi.python.org/pypi/pydbgr
 .. _other: https://www.npmjs.com/package/trepanjs
 .. _trepanning: https://rubygems.org/gems/trepanning
 .. _debuggers: https://metacpan.org/pod/Devel::Trepan
 .. _this: http://bashdb.sourceforge.net/pydb/features.html
-.. _Tutorial: https://github.com/rocky/python2-trepan/wiki/Tutorial
 .. |downloads| image:: https://img.shields.io/pypi/dd/trepan.svg
     :target: https://pypi.python.org/pypi/trepan
     :alt: Daily PyPI downloads
@@ -220,7 +217,6 @@ Documentation: http://python2-trepan.readthedocs.org
     :alt: Appveyor Build status
 .. |Latest Version| image:: https://pypip.in/version/trepan/badge.svg?text=version
    :target: https://pypi.python.org/pypi/trepan/
-.. _ipython-trepan: https://github.com/rocky/ipython-trepan
 .. |license| image:: https://img.shields.io/pypi/l/trepan.svg
    :target: https://pypi.python.org/pypi/trepan
    :alt: License

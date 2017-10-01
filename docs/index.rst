@@ -19,6 +19,7 @@ This package is for Python 2.6 and 2.7. See trepan3k_ for the same
 code modified to work with Python 3.  For Python before 2.6, use
 pydbgr_ .
 
+An Emacs interface is available via realgud_.
 
 .. toctree::
    :maxdepth: 2
@@ -40,3 +41,4 @@ Indices and tables
 .. _ipython-trepan: https://github.com/rocky/ipython-trepan
 .. _trepan3k: https://pypi.python.org/pypi/trepan3k
 .. _pydbgr: https://pypi.python.org/pypi/pydbgr
+.. _realgud: https://github.com/realgud/realgud

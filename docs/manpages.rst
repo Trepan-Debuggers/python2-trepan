@@ -6,5 +6,3 @@ Manual Pages
 
    manpages/trepan2
    manpages/trepan2c
-   manpages/trepan3k
-   manpages/trepan3kc

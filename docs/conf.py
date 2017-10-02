@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# trepan documentation build configuration file, created by
+# trepan2 documentation build configuration file, created by
 # sphinx-quickstart on Mon Jun  1 21:23:13 2015.
 #
 # This file is execfile()d with the current directory set to its
@@ -40,7 +40,7 @@ templates_path = ['_templates']
 # The suffix(es) of source filenames.
 # You can specify multiple suffix as a list of string:
 # source_suffix = ['.rst', '.md']
-source_suffix = '.rst'
+source_suffix = ['.rst', 'md']
 
 # The encoding of source files.
 #source_encoding = 'utf-8-sig'
@@ -49,8 +49,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'trepan'
-copyright = u'2015, Rocky Bernstein'
+project = u'trepan2'
+copyright = '2015, 2017 Rocky Bernstein'
 author = u'Rocky Bernstein'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -269,9 +269,9 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  (master_doc, 'trepan', u'trepan Documentation',
-   author, 'trepan', 'One line description of project.',
-   'Miscellaneous'),
+  (master_doc, 'trepan', 'trepan Documentation',
+   author, 'trepan', 'gdb-like debugger for Python 2.',
+   'Programming'),
 ]
 
 # Documents to append as an appendix to all manuals.

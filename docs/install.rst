@@ -10,14 +10,14 @@ If you are using `pyenv <https://github.com/yyuu/pyenv>`_ or don't need special 
 
 .. code:: console
 
-	  $ pip install trepan # or trepan3k for Python 3.x
+	  $ pip install trepan2 # or trepan3k for Python 3.x
 
 
 If you need root access you may insert `sudo` in front or become root:
 
 .. code:: console
 
-	  $ sudo pip install trepan
+	  $ sudo pip install trepan2
 
 or:
 

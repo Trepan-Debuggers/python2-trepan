@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-#  Copyright (C) 2009, 2010, 2015 Rocky Bernstein
+#  Copyright (C) 2009, 2010, 2015, 2017 Rocky Bernstein
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
 #  the Free Software Foundation, either version 3 of the License, or
@@ -15,9 +15,13 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import inspect, pyficache
+import os.path as osp
 
+from trepan.lib import stack as Mstack
 from trepan import misc as Mmisc
-
+from trepan.processor.parse.semantics import build_bp_expr
+from trepan.processor.parse.parser import LocationError
+from trepan.processor.parse.scanner import ScannerError
 
 def set_break(cmd_obj, func, filename, lineno, condition, temporary, args):
     if lineno is None:
@@ -59,34 +63,130 @@ def set_break(cmd_obj, func, filename, lineno, condition, temporary, args):
     return True
 
 
-def parse_break_cmd(cmd_obj, args):
-    curframe = cmd_obj.proc.curframe
-    if 0 == len(args) or args[0] == 'if':
-        filename = cmd_obj.core.canonic(curframe.f_code.co_filename)
+INVALID_PARSE_BREAK = (None, None, None, None)
+def parse_break_cmd(proc, args):
+    curframe = proc.curframe
+    if proc.current_command is None:
+        proc.errmsg("Don't have program source text")
+        return INVALID_PARSE_BREAK
+
+    text = proc.current_command[len(args[0])+1:]
+    if len(args) > 1 and args[1] == 'if':
+        location = '.'
+        condition = text[text.find('if ')+3:]
+    elif text == '':
+        location = '.'
+        condition  = None
+    else:
+        try:
+            bp_expr   = build_bp_expr(text)
+        except LocationError as e:
+            proc.errmsg("Error in parsing breakpoint expression at or around:")
+            proc.errmsg(e.text)
+            proc.errmsg(e.text_cursor)
+            return INVALID_PARSE_BREAK
+        except ScannerError as e:
+            proc.errmsg("Lexical error in parsing breakpoint expression at or around:")
+            proc.errmsg(e.text)
+            proc.errmsg(e.text_cursor)
+            return INVALID_PARSE_BREAK
+
+        location  = bp_expr.location
+        condition = bp_expr.condition
+        lineno    = bp_expr.location.line_number
+
+        # Validate arguments that can't be done in parsing
+        if proc.curframe:
+            g = curframe.f_globals
+            l = curframe.f_locals
+        else:
+            g = globals()
+            l = locals()
+            pass
+
+    if location == '.':
+        filename = Mstack.frame2file(proc.core, curframe, canonic=False)
         lineno   = curframe.f_lineno
-        if 0 == len(args):
-            return (None, filename, lineno, None)
-        modfunc = None
-        condition_pos = 0
-    else:
-        (modfunc, filename, lineno) = cmd_obj.proc.parse_position(args[0])
-        condition_pos = 1
-        pass
-    if inspect.ismodule(modfunc) and lineno is None and len(args) > 1:
-        val = cmd_obj.proc.get_an_int(args[1],
-                                   'Line number expected, got %s.' %
-                                   args[1])
-        if val is None: return (None, None, None, None)
-        lineno = val
-        condition_pos = 2
-        pass
-    if len(args) > condition_pos and 'if' == args[condition_pos]:
-        condition = ' '.join(args[condition_pos+1:])
-    else:
-        condition = None
-        pass
-    if inspect.isfunction(modfunc):
-        func = modfunc
-    else:
-        func = None
-    return (func, filename, lineno, condition)
+        modfunc  = None
+    elif location.method:
+        filename = lineno = None
+        msg = ('Object %s is not known yet as a function, ' % location.method)
+        try:
+            modfunc = eval(location.method, g, l)
+        except:
+            proc.errmsg(msg)
+            return INVALID_PARSE_BREAK
+
+        try:
+            # Check if the converted string is a function
+            if inspect.isfunction(modfunc):
+                pass
+            else:
+                proc.errmsg(msg)
+                return INVALID_PARSE_BREAK
+        except:
+            proc.errmsg(msg)
+            return INVALID_PARSE_BREAK
+        filename = proc.core.canonic(modfunc.func_code.co_filename)
+        lineno   = modfunc.func_code.co_firstlineno
+    elif location.path:
+        filename = proc.core.canonic(location.path)
+        lineno  =  location.line_number
+        modfunc  = None
+        if not osp.isfile(filename):
+            # See if argument is a module
+            try:
+                modfunc = eval(location.path, g, l)
+            except:
+                proc.errmsg(msg)
+                return INVALID_PARSE_BREAK
+            pass
+            if inspect.ismodule(modfunc):
+                filename = pyficache.pyc2py(modfunc.__file__)
+                filename = proc.core.canonic(filename)
+                # FIXME: ???
+                # We could pick out a line number, but we've already
+                # have passed at and won't it it again
+                return modfunc, filename, lineno, condition
+
+            proc.errmsg("%s is not known as a file" % location.path)
+            return INVALID_PARSE_BREAK
+        maxline = pyficache.maxline(filename)
+        if lineno > maxline:
+            proc.errmsg("%s has %d lines; requested line %d" % (location.path, lineno))
+            return INVALID_PARSE_BREAK
+    elif location.line_number:
+        filename = Mstack.frame2file(proc.core, curframe, canonic=False)
+        lineno   = location.line_number
+        modfunc  = None
+
+    return modfunc, filename, lineno, condition
+
+
+# # Demo it
+# if __name__=='__main__':
+#     from trepan.processor.command import mock as Mmock
+#     from trepan.processor.cmdproc import CommandProcessor
+#     import sys
+#     d = Mmock.MockDebugger()
+#     cmdproc = CommandProcessor(d.core)
+#     # print '-' * 10
+#     # print_source_line(sys.stdout.write, 100, 'source_line_test.py')
+#     # print '-' * 10
+#     cmdproc.frame = sys._getframe()
+#     cmdproc.setup()
+#     for cmd in (
+#             # "break '''c:\\tmp\\foo.bat''':1",
+#             'break """/Users/My Documents/foo.py""":2',
+#             # "break",
+#             # "break 10",
+#             # "break if True",
+#             # "break cmdproc.py:5",
+#             # "break set_break()",
+#             # "break cmdproc.setup()",
+#             # "break cmdproc.setup()",
+#             ):
+#         args = cmd.split(' ')
+#         cmdproc.current_command = cmd
+#         print(parse_break_cmd(cmdproc, args))
+#     pass

@@ -454,6 +454,7 @@ class CommandProcessor(Mprocessor.Processor):
         Parse arg as [filename:]lineno | function | module
         Make sure it works for C:\foo\bar.py:12
         """
+        self.errmsg("Note to rocky: this routine will soon disappear")
         colon = arg.rfind(':')
         if colon >= 0:
             # First handle part before the colon
@@ -709,7 +710,7 @@ class CommandProcessor(Mprocessor.Processor):
         try:
             args_list = arg_split(current_command)
         except:
-            self.errmsg("bad parse %s"< sys.exc_info()[0])
+            self.errmsg("bad parse %s" % sys.exc_info()[0])
             return False
 
         for args in args_list:

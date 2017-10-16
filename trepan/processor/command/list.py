@@ -25,6 +25,7 @@ from trepan.processor.cmdlist import parse_list_cmd
 
 class ListCommand(Mbase_cmd.DebuggerCommand):
     """**list** [ *range* ]
+
 **list**  **+** | **-** | **.**
 
 List source code. See `help syntax range` for what can go in a list range.
@@ -53,7 +54,7 @@ Examples:
     list os.path:5, +1   # Same as above. +1 is an offset
     list os.path:5, 1    # Same as above, since 1 < 5.
     list os.path:5, +6   # list lines 5-11
-    list os.path.join()  # List lines starting with the os.join.path function.
+    list os.path.join()  # List lines centered around the os.join.path function.
     list .               # List lines centered from where we currently are stopped
     list -               # List lines previous to those just shown
     list                 # List continuing from where we last left off

@@ -90,6 +90,8 @@ def parse_list_cmd(proc, args, listsize=10):
                 return INVALID_PARSE_LIST
             first    = location.line_number
             last     = list_range.last
+            if location.method:
+                first -= listsize / 2
             if isinstance(last, str):
                 # Is an offset +number
                 assert last[0] == '+'
@@ -104,32 +106,36 @@ def parse_list_cmd(proc, args, listsize=10):
         pass
     return
 
-# # Demo it
-# if __name__=='__main__':
-#     from trepan.processor.command import mock as Mmock
-#     from trepan.processor.cmdproc import CommandProcessor
-#     import sys
-#     d = Mmock.MockDebugger()
-#     cmdproc = CommandProcessor(d.core)
-#     # print '-' * 10
-#     # print_source_line(sys.stdout.write, 100, 'source_line_test.py')
-#     # print '-' * 10
-#     cmdproc.frame = sys._getframe()
-#     cmdproc.setup()
-#     import os
-#     for cmd in (
-#             # "list",
-#             # "list +",
-#             # "list -",
-#             # "list 15, 10",
-#             "list 9 , 5",
-#             # "list 7 ,",
-#             # "list '''c:\\tmp\\foo.bat''':1",
-#             # 'list """/Users/My Documents/foo.py""":2',
-#             # 'list build_range()',
-#             # 'list os:1 ,',
-#             ):
-#         args = cmd.split(' ')
-#         cmdproc.current_command = cmd
-#         print(parse_list_cmd(cmdproc, args))
-#     pass
+# Demo it
+if __name__=='__main__':
+    from trepan.processor.command import mock as Mmock
+    from trepan.processor.cmdproc import CommandProcessor
+    import sys
+    d = Mmock.MockDebugger()
+    cmdproc = CommandProcessor(d.core)
+    # print '-' * 10
+    # print_source_line(sys.stdout.write, 100, 'source_line_test.py')
+    # print '-' * 10
+    cmdproc.frame = sys._getframe()
+    cmdproc.setup()
+
+    def five():
+        return 5
+    import os
+    for cmd in (
+            # "list",
+            # "list +",
+            # "list -",
+            # "list 15, 10",
+            "list five()",
+            # "list 9 , 5",
+            # "list 7 ,",
+            # "list '''c:\\tmp\\foo.bat''':1",
+            # 'list """/Users/My Documents/foo.py""":2',
+            # 'list build_range()',
+            # 'list os:1 ,',
+            ):
+        args = cmd.split(' ')
+        cmdproc.current_command = cmd
+        print(parse_list_cmd(cmdproc, args))
+    pass

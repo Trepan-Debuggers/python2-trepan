@@ -20,17 +20,23 @@ from pygments.console import colorize
 
 # Our local modules
 from trepan.processor.command import base_cmd as Mbase_cmd
+from trepan.processor.cmdlist import parse_list_cmd
 
 
 class ListCommand(Mbase_cmd.DebuggerCommand):
-    """**list** [ *module* ] [ *first* [ *num* ]]
-
-**list** *location* [ *num* ]
+    """**list** { *module* | *function* }
+**list**  *linespec*  [ **,** *number* ]
+**list**  **,** *linespec* ]
+**list**  **+** | **-**
 
 List source code.
 
-Without arguments, print lines centered around the current line. If
-*num* is given that number of lines is shown.
+If a module or function is given listing centered around
+that. *number* is given, that is used as the last number to list if it
+is greater than the number in the linespec; otherwise it is used as a
+count.
+
+Without arguments, print lines centered around the current line.
 
 If this is the first `list` command issued since the debugger command
 loop was entered, then the current line is the current frame. If a
@@ -46,6 +52,7 @@ A *location* is either:
   - or a module name and a number, e.g,. os.path:5.
   - a '.' for the current line number
   - a '-' for the lines before the current linenumber
+  - a '+' for the lines after the current linenumber
 
 If the location form is used with a subsequent parameter, the
 parameter is the starting line number is used. When there two numbers
@@ -59,15 +66,16 @@ just something that evaluates to a positive integer.
 Examples:
 --------
 
-    list 5            # List starting from line 5
-    list 4+1          # Same as above.
-    list foo.py:5     # List starting from line 5 of foo.py
-    list os.path:5    # List starting from line 5 of os.path
-    list os.path 5    # Same as above.
-    list os.path 5 6  # list lines 5 and 6 of os.path
-    list os.path 5 2  # Same as above, since 2 < 5.
-    list foo.py:5 2   # List two lines starting from line 5 of foo.py
-    list os.path.join # List lines around the os.join.path function.
+    list 5              # List starting from line 5 of current file
+    list 5 ,            # Same as above.
+    list foo.py:5       # List starting from line 5 of file foo.py
+    list foo()          # List starting from function foo
+    list os.path:5      # List starting from line 5 of module os.path
+    list os.path 5      # Same as above.
+    list os.path 5 6    # list lines 5 and 6 of os.path
+    list os.path 5 2    # Same as above, since 2 < 5.
+    list foo.py:5 2     # List two lines starting from line 5 of file foo.py
+    list os.path.join() # List lines around the os.join.path function.
     list .            # List lines centered from where we currently are stopped
     list -            # List lines previous to those just shown
 
@@ -75,7 +83,8 @@ See also:
 ---------
 
 `set listize` or `show listsize` to see or set the value.
-"""
+
+    """
 
     aliases       = ('l',)
     category      = 'files'
@@ -85,89 +94,12 @@ See also:
     need_stack    = False
     short_help    = 'List source code'
 
-    # What a f*cking mess. Necessitated I suppose because we want to
-    # allow somewhat flexible parsing with either module names, files or none
-    # and optional line counts or end-line numbers.
-    def parse_list_cmd(self, args):
-        """Parses arguments for the "list" command and returns the tuple:
-        filename, start, last
-        or sets these to None if there was some problem."""
-
-        dbg_obj  = self.core.debugger
-        proc     = self.proc
-        curframe = proc.curframe
-        filename = proc.list_filename
-
-        last = None
-        listsize = dbg_obj.settings['listsize']
-        if len(args) == 0 and not curframe:
-            self.errmsg("No Python program loaded.")
-            return (None, None, None)
-
-        if len(args) > 0:
-            if args[0] == '-':
-                first = max(1, proc.list_lineno - 2*listsize - 1)
-            elif args[0] == '.':
-                filename = curframe.f_code.co_filename
-                first = max(1, inspect.getlineno(curframe) - int(listsize/2))
-            else:
-                (modfunc, filename, first) = proc.parse_position(args[0])
-                if first is None and modfunc is None:
-                    # error should have been shown previously
-                    return (None, None, None)
-                if len(args) == 1:
-                    if first is None and modfunc is not None: first = 1
-                    first = max(1, first - int(listsize/2))
-                elif len(args) == 2 or (len(args) == 3 and modfunc):
-                    msg = 'Starting line expected, got %s.' % args[-1]
-                    num = proc.get_an_int(args[1], msg)
-                    if num is None: return (None, None, None)
-                    if modfunc:
-                        if first is None:
-                            first = num
-                            if len(args) == 3 and modfunc:
-                                msg = ('last or count parameter expected, ' +
-                                       'got: %s.' % args[2])
-                                last = proc.get_an_int(args[2], msg)
-                                pass
-                            pass
-                        else:
-                            last = num
-                            pass
-                    else:
-                        last = num
-                        pass
-                    if last is not None and last < first:
-                        # Assume last is a count rather than an end line number
-                        last = first + last - 1
-                        pass
-                    pass
-                elif not modfunc:
-                    self.errmsg(('At most 2 parameters allowed when no '
-                                 'module name is found/given. Saw: %d '
-                                 'parameters') % len(args))
-                    return (None, None, None)
-                else:
-                    self.errmsg(('At most 3 parameters allowed when a module' +
-                                 ' name is given. Saw: %d parameters') %
-                                len(args))
-                    return (None, None, None)
-                pass
-        elif proc.list_lineno is None and self.core.is_running():
-            first = max(1, inspect.getlineno(curframe) - int(listsize/2))
-        else:
-            first = proc.list_lineno + 1
-            pass
-        if last is None:
-            last = first + listsize - 1
-            pass
-
-        proc.list_filename = filename
-        return (filename, first, last)
-
     def run(self, args):
-        filename, first, last = self.parse_list_cmd(args[1:])
-        curframe = self.proc.curframe
+        proc = self.proc
+        dbg_obj  = self.core.debugger
+        listsize = dbg_obj.settings['listsize']
+        filename, first, last = parse_list_cmd(proc, args, listsize)
+        curframe = proc.curframe
         if filename is None: return
         filename = pyficache.unmap_file(pyficache.pyc2py(filename))
 
@@ -176,7 +108,7 @@ See also:
         if max_line is None:
             self.errmsg('No file %s found; using "deparse" command instead to show source' %
                         filename)
-            self.proc.commands['deparse'].run(['deparse'])
+            proc.commands['deparse'].run(['deparse'])
             return
 
         canonic_filename = os.path.realpath(os.path.normcase(filename))
@@ -205,14 +137,14 @@ See also:
                 line = pyficache.getline(filename, lineno, opts)
                 if line is None:
                     line = linecache.getline(filename, lineno,
-                                             self.proc.frame.f_globals)
+                                             proc.frame.f_globals)
                     pass
                 if line is None:
                     self.msg('[EOF]')
                     break
                 else:
                     line = line.rstrip('\n')
-                    s = self.proc._saferepr(lineno).rjust(3)
+                    s = proc._saferepr(lineno).rjust(3)
                     if len(s) < 5: s += ' '
                     if (canonic_filename, lineno,) in list(bplist.keys()):
                         bp    = bplist[(canonic_filename, lineno,)][0]
@@ -230,69 +162,71 @@ See also:
                         s += a_pad
                         pass
                     self.msg(s + '\t' + line)
-                    self.proc.list_lineno = lineno
+                    proc.list_lineno = lineno
                     pass
                 pass
+            pass
         except KeyboardInterrupt:
             pass
         return False
 
 if __name__ == '__main__':
-    from mock import MockDebugger
-    d = MockDebugger()
-    command = ListCommand(d.core.processor)
-    command.proc.list_filename  = __file__
-    command.run(['list'])
-    from trepan.processor import cmdproc
-    command.proc = d.core.processor = cmdproc.CommandProcessor(d.core)
-    command = ListCommand(d.core.processor)
-    print('--' * 10)
 
-    command.run(['list', __file__ + ':10'])
-    print('--' * 10)
+    def doit(cmd, args):
+        proc = cmd.proc
+        proc.current_command = ' '.join(args)
+        cmd.run(args)
 
-    command.run(['list', 'os', '10'])
-    command.proc.frame = sys._getframe()
-    command.proc.setup()
-    print('--' * 10)
 
-    command.run(['list'])
-    print('--' * 10)
+    from trepan.processor.command import mock as Mmock
+    from trepan.processor.cmdproc import CommandProcessor
+    d = Mmock.MockDebugger()
+    cmdproc = CommandProcessor(d.core)
+    cmdproc.frame = sys._getframe()
+    cmdproc.setup()
+    lcmd = ListCommand(cmdproc)
 
-    Mbreak = __import__('trepan.processor.command.break', None, None, ['*'])
-    brk_cmd = Mbreak.BreakCommand(d.core.processor)
-    brk_cmd.run(['break'])
-    command.run(['list', '.'])
     print('--' * 10)
+    # doit(lcmd, ['list'])
 
-    from trepan.processor.command import disable as Mdisable
-    disable_cmd  = Mdisable.DisableCommand(d.core.processor)
-    brk_cmd.run(['break'])
-    disable_cmd.run(['disable', '2'])
-    command.run(['list', '.'])
-    print('--' * 10)
+    # doit(lcmd, ['list', __file__ + ':10'])
+    # print('--' * 10)
 
-    command.run(['list', '10'])
-    print('--' * 10)
+    # doit(lcmd, ['list', 'os:10'])
+    # print('--' * 10)
 
-    command.run(['list', '1000'])
+    # doit(lcmd, ['list', '.'])
+    # print('--' * 10)
+
+    # doit(lcmd, ['list', '10'])
+    # print('--' * 10)
+
+    # doit(lcmd, ['list', '1000'])
 
     def foo():
         return 'bar'
-    command.run(['list', 'foo'])
-    print('--' * 10)
+    # doit(lcmd, ['list', 'foo()'])
+    # print('--' * 10)
+    # doit(lcmd, ['list'])
+    # print('--' * 10)
+    # doit(lcmd, ['list', '-'])
+    # doit(lcmd, ['list', '-'])
+    # doit(lcmd, ['list', '+'])
+    # doit(lcmd, ['list', '+'])
+    doit(lcmd, ['list', '40', '60'])
+    # doit(lcmd, ['list', '20', '5'])
 
-    command.run(['list', 'os.path'])
-    print('--' * 10)
-    command.run(['list', 'os.path', '15'])
-    print('--' * 10)
-    command.run(['list', 'os.path', '30', '3'])
-    print('--' * 10)
-    command.run(['list', 'os.path', '40', '50'])
-    print('--' * 10)
+    # doit(lcmd, ['list', 'os.path'])
+    # print('--' * 10)
+    # doit(lcmd, ['list', 'os.path', '15'])
+    # print('--' * 10)
+    # doit(lcmd, ['list', 'os.path', '30', '3'])
+    # print('--' * 10)
+    # doit(lcmd, ['list', 'os.path', '40', '50'])
+    # print('--' * 10)
 
-    command.run(['list', os.path.abspath(__file__)+':3', '4'])
-    print('--' * 10)
-    command.run(['list', os.path.abspath(__file__)+':3', '12-10'])
-    command.run(['list', 'os.path:5'])
+    # doit(lcmd, ['list', os.path.abspath(__file__)+':3', '4'])
+    # print('--' * 10)
+    # doit(lcmd, ['list', os.path.abspath(__file__)+':3', '12-10'])
+    # doit(lcmd, ['list', 'os.path:5'])
     pass

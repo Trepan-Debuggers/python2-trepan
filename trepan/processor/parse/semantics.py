@@ -84,12 +84,19 @@ class LocationGrok(GenericASTTraversal, object):
         if 1 <= l <= 2:
             # range ::= location
             # range ::= DIRECTION
-            if range_node[-1] == 'location':
+            # range ::= FUNCNAME
+            # range ::= NUMBER
+            last_node = range_node[-1]
+            if last_node == 'location':
                 self.preorder(range_node[-1])
-                self.result = ListRange(range_node[-1].location, '.')
+                self.result = ListRange(last_node.location, None)
+            elif last_node == 'FUNCNAME':
+                self.result = ListRange(Location(None, None, last_node.value[:-2]), None)
+            elif last_node == 'NUMBER':
+                self.result = ListRange(Location(None, last_node.value, None), None)
             else:
-                assert range_node[-1] == 'DIRECTION'
-                self.result = ListRange('.', range_node[-1].value)
+                assert last_node == 'DIRECTION'
+                self.result = ListRange(None, last_node.value)
                 pass
             self.prune()
         elif l == 3:
@@ -98,13 +105,13 @@ class LocationGrok(GenericASTTraversal, object):
             if range_node[0] == 'COMMA':
                 assert range_node[-1] == 'location'
                 self.preorder(range_node[-1])
-                self.result = ListRange('.', self.result)
+                self.result = ListRange(None, self.result)
                 self.prune()
             else:
                 assert range_node[-1] == 'COMMA'
                 assert range_node[0] == 'location'
                 self.preorder(range_node[0])
-                self.result = ListRange(range_node[0].location, '.')
+                self.result = ListRange(range_node[0].location, None)
                 self.prune()
                 pass
         elif l == 5:
@@ -115,7 +122,6 @@ class LocationGrok(GenericASTTraversal, object):
             self.result = ListRange(range_node[0].location, range_node[-1].value)
             self.prune()
         else:
-            from trepan.api import debug; debug()
             raise RangeError("Something is wrong")
         return
 
@@ -147,7 +153,7 @@ def build_bp_expr(string, show_tokens=False, show_ast=False, show_grammar=False)
     assert location.line_number is not None or location.method
     return bp_expr
 
-def build_range(string, show_tokens=True, show_ast=False, show_grammar=True):
+def build_range(string, show_tokens=False, show_ast=False, show_grammar=False):
     parser_debug = {'rules': False, 'transition': False,
                     'reduce': show_grammar,
                     # 'errorstack': True, 'context': True, 'dups': True
@@ -163,30 +169,13 @@ def build_range(string, show_tokens=True, show_ast=False, show_grammar=True):
     return list_range
 
 if __name__ == '__main__':
-    lines = """
-    /tmp/foo.py:12
-    /tmp/foo.py line 12
-    12
-    ../foo.py:5
-    gcd()
-    foo.py line 5 if x > 1
-    """.splitlines()
-    for line in lines:
-        if not line.strip():
-            continue
-        print("=" * 30)
-        print(line)
-        print("+" * 30)
-        bp_expr = build_bp_expr(line)
-        print(bp_expr)
     # lines = """
-    # /tmp/foo.py:12 , 5
-    # -
-    # +
+    # /tmp/foo.py:12
+    # /tmp/foo.py line 12
+    # 12
     # ../foo.py:5
-    # ../foo.py:5 ,
-    # , 5
-    # , /foo.py:5
+    # gcd()
+    # foo.py line 5 if x > 1
     # """.splitlines()
     # for line in lines:
     #     if not line.strip():
@@ -194,5 +183,22 @@ if __name__ == '__main__':
     #     print("=" * 30)
     #     print(line)
     #     print("+" * 30)
-    #     list_range = build_range(line)
-    #     print(list_range)
+    #     bp_expr = build_bp_expr(line)
+    #     print(bp_expr)
+    lines = """
+    /tmp/foo.py:12 , 5
+    -
+    +
+    ../foo.py:5
+    ../foo.py:5 ,
+    , 5
+    , /foo.py:5
+    """.splitlines()
+    for line in lines:
+        if not line.strip():
+            continue
+        print("=" * 30)
+        print(line)
+        print("+" * 30)
+        list_range = build_range(line)
+        print(list_range)

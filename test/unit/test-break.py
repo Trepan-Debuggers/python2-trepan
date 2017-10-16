@@ -46,12 +46,13 @@ class TestBreakCommand(unittest.TestCase):
         self.assertEqual((None, True, 11),
                          (fn, fi.endswith('test-break.py'), li))
 
-        # fn, fi, li, cond = self.parse_break_cmd(proc, 'b', __file__ + ':8')
-        # self.assertEqual((None, True, 45),
-        #                  (fn, isinstance(fi, types.StringType), li))
+        fn, fi, li, cond = self.parse_break_cmd(proc, 'b ' + __file__ + ':8')
+        self.assertEqual((None, True, 8),
+                         (fn, isinstance(fi, types.StringType), li))
 
         def foo():
             return 'bar'
+
         fn, fi, li, cond = self.parse_break_cmd(proc, 'break foo()')
         self.assertEqual((foo, True, True),
                          (fn, fi.endswith('test-break.py'), li > 1))

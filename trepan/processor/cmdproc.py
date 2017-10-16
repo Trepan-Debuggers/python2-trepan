@@ -317,6 +317,8 @@ class CommandProcessor(Mprocessor.Processor):
         self.frame          = None
         self.list_lineno    = 0      # last list number used in "list"
         self.list_filename  = None   # last filename used in list
+        self.list_orig_lineno = 0    # line number of frame or exception on setup
+        self.list_filename  = None   # filename of frame or exception on setup
 
         self.macros         = {}     # Debugger Macros
 
@@ -829,6 +831,9 @@ class CommandProcessor(Mprocessor.Processor):
             if not exc_traceback: self.list_lineno = None
             pass
         # if self.execRcLines()==1: return True
+
+        # FIXME:  do we want to save self.list_lineno a second place
+        # so that we can do 'list .' and go back to the first place we listed?
         return False
 
     def queue_startfile(self, cmdfile):

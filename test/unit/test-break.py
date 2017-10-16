@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 'Unit test for trepan.processor.command.break'
 
-import os, unittest
+import platform, os, unittest
 
 from trepan import debugger
 from trepan.processor import cmdbreak as Mcmdbreak
@@ -46,7 +46,12 @@ class TestBreakCommand(unittest.TestCase):
         self.assertEqual((None, True, 11),
                          (fn, fi.endswith('test-break.py'), li))
 
-        fn, fi, li, cond = self.parse_break_cmd(proc, 'b ' + __file__ + ':8')
+        if platform.system() == 'Windows':
+            brk_cmd = 'b """%s""":8' % __file__
+        else:
+            brk_cmd = 'b %s:8' % __file__
+
+        fn, fi, li, cond = self.parse_break_cmd(proc, brk_cmd)
         self.assertEqual((None, True, 8),
                          (fn, isinstance(fi, types.StringType), li))
 

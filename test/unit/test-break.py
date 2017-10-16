@@ -46,6 +46,7 @@ class TestBreakCommand(unittest.TestCase):
         self.assertEqual((None, True, 11),
                          (fn, fi.endswith('test-break.py'), li))
 
+        print("XXXX", platform.system())
         if platform.system() == 'Windows':
             brk_cmd = 'b """%s""":8' % __file__
         else:

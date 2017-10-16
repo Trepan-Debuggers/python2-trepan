@@ -22,7 +22,7 @@ from trepan.lib import printing as Mprint
 from trepan.processor import complete as Mcomplete
 
 
-class PrintCommand(Mbase_cmd.DebuggerCommand):
+class PCommand(Mbase_cmd.DebuggerCommand):
     """**print** *expression*
 
 Print the value of the expression. Variables accessible are those of the
@@ -40,7 +40,7 @@ See also:
 
  `pp` and `examine` for commands which do more in the way of formatting.
 """
-    aliases       = ('p',)
+    aliases       = ('print',)
     category      = 'data'
     min_args      = 1
     max_args      = None
@@ -72,7 +72,7 @@ if __name__ == '__main__':
     from trepan.processor.command import mock
     d, cp = mock.dbg_setup()
     cp.curframe = inspect.currentframe()
-    command = PrintCommand(cp)
+    command = PCommand(cp)
     me = 10
 
     command.run([command.name, 'me'])

@@ -102,7 +102,9 @@ class TestListCommand(unittest.TestCase):
         # self.clear_run_check(['os.path:1'], range(1, self.listsize+1))
         self.clear_run_check(['os.path', '10', ',5'], list(range(10, 16)))
         # Use a file name
-        self.clear_run_check(['list', __file__+':3', ',4'], list(range(3, 5)))
+
+        if 'APPVEYOR' not in os.environ:
+            self.clear_run_check(['list', __file__+':3', ',4'], list(range(3, 5)))
 
         # BUGS - but possibly the windowing thing is happening?
         # self.clear_run_check(['list', __file__, '3'], list(range(3, 5)))

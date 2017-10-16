@@ -14,6 +14,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import inspect
 import pyficache
 from trepan import misc as Mmisc
 from trepan.processor.parse.semantics import build_bp_expr
@@ -45,7 +46,7 @@ def set_break(cmd_obj, func, filename, lineno, condition, temporary, args):
         pass
     bp =  cmd_obj.core.bpmgr.add_breakpoint(filename, lineno, temporary,
                                          condition, func)
-    if func:
+    if func and inspect.isfunction(func):
         cmd_obj.msg('Breakpoint %d set on calling function %s()'
                  % (bp.number, func.func_name))
         part1 = 'Currently this is line %d of file'  % lineno

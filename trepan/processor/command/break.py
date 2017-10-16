@@ -84,26 +84,23 @@ See also:
 #     import sys
 #     from trepan import debugger as Mdebugger
 #     d = Mdebugger.Debugger()
-#     command = BreakCommand(d.core.processor)
-#     command.proc.frame = sys._getframe()
-#     command.proc.setup()
-
-#     print(Mcmdbreak.parse_break_cmd(command, []))
-#     print(Mcmdbreak.parse_break_cmd(command, ['10']))
-#     print(Mcmdbreak.parse_break_cmd(command, [__file__ + ':10']))
+#     cmd = BreakCommand(d.core.processor)
+#     cmd.proc.frame = sys._getframe()
+#     cmd.proc.setup()
 
 #     def foo():
 #         return 'bar'
-#     print(Mcmdbreak.parse_break_cmd(command, ['foo']))
-#     print(Mcmdbreak.parse_break_cmd(command, ['os.path']))
-#     print(Mcmdbreak.parse_break_cmd(command, ['os.path', '5+1']))
-#     print(Mcmdbreak.parse_break_cmd(command, ['os.path.join']))
-#     print(Mcmdbreak.parse_break_cmd(command, ['if', 'True']))
-#     print(Mcmdbreak.parse_break_cmd(command, ['foo', 'if', 'True']))
-#     print(Mcmdbreak.parse_break_cmd(command, ['os.path:10', 'if', 'True']))
-#     command.run(['break'])
-#     command.run(['break', 'command.run'])
-#     command.run(['break', '10'])
-#     command.run(['break', __file__ + ':10'])
-#     command.run(['break', 'foo'])
+
+#     for c in (
+#             ('break', 'os.path:10'),
+#             ('break', 'os.path.join()'),
+#             ('break', 'foo()', 'if', 'True'),
+#             ('break', 'os.path:10', 'if', 'True'),
+#             ('break',),
+#             ('break', 'cmd.run()'),
+#             ('break', '10'),
+#             ('break', __file__ + ':10'),
+#             ('break', 'foo()')):
+#         cmd.proc.current_command = ' '.join(c)
+#         cmd.run(c)
 #     pass

@@ -72,7 +72,7 @@ x = 2y + z
         else:
             base = s
         pos = self.pos
-        if maybe_funcname and re.match('[a-zA-Z_][[a-zA-Z_.0-9]+\(\)', s):
+        if maybe_funcname and re.match('[a-zA-Z_][[a-zA-Z_.0-9\[\]]+\(\)', s):
             self.add_token('FUNCNAME', base)
         else:
             self.add_token('FILENAME', base)

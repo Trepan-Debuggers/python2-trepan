@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-#  Copyright (C) 2009-2010, 2013-2015 Rocky Bernstein
+#  Copyright (C) 2009-2010, 2013-2015, 2017 Rocky Bernstein
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
 #  the Free Software Foundation, either version 3 of the License, or
@@ -24,17 +24,16 @@ from trepan.processor import complete as Mcomplete
 class BreakCommand(Mbase_cmd.DebuggerCommand):
     """**break** [*location*] [if *condition*]]
 
-With a line number argument, set a break there in the current file.
-With a function name indicated by closing (), set a break at first
-executable line of that function.  You can even specify function names
-as instance methods off of an object.
+Sets a breakpoint, i.e. stopping point just before the
+execution of the instruction specified by *location*.
 
-Without no arguments at all or an empty *location*, a breakpoint at
-current location.
+Without arguments or an empty *location*, the breakpoint is set at the
+current stopped location.
 
 If the word `if` is given after *location*, subsequent arguments given
-an expression which must evaluate to true before the breakpoint is
-honored.
+Without arguments or an empty *location*, the breakpoint is set
+the current stopped location.
+
 
 The location line number may be prefixed with a filename or module
 name and a colon. Files is searched for using *sys.path*.
@@ -47,18 +46,21 @@ Examples:
    break 10             # Break on line 10 of the file we are
                         # currently stopped at
    break os.path.join() # Break in function os.path.join
+   break x[i].fn()      # break in function specified by x[i].fn
+   break x[i].fn() if x # break in function specified by x[i].fn
+                        # if x is set
    break os.path:45     # Break on line 45 file holding module os.path
    break myfile.py:2    # Break on line 2 of myfile.py
    break myfile.py:2 if i < j # Same as above but only if i < j
-   break '''c:\tmp\foo.bat''':1"  # One way to specify a Windows file name,
-   break '''/Users/My Documents/foo.py''':1"  # One way to specify path with blanks in it
+   break "foo's.py":1"  # One way to specify path with a quote
+   break 'c:\\foo.bat':1      # One way to specify a Windows file name,
+   break '/My Docs/foo.py':1  # One way to specify path with blanks in it
 
 See also:
 ---------
 
- `tbreak` and `condition`.
-
-    """
+`tbreak`, `condition` and `help syntax location`.
+"""
 
     aliases       = ('b',)
     category      = 'breakpoints'
@@ -77,30 +79,31 @@ See also:
                                 False, args)
         return
 
-if __name__ == '__main__':
-    import sys
-    from trepan import debugger as Mdebugger
-    d = Mdebugger.Debugger()
-    command = BreakCommand(d.core.processor)
-    command.proc.frame = sys._getframe()
-    command.proc.setup()
+# # Demo it
+# if __name__ == '__main__':
+#     import sys
+#     from trepan import debugger as Mdebugger
+#     d = Mdebugger.Debugger()
+#     command = BreakCommand(d.core.processor)
+#     command.proc.frame = sys._getframe()
+#     command.proc.setup()
 
-    print(Mcmdbreak.parse_break_cmd(command, []))
-    print(Mcmdbreak.parse_break_cmd(command, ['10']))
-    print(Mcmdbreak.parse_break_cmd(command, [__file__ + ':10']))
+#     print(Mcmdbreak.parse_break_cmd(command, []))
+#     print(Mcmdbreak.parse_break_cmd(command, ['10']))
+#     print(Mcmdbreak.parse_break_cmd(command, [__file__ + ':10']))
 
-    def foo():
-        return 'bar'
-    print(Mcmdbreak.parse_break_cmd(command, ['foo']))
-    print(Mcmdbreak.parse_break_cmd(command, ['os.path']))
-    print(Mcmdbreak.parse_break_cmd(command, ['os.path', '5+1']))
-    print(Mcmdbreak.parse_break_cmd(command, ['os.path.join']))
-    print(Mcmdbreak.parse_break_cmd(command, ['if', 'True']))
-    print(Mcmdbreak.parse_break_cmd(command, ['foo', 'if', 'True']))
-    print(Mcmdbreak.parse_break_cmd(command, ['os.path:10', 'if', 'True']))
-    command.run(['break'])
-    command.run(['break', 'command.run'])
-    command.run(['break', '10'])
-    command.run(['break', __file__ + ':10'])
-    command.run(['break', 'foo'])
-    pass
+#     def foo():
+#         return 'bar'
+#     print(Mcmdbreak.parse_break_cmd(command, ['foo']))
+#     print(Mcmdbreak.parse_break_cmd(command, ['os.path']))
+#     print(Mcmdbreak.parse_break_cmd(command, ['os.path', '5+1']))
+#     print(Mcmdbreak.parse_break_cmd(command, ['os.path.join']))
+#     print(Mcmdbreak.parse_break_cmd(command, ['if', 'True']))
+#     print(Mcmdbreak.parse_break_cmd(command, ['foo', 'if', 'True']))
+#     print(Mcmdbreak.parse_break_cmd(command, ['os.path:10', 'if', 'True']))
+#     command.run(['break'])
+#     command.run(['break', 'command.run'])
+#     command.run(['break', '10'])
+#     command.run(['break', __file__ + ':10'])
+#     command.run(['break', 'foo'])
+#     pass

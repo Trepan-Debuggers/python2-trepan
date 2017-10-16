@@ -24,9 +24,8 @@ from trepan.processor.cmdlist import parse_list_cmd
 
 
 class ListCommand(Mbase_cmd.DebuggerCommand):
-    """**list** { *module* | *function* }
-**list**  *linespec*  [ **,** *number* ]
-**list**  **,** *linespec* ]
+    """**list**  *location*  [ **,** *number* ]
+**list**  **,** *location* ]
 **list**  **+** | **-**
 
 List source code.
@@ -43,16 +42,13 @@ loop was entered, then the current line is the current frame. If a
 subsequent list command was issued with no intervening frame changing,
 then that is start the line after we last one previously shown.
 
-A *location* is either:
+in addtion to the usual kinds of *location* you can also use:
 
-  - a number, e.g. 5,
-  - a function, e.g. join or os.path.join
-  - a module, e.g. os or os.path
-  - a filename, colon, and a number, e.g. foo.py:5,
-  - or a module name and a number, e.g,. os.path:5.
-  - a '.' for the current line number
-  - a '-' for the lines before the current linenumber
-  - a '+' for the lines after the current linenumber
+  - a '.' for the location of the current frame
+  - a '-' for the lines before the last list
+  - a '+' for the lines after the last list
+
+The last list location starts out at '.' or the current frame
 
 If the location form is used with a subsequent parameter, the
 parameter is the starting line number is used. When there two numbers
@@ -82,7 +78,8 @@ Examples:
 See also:
 ---------
 
-`set listize` or `show listsize` to see or set the value.
+`set listize` or `show listsize` to see or set the value; `help syntax location`
+for specification of a location.
 
     """
 

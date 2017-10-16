@@ -1,7 +1,11 @@
 #  Copyright (c) 2017 by Rocky Bernstein
 from __future__ import print_function
 
-from trepan.processor.parse.parser import parse_bp_location, parse_range
+from trepan.processor.parse.parser import (
+    parse_bp_location, parse_range
+    )
+from trepan.processor.parse.parser import LocationError as PLocationError
+from trepan.processor.parse.scanner import ScannerError
 from spark_parser import GenericASTTraversal # , DEFAULT_DEBUG as PARSER_DEFAULT_DEBUG
 
 from collections import namedtuple
@@ -86,13 +90,14 @@ class LocationGrok(GenericASTTraversal, object):
             # range ::= DIRECTION
             # range ::= FUNCNAME
             # range ::= NUMBER
+            # range ::= OFFSET
             last_node = range_node[-1]
             if last_node == 'location':
                 self.preorder(range_node[-1])
                 self.result = ListRange(last_node.location, None)
             elif last_node == 'FUNCNAME':
                 self.result = ListRange(Location(None, None, last_node.value[:-2]), None)
-            elif last_node == 'NUMBER':
+            elif last_node in ('NUMBER', 'OFFSET'):
                 self.result = ListRange(Location(None, last_node.value, None), None)
             else:
                 assert last_node == 'DIRECTION'
@@ -117,7 +122,7 @@ class LocationGrok(GenericASTTraversal, object):
         elif l == 5:
             # range ::= location opt_space COMMA opt_space NUMBER
             assert range_node[2] == 'COMMA'
-            assert range_node[-1] == 'NUMBER'
+            assert range_node[-1] in ('NUMBER', 'OFFSET')
             self.preorder(range_node[0])
             self.result = ListRange(range_node[0].location, range_node[-1].value)
             self.prune()
@@ -194,13 +199,24 @@ if __name__ == '__main__':
     ../foo.py:5
     ../foo.py:5 ,
     , 5
+    6 , +2
     , /foo.py:5
     """.splitlines()
     for line in lines:
-        if not line.strip():
+        line = line.strip()
+        if not line:
             continue
         print("=" * 30)
         print(line)
         print("+" * 30)
-        list_range = build_range(line)
+        try:
+            list_range = build_range(line)
+        except ScannerError as e:
+            print("Scanner error")
+            print(e.text)
+            print(e.text_cursor)
+        except PLocationError as e:
+            print("Parser error at or near")
+            print(e.text)
+            print(e.text_cursor)
         print(list_range)

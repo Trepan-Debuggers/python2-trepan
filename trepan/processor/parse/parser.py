@@ -83,9 +83,10 @@ class LocationParser(GenericASTBuilder):
         range_start  ::= opt_space range
         range ::= location
         range ::= location opt_space COMMA opt_space NUMBER
+        range ::= location opt_space COMMA opt_space OFFSET
         range ::= COMMA opt_space location
         range ::= location opt_space COMMA
-        range ::= opt_space DIRECTION
+        range ::= DIRECTION
         '''
 
     ##########################################################
@@ -110,6 +111,7 @@ class LocationParser(GenericASTBuilder):
         # If just a number is given, the the filename is implied
         location    ::=  NUMBER
         location    ::=  METHOD
+        location    ::=  OFFSET
 
         # For tokens we accept anything. Were really just
         # going to use the underlying string from the part
@@ -121,6 +123,7 @@ class LocationParser(GenericASTBuilder):
         token       ::= COLON
         token       ::= NUMBER
         token       ::= COMMA
+        token       ::= OFFSET
         token       ::= DIRECTION
         token       ::= SPACE
         '''

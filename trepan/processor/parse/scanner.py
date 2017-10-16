@@ -103,7 +103,7 @@ x = 2y + z
         self.add_token('COMMA', s)
 
     def t_direction(self, s):
-        r'[+-]'
+        r'^[+-]$'
         # Used in the "list" command
         self.add_token('DIRECTION', s)
 
@@ -114,31 +114,40 @@ x = 2y + z
         self.add_token('NUMBER', int(s))
         self.pos = pos + len(s)
 
-# if __name__ == "__main__":
-#     for line in (
-#             # '/tmp/foo.py:12',
-#             # "'''/tmp/foo.py:12'''",
-#             "'/tmp/foo.py:12'",
-#             # "/tmp/foo.py line 12",
-#             # "\"\"\"/tmp/foo.py's line 12\"\"\"",
-#             # "12",
-#             # "../foo.py:5",
-#             # "gcd()",
-#             # "foo.py line 5 if x > 1",
-#             # "5 ,",
-#             # "5,",
-#             # "5,10",
-#             # ",10",
-#             ):
-#         try:
-#             tokens = LocationScanner().tokenize(line.strip())
-#             for t in tokens:
-#                 print(t)
-#                 pass
-#         except ScannerError as e:
-#             print("Lexical error at or around: ")
-#             print(e.text)
-#             print(e.text_cursor)
+    # Recognize integers
+    def t_offset(self, s):
+        r'[+]\d+'
+        pos = self.pos
+        self.add_token('OFFSET', s)
+        self.pos = pos + len(s)
 
-#         pass
-#     pass
+if __name__ == "__main__":
+    for line in (
+            # '/tmp/foo.py:12',
+            # "'''/tmp/foo.py:12'''",
+            "'/tmp/foo.py:12'",
+            "+",
+            "+6",
+            # "/tmp/foo.py line 12",
+            # "\"\"\"/tmp/foo.py's line 12\"\"\"",
+            # "12",
+            # "../foo.py:5",
+            # "gcd()",
+            # "foo.py line 5 if x > 1",
+            # "5 ,",
+            # "5,",
+            # "5,10",
+            # ",10",
+            ):
+        try:
+            tokens = LocationScanner().tokenize(line.strip())
+            for t in tokens:
+                print(t)
+                pass
+        except ScannerError as e:
+            print("Lexical error at or around: ")
+            print(e.text)
+            print(e.text_cursor)
+
+        pass
+    pass

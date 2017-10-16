@@ -24,64 +24,47 @@ from trepan.processor.cmdlist import parse_list_cmd
 
 
 class ListCommand(Mbase_cmd.DebuggerCommand):
-    """**list**  *location*  [ **,** *number* ]
-**list**  **,** *location* ]
-**list**  **+** | **-**
+    """**list** [ *range* ]
+**list**  **+** | **-** | **.**
 
-List source code.
+List source code. See `help syntax range` for what can go in a list range.
 
-If a module or function is given listing centered around
-that. *number* is given, that is used as the last number to list if it
-is greater than the number in the linespec; otherwise it is used as a
-count.
+Without arguments, print lines starting from where the last list left off
+since the last entry to the debugger. We start off at the location indicated
+by the current stack.
 
-Without arguments, print lines centered around the current line.
-
-If this is the first `list` command issued since the debugger command
-loop was entered, then the current line is the current frame. If a
-subsequent list command was issued with no intervening frame changing,
-then that is start the line after we last one previously shown.
-
-in addtion to the usual kinds of *location* you can also use:
+in addition you can also use:
 
   - a '.' for the location of the current frame
   - a '-' for the lines before the last list
   - a '+' for the lines after the last list
 
-The last list location starts out at '.' or the current frame
-
-If the location form is used with a subsequent parameter, the
-parameter is the starting line number is used. When there two numbers
-are given, the last number value is treated as a stopping line unless
-it is less than the start line, in which case it is taken to mean the
-number of lines to list instead.
-
-Wherever a number is expected, it does not need to be a constant --
-just something that evaluates to a positive integer.
-
 Examples:
 --------
 
-    list 5              # List starting from line 5 of current file
-    list 5 ,            # Same as above.
-    list foo.py:5       # List starting from line 5 of file foo.py
-    list foo()          # List starting from function foo
-    list os.path:5      # List starting from line 5 of module os.path
-    list os.path 5      # Same as above.
-    list os.path 5 6    # list lines 5 and 6 of os.path
-    list os.path 5 2    # Same as above, since 2 < 5.
-    list foo.py:5 2     # List two lines starting from line 5 of file foo.py
-    list os.path.join() # List lines around the os.join.path function.
-    list .            # List lines centered from where we currently are stopped
-    list -            # List lines previous to those just shown
+    list 5               # List starting from line 5 of current file
+    list 5 ,             # Same as above.
+    list , 5             # list listsize lines before and up to 5
+    list foo.py:5        # List starting from line 5 of file foo.py
+    list foo()           # List starting from function foo
+    list os.path:5       # List starting from line 5 of module os.path
+    list os.path:5       # Same as above.
+    list os.path:5, 6    # list lines 5 and 6 of os.path
+    list os.path:5, +1   # Same as above. +1 is an offset
+    list os.path:5, 1    # Same as above, since 1 < 5.
+    list os.path:5, +6   # list lines 5-11
+    list os.path.join()  # List lines starting with the os.join.path function.
+    list .               # List lines centered from where we currently are stopped
+    list -               # List lines previous to those just shown
+    list                 # List continuing from where we last left off
 
 See also:
 ---------
 
 `set listize` or `show listsize` to see or set the value; `help syntax location`
-for specification of a location.
-
-    """
+for the specification of a location and `help syntax range` for the specification
+of a range.
+"""
 
     aliases       = ('l',)
     category      = 'files'

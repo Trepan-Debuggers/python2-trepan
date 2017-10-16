@@ -90,7 +90,11 @@ def parse_list_cmd(proc, args, listsize=10):
                 return INVALID_PARSE_LIST
             first    = location.line_number
             last     = list_range.last
-            if not last:
+            if isinstance(last, str):
+                # Is an offset +number
+                assert last[0] == '+'
+                last = first + int(last[1:])
+            elif not last:
                 last = first + listsize
             elif last < first:
                 # Treat as a count rather than an absolute location

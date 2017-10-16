@@ -1,7 +1,11 @@
 Syntax for Source-Code Locations
 ================================
 
+A number of commands like "break", and "list" have locations
+embedded in them.
+
 A location can be either a *linespec* or an explicit location
+
 
 Linespec
 --------

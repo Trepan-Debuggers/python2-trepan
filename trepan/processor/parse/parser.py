@@ -18,7 +18,7 @@ from trepan.processor.parse.scanner import LocationScanner
 from spark_parser import GenericASTBuilder
 
 DEFAULT_DEBUG = {'rules': False, 'transition': False, 'reduce': False,
-                 # 'errorstack': 'full',
+                 'errorstack': None,
                  'dups': False, 'local_print': False}
 
 class LocationError(Exception):

@@ -46,15 +46,15 @@ class TestBreakCommand(unittest.TestCase):
         self.assertEqual((None, True, 11),
                          (fn, fi.endswith('test-break.py'), li))
 
-        print("XXXX", platform.system())
-        if platform.system() == 'Windows':
-            brk_cmd = 'b """%s""":8' % __file__
-        else:
-            brk_cmd = 'b %s:8' % __file__
+        if 'APPVEYOR' not in os.environ:
+            if platform.system() == 'Windows':
+                brk_cmd = 'b """%s""":8' % __file__
+            else:
+                brk_cmd = 'b %s:8' % __file__
 
-        fn, fi, li, cond = self.parse_break_cmd(proc, brk_cmd)
-        self.assertEqual((None, True, 8),
-                         (fn, isinstance(fi, types.StringType), li))
+                fn, fi, li, cond = self.parse_break_cmd(proc, brk_cmd)
+                self.assertEqual((None, True, 8),
+                                 (fn, isinstance(fi, types.StringType), li))
 
         def foo():
             return 'bar'

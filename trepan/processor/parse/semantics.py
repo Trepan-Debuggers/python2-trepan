@@ -38,16 +38,25 @@ class LocationGrok(GenericASTTraversal, object):
 
     def n_addr_location(self, node):
         # addr_location ::= location
-        #addr_location ::= ADDRESS
+        # addr_location ::= ADDRESS
+        # addr_location ::= FUNCNAME (via location singleton reduce)
+        # addr_location ::= NUMBER (via location singleton reduce)
 
         path, line_number, method = None, None, None
-        if node[0] == 'ADDRESS':
-            assert node[0].value[0] == '*'
-            line_number = int(node[0].value[1:])
-            self.result = Location(path, line_number, True, method)
-            node.location = Location(path, line_number, True, method)
+        n0 = node[0]
+        if n0 in ('ADDRESS', 'FUNCNAME', 'NUMBER'):
+            if n0 == 'ADDRESS':
+                assert node[0].value[0] == '*'
+                line_number = int(node[0].value[1:])
+                self.result = Location(path, line_number, True, method)
+            elif n0 == 'NUMBER':
+                self.result = Location(path, node[0].value, True, method)
+            else:
+                self.result = Location(path, line_number, False, node[0].value[:-2])
+            node.location = self.result
             self.prune()
         else:
+            print(node[0])
             assert node[0] == 'location'
             self.preorder(node[0])
             node.location = node[0].location
@@ -316,6 +325,7 @@ if __name__ == '__main__':
     #     ", /foo.py:5",
     #     )
     lines = (
+        "*10",
         "*10",
         "/tmp/foo.py:1, *5",
         "../foo.py:0,  +5",

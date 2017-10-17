@@ -55,7 +55,7 @@ x = 2y + z
         pass
 
     def t_file_or_func(self, s):
-        r'(?:[^*-+,\d\'"\t \n:][^\'"\t \n:]*)|(?:^""".+""")|(?:\'\'\'.+\'\'\')'
+        r'(?:[^*-+,\d\'"\t \n:][^\'"\t \n:,]*)|(?:^""".+""")|(?:\'\'\'.+\'\'\')'
         maybe_funcname = True
         if s == 'if':
             self.add_token('IF', s)

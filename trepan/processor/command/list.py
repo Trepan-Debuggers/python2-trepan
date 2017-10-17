@@ -49,7 +49,6 @@ Examples:
     list foo.py:5        # List starting from line 5 of file foo.py
     list foo()           # List starting from function foo
     list os.path:5       # List starting from line 5 of module os.path
-    list os.path:5       # Same as above.
     list os.path:5, 6    # list lines 5 and 6 of os.path
     list os.path:5, +1   # Same as above. +1 is an offset
     list os.path:5, 1    # Same as above, since 1 < 5.
@@ -153,6 +152,7 @@ of a range.
 
 if __name__ == '__main__':
 
+    # FIXME: make sure the below is in a unit test
     def doit(cmd, args):
         proc = cmd.proc
         proc.current_command = ' '.join(args)

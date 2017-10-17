@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2008-2010, 2013-2016 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008-2010, 2013-2017 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -316,6 +316,7 @@ class CommandProcessor(Mprocessor.Processor):
         self.event_arg      = None
         self.frame          = None
         self.list_lineno    = 0      # last list number used in "list"
+        self.list_offset    = -1     # last list number used in "disassemble"
         self.list_filename  = None   # last filename used in list
         self.list_orig_lineno = 0    # line number of frame or exception on setup
         self.list_filename  = None   # filename of frame or exception on setup
@@ -817,7 +818,7 @@ class CommandProcessor(Mprocessor.Processor):
             self.thread_name = Mthread.current_thread_name()
             if exc_traceback:
                 self.list_lineno = traceback.extract_tb(exc_traceback, 1)[0][1]
-
+                self.list_offset = self.curframe.f_lasti
         else:
             self.stack = self.curframe = \
                 self.botframe = None
@@ -826,6 +827,7 @@ class CommandProcessor(Mprocessor.Processor):
             self.list_lineno = \
                 max(1, inspect.getlineno(self.curframe)
                     - int(self.settings('listsize') / 2)) - 1
+            self.list_offset   = self.curframe.f_lasti
             self.list_filename = self.curframe.f_code.co_filename
         else:
             if not exc_traceback: self.list_lineno = None

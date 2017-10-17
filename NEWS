@@ -4,10 +4,15 @@ User incompatibilty alert!
 
 We have redone location, breakpoint, and list-range parsing.
 
-This release needs an explanation. Code to parse commands like "list"
-and "breakpoint" were ugly and hard to maintain.  Since version
-0.6.3 when the "deparse" command was added, there has been a hidden
-dependency of the the Earley parser.
+This release needs an explanation.
+
+Code to parse commands like "list" and "breakpoint" were ugly and hard
+to maintain. I hit a the tipping point in adding flexibility to the
+"disassemble" command which allows address in addition to the usual
+other kinds of locations.
+
+Since version 0.6.3 when the "deparse" command was added, there has
+been a hidden dependency of the the Earley parser.
 
 That is now used to simplify parsing concepts like location,
 list range, or breakpoint position.
@@ -36,6 +41,15 @@ an object file, isn't the way Python (or most dynamic languages)
 do things.  Instead you list the method/function inside a class or
 module. And we allow this to be done off of variables and variables
 holding instance methods.
+
+Some things like ending at an address is not implemented as going
+backwards in variable-length bytecode is a bit of work. Other things
+of dubious merit I've omitted. The flexibility that is there
+is probably overkill.
+
+Speaking of reduced flexibility. Now with parser in place we no longer
+support expressions as numbers in list commands. It's not in gdb and
+I have a feeling  that too is overkill.
 
 
 trepan 0.7.8 2017-07-10

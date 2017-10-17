@@ -19,8 +19,8 @@ import os, sys
 # Our local modules
 from trepan.processor.command import base_cmd as Mbase_cmd
 from trepan.lib import disassemble as Mdis, file as Mfile
-from trepan.processor import cmdfns as Mcmdfns
 from xdis.load import load_module
+from trepan.processor.cmd_addrlist import parse_addr_list_cmd
 
 # From Python3's importlib.util
 DEBUG_BYTECODE_SUFFIXES = ['.pyc']
@@ -70,15 +70,15 @@ disassemble that.
 
    disassemble    # Possibly lots of stuff dissassembled
    disassemble .  # Disassemble lines starting at current stopping point.
-   disassemble +                  # Same as above
-   disassemble +0                 # Same as above
-   disassemble os.path            # Disassemble all of os.path
-   disassemble os.path.normcase   # Disaassemble just method os.path.normcase
+   disassemble +                    # Same as above
+   disassemble +0                   # Same as above
+   disassemble os.path              # Disassemble all of os.path
+   disassemble os.path.normcase()   # Disaassemble just method os.path.normcase
    disassemble -3  # Disassemble subtracting 3 from the current line number
    disassemble +3  # Disassemble adding 3 from the current line number
    disassemble 3                  # Disassemble starting from line 3
-   disassemble 3 10               # Disassemble lines 3 to 10
-   disassemble @0 @10             # Disassemble offset
+   disassemble 3, 10               # Disassemble lines 3 to 10
+   disassemble *0 *10             # Disassemble offset 0-10
    disassemble myprog.pyc         # Disassemble file myprog.pyc
 """
 
@@ -109,127 +109,86 @@ disassemble that.
         return None, None, is_offset
 
     def run(self, args):
-        relative_pos = False
+        proc = self.proc
+        dbg_obj  = self.core.debugger
+        listsize = dbg_obj.settings['listsize'] * 10
+        (bytecode_file, start, is_offset, last,
+         last_is_offset)  = parse_addr_list_cmd(proc, args, listsize)
+        curframe = proc.curframe
+        obj = curframe
+        if bytecode_file is None: return
+
         opts = {'highlight': self.settings['highlight'],
-                'start_line': -1,
-                'end_line': None
+                'start_line': None,
+                'end_line': None,
+                'start_offset': None,
+                'end_offset': None,
+                'relative_pos': False,
                 }
 
-        if len(args) > 1:
-            start, opts['relative_pos'], is_offset = self.parse_arg(args[1])
-            if start is None:
-                # First argument should be an evaluatable object
-                # or a filename
-                bytecode_file = args[1]
-                have_code = False
-                if not (bytecode_file.endswith('.pyo') or
-                        bytecode_file.endswith('pyc')):
-                    bytecode_file = cache_from_source(bytecode_file)
-                if bytecode_file and Mfile.readable(bytecode_file):
-                    print("Reading %s ..." % bytecode_file)
-                    (version, timestamp, magic_int, obj,
-                     is_pypy, source_size) = load_module(bytecode_file)
-                    have_code = True
-                elif not self.proc.curframe:
-                        self.errmsg("No frame selected.")
-                        return
-                else:
-                    try:
-                        obj=self.proc.eval(args[1])
-                        opts['start_line'] = -1
-                    except:
-                        self.errmsg(("Object '%s' is not something we can"
-                                     + " disassemble.") % args[1])
-                        return
-                    pass
-                if len(args) > 2:
-                    start, opts['relative_pos'], is_offset = self.parse_arg(args[2])
-                    if start is None:
-                        ilk = 'line' if is_offset else 'offset'
+        if is_offset:
+            opts['start_offset'] = start
+        else:
+            opts['start_line'] = start
+        if last_is_offset:
+            opts['end_offset'] = last
+        else:
+            opts['end_line'] = last
 
-                        self.errmsg = ('Start %s should be a number. Got %s.'
-                                       % (ilk, args[2]))
-                        return
-                    else:
-                        opts['start_offset' if is_offset else 'start_line'] = start
-                    if len(args) == 4:
-                        finish, relative_pos, is_offset = self.parse_arg(args[3])
-                        if finish is None:
-                            self.errmsg = ('End %s should be a number. ' +
-                                           ' Got %s.' % (ilk, args[3]))
-                            return
-                        else:
-                            opts['end_offset' if is_offset else 'end_line'] = finish
-                        pass
-                    elif len(args) > 4:
-                        self.errmsg("Expecting 0-3 parameters. Got %d" %
-                                    len(args)-1)
-                        return
-                    pass
-                elif not have_code:
-                    try:
-                        obj=Mcmdfns.get_val(self.proc.curframe,
-                                            self.errmsg, args[1])
-                    except:
-                        return
-                    pass
-                Mdis.dis(self.msg, self.msg_nocr, self.section, self.errmsg,
-                         obj, **opts)
-                return False
+        if not (bytecode_file.endswith('.pyo') or
+                bytecode_file.endswith('pyc')):
+            bytecode_file = cache_from_source(bytecode_file)
+            if bytecode_file and Mfile.readable(bytecode_file):
+                print("Reading %s ..." % bytecode_file)
+                (version, timestamp, magic_int, obj,
+                 is_pypy, source_size) = load_module(bytecode_file)
+            elif not curframe:
+                self.errmsg("No frame selected.")
+                return
             else:
-                opts['start_offset' if is_offset else 'start_line'] = start
-                if len(args) == 3:
-                    finish, not_used, is_offset = self.parse_arg(args[2])
-                    if finish is None:
-                        self.errmsg = ('End line should be a number. ' +
-                                       ' Got %s.' % args[2])
-                        return
-                    else:
-                        opts['end_offset' if is_offset else 'end_line'] = finish
-                    pass
-                elif len(args) > 3:
-                    self.errmsg("Expecting 1-2 line parameters. Got %d." %
-                                len(args)-1)
-                    return False
-                pass
-            pass
-        elif not self.proc.curframe:
-            self.errmsg("No frame selected.")
-            return
+                self.errmsg(("Object '%s' is not something we can"
+                             + " disassemble.") % bytecode_file)
+                return
 
+        # We now have all  information. Do the listing.
         Mdis.dis(self.msg, self.msg_nocr, self.section, self.errmsg,
-                 self.proc.curframe,  **opts)
+                 obj, **opts)
         return False
 
 # Demo it
 if __name__ == '__main__':
+
+    # FIXME: make sure the below is in a unit tesgt
+    def doit(cmd, args):
+        proc = cmd.proc
+        proc.current_command = ' '.join(args)
+        cmd.run(args)
+
     from trepan.processor.command import mock
     d, cp = mock.dbg_setup()
     import inspect
     cp.curframe = inspect.currentframe()
     command = DisassembleCommand(cp)
     prefix = '-' * 20 + ' disassemble '
-    print(prefix + 'cp.errmsg')
-    command.run(['dissassemble', 'cp.errmsg'])
+    # print(prefix + 'cp.errmsg()')
+    # doit(command, ['dissassemble', 'cp.errmsg()'])
     # print(prefix)
-    # command.run(['disassemble'])
+    # doit(command, ['disassemble'])
     # print(prefix + 'me')
-    # command.run(['disassemble', 'me'])
+    # doit(command, ['disassemble', 'me'])
     # print(prefix + '+0 2')
-    # command.run(['disassemble', '+0', '2'])
+    # doit(command, ['disassemble', '*0', '+2'])
     # print(prefix + '+ 2-1')
-    # command.run(['disassemble', '+', '2-1'])
+    # doit(command, ['disassemble', '+', '20'])
     # print(prefix + '- 1')
-    # command.run(['disassemble', '-', '1'])
+    # doit(command, ['disassemble', '-', '1'])
     # print(prefix + '.')
-    # command.run(['disassemble', '.'])
+    # doit(command, ['disassemble', '.'])
     __file__ = './disassemble.py'
-    print(prefix + __file__ + ' 30 40')
-    # command.run(['disassemble', __file__, '30', '40'])
+    # doit(command, ['disassemble', __file__, '30', '40'])
     bytecode_file = cache_from_source(__file__)
     print(bytecode_file)
     if bytecode_file:
-        print(prefix + bytecode_file + ' 30 40')
-        command.run(['disassemble', bytecode_file, '30', '40'])
-    command.run(['disassemble', '@15', '@25'])
+        doit(command, ['disassemble', bytecode_file + ':22,28'])
+    doit(command, ['disassemble', '*15,', '*25'])
     pass

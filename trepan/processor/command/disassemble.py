@@ -95,9 +95,8 @@ disassemble that.
         dbg_obj  = self.core.debugger
         listsize = dbg_obj.settings['listsize'] * 10
         (bytecode_file, start, is_offset, last,
-         last_is_offset)  = parse_addr_list_cmd(proc, args, listsize)
+         last_is_offset, obj)  = parse_addr_list_cmd(proc, args, listsize)
         curframe = proc.curframe
-        obj = curframe
         if bytecode_file is None: return
 
         opts = {'highlight': self.settings['highlight'],
@@ -117,7 +116,7 @@ disassemble that.
         else:
             opts['end_line'] = last
 
-        if not (bytecode_file.endswith('.pyo') or
+        if not (obj or bytecode_file.endswith('.pyo') or
                 bytecode_file.endswith('pyc')):
             bytecode_file = cache_from_source(bytecode_file)
             if bytecode_file and Mfile.readable(bytecode_file):
@@ -128,13 +127,22 @@ disassemble that.
                 self.errmsg("No frame selected.")
                 return
             else:
-                self.errmsg(("Object '%s' is not something we can"
-                             + " disassemble.") % bytecode_file)
-                return
+                try:
+                    obj=self.proc.eval(args[1])
+                    opts['start_line'] = -1
+                except:
+                    self.errmsg(("Object '%s' is not something we can"
+                                + " disassemble.") % args[1])
+                    return
 
         # We now have all  information. Do the listing.
         Mdis.dis(self.msg, self.msg_nocr, self.section, self.errmsg,
                  obj, **opts)
+        self.list_object = obj
+        if last_is_offset:
+            self.list_offset = last + 1
+        else:
+            self.list_lineno = last
         return False
 
 # Demo it

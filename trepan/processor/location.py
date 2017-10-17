@@ -120,11 +120,11 @@ def resolve_address_location(proc, location):
     """
     curframe = proc.curframe
     if location == '.':
-        if not curframe:
-            proc.errmsg("Don't have a stack to get location from")
+        if not proc.list_object:
+            proc.errmsg("Don't have a stack or previous object to get location from")
             return INVALID_LOCATION
-        filename = Mstack.frame2file(proc.core, curframe, canonic=False)
-        offset   = curframe.f_lasti
+        filename = Mstack.frame2file(proc.core, proc.list_obj, canonic=False)
+        offset   = proc.list_obj.f_lasti
         is_address = True
         return Location(filename, offset, False, None)
 
@@ -203,5 +203,5 @@ def resolve_address_location(proc, location):
         filename   = Mstack.frame2file(proc.core, curframe, canonic=False)
         offset     = location.line_number
         is_address = location.is_address
-        modfunc  = None
+        modfunc    = proc.list_object
     return Location(filename, offset, is_address, modfunc)

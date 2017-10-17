@@ -19,7 +19,7 @@ from trepan.processor.parse.parser import LocationError
 from trepan.processor.parse.scanner import ScannerError
 from trepan.processor.location import resolve_address_location
 
-INVALID_PARSE_LIST = (None, None, None, None, None)
+INVALID_PARSE_LIST = (None, None, None, None, None, None)
 def parse_addr_list_cmd(proc, args, listsize=100):
     """Parses arguments for the "list" command and returns the tuple:
     (filename, first line number, last line number)
@@ -30,28 +30,29 @@ def parse_addr_list_cmd(proc, args, listsize=100):
     if text in frozenset(('', '.', '+', '-')):
         if text == '.':
             location = resolve_address_location(proc, '.')
-            return location.path, location.line_number, listsize
-        else:
-            if proc.list_offset is None:
-                proc.errmsg("Don't have previous list location")
+            return location.path, location.line_number, listsize, location.method
+
+        if proc.list_offset is None:
+            proc.errmsg("Don't have previous list location")
+            return INVALID_PARSE_LIST
+
+        filename = proc.list_filename
+        if text == '+':
+            # FIXME: not quite right for offsets
+            first = max(1, proc.list_offset + listsize)
+        elif text == '-':
+            # FIXME: not quite right for offsets
+            if proc.list_lineno == 1 + listsize:
+                proc.errmsg("Already at start of %s." % proc.list_filename)
                 return INVALID_PARSE_LIST
-            filename = proc.list_filename
-            if text == '+':
-                # FIXME: not quite right for offsets
-                first = max(1, proc.list_offset + listsize)
-            elif text == '-':
-                # FIXME: not quite right for offsets
-                if proc.list_lineno == 1 + listsize:
-                    proc.errmsg("Already at start of %s." % proc.list_filename)
-                    return INVALID_PARSE_LIST
-                first = max(1, proc.list_lineno - (2*listsize) - 1)
-            elif text == '':
-                # Continue from where we last left off
-                first = proc.list_offset + 1
-                last = first + listsize - 1
-                return filename, first, True, last, False
+            first = max(1, proc.list_lineno - (2*listsize) - 1)
+        elif text == '':
+            # Continue from where we last left off
+            first = proc.list_offset + 1
+            last = first + listsize - 1
+            return filename, first, True, last, False, proc.list_object
         last = first + listsize - 1
-        return filename, first, False, last, False
+        return filename, first, False, last, False, proc.list_object
     else:
         try:
             list_range = build_arange(text)
@@ -89,7 +90,7 @@ def parse_addr_list_cmd(proc, args, listsize=100):
             if not location.is_address and last < first:
                 # Treat as a count rather than an absolute location
                 last = first + last
-            return location.path, first, False, last, location.is_address
+            return location.path, first, False, last, location.is_address, location.method
         else:
             # First is location. Last may be empty or a number/address
             assert isinstance(list_range.first, Location)
@@ -104,7 +105,10 @@ def parse_addr_list_cmd(proc, args, listsize=100):
                 # Is an offset +number
                 assert last[0] in ('+', '*')
                 last_is_addr = last[0] == '*'
-                last = first + int(last[1:])
+                if last_is_addr:
+                    last = int(last[1:])
+                else:
+                    last = first + int(last[1:])
             elif not last:
                 last_is_addr = True
                 last = first + listsize
@@ -112,7 +116,7 @@ def parse_addr_list_cmd(proc, args, listsize=100):
                 # Treat as a count rather than an absolute location
                 last = first + last
 
-            return location.path, first, first_is_addr, last, last_is_addr
+            return location.path, first, first_is_addr, last, last_is_addr, location.method
         pass
     return
 

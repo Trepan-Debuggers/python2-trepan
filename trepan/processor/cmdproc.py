@@ -317,6 +317,7 @@ class CommandProcessor(Mprocessor.Processor):
         self.frame          = None
         self.list_lineno    = 0      # last list number used in "list"
         self.list_offset    = -1     # last list number used in "disassemble"
+        self.list_obj       = None
         self.list_filename  = None   # last filename used in list
         self.list_orig_lineno = 0    # line number of frame or exception on setup
         self.list_filename  = None   # filename of frame or exception on setup
@@ -740,6 +741,7 @@ class CommandProcessor(Mprocessor.Processor):
             if exc_traceback:
                 self.list_lineno = traceback.extract_tb(exc_traceback, 1)[0][1]
                 self.list_offset = self.curframe.f_lasti
+                self.list_object = self.curframe
         else:
             self.stack = self.curframe = \
                 self.botframe = None
@@ -750,6 +752,7 @@ class CommandProcessor(Mprocessor.Processor):
                     - int(self.settings('listsize') / 2)) - 1
             self.list_offset   = self.curframe.f_lasti
             self.list_filename = self.curframe.f_code.co_filename
+            self.list_object   = self.curframe
         else:
             if not exc_traceback: self.list_lineno = None
             pass

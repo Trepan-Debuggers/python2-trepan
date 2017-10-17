@@ -13,7 +13,7 @@ from __future__ import print_function
 import sys
 from spark_parser.ast import AST
 
-from trepan.processor.parse.scanner import LocationScanner
+from trepan.processor.parse.scanner import LocationScanner, ScannerError
 
 from spark_parser import GenericASTBuilder
 
@@ -31,7 +31,7 @@ class LocationError(Exception):
 
 class LocationParser(GenericASTBuilder):
     """Location parsing as used in trepan2 and trepan3k
-    for list and breakpoint commands
+    for list, breakpoint, and assembly commands
     Note: function parse() comes from GenericASTBuilder
     """
 
@@ -72,27 +72,49 @@ class LocationParser(GenericASTBuilder):
             rv = GenericASTBuilder.nonterminal(self, nt, args)
         return rv
 
+    ##########################################################
+    # Expression grammar rules. Grammar rule functions
+    # start with the name p_ and are collected automatically
+    ##########################################################
+
     def p_bp_location(self, args):
         '''
         bp_start    ::= opt_space location_if opt_space
         '''
 
+    # "disasm" command range which might refer to locations, ranges, and addresses
+    def p_asm_range(self, args):
+        '''
+        arange_start  ::= opt_space arange
+        arange ::= range
+        arange ::= addr_location opt_space COMMA opt_space NUMBER
+        arange ::= addr_location opt_space COMMA opt_space OFFSET
+        arange ::= addr_location opt_space COMMA opt_space ADDRESS
+        arange ::= location opt_space COMMA opt_space ADDRESS
+        arange ::= addr_location opt_space COMMA
+        arange ::= addr_location
+
+        # Unlike ranges, We don't allow ending at an address
+        # arange ::= COMMA opt_space addr_location
+
+        addr_location ::= location
+        addr_location ::= ADDRESS
+        '''
+
+    # "list" command range which may refer to locations
     def p_list_range(self, args):
         '''
-        ## START HERE
         range_start  ::= opt_space range
         range ::= location
         range ::= location opt_space COMMA opt_space NUMBER
         range ::= location opt_space COMMA opt_space OFFSET
         range ::= COMMA opt_space location
         range ::= location opt_space COMMA
+        range ::= location
         range ::= DIRECTION
         '''
 
-    ##########################################################
-    # Expression grammar rules. Grammar rule functions
-    # start with the name p_ and are collected automatically
-    ##########################################################
+    # location that is used in breakpoints, list commands, and disassembly
     def p_location(self, args):
         '''
         opt_space   ::= SPACE?
@@ -104,40 +126,25 @@ class LocationParser(GenericASTBuilder):
         location    ::= FILENAME COLON NUMBER
         location    ::= FUNCNAME
 
-        # In the below, the second FILENAME is really the word
-        # "line". We ferret this out in a reduction rule though.
-        location    ::= FILENAME SPACE FILENAME SPACE NUMBER
-
         # If just a number is given, the the filename is implied
-        location    ::=  NUMBER
-        location    ::=  METHOD
-        location    ::=  OFFSET
+        location    ::= NUMBER
+        location    ::= METHOD
+        location    ::= OFFSET
 
         # For tokens we accept anything. Were really just
         # going to use the underlying string from the part
         # after "if".  So below we all of the possible tokens
 
         tokens      ::= token+
+        token       ::= COLON
+        token       ::= COMMA
+        token       ::= DIRECTION
         token       ::= FILENAME
         token       ::= FUNCNAME
-        token       ::= COLON
         token       ::= NUMBER
-        token       ::= COMMA
         token       ::= OFFSET
-        token       ::= DIRECTION
         token       ::= SPACE
         '''
-
-    def add_custom_rules(self, tokens, orig_customize):
-        self.check_reduce['location'] = 'tokens'
-
-    def reduce_is_invalid(self, rule, ast, tokens, first, last):
-        if rule == ('location', ('FILENAME', 'SPACE', 'FILENAME', 'SPACE', 'NUMBER')):
-            # In this rule the 2nd filename should be 'line'. if not, the rule
-            # is invalid
-            return tokens[first+2].value != 'line'
-        return False
-
 
 def parse_location(start_symbol, text, out=sys.stdout,
                       show_tokens=False, parser_debug=DEFAULT_DEBUG):
@@ -151,11 +158,10 @@ def parse_location(start_symbol, text, out=sys.stdout,
     # parser_debug = {'rules': True, 'transition': True, 'reduce': True,
     #                 'errorstack': True, 'dups': True}
     # parser_debug = {'rules': False, 'transition': False, 'reduce': True,
-    #                 'errorstack': True, 'dups': False}
+    #                 'errorstack': 'full', 'dups': False}
 
     parser = LocationParser(start_symbol, text, parser_debug)
-    parser.check_grammar(frozenset(('bp_start', 'range_start')))
-    parser.add_custom_rules(tokens, {})
+    parser.check_grammar(frozenset(('bp_start', 'range_start', 'arange_start')))
     return parser.parse(tokens)
 
 def parse_bp_location(*args, **kwargs):
@@ -164,57 +170,85 @@ def parse_bp_location(*args, **kwargs):
 def parse_range(*args, **kwargs):
     return parse_location('range_start', *args, **kwargs)
 
-# if __name__ == '__main__':
-#     lines = """
-#     /tmp/foo.py:12
-#     '''/tmp/foo.py:12''' line 14
-#     /tmp/foo.py line 12
-#     '''/tmp/foo.py line 12''' line 25
-#     12
-#     ../foo.py:5
-#     gcd()
-#     foo.py line 5 if x > 1
-#     """.splitlines()
-#     for line in lines:
-#         if not line.strip():
-#             continue
-#         print("=" * 30)
-#         print(line)
-#         print("+" * 30)
-#         ast = parse_bp_location(line, show_tokens=True)
-#         print(ast)
+def parse_arange(*args, **kwargs):
+    return parse_location('arange_start', *args, **kwargs)
 
-#     bad_lines = """
-#     /tmp/foo.py
-#     '''/tmp/foo.py'''
-#     /tmp/foo.py 12
-#     /tmp/foo.py line
-#     gcd()
-#     foo.py if x > 1
-#     """.splitlines()
-#     for line in bad_lines:
-#         if not line.strip():
-#             continue
-#         print("=" * 30)
-#         print(line)
-#         print("+" * 30)
-#         try:
-#             ast = parse_bp_location(line, show_tokens=True)
-#         except:
-#             continue
-#         print(ast)
+if __name__ == '__main__':
 
-#     lines = """
-#     1
-#     2,
-#     ,3
-#     4,10
-#     """.splitlines()
-#     for line in lines:
-#         if not line.strip():
-#             continue
-#         print("=" * 30)
-#         print(line)
-#         print("+" * 30)
-#         ast = parse_range(line, show_tokens=True)
-#         print(ast)
+    def doit(fn, line):
+        try:
+            ast = fn(line, show_tokens=True)
+            print(ast)
+        except ScannerError as e:
+            print("Scanner error")
+            print(e.text)
+            print(e.text_cursor)
+        except LocationError as e:
+            print("Parser error at or near")
+            print(e.text)
+            print(e.text_cursor)
+
+    # FIXME: we should make sure all of the below is in a unit test.
+
+    # lines = """
+    # /tmp/foo.py:12
+    # /tmp/foo.py line 12
+    # 12
+    # ../foo.py:5
+    # gcd()
+    # foo.py line 5 if x > 1
+    # """.splitlines()
+    # for line in lines:
+    #     if not line.strip():
+    #         continue
+    #     print("=" * 30)
+    #     print(line)
+    #     print("+" * 30)
+    #     doit(parse_bp_location, line)
+
+    # bad_lines = """
+    # /tmp/foo.py
+    # '''/tmp/foo.py'''
+    # /tmp/foo.py 12
+    # gcd()
+    # foo.py if x > 1
+    # """.splitlines()
+    # for line in bad_lines:
+    #     if not line.strip():
+    #         continue
+    #     print("=" * 30)
+    #     print(line)
+    #     print("+" * 30)
+    #     doit(parse_bp_location, line)
+
+    # lines = """
+    # 1
+    # 2,
+    # ,3
+    # 4,10
+    # """.splitlines()
+    # for line in lines:
+    #     if not line.strip():
+    #         continue
+    #     print("=" * 30)
+    #     print(line)
+    #     print("+" * 30)
+    #     doit(parse_range, line)
+    #     print(ast)
+
+    lines = (
+    "*0",
+    "*1 ,",
+    "2 , *10",
+    "2, 10",
+    "*3,  10",
+    "sys.exit() , *20"
+    )
+    for line in lines:
+        line = line.strip()
+        if not line:
+            continue
+        print("=" * 30)
+        print(line)
+        print("+" * 30)
+        doit(parse_arange, line)

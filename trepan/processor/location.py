@@ -33,9 +33,10 @@ def resolve_location(proc, location):
             return INVALID_LOCATION
         filename = Mstack.frame2file(proc.core, curframe, canonic=False)
         lineno   = inspect.getlineno(curframe)
-        return Location(filename, lineno, None)
+        return Location(filename, lineno, False, None)
 
     assert isinstance(location, Location)
+    is_address = False
     if proc.curframe:
         g = curframe.f_globals
         l = curframe.f_locals
@@ -64,6 +65,8 @@ def resolve_location(proc, location):
             proc.errmsg(msg)
             return INVALID_LOCATION
         filename = proc.core.canonic(modfunc.func_code.co_filename)
+        # FIXME: we may want to check lineno and
+        # respect that in the future
         lineno   = modfunc.func_code.co_firstlineno
     elif location.path:
         filename = proc.core.canonic(location.path)
@@ -87,7 +90,7 @@ def resolve_location(proc, location):
                     if not lineno:
                         # use first line of module file
                         lineno = 1
-                    return Location(filename, lineno, modfunc)
+                    return Location(filename, lineno, False, modfunc)
                 else:
                     msg = ("module '%s' doesn't have a file associated with it" %
                             location.path)
@@ -103,5 +106,9 @@ def resolve_location(proc, location):
     elif location.line_number:
         filename = Mstack.frame2file(proc.core, curframe, canonic=False)
         lineno   = location.line_number
+        if isinstance(lineno, str):
+            assert lineno[0] == '*'
+            lineno = int(lineno[:1])
+            is_address = True
         modfunc  = None
-    return Location(filename, lineno, modfunc)
+    return Location(filename, lineno, is_address, modfunc)

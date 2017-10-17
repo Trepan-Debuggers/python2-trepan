@@ -90,24 +90,6 @@ disassemble that.
     need_stack    = False
     short_help    = 'Disassemble Python bytecode'
 
-    def parse_arg(self, arg):
-        is_offset = False
-        if not self.proc.curframe:
-            return None, None, False
-        if arg in ['+', '-', '.']:
-            return self.proc.curframe.f_lineno, True, is_offset
-        if arg[0:1] == '@':
-            is_offset = True
-            arg = arg[1:]
-        lineno = self.proc.get_int_noerr(arg)
-        if lineno is not None:
-            if arg[0:1] in ['+', '-']:
-                return lineno + self.proc.curframe.f_lineno, True, is_offset
-            else:
-                return lineno, False, is_offset
-            pass
-        return None, None, is_offset
-
     def run(self, args):
         proc = self.proc
         dbg_obj  = self.core.debugger

@@ -20,7 +20,7 @@ from trepan.processor.parse.scanner import ScannerError
 from trepan.processor.location import resolve_address_location
 
 INVALID_PARSE_LIST = (None, None, None, None, None, None)
-def parse_addr_list_cmd(proc, args, listsize=100):
+def parse_addr_list_cmd(proc, args, listsize=40):
     """Parses arguments for the "list" command and returns the tuple:
     (filename, first line number, last line number)
     or sets these to None if there was some problem."""
@@ -30,7 +30,9 @@ def parse_addr_list_cmd(proc, args, listsize=100):
     if text in frozenset(('', '.', '+', '-')):
         if text == '.':
             location = resolve_address_location(proc, '.')
-            return location.path, location.line_number, listsize, location.method
+            return (location.path, location.line_number, True,
+                    location.line_number + listsize, True,
+                    location.method)
 
         if proc.list_offset is None:
             proc.errmsg("Don't have previous list location")
@@ -38,8 +40,7 @@ def parse_addr_list_cmd(proc, args, listsize=100):
 
         filename = proc.list_filename
         if text == '+':
-            # FIXME: not quite right for offsets
-            first = max(1, proc.list_offset + listsize)
+            first = max(0, proc.list_offset-1)
         elif text == '-':
             # FIXME: not quite right for offsets
             if proc.list_lineno == 1 + listsize:
@@ -50,9 +51,9 @@ def parse_addr_list_cmd(proc, args, listsize=100):
             # Continue from where we last left off
             first = proc.list_offset + 1
             last = first + listsize - 1
-            return filename, first, True, last, False, proc.list_object
+            return filename, first, True, last, True, proc.list_object
         last = first + listsize - 1
-        return filename, first, False, last, False, proc.list_object
+        return filename, first, True, last, True, proc.list_object
     else:
         try:
             list_range = build_arange(text)
@@ -78,7 +79,7 @@ def parse_addr_list_cmd(proc, args, listsize=100):
                 raise RuntimeError("We don't handle ending offsets")
             else:
                 first    = max(1, last - listsize)
-            return location.path, first, False, last, False
+            return location.path, first, False, last, False, location.method
         elif isinstance(list_range.first, int):
             first    = list_range.first
             location = resolve_address_location(proc, list_range.last)

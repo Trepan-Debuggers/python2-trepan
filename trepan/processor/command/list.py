@@ -112,6 +112,8 @@ of a range.
         if 'style' in self.settings:
             opts['style'] = self.settings['style']
 
+        if first <= 0:
+            first = 1
         try:
             for lineno in range(first, last+1):
                 line = pyficache.getline(filename, lineno, opts)

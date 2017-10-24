@@ -66,20 +66,20 @@ number, then the line number is relative to the current frame number.
 With a class, method, function, pyc-file, code or string argument
 disassemble that.
 
-**Examples:**
+Examples:
+--------
+::
 
    disassemble    # Possibly lots of stuff dissassembled
    disassemble .  # Disassemble lines starting at current stopping point.
    disassemble +                    # Same as above
-   disassemble +0                   # Same as above
    disassemble os.path              # Disassemble all of os.path
    disassemble os.path.normcase()   # Disaassemble just method os.path.normcase
-   disassemble -3  # Disassemble subtracting 3 from the current line number
-   disassemble +3  # Disassemble adding 3 from the current line number
    disassemble 3                  # Disassemble starting from line 3
    disassemble 3, 10               # Disassemble lines 3 to 10
-   disassemble *0 *10             # Disassemble offset 0-10
+   disassemble *0, *10            # Disassemble offset 0-10
    disassemble myprog.pyc         # Disassemble file myprog.pyc
+
 """
 
     aliases       = ('disasm',)  # Note: we will have disable
@@ -93,7 +93,9 @@ disassemble that.
     def run(self, args):
         proc = self.proc
         dbg_obj  = self.core.debugger
-        listsize = dbg_obj.settings['listsize'] * 10
+        # We'll use a rough estimate of 4 bytes per instruction and
+        # go off listsize
+        listsize = dbg_obj.settings['listsize'] * 4
         (bytecode_file, start, is_offset, last,
          last_is_offset, obj)  = parse_addr_list_cmd(proc, args, listsize)
         curframe = proc.curframe
@@ -136,13 +138,10 @@ disassemble that.
                     return
 
         # We now have all  information. Do the listing.
-        Mdis.dis(self.msg, self.msg_nocr, self.section, self.errmsg,
-                 obj, **opts)
-        self.list_object = obj
-        if last_is_offset:
-            self.list_offset = last + 1
-        else:
-            self.list_lineno = last
+        print("WOOT", opts)
+        (self.object,
+         proc.list_offset) = Mdis.dis(self.msg, self.msg_nocr, self.section, self.errmsg,
+                                      obj, **opts)
         return False
 
 # Demo it

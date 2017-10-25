@@ -56,7 +56,7 @@ class LocationGrok(GenericASTTraversal, object):
             node.location = self.result
             self.prune()
         else:
-            print(node[0])
+            # print(node[0])
             assert node[0] == 'location'
             self.preorder(node[0])
             node.location = node[0].location

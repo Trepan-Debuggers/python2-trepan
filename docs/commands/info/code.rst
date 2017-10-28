@@ -1,3 +1,4 @@
+.. index:: info; code
 .. _info_code:
 
 **info code** [ *frame-number* | *code-object* ]

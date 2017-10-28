@@ -1,3 +1,4 @@
+.. index:: pr
 .. _pr:
 
 Pr (print expression)

@@ -1,3 +1,4 @@
+.. index:: info; builtins
 .. _info_builtins:
 
 Info Builtins

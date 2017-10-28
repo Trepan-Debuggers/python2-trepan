@@ -48,30 +48,14 @@ install_requires   = ['columnize >= 0.3.9',
                       'nose==1.0.0',
                       'pyficache >= 0.3.1',
                       'pygments  == 1.4',
-                      'uncompyle6 >= 2.11.1',
+                      'spark_parser >= 1.7.1, <1.8.0',
+                      'uncompyle6 >= 2.13.2',
                       'tracer >= 0.3.2',
-                      'xdis >= 3.5.4, < 3.6.0',
+                      'xdis >= 3.6.0, < 3.7.0',
                       ]
 license            = 'GPL3'
 mailing_list       = 'python-debugger@googlegroups.com'
 modname            = 'trepan2'
-packages = [
-    'trepan',
-    'trepan.bwprocessor',
-    'trepan.interfaces',
-    'trepan.inout',
-    'trepan.lib',
-    'trepan.processor',
-    'trepan.processor.command',
-#   'trepan.processor.command.ipython_magic',
-    'trepan.processor.command.info_subcmd',
-    'trepan.processor.command.set_subcmd',
-    'trepan.processor.command.show_subcmd'
-]
-namespace_packages = [
-    'trepan',
-    'trepan.processor',
-]
 py_modules         = None
 short_desc         = 'GDB-like Python Debugger in the Trepan family'
 

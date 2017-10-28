@@ -1,3 +1,4 @@
+.. index:: pp
 .. _pp:
 
 Pp (pretty print expression)

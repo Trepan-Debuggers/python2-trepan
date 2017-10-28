@@ -1,3 +1,4 @@
+.. index:: info; frame
 .. _info_frame:
 
 **info frame** [-v] [ *frame-number* | *frame-object* ]

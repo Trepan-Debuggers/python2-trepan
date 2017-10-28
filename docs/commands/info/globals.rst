@@ -1,3 +1,4 @@
+.. index:: info; globals
 .. _info_globals:
 
 Info Globals

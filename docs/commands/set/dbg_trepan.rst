@@ -1,3 +1,4 @@
+.. index:: set; dbg_trepan
 .. _set_dbg_trepan:
 
 Set Dbg_trepan

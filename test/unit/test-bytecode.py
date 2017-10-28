@@ -3,7 +3,7 @@
 import inspect, unittest
 
 from trepan.lib import bytecode as Mcode
-from xdis import IS_PYPY
+from xdis import IS_PYPY, PYTHON_VERSION
 
 
 class TestByteCode(unittest.TestCase):
@@ -22,10 +22,12 @@ class TestByteCode(unittest.TestCase):
 
     def test_op_at_frame(self):
         frame = inspect.currentframe()
-        if IS_PYPY:
-            self.assertEqual('CALL_METHOD', Mcode.op_at_frame(frame))
+        if IS_PYPY or PYTHON_VERSION >= 3.7:
+            call_opcode = 'CALL_METHOD'
         else:
-            self.assertEqual('CALL_FUNCTION', Mcode.op_at_frame(frame))
+            call_opcode = 'CALL_FUNCTION'
+
+        self.assertEqual(call_opcode, Mcode.op_at_frame(frame))
         return
 
     def test_is_def_frame(self):

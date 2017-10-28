@@ -1,3 +1,4 @@
+.. index:: pdef
 .. _pdef:
 
 Pdef

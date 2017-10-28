@@ -1,3 +1,4 @@
+.. index:: info; pc
 .. _info_pc:
 
 Info PC

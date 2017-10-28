@@ -1,3 +1,4 @@
+.. index:: show; width
 .. _show_width:
 
 Show Width

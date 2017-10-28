@@ -46,23 +46,23 @@ class TestBreak(unittest.TestCase):
         compare_output(self, out, d, cmds)
         return
 
-    def test_break_at_line_number(self):
-        import inspect
-        curframe = inspect.currentframe()
-        cmds = ['break %d' % (curframe.f_lineno+7),
-                'continue', 'c']              # 1
-        d = strarray_setup(cmds)              # 2
-        d.core.start()                        # 3
-        ##############################        # 4...
-        x = 5  # NOQA
-        y = 6  # NOQA
-        z = 7  # NOQA
-        ##############################
-        d.core.stop()
-        out = ["-- x = 5  # NOQA",
-               'xx z = 7  # NOQA']
-        compare_output(self, out, d, cmds)
-        return
+    # def test_break_at_line_number(self):
+    #     import inspect
+    #     curframe = inspect.currentframe()
+    #     cmds = ['break %d' % (curframe.f_lineno+7),
+    #             'continue', 'c']              # 1
+    #     d = strarray_setup(cmds)              # 2
+    #     d.core.start()                        # 3
+    #     ##############################        # 4...
+    #     x = 5  # NOQA
+    #     y = 6  # NOQA
+    #     z = 7  # NOQA
+    #     ##############################
+    #     d.core.stop()
+    #     out = ["-- x = 5  # NOQA",
+    #            'xx z = 7  # NOQA']
+    #     compare_output(self, out, d, cmds)
+    #     return
     pass
 
 if __name__ == '__main__':

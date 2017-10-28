@@ -1,3 +1,4 @@
+.. index:: pydocx
 .. _pydocx:
 
 Pydocx (show pydoc)

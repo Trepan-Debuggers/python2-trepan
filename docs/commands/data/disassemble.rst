@@ -1,3 +1,4 @@
+.. index:: disassemble
 .. _disassemble:
 
 Disassemble (CPython disassembly)

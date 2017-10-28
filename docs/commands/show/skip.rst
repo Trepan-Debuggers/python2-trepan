@@ -1,3 +1,4 @@
+.. index:: show; skip
 .. _show_skip:
 
 Show Skip

@@ -1,3 +1,4 @@
+.. index:: deparse
 .. _deparse:
 
 Deparse (CPython bytecode deparser)

@@ -1,3 +1,4 @@
+.. index:: bpython
 .. _bpython:
 
 BPython (go into a bpython shell)

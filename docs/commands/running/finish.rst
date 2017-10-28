@@ -1,3 +1,4 @@
+.. index:: finish
 .. _finish:
 
 Finish (step out)

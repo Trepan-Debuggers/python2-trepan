@@ -1,3 +1,4 @@
+.. index:: show; flush
 .. _show_flush:
 
 Show Flush

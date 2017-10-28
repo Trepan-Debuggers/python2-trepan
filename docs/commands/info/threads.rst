@@ -1,3 +1,4 @@
+.. index:: info; threads
 .. _info_threads:
 
 Info Threads

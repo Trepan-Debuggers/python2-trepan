@@ -1,3 +1,4 @@
+.. index:: info; return
 .. _info_return:
 
 Info Return

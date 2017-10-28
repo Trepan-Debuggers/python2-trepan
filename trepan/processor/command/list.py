@@ -196,7 +196,7 @@ if __name__ == '__main__':
     # doit(lcmd, ['list', '-'])
     # doit(lcmd, ['list', '+'])
     # doit(lcmd, ['list', '+'])
-    doit(lcmd, ['list', '40', '60'])
+    doit(lcmd, ['list', '40,', '60'])
     # doit(lcmd, ['list', '20', '5'])
 
     # doit(lcmd, ['list', 'os.path'])

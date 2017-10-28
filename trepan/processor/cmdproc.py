@@ -275,7 +275,6 @@ class CommandProcessor(Mprocessor.Processor):
         self.event2short['signal'] = '?!'
         self.event2short['brkpt']  = 'xx'
 
-        self.optional_modules = ('ipython', 'bpy', 'deparse')
         self.optional_modules = ('ipython', 'bpy')
         self.cmd_instances    = self._populate_commands()
 
@@ -973,13 +972,6 @@ if __name__=='__main__':
     print(arg_split("Now is 'the time'"))
     print(arg_split("Now is the time ;; for all good men"))
     print(arg_split("Now is the time ';;' for all good men"))
-
-    print(cmdproc.parse_position_one_arg('4+1'))
-    print(cmdproc.parse_position_one_arg('os.path'))
-    print(cmdproc.parse_position_one_arg('os.path.join'))
-    print(cmdproc.parse_position_one_arg('/bin/bash', show_errmsg=False))
-    print(cmdproc.parse_position('/bin/bash'))
-    print(cmdproc.parse_position('/bin/bash:4'))
 
     print(cmdproc.commands)
     fn = cmdproc.commands['quit']

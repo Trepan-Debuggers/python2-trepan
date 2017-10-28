@@ -50,18 +50,19 @@ def cache_from_source(path, debug_override=None):
     return os.path.join(head, filename)
 
 class DisassembleCommand(Mbase_cmd.DebuggerCommand):
-    """**disassemble** [*thing*] [[**+**|**-**|**.**|**@**]*start* [[**+**|**-***|**.**|**@**]*end]]
+    """**disassemble** [*thing*]disassemble [*addresss-range*]
 
-With no argument, disassemble the current frame.  With an integer
-start, the disassembly is narrowed to show lines starting
-at that line number or later; with an end number, disassembly
-stops when the next line would be greater than that or the end of the
-code is hit. Additionally if you prefice the number with an @, the value
-is take to be a bytecode offset rather than a line number.
+Disassembles bytecode. See `help syntax range` for what can go in a list range.
 
-If *start* or *end is* `.`, `+`, or `-`, the current line number
-is used.  If instead it starts with a plus or minus prefix to a
-number, then the line number is relative to the current frame number.
+Without arguments, print lines starting from where the last list left off
+since the last entry to the debugger. We start off at the location indicated
+by the current stack.
+
+in addition you can also use:
+
+  - a '.' for the location of the current frame
+  - a '-' for the lines before the last list
+  - a '+' for the lines after the last list
 
 With a class, method, function, pyc-file, code or string argument
 disassemble that.
@@ -75,10 +76,10 @@ Examples:
    disassemble +                    # Same as above
    disassemble os.path              # Disassemble all of os.path
    disassemble os.path.normcase()   # Disaassemble just method os.path.normcase
-   disassemble 3                  # Disassemble starting from line 3
-   disassemble 3, 10               # Disassemble lines 3 to 10
-   disassemble *0, *10            # Disassemble offset 0-10
-   disassemble myprog.pyc         # Disassemble file myprog.pyc
+   disassemble 3                    # Disassemble starting from line 3
+   disassemble 3, 10                # Disassemble lines 3 to 10
+   disassemble *0, *10              # Disassemble offset 0-10
+   disassemble myprog.pyc           # Disassemble file myprog.pyc
 
 """
 
@@ -137,8 +138,7 @@ Examples:
                                 + " disassemble.") % args[1])
                     return
 
-        # We now have all  information. Do the listing.
-        print("WOOT", opts)
+        # We now have all information. Do the listing.
         (self.object,
          proc.list_offset) = Mdis.dis(self.msg, self.msg_nocr, self.section, self.errmsg,
                                       obj, **opts)
@@ -147,7 +147,7 @@ Examples:
 # Demo it
 if __name__ == '__main__':
 
-    # FIXME: make sure the below is in a unit tesgt
+    # FIXME: make sure the below is in a unit test
     def doit(cmd, args):
         proc = cmd.proc
         proc.current_command = ' '.join(args)

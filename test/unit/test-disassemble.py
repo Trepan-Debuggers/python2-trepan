@@ -67,7 +67,6 @@ class TestDisassemble(unittest.TestCase):
                      ['disassemble', '+', '1'],
                      ['disassemble', '-', '1'],
                      ['disassemble', '1', '2'],
-                     ['disassemble', '1', '2'],
                      ['disassemble', 'me']):
             self.clear_output()
             proc.current_command = ' '.join(args)

@@ -24,7 +24,7 @@ elif ((2, 4) <= sys.version_info[0:2] < (2, 6)) and not os.path.exists('gitbranc
 from __pkginfo__ import \
     author,           author_email,       classifiers,                    \
     install_requires, license,            long_description,               \
-    modname,          py_modules,                     \
+    modname,          packages,           py_modules,                     \
     short_desc,       version,            web,              zip_safe
 
 __import__('pkg_resources')
@@ -35,10 +35,12 @@ setup(
        author_email       = author_email,
        classifiers        = classifiers,
        data_files=[('trepan/processor/command/help',
-                    ['trepan/processor/command/help/command.rst',
+                    ['trepan/processor/command/help/arange.rst',
+                     'trepan/processor/command/help/command.rst',
                      'trepan/processor/command/help/examples.rst',
                      'trepan/processor/command/help/filename.rst',
                      'trepan/processor/command/help/location.rst',
+                     'trepan/processor/command/help/range.rst',
                      'trepan/processor/command/help/suffixes.rst',
                      ])],
        description        = short_desc,
@@ -52,6 +54,7 @@ setup(
        long_description   = long_description,
        py_modules         = py_modules,
        name               = modname,
+       packages           = packages,
        test_suite         = 'nose.collector',
        url                = web,
        version            = version,

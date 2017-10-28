@@ -56,6 +56,24 @@ install_requires   = ['columnize >= 0.3.9',
 license            = 'GPL3'
 mailing_list       = 'python-debugger@googlegroups.com'
 modname            = 'trepan2'
+packages = [
+    'trepan',
+    'trepan.bwprocessor',
+    'trepan.interfaces',
+    'trepan.inout',
+    'trepan.lib',
+    'trepan.processor',
+    'trepan.processor.command',
+#   'trepan.processor.command.ipython_magic',
+    'trepan.processor.command.info_subcmd',
+    'trepan.processor.command.set_subcmd',
+    'trepan.processor.command.show_subcmd',
+    'trepan.processor.parse',
+]
+namespace_packages = [
+    'trepan',
+    'trepan.processor',
+]
 py_modules         = None
 short_desc         = 'GDB-like Python Debugger in the Trepan family'
 

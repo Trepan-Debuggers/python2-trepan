@@ -1,4 +1,4 @@
-#  Copyright (c) 2017-2018 Rocky Bernstein
+#  Copyright (c) 2017-2018, 2022 Rocky Bernstein
 """
 Parsing for a trepan2/trepan3k debugger
 "breakpoint' or "list" command arguments
@@ -7,6 +7,8 @@ This is a debugger location along with:
  - an optional condition parsing for breakpoints commands
  - a range or count for "list" commands
 """
+
+# from __future__ import print_function
 
 import sys
 from spark_parser.ast import AST
@@ -176,11 +178,11 @@ if __name__ == '__main__':
         try:
             ast = fn(line, show_tokens=True)
             print(ast)
-        except ScannerError(e):
+        except ScannerError, e:
             print("Scanner error")
             print(e.text)
             print(e.text_cursor)
-        except LocationError(e):
+        except LocationError, e:
             print("Parser error at or near")
             print(e.text)
             print(e.text_cursor)

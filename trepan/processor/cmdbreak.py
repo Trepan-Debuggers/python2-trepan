@@ -85,12 +85,12 @@ def parse_break_cmd(proc, args):
     else:
         try:
             bp_expr   = build_bp_expr(text)
-        except LocationError(e):
+        except LocationError, e:
             proc.errmsg("Error in parsing breakpoint expression at or around:")
             proc.errmsg(e.text)
             proc.errmsg(e.text_cursor)
             return INVALID_PARSE_BREAK
-        except ScannerError(e):
+        except ScannerError, e:
             proc.errmsg("Lexical error in parsing breakpoint expression at or around:")
             proc.errmsg(e.text)
             proc.errmsg(e.text_cursor)

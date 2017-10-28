@@ -26,8 +26,8 @@ Examples
   *5                 # start from bytecode offset 5 of current file
   *5 ,                 # Same as above.
   foo.py:*5            # start from bytecode offset 5 of file foo.py
-   
+  
 
-See also:
+See also
 ---------
   `help syntax location`

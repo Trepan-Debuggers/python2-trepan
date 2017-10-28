@@ -10,8 +10,8 @@ A location can be either a *linespec* an explicit function, or a *module linespe
 Linespec
 --------
 
-A linespec has a colon-separated list of source location parameters
-such as file name or module name.
+A linespec has a colon-separated pair of a source-location parameter
+and a line number.  A source location is a file path or a module name.
 
 In [*path*:]*linenum* , the line *linenum* in the source file *path*
 is indicated. When *path* is omitted, some default value is given,
@@ -37,7 +37,7 @@ quotes, double quotes or triple double as you would do in Python
     ./../myfile.py:3     # line 3 of the parent of some directory in `sys.path`
     /tmp/foo.py:4        # line 4 of absolute path /tmp/foo.py
     "foo's.py":1"        # One way to specify a path with a quote
-    '''foo's.py":1'''    # Another way to specify a path with a quote
+    '''foo's.py"''':2    # Another way to specify a path with a quote
     'c:\foo.bat':1"      # One way to specify a Windows file name,
     '/My Docs/foo.py':1" # One way to specify path with blanks in it
 
@@ -72,12 +72,12 @@ as either of these ways:
    b[0]()
 
 Although in the last example `b[0]()` the expressions can get a bit
-complex, to simpliify parsing, we don't allow arbitrary
-expressions. We currently allow only alphanumeric symbols as you'd
-find in valid Python identifiers along with extra symbols ".", "[",
-and "]".  This means `b[i+1]()` would be invalid because it contains
-"+".  So would `b["foo"]()`, assuming `b` were a dictionary, because
-of the quote symbol.
+complex, to simplify parsing, we don't allow arbitrary expressions. We
+currently allow only alphanumeric symbols as you'd find in valid
+Python identifiers along with extra symbols ".", "[", and "]".  This
+means `b[i+1]()` would be invalid because it contains "+".  So would
+`b["foo"]()`, assuming `b` were a dictionary, because of the quote
+symbol.
 
 *Right now we don't allow line offsets from functions. If the need
 arises we may do so in the future.*

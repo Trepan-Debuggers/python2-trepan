@@ -4,7 +4,7 @@ Syntax for Source-Code Locations
 A number of commands like "break", and "list" have locations
 embedded in them.
 
-A location can be either a *linespec* or an explicit location
+A location can be either a *linespec* an explicit function, or a *module linespec*
 
 
 Linespec
@@ -93,15 +93,18 @@ the debugger. However you can run `eval` (or `autoeval`) to have
 Python import the module inside the debugger.
 
 In sum file names are distinguished from method names purely by
-semantic means. However *gdb* and thus this debugger has  means
-to explicitly tag names as a path, function or module.
+semantic means. However *gdb* and thus this debugger has no means to
+explicitly tag names as a file path or Python module name. We, but not
+*gdb*, make a distinction between functions versus modules and file
+paths.
 
 **Examples:**
 
     os.path:45  # Line 45 of the file that contains os.path
     os:1        # First line of module os
-    os          # Invalid!
+    os          # Invalid! (for now)
 
-Note that the last line is invalid. In contrast to functions,
-you need to give a line numbers. Also it is assumed there is not a *file* called
-`os` or  and `os.path`.
+Note that the last line is invalid. In contrast to functions, you need
+to give a line numbers. Also it is assumed there is not a *file*
+called `os` in the last example line. Nor a file called `os.path` in
+the first example.

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2008-2010, 2013-2016 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008-2010, 2013-2017 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -275,7 +275,6 @@ class CommandProcessor(Mprocessor.Processor):
         self.event2short['signal'] = '?!'
         self.event2short['brkpt']  = 'xx'
 
-        self.optional_modules = ('ipython', 'bpy', 'deparse')
         self.optional_modules = ('ipython', 'bpy')
         self.cmd_instances    = self._populate_commands()
 
@@ -316,7 +315,11 @@ class CommandProcessor(Mprocessor.Processor):
         self.event_arg      = None
         self.frame          = None
         self.list_lineno    = 0      # last list number used in "list"
+        self.list_offset    = -1     # last list number used in "disassemble"
+        self.list_obj       = None
         self.list_filename  = None   # last filename used in list
+        self.list_orig_lineno = 0    # line number of frame or exception on setup
+        self.list_filename  = None   # filename of frame or exception on setup
 
         self.macros         = {}     # Debugger Macros
 
@@ -447,84 +450,6 @@ class CommandProcessor(Mprocessor.Processor):
             self.errmsg('%s: %s' % (str(exc_type_name), str(v)))
             pass
         return
-
-    def parse_position(self, arg, old_mod=None):
-        """parse_position(self, arg)->(fn, name, lineno)
-
-        Parse arg as [filename:]lineno | function | module
-        Make sure it works for C:\foo\bar.py:12
-        """
-        colon = arg.rfind(':')
-        if colon >= 0:
-            # First handle part before the colon
-            arg1 = arg[:colon].rstrip()
-            lineno_str = arg[colon+1:].lstrip()
-            (mf, filename, lineno) = self.parse_position_one_arg(arg1, old_mod,
-                                                                 False)
-            if filename is None: filename = self.core.canonic(arg1)
-            # Next handle part after the colon
-            val = self.get_an_int(lineno_str, "Bad line number: %s" %
-                                  lineno_str)
-            if val is not None: lineno = val
-        else:
-            (mf, filename, lineno) = self.parse_position_one_arg(arg, old_mod)
-            pass
-
-        return mf, filename, lineno
-
-    def parse_position_one_arg(self, arg, old_mod=None, show_errmsg=True):
-        """parse_position_one_arg(self, arg, show_errmsg) ->
-              (module/function, file, lineno)
-
-        See if arg is a line number, function name, or module name.
-        Return what we've found. None can be returned as a value in
-        the triple.
-        """
-        modfunc, filename, lineno = (None, None, None)
-        if self.curframe:
-            g = self.curframe.f_globals
-            l = self.curframe.f_locals
-        else:
-            g = globals()
-            l = locals()
-            pass
-        try:
-            # First see if argument is an integer
-            lineno   = int(eval(arg, g, l))
-            if old_mod is None:
-                filename = self.curframe.f_code.co_filename
-                pass
-        except:
-            try:
-                modfunc = eval(arg, g, l)
-            except:
-                modfunc = arg
-                pass
-            msg = ('Object %s is not known yet as a function, module, '
-                   'or is not found along sys.path, '
-                   'and not a line number.') % str(repr(arg))
-            try:
-                # See if argument is a module or function
-                if inspect.isfunction(modfunc):
-                    pass
-                elif inspect.ismodule(modfunc):
-                    filename = pyficache.pyc2py(modfunc.__file__)
-                    filename = self.core.canonic(filename)
-                    return(modfunc, filename, None)
-                elif hasattr(modfunc, 'im_func'):
-                    modfunc = modfunc.im_func
-                    pass
-                else:
-                    if show_errmsg: self.errmsg(msg)
-                    return(None, None, None)
-                code     = modfunc.func_code
-                lineno   = code.co_firstlineno
-                filename = code.co_filename
-            except:
-                if show_errmsg: self.errmsg(msg)
-                return (None, None, None)
-            pass
-        return (modfunc, self.core.canonic(filename), lineno)
 
     def get_an_int(self, arg, msg_on_error, min_value=None, max_value=None):
         """Like cmdfns.get_an_int(), but if there's a stack frame use that
@@ -709,7 +634,7 @@ class CommandProcessor(Mprocessor.Processor):
         try:
             args_list = arg_split(current_command)
         except:
-            self.errmsg("bad parse %s"< sys.exc_info()[0])
+            self.errmsg("bad parse %s" % sys.exc_info()[0])
             return False
 
         for args in args_list:
@@ -814,7 +739,8 @@ class CommandProcessor(Mprocessor.Processor):
             self.thread_name = Mthread.current_thread_name()
             if exc_traceback:
                 self.list_lineno = traceback.extract_tb(exc_traceback, 1)[0][1]
-
+                self.list_offset = self.curframe.f_lasti
+                self.list_object = self.curframe
         else:
             self.stack = self.curframe = \
                 self.botframe = None
@@ -823,11 +749,16 @@ class CommandProcessor(Mprocessor.Processor):
             self.list_lineno = \
                 max(1, inspect.getlineno(self.curframe)
                     - int(self.settings('listsize') / 2)) - 1
+            self.list_offset   = self.curframe.f_lasti
             self.list_filename = self.curframe.f_code.co_filename
+            self.list_object   = self.curframe
         else:
             if not exc_traceback: self.list_lineno = None
             pass
         # if self.execRcLines()==1: return True
+
+        # FIXME:  do we want to save self.list_lineno a second place
+        # so that we can do 'list .' and go back to the first place we listed?
         return False
 
     def queue_startfile(self, cmdfile):
@@ -1041,13 +972,6 @@ if __name__=='__main__':
     print(arg_split("Now is 'the time'"))
     print(arg_split("Now is the time ;; for all good men"))
     print(arg_split("Now is the time ';;' for all good men"))
-
-    print(cmdproc.parse_position_one_arg('4+1'))
-    print(cmdproc.parse_position_one_arg('os.path'))
-    print(cmdproc.parse_position_one_arg('os.path.join'))
-    print(cmdproc.parse_position_one_arg('/bin/bash', show_errmsg=False))
-    print(cmdproc.parse_position('/bin/bash'))
-    print(cmdproc.parse_position('/bin/bash:4'))
 
     print(cmdproc.commands)
     fn = cmdproc.commands['quit']

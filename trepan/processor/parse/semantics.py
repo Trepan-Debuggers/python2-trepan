@@ -1,5 +1,5 @@
 #  Copyright (c) 2017 by Rocky Bernstein
-from __future__ import print_function
+# from __future__ import print_function
 
 from trepan.processor.parse.parser import (
     parse_bp_location, parse_range, parse_arange
@@ -289,11 +289,11 @@ if __name__ == '__main__':
         try:
             result = fn(line)
             print(result)
-        except ScannerError as e:
+        except ScannerError, e:
             print("Scanner error")
             print(e.text)
             print(e.text_cursor)
-        except PLocationError as e:
+        except PLocationError, e:
             print("Parser error at or near")
             print(e.text)
             print(e.text_cursor)

@@ -51,12 +51,12 @@ def parse_list_cmd(proc, args, listsize=10):
     else:
         try:
             list_range = build_range(text)
-        except LocationError as e:
+        except LocationError, e:
             proc.errmsg("Error in parsing list range at or around:")
             proc.errmsg(e.text)
             proc.errmsg(e.text_cursor)
             return INVALID_PARSE_LIST
-        except ScannerError as e:
+        except ScannerError, e:
             proc.errmsg("Lexical error in parsing list range at or around:")
             proc.errmsg(e.text)
             proc.errmsg(e.text_cursor)

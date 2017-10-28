@@ -50,30 +50,30 @@ See also:
         return False
 
 
-if __name__ == '__main__':
-    from trepan.processor import cmdproc as Mcmdproc
-    from trepan import debugger as Mdebugger
-    d            = Mdebugger.Debugger()
-    cp           = d.core.processor
-    command = UpCommand(cp)
-    command.run(['up'])
+# if __name__ == '__main__':
+#     from trepan.processor import cmdproc as Mcmdproc
+#     from trepan import debugger as Mdebugger
+#     d            = Mdebugger.Debugger()
+#     cp           = d.core.processor
+#     command = UpCommand(cp)
+#     command.run(['up'])
 
-    def nest_me(cp, command, i):
-        import inspect
-        if i > 1:
-            cp.curframe = inspect.currentframe()
-            cp.stack, cp.curindex = Mcmdproc.get_stack(cp.curframe, None, None,
-                                                       cp)
-            command.run(['up'])
-            print '-' * 10
-            command.run(['up', '-2'])
-            print '-' * 10
-            command.run(['up', '-3'])
-            print '-' * 10
-        else:
-            nest_me(cp, command, i+1)
-        return
+#     def nest_me(cp, command, i):
+#         import inspect
+#         if i > 1:
+#             cp.curframe = inspect.currentframe()
+#             cp.stack, cp.curindex = Mcmdproc.get_stack(cp.curframe, None, None,
+#                                                        cp)
+#             command.run(['up'])
+#             print('-' * 10)
+#             command.run(['up', '-2'])
+#             print('-' * 10)
+#             command.run(['up', '-3'])
+#             print('-' * 10)
+#         else:
+#             nest_me(cp, command, i+1)
+#         return
 
-    cp.forget()
-    nest_me(cp, command, 1)
-    pass
+#     cp.forget()
+#     nest_me(cp, command, 1)
+#     pass

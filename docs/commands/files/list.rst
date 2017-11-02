@@ -8,7 +8,7 @@ List (show me the code!)
 
 **list**  **+** | **-** | **.**
 
-List source code. See :ref:`help syntax range` for what can go in a list range.
+List source code. See :ref:`help syntax range <syntax_range>` for what can go in a list range.
 
 Without arguments, print lines centered around the current line. If
 *num* is given that number of lines is shown.
@@ -46,4 +46,4 @@ Examples:
 .. seealso::
 
    :ref:`set listize <set_listsize>`, or :ref:`show listsize <show_listsize>` to see or set the number of source-code lines to list.
-	:ref:`help syntax location` for the specification of a location and :ref:`help syntax range` for the specification of a range.
+x	:ref:`help syntax location <syntax_location>` for the specification of a location and :ref:`help syntax range <syntax_range>` for the specification of a range.

@@ -17,9 +17,10 @@ offset.
 A number is just a decimal number. An offset is a number prefaced with "+" and
 indicates the number to increment the line number found in *first*.
 
-Examples
---------
+Examples:
+---------
 
+::
     5                    # start from line 5 of current file
     5 ,                  # Same as above.
     , 5                 # listsize lines before and up to 5

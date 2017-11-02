@@ -7,5 +7,6 @@ Command Syntax
    syntax/arange
    syntax/command
    syntax/examples
+   syntax/filename
    syntax/range
    syntax/suffixes

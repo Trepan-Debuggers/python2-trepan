@@ -22,12 +22,11 @@ Examples
 --------
 
 ::
-  
+
   *5                 # start from bytecode offset 5 of current file
   *5 ,                 # Same as above.
   foo.py:*5            # start from bytecode offset 5 of file foo.py
-  
 
-See also
----------
-  `help syntax location`
+
+.. seealso::
+  :ref:`help syntax location <syntax_location>`

@@ -39,4 +39,4 @@ Examples
 See also:
 ---------
 
-`help syntax location`
+`help syntax location <syntax_location>`

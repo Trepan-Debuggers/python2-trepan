@@ -52,7 +52,8 @@ def cache_from_source(path, debug_override=None):
 class DisassembleCommand(Mbase_cmd.DebuggerCommand):
     """**disassemble** [*thing*]disassemble [*addresss-range*]
 
-Disassembles bytecode. See `help syntax range` for what can go in a list range.
+Disassembles bytecode. See `help syntax arange` for what can go in a
+assembly-list range.
 
 Without arguments, print lines starting from where the last list left off
 since the last entry to the debugger. We start off at the location indicated
@@ -81,6 +82,10 @@ Examples:
    disassemble *0, *10              # Disassemble offset 0-10
    disassemble myprog.pyc           # Disassemble file myprog.pyc
 
+See also:
+---------
+
+`help syntax arange`, `deparse`, `list`, `info pc`.
 """
 
     aliases       = ('disasm',)  # Note: we will have disable

@@ -38,7 +38,6 @@ Examples
     , 'My Doc/foo.py':20 # listsize lines ending at line 20 of file: My Doc/foo.py
 
 
-See also:
----------
+.. seealso::
 
-`help syntax location <syntax_location>`
+:ref:`help syntax location <syntax_location>`

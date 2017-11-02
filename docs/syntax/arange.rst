@@ -31,4 +31,5 @@ Examples
 
 
 .. seealso::
-  :ref:`help syntax location <syntax_location>`
+
+:ref:`help syntax location <syntax_location>`

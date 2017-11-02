@@ -32,6 +32,8 @@ quotes, double quotes or triple double as you would do in Python
 Examples:
 +++++++++
 
+::
+
     10                   # line 10 of the most-recently used path
     myfile.py:2          # line 2 of myfile.py where the directory name is
                          #resolved from `sys.path`
@@ -59,6 +61,8 @@ variables or the function indicated in an instance method.
 
 For example consider this program:
 
+::
+
     class Foo():
         def food(): return
     f = Foo()
@@ -67,6 +71,8 @@ For example consider this program:
 
 If you are stopped at the last line `x = 2`. You can specify the function `food`
 as either of these ways:
+
+::
 
    Foo.food()
    f.food()
@@ -101,6 +107,8 @@ paths.
 
 Examples:
 +++++++++
+
+::
 
     os.path:45  # Line 45 of the file that contains os.path
     os:1        # First line of module os

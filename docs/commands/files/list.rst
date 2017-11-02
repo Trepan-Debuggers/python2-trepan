@@ -27,7 +27,6 @@ Examples:
 +++++++++
 
 ::
-
     list 5               # List starting from line 5 of current file
     list 5 ,             # Same as above.
     list , 5             # list listsize lines before and up to 5
@@ -45,5 +44,4 @@ Examples:
 
 .. seealso::
 
-   :ref:`set listize <set_listsize>`, or :ref:`show listsize <show_listsize>` to see or set the number of source-code lines to list.
-x	:ref:`help syntax location <syntax_location>` for the specification of a location and :ref:`help syntax range <syntax_range>` for the specification of a range.
+   :ref:`set listize <set_listsize>`, or :ref:`show listsize <show_listsize>` to see or set the number of source-code lines to list. :ref:`help syntax location <syntax_location>` for the specification of a location and :ref:`help syntax range <syntax_range>` for the specification of a range.

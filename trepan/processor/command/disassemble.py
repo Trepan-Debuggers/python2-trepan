@@ -50,10 +50,11 @@ def cache_from_source(path, debug_override=None):
     return os.path.join(head, filename)
 
 class DisassembleCommand(Mbase_cmd.DebuggerCommand):
-    """**disassemble** [*thing*]disassemble [*addresss-range*]
+    """**disassemble** [*thing*]
 
-Disassembles bytecode. See `help syntax arange` for what can go in a
-assembly-list range.
+disassemble [*addresss-range*]
+
+Disassembles bytecode. See `help syntax range` for what can go in a list range.
 
 Without arguments, print lines starting from where the last list left off
 since the last entry to the debugger. We start off at the location indicated
@@ -108,7 +109,7 @@ See also:
         if bytecode_file is None: return
 
         opts = {'highlight': self.settings['highlight'],
-                'start_line': None,
+                'start_line': 1,
                 'end_line': None,
                 'start_offset': None,
                 'end_offset': None,

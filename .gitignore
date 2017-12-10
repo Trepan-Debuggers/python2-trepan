@@ -4,6 +4,7 @@
 *~
 .python-version
 /*.egg
+/.cache
 /.eggs
 /.tox
 /ChangeLog

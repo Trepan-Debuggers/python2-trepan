@@ -46,11 +46,12 @@ author_email       = "rocky@gnu.org"
 ftp_url            = None
 install_requires   = ['columnize >= 0.3.9',
                       'nose==1.0.0',
-                      'pyficache >= 0.3.1',
+                      'pyficache >= 0.3.2',
                       'pygments  == 1.4',
                       'spark_parser >= 1.7.2, <1.8.0',
                       'uncompyle6 >= 2.13.3',
                       'tracer >= 0.3.2',
+                      'unittest2',
                       'xdis >= 3.6.1, < 3.7.0',
                       ]
 license            = 'GPL3'

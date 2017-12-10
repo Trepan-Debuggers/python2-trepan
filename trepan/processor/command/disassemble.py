@@ -53,7 +53,9 @@ def cache_from_source(path, debug_override=None):
     return os.path.join(head, filename)
 
 class DisassembleCommand(Mbase_cmd.DebuggerCommand):
-    """**disassemble** [*thing*]disassemble [*addresss-range*]
+    """**disassemble** [*thing*]
+
+disassemble [*addresss-range*]
 
 Disassembles bytecode. See `help syntax range` for what can go in a list range.
 
@@ -84,6 +86,10 @@ Examples:
    disassemble *0, *10              # Disassemble offset 0-10
    disassemble myprog.pyc           # Disassemble file myprog.pyc
 
+See also:
+---------
+
+`help syntax arange`, `deparse`, `list`, `info pc`.
 """
 
     aliases       = ('disasm',)  # Note: we will have disable
@@ -106,7 +112,7 @@ Examples:
         if bytecode_file is None: return
 
         opts = {'highlight': self.settings['highlight'],
-                'start_line': None,
+                'start_line': 1,
                 'end_line': None,
                 'start_offset': None,
                 'end_offset': None,

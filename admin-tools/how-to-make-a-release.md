@@ -59,6 +59,15 @@
     $ . ./admin-tools/make-dist-newer.sh
 	$ pyenv local 3.8.6 &&  twine check dist/trepan2-$__version__* && pyenv local 2.7.18
 
+# Make packages and tag
+
+    $ . ./admin-tools/make-dist-older.sh
+    $ git tag release-python-2.4-$VERSION
+
+    $ . /admin-tools/make-dist-newer.sh
+    $ git tag release-$VERSION
+
+# Upload single package and look at Rst Formating
 
 # Check package on github
 

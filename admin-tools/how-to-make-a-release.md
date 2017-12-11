@@ -61,7 +61,7 @@ http://rst.ninjs.org
     $ . ./admin-tools/make-dist-older.sh
     $ git tag release-python-2.4-$VERSION
 
-    $ . /admin-tools/make-dist-newer.sh
+    $ . ./admin-tools/make-dist-newer.sh
     $ git tag release-$VERSION
 
 # Upload single package and look at Rst Formating

@@ -70,7 +70,7 @@ http://rst.ninjs.org
 
 # Upload rest of versions
 
-    $ twine upload dist/uncompyle6-${VERSION}*
+    $ twine upload dist/trepan2-${VERSION}*
 
 # Push tags:
 

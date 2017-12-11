@@ -13,8 +13,11 @@ class GeneralTests(unittest.TestCase):
         srcdir = osp.abspath(osp.dirname(__file__))
         datadir   = osp.join(srcdir, '..', 'data')
 
-        if sys.version_info[0:2] <= (2, 4):
+        vers_info = sys.version_info[0:2]
+        if vers_info <= (2, 4):
             rightfile = osp.join(datadir, "macro-2.4.right")
+        elif vers_info == (2, 5):
+            rightfile = osp.join(datadir, "macro-2.5.right")
         else:
             rightfile = osp.join(datadir, "macro.right")
 

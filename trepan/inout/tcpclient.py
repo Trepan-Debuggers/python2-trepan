@@ -115,23 +115,23 @@ class TCPClient(DebuggerInOutBase):
 
     pass
 
-# Demo
-if __name__=='__main__':
-    inout = TCPClient(opts={'open': False})
-    import sys
-    if len(sys.argv) > 1:
-        print 'Connecting...',
-        inout.open()
-        print('connected.')
-        while True:
-            line = raw_input('nu? ')
-            if len(line) == 0: break
-            try:
-                line = inout.writeline(line)
-                print("Got: ", inout.read_msg().rstrip('\n'))
-            except EOFError:
-                break
-            pass
-        pass
-    inout.close()
-    pass
+# # Demo
+# if __name__=='__main__':
+#     inout = TCPClient(opts={'open': False})
+#     import sys
+#     if len(sys.argv) > 1:
+#         print('Connecting...',)
+#         inout.open()
+#         print('connected.')
+#         while True:
+#             line = raw_input('nu? ')
+#             if len(line) == 0: break
+#             try:
+#                 line = inout.writeline(line)
+#                 print("Got: ", inout.read_msg().rstrip('\n'))
+#             except EOFError:
+#                 break
+#             pass
+#         pass
+#     inout.close()
+#     pass

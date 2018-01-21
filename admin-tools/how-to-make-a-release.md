@@ -21,7 +21,7 @@
 
 # Change version in uncompyle6/version.py:
 
-	$ emacs uncompyle6/version.py
+	$ emacs trepan/version.py
     $ source trepan/version.py
     $ echo $VERSION
     $ git commit -m"Get ready for release $VERSION" .
@@ -61,7 +61,7 @@ http://rst.ninjs.org
     $ . ./admin-tools/make-dist-older.sh
     $ git tag release-python-2.4-$VERSION
 
-    $ . /admin-tools/make-dist-newer.sh
+    $ . ./admin-tools/make-dist-newer.sh
     $ git tag release-$VERSION
 
 # Upload single package and look at Rst Formating
@@ -70,7 +70,7 @@ http://rst.ninjs.org
 
 # Upload rest of versions
 
-    $ twine upload dist/uncompyle6-${VERSION}*
+    $ twine upload dist/trepan2-${VERSION}*
 
 # Push tags:
 

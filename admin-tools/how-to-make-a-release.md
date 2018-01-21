@@ -2,7 +2,7 @@
 **Table of Contents**
 
 - [Get latest sources:](#get-latest-sources)
-- [Change version in uncompyle6/version.py](#change-version-in-uncompyle6versionpy)
+- [Change version in trepan2/version.py](#change-version-in-trepan26versionpy)
 - [Update ChangeLog:](#update-changelog)
 - [Update NEWS from ChangeLog:](#update-news-from-changelog)
 - [Make sure pyenv is running and check newer versions](#make-sure-pyenv-is-running-and-check-newer-versions)
@@ -19,7 +19,7 @@
 
     $ git pull
 
-# Change version in uncompyle6/version.py:
+# Change version in trepan/version.py:
 
 	$ emacs trepan/version.py
     $ source trepan/version.py

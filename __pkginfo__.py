@@ -1,4 +1,4 @@
-# Copyright (C) 2008-2010, 2013-2017 Rocky Bernstein <rocky@gnu.org>
+# Copyright (C) 2008-2010, 2013-2018 Rocky Bernstein <rocky@gnu.org>
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
 
 # Things that change more often go here.
 copyright   = """
-Copyright (C) 2008-2010, 2013-2017 Rocky Bernstein <rocky@gnu.org>.
+Copyright (C) 2008-2010, 2013-2018 Rocky Bernstein <rocky@gnu.org>.
 """
 
 classifiers =  ['Development Status :: 5 - Production/Stable',
@@ -47,12 +47,12 @@ ftp_url            = None
 install_requires   = ['columnize >= 0.3.9',
                       'nose>=1.0.0',
                       'pyficache >= 0.3.2',
-                      'pygments  >= 2.0.2',
-                      'spark_parser >= 1.8.4, <1.9.0',
-                      'uncompyle6 >= 2.14.1',
+                      'pygments  >= 2.2.0',
+                      'spark_parser >= 1.8.5, <1.9.0',
+                      'uncompyle6 >= 2.14.3',
                       'tracer >= 0.3.2',
                       'unittest2',
-                      'xdis >= 3.6.3, < 3.7.0',
+                      'xdis >= 3.6.7 < 3.7.0',
                       ]
 license            = 'GPL3'
 mailing_list       = 'python-debugger@googlegroups.com'

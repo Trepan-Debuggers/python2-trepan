@@ -1,4 +1,4 @@
-|buildstatus| |license| |Supported Python Versions|
+|buildstatus| |license|
 
 .. contents:: :local:
 
@@ -255,4 +255,3 @@ See Also
 .. _eval: https://python2-trepan.readthedocs.org/en/latest/commands/data/eval.html
 .. _step: https://python2-trepan.readthedocs.org/en/latest/commands/running/step.html
 .. _install: http://python2-trepan.readthedocs.org/en/latest/install.html
-.. |Supported Python Versions| image:: https://img.shields.io/pypi/pyversions/trepan2.svg

@@ -66,7 +66,7 @@ http://rst.ninjs.org
 
 # Upload single package and look at Rst Formating
 
-    $ twine upload dist/trepan2-${VERSION}-py2.6.egg
+    $ twine upload dist/trepan2-${VERSION}-py2.5.egg
 
 # Upload rest of versions
 

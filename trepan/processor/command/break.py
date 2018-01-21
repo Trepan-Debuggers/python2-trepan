@@ -75,7 +75,10 @@ See also:
     complete= Mcomplete.complete_break_linenumber
 
     def run(self, args):
-        force = True if args[0][-1] == '!' else False
+        if args[0][-1] == '!':
+            force = True
+        else:
+            force = False
         (func, filename, lineno,
          condition) = Mcmdbreak.parse_break_cmd(self.proc, args)
         if not (func == None and filename == None):

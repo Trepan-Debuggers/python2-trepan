@@ -2,6 +2,7 @@ trepan 0.8.3 2018-01-21
 
 - Add break! and b! aliases to force setting a breakpoint on a line
 - Update rst
+- print p and pr mean the same thing
 
 trepan 0.8.2 2017-12-10
 

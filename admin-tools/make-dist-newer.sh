@@ -1,5 +1,5 @@
 #!/bin/bash
-PACKAGE=uncompyle6
+PACKAGE=trepan2
 
 # FIXME put some of the below in a common routine
 function finish {
@@ -18,7 +18,7 @@ if ! source ./setup-master.sh ; then
 fi
 
 cd ..
-source $PACKAGE/version.py
+source trepan/version.py
 echo $VERSION
 
 for pyversion in $PYVERSIONS; do

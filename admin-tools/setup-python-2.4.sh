@@ -4,7 +4,7 @@ PYTHON_VERSION=2.4.6
 function checkout_version {
     local repo=$1
     version=${2:-python-2.4}
-    echo Checking out $version.4 on $repo ...
+    echo Checking out python-2.4 on $repo ...
     (cd ../$repo && git checkout $version && pyenv local $PYTHON_VERSION) && \
 	git pull
     return $?
@@ -20,10 +20,10 @@ fi
 mydir=$(dirname $bs)
 fulldir=$(readlink -f $mydir)
 cd $fulldir/..
-(cd ../python-spark && git checkout python-2.4 && pyenv local $PYTHON_VERSION) && git pull && \
-    (cd ../python-filecache && git checkout python-2.4) && \
-    (cd ../python-xdis && git checkout python-2.4 && pyenv local $PYTHON_VERSION) && git pull && \
-    (cd ../python-uncompyle6 && git checkout python-2.4 && pyenv local $PYTHON_VERSION) && git pull && \
-    git checkout python-2.4 &&  pyenv local $PYTHON_VERSION && git pull
+checkout_version python-spark && \
+checkout_version python-filecache && \
+checkout_version python-xdis && \
+checkout_version python-uncompyle6 && \
+git checkout python-2.4 &&  pyenv local $PYTHON_VERSION && git pull
 cd $owd
 git checkout python-2.4 &&  pyenv local $PYTHON_VERSION && git pull

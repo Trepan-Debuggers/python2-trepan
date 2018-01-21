@@ -4,13 +4,18 @@
 - [Get latest sources:](#get-latest-sources)
 - [Change version in trepan/version.py:](#change-version-in-trepanversionpy)
 - [Update ChangeLog:](#update-changelog)
-- [Update NEWS.md from ChangeLog:](#update-news-from-changelog)
+- [Update NEWS.md from ChangeLog:](#update-newsmd-from-changelog)
 - [Make sure pyenv is running and check newer versions](#make-sure-pyenv-is-running-and-check-newer-versions)
 - [Switch to python-2.4, sync that up and build that first since it creates a tarball which we don't want.](#switch-to-python-24-sync-that-up-and-build-that-first-since-it-creates-a-tarball-which-we-dont-want)
 - [Check against older versions](#check-against-older-versions)
 - [Make packages and tag](#make-packages-and-tag)
-- [Upload](#upload)
+- [Make packages and tag](#make-packages-and-tag-1)
+- [Upload single package and look at Rst Formating](#upload-single-package-and-look-at-rst-formating)
+- [Check package on github](#check-package-on-github)
+- [Release on github](#release-on-github)
+- [Get on PyPI](#get-on-pypi)
 - [Push tags:](#push-tags)
+- [Move dist files to uploaded](#move-dist-files-to-uploaded)
 
 <!-- markdown-toc end -->
 # Get latest sources:

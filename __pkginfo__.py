@@ -59,7 +59,7 @@ install_requires   = ['columnize >= 0.3.9',
                       'spark_parser >= 1.7.2, <1.8.0',
                       'uncompyle6 >= 2.13.3',
                       'tracer >= 0.3.2',
-                      'xdis >= 3.6.3, < 3.7.0',
+                      'xdis >= 3.6.9, < 3.7.0',
                       ]
 license            = 'GPL3'
 mailing_list       = 'python-debugger@googlegroups.com'
@@ -83,7 +83,6 @@ namespace_packages = [
 ]
 py_modules         = None
 short_desc         = 'GDB-like Python Debugger in the Trepan family'
->>>>>>> d57a991 (colummnize 0.3.9 has fixes for Python 2.4-2.5)
 
 entry_points = {
     "console_scripts": [

@@ -1,6 +1,15 @@
 #!/bin/bash
 PYTHON_VERSION=2.4.6
 
+function checkout_version {
+    local repo=$1
+    echo Checking out master on $repo ...
+    (cd ../$repo && git checkout master && pyenv local $PYTHON_VERSION) && \
+	git pull
+    return $?
+}
+
+export PATH=$HOME/.pyenv/bin/pyenv:$PATH
 owd=$(pwd)
 bs=${BASH_SOURCE[0]}
 if [[ $0 == $bs ]] ; then
@@ -10,9 +19,9 @@ fi
 mydir=$(dirname $bs)
 fulldir=$(readlink -f $mydir)
 cd $fulldir/..
-(cd ../python-spark && git checkout python-2.4 && pyenv local $PYTHON_VERSION) && git pull && \
-    (cd ../python-filecache && git checkout python-2.4) && \
-    (cd ../python-xdis && git checkout python-2.4 && pyenv local $PYTHON_VERSION) && git pull && \
-    (cd ../python-uncompyle6 && git checkout python-2.4 && pyenv local $PYTHON_VERSION) && git pull && \
-    git checkout python-2.4 &&  pyenv local $PYTHON_VERSION && git pull
+checkout_version python-spark && \
+checkout_version python-filecache && \
+checkout_version python-xdis && \
+checkout_version python-uncompyle6 && \
+git checkout python-2.4 &&  pyenv local $PYTHON_VERSION && git pull
 cd $owd

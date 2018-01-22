@@ -18,7 +18,7 @@ if ! source ./setup-master.sh ; then
 fi
 
 cd ..
-source $PACKAGE/version.py
+source trepan/version.py
 echo $VERSION
 
 for pyversion in $PYVERSIONS; do

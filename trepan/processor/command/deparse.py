@@ -18,7 +18,6 @@ from getopt import getopt, GetoptError
 from uncompyle6.semantics.fragments import deparse_code, deparse_code_around_offset
 from uncompyle6.semantics.pysource import deparse_code as deparse_code_pretty
 from trepan.lib.bytecode import op_at_code_loc
-from sys import version_info
 from StringIO import StringIO
 from pyficache import highlight_string
 from xdis import IS_PYPY
@@ -144,6 +143,12 @@ See also:
         except:
             self.errmsg(sys.exc_info()[1])
             return
+
+        try:
+            float_version = py_str2float(sys_version)
+        except:
+            self.errmsg(sys.exc_info()[1])
+            return
         if len(args) >= 1 and args[0] == '.':
             try:
                 if not pretty:
@@ -162,7 +167,7 @@ See also:
             self.print_text(text)
             return
         elif show_offsets:
-            deparsed = deparse_code(sys_version, co, is_pypy=IS_PYPY)
+            deparsed = deparse_code(float_version, co, is_pypy=IS_PYPY)
             self.section("Offsets known:")
             m = self.columnize_commands(list(sorted(deparsed.offsets.keys(),
                                                     key=lambda x: str(x[0]))))
@@ -179,11 +184,11 @@ See also:
             if last_i == -1: last_i = 0
 
         try:
-           deparsed = deparse_code(sys_version, co)
+           deparsed = deparse_code(float_version, co)
            nodeInfo = deparsed_find((name, last_i), deparsed, co)
            if not nodeInfo:
                self.errmsg("Can't find exact offset %d; giving inexact results" % last_i)
-               deparsed = deparse_code_around_offset(co.co_name, last_i, sys_version, co)
+               deparsed = deparse_code_around_offset(co.co_name, last_i, float_version, co)
         except:
             self.errmsg(sys.exc_info()[1])
             self.errmsg("error in deparsing code at offset %d" % last_i)
@@ -230,20 +235,12 @@ See also:
         return
     pass
 
-# if __name__ == '__main__':
-#     import sys
-#     from trepan import debugger as Mdebugger
-#     d = Mdebugger.Trepan()
-#     command = PythonCommand(d.core.processor)
-#     command.proc.frame = sys._getframe()
-#     command.proc.setup()
-#     if len(sys.argv) > 1:
-#         print("Type Python commands and exit to quit.")
-#         print(sys.argv[1])
-#         if sys.argv[1] == '-d':
-#             print(command.run(['bpy', '-d']))
-#         else:
-#             print(command.run(['bpy']))
-#             pass
-#         pass
-#     pass
+if __name__ == '__main__':
+    from trepan import debugger
+    d            = debugger.Debugger()
+    cp           = d.core.processor
+    command      = DeparseCommand(d.core.processor)
+    command.proc.frame = sys._getframe()
+    command.proc.setup()
+    command.run(['deparse'])
+    pass

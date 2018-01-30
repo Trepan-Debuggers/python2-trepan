@@ -46,13 +46,13 @@ author_email       = "rocky@gnu.org"
 ftp_url            = None
 install_requires   = ['columnize >= 0.3.9',
                       'nose>=1.0.0, <= 1.3.4',
-                      'pyficache >= 0.3.2',
+                      'pyficache >= 1.0.0',
                       'pygments == 2.0.0',
                       'spark_parser >= 1.8.5, <1.9.0',
-                      'uncompyle6 >= 2.14.3',
+                      'uncompyle6 >= 2.15.0',
                       'tracer >= 0.3.2',
                       'unittest2',
-                      'xdis >= 3.6.7, < 3.7.0',
+                      'xdis >= 3.6.9, < 3.7.0',
                       ]
 license            = 'GPL3'
 mailing_list       = 'python-debugger@googlegroups.com'

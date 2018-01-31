@@ -26,7 +26,8 @@ _with_local_varname = re.compile(r'_\[[0-9+]\]')
 
 class InfoLocals(Mbase_subcmd.DebuggerSubcommand):
     """**info locals** [*var1 ...*]
-**info locals** \*
+
+**info locals** *
 
 With no arguments, show all of the local variables of the current stack
 frame. If a list of names is provide limit display to just those

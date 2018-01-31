@@ -22,7 +22,8 @@ from trepan.lib import pp as Mpp
 
 class InfoGlobals(Mbase_subcmd.DebuggerSubcommand):
     """**info globals** [*var1 ...*]
-**info globals** \*
+
+**info globals** *
 
 With no arguments, show all of the global variables of the current stack
 frame. If a list of names is provide limit display to just those

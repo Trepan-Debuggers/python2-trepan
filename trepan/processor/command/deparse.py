@@ -21,7 +21,7 @@ from trepan.lib.bytecode import op_at_code_loc
 from StringIO import StringIO
 from pyficache import highlight_string
 from xdis import IS_PYPY
-from xdis.magics import py_str2float
+from xdis.magics import sysinfo2float
 
 # Our local modules
 from trepan.processor.command import base_cmd as Mbase_cmd
@@ -137,22 +137,16 @@ See also:
         pass
         nodeInfo = None
 
-        sys_version = sys.version[:5]
         try:
-            float_version = py_str2float(sys_version)
-        except:
-            self.errmsg(sys.exc_info()[1])
-            return
-
-        try:
-            float_version = py_str2float(sys_version)
+            float_version = sysinfo2float()
         except:
             self.errmsg(sys.exc_info()[1])
             return
         if len(args) >= 1 and args[0] == '.':
             try:
                 if not pretty:
-                    deparsed = deparse_code(float_version, co, is_pypy=IS_PYPY)
+                    deparsed = deparse_code(float_version, co,
+                                            is_pypy=IS_PYPY)
                     text = deparsed.text
                 else:
                     out = StringIO()
@@ -184,11 +178,13 @@ See also:
             if last_i == -1: last_i = 0
 
         try:
-           deparsed = deparse_code(float_version, co)
+           deparsed = deparse_code(float_version, co, is_pypy=IS_PYPY)
            nodeInfo = deparsed_find((name, last_i), deparsed, co)
            if not nodeInfo:
                self.errmsg("Can't find exact offset %d; giving inexact results" % last_i)
-               deparsed = deparse_code_around_offset(co.co_name, last_i, float_version, co)
+               deparsed = deparse_code_around_offset(co.co_name, last_i,
+                                                     float_version, co,
+                                                     is_pypy=IS_PYPY)
         except:
             self.errmsg(sys.exc_info()[1])
             self.errmsg("error in deparsing code at offset %d" % last_i)

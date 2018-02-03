@@ -16,10 +16,10 @@
 import os, sys
 from getopt import getopt, GetoptError
 from uncompyle6.semantics.fragments import deparse_code, deparse_code_around_offset
-from uncompyle6.semantics.pysource import deparse_code as deparse_code_pretty
+from trepan.lib.deparse import deparse_and_cache
 from trepan.lib.bytecode import op_at_code_loc
 from StringIO import StringIO
-from pyficache import highlight_string
+from pyficache import highlight_string, getlines
 from xdis import IS_PYPY
 from xdis.magics import sysinfo2float
 
@@ -48,20 +48,16 @@ Options:
 ------
 
     -p | --parent        show parent node
-    -P | --pretty        show pretty output
     -A | --tree | --AST  show abstract syntax tree (AST)
     -o | --offset [num]  show deparse of offset NUM
     -h | --help          give this help
 
-deparse around where the program is currently stopped. If no offset is given,
-we use the current frame offset. If `-p` is given, include parent information.
+    deparse around where the program is currently stopped. If no offset is
+    given, we use the current frame offset. If `-p` is given, include parent
+    information.
 
 If an '.' argument is given, deparse the entire function or main
-program you are in.  The `-P` parameter determines whether to show the
-prettified as you would find in source code, or in a form that more
-closely matches a literal reading of the bytecode with hidden (often
-extraneous) instructions added. In some cases this may even result in
-invalid Python code.
+program you are in.
 
 Output is colorized the same as source listing. Use `set highlight plain` to turn
 that off.
@@ -112,7 +108,6 @@ See also:
             print(str(err))  # will print something like "option -a not recognized"
             return
 
-        pretty = False
         show_parent = False
         show_ast = False
         offset = None
@@ -125,8 +120,6 @@ See also:
                 show_offsets = True
             elif o in ("-p", "--parent"):
                 show_parent = True
-            elif o in ("-P", "--pretty"):
-                pretty = True
             elif o in ("-A", "--tree", '--AST'):
                 show_ast = True
             elif o in ("-o", '--offset'):
@@ -143,22 +136,10 @@ See also:
             self.errmsg(sys.exc_info()[1])
             return
         if len(args) >= 1 and args[0] == '.':
-            try:
-                if not pretty:
-                    deparsed = deparse_code(float_version, co,
-                                            is_pypy=IS_PYPY)
-                    text = deparsed.text
-                else:
-                    out = StringIO()
-                    deparsed = deparse_code_pretty(float_version, co, out,
-                                                   is_pypy=IS_PYPY)
-                    text = out.getvalue()
-                    pass
-            except:
-                self.errmsg(sys.exc_info()[0])
-                self.errmsg("error in deparsing code")
+            temp_filename, name_for_code = deparse_and_cache(co, self.errmsg)
+            if not temp_filename:
                 return
-            self.print_text(text)
+            self.print_text(''.join(getlines(temp_filename)))
             return
         elif show_offsets:
             deparsed = deparse_code(float_version, co, is_pypy=IS_PYPY)

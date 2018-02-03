@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009, 2012-2017 Rocky Bernstein
+#   Copyright (C) 2009, 2012-2018 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -21,6 +21,9 @@ from pygments.console import colorize
 # Our local modules
 from trepan.processor.command import base_cmd as Mbase_cmd
 from trepan.processor.cmdlist import parse_list_cmd
+from trepan.processor import cmdproc as Mcmdproc
+from trepan.lib.deparse import deparse_and_cache
+from pyficache import pyc2py # , unmap_file_line
 
 
 class ListCommand(Mbase_cmd.DebuggerCommand):
@@ -80,8 +83,26 @@ of a range.
         listsize = dbg_obj.settings['listsize']
         filename, first, last = parse_list_cmd(proc, args, listsize)
         curframe = proc.curframe
+
         if filename is None: return
+
+        # Sometimes such as due to decompilation we might not really
+        # have an idea based on the listing where we really are.
+        # Setting "show_marks" to false will disable marking breakpoint
+        # and current line numbers.
+        show_marks = True
+
         filename = pyficache.unmap_file(pyficache.pyc2py(filename))
+
+        if filename == "<string>" and proc.curframe.f_code:
+            # Deparse the code object into a temp file and remap the line from code
+            # into the corresponding line of the tempfile
+            co = proc.curframe.f_code
+            temp_filename, name_for_code = deparse_and_cache(co, proc.errmsg)
+            if temp_filename:
+                filename = temp_filename
+                show_marks = False
+            pass
 
         # We now have range information. Do the listing.
         max_line = pyficache.size(filename)
@@ -128,7 +149,8 @@ of a range.
                     line = line.rstrip('\n')
                     s = proc._saferepr(lineno).rjust(3)
                     if len(s) < 5: s += ' '
-                    if (canonic_filename, lineno,) in list(bplist.keys()):
+                    if (show_marks and
+                        (canonic_filename, lineno,) in list(bplist.keys())):
                         bp    = bplist[(canonic_filename, lineno,)][0]
                         a_pad = '%02d' % bp.number
                         s    += bp.icon_char()
@@ -136,7 +158,8 @@ of a range.
                         s    += ' '
                         a_pad = '  '
                         pass
-                    if curframe and lineno == inspect.getlineno(curframe):
+                    if (curframe and lineno == inspect.getlineno(curframe)
+                        and show_marks):
                         s += '->'
                         if 'plain' != self.settings['highlight']:
                             s = colorize('bold', s)

@@ -70,10 +70,6 @@ packages = [
     'trepan.processor.command.show_subcmd',
     'trepan.processor.parse',
 ]
-namespace_packages = [
-    'trepan',
-    'trepan.processor',
-]
 py_modules         = None
 short_desc         = 'GDB-like Python Debugger in the Trepan family'
 

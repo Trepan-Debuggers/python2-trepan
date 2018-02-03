@@ -27,6 +27,7 @@ def deparse_and_cache(co, errmsg_fn, tempdir=None):
         deparse_cache[co] = deparsed
 
     text = out.getvalue()
+    deparsed = deparse_code_with_map(float_version, co, is_pypy=IS_PYPY)
     linemap = [(line_no, deparsed.source_linemap[line_no])
                    for line_no in
                    sorted(deparsed.source_linemap.keys())]
@@ -42,7 +43,6 @@ def deparse_and_cache(co, errmsg_fn, tempdir=None):
     map_line = "\n\n# %s" % linemap
     fd.write(map_line.encode('utf-8'))
     remapped_file = fd.name
-    fd.close()
     # FIXME remap filename to a short name.
     pyficache.remap_file_lines(name_for_code, remapped_file,
                                linemap)

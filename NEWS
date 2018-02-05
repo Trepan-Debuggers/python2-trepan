@@ -1,3 +1,13 @@
+trepan 0.8.4 2018-02-5
+
+- Add "break!" to set a breakpoint whether trepan thinks
+  there is a breakpoint
+- Cache deparse info
+- "set style" improvements
+- Handle PyPy better
+- "info locals *" and "info globals *" will list names
+   in columnar form omitting values
+
 trepan 0.8.3 2018-01-21
 
 - Add break! and b! aliases to force setting a breakpoint on a line

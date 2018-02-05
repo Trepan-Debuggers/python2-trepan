@@ -2,7 +2,7 @@
 **Table of Contents**
 
 - [Get latest sources:](#get-latest-sources)
-- [Change version in trepan/version.py:](#change-version-in-trepanversionpy)
+- [Change version in uncompyle6/version.py:](#change-version-in-uncompyle6versionpy)
 - [Update ChangeLog:](#update-changelog)
 - [Update NEWS.md from ChangeLog:](#update-newsmd-from-changelog)
 - [Make sure pyenv is running and check newer versions](#make-sure-pyenv-is-running-and-check-newer-versions)
@@ -10,6 +10,7 @@
 - [Check against older versions](#check-against-older-versions)
 - [Make packages and tag](#make-packages-and-tag)
 - [Make packages and tag](#make-packages-and-tag-1)
+- [make check-rst or better check via:](#make-check-rst-or-better-check-via)
 - [Upload single package and look at Rst Formating](#upload-single-package-and-look-at-rst-formating)
 - [Check package on github](#check-package-on-github)
 - [Release on github](#release-on-github)
@@ -22,7 +23,7 @@
 
     $ git pull
 
-# Change version in trepan/version.py:
+# Change version in uncompyle6/version.py:
 
 	$ emacs trepan/version.py
     $ source trepan/version.py
@@ -56,6 +57,7 @@
 
     $ source admin-tools/check-older-versions.sh
 
+<<<<<<< HEAD
 # Make packages and tag
 
     $ . ./admin-tools/make-dist-older.sh
@@ -64,6 +66,8 @@
     $ . ./admin-tools/make-dist-newer.sh
 	$ pyenv local 3.8.6 &&  twine check dist/trepan2-$__version__* && pyenv local 2.7.18
 
+=======
+>>>>>>> 78b285f (Administrivia)
 # Make packages and tag
 
     $ . ./admin-tools/make-dist-older.sh
@@ -71,6 +75,10 @@
 
     $ . /admin-tools/make-dist-newer.sh
     $ git tag release-$VERSION
+
+# make check-rst or better check via:
+
+http://rst.ninjs.org
 
 # Upload single package and look at Rst Formating
 

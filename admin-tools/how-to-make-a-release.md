@@ -2,7 +2,7 @@
 **Table of Contents**
 
 - [Get latest sources:](#get-latest-sources)
-- [Change version in trepan2/version.py](#change-version-in-trepan26versionpy)
+- [Change version in uncompyle6/version.py](#change-version-in-uncompyle6versionpy)
 - [Update ChangeLog:](#update-changelog)
 - [Update NEWS from ChangeLog:](#update-news-from-changelog)
 - [Make sure pyenv is running and check newer versions](#make-sure-pyenv-is-running-and-check-newer-versions)
@@ -19,7 +19,7 @@
 
     $ git pull
 
-# Change version in trepan/version.py:
+# Change version in uncompyle6/version.py:
 
 	$ emacs trepan/version.py
     $ source trepan/version.py
@@ -54,10 +54,6 @@
 
     $ source admin-tools/check-older-versions.sh
 
-# make check-rst or better check via:
-
-http://rst.ninjs.org
-
 # Make packages and tag
 
     $ . ./admin-tools/make-dist-older.sh
@@ -65,6 +61,10 @@ http://rst.ninjs.org
 
     $ . ./admin-tools/make-dist-newer.sh
     $ git tag release-$VERSION
+
+# make check-rst or better check via:
+
+http://rst.ninjs.org
 
 # Upload single package and look at Rst Formating
 

@@ -21,7 +21,7 @@ A gdb-like debugger for Python 2.
 
 A command-line interface (CLI) is provided.
 
-See the `Tutorial <https://github.com/rocky/python2-trepan/wiki/Tutorial>`_ for how to use.
+See the `Tutorial <http://python2-trepan.readthedocs.io/en/latest/entry-exit.html>`_ for how to use.
 
 Features
 ========

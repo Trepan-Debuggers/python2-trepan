@@ -37,7 +37,7 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`search`
 
-.. _Tutorial: https://github.com/rocky/python2-trepan/wiki/Tutorial
+.. _Tutorial: http://python2-trepan.readthedocs.io/en/latest/entry-exit.html
 .. _ipython-trepan: https://github.com/rocky/ipython-trepan
 .. _trepan3k: https://pypi.python.org/pypi/trepan3k
 .. _pydbgr: https://pypi.python.org/pypi/pydbgr

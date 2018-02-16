@@ -86,6 +86,11 @@ exec(open(os.path.join(get_srcdir(), 'trepan', 'version.py')).read(), ns)
 version            = ns['VERSION']
 web                = 'http://github.com/rocky/python2-trepan/'
 
+# VERSION.py sets variable VERSION.
+ns = {}
+exec(open(os.path.join(get_srcdir(), 'trepan', 'version.py')).read(), ns)
+version            = ns['VERSION']
+
 # tracebacks in zip files are funky and not debuggable
 zip_safe = False
 

@@ -4,7 +4,9 @@
 Disassemble (CPython disassembly)
 ---------------------------------
 
-**disassemble** [*thing*]disassemble [*addresss-range*]
+**disassemble** [*thing*]
+
+**disassemble** [*address-range*]
 
 Disassembles bytecode. See `help syntax arange` for what can go in an
 assembly-list range.

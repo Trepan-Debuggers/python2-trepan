@@ -19,7 +19,6 @@ on/off setting value.
 '''
 import os, sys, tempfile
 import pyficache
-from xdis import IS_PYPY
 
 def source_tempfile_remap(prefix, text):
     fd = tempfile.NamedTemporaryFile(suffix='.py',
@@ -34,12 +33,11 @@ def source_tempfile_remap(prefix, text):
 
 def deparse_fn(code):
     try:
-        from uncompyle6.semantics.fragments import deparse_code
+        from uncompyle6.semantics.fragments import code_deparse
     except ImportError:
         return None
-    sys_version = sys.version_info[0] + (sys.version_info[1] / 10.0)
     try:
-        deparsed = deparse_code(sys_version, code, is_pypy=IS_PYPY)
+        deparsed = code_deparse(code)
         return deparsed.text.strip()
     except:
         raise

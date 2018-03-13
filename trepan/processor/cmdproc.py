@@ -30,7 +30,7 @@ from trepan.lib import file as Mfile
 from trepan.lib import stack as Mstack
 from trepan.lib import thred as Mthread
 from trepan.processor import complete as Mcomplete
-from trepan.processor.cmdfns import deparse_fn
+from trepan.processor.cmdfns import deparse_fn, source_tempfile_remap
 from trepan.lib.deparse import deparse_and_cache
 
 # arg_split culled from ipython's routine
@@ -165,6 +165,7 @@ def print_location(proc_obj):
     # the stack.  Hence the looping below which in practices loops
     # once and sometimes twice.
     remapped_file = None
+    source_text = None
     while i_stack >= 0:
         frame_lineno = proc_obj.stack[i_stack]
         i_stack -= 1
@@ -182,16 +183,8 @@ def print_location(proc_obj):
             remapped_file = filename
             filename = pyficache.unmap_file(filename)
             if '<string>' == filename:
-                fd = tempfile.NamedTemporaryFile(suffix='.py',
-                                                 prefix='eval_string',
-                                                 delete=False)
-                with fd:
-                    fd.write(dbgr_obj.eval_string)
-                    fd.close()
-                    pass
-                pyficache.remap_file(fd.name, '<string>')
-                remapped = cmdfns.source_tempfile_remap('eval_string',
-                                                        dbgr_obj.eval_string)
+                remapped = source_tempfile_remap('eval_string',
+                                                 dbgr_obj.eval_string)
                 pyficache.remap_file(filename, remapped)
                 filename = remapped
                 lineno = pyficache.unmap_file_line(filename, lineno)
@@ -222,7 +215,8 @@ def print_location(proc_obj):
         pyficache.update_cache(filename)
         line = pyficache.getline(filename, lineno, opts)
         if not line:
-            if filename.startswith("<string: ") and proc_obj.curframe.f_code:
+            if (not source_text and
+                filename.startswith("<string: ") and proc_obj.curframe.f_code):
                 # Deparse the code object into a temp file and remap the line from code
                 # into the corresponding line of the tempfile
                 co = proc_obj.curframe.f_code
@@ -235,11 +229,16 @@ def print_location(proc_obj):
 
             else:
                 # FIXME:
-                # try with good ol linecache and consider fixing pyficache
-                lines = linecache.getlines(filename)
+                if source_text:
+                    lines = source_text.split("\n")
+                    temp_name='string-'
+                else:
+                    # try with good ol linecache and consider fixing pyficache
+                    lines = linecache.getlines(filename)
+                    temp_name = filename
                 if lines:
                     # FIXME: DRY code with version in cmdproc.py print_location
-                    prefix = os.path.basename(filename).split('.')[0]
+                    prefix = os.path.basename(temp_name).split('.')[0]
                     fd = tempfile.NamedTemporaryFile(suffix='.py',
                                                      prefix=prefix,
                                                      delete=False)

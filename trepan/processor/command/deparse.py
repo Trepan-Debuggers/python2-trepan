@@ -16,7 +16,7 @@
 import os, sys
 from getopt import getopt, GetoptError
 from uncompyle6.semantics.fragments import (
-    deparse_code, deparse_code_around_offset)
+    code_deparse, deparse_code_around_offset)
 from uncompyle6.semantics.fragments import deparsed_find
 from trepan.lib.deparse import deparse_and_cache
 from pyficache import highlight_string, getlines
@@ -126,7 +126,7 @@ See also:
             self.print_text(''.join(getlines(temp_filename)))
             return
         elif show_offsets:
-            deparsed = deparse_code(float_version, co, is_pypy=IS_PYPY)
+            deparsed = code_deparse(co)
             self.section("Offsets known:")
             m = self.columnize_commands(list(sorted(deparsed.offsets.keys(),
                                                     key=lambda x: str(x[0]))))
@@ -143,7 +143,7 @@ See also:
             if last_i == -1: last_i = 0
 
         try:
-           deparsed = deparse_code(float_version, co, is_pypy=IS_PYPY)
+           deparsed = code_deparse(co)
            nodeInfo = deparsed_find((name, last_i), deparsed, co)
            if not nodeInfo:
                self.errmsg("Can't find exact offset %d; giving inexact results" % last_i)

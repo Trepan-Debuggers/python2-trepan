@@ -21,9 +21,7 @@ from pygments.console import colorize
 # Our local modules
 from trepan.processor.command import base_cmd as Mbase_cmd
 from trepan.processor.cmdlist import parse_list_cmd
-from trepan.processor import cmdproc as Mcmdproc
 from trepan.lib.deparse import deparse_and_cache
-from pyficache import pyc2py # , unmap_file_line
 
 
 class ListCommand(Mbase_cmd.DebuggerCommand):

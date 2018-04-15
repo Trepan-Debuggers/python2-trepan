@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2009, 2013, 2015, 2017 Rocky Bernstein
+#  Copyright (C) 2009, 2013, 2015, 2017-2018 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -14,6 +14,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import os
+from getopt import getopt, GetoptError
 
 # Our local modules
 from trepan.processor.command import base_cmd as Mbase_cmd
@@ -22,22 +23,36 @@ from trepan.lib import stack as Mstack
 
 
 class BacktraceCommand(Mbase_cmd.DebuggerCommand):
-    """**backtrace** [*count*]
+    """**backtrace** [*opts*] [*count*]
 
-Print a stack trace, with the most recent frame at the top.  With a
-positive number, print at most many entries.  With a negative number
-print the top entries minus that number.
+Print backtrace of all stack frames, or innermost *count* frames.
+
+With a negative argument, print outermost -*count* frames.
 
 An arrow indicates the 'current frame'. The current frame determines
 the context used for many debugger commands such as expression
 evaluation or source-line listing.
 
-Examples:
+*opts* are:
+
+   -d | --deparse - show deparsed call position
+   -s | --source  - show source code line
+   -f | --full    - locals of each frame
+   -h | --help    - give this help
+
+   backtrace      # Print a full stack trace
+   backtrace 2    # Print only the top two entries
+   backtrace -1   # Print a stack trace except the initial (least recent) call.
+   backtrace -s   # show source lines in listing
+   backtrace -d   # show deparsed source lines in listing
+   backtrace -f   # show with locals
+   backtrace -df  # show with deparsed calls and locals
+   backtrace --deparse --full   # same as above
+
+See also:
 ---------
 
-   backtrace    # Print a full stack trace
-   backtrace 2  # Print only the top two entries
-   backtrace -1 # Print a stack trace except the initial (least recent) call.
+`frame`, `locals`, `global`, `deparse`, `list`.
 """
 
     aliases       = ('bt', 'where')
@@ -53,6 +68,30 @@ Examples:
         return Mframe.frame_complete(proc_obj, prefix, None)
 
     def run(self, args):
+
+        try:
+            opts, args = getopt(args[1:], "hfds",
+                                "help deparse full source".split())
+        except GetoptError as err:
+            # print help information and exit:
+            print(str(err))  # will print something like "option -a not recognized"
+            return
+
+        bt_opts = {'width': self.settings['width']}
+        for o, a in opts:
+            if o in ("-h", "--help"):
+                self.proc.commands['help'].run(['help', 'backtrace'])
+                return
+            elif o in ("-d", "--deparse"):
+                bt_opts['deparse'] = True
+            elif o in ("-f", "--full"):
+                bt_opts['full'] = True
+            elif o in ("-s", "--source"):
+                bt_opts['source'] = True
+            else:
+                self.errmsg("unhandled option '%s'" % o)
+            pass
+
         if len(args) > 1:
             at_most = len(self.proc.stack)
             if at_most == 0:
@@ -75,7 +114,8 @@ Examples:
             self.errmsg("No stack.")
             return False
         Mstack.print_stack_trace(self.proc, count,
-                                 color=self.settings['highlight'])
+                                 color=self.settings['highlight'],
+                                 opts=bt_opts)
         return False
 
     pass

@@ -1,4 +1,4 @@
-#  Copyright (c) 2017 Rocky Bernstein
+#  Copyright (c) 2017-2018 Rocky Bernstein
 """
 Parsing for a trepan2/trepan3k debugger
 "breakpoint' or "list" command arguments
@@ -54,14 +54,14 @@ class LocationParser(GenericASTBuilder):
     def nonterminal(self, nt, args):
         has_len = hasattr(args, '__len__')
 
-        collect = ('tokens',)
-        if nt in collect:
-            #
-            #  Collect iterated thingies together.
-            #
-            rv = args[0]
-            for arg in args[1:]:
-                rv.append(arg)
+        # collect = ('tokens',)
+        # if nt in collect and len(args) > 1:
+        #     #
+        #     #  Collect iterated thingies together.
+        #     #
+        #     rv = args[0]
+        #     for arg in args[1:]:
+        #         rv.append(arg)
 
         if (has_len and len(args) == 1 and
             hasattr(args[0], '__len__') and len(args[0]) == 1):
@@ -161,6 +161,7 @@ def parse_location(start_symbol, text, out=sys.stdout,
     #                 'errorstack': 'full', 'dups': False}
 
     parser = LocationParser(start_symbol, text, parser_debug)
+    # parser.check_grammar(frozenset(('bp_start', 'range_start', 'arange_start')))
     return parser.parse(tokens)
 
 def parse_bp_location(*args, **kwargs):

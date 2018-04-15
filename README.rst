@@ -236,14 +236,13 @@ See Also
 .. _trepanning: https://rubygems.org/gems/trepanning
 .. _debuggers: https://metacpan.org/pod/Devel::Trepan
 .. _this: http://bashdb.sourceforge.net/pydb/features.html
-.. _Tutorial: https://github.com/rocky/python2-trepan/wiki/Tutorial
+.. _Tutorial: http://python2-trepan.readthedocs.io/en/latest/entry-exit.html
 .. |downloads| image:: https://img.shields.io/pypi/dd/trepan.svg
     :target: https://pypi.python.org/pypi/trepan
     :alt: Daily PyPI downloads
 .. |buildstatus| image:: https://travis-ci.org/rocky/python2-trepan.svg
     :target: https://travis-ci.org/rocky/python2-trepan
     :alt: CircleCI Build status
-.. |Latest Version| image:: https://pypip.in/version/trepan/badge.svg?text=version
    :target: https://pypi.python.org/pypi/trepan/
 .. _ipython-trepan: https://github.com/rocky/ipython-trepan
 .. |license| image:: https://img.shields.io/pypi/l/trepan2.svg

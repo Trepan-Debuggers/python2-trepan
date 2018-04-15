@@ -48,10 +48,12 @@ install_requires   = ['columnize >= 0.3.9',
                       'nose>=1.0.0, <= 1.3.7',
                       'pyficache >= 1.0.0',
                       'pygments  == 1.4',
+                      'spark_parser >= 1.8.5, <1.9.0',
+                      'uncompyle6 >= 3.1.1',
                       'uncompyle6 >= 2.13.3',
                       'tracer >= 0.3.2',
                       'unittest2',
-                      'xdis >= 3.6.10, < 3.7.0',
+                      'xdis >= 3.8.0',
                       ]
 license            = 'GPL3'
 mailing_list       = 'python-debugger@googlegroups.com'
@@ -84,6 +86,11 @@ ns = {}
 exec(open(os.path.join(get_srcdir(), 'trepan', 'version.py')).read(), ns)
 version            = ns['VERSION']
 web                = 'http://github.com/rocky/python2-trepan/'
+
+# VERSION.py sets variable VERSION.
+ns = {}
+exec(open(os.path.join(get_srcdir(), 'trepan', 'version.py')).read(), ns)
+version            = ns['VERSION']
 
 # tracebacks in zip files are funky and not debuggable
 zip_safe = False

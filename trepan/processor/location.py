@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-#  Copyright (C) 2017 Rocky Bernstein
+#  Copyright (C) 2017-2018 Rocky Bernstein
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
 #  the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +20,7 @@ import os.path as osp
 from trepan.processor.parse.semantics import Location
 
 INVALID_LOCATION = None
-def resolve_location(proc, location):
+def resolve_location(proc, location, canonic=True):
     """Expand fields in Location namedtuple. If:
        '.':  get fields from stack
        function/module: get fields from evaluation/introspection
@@ -31,7 +31,7 @@ def resolve_location(proc, location):
         if not curframe:
             proc.errmsg("Don't have a stack to get location from")
             return INVALID_LOCATION
-        filename = Mstack.frame2file(proc.core, curframe, canonic=False)
+        filename = Mstack.frame2file(proc.core, curframe, canonic=canonic)
         lineno   = inspect.getlineno(curframe)
         return Location(filename, lineno, False, None)
 
@@ -106,13 +106,13 @@ def resolve_location(proc, location):
                         % (lineno, filename, maxline))
             return INVALID_LOCATION
     elif location.line_number:
-        filename   = Mstack.frame2file(proc.core, curframe, canonic=False)
+        filename   = Mstack.frame2file(proc.core, curframe, canonic=canonic)
         lineno     = location.line_number
         is_address = location.is_address
         modfunc  = None
     return Location(filename, lineno, is_address, modfunc)
 
-def resolve_address_location(proc, location):
+def resolve_address_location(proc, location, canonic=False):
     """Expand fields in Location namedtuple. If:
        '.':  get fields from stack
        function/module: get fields from evaluation/introspection
@@ -120,7 +120,7 @@ def resolve_address_location(proc, location):
     """
     curframe = proc.curframe
     if location == '.':
-        filename = Mstack.frame2file(proc.core, curframe, canonic=False)
+        filename = Mstack.frame2file(proc.core, curframe, canonic=canonic)
         offset   = curframe.f_lasti
         is_address = True
         return Location(filename, offset, False, None)

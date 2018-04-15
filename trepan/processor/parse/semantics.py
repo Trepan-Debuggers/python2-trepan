@@ -1,4 +1,4 @@
-#  Copyright (c) 2017 by Rocky Bernstein
+#  Copyright (c) 2017-2081 by Rocky Bernstein
 # from __future__ import print_function
 
 from trepan.processor.parse.parser import (
@@ -102,7 +102,7 @@ class LocationGrok(GenericASTTraversal, object):
         else:
             assert False, 'location_if: Something is wrong; cannot find "if"'
 
-        condition = self.text[if_node.offset:]
+        condition = self.text[if_node.offset+len(if_node.value)+1:]
 
         # Pick out condition from string and location inside "IF" token
         self.result = BPLocation(location, condition)
@@ -223,15 +223,15 @@ class LocationGrok(GenericASTTraversal, object):
                                   IF FILENAME COLON COMMA SPACE DIRECTION""".split())):
             assert False, ("Something's wrong: you missed a rule for %s" % node.kind)
 
-    def traverse(self, node, ):
+    def traverse(self, node):
         return self.preorder(node)
 
 
 def build_bp_expr(string, show_tokens=False, show_ast=False, show_grammar=False):
     parser_debug = {'rules': False, 'transition': False,
                     'reduce': show_grammar,
-                    'errorstack': None,
-                    'context': True, 'dups': False
+                    'errorstack': None, 'dups': False
+                    # 'context': True, 'dups': True
                         }
     parsed = parse_bp_location(string, show_tokens=show_tokens,
                                parser_debug=parser_debug)
@@ -251,7 +251,7 @@ def build_range(string, show_tokens=False, show_ast=False, show_grammar=False):
     parser_debug = {'rules': False, 'transition': False,
                     'reduce': show_grammar,
                     'errorstack': None,
-                    'context': True, 'dups': False
+                    'context': False, 'dups': True
                         }
     parsed = parse_range(string, show_tokens=show_tokens,
                                parser_debug=parser_debug)
@@ -268,7 +268,7 @@ def build_arange(string, show_tokens=False, show_ast=False, show_grammar=False):
     parser_debug = {'rules': False, 'transition': False,
                     'reduce': show_grammar,
                     'errorstack': None,
-                    'context': True, 'dups': False
+                    'context': True, 'dups': True
                         }
     parsed = parse_arange(string, show_tokens=show_tokens,
                           parser_debug=parser_debug)

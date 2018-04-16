@@ -243,7 +243,6 @@ See Also
 .. |buildstatus| image:: https://api.travis-ci.org/rocky/python2-trepan.svg
     :target: https://travis-ci.org/rocky/python2-trepan
     :alt: CircleCI Build status
-   :target: https://pypi.python.org/pypi/trepan/
 .. _ipython-trepan: https://github.com/rocky/ipython-trepan
 .. |license| image:: https://img.shields.io/pypi/l/trepan2.svg
    :target: https://pypi.python.org/pypi/trepan2

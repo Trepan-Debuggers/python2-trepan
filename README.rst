@@ -240,7 +240,7 @@ See Also
 .. |downloads| image:: https://img.shields.io/pypi/dd/trepan.svg
     :target: https://pypi.python.org/pypi/trepan
     :alt: Daily PyPI downloads
-.. |buildstatus| image:: https://travis-ci.org/rocky/python2-trepan.svg
+.. |buildstatus| image:: https://api.travis-ci.org/rocky/python2-trepan.svg
     :target: https://travis-ci.org/rocky/python2-trepan
     :alt: CircleCI Build status
    :target: https://pypi.python.org/pypi/trepan/

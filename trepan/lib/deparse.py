@@ -47,6 +47,7 @@ def deparse_and_cache(co, errmsg_fn):
     return remapped_file, name_for_code
 
 def deparse_offset(co, name, last_i, errmsg_fn):
+    nodeInfo = None
     deparsed = deparse_cache.get(co, None)
     if not deparsed:
         out = StringIO()

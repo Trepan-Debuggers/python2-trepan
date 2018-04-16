@@ -1,3 +1,11 @@
+trepan 0.8.7 2018-04-16  (no 0.8.5 or 0.8.6)
+
+- gdb "backtrace" negative count documented and supported
+- add -d, --deparse and --source options on backtrace command
+- DRY uncompyle and deparsing code. Use newer API
+- expand source-code line-number width to 4 places
+- reinstante deparse
+
 trepan 0.8.4 2018-02-5
 
 - Add "break!" to set a breakpoint whether trepan thinks

@@ -58,7 +58,7 @@ See also:
     aliases       = ('bt', 'where')
     category      = 'stack'
     min_args      = 0
-    max_args      = 1
+    max_args      = 10
     name          = os.path.basename(__file__).split('.')[0]
     need_stack    = True
     short_help   = 'Print backtrace of stack frames'

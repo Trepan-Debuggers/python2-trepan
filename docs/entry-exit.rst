@@ -196,12 +196,19 @@ inside the *debug()* call:
              debug(step_ignore=0) # Stop before even returning from the debug() call
           foo()  # Note there's no statement following foo()
 
-If you want your startup profile to get run, perhaps you want to
-set your pygments style, add `start_opts={'startup-profile': True}`. For example:
+If you want a startup profile to get run, you can pass a list of file
+names in option `start_opts`. For example, let's say I want to set the
+formatting style and automatic source code listing in by debugger
+session. I would put the trepan debugger commands in a file, say
+`/home/rocky/trepan-startup`, and then list that file like this:
+
 
 .. code:: python
 
-          debug(start_opts={'startup-profile': True})
+          debug(start_opts={'startup-profile': ["/home/rocky/trepan-startup"]})
+
+
+See :ref:`Startup Profile <startup_profile>` for a sample profile.
 
 
 Calling the debugger from pytest
@@ -362,10 +369,17 @@ example it might look like this:
 
 .. code:: console
 
-      $ cat ~/.config/profile
+      $ cat ~/.config/trepanpy/profile/alternate-profile.py
       set autolist
       set different on
       set autoeval on
       set style colorful
-      print("My trepan startup file loaded")
+      # Note that the below is a debugger command, not a Python command
+      print "My trepan startup file loaded"
       $
+
+
+By default, the file `$HOME/.config/trepanpy/profile/profile.py` is
+loaded, and that a file exists `trepan2` starts up. To change this
+default behavior and *not* have the default profile loaded, use the
+option `-n`, or `--nx` in the `trepan2` invocation.

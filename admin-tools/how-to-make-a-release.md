@@ -19,7 +19,7 @@
 
     $ git pull
 
-# Change version in uncompyle6/version.py:
+# Change version in trepan/version.py:
 
 	$ emacs trepan/version.py
     $ source trepan/version.py
@@ -32,7 +32,6 @@
 
 #  Update NEWS from ChangeLog:
 
-    $ Update NEWS from ChangeLog
     $ make check-short
     $ git commit --amend .
     $ git push # get CI testing going early

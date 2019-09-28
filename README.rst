@@ -253,5 +253,4 @@ See Also
 .. _eval: https://python2-trepan.readthedocs.org/en/latest/commands/data/eval.html
 .. _step: https://python2-trepan.readthedocs.org/en/latest/commands/running/step.html
 .. _install: http://python2-trepan.readthedocs.org/en/latest/install.html
-.. |Pypi Installs| image:: https://travis-ci.org/rocky/python2-trepan.svg?branch=master
-    :target: https://travis-ci.org/rocky/python2-trepan
+.. |Pypi Installs| image:: https://pepy.tech/badge/trepan2

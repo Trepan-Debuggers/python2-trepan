@@ -1,4 +1,4 @@
-|Pypi Installs| |license|
+|buildstatus| |Pypi Installs| |license|
 
 .. contents:: :local:
 

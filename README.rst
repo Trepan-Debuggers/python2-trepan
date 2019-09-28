@@ -1,4 +1,4 @@
-|buildstatus| |license| |Supported Python Versions|
+|buildstatus| |Pypi Installs| |license| |Supported Python Versions|
 
 .. contents:: :local:
 
@@ -254,3 +254,4 @@ See Also
 .. _step: https://python2-trepan.readthedocs.org/en/latest/commands/running/step.html
 .. _install: http://python2-trepan.readthedocs.org/en/latest/install.html
 .. |Supported Python Versions| image:: https://img.shields.io/pypi/pyversions/trepan2.svg
+.. |Pypi Installs| image:: https://pepy.tech/badge/trepan2

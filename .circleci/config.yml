@@ -12,8 +12,6 @@ jobs:
     working_directory: ~/rocky/python2-trepan
     docker:
     - image: circleci/python:2.7.16
-      enviroment:
-        PIPENV_VENV_IN_PROJECT: true
     steps:
       - checkout  # checkout source code to working directory
       - run: sudo chown -R circleci:circleci /usr/local/bin

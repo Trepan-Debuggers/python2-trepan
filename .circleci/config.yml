@@ -37,10 +37,17 @@ jobs:
     # In many cases you can simplify this from what is generated here.
     # 'See docs on artifact collection here https://circleci.com/docs/2.0/artifacts/'
     - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
-    # This is based on your 1.0 configuration file or project settings
+    - run:
+          name: "Setup custom environment variables"
+          command: |
+            export PATH="/home/circleci/.pyenv/bin:$PATH"
+    - run:
+        command: |
+          curl https://pyenv.run | bash && pyenv install 2.7.16
     - run:
         working_directory: ~/rocky/python2-trepan
-        command: curl https://pyenv.run | bash && pyenv install 2.7.13 && export PATH="/home/circleci/.pyenv/bin:$PATH" && eval "$(pyenv init -)" && pyenv local 2.7.16 && pyenv rehash && pip install nose && pip install pep8 && pyenv rehash
+        command: |
+          pyenv local 2.7.16 && pyenv rehash && pip install nose && pip install pep8 && pyenv rehash
     # Dependencies
     #   This would typically go in either a build or a build-and-test job when using workflows
     # Restore the dependency cache

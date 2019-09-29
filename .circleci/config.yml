@@ -20,8 +20,8 @@ jobs:
           command: |  # use pipenv to install dependencies
             sudo pip install pipenv
             pipenv install
-            pip install -e .
-            pip install -r requirements-dev.txt
+            sudo pip install -e .
+            sudo pip install -r requirements-dev.txt
       - run: python ./setup.py develop && make test-unit test-functional
       - store_test_results:
           path: test-results

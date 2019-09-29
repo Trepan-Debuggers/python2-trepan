@@ -22,7 +22,7 @@ jobs:
             pipenv install
             sudo pip install -e .
             sudo pip install -r requirements-dev.txt
-      - run: python ./setup.py develop && make test-unit test-functional
+      - run: sudo python ./setup.py develop && make test-unit test-functional
       - store_test_results:
           path: test-results
       - store_artifacts:

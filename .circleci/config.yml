@@ -40,7 +40,7 @@ jobs:
     # This is based on your 1.0 configuration file or project settings
     - run:
         working_directory: ~/rocky/python2-trepan
-        command: curl https://pyenv.run | bash && pyenv install 2.7.13 && eval "$(pyenv init -)" && eval "$(pyenv virtualenv-init -)" && export PATH="/home/circleci/.pyenv/bin:$PATH" && eval "$(pyenv init -)" && eval "$(pyenv virtualenv-init -)" pyenv local 2.7.13 && pyenv rehash && pip install virtualenv && pip install nose && pip install pep8 && pyenv rehash
+        command: curl https://pyenv.run | bash && pyenv install 2.7.13 && export PATH="/home/circleci/.pyenv/bin:$PATH" && eval "$(pyenv init -)" && pyenv local 2.7.16 && pyenv rehash && pip install nose && pip install pep8 && pyenv rehash
     # Dependencies
     #   This would typically go in either a build or a build-and-test job when using workflows
     # Restore the dependency cache

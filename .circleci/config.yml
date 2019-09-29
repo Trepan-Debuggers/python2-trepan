@@ -16,21 +16,12 @@ jobs:
       - checkout  # checkout source code to working directory
       - run: sudo chown -R circleci:circleci /usr/local/bin
       - run: sudo chown -R circleci:circleci /usr/local/lib/python2.7/site-packages
-      - restore_cache:
-      # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
-        key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
       - run:
           command: |  # use pipenv to install dependencies
             sudo pip install pipenv
             pipenv install
             pip install -e .
             pip install -r requirements-dev.txt
-      - save_cache: # cache Python dependencies using checksum of Pipfile as the cache-key
-          key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
-          paths:
-            - ".venv"
-            - "/usr/local/bin"
-            - "/usr/local/lib/python2.7/site-packages"
       - run: python ./setup.py develop && make test-unit test-functional
       - store_test_results:
           path: test-results

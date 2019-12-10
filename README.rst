@@ -1,4 +1,4 @@
-|buildstatus| |license| |Supported Python Versions|
+|buildstatus| |Pypi Installs| |license|
 
 .. contents:: :local:
 
@@ -242,7 +242,7 @@ See Also
     :alt: Daily PyPI downloads
 .. |buildstatus| image:: https://api.travis-ci.org/rocky/python2-trepan.svg
     :target: https://travis-ci.org/rocky/python2-trepan
-    :alt: CircleCI Build status
+    :alt: Travis Build status
 .. _ipython-trepan: https://github.com/rocky/ipython-trepan
 .. |license| image:: https://img.shields.io/pypi/l/trepan2.svg
    :target: https://pypi.python.org/pypi/trepan2
@@ -253,4 +253,4 @@ See Also
 .. _eval: https://python2-trepan.readthedocs.org/en/latest/commands/data/eval.html
 .. _step: https://python2-trepan.readthedocs.org/en/latest/commands/running/step.html
 .. _install: http://python2-trepan.readthedocs.org/en/latest/install.html
-.. |Supported Python Versions| image:: https://img.shields.io/pypi/pyversions/trepan2.svg
+.. |Pypi Installs| image:: https://pepy.tech/badge/trepan2

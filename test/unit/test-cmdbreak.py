@@ -1,8 +1,7 @@
-#!/usr/bin/env python3
-'Unit test for pydbgr.processor.cmdproc'
-import sys, unittest
+#!/usr/bin/env python2
+'Unit test for trepan.processor.cmdproc'
+import re, sys, unittest
 import os.path as osp
-
 from trepan.processor import cmdproc as Mcmdproc
 from trepan.processor.command import mock as Mmock
 from trepan.processor.cmdbreak import parse_break_cmd
@@ -41,18 +40,21 @@ class TestCmdParse(unittest.TestCase):
 
         self.cp.frame = sys._getframe()
         self.cp.setup()
+        myfile = osp.basename(__file__)
+        re.sub(r"pyc$", "py", myfile)
+
         for expect, cmd in (
                 ( (None, None, None, None),
                   "break '''c:\\tmp\\foo.bat''':1" ),
                 ( (None, None, None, None),
                   'break """/Users/My Documents/foo.py""":2' ),
-                ( (None, osp.basename(__file__), 10, None),
+                ( (None, myfile, 10, None),
                   "break 10" ),
                 ( (None, None, None, None),
                    "break cmdproc.py:5" ) ,
                 ( (None, None, None, None),
                    "break set_break()" ),
-                ( (None, osp.basename(__file__), 4, 'i==5'),
+                ( (None, myfile, 4, 'i==5'),
                    "break 4 if i==5" ),
                 ( (None, None, None, None),
                   "break cmdproc.setup()" ),
@@ -71,9 +73,9 @@ class TestCmdParse(unittest.TestCase):
         # FIXME: can reduce by using .format() before test?
         break_lineno = self.cp.frame.f_lineno + 9
         for expect, cmd in (
-                ( (None, osp.basename(__file__), break_lineno, None),
+                ( (None, myfile, break_lineno, None),
                     "break" ),
-                ( (None, osp.basename(__file__), break_lineno, 'True'),
+                ( (None, myfile, break_lineno, 'True'),
                     "break if True" ),
                 ):
             args = cmd.split(' ')

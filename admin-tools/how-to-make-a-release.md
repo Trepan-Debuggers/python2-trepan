@@ -53,25 +53,19 @@
 
     $ source admin-tools/check-older-versions.sh
 
-# make check-rst or better check via:
-
-http://rst.ninjs.org
-
 # Make packages and tag
 
     $ . ./admin-tools/make-dist-older.sh
+	$ pyenv local 3.8.2
+	$ twine check dist/trepan2-$VERSION*
     $ git tag release-python-2.4-$VERSION
-
     $ . ./admin-tools/make-dist-newer.sh
-    $ git tag release-$VERSION
+	$ twine check dist/trepan2-$VERSION*
+
 
 # Upload single package and look at Rst Formating
 
-    $ twine upload dist/trepan2-${VERSION}-py2.5.egg
-
-# Upload rest of versions
-
-    $ twine upload dist/trepan2-${VERSION}*
+    $ twine upload dist/uncompyle6-${VERSION}-py3.3.egg
 
 # Push tags:
 

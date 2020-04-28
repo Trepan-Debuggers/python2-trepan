@@ -47,7 +47,7 @@ ftp_url            = None
 install_requires   = ['columnize >= 0.3.10',
                       "nose>=1.0.0, <= 1.3.7",
                       'pyficache >= 1.0.0',
-                      'pygments >= 2.2.0',
+                      'pygments == 2.2.0',  # Later releases don't support Python 2.7
                       'spark_parser >= 1.8.7, <1.9.0',
                       "uncompyle6 >= 3.6.7",
                       'tracer >= 0.3.2',

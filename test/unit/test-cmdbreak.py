@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 'Unit test for pydbgr.processor.cmdproc'
-import sys, unittest
+import re, sys, unittest
 import os.path as osp
 
 from trepan.processor import cmdproc as Mcmdproc
@@ -41,18 +41,21 @@ class TestCmdParse(unittest.TestCase):
 
         self.cp.frame = sys._getframe()
         self.cp.setup()
+        myfile = osp.basename(__file__)
+        re.sub(r"\.pyc$", ".py", myfile)
+
         for expect, cmd in (
                 ( (None, None, None, None),
                   "break '''c:\\tmp\\foo.bat''':1" ),
                 ( (None, None, None, None),
                   'break """/Users/My Documents/foo.py""":2' ),
-                ( (None, osp.basename(__file__), 10, None),
+                ( (None, myfile, 10, None),
                   "break 10" ),
                 ( (None, None, None, None),
                    "break cmdproc.py:5" ) ,
                 ( (None, None, None, None),
                    "break set_break()" ),
-                ( (None, osp.basename(__file__), 4, 'i==5'),
+                ( (None, myfile, 4, 'i==5'),
                    "break 4 if i==5" ),
                 ( (None, None, None, None),
                   "break cmdproc.setup()" ),

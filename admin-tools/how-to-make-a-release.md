@@ -63,9 +63,9 @@
 	$ twine check dist/trepan2-$VERSION*
 
 
-# Upload single package and look at Rst Formating
+# Upload
 
-    $ twine upload dist/uncompyle6-${VERSION}-py3.3.egg
+    $ twine upload dist/trepan2-${VERSION}*
 
 # Push tags:
 

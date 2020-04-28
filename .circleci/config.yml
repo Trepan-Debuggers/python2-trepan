@@ -22,7 +22,7 @@ jobs:
     # 'See docs on artifact collection here https://circleci.com/docs/2.0/artifacts/'
     - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
     - run:
-        command: sudo easy_install xdis spark-parser uncompyle6 nose && sudo pip install -e . && sudo pip install -r requirements-dev.txt
+        command: sudo easy_install xdis spark-parser uncompyle6 nose
         working_directory: ~/rocky/python2-trepan
     # Dependencies
     #   This would typically go in either a build or a build-and-test job when using workflows
@@ -35,9 +35,6 @@ jobs:
         - v1-dep-master-
         # Any branch if there are none on the default branch - this should be unnecessary if you have your default branch configured correctly
         - v1-dep-
-    # This is based on your 1.0 configuration file or project settings
-    - run: pip install -e .
-    - run: pip install -r requirements-dev.txt
     # Save dependency cache
     - save_cache:
         key: v1-dep-{{ .Branch }}-{{ epoch }}

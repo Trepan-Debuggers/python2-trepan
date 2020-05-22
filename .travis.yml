@@ -1,14 +1,16 @@
 language: python
 
-sudo: false
-
 python:
   - '2.6'
 
+matrix:
+  include:
+    - python: '2.6'
+      dist: precise  # required for Python >= 2.6 (travis-ci/travis-ci#9069)
+
 install:
-  - pip install -e .
-  - pip install -r requirements-dev.txt
+- pip install -e .
+- pip install -r requirements-dev.txt
 
 script:
-- make test
-# - flake8 trepan
+- python ./setup.py develop && make check

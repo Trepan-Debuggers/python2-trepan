@@ -57,7 +57,6 @@
 
     $ source admin-tools/check-older-versions.sh
 
-<<<<<<< HEAD
 # Make packages and tag
 
     $ . ./admin-tools/make-dist-older.sh
@@ -66,8 +65,6 @@
     $ . ./admin-tools/make-dist-newer.sh
 	$ pyenv local 3.8.6 &&  twine check dist/trepan2-$__version__* && pyenv local 2.7.18
 
-=======
->>>>>>> 78b285f (Administrivia)
 # Make packages and tag
 
     $ . ./admin-tools/make-dist-older.sh

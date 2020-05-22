@@ -245,8 +245,6 @@ See Also
     :alt: Travis Build status
 .. _ipython-trepan: https://github.com/rocky/ipython-trepan
 .. |license| image:: https://img.shields.io/pypi/l/trepan2.svg
-   :target: https://pypi.python.org/pypi/trepan2
-   :alt: License
 .. _set_substitute:  https://python2-trepan.readthedocs.org/en/latest/commands/set/substitute.html
 .. _set_style:  https://python2-trepan.readthedocs.org/en/latest/commands/set/style.html
 .. _set_width:  https://python2-trepan.readthedocs.org/en/latest/commands/set/width.html

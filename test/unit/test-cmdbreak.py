@@ -41,7 +41,7 @@ class TestCmdParse(unittest.TestCase):
         self.cp.frame = sys._getframe()
         self.cp.setup()
         myfile = osp.basename(__file__)
-        re.sub(r"pyc$", "py", myfile)
+        myfile = re.sub(r"pyc$", "py", myfile)
 
         for expect, cmd in (
                 ( (None, None, None, None),

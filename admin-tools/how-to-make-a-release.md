@@ -2,16 +2,14 @@
 **Table of Contents**
 
 - [Get latest sources:](#get-latest-sources)
-- [Change version in uncompyle6/version.py](#change-version-in-uncompyle6versionpy)
+- [Change version in trepan/version.py:](#change-version-in-trepanversionpy)
 - [Update ChangeLog:](#update-changelog)
 - [Update NEWS from ChangeLog:](#update-news-from-changelog)
 - [Make sure pyenv is running and check newer versions](#make-sure-pyenv-is-running-and-check-newer-versions)
 - [Switch to python-2.4, sync that up and build that first since it creates a tarball which we don't want.](#switch-to-python-24-sync-that-up-and-build-that-first-since-it-creates-a-tarball-which-we-dont-want)
-- [Update NEWS from master branch](#update-news-from-master-branch)
-- [Check against all versions](#check-against-all-versions)
+- [Check against older versions](#check-against-older-versions)
 - [Make packages and tag](#make-packages-and-tag)
-- [Upload single package and look at Rst Formating](#upload-single-package-and-look-at-rst-formating)
-- [Upload rest of versions](#upload-rest-of-versions)
+- [Upload](#upload)
 - [Push tags:](#push-tags)
 
 <!-- markdown-toc end -->
@@ -56,20 +54,14 @@
 # Make packages and tag
 
     $ . ./admin-tools/make-dist-older.sh
+	$ pyenv local 3.8.2
+	$ twine check dist/trepan2-$VERSION*
     $ git tag release-python-2.4-$VERSION
-
     $ . ./admin-tools/make-dist-newer.sh
-    $ git tag release-$VERSION
+	$ twine check dist/trepan2-$VERSION*
 
-# make check-rst or better check via:
 
-http://rst.ninjs.org
-
-# Upload single package and look at Rst Formating
-
-    $ twine upload dist/trepan2-${VERSION}-py2.5.egg
-
-# Upload rest of versions
+# Upload
 
     $ twine upload dist/trepan2-${VERSION}*
 

@@ -7,7 +7,7 @@ from trepan.processor.parse.parser import LocationError as PLocationError
 from trepan.processor.parse.scanner import ScannerError
 from spark_parser import GenericASTTraversal # , DEFAULT_DEBUG as PARSER_DEFAULT_DEBUG
 
-from xdis.namedtuple24 import namedtuple
+from trepan.processor.parse.namedtuple24 import namedtuple
 Location = namedtuple("Location", "path line_number is_address method")
 BPLocation = namedtuple("BPLocation", "location condition")
 ListRange = namedtuple("ListRange", "first last")

@@ -61,10 +61,13 @@
 	$ twine check dist/trepan2-$VERSION*
 
 
-# Upload
+# Release on github
 
-    $ twine upload dist/trepan2-${VERSION}*
+Goto https://github.com/rocky/python2-trepan/releases/new
 
+# Get on PyPy
+
+	$ twine upload dist/trepan2-${VERSION}*
 # Push tags:
 
     $ git push --tags

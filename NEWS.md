@@ -1,3 +1,11 @@
+trepan 1.1.0 2020-05-23 pyficache
+=================================
+
+* Incorporate a major update of pyficache which removes the coverage dependency.
+* More Python source has been reformatted and imports revised along current thinking.
+* Some errors in termination messages have been fixed.
+* `--AST` renamed to `--tree` since that's what it is and `AST` it is not
+
 trepan 1.0.0 2020-04-27 One oh
 ==============================
 

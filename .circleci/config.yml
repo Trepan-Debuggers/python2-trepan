@@ -2,18 +2,18 @@ version: 2.1
 
 jobs:
   build-and-test:
-    environment:
+    docker:
       - image: circleci/python:2.7
         environment:
           PIPENV_VENV_IN_PROJECT: true
     steps:
-    - checkout
-    - run:
-        command: pip install -e . && pip install -r requirements-dev.txt
-        name: Install dependencies
-    - run:
-        command: make check
-        name: Run Tests
+      - checkout
+      - run:
+          command: pip install -e . && pip install -r requirements-dev.txt
+          name: Install dependencies
+      - run:
+          command: make check
+          name: Run Tests
 
 workflows:
   main:

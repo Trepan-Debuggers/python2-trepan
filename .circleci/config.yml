@@ -1,17 +1,11 @@
-version: 2
+version: 2.1
+
 jobs:
-  build:
-    parallelism: 1
-    shell: /bin/bash --login
-    working_directory: ~/rocky/python2-trepan
-    environment:
-      CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
-      CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
-      COMPILE: --compile
-    # To see the list of pre-built images that CircleCI provides for most common languages see
-    # https://circleci.com/docs/2.0/circleci-images/
+  build-and-test:
     docker:
       - image: circleci/python:2.7
+        environment:
+          PIPENV_VENV_IN_PROJECT: true
     steps:
       - checkout  # checkout source code to working directory
       - run: sudo chown -R circleci:circleci /usr/local/
@@ -51,10 +45,6 @@ jobs:
     #   If you break your build into multiple jobs with workflows, you will probably want to do the parts of this that are relevant in each
     # The following `checkout` command checks out your code to your working directory. In 1.0 we did this implicitly. In 2.0 you can choose where in the course of a job your code should be checked out.
     - checkout
-    # Prepare for artifact and test results  collection equivalent to how it was done on 1.0.
-    # In many cases you can simplify this from what is generated here.
-    # 'See docs on artifact collection here https://circleci.com/docs/2.0/artifacts/'
-    - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
     - run:
         command: sudo easy_install xdis spark-parser uncompyle6 nose
         working_directory: ~/rocky/python2-trepan

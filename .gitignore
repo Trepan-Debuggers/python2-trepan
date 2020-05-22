@@ -13,5 +13,5 @@
 /dist
 /python2-trepan.html
 /test/integration/*.out
-/tmp
+tmp
 __pycache__

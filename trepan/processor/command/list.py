@@ -90,7 +90,7 @@ of a range.
         # and current line numbers.
         show_marks = True
 
-        filename = pyficache.unmap_file(pyficache.pyc2py(filename))
+        filename = pyficache.unmap_file(pyficache.resolve_name_to_path(filename))
 
         if filename == "<string>" and proc.curframe.f_code:
             # Deparse the code object into a temp file and remap the line from code

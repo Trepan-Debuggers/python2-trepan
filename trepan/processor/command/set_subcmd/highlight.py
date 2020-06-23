@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2012-2013, 2015-2016 Rocky Bernstein
+#   Copyright (C) 2012-2013, 2015-2016, 2020 Rocky Bernstein
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@ from pyficache import clear_file_format_cache
 
 # Our local modules
 from trepan.processor.command import base_subcmd as Mbase_subcmd
-from trepan.lib import complete as Mcomplete
+from trepan.lib.complete import complete_token
 from trepan.lib.format import color_tf
 
 
@@ -60,14 +60,13 @@ See also:
     min_abbrev = len('hi')
     short_help = 'Set whether we use terminal highlighting'
 
-    highlight_choices = ('reset', 'plain', 'light', 'dark', 'off')
+    highlight_choices = frozenset(("reset", "plain", "light", "dark", "off"))
 
     def complete(self, prefix):
-        return Mcomplete.complete_token(SetHighlight.highlight_choices,
-                                        prefix)
+        return complete_token(SetHighlight.highlight_choices, prefix)
 
     def get_highlight_type(self, arg):
-        if not arg: return 'light'
+        if not arg: return "light"
         if arg in SetHighlight.highlight_choices:
             return arg
         else:

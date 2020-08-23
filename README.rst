@@ -238,13 +238,8 @@ See Also
 .. _this: http://bashdb.sourceforge.net/pydb/features.html
 .. _Tutorial: http://python2-trepan.readthedocs.io/en/latest/entry-exit.html
 .. |downloads| image:: https://img.shields.io/pypi/dd/trepan.svg
-    :target: https://pypi.python.org/pypi/trepan
-    :alt: Daily PyPI downloads
 .. |TravisCI| image:: https://api.travis-ci.org/rocky/python2-trepan.svg
-    :target: https://travis-ci.org/rocky/python2-trepan
-    :alt: Travis Build status
-.. |CircleCI| image::https://circleci.com/gh/rocky/python2-trepan.svg?style=svg
-    :target: https://circleci.com/gh/rocky/python2-trepan
+.. |CircleCI| image:: https://circleci.com/gh/rocky/python2-trepan.svg?style=svg
 .. _ipython-trepan: https://github.com/rocky/ipython-trepan
 .. |license| image:: https://img.shields.io/pypi/l/trepan2.svg
 .. _set_substitute:  https://python2-trepan.readthedocs.org/en/latest/commands/set/substitute.html

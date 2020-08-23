@@ -61,7 +61,7 @@ See also:
 
         try:
             opts, args = getopt(args, "hl", ["help", "list"],)
-        except GetoptError as err:
+        except GetoptError(err):
             # print help information and exit:
             self.errmsg(
                 str(err)

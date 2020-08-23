@@ -60,7 +60,7 @@ install_requires = [
     "uncompyle6 >= 3.7.2",
     "tracer >= 0.3.2",
     "unittest2",
-    "xdis >= 4.7.0, < 5.1.0",
+    "xdis >= 5.0.3",
 ]
 license = "GPL3"
 mailing_list = "python-debugger@googlegroups.com"

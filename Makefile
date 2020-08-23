@@ -69,7 +69,7 @@ clean: clean_pyc
 
 #: Create source (tarball) and binary (egg) distribution
 dist: check-rst
-	$(PYTHON) ./setup.py sdist bdist_egg
+	bash ./admin-tools/make-dist.sh
 
 #: Remove .pyc files
 clean_pyc:

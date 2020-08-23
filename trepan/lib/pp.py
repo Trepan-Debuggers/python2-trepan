@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009, 2016-2017 Rocky Bernstein
+#   Copyright (C) 2009, 2016-2017, 2020 Rocky Bernstein
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -24,63 +24,86 @@ def pp(val, display_width, msg_nocr, msg, prefix=None):
     if prefix is not None:
         val_len = len(repr(val))
         if val_len + len(prefix) < display_width - 1:
-            msg(prefix + ' ' + repr(val))
+            msg(prefix + " " + repr(val))
             return
         else:
             msg(prefix)
         pass
-    if not pprint_simple_array(val, display_width, msg_nocr, msg,
-                               '  '):
-        msg('  ' + pprint.pformat(val))
+    if isinstance(val, list) or isinstance(val, tuple):
+        if not pprint_simple_array(val, display_width, msg_nocr, msg, "  "):
+            print("Can't print_simple_array")
+            msg("  " + pprint.pformat(val))
+            pass
+        pass
+    else:
+        msg("  " + pprint.pformat(val))
         pass
     return
 
 
 # Actually... code like this should go in pformat.
 # Possibly some will go into columnize.
-def pprint_simple_array(val, displaywidth, msg_nocr, msg, lineprefix=''):
-    '''Try to pretty print a simple case where a list is not nested.
-    Return True if we can do it and False if not. '''
+def pprint_simple_array(val, displaywidth, msg_nocr, msg, lineprefix=""):
+    """Try to pretty print a simple case where a list is not nested.
+    Return True if we can do it and False if not. """
 
-    if type(val) != list:
+    if not (isinstance(val, list) or isinstance(val, tuple)):
         return False
 
     numeric = True
     for i in range(len(val)):
         if not (type(val[i]) in [bool, float, int, types.LongType]):
             numeric = False
-            if not (type(val[i]) in [bool, float, int, bytes, str,
-                                     types.LongType, types.UnicodeType,
-                                     types.NoneType]):
+            if not (
+                type(val[i])
+                in [
+                    bool,
+                    float,
+                    int,
+                    bytes,
+                    str,
+                    types.LongType,
+                    types.UnicodeType,
+                    types.NoneType,
+                ]
+            ):
                 return False
             pass
         pass
-    mess = columnize([repr(v) for v in val],
-                     opts={"arrange_array": True,
-                           "lineprefix": lineprefix,
-                           "displaywidth": int(displaywidth)-3,
-                           'ljust': not numeric})
+    mess = columnize(
+        [repr(v) for v in val],
+        opts={
+            "arrange_array": True,
+            "lineprefix": lineprefix,
+            "displaywidth": int(displaywidth) - 3,
+            "ljust": not numeric,
+        },
+    )
     msg_nocr(mess)
     return True
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
+
     def msg_nocr(m):
         sys.stdout.write(m)
         return
+
     import sys
 
-    def msg(m): print(m)
+    def msg(m):
+        print(m)
+
     pprint_simple_array(range(50), 50, msg_nocr, msg)
     pp([i for i in range(10)], 50, msg_nocr, msg)
     pp(locals(), 50, msg_nocr, msg)
     x = [i for i in range(10)]
-    pp(x, 50, msg_nocr, msg, 'x = ')
-    pp(x, 20, msg_nocr, msg, 'x = ')
-    pp(x, 32, msg_nocr, msg, 'x = ')
+    pp(x, 50, msg_nocr, msg, "x = ")
+    pp(x, 20, msg_nocr, msg, "x = ")
+    pp(x, 32, msg_nocr, msg, "x = ")
     x = [i for i in range(30)]
     l = locals().keys()
     for k in sorted(l):
-        pp(eval(k), 80, msg_nocr, msg, prefix='%s =' % k)
+        pp(eval(k), 80, msg_nocr, msg, prefix="%s =" % k)
         pass
     pass

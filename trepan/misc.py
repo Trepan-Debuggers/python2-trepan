@@ -38,6 +38,11 @@ def wrapped_lines(msg_part1, msg_part2, width):
 import os
 from glob import glob
 
+def pretty_modfunc_name(s):
+    if s == "<module>":
+        return s
+    else:
+        return s + "()"
 
 def pyfiles(callername, level=2):
     "All python files caller's dir without the path and trailing .py"

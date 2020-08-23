@@ -80,6 +80,7 @@ class TestCompletion(unittest.TestCase):
                         "lines",
                         "locals",
                         "macro",
+                        "offsets",
                         "pc",
                         "program",
                         "return",

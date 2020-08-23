@@ -36,7 +36,7 @@ def resolve_location(proc, location, canonic=True):
         return Location(filename, lineno, False, None)
 
     assert isinstance(location, Location)
-    is_address = False
+    is_address = location.is_address
     if proc.curframe:
         g = curframe.f_globals
         l = curframe.f_locals

@@ -40,15 +40,18 @@ Examples:
 
 """
 
-    in_list    = True
-    min_abbrev = len('sub')
-    short_help = 'Set filename substitution'
+    in_list = True
+    min_abbrev = len("sub")
+    short_help = "Set filename substitution"
 
     def run(self, args):
         pyficache.remap_file(args[1], args[0])
+
     pass
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     from trepan.processor.command.set_subcmd import __demo_helper__ as Mhelper
+
     Mhelper.demo_run(SetSubstitute)
     pass

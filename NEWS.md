@@ -1,7 +1,7 @@
 trepan 1.2.0 2020-08-23
 =======================
 
-disasesmbly via [`xdis`](https://pypi.org/project/xdis/) now supports "extended" assembly listing which is new. Use that by default. New command `
+disassembly via [`xdis`](https://pypi.org/project/xdis/) now supports "extended" assembly listing which is new. Use that by default. New command `
 
 Commands have been gone over to be DRYer and use a more modern style of imports.
 Small bugs have been fixed in conjunction with going over the commands.

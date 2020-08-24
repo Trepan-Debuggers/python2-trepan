@@ -138,7 +138,7 @@ def dis(
                         start_line=start_line,
                         end_line=end_line,
                         relative_pos=relative_pos,
-                        asm_format=asm_format
+                        asm_format=asm_format,
                     )
                     msg("")
                 except TypeError:
@@ -163,7 +163,7 @@ def dis(
             highlight=highlight,
             start_offset=start_offset,
             end_offset=end_offset,
-            asm_format=asm_format
+            asm_format=asm_format,
         )
     elif isinstance(x, str):  # Source code
         return disassemble_string(msg, msg_nocr, x,)
@@ -241,7 +241,7 @@ def disassemble_bytes(
 ):
     """Disassemble byte string of code. If end_line is negative
     it counts the number of statement linestarts to use."""
-    instructions=[]
+    instructions = []
     statement_count = 10000
     if end_line is None:
         end_line = 10000
@@ -316,12 +316,16 @@ def disassemble_bytes(
             msg_nocr(format_token(Hex, "%02x" % instr.opcode, highlight=highlight))
             if instr.inst_size == 1:
                 # Not 3.6 or later
-                msg_nocr(" " * (2 * 3))
+                msg_nocr(" " * 5)
             if instr.inst_size == 2:
                 # Must by Python 3.6 or later
                 msg_nocr(" ")
                 if instr.has_arg:
-                    msg_nocr(format_token(Hex, "%02x" % (instr.arg % 256), highlight=highlight))
+                    msg_nocr(
+                        format_token(
+                            Hex, "%02x" % (instr.arg % 256), highlight=highlight
+                        )
+                    )
                 else:
                     msg_nocr(format_token(Hex, "00", highlight=highlight))
             elif instr.inst_size == 3:
@@ -349,17 +353,21 @@ def disassemble_bytes(
                     hasattr(opc, "opcode_extended_fmt")
                     and opc.opname[op] in opc.opcode_extended_fmt
                 ):
-                    new_repr = opc.opcode_extended_fmt[opc.opname[op]](opc, list(reversed(instructions)))
+                    new_repr = opc.opcode_extended_fmt[opc.opname[op]](
+                        opc, list(reversed(instructions))
+                    )
                     if new_repr:
                         argrepr = new_repr
                 pass
         elif asm_format in ("extended", "extended-bytes"):
-           op = instr.opcode
-           if (
+            op = instr.opcode
+            if (
                 hasattr(opc, "opcode_extended_fmt")
                 and opc.opname[op] in opc.opcode_extended_fmt
             ):
-                new_repr = opc.opcode_extended_fmt[opc.opname[op]](opc, list(reversed(instructions)))
+                new_repr = opc.opcode_extended_fmt[opc.opname[op]](
+                    opc, list(reversed(instructions))
+                )
                 if new_repr:
                     argrepr = new_repr
         if argrepr is None:

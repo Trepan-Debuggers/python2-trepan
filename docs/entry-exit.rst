@@ -73,7 +73,7 @@ After installing the trepan extension, the following IPython magic functions are
 Example
 +++++++
 
-.. code:: ipython
+.. code:: python
 
        $ ipython
        Python 2.7.8 (default, Apr  6 2015, 16:25:30)

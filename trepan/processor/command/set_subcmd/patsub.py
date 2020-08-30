@@ -14,8 +14,6 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import pyficache
-
 # Our local modules
 from trepan.processor.command import base_subcmd as Mbase_subcmd
 
@@ -35,7 +33,7 @@ from the docker container, but debugging this from outside of that.
 Example:
 --------
 
-    set substitute ^/mmt/project /home/rocky/project
+    set patsub ^/mmt/project /home/rocky/project
 
     """
 

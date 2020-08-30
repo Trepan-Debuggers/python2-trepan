@@ -21,3 +21,7 @@ Examples:
 
     set substitute importlib._bootstrap /usr/lib/python3.4/importlib/_bootstrap.py
     set substitute ./gcd.py /tmp/gcd.py
+
+.. seealso::
+
+   :ref:`set patsub <set_patsub>`

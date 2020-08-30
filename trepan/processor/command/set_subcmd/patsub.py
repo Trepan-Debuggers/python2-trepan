@@ -44,7 +44,7 @@ Example:
     short_help = "Set pattern substitution rule"
 
     def run(self, args):
-        pyficache.add_remap_pat(args[1], args[0])
+        self.proc.add_remap_pat(args[0], args[1])
 
     pass
 

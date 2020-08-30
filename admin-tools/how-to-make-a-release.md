@@ -60,6 +60,15 @@
 	$ pyenv local 3.8.3 &&  twine check dist/trepan2-$VERSION* && pyenv local 2.7.18
 
 
+# Check package on github
+
+	$ [[ ! -d /tmp/gittest ]] && mkdir /tmp/gittest; pushd /tmp/gittest
+	$ pyenv local 2.7.18
+	$ pip install -e git://github.com/rocky/python2-trepan.git#egg=trepan
+	$ trepan2 --version
+	$ pip uninstall trepan2
+	$ popd
+
 # Release on github
 
 Goto https://github.com/rocky/python2-trepan/releases/new
@@ -69,4 +78,9 @@ Goto https://github.com/rocky/python2-trepan/releases/new
 	$ pyenv local 3.6.10 && twine upload dist/trepan2-${VERSION}* && pyenv local 2.7.18
 # Push tags:
 
+    $ git pull --tags
     $ git push --tags
+
+# Move dist files to uploaded
+
+	$ mv -v dist/trepan2-${VERSION}* dist/uploaded

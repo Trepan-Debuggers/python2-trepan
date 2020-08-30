@@ -17,11 +17,13 @@ Type `info` for a list of info subcommands and what they do. Type help
    info/args
    info/break
    info/builtins
+   info/code
    info/display
    info/files
    info/frame
    info/globals
    info/line
+   info/lines
    info/locals
    info/macro
    info/pc

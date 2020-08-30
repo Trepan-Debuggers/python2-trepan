@@ -1,7 +1,19 @@
+trepan 1.2.1 2020-08-30
+=======================
+
+* Add `info locals --list`
+* Correct Formatting of 1-arg bytes in asm
+* Get "set patsub" to substitute file paths e.g. "^/code" inside docker -> "/Users/rocky/project"
+
+About "set patsub". We need to do the substitution in the debugger, not in
+`pyficache` where we just want the presentation of the filename to be
+different. The actual location is the name `pyficache` sees and gets
+lines from.
+
 trepan 1.2.0 2020-08-23
 =======================
 
-disasesmbly via [`xdis`](https://pypi.org/project/xdis/) now supports "extended" assembly listing which is new. Use that by default. New command `
+disassembly via [`xdis`](https://pypi.org/project/xdis/) now supports "extended" assembly listing which is new. Use that by default.
 
 Commands have been gone over to be DRYer and use a more modern style of imports.
 Small bugs have been fixed in conjunction with going over the commands.

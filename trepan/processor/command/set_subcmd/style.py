@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2015, 2017-2018 Rocky Bernstein
+#   Copyright (C) 2015, 2017-2018, 2020 Rocky Bernstein
 #
 
 from pygments.styles import STYLE_MAP
@@ -46,7 +46,7 @@ See also:
             self.msg(self.columnize_commands(style_names))
             return
         elif len(args) > 1:
-            self.errmsg("Expecting zero one one arg")
+            self.errmsg("Expecting zero or one arguemnt.")
             return
         if args[0] == 'none':
             self.debugger.settings[self.name] = None

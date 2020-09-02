@@ -8,7 +8,7 @@ Set Substition Pattern
 
 Add a substitution pattern rule replacing *patsub* with
 *replace-string* anywhere it is found in source file names.  If a
-substitution rule was previously set for *from-pat*, the old rule is
+substitution rule was previously set for *from-re*, the old rule is
 replaced by the new one.
 
 In the following example, suppose in a docker container /mnt/project is

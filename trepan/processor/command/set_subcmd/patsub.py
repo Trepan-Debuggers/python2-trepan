@@ -23,7 +23,7 @@ class SetPatSub(Mbase_subcmd.DebuggerSubcommand):
 
 Add a substitution pattern rule replacing *patsub* with
 *replace-string* anywhere it is found in source file names.  If a
-substitution rule was previously set for *from-pat*, the old rule is
+substitution rule was previously set for *from-re*, the old rule is
 replaced by the new one.
 
 In the following example, suppose in a docker container /mnt/project is
@@ -42,6 +42,9 @@ Example:
     short_help = "Set pattern substitution rule"
 
     def run(self, args):
+        if len(args) != 2:
+            self.errmsg("Expecting two arguments; got %d." % len(args))
+            return
         self.proc.add_remap_pat(args[0], args[1])
 
     pass

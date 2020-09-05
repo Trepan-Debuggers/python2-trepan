@@ -41,6 +41,8 @@ See also:
 `show asmfmt`"""
 
     in_list = True
+    max_args = 1
+    min_args = 1
     min_abbrev = len("asmf")
     short_help = "Set disassembly style"
 
@@ -55,7 +57,10 @@ See also:
         if arg in SetAsmFmt.choices:
             return arg
         else:
-            self.errmsg('Expecting %s"; got %s' % (", ".join(SetAsmFmt.choices), arg))
+            self.errmsg(
+                'Expecting %s"; got %s'
+                % (", ".join(SetAsmFmt.choices), arg)
+            )
             return None
         pass
 
@@ -71,8 +76,7 @@ See also:
     pass
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     from trepan.processor.command.set_subcmd.__demo_helper__ import demo_run
-
     demo_run(SetAsmFmt, ["classic"])
     pass

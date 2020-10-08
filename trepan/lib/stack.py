@@ -88,12 +88,16 @@ def format_stack_entry(dbg_obj, frame_lineno, lprefix=': ',
             pass
     else:
         is_module = False
-        parms=inspect.formatargvalues(args, varargs, varkw, local_vars)
         maxargstrsize = dbg_obj.settings['maxargstrsize']
-        if len(parms) >= maxargstrsize:
-            parms = "%s...)" % parms[0:maxargstrsize]
+        try:
+            parms=inspect.formatargvalues(args, varargs, varkw, local_vars)
+        except:
             pass
-        s += parms
+        else:
+            if len(parms) >= maxargstrsize:
+                parms = "%s...)" % parms[0:maxargstrsize]
+                pass
+            s += parms
         pass
 
     # Note: ddd can't handle wrapped stack entries (yet).

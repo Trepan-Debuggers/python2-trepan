@@ -57,7 +57,7 @@ install_requires = [
     "pyficache >= 2.2.1",
     "pygments == 2.2.0",  # Later releases don't support Python 2.7
     "spark_parser >= 1.8.9, <1.9.0",
-    "uncompyle6 >= 3.7.3",
+    "uncompyle6 >= 3.7.4",
     "tracer >= 0.3.2",
     "unittest2",
     "xdis >= 5.0.4",

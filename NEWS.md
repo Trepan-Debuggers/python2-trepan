@@ -1,3 +1,13 @@
+trepan 1.2.2 2020-10-11
+=======================
+
+* Extend patsub's effect to breakpoint Hook the command processor file
+  pattern substutition to python filecache's file pattern substitution
+* Tolerate inspect.formatargvalues() errors
+* Go over "set" subcommand processing
+* Set min/max args for set patsub
+* set style command error message
+
 trepan 1.2.1 2020-08-30
 =======================
 

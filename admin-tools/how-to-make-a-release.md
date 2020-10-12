@@ -4,7 +4,7 @@
 - [Get latest sources:](#get-latest-sources)
 - [Change version in trepan/version.py:](#change-version-in-trepanversionpy)
 - [Update ChangeLog:](#update-changelog)
-- [Update NEWS from ChangeLog:](#update-news-from-changelog)
+- [Update NEWS.md from ChangeLog:](#update-news-from-changelog)
 - [Make sure pyenv is running and check newer versions](#make-sure-pyenv-is-running-and-check-newer-versions)
 - [Switch to python-2.4, sync that up and build that first since it creates a tarball which we don't want.](#switch-to-python-24-sync-that-up-and-build-that-first-since-it-creates-a-tarball-which-we-dont-want)
 - [Check against older versions](#check-against-older-versions)
@@ -28,7 +28,7 @@
 
     $ make ChangeLog
 
-#  Update NEWS from ChangeLog:
+#  Update NEWS.md from ChangeLog:
 
     $ make check-short
     $ git commit --amend .
@@ -60,6 +60,15 @@
 	$ pyenv local 3.8.5 &&  twine check dist/trepan2-$VERSION* && pyenv local 2.7.18
 
 
+# Check package on github
+
+	$ [[ ! -d /tmp/gittest ]] && mkdir /tmp/gittest; pushd /tmp/gittest
+	$ pyenv local 2.7.18
+	$ pip install -e git://github.com/rocky/python2-trepan.git#egg=trepan
+	$ trepan2 --version
+	$ pip uninstall trepan2
+	$ popd
+
 # Release on github
 
 Goto https://github.com/rocky/python2-trepan/releases/new
@@ -69,4 +78,9 @@ Goto https://github.com/rocky/python2-trepan/releases/new
 	$ pyenv local 3.6.10 && twine upload dist/trepan2-${VERSION}* && pyenv local 2.7.18
 # Push tags:
 
+    $ git pull --tags
     $ git push --tags
+
+# Move dist files to uploaded
+
+	$ mv -v dist/trepan2-${VERSION}* dist/uploaded

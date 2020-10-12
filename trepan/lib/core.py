@@ -26,7 +26,7 @@ handling what to do when an event is triggered."""
 import os, sys, threading
 
 # External Egg packages
-import tracer
+import pyficache, tracer
 
 # Our local modules
 from trepan.lib import breakpoint, default, stack as Mstack
@@ -176,6 +176,8 @@ class DebuggerCore:
                 pass
             canonic = os.path.realpath(os.path.normcase(canonic))
             self.filename_cache[filename] = canonic
+        canonic = pyficache.unmap_file(canonic)
+
         return canonic
 
     def canonic_filename(self, frame):

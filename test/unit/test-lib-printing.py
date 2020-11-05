@@ -8,6 +8,12 @@ from trepan.lib import printing as Mprint
 class TestLibPrint(unittest.TestCase):
 
     def test_lib_printf(self):
+        """
+        Test for test test.
+
+        Args:
+            self: (todo): write your description
+        """
         self.assertEqual('037', Mprint.printf(31, "/o"))
         self.assertEqual('00011111', Mprint.printf(31, "/t"))
         self.assertEqual('!', Mprint.printf(33, "/c"))
@@ -15,6 +21,12 @@ class TestLibPrint(unittest.TestCase):
         return
 
     def test_lib_argspec(self):
+        """
+        Return the test test test test for the test.
+
+        Args:
+            self: (todo): write your description
+        """
         self.assertEqual('test_lib_argspec(self)',
                          Mprint.print_argspec(self.test_lib_argspec,
                                               'test_lib_argspec'))

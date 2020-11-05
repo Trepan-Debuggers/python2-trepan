@@ -25,6 +25,14 @@ class ScriptInput(Mbase.DebuggerInputBase):
     """Debugger Script input - largely the same as DebuggerInput."""
 
     def __init__(self, inp, opts=None):
+        """
+        Initialize the input file.
+
+        Args:
+            self: (todo): write your description
+            inp: (int): write your description
+            opts: (todo): write your description
+        """
 
         self.input     = None
         self.line_edit = False  # Our name for GNU readline capability
@@ -33,6 +41,12 @@ class ScriptInput(Mbase.DebuggerInputBase):
         return
 
     def close(self):
+        """
+        Close the connection.
+
+        Args:
+            self: (todo): write your description
+        """
         if self.input:
             self.input.close()
             pass

@@ -21,6 +21,16 @@ from columnize import columnize
 
 
 def pp(val, display_width, msg_nocr, msg, prefix=None):
+    """
+    Pretty print a value in a table.
+
+    Args:
+        val: (float): write your description
+        display_width: (int): write your description
+        msg_nocr: (str): write your description
+        msg: (str): write your description
+        prefix: (str): write your description
+    """
     if prefix is not None:
         val_len = len(repr(val))
         if val_len + len(prefix) < display_width - 1:
@@ -86,12 +96,24 @@ def pprint_simple_array(val, displaywidth, msg_nocr, msg, lineprefix=""):
 if __name__ == "__main__":
 
     def msg_nocr(m):
+        """
+        Writes a message
+
+        Args:
+            m: (todo): write your description
+        """
         sys.stdout.write(m)
         return
 
     import sys
 
     def msg(m):
+        """
+        Print a message
+
+        Args:
+            m: (int): write your description
+        """
         print(m)
 
     pprint_simple_array(range(50), 50, msg_nocr, msg)

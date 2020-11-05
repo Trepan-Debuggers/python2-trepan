@@ -9,12 +9,28 @@
 # in the course of the program and if we made such an method assignemnt
 # we wouldn't pick up that change in our self.msg
 def errmsg(proc_obj, message, opts={}):
+    """
+    Convert an error message to an error message
+
+    Args:
+        proc_obj: (todo): write your description
+        message: (str): write your description
+        opts: (todo): write your description
+    """
     response = proc_obj.response
     if 'set_name' in opts: response['name'] = 'error'
     return response['errs'].append(message)
 
 
 def msg(proc_obj, message, opts={}):
+    """
+    Convert a message to a json object.
+
+    Args:
+        proc_obj: (todo): write your description
+        message: (str): write your description
+        opts: (todo): write your description
+    """
     response = proc_obj.response
     return response['msg'].append(message)
 
@@ -23,6 +39,12 @@ def msg(proc_obj, message, opts={}):
 if __name__=='__main__':
     class Demo:
         def __init__(self):
+            """
+            Initialize the response.
+
+            Args:
+                self: (todo): write your description
+            """
             self.response = {'errs': [],
                              'msg' : []}
             pass

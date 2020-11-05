@@ -5,6 +5,12 @@ from fn_helper import compare_output, strarray_setup
 
 class TestJump(unittest.TestCase):
     def test_jump(self):
+        """
+        Determine test test.
+
+        Args:
+            self: (todo): write your description
+        """
         # FIXME
         return
 

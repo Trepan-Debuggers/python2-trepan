@@ -30,6 +30,14 @@ class TCPServer(DebuggerInOutBase):
     DEFAULT_INIT_OPTS = {'open': True, 'socket': None}
 
     def __init__(self, inout=None, opts=None):
+        """
+        Initialize a connection.
+
+        Args:
+            self: (todo): write your description
+            inout: (int): write your description
+            opts: (todo): write your description
+        """
         get_option = lambda key: Mmisc.option_set(opts, key,
                                                   self.DEFAULT_INIT_OPTS)
 
@@ -66,6 +74,13 @@ class TCPServer(DebuggerInOutBase):
         return
 
     def open(self, opts=None):
+        """
+        Establish a connection to a socket
+
+        Args:
+            self: (todo): write your description
+            opts: (todo): write your description
+        """
         get_option = lambda key: Mmisc.option_set(opts, key,
                                                   Mdefault.SERVER_SOCKET_OPTS)
 
@@ -115,6 +130,12 @@ class TCPServer(DebuggerInOutBase):
         return
 
     def read(self):
+        """
+        Reads a message from the stream.
+
+        Args:
+            self: (todo): write your description
+        """
         if len(self.buf) == 0:
             self.read_msg()
             pass
@@ -142,6 +163,12 @@ class TCPServer(DebuggerInOutBase):
             raise IOError("read_msg called in state: %s." % self.state)
 
     def wait_for_connect(self):
+        """
+        Wait for a connection to the remote host.
+
+        Args:
+            self: (todo): write your description
+        """
         self.conn, self.addr = self.inout.accept()
         self.remote_addr = ':'.join(str(v) for v in self.addr)
         self.state = 'connected'

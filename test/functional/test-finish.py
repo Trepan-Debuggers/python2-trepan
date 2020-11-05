@@ -5,6 +5,12 @@ from fn_helper import compare_output, strarray_setup
 
 class TestFinish(unittest.TestCase):
     def test_finish_same_level(self):
+        """
+        Determine whether two test sets.
+
+        Args:
+            self: (todo): write your description
+        """
         print("test ", __file__, "finish_same_level skipped")
         return
 
@@ -13,10 +19,20 @@ class TestFinish(unittest.TestCase):
         d.core.start()
 
         def bar():
+            """
+            Returns the current bar.
+
+            Args:
+            """
             x = 3  # NOQA
             return 1
 
         def foo():
+            """
+            Returns a bar object.
+
+            Args:
+            """
             bar()
             x = 2  # NOQA
             return 5

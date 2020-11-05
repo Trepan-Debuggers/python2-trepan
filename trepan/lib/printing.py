@@ -18,6 +18,14 @@ import inspect, types
 
 
 def print_dict(s, obj, title):
+    """
+    Print a dict ascii.
+
+    Args:
+        s: (str): write your description
+        obj: (todo): write your description
+        title: (str): write your description
+    """
     if hasattr(obj, "__dict__"):
         obj = obj.__dict__
         pass
@@ -89,6 +97,13 @@ twos = ('0000', '0001', '0010', '0011', '0100', '0101', '0110', '0111',
 
 
 def printf(val, fmt):
+    """
+    Return the given value of the given format.
+
+    Args:
+        val: (float): write your description
+        fmt: (float): write your description
+    """
     global pconvert, twos
     if not fmt:
         fmt = ' '  # not 't' nor in pconvert
@@ -123,6 +138,13 @@ if __name__ == '__main__':
     print(print_argspec('Exception', None))
 
     class Foo:
+        """
+        Initialize the widget.
+
+        Args:
+            self: (todo): write your description
+            bar: (int): write your description
+        """
         def __init__(self, bar=None): pass
         pass
     print(print_obj('Foo.__init__', None))

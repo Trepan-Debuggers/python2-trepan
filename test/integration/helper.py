@@ -6,6 +6,15 @@ srcdir = os.path.abspath(os.path.dirname(__file__))
 
 def run_debugger(testname, python_file, dbgr_opts='', args='',
                  outfile=None):
+    """
+    Run debugger.
+
+    Args:
+        testname: (str): write your description
+        python_file: (str): write your description
+        dbgr_opts: (todo): write your description
+        outfile: (str): write your description
+    """
     datadir   = os.path.join(srcdir, '..', 'data')
     progdir   = os.path.join(srcdir, '..', 'example')
     dbgrdir   = os.path.join(srcdir, '..', '..', 'trepan')

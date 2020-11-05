@@ -19,6 +19,14 @@
 class Subcmd:
     """Gdb-like subcommand handling """
     def __init__(self, name, cmd_obj):
+        """
+        Create a new subcmd.
+
+        Args:
+            self: (todo): write your description
+            name: (str): write your description
+            cmd_obj: (todo): write your description
+        """
         self.name    = name
         self.cmd_obj = cmd_obj
         self.subcmds = {}
@@ -102,6 +110,12 @@ List of %s subcommands:
                                 % (self.name, subcmd_prefix))
 
     def list(self):
+        """
+        List all subcmds
+
+        Args:
+            self: (todo): write your description
+        """
         l = list(self.subcmds.keys())
         l.sort()
         return l
@@ -128,15 +142,33 @@ if __name__ == '__main__':
         name = 'test'
 
         def __init__(self):
+            """
+            Initialize the object
+
+            Args:
+                self: (todo): write your description
+            """
             self.name  = 'test'
             return
 
+        """
+        Run the command.
+
+        Args:
+            self: (todo): write your description
+        """
         def run(self, args): print('test command run')
 
     class TestTestingSubcommand:
         '''Doc string for test testing subcommand'''
 
         def __init__(self):
+            """
+            Initialize the object
+
+            Args:
+                self: (todo): write your description
+            """
             self.name  = 'testing'
             return
 
@@ -144,6 +176,12 @@ if __name__ == '__main__':
         min_abbrev = 4
         in_list    = True
 
+        """
+        Run the command.
+
+        Args:
+            self: (todo): write your description
+        """
         def run(self, args): print('test testing run')
         pass
 

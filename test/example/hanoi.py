@@ -3,6 +3,15 @@
 import sys
 
 def hanoi(n,a,b,c):
+    """
+    Hanoi ( a b
+
+    Args:
+        n: (todo): write your description
+        a: (todo): write your description
+        b: (todo): write your description
+        c: (todo): write your description
+    """
     if n-1 > 0:
        hanoi(n-1, a, c, b) 
     print("Move disk %s to %s" % (a, b))

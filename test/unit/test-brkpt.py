@@ -62,6 +62,13 @@ class TestBreakpoint(unittest.TestCase):
         self.assertEqual(False, Mbreakpoint.checkfuncname(bp, frame))
 
         def foo(bp, bpmgr):
+            """
+            Adds a breakpoint.
+
+            Args:
+                bp: (todo): write your description
+                bpmgr: (todo): write your description
+            """
             frame = inspect.currentframe()
             self.assertEqual(True, Mbreakpoint.checkfuncname(bp, frame))
             # frame.f_lineno is constantly updated. So adjust for the

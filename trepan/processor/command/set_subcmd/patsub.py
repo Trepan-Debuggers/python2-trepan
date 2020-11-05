@@ -44,6 +44,12 @@ Example:
     short_help = "Set pattern substitution rule"
 
     def run(self, args):
+        """
+        Run a new command.
+
+        Args:
+            self: (todo): write your description
+        """
         self.proc.add_remap_pat(args[0], args[1])
 
     pass

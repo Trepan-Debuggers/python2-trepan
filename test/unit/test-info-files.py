@@ -14,6 +14,13 @@ class TestInfoFile(unittest.TestCase):
     # FIXME: put in a more common place
     # Possibly fix up Mock to include this
     def setup_io(self, command):
+        """
+        Setup a command.
+
+        Args:
+            self: (todo): write your description
+            command: (str): write your description
+        """
         self.clear_output()
         command.msg = self.msg
         command.errmsg = self.errmsg
@@ -21,12 +28,25 @@ class TestInfoFile(unittest.TestCase):
         return
 
     def clear_output(self):
+        """
+        Clear the output.
+
+        Args:
+            self: (todo): write your description
+        """
         self.msgs = []
         self.errmsgs = []
         self.last_was_newline = True
         return
 
     def msg_nocr(self, msg):
+        """
+        Nocr message.
+
+        Args:
+            self: (todo): write your description
+            msg: (str): write your description
+        """
         if len(self.msgs) > 0:
             self.msgs[-1] += msg
         else:
@@ -35,14 +55,34 @@ class TestInfoFile(unittest.TestCase):
         return
 
     def msg(self, msg):
+        """
+        Convert a message to a message
+
+        Args:
+            self: (todo): write your description
+            msg: (str): write your description
+        """
         self.msgs += [msg]
         return
 
     def errmsg(self, msg):
+        """
+        Add an error message
+
+        Args:
+            self: (todo): write your description
+            msg: (str): write your description
+        """
         self.errmsgs.append(msg)
         pass
 
     def test_info_file(self):
+        """
+        Test the test info file info file.
+
+        Args:
+            self: (todo): write your description
+        """
         d = Mdebugger.Debugger()
         d, cp = dbg_setup(d)
         command = Minfo.InfoCommand(cp, 'info')

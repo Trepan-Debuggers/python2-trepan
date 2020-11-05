@@ -20,6 +20,13 @@ from trepan.processor import subcmd as Msubcmd
 from trepan.lib import complete as Mcomplete
 
 def abbrev_stringify(name, min_abbrev):
+    """
+    Return a human - readable string.
+
+    Args:
+        name: (str): write your description
+        min_abbrev: (float): write your description
+    """
     return ("(%s)%s" % (name[:min_abbrev], name[min_abbrev:],))
 
 class SubcommandMgr(Mbase_cmd.DebuggerCommand):
@@ -156,9 +163,23 @@ class SubcommandMgr(Mbase_cmd.DebuggerCommand):
     # found we just return +arg+.
     # FIXME: Not used any more?
     def complete(self, prefix):
+        """
+        Complete a list of the given prefix.
+
+        Args:
+            self: (todo): write your description
+            prefix: (str): write your description
+        """
         return Mcomplete.complete_token(self.subcmds.subcmds.keys(), prefix)
 
     def complete_token_with_next(self, prefix):
+        """
+        Return the next token with the given prefix.
+
+        Args:
+            self: (todo): write your description
+            prefix: (str): write your description
+        """
         result = Mcomplete.complete_token_with_next(self.cmds.subcmds, prefix)
         return result
 
@@ -200,6 +221,14 @@ class SubcommandMgr(Mbase_cmd.DebuggerCommand):
         return  # Not reached
 
     def summary_help(self, subcmd_name, subcmd):
+        """
+        Return the help for the command.
+
+        Args:
+            self: (todo): write your description
+            subcmd_name: (str): write your description
+            subcmd: (str): write your description
+        """
         self.msg_nocr('  %-12s -- ' %
                       abbrev_stringify(subcmd_name, subcmd.min_abbrev))
         self.rst_msg(subcmd.short_help.rstrip("\n"))

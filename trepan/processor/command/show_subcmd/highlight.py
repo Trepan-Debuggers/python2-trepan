@@ -32,6 +32,12 @@ See also:
     short_help = 'Show if we use terminal highlight'
 
     def run(self, args):
+        """
+        Evaluate the parameter.
+
+        Args:
+            self: (todo): write your description
+        """
         val = self.settings['highlight']
         if 'plain' == val:
             mess = 'output set to not use terminal escape sequences'

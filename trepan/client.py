@@ -69,6 +69,12 @@ def process_options(pkg_version, sys_argv, option_list=None):
 DEFAULT_CLIENT_CONNECTION_OPTS = {'open': True, 'IO': 'TCP',
                                   'HOST': '127.0.0.1', 'PORT': 1027}
 def start_client(connection_opts):
+    """
+    Start a client.
+
+    Args:
+        connection_opts: (todo): write your description
+    """
     intf = Mclient.ClientInterface(connection_opts=connection_opts)
     # debugger.interface.append(intf)
     intf.msg("Connected.")
@@ -118,6 +124,11 @@ def start_client(connection_opts):
 
 
 def main():
+    """
+    Main function.
+
+    Args:
+    """
     opts, sys_argv  = process_options(VERSION, sys.argv)
     # print(opts)
     if hasattr(opts, 'pid') and opts.pid > 0:

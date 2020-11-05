@@ -11,6 +11,12 @@ if hasattr(os, 'mkfifo'):
         """Tests FIFOServer and FIFOClient"""
 
         def test_client_server(self):
+            """
+            Test if the server is running.
+
+            Args:
+                self: (todo): write your description
+            """
             Mserver.FIFOServer(opts={'open': True})
             Mclient.FIFOClient(opts={'open': os.getpid()})
             self.assertTrue(True, 'FIXME: need to add a test here.')

@@ -34,6 +34,12 @@ being debugged. """
     )
 
     def run(self, args):
+        """
+        Run the command.
+
+        Args:
+            self: (todo): write your description
+        """
         try:
             os.chdir(args[1])
             self.msg("Working directory %s." % os.getcwd())

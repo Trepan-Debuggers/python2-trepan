@@ -8,14 +8,33 @@ from trepan.processor import cmdfns as Mcmdfns
 class TestCommandHelper(unittest.TestCase):
 
     def setUp(self):
+        """
+        Set all the set of this query.
+
+        Args:
+            self: (todo): write your description
+        """
         self.errors = []
         return
 
     def errmsg(self, msg):
+        """
+        Add an error message
+
+        Args:
+            self: (todo): write your description
+            msg: (str): write your description
+        """
         self.errors.append(msg)
         return
 
     def test_get_an_int(self):
+        """
+        Runs an int int ints of the test
+
+        Args:
+            self: (todo): write your description
+        """
         self.assertEqual(0, Mcmdfns.get_an_int(self.errmsg, '0', 'foo', 0))
         self.assertEqual(0, len(self.errors))
         self.assertEqual(6, Mcmdfns.get_an_int(self.errmsg, '6*1', 'foo', 5))
@@ -29,6 +48,12 @@ class TestCommandHelper(unittest.TestCase):
         return
 
     def test_get_int(self):
+        """
+        Get the integer value of the test
+
+        Args:
+            self: (todo): write your description
+        """
         self.assertEqual(1, Mcmdfns.get_int(self.errmsg, '1', 5))
         self.assertEqual(3, Mcmdfns.get_int(self.errmsg, '1+2', 5))
         self.assertEqual(5, Mcmdfns.get_int(self.errmsg, None, 5))
@@ -38,6 +63,12 @@ class TestCommandHelper(unittest.TestCase):
         return
 
     def test_get_onoff(self):
+        """
+        Get the test test results.
+
+        Args:
+            self: (todo): write your description
+        """
         for arg in ('1', 'on',):
             self.assertEqual(True, Mcmdfns.get_onoff(self.errmsg, arg))
             pass
@@ -53,6 +84,12 @@ class TestCommandHelper(unittest.TestCase):
         return
 
     def test_want_different_line(self):
+        """
+        Test for test test test.
+
+        Args:
+            self: (todo): write your description
+        """
         for cmd, default, expected in [
             ('s+', False, True,),
             ('s-', True,  False,),

@@ -10,10 +10,24 @@ from trepan.processor.parse.tok import Token
 
 class ScannerError(Exception):
     def __init__(self, text, text_cursor):
+        """
+        Set text cursor.
+
+        Args:
+            self: (todo): write your description
+            text: (str): write your description
+            text_cursor: (str): write your description
+        """
         self.text = text
         self.text_cursor = text_cursor
 
     def __str__(self):
+        """
+        Return the cursor
+
+        Args:
+            self: (todo): write your description
+        """
         return self.text + "\n" + self.text_cursor
 
 class LocationScanner(GenericScanner):
@@ -31,11 +45,26 @@ x = 2y + z
                             ("%s^" % (" "*(self.pos-1))) )
 
     def tokenize(self, input):
+        """
+        Tokenize the input.
+
+        Args:
+            self: (todo): write your description
+            input: (array): write your description
+        """
         self.rv = []
         GenericScanner.tokenize(self, input)
         return self.rv
 
     def add_token(self, name, v):
+        """
+        Add a token to the list.
+
+        Args:
+            self: (todo): write your description
+            name: (str): write your description
+            v: (todo): write your description
+        """
         t = Token(kind=name, value=v, offset=self.pos)
         self.pos += len(str(v))
         self.rv.append(t)

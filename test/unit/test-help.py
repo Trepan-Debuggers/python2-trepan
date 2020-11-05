@@ -10,6 +10,12 @@ class TestHelp(unittest.TestCase):
     """Tests HelpCommand class"""
 
     def setUp(self):
+        """
+        Sets the socket.
+
+        Args:
+            self: (todo): write your description
+        """
         self.errors             = []
         self.msgs               = []
         self.d                  = Mmock.MockDebugger()
@@ -22,10 +28,24 @@ class TestHelp(unittest.TestCase):
         return
 
     def errmsg(self, msg):
+        """
+        Add an error message
+
+        Args:
+            self: (todo): write your description
+            msg: (str): write your description
+        """
         self.errors.append(msg)
         return
 
     def msg(self, msg):
+        """
+        Convert a message to a message.
+
+        Args:
+            self: (todo): write your description
+            msg: (str): write your description
+        """
         self.msgs.append(msg)
         return
 

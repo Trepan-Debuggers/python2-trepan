@@ -9,6 +9,12 @@ from trepan.lib import stack as Mstack
 class TestStack(unittest.TestCase):
 
     def test_count_frames(self):
+        """
+        Return the number of frames in the current frame.
+
+        Args:
+            self: (todo): write your description
+        """
         f = inspect.currentframe()
         frame_count = Mstack.count_frames(f)
         self.assertTrue(Mstack.count_frames(f) > 2)
@@ -17,6 +23,12 @@ class TestStack(unittest.TestCase):
         return
 
     def test_stack_misc(self):
+        """
+        Test if the stack stack stack stack
+
+        Args:
+            self: (todo): write your description
+        """
         f = inspect.currentframe()
         if sys.version_info[0:2] <= (2, 4):
             expect = 'defaultTestResult'

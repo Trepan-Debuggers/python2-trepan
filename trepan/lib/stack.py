@@ -43,6 +43,12 @@ _re_pseudo_file = re.compile(r"^<.+>")
 
 
 def deparse_source_from_code(code):
+    """
+    Return the source code of code block.
+
+    Args:
+        code: (str): write your description
+    """
     source_text = ""
     try:
         source_lines = deparse_fn(code).split("\n")
@@ -159,6 +165,14 @@ def format_stack_entry(
 
 
 def frame2file(core_obj, frame, canonic=True):
+    """
+    Return the frame frame to file.
+
+    Args:
+        core_obj: (todo): write your description
+        frame: (todo): write your description
+        canonic: (str): write your description
+    """
     if canonic:
         return core_obj.filename(core_obj.canonic_filename(frame))
     else:
@@ -204,6 +218,15 @@ def get_call_function_name(frame):
 
 
 def print_stack_entry(proc_obj, i_stack, color="plain", opts={}):
+    """
+    Prints stack
+
+    Args:
+        proc_obj: (todo): write your description
+        i_stack: (todo): write your description
+        color: (str): write your description
+        opts: (dict): write your description
+    """
     frame_lineno = proc_obj.stack[len(proc_obj.stack) - i_stack - 1]
     frame, lineno = frame_lineno
     intf = proc_obj.intf[-1]
@@ -272,6 +295,14 @@ def print_stack_trace(proc_obj, count=None, color="plain", opts={}):
 
 
 def print_dict(s, obj, title):
+    """
+    Prints a dict with keys and values.
+
+    Args:
+        s: (str): write your description
+        obj: (todo): write your description
+        title: (str): write your description
+    """
     if hasattr(obj, "__dict__"):
         d = obj.__dict__
         if isinstance(d, dict):
@@ -331,15 +362,35 @@ if __name__ == "__main__":
 
     class MockDebuggerCore:
         def canonic_filename(self, frame):
+            """
+            Determine whether the frame filename.
+
+            Args:
+                self: (todo): write your description
+                frame: (todo): write your description
+            """
             return frame.f_code.co_filename
 
         def filename(self, name):
+            """
+            Returns the filename of a filename.
+
+            Args:
+                self: (todo): write your description
+                name: (str): write your description
+            """
             return name
 
         pass
 
     class MockDebugger:
         def __init__(self):
+            """
+            Initialize the mockger
+
+            Args:
+                self: (todo): write your description
+            """
             self.core = MockDebuggerCore()
             self.settings = {"maxargstrsize": 80}
             pass
@@ -375,9 +426,21 @@ if __name__ == "__main__":
     print(Mbytecode.is_def_stmt("def foo():", frame))
 
     def sqr(x):
+        """
+        Sqr ( x value of x.
+
+        Args:
+            x: (array): write your description
+        """
         x * x
 
     def fn(x):
+        """
+        Return the number of frames that function
+
+        Args:
+            x: (int): write your description
+        """
         frame = inspect.currentframe()
         print(get_call_function_name(frame))
         return

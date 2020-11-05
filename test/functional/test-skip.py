@@ -5,6 +5,12 @@ from fn_helper import strarray_setup, compare_output
 
 class TestSkip(unittest.TestCase):
     def test_skip(self):
+        """
+        Run test test test.
+
+        Args:
+            self: (todo): write your description
+        """
         # FIXME
         return
 

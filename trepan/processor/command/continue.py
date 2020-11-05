@@ -55,6 +55,12 @@ See also:
     short_help    = 'Continue execution of debugged program'
 
     def run(self, args):
+        """
+        Run a command.
+
+        Args:
+            self: (todo): write your description
+        """
         if len(args) > 1:
             # FIXME: DRY this code. Better is to hook into tbreak.
             func, filename, lineno, condition = \

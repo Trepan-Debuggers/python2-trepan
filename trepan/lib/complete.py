@@ -19,11 +19,26 @@ import re
 
 
 def complete_token(complete_ary, prefix):
+    """
+    Returns a list of all the currently running token
+
+    Args:
+        complete_ary: (str): write your description
+        prefix: (str): write your description
+    """
     return sorted([cmd for cmd in
                    complete_ary if cmd.startswith(prefix)])
 
 
 def complete_token_with_next(complete_hash, prefix, cmd_prefix=''):
+    """
+    Complete a list of tokens
+
+    Args:
+        complete_hash: (bool): write your description
+        prefix: (str): write your description
+        cmd_prefix: (str): write your description
+    """
     result = []
     for cmd_name in list(complete_hash.keys()):
         if cmd_name.startswith(cmd_prefix + prefix):
@@ -66,6 +81,13 @@ def complete_token_filtered(aliases, prefix, expanded):
     return [cmd for cmd in complete_ary if cmd.startswith(prefix)]
 
 def complete_brkpts(bpmgr, prefix):
+    """
+    Complete a bpmgr token.
+
+    Args:
+        bpmgr: (todo): write your description
+        prefix: (str): write your description
+    """
     return complete_token(sorted(bpmgr.bpnumbers()), prefix)
 
 def next_token(str, start_pos):

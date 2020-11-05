@@ -30,6 +30,13 @@ if hasattr(os, 'mkfifo'):
         DEFAULT_INIT_OPTS = {'open': True}
 
         def __init__(self, opts=None):
+            """
+            Initialize a new option.
+
+            Args:
+                self: (todo): write your description
+                opts: (todo): write your description
+            """
             get_option = lambda key: Mmisc.option_set(opts, key,
                                                       self.DEFAULT_INIT_OPTS)
             atexit.register(self.close)
@@ -64,9 +71,22 @@ if hasattr(os, 'mkfifo'):
             return
 
         def flush(self):
+            """
+            Flush the output.
+
+            Args:
+                self: (todo): write your description
+            """
             return self.output.flush()
 
         def open(self, opts=None):
+            """
+            Open the state file.
+
+            Args:
+                self: (todo): write your description
+                opts: (todo): write your description
+            """
             d              = tempfile.gettempdir()
             pid            = os.getpid()
             self.out_name  = os.path.join(d, ('trepan-%s.out' % pid))

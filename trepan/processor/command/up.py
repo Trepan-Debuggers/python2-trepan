@@ -33,6 +33,13 @@ class UpCommand(Mbase_cmd.DebuggerCommand):
       'the last-selected frame'
 
     def complete(self, prefix):
+        """
+        Signal handler for the given frame.
+
+        Args:
+            self: (todo): write your description
+            prefix: (str): write your description
+        """
         proc_obj = self.proc
         return Mframe.frame_complete(proc_obj, prefix, self.signum)
 

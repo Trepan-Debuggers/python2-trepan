@@ -41,6 +41,12 @@ See also:
     short_help = 'Execution status of the program'
 
     def run(self, args):
+        """
+        The main loop.
+
+        Args:
+            self: (todo): write your description
+        """
         mainfile = self.core.filename(None)
         if self.core.is_running():
             if mainfile:

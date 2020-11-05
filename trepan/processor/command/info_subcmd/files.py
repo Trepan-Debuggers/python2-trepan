@@ -28,6 +28,13 @@ class InfoFiles(DebuggerSubcommand):
     short_help = 'Show information about an imported or loaded Python file'
 
     def complete(self, prefix):
+        """
+        Return the completions.
+
+        Args:
+            self: (todo): write your description
+            prefix: (str): write your description
+        """
         completions = sorted(['.'] + file_list())
         return Mcomplete.complete_token(completions, prefix)
 

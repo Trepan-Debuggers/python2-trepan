@@ -12,10 +12,22 @@ class TestKill(unittest.TestCase):
     """Tests KillCommand class"""
 
     def setUp(self):
+        """
+        Sets the signal signal.
+
+        Args:
+            self: (todo): write your description
+        """
         self.signal_caught = False
         return
 
     def handle(self, *args):
+        """
+        Handle a signal.
+
+        Args:
+            self: (todo): write your description
+        """
         self.signal_caught = True
         return
 

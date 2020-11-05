@@ -60,6 +60,13 @@ See also:
     complete = Mcomplete.complete_bpnumber
 
     def bpprint(self, bp):
+        """
+        Pretty print a bpp.
+
+        Args:
+            self: (todo): write your description
+            bp: (float): write your description
+        """
         if bp.temporary:
             disp = 'del  '
         else:
@@ -87,6 +94,12 @@ See also:
         return
 
     def run(self, args):
+        """
+        Run bpmgr.
+
+        Args:
+            self: (todo): write your description
+        """
         bpmgr = self.core.bpmgr
         bpnums = bpmgr.bpnumbers()
         if len(bpnums) > 0:  # There's at least one

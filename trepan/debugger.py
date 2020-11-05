@@ -49,6 +49,11 @@ try:
     from readline import get_line_buffer
 except ImportError:
     def get_line_buffer():
+        """
+        Get the line buffer buffer buffer.
+
+        Args:
+        """
         return None
     pass
 
@@ -341,6 +346,14 @@ class Debugger:
         return
 
     def complete(self, last_token, state):
+        """
+        Complete the next complete completion.
+
+        Args:
+            self: (todo): write your description
+            last_token: (str): write your description
+            state: (int): write your description
+        """
         if hasattr(self.core.processor, 'completer'):
             str = get_line_buffer() or last_token
             results = self.core.processor.completer(str, state)
@@ -352,6 +365,11 @@ class Debugger:
 # Demo it
 if __name__=='__main__':
     def foo():
+        """
+        Returns true if x y - axis false otherwise.
+
+        Args:
+        """
         y = 2
         for i in range(2):
             print("%d %d" % (i, y) )
@@ -387,6 +405,12 @@ if __name__=='__main__':
                     pass
                 d.core.stop()
 
+                """
+                Returns the square of x.
+
+                Args:
+                    x: (float): write your description
+                """
                 def square(x): return x*x
                 print('calling: run_call(square,2)')
                 d.run_call(square, 2)

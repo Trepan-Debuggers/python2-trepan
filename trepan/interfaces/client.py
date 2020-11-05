@@ -31,6 +31,17 @@ class ClientInterface(Muser.UserInterface):
 
     def __init__(self, inp=None, out=None, inout=None, user_opts={},
                  connection_opts={}):
+        """
+        Initialize a new ssh server.
+
+        Args:
+            self: (todo): write your description
+            inp: (int): write your description
+            out: (str): write your description
+            inout: (int): write your description
+            user_opts: (str): write your description
+            connection_opts: (dict): write your description
+        """
 
         opts = DEFAULT_INIT_CONNECTION_OPTS.copy()
         opts.update(connection_opts)

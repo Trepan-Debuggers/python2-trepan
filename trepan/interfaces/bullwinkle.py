@@ -27,6 +27,15 @@ class BWInterface(Minterface.DebuggerInterface):
     process as the debugged program."""
 
     def __init__(self, inp=None, out=None, opts=None):
+        """
+        Initialize a new instance.
+
+        Args:
+            self: (todo): write your description
+            inp: (int): write your description
+            out: (str): write your description
+            opts: (todo): write your description
+        """
         atexit.register(self.finalize)
         self.input       = inp or Minput.DebuggerUserInput()
         self.output      = out or Moutput.DebuggerUserOutput()
@@ -45,16 +54,36 @@ class BWInterface(Minterface.DebuggerInterface):
         return self.msg(msg)
 
     def finalize(self, last_wishes=None):
+        """
+        Finalize the stream.
+
+        Args:
+            self: (todo): write your description
+            last_wishes: (str): write your description
+        """
         # print exit annotation
         # save history
         self.close()
         return
 
     def msg(self, msg):
+        """
+        Write a message to the message.
+
+        Args:
+            self: (todo): write your description
+            msg: (str): write your description
+        """
         self.output.write(self.pp.pformat(msg) + "\n")
         return
 
     def read_command(self):
+        """
+        Reads a command from the device.
+
+        Args:
+            self: (todo): write your description
+        """
         line = self.readline('Bullwinkle read: ')
         try:
             command = eval(line)
@@ -64,6 +93,13 @@ class BWInterface(Minterface.DebuggerInterface):
         return command
 
     def readline(self, prompt=''):
+        """
+        Reads a single line.
+
+        Args:
+            self: (todo): write your description
+            prompt: (todo): write your description
+        """
         return self.input.readline(prompt=prompt)
     pass
 

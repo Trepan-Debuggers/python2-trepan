@@ -46,6 +46,12 @@ program."""
     short_help   = 'Execute until selected stack frame returns'
 
     def run(self, args):
+        """
+        Run the command.
+
+        Args:
+            self: (todo): write your description
+        """
         if self.proc.stack is None: return False
         if len(args) <= 1:
             levels = 1
@@ -71,6 +77,12 @@ if __name__ == '__main__':
     # Need to have a subroutine to get at least one frame f_back.
 
     def demo_finish(cmd):
+        """
+        Demo_fino command.
+
+        Args:
+            cmd: (str): write your description
+        """
         for c in (['finish', '1'],
                   ['finish', 'wrong', 'number', 'of', 'args'],
                   ['finish', '5'],

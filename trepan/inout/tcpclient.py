@@ -29,6 +29,14 @@ class TCPClient(DebuggerInOutBase):
     DEFAULT_INIT_OPTS = {'open': True}
 
     def __init__(self, inout=None, opts=None):
+        """
+        Initialize the ssh session.
+
+        Args:
+            self: (todo): write your description
+            inout: (int): write your description
+            opts: (todo): write your description
+        """
         get_option = lambda key: option_set(opts, key,
                                             Mdefault.CLIENT_SOCKET_OPTS)
         self.inout = None
@@ -52,6 +60,13 @@ class TCPClient(DebuggerInOutBase):
         return
 
     def open(self, opts=None):
+        """
+        Opens a connection to a socket.
+
+        Args:
+            self: (todo): write your description
+            opts: (todo): write your description
+        """
 
         get_option = lambda key: option_set(opts, key,
                                             Mdefault.CLIENT_SOCKET_OPTS)

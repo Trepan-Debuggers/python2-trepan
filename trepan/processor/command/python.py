@@ -55,6 +55,12 @@ See also:
         return
 
     def run(self, args):
+        """
+        Main entry point.
+
+        Args:
+            self: (todo): write your description
+        """
         # See if python's code module is around
 
         # Python does it's own history thing.

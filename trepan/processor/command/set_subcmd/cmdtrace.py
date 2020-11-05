@@ -26,6 +26,12 @@ class SetCmdtrace(Mbase_subcmd.DebuggerSetBoolSubcommand):
     pass
 
     def run(self, args):
+        """
+        Run the command.
+
+        Args:
+            self: (todo): write your description
+        """
         Mcmdfns.run_set_bool(self, args)
         dbg = self.debugger
         if hasattr(dbg.intf[-1], 'verbose'):

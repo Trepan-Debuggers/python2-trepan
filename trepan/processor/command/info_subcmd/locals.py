@@ -51,10 +51,23 @@ See also:
     short_help = "Show the local variables of current stack frame"
 
     def complete(self, prefix):
+        """
+        Returns the complete complete token.
+
+        Args:
+            self: (todo): write your description
+            prefix: (str): write your description
+        """
         completions = sorted(["*"] + self.proc.curframe.f_locals.keys())
         return Mcomplete.complete_token(completions, prefix)
 
     def run(self, args):
+        """
+        Run the program.
+
+        Args:
+            self: (todo): write your description
+        """
         if not self.proc.curframe:
             self.errmsg("No frame selected")
             return False

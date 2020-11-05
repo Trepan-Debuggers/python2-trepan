@@ -39,6 +39,12 @@ See also:
     short_help = '''Show the debugged programs's global variables'''
 
     def run(self, args):
+        """
+        Run command.
+
+        Args:
+            self: (todo): write your description
+        """
         if not self.proc.curframe:
             self.errmsg("No frame selected.")
             return False

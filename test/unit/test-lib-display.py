@@ -9,6 +9,12 @@ from trepan.lib import display as Mdisplay
 class TestLibDisplay(unittest.TestCase):
 
     def test_display(self):
+        """
+        Convert a test *
+
+        Args:
+            self: (todo): write your description
+        """
 
         mgr = Mdisplay.DisplayMgr()
         self.assertEqual(mgr.list, [], "Initial list empty")

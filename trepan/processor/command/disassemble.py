@@ -110,6 +110,12 @@ See also:
     DebuggerCommand.setup(locals(), category="data", max_args=2)
 
     def run(self, args):
+        """
+        Main entry point.
+
+        Args:
+            self: (todo): write your description
+        """
         proc = self.proc
 
         # FIXME: add a setting for assembler list size
@@ -222,6 +228,12 @@ if __name__ == "__main__":
 
     # FIXME: make sure the below is in a unit test
     def doit(cmd, args):
+        """
+        Run a command.
+
+        Args:
+            cmd: (str): write your description
+        """
         proc = cmd.proc
         proc.current_command = " ".join(args)
         cmd.run(args)

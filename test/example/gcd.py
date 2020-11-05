@@ -11,6 +11,11 @@ of parameters.
 import sys
 
 def check_args():
+    """
+    Checks if arguments.
+
+    Args:
+    """
     if len(sys.argv) != 3:
         # Rather than use sys.exit let's just raise an error
         raise Exception("Need to give two numbers")

@@ -66,6 +66,13 @@ def run_hooks(obj, hooks, *args):
 
 
 def resolve_name(obj, command_name):
+    """
+    Resolve the given the command name.
+
+    Args:
+        obj: (todo): write your description
+        command_name: (str): write your description
+    """
     if command_name not in obj.commands:
         return None
     return command_name
@@ -82,6 +89,14 @@ DEFAULT_PROC_OPTS = {
 class BWProcessor(Mprocessor.Processor):
 
     def __init__(self, core_obj, opts=None):
+        """
+        Initialize a thread
+
+        Args:
+            self: (todo): write your description
+            core_obj: (todo): write your description
+            opts: (todo): write your description
+        """
         Mprocessor.Processor.__init__(self, core_obj)
 
         self.response = {'errs': [], 'msg': []}
@@ -130,6 +145,15 @@ class BWProcessor(Mprocessor.Processor):
         return
 
     def add_preloop_hook(self, hook, position=-1, nodups = True):
+        """
+        Decorator to the hook.
+
+        Args:
+            self: (todo): write your description
+            hook: (todo): write your description
+            position: (todo): write your description
+            nodups: (todo): write your description
+        """
         if hook in self.preloop_hooks: return False
         self.preloop_hooks.insert(position, hook)
         return True
@@ -230,6 +254,13 @@ class BWProcessor(Mprocessor.Processor):
         return None  # Not reached
 
     def exec_line(self, line):
+        """
+        Execute a command.
+
+        Args:
+            self: (todo): write your description
+            line: (str): write your description
+        """
         if self.curframe:
             local_vars = self.curframe.f_locals
             global_vars = self.curframe.f_globals
@@ -312,6 +343,12 @@ class BWProcessor(Mprocessor.Processor):
         return run_hooks(self, self.postcmd_hooks)
 
     def process_command(self):
+        """
+        Process a single command.
+
+        Args:
+            self: (todo): write your description
+        """
         # process command
         self.response = {'errs': [], 'msg': []}
         cmd_hash = self.intf[-1].read_command()
@@ -356,6 +393,13 @@ class BWProcessor(Mprocessor.Processor):
         return False
 
     def remove_preloop_hook(self, hook):
+        """
+        Remove a hook hook.
+
+        Args:
+            self: (todo): write your description
+            hook: (todo): write your description
+        """
         try:
             position = self.preloop_hooks.index(hook)
         except ValueError:
@@ -458,16 +502,42 @@ if __name__=='__main__':
 
     class Debugger:
         def __init__(self):
+            """
+            Initialize the settings.
+
+            Args:
+                self: (todo): write your description
+            """
             self.intf = [Mbullwinkle.BWInterface()]
             self.settings = {'dbg_trepan': True, 'reload': False}
         pass
 
     class MockCore:
+        """
+        Returns the filename for a file.
+
+        Args:
+            self: (todo): write your description
+            fn: (str): write your description
+        """
         def filename(self, fn): return fn
 
+        """
+        Determine whether the frame filename.
+
+        Args:
+            self: (todo): write your description
+            frame: (todo): write your description
+        """
         def canonic_filename(self, frame): return frame.f_code.co_filename
 
         def __init__(self):
+            """
+            Create a new debugger.
+
+            Args:
+                self: (todo): write your description
+            """
             self.debugger = Debugger()
             return
         pass

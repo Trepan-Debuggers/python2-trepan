@@ -34,11 +34,25 @@ class DebuggerInputBase(object):
     """ This is an abstract class that specifies debugger input. """
 
     def __init__(self, inp=None, opts=None):
+        """
+        Initialize a new input.
+
+        Args:
+            self: (todo): write your description
+            inp: (int): write your description
+            opts: (todo): write your description
+        """
         self.input   = None
         self.closed = None
         return
 
     def close(self):
+        """
+        Close the connection.
+
+        Args:
+            self: (todo): write your description
+        """
         self.closed = True
         if self.input:
             self.input.close()
@@ -46,6 +60,12 @@ class DebuggerInputBase(object):
         return
 
     def use_history(self):
+        """
+        Return true if history : attrpc.
+
+        Args:
+            self: (todo): write your description
+        """
         return False
 
     def open(self, inp, opts=None):
@@ -73,16 +93,36 @@ class DebuggerOutputBase(object):
     """ This is an abstract class that specifies debugger output. """
 
     def __init__(self, out=None, opts=None):
+        """
+        Initialize an output.
+
+        Args:
+            self: (todo): write your description
+            out: (str): write your description
+            opts: (todo): write your description
+        """
         self.output = None
         return
 
     def close(self):
+        """
+        Closes the connection.
+
+        Args:
+            self: (todo): write your description
+        """
         if self.output:
             self.output.close()
             pass
         return
 
     def flush(self):
+        """
+        Flush the given message.
+
+        Args:
+            self: (todo): write your description
+        """
         raise NotImplementedError(NotImplementedMessage)
 
     def write(self, output):
@@ -106,16 +146,36 @@ class DebuggerInOutBase(object):
     """
 
     def __init__(self, inout=None, opts=None):
+        """
+        Initialize the object.
+
+        Args:
+            self: (todo): write your description
+            inout: (int): write your description
+            opts: (todo): write your description
+        """
         self.inout = None
         return
 
     def close(self):
+        """
+        Closes the connection.
+
+        Args:
+            self: (todo): write your description
+        """
         if self.inout:
             self.inout.close()
             pass
         return
 
     def flush(self):
+        """
+        Flush the given message.
+
+        Args:
+            self: (todo): write your description
+        """
         raise NotImplementedError(NotImplementedMessage)
 
     def open(self, inp, opts=None):
@@ -153,12 +213,27 @@ class DebuggerInOutBase(object):
 if __name__=='__main__':
     class MyInput(DebuggerInputBase):
         def open(self, inp, opts=None):
+            """
+            Open a file using the specified options.
+
+            Args:
+                self: (todo): write your description
+                inp: (str): write your description
+                opts: (todo): write your description
+            """
             print("open(%s) called" % inp)
             pass
         pass
 
     class MyOutput(DebuggerOutputBase):
         def writeline(self, s):
+            """
+            Write string s to the output.
+
+            Args:
+                self: (todo): write your description
+                s: (int): write your description
+            """
             print "writeline:", s
             pass
         pass

@@ -23,6 +23,12 @@ See also:
     short_help = 'Set the width of the terminal'
 
     def run(self, args):
+        """
+        Run a command line arguments.
+
+        Args:
+            self: (todo): write your description
+        """
         Mcmdfns.run_set_int(self, ' '.join(args),
                             "The 'width' command requires a line width",
                             0, None)

@@ -198,6 +198,12 @@ class DebuggerCore:
         return filename
 
     def is_running(self):
+        """
+        Check if the status is running.
+
+        Args:
+            self: (todo): write your description
+        """
         return 'Running' == self.execution_status
 
     def is_started(self):
@@ -248,6 +254,13 @@ class DebuggerCore:
         return
 
     def stop(self, options=None):
+        """
+        Stops the hook.
+
+        Args:
+            self: (todo): write your description
+            options: (dict): write your description
+        """
         # Our version of:
         #    pdb.set_trace(None)
         try:
@@ -270,6 +283,14 @@ class DebuggerCore:
         return
 
     def is_break_here(self, frame, arg):
+        """
+        Determine if breakpoint
+
+        Args:
+            self: (todo): write your description
+            frame: (todo): write your description
+            arg: (str): write your description
+        """
         filename = self.canonic(frame.f_code.co_filename)
         if 'call' == self.event:
             find_name  = frame.f_code.co_name
@@ -312,6 +333,13 @@ class DebuggerCore:
         return False
 
     def matches_condition(self, frame):
+        """
+        Determine if the condition matches the condition.
+
+        Args:
+            self: (todo): write your description
+            frame: (todo): write your description
+        """
         # Conditional bp.
         # Ignore count applies only to those bpt hits where the
         # condition evaluates to true.
@@ -382,6 +410,13 @@ class DebuggerCore:
         return False
 
     def _is_step_next_stop(self, event):
+        """
+        Determine if the next step is running
+
+        Args:
+            self: (todo): write your description
+            event: (todo): write your description
+        """
         if self.step_events and event not in self.step_events:
             return False
         if self.step_ignore == 0:

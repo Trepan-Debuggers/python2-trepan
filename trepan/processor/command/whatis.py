@@ -55,6 +55,12 @@ the *inspect* module."""
     DebuggerCommand.setup(locals(), category="data", min_args=1, need_stack=True)
 
     def run(self, args):
+        """
+        Run the command.
+
+        Args:
+            self: (todo): write your description
+        """
         proc = self.proc
         arg = proc.cmd_argstr
         try:

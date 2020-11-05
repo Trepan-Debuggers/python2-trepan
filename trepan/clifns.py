@@ -82,6 +82,12 @@ def whence_file(py_script, dirnames=None):
 
 
 def path_expanduser_abs(filename):
+    """
+    Return the absolute path.
+
+    Args:
+        filename: (str): write your description
+    """
     return osp.realpath(osp.expanduser(filename))
 
 # Demo

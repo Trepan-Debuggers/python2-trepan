@@ -27,6 +27,13 @@ class DebuggerRestart(Exception):
     we have to issue an execv-style restart.
     """
     def __init__(self, sys_argv=[]):
+        """
+        Initialize sys_argv.
+
+        Args:
+            self: (todo): write your description
+            sys_argv: (todo): write your description
+        """
         self.sys_argv = sys_argv
         return
     pass

@@ -33,6 +33,12 @@ variable "debugger" contains the top-level debugger object.
     min_abbrev = len('dbg')    # Need at least "set dbg"
 
     def run(self, args):
+        """
+        Run the command.
+
+        Args:
+            self: (todo): write your description
+        """
         Mcmdfns.run_set_bool(self, args)
         if self.debugger.settings[self.name]:
             # Put a stack frame in the list of frames so we have

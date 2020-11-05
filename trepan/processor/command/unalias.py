@@ -37,10 +37,23 @@ See also:
     short_help    = 'Remove an alias'
 
     def complete(self, prefix):
+        """
+        Returns the next token.
+
+        Args:
+            self: (todo): write your description
+            prefix: (str): write your description
+        """
         return Mcomplete.complete_token(self.proc.aliases.keys(), prefix)
 
     # Run command.
     def run(self, args):
+        """
+        Run a command.
+
+        Args:
+            self: (todo): write your description
+        """
         for arg in args[1:]:
             if arg in self.proc.aliases:
                 del(self.proc.aliases[arg])

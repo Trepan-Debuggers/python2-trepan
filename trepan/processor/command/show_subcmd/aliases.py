@@ -39,15 +39,34 @@ See also:
     run_cmd    = False
 
     def _alias_header(self):
+        """
+        Return the alias. alias.
+
+        Args:
+            self: (todo): write your description
+        """
         self.section("%-10s : %s" % ('Alias', 'Command'))
         self.msg("%-10s : %s" % ('-' * 10, '-' * 11))
         return
 
     def _alias_line(self, alias):
+        """
+        Alias for an alias for an alias.
+
+        Args:
+            self: (todo): write your description
+            alias: (str): write your description
+        """
         self.msg("%-10s : %s" % (alias, self.proc.aliases[alias]))
         return
 
     def run(self, args):
+        """
+        Run the command.
+
+        Args:
+            self: (todo): write your description
+        """
         aliases = list(self.proc.aliases.keys())
         aliases.sort()
         if len(args) == 0:

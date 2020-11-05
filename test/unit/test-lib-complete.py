@@ -10,6 +10,12 @@ from trepan.lib import breakpoint as Mbreakpoint
 class TestLibComplete(unittest.TestCase):
 
     def test_complete(self):
+        """
+        Generate a hash of the algorithm
+
+        Args:
+            self: (todo): write your description
+        """
 
         hash = {'ab': 1, 'aac': 2, 'aa': 3, 'a':  4}
         ary = sorted(hash.keys())
@@ -34,6 +40,12 @@ class TestLibComplete(unittest.TestCase):
         return
 
     def test_next_token(self):
+        """
+        Returns the next token.
+
+        Args:
+            self: (todo): write your description
+        """
         x = '  now is  the  time'
         for pos, expect in [
                 [0, [ 5, 'now']],
@@ -49,6 +61,12 @@ class TestLibComplete(unittest.TestCase):
         return
 
     def test_complete_brkpts(self):
+        """
+        Test if breakpoint breakpoint
+
+        Args:
+            self: (todo): write your description
+        """
         bpmgr = Mbreakpoint.BreakpointManager()
         bp = bpmgr.add_breakpoint('foo', 5)
         for find in ('1'):

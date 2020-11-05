@@ -26,6 +26,13 @@ class Processor:
     the events.
     """
     def __init__(self, core_obj):
+        """
+        Initialize the core object.
+
+        Args:
+            self: (todo): write your description
+            core_obj: (todo): write your description
+        """
         self.core = core_obj
         self.debugger = core_obj.debugger
         return
@@ -52,6 +59,15 @@ class Processor:
         return(self.intf[-1].msg_nocr(msg))
 
     def event_processor(self, frame, event, arg):
+        """
+        Receive an event processor.
+
+        Args:
+            self: (todo): write your description
+            frame: (todo): write your description
+            event: (todo): write your description
+            arg: (todo): write your description
+        """
         raise NotImplementedError(NotImplementedMessage)
 
     def rst_msg(self, text, opts={}):
@@ -63,11 +79,26 @@ class Processor:
         return self.msg(text)
 
     def section(self, message, opts={}):
+        """
+        Get a section of the message.
+
+        Args:
+            self: (todo): write your description
+            message: (str): write your description
+            opts: (todo): write your description
+        """
         if 'plain' != self.settings('highlight'):
             message = colorize('bold', message)
             pass
         return self.msg(message, opts)
 
     def settings(self, setting):
+        """
+        Get the settings for the given setting.
+
+        Args:
+            self: (todo): write your description
+            setting: (todo): write your description
+        """
         return self.core.debugger.settings[setting]
     pass

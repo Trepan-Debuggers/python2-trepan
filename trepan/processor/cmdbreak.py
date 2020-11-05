@@ -24,6 +24,18 @@ from trepan.processor.location import resolve_location
 
 def set_break(cmd_obj, func, filename, lineno, condition, temporary,
               args, force=False):
+    """
+    Sets a breakpoint.
+
+    Args:
+        cmd_obj: (todo): write your description
+        func: (todo): write your description
+        filename: (str): write your description
+        lineno: (todo): write your description
+        condition: (todo): write your description
+        temporary: (todo): write your description
+        force: (bool): write your description
+    """
     if lineno is None:
         part1 = ("I don't understand '%s' as a line number, function name,"
                  % ' '.join(args[1:]))
@@ -67,6 +79,12 @@ def set_break(cmd_obj, func, filename, lineno, condition, temporary,
 
 INVALID_PARSE_BREAK = (None, None, None, None)
 def parse_break_cmd(proc, args):
+    """
+    Parses a breakpoint.
+
+    Args:
+        proc: (todo): write your description
+    """
     if proc.current_command is None:
         proc.errmsg("Internal error")
         return INVALID_PARSE_BREAK

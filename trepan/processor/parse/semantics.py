@@ -16,27 +16,67 @@ ListRange = namedtuple("ListRange", "first last")
 
 class LocationError(Exception):
     def __init__(self, errmsg):
+        """
+        Initialize an error message
+
+        Args:
+            self: (todo): write your description
+            errmsg: (str): write your description
+        """
         self.errmsg = errmsg
 
     def __str__(self):
+        """
+        : return : class as a string
+
+        Args:
+            self: (todo): write your description
+        """
         return self.errmsg
 
 class RangeError(Exception):
     def __init__(self, errmsg):
+        """
+        Initialize an error message
+
+        Args:
+            self: (todo): write your description
+            errmsg: (str): write your description
+        """
         self.errmsg = errmsg
 
     def __str__(self):
+        """
+        : return : class as a string
+
+        Args:
+            self: (todo): write your description
+        """
         return self.errmsg
 
 class LocationGrok(GenericASTTraversal, object):
 
     def __init__(self, text):
+        """
+        Initialize the text.
+
+        Args:
+            self: (todo): write your description
+            text: (str): write your description
+        """
         GenericASTTraversal.__init__(self, None)
         self.text = text
         self.result = None
         return
 
     def n_addr_location(self, node):
+        """
+        Set location location.
+
+        Args:
+            self: (todo): write your description
+            node: (todo): write your description
+        """
         # addr_location ::= location
         # addr_location ::= ADDRESS
         # addr_location ::= FUNCNAME (via location singleton reduce)
@@ -63,6 +103,13 @@ class LocationGrok(GenericASTTraversal, object):
 
 
     def n_location(self, node):
+        """
+        Set the location.
+
+        Args:
+            self: (todo): write your description
+            node: (todo): write your description
+        """
         path, line_number, method = None, None, None
         if node[0] == 'FILENAME':
             path = node[0].value
@@ -80,12 +127,33 @@ class LocationGrok(GenericASTTraversal, object):
         self.prune()
 
     def n_NUMBER(self, node):
+        """
+        Set the result
+
+        Args:
+            self: (todo): write your description
+            node: (todo): write your description
+        """
         self.result = Location(None, node.value, False, None)
 
     def n_FUNCNAME(self, node):
+        """
+        Set the value of a node
+
+        Args:
+            self: (todo): write your description
+            node: (todo): write your description
+        """
         self.result = Location(None, None, False, node.value[:-2])
 
     def n_location_if(self, node):
+        """
+        N_location
+
+        Args:
+            self: (todo): write your description
+            node: (todo): write your description
+        """
         location = None
         if node[0] == 'location':
             self.preorder(node[0])
@@ -110,6 +178,13 @@ class LocationGrok(GenericASTTraversal, object):
 
     # FIXME: DRY with range
     def n_arange(self, arange_node):
+        """
+        Finds n_node.
+
+        Args:
+            self: (todo): write your description
+            arange_node: (todo): write your description
+        """
         if arange_node[0]  == 'range':
             arange_node = arange_node[0]
         l = len(arange_node)
@@ -170,6 +245,13 @@ class LocationGrok(GenericASTTraversal, object):
         return
 
     def n_range(self, range_node):
+        """
+        Find a range.
+
+        Args:
+            self: (todo): write your description
+            range_node: (todo): write your description
+        """
         l = len(range_node)
         if 1 <= l <= 2:
             # range ::= location
@@ -219,15 +301,38 @@ class LocationGrok(GenericASTTraversal, object):
         return
 
     def default(self, node):
+        """
+        Add the given node.
+
+        Args:
+            self: (todo): write your description
+            node: (todo): write your description
+        """
         if node not in frozenset(("""opt_space tokens token bp_start range_start arange_start
                                   IF FILENAME COLON COMMA SPACE DIRECTION""".split())):
             assert False, ("Something's wrong: you missed a rule for %s" % node.kind)
 
     def traverse(self, node):
+        """
+        Traverse node.
+
+        Args:
+            self: (todo): write your description
+            node: (todo): write your description
+        """
         return self.preorder(node)
 
 
 def build_bp_expr(string, show_tokens=False, show_ast=False, show_grammar=False):
+    """
+    R build a b. expression.
+
+    Args:
+        string: (str): write your description
+        show_tokens: (bool): write your description
+        show_ast: (bool): write your description
+        show_grammar: (bool): write your description
+    """
     parser_debug = {'rules': False, 'transition': False,
                     'reduce': show_grammar,
                     'errorstack': None, 'dups': False
@@ -248,6 +353,15 @@ def build_bp_expr(string, show_tokens=False, show_ast=False, show_grammar=False)
     return bp_expr
 
 def build_range(string, show_tokens=False, show_ast=False, show_grammar=False):
+    """
+    Build a list of - words.
+
+    Args:
+        string: (str): write your description
+        show_tokens: (bool): write your description
+        show_ast: (bool): write your description
+        show_grammar: (bool): write your description
+    """
     parser_debug = {'rules': False, 'transition': False,
                     'reduce': show_grammar,
                     'errorstack': None,
@@ -265,6 +379,15 @@ def build_range(string, show_tokens=False, show_ast=False, show_grammar=False):
 
 # FIXME: DRY with build_range
 def build_arange(string, show_tokens=False, show_ast=False, show_grammar=False):
+    """
+    Builds a string from arange.
+
+    Args:
+        string: (str): write your description
+        show_tokens: (bool): write your description
+        show_ast: (bool): write your description
+        show_grammar: (bool): write your description
+    """
     parser_debug = {'rules': False, 'transition': False,
                     'reduce': show_grammar,
                     'errorstack': None,
@@ -283,6 +406,13 @@ def build_arange(string, show_tokens=False, show_ast=False, show_grammar=False):
 if __name__ == '__main__':
     # FIXME: make sure the below is in a test
     def doit(fn, line):
+        """
+        Do a function
+
+        Args:
+            fn: (todo): write your description
+            line: (str): write your description
+        """
         print("=" * 30)
         print(line)
         print("+" * 30)

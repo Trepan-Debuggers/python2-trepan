@@ -43,6 +43,12 @@ See `quit`, `exit` or `kill` for termination commands.
     short_help    = '(Soft) restart program via a DebuggerRestart exception'
 
     def run(self, args):
+        """
+        Run the daemon.
+
+        Args:
+            self: (todo): write your description
+        """
         confirmed = self.confirm('Soft restart', False)
         if confirmed:
             self.core.step_ignore = 0

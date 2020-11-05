@@ -9,13 +9,31 @@ from trepan.processor.command import mock as Mmock
 from trepan.processor import command as Mcommand
 
 def camelcase(s):
+    """
+    Convert a string to camelcase.
+
+    Args:
+        s: (todo): write your description
+    """
     return s[0].upper() + s[1:]
 
 def minus2plus(matchobj):
+    """
+    Prints out - text that matchobj
+
+    Args:
+        matchobj: (todo): write your description
+    """
     print("gotone")
     return "\n" + '+' * len(matchobj.group(1)) + "\n"
 
 def cmdDoc2RsT(mod_name):
+    """
+    Generate documentation for the given module
+
+    Args:
+        mod_name: (str): write your description
+    """
     exec("import trepan.processor.command.%s as mod" %
          (mod_name))
     classnames = [ tup[0] for tup in
@@ -55,6 +73,11 @@ def cmdDoc2RsT(mod_name):
 
 
 def subCmdDoc2RsT():
+    """
+    Generate documentation
+
+    Args:
+    """
     for mod_name in 'info set show'.split():
         exec("import trepan.processor.command.%s as mod" %
              (mod_name))

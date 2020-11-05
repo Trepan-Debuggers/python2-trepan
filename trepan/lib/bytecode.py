@@ -20,6 +20,13 @@ from opcode import opname, HAVE_ARGUMENT
 
 
 def op_at_code_loc(code, loc):
+    """
+    Returns the op_at_locator.
+
+    Args:
+        code: (str): write your description
+        loc: (str): write your description
+    """
     try:
         op = ord(code[loc])
     except IndexError:
@@ -28,6 +35,13 @@ def op_at_code_loc(code, loc):
 
 
 def op_at_frame(frame, loc=None):
+    """
+    Return the op_at frame at the given frame.
+
+    Args:
+        frame: (todo): write your description
+        loc: (todo): write your description
+    """
     code = frame.f_code.co_code
     if loc is None: loc = frame.f_lasti
     return op_at_code_loc(code, loc)
@@ -51,6 +65,14 @@ def next_opcode(code, offset):
 
 
 def next_linestart(co, offset, count=1):
+    """
+    Return the next linestart offset.
+
+    Args:
+        co: (array): write your description
+        offset: (int): write your description
+        count: (int): write your description
+    """
     linestarts = dict(dis.findlinestarts(co))
     code = co.co_code
     # n = len(code)
@@ -66,6 +88,14 @@ def next_linestart(co, offset, count=1):
 
 
 def stmt_contains_opcode(co, lineno, query_opcode):
+    """
+    Return true if coords are contained within a code.
+
+    Args:
+        co: (todo): write your description
+        lineno: (str): write your description
+        query_opcode: (str): write your description
+    """
     linestarts = dict(dis.findlinestarts(co))
     code = co.co_code
     found_start = False
@@ -110,6 +140,12 @@ if __name__=='__main__':
     import inspect
 
     def sqr(x):
+        """
+        Sqr ( x ) of x.
+
+        Args:
+            x: (array): write your description
+        """
         return x * x
     frame = inspect.currentframe()
     co = frame.f_code
@@ -120,6 +156,12 @@ if __name__=='__main__':
                                                              'MAKE_FUNCTION'))
 
     def double(x):
+        """
+        Return the double double precision of x.
+
+        Args:
+            x: (int): write your description
+        """
         dis.dis(double)
         eval('1+2')
         frame = inspect.currentframe()

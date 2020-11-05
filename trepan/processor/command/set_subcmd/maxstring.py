@@ -37,6 +37,12 @@ See also:
     short_help = "Set maximum characters in showing strings"
 
     def run(self, args):
+        """
+        Run a command.
+
+        Args:
+            self: (todo): write your description
+        """
         Mcmdfns.run_set_int(
             self,
             " ".join(args),

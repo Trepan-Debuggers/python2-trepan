@@ -15,9 +15,21 @@ class MyCommand(Mbase_cmd.DebuggerCommand):
     name_aliases = ('mycommand',)
 
     def __init__(self):
+        """
+        Initialize the object
+
+        Args:
+            self: (todo): write your description
+        """
         self.name  = 'test'
         return
 
+    """
+    Run the command.
+
+    Args:
+        self: (todo): write your description
+    """
     def run(self, args): print('test command run')
     pass
 
@@ -25,18 +37,36 @@ class MySubcommand:
     '''Doc string for test testing subcommand'''
 
     def __init__(self):
+        """
+        Initialize the object
+
+        Args:
+            self: (todo): write your description
+        """
         self.name  = 'testing'
         return
 
     short_help = 'This is short help for test testing'
     min_abbrev = 4
     in_list    = True
+    """
+    Run the command.
+
+    Args:
+        self: (todo): write your description
+    """
     def run(self, args): print('test testing run')
     pass
 
 class TestSubcommand(unittest.TestCase):
 
     def setUp(self):
+        """
+        Sets the subcommand.
+
+        Args:
+            self: (todo): write your description
+        """
         self.d = Mmock.MockDebugger()
         self.mycmd  = MyCommand()
         self.mycmd.debugger = self.d

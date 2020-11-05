@@ -63,9 +63,23 @@ See also:
     highlight_choices = frozenset(("reset", "plain", "light", "dark", "off"))
 
     def complete(self, prefix):
+        """
+        Complete a prefix.
+
+        Args:
+            self: (todo): write your description
+            prefix: (str): write your description
+        """
         return complete_token(SetHighlight.highlight_choices, prefix)
 
     def get_highlight_type(self, arg):
+        """
+        Determine type for arg.
+
+        Args:
+            self: (todo): write your description
+            arg: (todo): write your description
+        """
         if not arg: return "light"
         if arg in SetHighlight.highlight_choices:
             return arg
@@ -76,6 +90,12 @@ See also:
         pass
 
     def run(self, args):
+        """
+        Main function.
+
+        Args:
+            self: (todo): write your description
+        """
         if len(args) >= 1 and 'reset' == args[0]:
             if len(args) >= 2:
                 highlight_type = self.get_highlight_type(args[1])

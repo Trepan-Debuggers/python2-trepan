@@ -13,6 +13,13 @@ import pyficache
 deparse_cache = {}
 
 def deparse_and_cache(co, errmsg_fn):
+    """
+    Deprecated
+
+    Args:
+        co: (todo): write your description
+        errmsg_fn: (str): write your description
+    """
     # co = proc_obj.curframe.f_code
     out = StringIO()
     deparsed = deparse_cache.get(co, None)
@@ -47,6 +54,15 @@ def deparse_and_cache(co, errmsg_fn):
     return remapped_file, name_for_code
 
 def deparse_offset(co, name, last_i, errmsg_fn):
+    """
+    Create a deparse node
+
+    Args:
+        co: (todo): write your description
+        name: (str): write your description
+        last_i: (str): write your description
+        errmsg_fn: (str): write your description
+    """
     nodeInfo = None
     deparsed = deparse_cache.get(co, None)
     if not deparsed or not hasattr(deparsed, 'offsets'):
@@ -76,10 +92,22 @@ def deparse_offset(co, name, last_i, errmsg_fn):
 if __name__ == '__main__':
     import inspect
     def msg(msg_str):
+        """
+        Prints a message
+
+        Args:
+            msg_str: (str): write your description
+        """
         print(msg_str)
         return
 
     def errmsg(msg_str):
+        """
+        Convert an error message to an error message
+
+        Args:
+            msg_str: (str): write your description
+        """
         msg('*** ' + msg_str)
         return
 

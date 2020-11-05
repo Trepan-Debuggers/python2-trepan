@@ -41,6 +41,12 @@ See also:
     short_help    = 'Edit specified file or module'
 
     def run(self, args):
+        """
+        Run command.
+
+        Args:
+            self: (todo): write your description
+        """
         curframe = self.proc.curframe
         if len(args) == 1:
             if curframe is None:

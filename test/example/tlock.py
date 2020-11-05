@@ -4,6 +4,14 @@ import thread
 # from trepan.api import debug
 
 def myfunction(string,sleeptime,lock,*args):
+    """
+    Myfunction until the given lock.
+
+    Args:
+        string: (str): write your description
+        sleeptime: (float): write your description
+        lock: (todo): write your description
+    """
     while 1:
 	#entering critical section
         # debug()

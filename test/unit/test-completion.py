@@ -11,11 +11,23 @@ line_buffer = ""
 
 
 def get_line_buffer():
+    """
+    Get the line buffer buffer buffer.
+
+    Args:
+    """
     return line_buffer
 
 
 class TestCompletion(unittest.TestCase):
     def run_complete(self, line):
+        """
+        Run a complete complete command.
+
+        Args:
+            self: (todo): write your description
+            line: (str): write your description
+        """
         global line_buffer
         line_buffer = line
         results = []
@@ -30,6 +42,12 @@ class TestCompletion(unittest.TestCase):
         return results
 
     def test_complete_identifier(self):
+        """
+        Test if the command is complete.
+
+        Args:
+            self: (todo): write your description
+        """
         from trepan.processor.command import base_cmd as mBaseCmd
         from trepan.processor import complete as mComplete
 
@@ -48,6 +66,12 @@ class TestCompletion(unittest.TestCase):
     if not IS_PYPY:
 
         def test_completion(self):
+            """
+            Run completion.
+
+            Args:
+                self: (todo): write your description
+            """
 
             self.dbgr = Mdebugger.Debugger()
 

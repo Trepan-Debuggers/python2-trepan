@@ -17,6 +17,12 @@ class TestCLIFns(unittest.TestCase):
         return
 
     def test_is_ok_line_for_breakpoint(self):
+        """
+        Check if breakpoint is a breakpoint.
+
+        Args:
+            self: (todo): write your description
+        """
         filename =  __file__
         if len(filename) > 4 and filename[-4:] == '.pyc':
             filename = filename[:-1]

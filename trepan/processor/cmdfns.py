@@ -21,6 +21,13 @@ import os, sys, tempfile
 import pyficache
 
 def source_tempfile_remap(prefix, text):
+    """
+    Removes a tempfile with the given prefix.
+
+    Args:
+        prefix: (str): write your description
+        text: (str): write your description
+    """
     fd = tempfile.NamedTemporaryFile(suffix='.py',
                                      prefix=prefix,
                                      delete=False)
@@ -32,6 +39,12 @@ def source_tempfile_remap(prefix, text):
 
 
 def deparse_fn(code):
+    """
+    Return the first part of the code.
+
+    Args:
+        code: (str): write your description
+    """
     try:
         from uncompyle6.semantics.fragments import code_deparse
     except ImportError:
@@ -44,6 +57,15 @@ def deparse_fn(code):
     return None
 
 def deparse_getline(code, filename, line_number, opts):
+    """
+    Return the first line number of the line number.
+
+    Args:
+        code: (str): write your description
+        filename: (str): write your description
+        line_number: (int): write your description
+        opts: (todo): write your description
+    """
     # Would love to figure out how to deparse the entire module
     # but with all many-time rewritten import stuff, I still
     # can't figure out how to get from "<frozen importlib>" to
@@ -129,6 +151,14 @@ def get_onoff(errmsg, arg, default=None, print_error=True):
 
 
 def get_val(curframe, errmsg, arg):
+    """
+    Get the value of a variable.
+
+    Args:
+        curframe: (str): write your description
+        errmsg: (str): write your description
+        arg: (str): write your description
+    """
     try:
         return eval(arg, curframe.f_globals,
                     curframe.f_locals)
@@ -198,6 +228,13 @@ def run_show_val(obj, name):
 
 
 def want_different_line(cmd, default):
+    """
+    Determine if there is disabled.
+
+    Args:
+        cmd: (str): write your description
+        default: (todo): write your description
+    """
     if cmd[-1] == '-':
         return False
     elif cmd[-1] == '+':
@@ -207,10 +244,22 @@ def want_different_line(cmd, default):
 # Demo it
 if __name__ == '__main__':
     def errmsg(msg):
+        """
+        Print an error message
+
+        Args:
+            msg: (str): write your description
+        """
         print "** ", msg
         return
 
     def msg(m):
+        """
+        Prints a message
+
+        Args:
+            m: (int): write your description
+        """
         print m
     print get_int(errmsg, '1+2')  # 3
     print get_int(errmsg, None)  # 1

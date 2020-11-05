@@ -11,24 +11,58 @@ Mbreak = __import__('trepan.processor.command.break', None, None, ['*'])
 class TestBreakCommand(unittest.TestCase):
 
     def setUp(self):
+        """
+        Sets the error result.
+
+        Args:
+            self: (todo): write your description
+        """
         self.errors = []
         self.msgs = []
         return
 
     def errmsg(self, msg):
+        """
+        Add an error message
+
+        Args:
+            self: (todo): write your description
+            msg: (str): write your description
+        """
         self.errors.append(msg)
         return
 
     def msg(self, msg):
+        """
+        Convert a message to a message.
+
+        Args:
+            self: (todo): write your description
+            msg: (str): write your description
+        """
         self.msgs.append(msg)
         return
 
     def parse_break_cmd(self, proc, cmd):
+        """
+        Parse the command line.
+
+        Args:
+            self: (todo): write your description
+            proc: (todo): write your description
+            cmd: (str): write your description
+        """
         proc.current_command = cmd
         args = cmd.split(' ')
         return Mcmdbreak.parse_break_cmd(proc, args)
 
     def test_parse_break_cmd(self):
+        """
+        The test command.
+
+        Args:
+            self: (todo): write your description
+        """
         import inspect, types
         d               = debugger.Debugger()
         cp              = d.core.processor
@@ -57,6 +91,11 @@ class TestBreakCommand(unittest.TestCase):
                                  (fn, isinstance(fi, types.StringType), li))
 
         def foo():
+            """
+            Returns a list of all the integers
+
+            Args:
+            """
             return 'bar'
 
         fn, fi, li, cond = self.parse_break_cmd(proc, 'break foo()')

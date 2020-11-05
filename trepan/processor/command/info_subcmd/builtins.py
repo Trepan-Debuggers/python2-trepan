@@ -30,11 +30,24 @@ Show the builtin-functions for the current stack frame."""
     short_help = "Show the builtins for current stack frame"
 
     def complete(self, prefix):
+        """
+        Returns the complete complete complete complete complete token.
+
+        Args:
+            self: (todo): write your description
+            prefix: (str): write your description
+        """
         completions = sorted(['*'] +
                               self.proc.curframe.f_builtins.keys())
         return Mcomplete.complete_token(completions, prefix)
 
     def run(self, args):
+        """
+        Run command.
+
+        Args:
+            self: (todo): write your description
+        """
         if not self.proc.curframe:
             self.errmsg("No frame selected.")
             return False

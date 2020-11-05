@@ -48,9 +48,23 @@ See also:
     short_help = "Set disassembly style"
 
     def complete(self, prefix):
+        """
+        Complete a token.
+
+        Args:
+            self: (todo): write your description
+            prefix: (str): write your description
+        """
         return complete_token(choices, prefix)
 
     def get_format_type(self, arg):
+        """
+        Get the format name for the given argument.
+
+        Args:
+            self: (todo): write your description
+            arg: (str): write your description
+        """
         if not arg:
             return "extended"
         if arg in choices:
@@ -64,6 +78,12 @@ See also:
         pass
 
     def run(self, args):
+        """
+        Run a command.
+
+        Args:
+            self: (todo): write your description
+        """
         if len(args) == 0:
             self.section("disasembly style types: ")
             self.msg(self.columnize_commands(choices))

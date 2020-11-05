@@ -8,6 +8,12 @@ from trepan import misc as Mmisc
 class TestMisc(unittest.TestCase):
 
     def test_option_set(self):
+        """
+        Set the test - test.
+
+        Args:
+            self: (todo): write your description
+        """
         TEST_OPTS = {'a': True, 'b': 5, 'c': None}
         get_option = lambda key: Mmisc.option_set(opts, key, TEST_OPTS)
         opts={'d': 6, 'a': False}

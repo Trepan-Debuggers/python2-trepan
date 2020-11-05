@@ -15,6 +15,11 @@ import sys
 import trepan.api;
 
 def check_args():
+    """
+    Checks arguments.
+
+    Args:
+    """
     if len(sys.argv) != 3:
         # Rather than use sys.exit let's just raise an error
         raise Exception("Need to give two numbers")

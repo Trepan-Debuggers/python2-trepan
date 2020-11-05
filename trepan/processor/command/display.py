@@ -47,15 +47,34 @@ requests previously made."""
     format_specs = ('/c', '/x', '/o', '/f', '/s')
 
     def complete(self, prefix):
+        """
+        Returns the complete complete command
+
+        Args:
+            self: (todo): write your description
+            prefix: (str): write your description
+        """
         return (DisplayCommand.format_specs +
                 Mcomplete.complete_expression(self, prefix))
 
     def run_eval_display(self, args=None):
+        """
+        Eval on the current process.
+
+        Args:
+            self: (todo): write your description
+        """
         for line in self.proc.display_mgr.display(self.proc.curframe):
             self.msg(line)
         return
 
     def run(self, args):
+        """
+        Evaluates command.
+
+        Args:
+            self: (todo): write your description
+        """
         if len(args) == 1:
             # Display anything active
             self.run_eval_display(self)

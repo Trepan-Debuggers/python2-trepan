@@ -57,6 +57,12 @@ See also:
     complete = Mcomplete.complete_id_and_builtins
 
     def run(self, args):
+        """
+        Main entry point command line.
+
+        Args:
+            self: (todo): write your description
+        """
         sys_path_save = list(sys.path)
         sys_argv_save = list(sys.argv)
         sys.argv      = ['pydoc'] + args[1:]

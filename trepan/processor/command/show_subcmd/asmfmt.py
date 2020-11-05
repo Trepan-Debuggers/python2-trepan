@@ -33,6 +33,12 @@ See also:
     pass
 
     def run(self, args):
+        """
+        Emit a command.
+
+        Args:
+            self: (todo): write your description
+        """
         if len(args) != 0:
             self.errmsg("Expecting no args")
             return

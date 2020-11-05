@@ -391,18 +391,42 @@ def disassemble_bytes(
 if __name__ == "__main__":
 
     def msg(msg_str):
+        """
+        Prints a message
+
+        Args:
+            msg_str: (str): write your description
+        """
         print(msg_str)
         return
 
     def msg_nocr(msg_str):
+        """
+        Prints a message to stdout.
+
+        Args:
+            msg_str: (str): write your description
+        """
         sys.stdout.write(msg_str)
         return
 
     def errmsg(msg_str):
+        """
+        Convert an error message to an error message
+
+        Args:
+            msg_str: (str): write your description
+        """
         msg("*** " + msg_str)
         return
 
     def section(msg_str):
+        """
+        Returns a message as a string.
+
+        Args:
+            msg_str: (str): write your description
+        """
         msg("=== " + msg_str + " ===")
         return
 

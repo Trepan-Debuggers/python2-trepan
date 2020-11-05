@@ -21,6 +21,13 @@ from trepan.processor.command import base_cmd as Mbase_cmd
 from trepan import exception as Mexcept
 
 def ctype_async_raise(thread_obj, exception):
+    """
+    Raise an exception asynchronously.
+
+    Args:
+        thread_obj: (int): write your description
+        exception: (todo): write your description
+    """
     found = False
     target_tid = 0
     for tid, tobj in threading._active.items():
@@ -98,6 +105,12 @@ See `exit` or `kill` for more forceful termination commands.
         raise Mexcept.DebuggerQuit
 
     def run(self, args):
+        """
+        Run a daemon.
+
+        Args:
+            self: (todo): write your description
+        """
         confirmed = False
         if len(args) <= 1:
             if '!' != args[0][-1]:
@@ -129,6 +142,12 @@ if __name__ == '__main__':
 
     class MyThread(threading.Thread):
         def run(self):
+            """
+            Run a command.
+
+            Args:
+                self: (todo): write your description
+            """
             command.run(['quit'])
             return
         pass

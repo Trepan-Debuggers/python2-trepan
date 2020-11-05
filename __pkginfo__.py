@@ -87,6 +87,11 @@ import os.path as osp
 
 
 def get_srcdir():
+    """
+    Return the source directory of the filename
+
+    Args:
+    """
     filename = osp.normcase(osp.dirname(osp.abspath(__file__)))
     return osp.realpath(filename)
 
@@ -107,6 +112,12 @@ zip_safe = False
 
 
 def read(*rnames):
+    """
+    Read the contents.
+
+    Args:
+        rnames: (str): write your description
+    """
     return open(osp.join(osp.dirname(__file__), *rnames)).read()
 
 

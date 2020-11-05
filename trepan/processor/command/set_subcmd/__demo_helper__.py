@@ -13,12 +13,23 @@ def get_name():
     return os.path.splitext(filename)[0]
 
 def demo_setup():
+    """
+    Setup a set
+
+    Args:
+    """
     from trepan.processor.command import mock as Mmock, set as Mset
     d, cp = Mmock.dbg_setup()
     mgr = Mset.SetCommand(cp)
     return mgr
 
 def demo_run(subcmd):
+    """
+    Demoo command
+
+    Args:
+        subcmd: (list): write your description
+    """
     mgr = demo_setup()
     sub = subcmd(mgr)
     sub.name = get_name()

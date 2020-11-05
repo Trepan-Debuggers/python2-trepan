@@ -68,6 +68,13 @@ See also:
     short_help = "Deparse source via uncompyle6"
 
     def print_text(self, text):
+        """
+        Prints the text.
+
+        Args:
+            self: (todo): write your description
+            text: (str): write your description
+        """
         if self.settings["highlight"] == "plain":
             self.msg(text)
             return
@@ -78,6 +85,12 @@ See also:
         self.msg(highlight_string(text, opts).strip("\n"))
 
     def run(self, args):
+        """
+        Run the code command.
+
+        Args:
+            self: (todo): write your description
+        """
         co = self.proc.curframe.f_code
         name = co.co_name
 

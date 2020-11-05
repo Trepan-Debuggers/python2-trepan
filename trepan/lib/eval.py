@@ -21,6 +21,12 @@ import re
 
 
 def extract_expression(text):
+    """
+    Extract the text from a string.
+
+    Args:
+        text: (str): write your description
+    """
     if re.search("^\s*(?:if|elif)\s+", text):
         text = re.sub("^\s*(?:if|elif)\s+", "", text)
         text = re.sub(":(?:\s+.*$|$)", "", text)

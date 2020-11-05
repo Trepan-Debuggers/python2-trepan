@@ -51,6 +51,12 @@ See also:
                      "of an expression")
 
     def run(self, args):
+        """
+        Run command line arguments.
+
+        Args:
+            self: (todo): write your description
+        """
         for arg in args[1:]:
             s = Mprint.print_obj(arg, self.proc.curframe)
             self.msg(s)

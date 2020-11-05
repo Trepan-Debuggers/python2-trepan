@@ -10,6 +10,12 @@ class TestStepCommand(unittest.TestCase):
     """Tests StepCommand class"""
 
     def setup(self):
+        """
+        Setup the error.
+
+        Args:
+            self: (todo): write your description
+        """
         self.errors = []
         return
 

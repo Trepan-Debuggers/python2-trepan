@@ -9,7 +9,19 @@ from xdis import IS_PYPY, PYTHON_VERSION
 class TestByteCode(unittest.TestCase):
 
     def test_contains_make_function(self):
+        """
+        Determine if the current function.
+
+        Args:
+            self: (todo): write your description
+        """
         def sqr(x):
+            """
+            Sqr ( x ) of x.
+
+            Args:
+                x: (array): write your description
+            """
             return x * x
         frame = inspect.currentframe()
         co = frame.f_code
@@ -21,6 +33,12 @@ class TestByteCode(unittest.TestCase):
         return
 
     def test_op_at_frame(self):
+        """
+        Test if the current frame at the last frame.
+
+        Args:
+            self: (todo): write your description
+        """
         frame = inspect.currentframe()
         if IS_PYPY or PYTHON_VERSION >= 3.7:
             call_opcode = 'CALL_METHOD'
@@ -31,6 +49,12 @@ class TestByteCode(unittest.TestCase):
         return
 
     def test_is_def_frame(self):
+        """
+        Determine if a frame.
+
+        Args:
+            self: (todo): write your description
+        """
         # Not a "def" statement because frame is wrong spot
         frame = inspect.currentframe()
         self.assertFalse(Mcode.is_def_stmt('foo(): pass', frame))

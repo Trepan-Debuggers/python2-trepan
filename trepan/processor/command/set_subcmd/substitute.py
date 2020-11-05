@@ -45,6 +45,12 @@ Examples:
     short_help = "Set filename substitution"
 
     def run(self, args):
+        """
+        Run a file
+
+        Args:
+            self: (todo): write your description
+        """
         pyficache.remap_file(args[1], args[0])
 
     pass

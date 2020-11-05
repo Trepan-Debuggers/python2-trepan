@@ -31,6 +31,15 @@ class ServerInterface(Minterface.DebuggerInterface):
     computer."""
 
     def __init__(self, inout=None, out=None, connection_opts={}):
+        """
+        Initialize the mtcoser.
+
+        Args:
+            self: (todo): write your description
+            inout: (int): write your description
+            out: (str): write your description
+            connection_opts: (dict): write your description
+        """
         atexit.register(self.finalize)
 
         opts = DEFAULT_INIT_CONNECTION_OPTS.copy()
@@ -84,6 +93,15 @@ class ServerInterface(Minterface.DebuggerInterface):
         return self.msg("%s%s" %(prefix, str))
 
     def finalize(self, last_wishes=Mcomcodes.QUIT):
+        """
+        Finalize the socket.
+
+        Args:
+            self: (todo): write your description
+            last_wishes: (str): write your description
+            Mcomcodes: (str): write your description
+            QUIT: (todo): write your description
+        """
         # print exit annotation
         if self.is_connected():
             self.inout.writeline(last_wishes)
@@ -110,12 +128,33 @@ class ServerInterface(Minterface.DebuggerInterface):
         return
 
     def read_command(self, prompt):
+        """
+        Reads a command from the prompt.
+
+        Args:
+            self: (todo): write your description
+            prompt: (str): write your description
+        """
         return self.readline(prompt)
 
     def read_data(self):
+        """
+        Reads the data from the packet.
+
+        Args:
+            self: (todo): write your description
+        """
         return self.inout.read_data()
 
     def readline(self, prompt, add_to_history=True):
+        """
+        Read a line from the prompt.
+
+        Args:
+            self: (todo): write your description
+            prompt: (todo): write your description
+            add_to_history: (bool): write your description
+        """
         if prompt:
             self.write_prompt(prompt)
             pass
@@ -128,9 +167,24 @@ class ServerInterface(Minterface.DebuggerInterface):
         return self.inout.state
 
     def write_prompt(self, prompt):
+        """
+        Write prompt prompt.
+
+        Args:
+            self: (todo): write your description
+            prompt: (str): write your description
+        """
         return self.inout.writeline(Mcomcodes.PROMPT + prompt)
 
     def write_confirm(self, prompt, default):
+        """
+        Write a confirmation.
+
+        Args:
+            self: (todo): write your description
+            prompt: (str): write your description
+            default: (todo): write your description
+        """
         if default:
             code = Mcomcodes.CONFIRM_TRUE
         else:

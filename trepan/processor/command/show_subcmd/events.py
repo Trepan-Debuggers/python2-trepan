@@ -36,6 +36,12 @@ See also:
     short_help = 'Show the kinds of events the debugger will stop on'
 
     def run(self, args):
+        """
+        Run the command.
+
+        Args:
+            self: (todo): write your description
+        """
         events = list(self.debugger.settings['printset'])
         if events != []:
             events.sort()

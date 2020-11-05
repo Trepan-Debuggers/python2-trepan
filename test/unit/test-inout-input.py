@@ -11,6 +11,12 @@ srcdir = os.path.abspath(os.path.dirname(__file__))
 class TestDebuggerInput(unittest.TestCase):
 
     def test_DebuggerInput(self):
+        """
+        Reads the input file.
+
+        Args:
+            self: (todo): write your description
+        """
         cmdhelper_file = os.path.join(srcdir, 'cmdhelper.py')
         inp = Minput.DebuggerUserInput(cmdhelper_file)
         self.assertTrue(inp, 'Should have gotten a DebuggerInput object back')

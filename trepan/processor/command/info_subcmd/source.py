@@ -28,6 +28,12 @@ Information about the current Python file."""
     short_help = "Information about the current Python file"
 
     def run(self, args):
+        """
+        Run command.
+
+        Args:
+            self: (todo): write your description
+        """
         if not self.proc.curframe:
             self.errmsg("No current source file.")
             return

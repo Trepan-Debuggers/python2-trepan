@@ -22,6 +22,13 @@ from trepan.lib import complete as Mcomplete
 
 
 def frame_low_high(proc_obj, direction):
+    """
+    Return the low low and high high high low low values of a high high low values.
+
+    Args:
+        proc_obj: (todo): write your description
+        direction: (str): write your description
+    """
     stack_size = len(proc_obj.stack)  # - hide_level
     if direction is None:
         return [-stack_size, stack_size-1]
@@ -35,11 +42,26 @@ def frame_low_high(proc_obj, direction):
 
 
 def frame_complete(proc_obj, prefix, direction):
+    """
+    Return the complete complete complete complete token.
+
+    Args:
+        proc_obj: (todo): write your description
+        prefix: (str): write your description
+        direction: (todo): write your description
+    """
     low, high = frame_low_high(proc_obj, direction)
     ary = [str(low+i) for i in range(high-low+1)]
     return Mcomplete.complete_token(ary, prefix)
 
 def frame_num(proc_obj, pos):
+    """
+    Return the number of frames in the stack.
+
+    Args:
+        proc_obj: (todo): write your description
+        pos: (dict): write your description
+    """
     return len(proc_obj.stack) - pos - 1
 
 def adjust_frame(proc_obj, name, pos, absolute_pos):
@@ -82,6 +104,14 @@ def adjust_frame(proc_obj, name, pos, absolute_pos):
 
 
 def adjust_relative(proc_obj, name, args, signum):
+    """
+    Adjust the relative position of a process
+
+    Args:
+        proc_obj: (todo): write your description
+        name: (str): write your description
+        signum: (int): write your description
+    """
     if not proc_obj.stack:
         proc_obj.errmsg("Program has no stack frame set.")
         return False

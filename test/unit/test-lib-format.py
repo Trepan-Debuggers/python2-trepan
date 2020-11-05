@@ -9,6 +9,12 @@ from trepan.lib import format as Mformat
 class TestLibFile(unittest.TestCase):
 
     def test_mono(self):
+        """
+        Highlight a mono rst.
+
+        Args:
+            self: (todo): write your description
+        """
 
         # Could be in setup()
         rst_lex  = RstLexer()

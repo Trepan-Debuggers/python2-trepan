@@ -25,6 +25,14 @@ class StringArrayInput(Mbase.DebuggerInputBase):
     even simplier. """
 
     def __init__(self, inp=[], opts=None):
+        """
+        Initialize a new input.
+
+        Args:
+            self: (todo): write your description
+            inp: (int): write your description
+            opts: (todo): write your description
+        """
         self.input  = inp
         self.closed = False
         return
@@ -63,6 +71,14 @@ class StringArrayOutput(Mbase.DebuggerOutputBase):
     even simplier. """
 
     def __init__(self, out=[], opts=None):
+        """
+        Initialize the stream.
+
+        Args:
+            self: (todo): write your description
+            out: (str): write your description
+            opts: (todo): write your description
+        """
         self.flush_after_write = False  # For compatibility
         self.closed = False
         self.output = out

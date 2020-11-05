@@ -49,6 +49,12 @@ See also:
 
     # Run command.
     def run(self, args):
+        """
+        Run a command.
+
+        Args:
+            self: (todo): write your description
+        """
         if len(args) == 1:
             self.proc.commands["show"].run(["show", "alias"])
         elif len(args) == 2:

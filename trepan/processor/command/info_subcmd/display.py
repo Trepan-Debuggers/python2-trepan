@@ -33,6 +33,12 @@ See also:
     short_help = 'Expressions to display when program stops'
 
     def run(self, args):
+        """
+        Run the command.
+
+        Args:
+            self: (todo): write your description
+        """
         lines = self.proc.display_mgr.all()
         if 0 == len(lines):
             self.errmsg('There are no auto-display expressions now.')

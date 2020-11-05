@@ -8,6 +8,12 @@ from trepan.lib import file as Mfile
 class TestLibFile(unittest.TestCase):
 
     def test_lookupmodule(self):
+        """
+        Returns the module name of the given file.
+
+        Args:
+            self: (todo): write your description
+        """
         m, f = Mfile.lookupmodule('os.path')
         self.assertTrue(f)
         self.assertTrue(m)
@@ -19,6 +25,12 @@ class TestLibFile(unittest.TestCase):
 
     if sys.platform != 'win32':
         def test_readable(self):
+            """
+            Test if the file - readable file is readable.
+
+            Args:
+                self: (todo): write your description
+            """
             self.assertFalse(Mfile.readable('fdafdsa'))
             for mode, can_read in [(stat.S_IRUSR, True),
                                    (stat.S_IWUSR, False)]:

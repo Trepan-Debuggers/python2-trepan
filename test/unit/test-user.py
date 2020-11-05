@@ -10,6 +10,13 @@ class TestInterfaceUser(unittest.TestCase):
     """Tests UserInterface class"""
 
     def readline(self, answer):
+        """
+        Read a single line from the queue.
+
+        Args:
+            self: (todo): write your description
+            answer: (todo): write your description
+        """
         return answer
 
     def test_confirm(self):

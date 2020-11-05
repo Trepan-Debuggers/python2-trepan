@@ -44,11 +44,24 @@ unless option `-c` is given."""
     short_help    = "Read and run debugger commands from a file"
 
     def complete(self, prefix):
+        """
+        Returns the complete token
+
+        Args:
+            self: (todo): write your description
+            prefix: (str): write your description
+        """
         # files = Readline::FILENAME_COMPLETION_PROC.call(prefix) || []
         opts = ['-v', '-Y', '-N', '-c']  # + files
         return Mcomplete.complete_token(opts, prefix)
 
     def run(self, args):
+        """
+        Run a script.
+
+        Args:
+            self: (todo): write your description
+        """
         parms = args[1:-1]
         opts = {}
         for arg in parms:

@@ -52,6 +52,12 @@ See also:
     short_help = "Set execution-tracing event set"
 
     def run(self, args):
+        """
+        Run the plugin.
+
+        Args:
+            self: (todo): write your description
+        """
         valid_args = tracer.ALL_EVENT_NAMES + ("all",)
         eventset = []
         for arg in args:

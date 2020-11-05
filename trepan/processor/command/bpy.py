@@ -49,6 +49,12 @@ To issue a debugger command use function *dbgr()*. For example:
         return
 
     def run(self, args):
+        """
+        Main entry point.
+
+        Args:
+            self: (todo): write your description
+        """
 
         try:
             from bpython.curtsies import main as main_bpython

@@ -55,6 +55,12 @@ See also:
     short_help    = 'Print value of deparsed expression'
 
     def run(self, args):
+        """
+        Execute code.
+
+        Args:
+            self: (todo): write your description
+        """
         co = self.proc.curframe.f_code
         name = co.co_name
         last_i = self.proc.curframe.f_lasti

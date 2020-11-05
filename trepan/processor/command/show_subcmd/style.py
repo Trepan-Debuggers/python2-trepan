@@ -13,6 +13,13 @@ style_names = sorted(list(STYLE_MAP.keys()))
 
 
 def complete(self, prefix):
+    """
+    Returns the next token.
+
+    Args:
+        self: (todo): write your description
+        prefix: (str): write your description
+    """
     return complete_token(style_names)
 
 
@@ -32,6 +39,12 @@ See also:
     short_help = "Set the pygments style"
 
     def run(self, args):
+        """
+        Emit a message.
+
+        Args:
+            self: (todo): write your description
+        """
         if len(args) != 0:
             self.errmsg("Expecting no args")
             return

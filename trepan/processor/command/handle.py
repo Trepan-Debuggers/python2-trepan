@@ -57,6 +57,12 @@ Without any action names the current settings are shown.
     DebuggerCommand.setup(locals(), category="running", min_args=1)
 
     def run(self, args):
+        """
+        Run the given arguments.
+
+        Args:
+            self: (todo): write your description
+        """
         if self.debugger.sigmgr.action(" ".join(args[1:])) and len(args) > 2:
             # Show results of recent change
             self.debugger.sigmgr.info_signal([args[1]])

@@ -9,14 +9,34 @@ class TestAliasCommand(unittest.TestCase):
     '''Test 'alias' and 'unalias' commands'''
 
     def errmsg(self, msg):
+        """
+        Add an error message
+
+        Args:
+            self: (todo): write your description
+            msg: (str): write your description
+        """
         self.errors.append(msg)
         return
 
     def msg(self, msg):
+        """
+        Convert a message to a message.
+
+        Args:
+            self: (todo): write your description
+            msg: (str): write your description
+        """
         self.msgs.append(msg)
         return
 
     def setUp(self):
+        """
+        Set the current command.
+
+        Args:
+            self: (todo): write your description
+        """
         self.errors = []
         self.msgs = []
         d                     = Mdebugger.Debugger()
@@ -31,6 +51,14 @@ class TestAliasCommand(unittest.TestCase):
         return
 
     def check_alias(self, should_not_have, cmd_name, *args):
+        """
+        Check if a command is in a command.
+
+        Args:
+            self: (todo): write your description
+            should_not_have: (bool): write your description
+            cmd_name: (str): write your description
+        """
         self.cmdproc.msgs    = []
         self.cmdproc.errmsgs = []
         cmds    = self.cmdproc.commands
@@ -53,9 +81,22 @@ class TestAliasCommand(unittest.TestCase):
         return
 
     def is_alias_defined(self, alias_name):
+        """
+        Returns true if the alias is defined in the alias.
+
+        Args:
+            self: (todo): write your description
+            alias_name: (str): write your description
+        """
         return alias_name in list(self.cmdproc.aliases.keys())
 
     def test_alias_unalias_command(self):
+        """
+        Test if the command.
+
+        Args:
+            self: (todo): write your description
+        """
         self.assertEqual(False, len(self.cmdproc.aliases) == 0,
                          'There should be some aliases defined')
 

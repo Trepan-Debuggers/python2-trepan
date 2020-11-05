@@ -22,6 +22,11 @@ from trepan.inout import base as Mbase
 
 
 def readline_importable():
+    """
+    Returns true if the readline can be readline.
+
+    Args:
+    """
     try:
         import readline
         return True
@@ -36,12 +41,26 @@ class DebuggerUserInput(Mbase.DebuggerInputBase):
     interative terminal, but it might be file input."""
 
     def __init__(self, inp=None, opts=None):
+        """
+        Initialize the input file.
+
+        Args:
+            self: (todo): write your description
+            inp: (int): write your description
+            opts: (todo): write your description
+        """
         self.input     = inp or sys.stdin
         self.line_edit = None  # Our name for GNU readline capability
         self.open(self.input, opts)
         return
 
     def close(self):
+        """
+        Close the connection.
+
+        Args:
+            self: (todo): write your description
+        """
         self.input.close()
         self.closed = True
         return
@@ -52,6 +71,12 @@ class DebuggerUserInput(Mbase.DebuggerInputBase):
         }
 
     def use_history(self):
+        """
+        Return the history of the history.
+
+        Args:
+            self: (todo): write your description
+        """
         return self.use_raw and readline_importable()
 
     def open(self, inp, opts={}):

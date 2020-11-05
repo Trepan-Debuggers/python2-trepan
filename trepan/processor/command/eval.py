@@ -60,6 +60,12 @@ class EvalCommand(DebuggerCommand):
     DebuggerCommand.setup(locals(), category="data", need_stack=True)
 
     def run(self, args):
+        """
+        Run commands.
+
+        Args:
+            self: (todo): write your description
+        """
         if 1 == len(args):
             if self.proc.current_source_text:
                 text = self.proc.current_source_text.rstrip("\n")

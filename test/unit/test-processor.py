@@ -10,6 +10,12 @@ from cmdhelper import dbg_setup
 class TestProcesor(unittest.TestCase):
 
     def setUp(self):
+        """
+        Sets the setup.
+
+        Args:
+            self: (todo): write your description
+        """
         self.d, self.cp = dbg_setup()
 
     def test_populate_commands(self):

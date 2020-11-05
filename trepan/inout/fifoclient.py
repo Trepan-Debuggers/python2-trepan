@@ -28,6 +28,14 @@ class FIFOClient(DebuggerInOutBase):
     DEFAULT_INIT_OPTS = {'open': True}
 
     def __init__(self, inp=None, opts=None):
+        """
+        Initialize the pid file.
+
+        Args:
+            self: (todo): write your description
+            inp: (int): write your description
+            opts: (todo): write your description
+        """
         get_option = lambda key: Mmisc.option_set(opts, key,
                                                   Mdefault.CLIENT_SOCKET_OPTS)
         self.state = 'disconnected'
@@ -56,9 +64,23 @@ class FIFOClient(DebuggerInOutBase):
         return
 
     def flush(self):
+        """
+        Flush the output.
+
+        Args:
+            self: (todo): write your description
+        """
         return self.output.flush()
 
     def open(self, pid, opts=None):
+        """
+        Open a file.
+
+        Args:
+            self: (todo): write your description
+            pid: (str): write your description
+            opts: (todo): write your description
+        """
 
         # Not in/out are reversed from server side
         d              = tempfile.gettempdir()

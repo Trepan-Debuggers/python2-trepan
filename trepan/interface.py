@@ -32,6 +32,14 @@ the program and the outside portion which could be
     """
 
     def __init__(self, inp=None, out=None):
+        """
+        Initialize stdinp
+
+        Args:
+            self: (todo): write your description
+            inp: (int): write your description
+            out: (str): write your description
+        """
         self.input  = inp or sys.stdin
         self.output = out or sys.stdout
         self.interactive = False
@@ -53,6 +61,13 @@ the program and the outside portion which could be
         raise NotImplementedError(NotImplementedMessage)
 
     def finalize(self, last_wishes=None):
+        """
+        Finalize the message.
+
+        Args:
+            self: (todo): write your description
+            last_wishes: (str): write your description
+        """
         raise NotImplementedError(NotImplementedMessage)
 
     def msg(self, msg):
@@ -74,9 +89,24 @@ the program and the outside portion which could be
         return
 
     def read_command(self, prompt):
+        """
+        Reads a command.
+
+        Args:
+            self: (todo): write your description
+            prompt: (str): write your description
+        """
         raise NotImplementedError(NotImplementedMessage)
 
     def readline(self, prompt, add_to_history=True):
+        """
+        Read a line from the user.
+
+        Args:
+            self: (todo): write your description
+            prompt: (todo): write your description
+            add_to_history: (bool): write your description
+        """
         raise NotImplementedError(NotImplementedMessage)
 
     pass

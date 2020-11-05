@@ -21,6 +21,13 @@ from trepan import clifns as Mclifns, misc as Mmisc
 
 
 def find_function(funcname, filename):
+    """
+    Finds the first line of a functionname.
+
+    Args:
+        funcname: (str): write your description
+        filename: (str): write your description
+    """
     cre = re.compile(r'def\s+%s\s*[(]' % re.escape(funcname))
     try:
         fp = open(filename)
@@ -57,6 +64,13 @@ See also:
     short_help = 'Show current-line information'
 
     def lineinfo(self, identifier):
+        """
+        Return user info
+
+        Args:
+            self: (todo): write your description
+            identifier: (str): write your description
+        """
         failed = (None, None, None)
         # Input is identifier, may be in single quotes
         idstring = identifier.split("'")

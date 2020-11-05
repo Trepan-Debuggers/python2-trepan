@@ -65,6 +65,13 @@ def format_location(proc_obj):
     return location
 
 def print_location(proc_obj, event=None):
+    """
+    Print the location of the event.
+
+    Args:
+        proc_obj: (todo): write your description
+        event: (todo): write your description
+    """
     response = proc_obj.response
     response['name'] = 'status'
     response['location'] = format_location(proc_obj)
@@ -83,11 +90,24 @@ def print_location(proc_obj, event=None):
 if __name__=='__main__':
     class MockDebugger:
         def __init__(self):
+            """
+            Initialize the module
+
+            Args:
+                self: (todo): write your description
+            """
             self.eval_string = None
         pass
 
     class MockProcessor:
         def __init__(self, core_obj):
+            """
+            Initialize the core object.
+
+            Args:
+                self: (todo): write your description
+                core_obj: (todo): write your description
+            """
             self.curindex = 0
             self.stack = []
             self.core = core_obj
@@ -96,12 +116,33 @@ if __name__=='__main__':
             pass
 
         def settings(self, key):
+            """
+            Get the settings for a key.
+
+            Args:
+                self: (todo): write your description
+                key: (str): write your description
+            """
             return self.opts[key]
         pass
 
     class MockCore:
+        """
+        Returns the filename for a file.
+
+        Args:
+            self: (todo): write your description
+            fn: (str): write your description
+        """
         def filename(self, fn): return fn
 
+        """
+        Determine whether the frame filename.
+
+        Args:
+            self: (todo): write your description
+            frame: (todo): write your description
+        """
         def canonic_filename(self, frame): return frame.f_code.co_filename
         pass
 
@@ -117,6 +158,13 @@ if __name__=='__main__':
     pp.pprint(format_location(cmdproc))
 
     def test(cmdproc, pp):
+        """
+        Run test.
+
+        Args:
+            cmdproc: (int): write your description
+            pp: (int): write your description
+        """
         cmdproc.stack[0:0] = [(sys._getframe(1), 1)]
         pp.pprint(format_location(cmdproc))
         pass

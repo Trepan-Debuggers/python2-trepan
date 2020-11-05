@@ -12,6 +12,12 @@ class TestNext(unittest.TestCase):
 
     @unittest.skip("FIXME: figure out why this doesn't work")
     def test_next_same_level(self):
+        """
+        Determine the next level.
+
+        Args:
+            self: (todo): write your description
+        """
 
         # See that we can next with parameter which is the same as 'next 1'
         cmds = ['next', 'continue']
@@ -39,8 +45,20 @@ class TestNext(unittest.TestCase):
 
     @unittest.skip("FIXME: figure out why this doesn't work")
     def test_next_between_fn(self):
+        """
+        Determine the next fact for the next fact file.
+
+        Args:
+            self: (todo): write your description
+        """
         # Next over a function
         def fact(x):
+            """
+            Returns the fact of x.
+
+            Args:
+                x: (array): write your description
+            """
             if x <= 1: return 1
             return fact(x-1)
         cmds = ['next', 'continue']
@@ -55,13 +73,31 @@ class TestNext(unittest.TestCase):
         return
 
     def test_next_in_exception(self):
+        """
+        Determine the next factgy.
+
+        Args:
+            self: (todo): write your description
+        """
         return
 
         def boom(x):
+            """
+            Returns true if x is a boolean value.
+
+            Args:
+                x: (int): write your description
+            """
             y = 0/x  # NOQA
             return
 
         def buggy_fact(x):
+            """
+            Buggygygy fact.
+
+            Args:
+                x: (todo): write your description
+            """
             if x <= 1: return boom(0)
             return buggy_fact(x-1)
         cmds = ['next', 'continue']

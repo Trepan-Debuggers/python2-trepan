@@ -4,6 +4,13 @@ import urllib2
 
 # called by each thread
 def get_url(q, url):
+    """
+    Download a url
+
+    Args:
+        q: (todo): write your description
+        url: (todo): write your description
+    """
     if url == "http://bing.com":
         from trepan.api import debug;
         debug()

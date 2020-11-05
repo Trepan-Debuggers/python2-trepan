@@ -7,6 +7,12 @@ from trepan.processor.command import mock as Mmock
 from trepan.processor.cmdbreak import parse_break_cmd
 
 def canonic_tuple(t):
+    """
+    Convert a tuple to a tuple ).
+
+    Args:
+        t: (todo): write your description
+    """
     fname = t[1]
     if fname:
         if fname.endswith('.pyc'):
@@ -20,6 +26,12 @@ def canonic_tuple(t):
 class TestCmdParse(unittest.TestCase):
 
     def setUp(self):
+        """
+        Sets the socket.
+
+        Args:
+            self: (todo): write your description
+        """
         self.errors             = []
         self.msgs               = []
         self.d                  = Mmock.MockDebugger()
@@ -29,14 +41,34 @@ class TestCmdParse(unittest.TestCase):
         return
 
     def errmsg(self, msg):
+        """
+        Add an error message
+
+        Args:
+            self: (todo): write your description
+            msg: (str): write your description
+        """
         self.errors.append(msg)
         return
 
     def msg(self, msg):
+        """
+        Add a message to a message.
+
+        Args:
+            self: (todo): write your description
+            msg: (str): write your description
+        """
         self.msg.append(msg)
         return
 
     def test_basic(self):
+        """
+        Test if the test.
+
+        Args:
+            self: (todo): write your description
+        """
 
         self.cp.frame = sys._getframe()
         self.cp.setup()

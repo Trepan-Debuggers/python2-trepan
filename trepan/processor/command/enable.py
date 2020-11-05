@@ -45,6 +45,12 @@ See also:
     complete = Mcomplete.complete_bpnumber
 
     def run(self, args):
+        """
+        Run breakpoint.
+
+        Args:
+            self: (todo): write your description
+        """
         if len(args) == 1:
             self.msg(self.core.bpmgr.en_disable_all_breakpoints(do_enable=True))
             return

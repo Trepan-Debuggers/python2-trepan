@@ -48,6 +48,13 @@ To get the full stack trace for a specific thread pass in the thread name.
     short_help = "List thread info"
 
     def __init__(self, cmd):
+        """
+        Create a new subcommand.
+
+        Args:
+            self: (todo): write your description
+            cmd: (int): write your description
+        """
         Mbase_subcmd.DebuggerSubcommand.__init__(self, cmd)
         self.name2id = {}
         return
@@ -65,6 +72,14 @@ To get the full stack trace for a specific thread pass in the thread name.
         return
 
     def info_thread_terse(self, name2id, arg=None):
+        """
+        Get thread info
+
+        Args:
+            self: (todo): write your description
+            name2id: (str): write your description
+            arg: (todo): write your description
+        """
         if arg is not None:
             thread_name = arg
             if thread_name in list(name2id.keys()):
@@ -84,6 +99,14 @@ To get the full stack trace for a specific thread pass in the thread name.
         return
 
     def info_thread_line(self, thread_name, name2id):
+        """
+        Returns a message line of a thread name.
+
+        Args:
+            self: (todo): write your description
+            thread_name: (str): write your description
+            name2id: (str): write your description
+        """
         if thread_name == self.proc.frame_thread_name:
             prefix = '-> '
         elif thread_name == self.proc.thread_name:
@@ -97,6 +120,12 @@ To get the full stack trace for a specific thread pass in the thread name.
         return
 
     def run(self, args):
+        """
+        Run thread.
+
+        Args:
+            self: (todo): write your description
+        """
         # FIXME: add thread locking here?
 
         self.thread_name = Mthread.current_thread_name()

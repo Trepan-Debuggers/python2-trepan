@@ -51,6 +51,15 @@ def get_lineno():
 
 
 def compare_output(obj, right, d, debugger_cmds):
+    """
+    Compares two objects
+
+    Args:
+        obj: (todo): write your description
+        right: (bool): write your description
+        d: (todo): write your description
+        debugger_cmds: (str): write your description
+    """
     got = filter_line_cmd(d.intf[-1].output.output)
     if got != right:
         for i in range(len(got)):

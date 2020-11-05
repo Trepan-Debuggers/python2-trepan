@@ -72,6 +72,13 @@ See also:
     RST_EXTENSION = '.rst'
 
     def complete(self, prefix):
+        """
+        Returns the list of aliases.
+
+        Args:
+            self: (todo): write your description
+            prefix: (str): write your description
+        """
         proc_obj = self.proc
         matches = Mcomplete.complete_token(list(categories.keys())
                                            + ['*', 'all'] +
@@ -82,6 +89,12 @@ See also:
         return sorted(matches + aliases)
 
     def run(self, args):
+        """
+        Run commands
+
+        Args:
+            self: (todo): write your description
+        """
         # It does not make much sense to repeat the last help
         # command. Also, given that 'help' uses PAGER, the you may
         # enter an extra CR which would rerun the (long) help command.
@@ -192,22 +205,46 @@ Type `help` followed by command name for full documentation.
         return
 
     def syntax_files(self):
+        """
+        Returns a list of all symlinks.
+
+        Args:
+            self: (todo): write your description
+        """
         path = os.path.join(self.HELP_DIR, ("*%s" % self.RST_EXTENSION))
         files = glob.glob(path)
         return [os.path.basename(name).split('.')[0] for
                 name in files]
 
     def show_aliases(self):
+        """
+        List all aliases.
+
+        Args:
+            self: (todo): write your description
+        """
         self.section('All alias names:')
         m = self.columnize_commands(list(sorted(self.proc.aliases.keys())))
         self.msg_nocr(m)
 
     def show_macros(self):
+        """
+        Show macros.
+
+        Args:
+            self: (todo): write your description
+        """
         self.section('All macro names:')
         m = self.columnize_commands(list(sorted(self.proc.macros.keys())))
         self.msg_nocr(m)
 
     def init_syntax_summary_help(self):
+        """
+        Generate help text summary of the cli help.
+
+        Args:
+            self: (todo): write your description
+        """
         self.syntax_summary_help = {}
         self.syntax_help = {}
         for name in self.syntax_files():
@@ -221,6 +258,12 @@ Type `help` followed by command name for full documentation.
         return
 
     def show_command_syntax(self, args):
+        """
+        Show the syntax of the command.
+
+        Args:
+            self: (todo): write your description
+        """
         if not hasattr(self, 'syntax_summary_help'):
             self.init_syntax_summary_help()
             pass

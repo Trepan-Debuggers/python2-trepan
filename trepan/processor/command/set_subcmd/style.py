@@ -35,6 +35,13 @@ See also:
 """
 
     def complete(self, prefix):
+        """
+        Return the given prefix.
+
+        Args:
+            self: (todo): write your description
+            prefix: (str): write your description
+        """
         return Mcomplete.complete_token(style_names, prefix)
 
     in_list = True
@@ -42,6 +49,12 @@ See also:
     short_help = "Set the pygments style"
 
     def run(self, args):
+        """
+        Run the command.
+
+        Args:
+            self: (todo): write your description
+        """
         if len(args) == 0:
             self.section("style names: ")
             self.msg(self.columnize_commands(style_names))

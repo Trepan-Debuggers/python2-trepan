@@ -45,10 +45,23 @@ signals. If '*' is given we just give a list of signals.
     short_help = 'What debugger does when program gets various signals'
 
     def complete(self, prefix):
+        """
+        Returns a list of tokens
+
+        Args:
+            self: (todo): write your description
+            prefix: (str): write your description
+        """
         completions = sorted(['*'] + self.debugger.sigmgr.siglist)
         return Mcomplete.complete_token(completions, prefix)
 
     def run(self, args):
+        """
+        Run a command.
+
+        Args:
+            self: (todo): write your description
+        """
         if len(args) > 0 and args[0] == '*' :
             self.msg(self.columnize_commands(self.debugger.sigmgr.siglist))
         else:

@@ -7,11 +7,24 @@ import Queue
 class Producer(Thread):
 
     def __init__(self, itemq):
+        """
+        Initialize a new item.
+
+        Args:
+            self: (todo): write your description
+            itemq: (todo): write your description
+        """
         Thread.__init__(self)
         self.itemq=itemq
         return
 
     def run(self):
+        """
+        Runs loop.
+
+        Args:
+            self: (todo): write your description
+        """
 
         itemq=self.itemq
         i=0
@@ -27,11 +40,24 @@ class Producer(Thread):
 class Consumer(Thread):
 
     def __init__(self, itemq):
+        """
+        Initialize a new item.
+
+        Args:
+            self: (todo): write your description
+            itemq: (todo): write your description
+        """
         Thread.__init__(self)
         self.itemq=itemq
         return
 
     def run(self):
+        """
+        Run all items in the queue.
+
+        Args:
+            self: (todo): write your description
+        """
         itemq=self.itemq
 
         for j in range(4):

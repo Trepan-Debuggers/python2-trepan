@@ -219,6 +219,12 @@ trepan.debugger::
 
 
 def stop(opts=None):
+    """
+    Stops a new thread.
+
+    Args:
+        opts: (todo): write your description
+    """
     if isinstance(Mdebugger.Debugger, Mdebugger.debugger_obj):
         return Mdebugger.debugger_obj.stop(opts)
     return None
@@ -228,6 +234,12 @@ if __name__=='__main__':
     import tracer
 
     def foo(n):
+        """
+        Prints the number n elements of n
+
+        Args:
+            n: (todo): write your description
+        """
         y = n
         for i in range(n):
             print(i)

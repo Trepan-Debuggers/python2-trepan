@@ -16,6 +16,14 @@
 
 
 def option_set(options, value, default_options):
+    """
+    Set an option value of a given option.
+
+    Args:
+        options: (dict): write your description
+        value: (todo): write your description
+        default_options: (dict): write your description
+    """
     if not options or value not in options:
         return default_options.get(value)
     else:
@@ -24,11 +32,25 @@ def option_set(options, value, default_options):
 
 
 def bool2YN(b):
+    """
+    Convert b to false otherwise.
+
+    Args:
+        b: (todo): write your description
+    """
     if b: return 'Y'
     else: return 'N'
 
 
 def wrapped_lines(msg_part1, msg_part2, width):
+    """
+    Wraps the number of the message.
+
+    Args:
+        msg_part1: (str): write your description
+        msg_part2: (str): write your description
+        width: (int): write your description
+    """
     if len(msg_part1) + len(msg_part2) + 1 > width:
         return msg_part1 + "\n\t" + msg_part2
     else:
@@ -39,6 +61,12 @@ import os
 from glob import glob
 
 def pretty_modfunc_name(s):
+    """
+    Pretty print a human - readable by name
+
+    Args:
+        s: (todo): write your description
+    """
     if s == "<module>":
         return s
     else:

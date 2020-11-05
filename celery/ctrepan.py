@@ -83,6 +83,19 @@ class RemoteCeleryTrepan():
 
     def __init__(self, host=CELERY_TREPAN_HOST, port=CELERY_TREPAN_PORT,
                  out=sys.stdout):
+        """
+        Init the connection.
+
+        Args:
+            self: (todo): write your description
+            host: (str): write your description
+            CELERY_TREPAN_HOST: (int): write your description
+            port: (int): write your description
+            CELERY_TREPAN_PORT: (int): write your description
+            out: (str): write your description
+            sys: (todo): write your description
+            stdout: (todo): write your description
+        """
         self.active = True
         self.out = out
 
@@ -98,6 +111,13 @@ class RemoteCeleryTrepan():
         return
 
     def say(self, m):
+        """
+        Prints the value
+
+        Args:
+            self: (todo): write your description
+            m: (array): write your description
+        """
         print(m, file=self.out)
 
 def debugger():

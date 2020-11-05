@@ -36,6 +36,13 @@ else:
               signal.SIGBREAK: signal.CTRL_BREAK_EVENT}
 
     def kill(pid, signum):
+        """
+        Kill a signal.
+
+        Args:
+            pid: (int): write your description
+            signum: (int): write your description
+        """
         if signum in sigmap and pid == os.getpid():
             # we don't know if the current process is a
             # process group leader, so just broadcast
@@ -51,6 +58,13 @@ else:
             pid == 0):
             event = threading.Event()
             def handler_set_event(signum, frame):
+                """
+                Sets the signal handler.
+
+                Args:
+                    signum: (int): write your description
+                    frame: (todo): write your description
+                """
                 event.set()
                 return handler(signum, frame)
             signal.signal(signum, handler_set_event)
@@ -130,6 +144,13 @@ See also:
     short_help    = 'Send this process a POSIX signal ("9" for "kill -9")'
 
     def complete(self, prefix):
+        """
+        Returns a complete complete token
+
+        Args:
+            self: (todo): write your description
+            prefix: (str): write your description
+        """
         names = [sig for sig in signal.__dict__.keys() if
                  sig.startswith('SIG')]
         nums  = [str(eval("signal."+name)) for name in names]
@@ -138,6 +159,12 @@ See also:
         return Mcomplete.complete_token(completions, prefix.lower())
 
     def run(self, args):
+        """
+        Run the daemon.
+
+        Args:
+            self: (todo): write your description
+        """
         if sys.platform != 'win32':
             signo =  signal.SIGKILL
         else:
@@ -172,6 +199,11 @@ See also:
 
 if __name__ == '__main__':
     def handle(*args):
+        """
+        Handle the command
+
+        Args:
+        """
         print('signal received')
         pass
     signal.signal(28, handle)

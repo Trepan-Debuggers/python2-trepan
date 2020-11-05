@@ -41,11 +41,24 @@ See also:
 
 
     def complete(self, prefix):
+        """
+        Returns a list of completion.
+
+        Args:
+            self: (todo): write your description
+            prefix: (str): write your description
+        """
         completions = [str(disp.number) for disp in
                        self.proc.display_mgr.list]
         return Mcomplete.complete_token(completions, prefix)
 
     def run(self, args):
+        """
+        Run the index.
+
+        Args:
+            self: (todo): write your description
+        """
 
         if len(args) == 1:
             self.proc.display_mgr.clear()

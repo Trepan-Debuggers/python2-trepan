@@ -28,6 +28,12 @@ class ShowWidth(Mbase_subcmd.DebuggerSubcommand):
     short_help = 'Show terminal width'
 
     def run(self, args):
+        """
+        Execute a show command.
+
+        Args:
+            self: (todo): write your description
+        """
         Mcmdfns.run_show_int(self, self.__doc__[5:].capitalize())
         return
     pass

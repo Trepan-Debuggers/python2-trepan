@@ -60,6 +60,16 @@ pyficache.light_terminal_formatter.colorscheme = color_scheme
 
 
 def format_token(ttype, token, colorscheme=color_scheme, highlight="light"):
+    """
+    Formats a token.
+
+    Args:
+        ttype: (todo): write your description
+        token: (str): write your description
+        colorscheme: (todo): write your description
+        color_scheme: (str): write your description
+        highlight: (str): write your description
+    """
     if "plain" == highlight:
         return token
     dark_bg = "dark" == highlight
@@ -95,10 +105,25 @@ Name = Comment.Preproc
 
 class RstFilter(Filter):
     def __init__(self, **options):
+        """
+        Initialize the filter.
+
+        Args:
+            self: (todo): write your description
+            options: (dict): write your description
+        """
         Filter.__init__(self, **options)
         pass
 
     def filter(self, lexer, stream):
+        """
+        Filter the given lexer from stream.
+
+        Args:
+            self: (todo): write your description
+            lexer: (todo): write your description
+            stream: (todo): write your description
+        """
         last_was_heading_title = ""
         for ttype, value in stream:
             if ttype is Token.Name.Variable:
@@ -159,6 +184,13 @@ class RSTTerminalFormatter(Formatter):
     filenames = []
 
     def __init__(self, **options):
+        """
+        Initialize the table.
+
+        Args:
+            self: (todo): write your description
+            options: (dict): write your description
+        """
         Formatter.__init__(self, **options)
         self.darkbg = (
             get_choice_opt(options, "bg", ["light", "dark"], "light") != "dark"
@@ -172,12 +204,27 @@ class RSTTerminalFormatter(Formatter):
         return
 
     def reset(self, width=None):
+        """
+        Reset the column.
+
+        Args:
+            self: (todo): write your description
+            width: (int): write your description
+        """
         self.column = 0
         if width:
             self.width = width
         return
 
     def format(self, tokensource, outfile):
+        """
+        Formats tokens ascii.
+
+        Args:
+            self: (todo): write your description
+            tokensource: (str): write your description
+            outfile: (str): write your description
+        """
         # hack: if the output is a terminal and has an encoding set,
         # use that to avoid unicode encode problems
         if (
@@ -193,6 +240,13 @@ class RSTTerminalFormatter(Formatter):
         return Formatter.format(self, tokensource, outfile)
 
     def write_verbatim(self, text):
+        """
+        Write text to the console
+
+        Args:
+            self: (todo): write your description
+            text: (str): write your description
+        """
         # If we are doing color, then change to the verbatim
         # color
         if self.__class__ != MonoRSTTerminalFormatter:
@@ -204,6 +258,14 @@ class RSTTerminalFormatter(Formatter):
         return self.write(text, color)
 
     def write(self, text, color):
+        """
+        Write text to the screen.
+
+        Args:
+            self: (todo): write your description
+            text: (str): write your description
+            color: (str): write your description
+        """
         color_text = text
         if color:
             color_text = ansiformat(color, color_text)
@@ -212,11 +274,26 @@ class RSTTerminalFormatter(Formatter):
         return self.column
 
     def write_nl(self):
+        """
+        Write out outfile ascii file.
+
+        Args:
+            self: (todo): write your description
+        """
         self.outfile.write("\n")
         self.column = 0
         return self.column
 
     def reflow_text(self, text, ttype, color):
+        """
+        Recompute text
+
+        Args:
+            self: (todo): write your description
+            text: (str): write your description
+            ttype: (todo): write your description
+            color: (str): write your description
+        """
         # print '%r' % text
         # from trepan.api import debug
         # if u' or ' == text: debug()
@@ -296,6 +373,14 @@ class RSTTerminalFormatter(Formatter):
         return
 
     def format_unencoded(self, tokensource, outfile):
+        """
+        Format a piece of a list of tokens.
+
+        Args:
+            self: (todo): write your description
+            tokensource: (str): write your description
+            outfile: (str): write your description
+        """
         for ttype, text in tokensource:
             # print("ttype: ", ttype, "text: ", text)
             color = self.colorscheme.get(ttype)
@@ -315,6 +400,14 @@ class RSTTerminalFormatter(Formatter):
 
 class MonoRSTTerminalFormatter(RSTTerminalFormatter):
     def format_unencoded(self, tokensource, outfile):
+        """
+        Formats a tokenizer.
+
+        Args:
+            self: (todo): write your description
+            tokensource: (str): write your description
+            outfile: (str): write your description
+        """
         for ttype, text in tokensource:
             if ttype is Token.Name.Variable:
                 text = '"%s"' % text
@@ -334,6 +427,14 @@ class MonoRSTTerminalFormatter(RSTTerminalFormatter):
 
 class MonoTerminalFormatter(TerminalFormatter):
     def format_unencoded(self, tokensource, outfile):
+        """
+        Format a tokens object.
+
+        Args:
+            self: (todo): write your description
+            tokensource: (str): write your description
+            outfile: (todo): write your description
+        """
         for ttype, text in tokensource:
             if ttype is Token.Name.Variable:
                 text = '"%s"' % text
@@ -362,6 +463,14 @@ mono_tf = MonoRSTTerminalFormatter()
 
 
 def rst_text(text, mono, width=80):
+    """
+    Highlight rst string.
+
+    Args:
+        text: (str): write your description
+        mono: (bool): write your description
+        width: (int): write your description
+    """
     if mono:
         tf = mono_tf
     else:
@@ -374,6 +483,14 @@ def rst_text(text, mono, width=80):
 if __name__ == "__main__":
 
     def show_it(string, tf, width=80):
+        """
+        Print a string in the given string.
+
+        Args:
+            string: (str): write your description
+            tf: (todo): write your description
+            width: (int): write your description
+        """
         tf.reset(width)
         print("=" * 30)
         for t in lex(string, rst_lex):

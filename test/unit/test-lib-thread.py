@@ -7,11 +7,24 @@ from trepan.lib import thred as Mthread
 
 class BgThread(threading.Thread):
     def __init__(self, id_name_checker):
+        """
+        Initialize a new thread.
+
+        Args:
+            self: (todo): write your description
+            id_name_checker: (str): write your description
+        """
         threading.Thread.__init__(self)
         self.id_name_checker = id_name_checker
         return
 
     def run(self):
+        """
+        Run the checker.
+
+        Args:
+            self: (todo): write your description
+        """
         self.id_name_checker()
         return
     pass
@@ -33,6 +46,12 @@ class TestLibThread(unittest.TestCase):
             pass
 
     def test_current_thread_name(self):
+        """
+        Return the current thread name.
+
+        Args:
+            self: (todo): write your description
+        """
         self.assertEqual('MainThread', Mthread.current_thread_name())
         return
 

@@ -45,6 +45,13 @@ is not given, 1 is used, i.e. stop at the next statement.
     need_stack    = True
 
     def run(self, cmd_hash):
+        """
+        Run a command.
+
+        Args:
+            self: (todo): write your description
+            cmd_hash: (str): write your description
+        """
 
         if 'step_count' in cmd_hash:
             step_count = cmd_hash['step_count'] - 1

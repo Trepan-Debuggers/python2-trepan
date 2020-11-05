@@ -10,24 +10,57 @@ from trepan.processor.command import list as Mlist
 class TestListCommand(unittest.TestCase):
 
     def setUp(self):
+        """
+        Sets the error messages
+
+        Args:
+            self: (todo): write your description
+        """
         self.listsize = 8
         self.errors = []
         self.msgs = []
         return
 
     def errmsg(self, msg):
+        """
+        Add an error message
+
+        Args:
+            self: (todo): write your description
+            msg: (str): write your description
+        """
         self.errors.append(msg)
         return
 
     def msg(self, msg):
+        """
+        Convert a message to a message.
+
+        Args:
+            self: (todo): write your description
+            msg: (str): write your description
+        """
         self.msgs.append(msg)
         return
 
     def print_lines(self):
+        """
+        Print all the errors
+
+        Args:
+            self: (todo): write your description
+        """
         for msg in self.msgs: print(msg)
         for msg in self.errors: print(msg)
 
     def check_lines(self, nums):
+        """
+        Check the number of lines.
+
+        Args:
+            self: (todo): write your description
+            nums: (list): write your description
+        """
         j = 0
         # self.print_lines()
         if len(nums) != len(self.msgs):
@@ -42,21 +75,46 @@ class TestListCommand(unittest.TestCase):
         return
 
     def clear_run(self, args):
+        """
+        Clear the run
+
+        Args:
+            self: (todo): write your description
+        """
         self.msgs = []
         self.cmd.proc.current_command = ' '.join(args)
         self.cmd.run(args)
 
     def clear_run_check(self, args, nums):
+        """
+        Clear the run run run.
+
+        Args:
+            self: (todo): write your description
+            nums: (list): write your description
+        """
         self.clear_run(args)
         self.check_lines(nums)
         return
 
     def clear_run_checksize(self, args):
+        """
+        Clear the checksize the arguments.
+
+        Args:
+            self: (todo): write your description
+        """
         self.clear_run(args)
         self.assertEqual(self.listsize, len(self.msgs)-1)
         return
 
     def test_list_command(self):
+        """
+        Run a list.
+
+        Args:
+            self: (todo): write your description
+        """
         import inspect
         d               = debugger.Debugger()
         cp              = d.core.processor
@@ -95,6 +153,11 @@ class TestListCommand(unittest.TestCase):
         self.clear_run_checksize(['list', 'os.path.join()'])
         self.clear_run_checksize(['list', 'self.setUp()'])
 
+        """
+        : param : class : return :
+
+        Args:
+        """
         def foo(): pass
         self.clear_run_checksize(['list', 'foo()'])
 

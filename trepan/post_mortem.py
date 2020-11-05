@@ -52,6 +52,15 @@ def pm(frameno=1, dbg=None):
 
 
 def post_mortem_excepthook(exc_type, exc_value, exc_tb, tb_fn=None):
+    """
+    Post exceptions exceptions exceptions.
+
+    Args:
+        exc_type: (todo): write your description
+        exc_value: (str): write your description
+        exc_tb: (todo): write your description
+        tb_fn: (todo): write your description
+    """
     if str(exc_type) == str(DebuggerQuit): return
     try:
         if str(exc_type) == str(DebuggerRestart):
@@ -170,6 +179,13 @@ def post_mortem(exc=None, frameno=1, dbg=None):
 
 
 def uncaught_exception(dbg, tb_fn=None):
+    """
+    Execute the exception traceback to the given exception.
+
+    Args:
+        dbg: (todo): write your description
+        tb_fn: (todo): write your description
+    """
     exc = sys.exc_info()
     exc_type, exc_value, exc_tb = exc
     if exc_type == DebuggerQuit: return

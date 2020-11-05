@@ -8,6 +8,12 @@ from trepan import exception as Mexcept
 class TestDeguggerExcept(unittest.TestCase):
 
     def test_debugger_restart(self):
+        """
+        Test if the debug.
+
+        Args:
+            self: (todo): write your description
+        """
         try:
             raise Mexcept.DebuggerRestart(['a', 'b'])
         except Mexcept.DebuggerRestart:

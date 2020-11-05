@@ -148,6 +148,15 @@ class SignalManager:
     handler.
     """
     def __init__(self, dbgr, ignore_list=None, default_print=True):
+        """
+        Initialize signals
+
+        Args:
+            self: (todo): write your description
+            dbgr: (todo): write your description
+            ignore_list: (list): write your description
+            default_print: (str): write your description
+        """
         self.dbgr    = dbgr
         # dbgr.core.add_ignore(SigHandler.handle)
         self.sigs    = {}
@@ -183,6 +192,13 @@ class SignalManager:
         return
 
     def initialize_handler(self, signame):
+        """
+        Initialize the handler
+
+        Args:
+            self: (todo): write your description
+            signame: (str): write your description
+        """
         if signame in fatal_signals: return False
         signum = lookup_signum(signame)
         if signum is None: return False
@@ -274,6 +290,13 @@ class SignalManager:
         return
 
     def is_name_or_number(self, name_num):
+        """
+        Return true if a name is a number number
+
+        Args:
+            self: (todo): write your description
+            name_num: (str): write your description
+        """
         signame = canonic_signame(name_num)
         if signame is None:
             self.dbgr.intf[-1].errmsg(("%s is not a signal number" +
@@ -446,6 +469,20 @@ class SigHandler:
     def __init__(self, dbgr, signame, signum, old_handler,
                  print_method, b_stop,
                  print_stack=False, pass_along=True):
+        """
+        Initialize the signals.
+
+        Args:
+            self: (todo): write your description
+            dbgr: (todo): write your description
+            signame: (str): write your description
+            signum: (int): write your description
+            old_handler: (todo): write your description
+            print_method: (str): write your description
+            b_stop: (str): write your description
+            print_stack: (todo): write your description
+            pass_along: (str): write your description
+        """
 
         self.dbgr         = dbgr
         self.old_handler  = old_handler

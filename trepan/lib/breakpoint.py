@@ -19,6 +19,12 @@ class BreakpointManager(object):
     may have different conditions associated with them.
     """
     def __init__(self):
+        """
+        Reset the internal state.
+
+        Args:
+            self: (todo): write your description
+        """
         self.reset()
         return
 
@@ -28,6 +34,13 @@ class BreakpointManager(object):
                 bp is not None]
 
     def get_breakpoint(self, i):
+        """
+        Return breakpoint at i i.
+
+        Args:
+            self: (todo): write your description
+            i: (todo): write your description
+        """
         if isinstance(i, str):
             try:
                 i = int(i)
@@ -47,6 +60,17 @@ class BreakpointManager(object):
 
     def add_breakpoint(self, filename, lineno, temporary=False, condition=None,
                        func=None):
+        """
+        Add a breakpoint.
+
+        Args:
+            self: (todo): write your description
+            filename: (str): write your description
+            lineno: (str): write your description
+            temporary: (todo): write your description
+            condition: (todo): write your description
+            func: (callable): write your description
+        """
 
         bpnum = len(self.bpbynumber)
         if filename: filename  = os.path.realpath(filename)
@@ -68,6 +92,12 @@ class BreakpointManager(object):
         return brkpt
 
     def delete_all_breakpoints(self):
+        """
+        Delete all breakpoints.
+
+        Args:
+            self: (todo): write your description
+        """
         bp_list = []
         for bp in self.bpbynumber:
             if bp:
@@ -196,6 +226,12 @@ class BreakpointManager(object):
         return (None, None)
 
     def last(self):
+        """
+        Return the last occurrence of the last occurrence.
+
+        Args:
+            self: (todo): write your description
+        """
         return len(self.bpbynumber)-1
 
     def reset(self):
@@ -222,6 +258,18 @@ class Breakpoint:
 
     def __init__(self, number, filename, line, temporary=False,
                  condition=None, funcname=None):
+        """
+        Initialize a new file.
+
+        Args:
+            self: (todo): write your description
+            number: (int): write your description
+            filename: (str): write your description
+            line: (str): write your description
+            temporary: (todo): write your description
+            condition: (dict): write your description
+            funcname: (str): write your description
+        """
 
         self.condition = condition
         self.enabled   = True
@@ -247,6 +295,12 @@ class Breakpoint:
         return
 
     def __str__(self):
+        """
+        Return a string representation of the file.
+
+        Args:
+            self: (todo): write your description
+        """
         if self.temporary:
             disp = 'del  '
         else:
@@ -268,10 +322,22 @@ class Breakpoint:
         return msg
 
     def enable(self):
+        """
+        Enable / disable this session
+
+        Args:
+            self: (todo): write your description
+        """
         self.enabled = True
         return self.enabled
 
     def disable(self):
+        """
+        Disable the interface.
+
+        Args:
+            self: (todo): write your description
+        """
         self.enabled = False
         return self.enabled
 
@@ -335,6 +401,13 @@ if __name__=='__main__':
     print("Stop at bp: %s" % checkfuncname(bp, frame))
 
     def foo(bp, bpmgr):
+        """
+        Adds a breakpoint to breakpoint.
+
+        Args:
+            bp: (todo): write your description
+            bpmgr: (todo): write your description
+        """
         frame = inspect.currentframe()
         print("Stop at bp2: %s" % checkfuncname(bp, frame))
         # frame.f_lineno is constantly updated. So adjust for the

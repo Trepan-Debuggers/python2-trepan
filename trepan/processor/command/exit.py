@@ -42,6 +42,12 @@ See `quit` and `kill`.
     short_help    = 'Exit program via sys.exit()'
 
     def run(self, args):
+        """
+        Run a command.
+
+        Args:
+            self: (todo): write your description
+        """
         self.core.stop()
         self.core.execution_status = 'Exit command'
         if len(args) <= 1:

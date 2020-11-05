@@ -296,6 +296,14 @@ if __name__=='__main__':
     import pprint
 
     def doit(prog, version, arg_str):
+        """
+        Do the command line.
+
+        Args:
+            prog: (todo): write your description
+            version: (str): write your description
+            arg_str: (str): write your description
+        """
         print("options '%s'" % arg_str)
         args = arg_str.split()
         opts, dbg_opts, sys_argv = process_options('testing', version, args)

@@ -56,6 +56,13 @@ The program being debugged is exited raising a *DebuggerQuit* exception.
         return False
 
     def run(self, cmd_hash):
+        """
+        Run a command.
+
+        Args:
+            self: (todo): write your description
+            cmd_hash: (str): write your description
+        """
         threading_list = threading.enumerate()
         if (len(threading_list) == 1 and
             threading_list[0].getName() == 'MainThread'):
@@ -77,6 +84,12 @@ if __name__ == '__main__':
 
     class MyThread(threading.Thread):
         def run(self):
+            """
+            Run a command.
+
+            Args:
+                self: (todo): write your description
+            """
             command.run(['quit'])
             return
         pass

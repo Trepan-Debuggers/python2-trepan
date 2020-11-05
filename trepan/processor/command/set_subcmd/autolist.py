@@ -37,6 +37,12 @@ See also:
     list_cmd = None
 
     def run(self, args):
+        """
+        Run the specified command.
+
+        Args:
+            self: (todo): write your description
+        """
         Mcmdfns.run_set_bool(self, args)
         if self.settings['autolist']:
             if self.list_cmd is None:
@@ -51,6 +57,12 @@ See also:
         return
 
     def run_list(self, args):
+        """
+        Run a list command
+
+        Args:
+            self: (todo): write your description
+        """
         # Check if there is a "file" to show. Right now we just
         # handle the case of a string.
         # FIXME: generalize this so for other kinds of missing "files"

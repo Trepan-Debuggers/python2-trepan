@@ -64,10 +64,23 @@ See also:
     short_help   = 'Print backtrace of stack frames'
 
     def complete(self, prefix):
+        """
+        Complete a frame from the given prefix.
+
+        Args:
+            self: (todo): write your description
+            prefix: (str): write your description
+        """
         proc_obj = self.proc
         return Mframe.frame_complete(proc_obj, prefix, None)
 
     def run(self, args):
+        """
+        Main entry point.
+
+        Args:
+            self: (todo): write your description
+        """
 
         try:
             opts, args = getopt(args[1:], "hfds",
@@ -129,6 +142,14 @@ if __name__ == '__main__':
     command.run(['backtrace', 'wrong', 'number', 'of', 'args'])
 
     def nest_me(cp, command, i):
+        """
+        Nest the given command in the given command.
+
+        Args:
+            cp: (array): write your description
+            command: (str): write your description
+            i: (array): write your description
+        """
         import inspect
         if i > 1:
             cp.curframe = inspect.currentframe()
@@ -143,6 +164,14 @@ if __name__ == '__main__':
         return
 
     def ignore_me(cp, command, i):
+        """
+        Add a new command.
+
+        Args:
+            cp: (todo): write your description
+            command: (str): write your description
+            i: (todo): write your description
+        """
         print('=' * 10)
         nest_me(cp, command, 1)
         print('=' * 10)

@@ -45,6 +45,12 @@ See also:
     complete = Mcomplete.complete_bpnumber
 
     def run(self, args):
+        """
+        Run bpmgr command.
+
+        Args:
+            self: (todo): write your description
+        """
         if len(args) <= 1:
             if '!' != args[0][-1]:
                 confirmed = self.confirm('Delete all breakpoints', False)

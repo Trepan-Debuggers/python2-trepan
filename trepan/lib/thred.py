@@ -19,6 +19,11 @@ import threading
 
 
 def current_thread_name():
+    """
+    Return the current thread name.
+
+    Args:
+    """
     return threading.currentThread().getName()
 
 
@@ -48,6 +53,12 @@ def find_debugged_frame(frame):
 
 
 def id2thread_name(thread_id):
+    """
+    Return the thread name.
+
+    Args:
+        thread_id: (int): write your description
+    """
     return threading.Thread.getName(threading._active[thread_id])
 
 
@@ -69,6 +80,11 @@ if __name__ == '__main__':
     print('=' * 10)
 
     def showit():
+        """
+        Prints the current thread
+
+        Args:
+        """
         print('Current thread: %s' % current_thread_name())
         print('All threads:')
         for thread_id, f in list(sys._current_frames().items()):
@@ -83,10 +99,22 @@ if __name__ == '__main__':
 
     class BgThread(threading.Thread):
         def __init__(self):
+            """
+            Initialize the thread.
+
+            Args:
+                self: (todo): write your description
+            """
             threading.Thread.__init__(self)
             return
 
         def run(self):
+            """
+            Runs a list of the run.
+
+            Args:
+                self: (todo): write your description
+            """
             showit()
             return
         pass

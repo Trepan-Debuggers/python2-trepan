@@ -39,10 +39,23 @@ In the last form the only definitions of the given macro names is shown."""
     short_help = "List of defined macros"
 
     def complete(self, prefix):
+        """
+        Returns the next token.
+
+        Args:
+            self: (todo): write your description
+            prefix: (str): write your description
+        """
         m = sorted(list(self.proc.macros.keys()) + ['*'])
         return Mcomplete.complete_token(m, prefix)
 
     def run(self, args):
+        """
+        Runs function.
+
+        Args:
+            self: (todo): write your description
+        """
         if len(args) > 0:
             if len(args) == 1 and '*' == args[0]:
                 macro_names = list(self.proc.macros.keys())

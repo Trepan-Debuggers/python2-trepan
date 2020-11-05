@@ -45,6 +45,12 @@ See also:
     complete = complete_bpnumber
 
     def run(self, args):
+        """
+        Run breakpoint.
+
+        Args:
+            self: (todo): write your description
+        """
         success, msg, bp = self.core.bpmgr.get_breakpoint(int(args[1]))
         if not success:
             self.errmsg(msg)

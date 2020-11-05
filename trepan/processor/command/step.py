@@ -75,6 +75,12 @@ See also:
     short_help    = 'Step program (possibly entering called functions)'
 
     def run(self, args):
+        """
+        Run the daemon.
+
+        Args:
+            self: (todo): write your description
+        """
         step_events  = []
         if args[0][-1] == '>':
             step_events  = ['call']

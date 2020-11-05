@@ -26,6 +26,14 @@ class DebuggerUserOutput(Mbase.DebuggerOutputBase):
     could be an interactive terminal, but it might also be file output"""
 
     def __init__(self, out=None, opts=None):
+        """
+        Initialize the file.
+
+        Args:
+            self: (todo): write your description
+            out: (str): write your description
+            opts: (todo): write your description
+        """
 
         self.flush_after_write = False
         self.output = out or sys.stdout
@@ -33,6 +41,12 @@ class DebuggerUserOutput(Mbase.DebuggerOutputBase):
         return
 
     def flush(self):
+        """
+        Flush the output.
+
+        Args:
+            self: (todo): write your description
+        """
         return self.output.flush()
 
     def open(self, output, opts=None):

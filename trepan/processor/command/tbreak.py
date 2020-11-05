@@ -67,6 +67,12 @@ See also:
     complete = Mcomplete.complete_break_linenumber
 
     def run(self, args):
+        """
+        Run a command.
+
+        Args:
+            self: (todo): write your description
+        """
         func, filename, lineno, condition = Mcmdbreak.parse_break_cmd(self.proc, args)
         if not (func == None and filename == None):
             Mcmdbreak.set_break(self, func, filename, lineno, condition,

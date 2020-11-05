@@ -10,19 +10,45 @@ class TestP(unittest.TestCase):
     """Tests PrintCommand class"""
 
     def setUp(self):
+        """
+        Sets the error result.
+
+        Args:
+            self: (todo): write your description
+        """
         self.errors = []
         self.msgs = []
         return
 
     def errmsg(self, msg):
+        """
+        Add an error message
+
+        Args:
+            self: (todo): write your description
+            msg: (str): write your description
+        """
         self.errors.append(msg)
         return
 
     def msg(self, msg):
+        """
+        Convert a message to a message.
+
+        Args:
+            self: (todo): write your description
+            msg: (str): write your description
+        """
         self.msgs.append(msg)
         return
 
     def test_p(self):
+        """
+        Run a test test.
+
+        Args:
+            self: (todo): write your description
+        """
         import inspect
         d           = debugger.Debugger()
         cp          = d.core.processor

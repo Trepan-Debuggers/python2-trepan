@@ -8,12 +8,24 @@ from trepan.lib import sighandler as Msig
 class TestLibSigHandle(unittest.TestCase):
 
     def test_YN(self):
+        """
+        Return true if the test is true if - test.
+
+        Args:
+            self: (todo): write your description
+        """
         for expect, b in (('Yes', True), ('No', False)):
             self.assertEqual(expect, Msig.YN(b))
             pass
         return
 
     def test_canonic_signame(self):
+        """
+        Test if a constraint can be used as a signal.
+
+        Args:
+            self: (todo): write your description
+        """
         for expect, name_num in (('SIGTERM',  '15'),
                                  ('SIGTERM', '-15'),
                                  ('SIGTERM', 'term'),
@@ -27,6 +39,12 @@ class TestLibSigHandle(unittest.TestCase):
         pass
 
     def test_lookup_signame(self):
+        """
+        Return the name of the signal.
+
+        Args:
+            self: (todo): write your description
+        """
         for expect, num in (('SIGTERM', 15), ('SIGTERM', -15),
                           (None, 300)):
             self.assertEqual(expect, Msig.lookup_signame(num))
@@ -34,6 +52,12 @@ class TestLibSigHandle(unittest.TestCase):
         return
 
     def test_lookup_signum(self):
+        """
+        Look up the signal in the signal.
+
+        Args:
+            self: (todo): write your description
+        """
         for expect, name in ((15, 'SIGTERM'), (15, 'TERM'),
                              (15, 'term'), (None, 'nothere')):
             self.assertEqual(expect, Msig.lookup_signum(name))
@@ -41,6 +65,12 @@ class TestLibSigHandle(unittest.TestCase):
         return
 
     def test_lookup_signame_signum(self):
+        """
+        Return a signal name of the signal.
+
+        Args:
+            self: (todo): write your description
+        """
         for signum in range(signal.NSIG):
             signame = Msig.lookup_signame(signum)
             if signame is not None:

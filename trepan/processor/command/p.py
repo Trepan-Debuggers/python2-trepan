@@ -51,6 +51,12 @@ See also:
     complete = Mcomplete.complete_identifier
 
     def run(self, args):
+        """
+        Emit the program.
+
+        Args:
+            self: (todo): write your description
+        """
         if len(args) > 2 and '/' == args[1][0]:
             fmt = args[1]
             del args[1]

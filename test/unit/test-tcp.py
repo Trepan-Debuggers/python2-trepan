@@ -9,6 +9,12 @@ class TestTCP(unittest.TestCase):
     """Tests TCPServer and TCPClient"""
 
     def test_client_server(self):
+        """
+        Test if the client
+
+        Args:
+            self: (todo): write your description
+        """
         client = None
         server = None
         try:

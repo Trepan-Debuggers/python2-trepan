@@ -118,6 +118,14 @@ class DebuggerSubcommand:
         raise NotImplementedError(NotImplementedMessage)
 
     def section(self, message, opts={}):
+        """
+        Print a message
+
+        Args:
+            self: (todo): write your description
+            message: (str): write your description
+            opts: (todo): write your description
+        """
         if "plain" != self.settings["highlight"]:
             message = colorize("bold", message)
         else:
@@ -136,10 +144,23 @@ class DebuggerSetBoolSubcommand(DebuggerSubcommand):
     max_args = 1
 
     def complete(self, prefix):
+        """
+        Complete the token.
+
+        Args:
+            self: (todo): write your description
+            prefix: (str): write your description
+        """
         result = Mcomplete.complete_token(("on", "off"), prefix)
         return result
 
     def run(self, args):
+        """
+        \ display
+
+        Args:
+            self: (todo): write your description
+        """
         # Strip off ReStructuredText tags
         doc = re.sub("[*]", "", self.short_help).lstrip()
         # # Take only the first two tokens
@@ -154,6 +175,14 @@ class DebuggerSetBoolSubcommand(DebuggerSubcommand):
         return
 
     def summary_help(self, subcmd_name, subcmd):
+        """
+        Prints the help message.
+
+        Args:
+            self: (todo): write your description
+            subcmd_name: (str): write your description
+            subcmd: (str): write your description
+        """
         return self.msg_nocr("%-12s: " % self.short_help)
 
     pass
@@ -163,6 +192,12 @@ class DebuggerShowIntSubcommand(DebuggerSubcommand):
     max_args = 0
 
     def run(self, args):
+        """
+        Usage : class
+
+        Args:
+            self: (todo): write your description
+        """
         if hasattr(self, "short_help"):
             short_help = self.short_help
         else:
@@ -176,6 +211,12 @@ class DebuggerShowBoolSubcommand(DebuggerSubcommand):
     max_args = 0
 
     def run(self, args):
+        """
+        Usage : class :.
+
+        Args:
+            self: (todo): write your description
+        """
         # Strip off ReStructuredText tags
         doc = re.sub("[*]", "", self.short_help)
         doc = doc[5:].capitalize().split("\n")[0].rstrip(".")

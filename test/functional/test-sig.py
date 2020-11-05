@@ -6,6 +6,12 @@ from fn_helper import strarray_setup, compare_output, get_lineno
 class TestSigHandler(unittest.TestCase):
 
     def test_handle(self):
+        """
+        Executes a signal.
+
+        Args:
+            self: (todo): write your description
+        """
 
         # FIXME!
         self.assertTrue(True)
@@ -16,6 +22,13 @@ class TestSigHandler(unittest.TestCase):
         d = strarray_setup(cmds)
 
         def signal_handler(num, f):
+            """
+            Signal handler.
+
+            Args:
+                num: (int): write your description
+                f: (todo): write your description
+            """
             print('signal %d received' % num)
             return
 
@@ -43,6 +56,13 @@ class TestSigHandler(unittest.TestCase):
         d.intf[-1].input.input = cmds
 
         def signal_handler2(num, f):
+            """
+            Signal handler.
+
+            Args:
+                num: (int): write your description
+                f: (int): write your description
+            """
             print('signal %d received' % num)
             return
         signal.signal(signal.SIGUSR1, signal_handler2)
@@ -69,6 +89,13 @@ class TestSigHandler(unittest.TestCase):
         d.intf[-1].input.input = cmds
 
         def signal_handler3(num, f):
+            """
+            Signal handler for signal handler
+
+            Args:
+                num: (int): write your description
+                f: (todo): write your description
+            """
             print('signal %d received' % num)
             return
         signal.signal(signal.SIGUSR2, signal_handler2)

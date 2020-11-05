@@ -44,6 +44,12 @@ See also:
     short_help    = 'Skip lines to be executed'
 
     def run(self, args):
+        """
+        Run the command.
+
+        Args:
+            self: (todo): write your description
+        """
         if not self.core.is_running(): return False
 
         if self.proc.curindex + 1 != len(self.proc.stack):

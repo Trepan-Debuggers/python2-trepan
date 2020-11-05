@@ -33,6 +33,15 @@ def complete_token_filtered(aliases, prefix, expanded):
 
 
 def completer(self, str, state, last_token=''):
+    """
+    Return the completer for the completer.
+
+    Args:
+        self: (todo): write your description
+        str: (str): write your description
+        state: (int): write your description
+        last_token: (str): write your description
+    """
     next_blank_pos, token = Mcomplete.next_token(str, 0)
     if len(token) == 0 and not 0 == len(last_token):
         return ['', None]
@@ -84,6 +93,15 @@ def completer(self, str, state, last_token=''):
 
 
 def next_complete(str, next_blank_pos, cmd, last_token):
+    """
+    Returns the next complete token.
+
+    Args:
+        str: (todo): write your description
+        next_blank_pos: (int): write your description
+        cmd: (todo): write your description
+        last_token: (str): write your description
+    """
     next_blank_pos, token = Mcomplete.next_token(str, next_blank_pos)
 
     if hasattr(cmd, 'complete_token_with_next'):
@@ -114,9 +132,23 @@ def next_complete(str, next_blank_pos, cmd, last_token):
     return [None]
 
 def complete_bpnumber(self, prefix):
+    """
+    Return a bpmnumber number.
+
+    Args:
+        self: (todo): write your description
+        prefix: (str): write your description
+    """
     return Mcomplete.complete_brkpts(self.core.bpmgr, prefix)
 
 def complete_break_linenumber(self, prefix):
+    """
+    Return the complete complete completion for the given prefix.
+
+    Args:
+        self: (todo): write your description
+        prefix: (str): write your description
+    """
     canonic_name = self.proc.curframe.f_code.co_filename
     completions = pyficache.trace_line_numbers(canonic_name)
     return Mcomplete.complete_token([str(i) for i in completions],
@@ -149,6 +181,13 @@ def complete_identifier(cmd, prefix):
         return Mcomplete.complete_token(ns.keys(), prefix)
 
 def complete_id_and_builtins(cmd, prefix):
+    """
+    Returns a tuple of ( command and return a tuple ) where the given.
+
+    Args:
+        cmd: (str): write your description
+        prefix: (str): write your description
+    """
     if not cmd.proc.curframe: return [None]
     items = (list(cmd.proc.curframe.f_builtins.keys()) +
              complete_identifier(cmd, prefix))

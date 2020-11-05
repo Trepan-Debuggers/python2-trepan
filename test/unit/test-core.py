@@ -12,6 +12,12 @@ class MockProcessor:
 class TestCore(unittest.TestCase):
 
     def test_is_next_stop(self):
+        """
+        Checks if the next step is running.
+
+        Args:
+            self: (todo): write your description
+        """
         # We assume there's at least one command
         opts = {'processor': MockProcessor()}
         dc = Mcore.DebuggerCore(None, opts=opts)
@@ -24,6 +30,12 @@ class TestCore(unittest.TestCase):
         return
 
     def test_canonic(self):
+        """
+        Test if the machine can be established.
+
+        Args:
+            self: (todo): write your description
+        """
         opts = {'processor': MockProcessor()}
         dc = Mcore.DebuggerCore(None, opts=opts)
         s = '<string>'

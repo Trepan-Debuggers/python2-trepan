@@ -40,6 +40,12 @@ See also:
     complete = Mcomplete.complete_bpnumber
 
     def run(self, args):
+        """
+        Run the breakpoints.
+
+        Args:
+            self: (todo): write your description
+        """
         proc     = self.proc
         curframe = proc.curframe
         filename = proc.list_filename

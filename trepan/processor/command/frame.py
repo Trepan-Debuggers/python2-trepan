@@ -66,6 +66,13 @@ See also:
     DebuggerCommand.setup(locals(), category="stack", max_args=2, need_stack=True)
 
     def complete(self, prefix):
+        """
+        Return the complete complete token
+
+        Args:
+            self: (todo): write your description
+            prefix: (str): write your description
+        """
         proc_obj = self.proc
         low, high = frame_low_high(proc_obj, None)
         ary = [str(low + i) for i in range(high - low + 1)]
@@ -205,6 +212,12 @@ if __name__ == "__main__":
     cp.stack, cp.curindex = get_stack(cp.curframe, None, None, cp)
 
     def showit(cmd):
+        """
+        Run a show command.
+
+        Args:
+            cmd: (str): write your description
+        """
         print("=" * 20)
         cmd.run(["frame"])
         print("-" * 20)
@@ -220,12 +233,26 @@ if __name__ == "__main__":
 
     class BgThread(threading.Thread):
         def __init__(self, fn, cmd):
+            """
+            Initialize a new thread.
+
+            Args:
+                self: (todo): write your description
+                fn: (int): write your description
+                cmd: (int): write your description
+            """
             threading.Thread.__init__(self)
             self.fn = fn
             self.cmd = cmd
             return
 
         def run(self):
+            """
+            Run a command.
+
+            Args:
+                self: (todo): write your description
+            """
             self.fn(self.cmd)
             return
 

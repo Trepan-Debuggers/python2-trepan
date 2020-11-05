@@ -12,6 +12,13 @@ class TestDisassemble(unittest.TestCase):
     # FIXME: put in a more common place
     # Possibly fix up Mock to include this
     def setup_io(self, command):
+        """
+        Setup a command.
+
+        Args:
+            self: (todo): write your description
+            command: (str): write your description
+        """
         self.clear_output()
         command.msg = self.msg
         command.errmsg = self.errmsg
@@ -19,17 +26,37 @@ class TestDisassemble(unittest.TestCase):
         return
 
     def clear_output(self):
+        """
+        Clear the output.
+
+        Args:
+            self: (todo): write your description
+        """
         self.msgs = []
         self.errmsgs = []
         self.last_was_newline = True
         return
 
     def msg(self, msg):
+        """
+        Prints a message
+
+        Args:
+            self: (todo): write your description
+            msg: (str): write your description
+        """
         self.msg_nocr(msg)
         self.last_was_newline = True
         return
 
     def msg_nocr(self, msg):
+        """
+        Add a message.
+
+        Args:
+            self: (todo): write your description
+            msg: (str): write your description
+        """
         if self.last_was_newline:
             self.msgs.append('')
             pass
@@ -38,6 +65,13 @@ class TestDisassemble(unittest.TestCase):
         return
 
     def errmsg(self, msg):
+        """
+        Add an error message
+
+        Args:
+            self: (todo): write your description
+            msg: (str): write your description
+        """
         self.errmsgs.append(msg)
         pass
 

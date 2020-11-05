@@ -7,6 +7,12 @@ from trepan.lib import eval as Meval
 
 class TestExtractExpression(unittest.TestCase):
     def test_extract_expression(self):
+        """
+        Extract all the expression.
+
+        Args:
+            self: (todo): write your description
+        """
         for fragment, expect in (
             ("if condition(x):", "condition(x)"),
             ("elif is_magic(name):", "is_magic(name)"),

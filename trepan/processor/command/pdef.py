@@ -43,6 +43,12 @@ See also:
     short_help    = 'Print the definition header for a callable object'
 
     def run(self, args):
+        """
+        Run the command.
+
+        Args:
+            self: (todo): write your description
+        """
         if len(args) != 2: return
         obj_name = args[1]
         try:

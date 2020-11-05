@@ -9,6 +9,12 @@ from trepan.processor.command import mock as Mmock
 class TestCmdProc(unittest.TestCase):
 
     def setUp(self):
+        """
+        Sets the socket.
+
+        Args:
+            self: (todo): write your description
+        """
         self.errors             = []
         self.msgs               = []
         self.d                  = Mmock.MockDebugger()
@@ -18,14 +24,34 @@ class TestCmdProc(unittest.TestCase):
         return
 
     def errmsg(self, msg):
+        """
+        Add an error message
+
+        Args:
+            self: (todo): write your description
+            msg: (str): write your description
+        """
         self.errors.append(msg)
         return
 
     def msg(self, msg):
+        """
+        Add a message to a message.
+
+        Args:
+            self: (todo): write your description
+            msg: (str): write your description
+        """
         self.msg.append(msg)
         return
 
     def test_basic(self):
+        """
+        Perform the test test commands.
+
+        Args:
+            self: (todo): write your description
+        """
 
         # We assume there's at least one command
         self.assertTrue(len(self.cp.commands) > 0)
@@ -86,6 +112,12 @@ class TestCmdProc(unittest.TestCase):
             pass
 
     def test_args_split(self):
+        """
+        Split test test test test.
+
+        Args:
+            self: (todo): write your description
+        """
         for test, expect in (
             ("Now is the time",    [['Now', 'is', 'the', 'time']]),
             ("Now is the time ;;", [['Now', 'is', 'the', 'time'], []]),
@@ -100,6 +132,12 @@ class TestCmdProc(unittest.TestCase):
         return
 
     def test_preloop_hooks(self):
+        """
+        This function will be called by the hook is executed.
+
+        Args:
+            self: (todo): write your description
+        """
         fn = self.cp.commands['list']
         self.assertEqual(0, len(self.cp.preloop_hooks),
                          'Should start out with no preloop hooks')

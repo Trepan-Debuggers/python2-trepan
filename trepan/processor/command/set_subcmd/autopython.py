@@ -37,6 +37,12 @@ See also:
     python_cmd = None
 
     def run(self, args):
+        """
+        Executes a python interpreter.
+
+        Args:
+            self: (todo): write your description
+        """
         Mcmdfns.run_set_bool(self, args)
         if self.settings['autopython']:
             if self.python_cmd is None:
@@ -50,6 +56,12 @@ See also:
         return
 
     def run_python(self, args):
+        """
+        Run python command.
+
+        Args:
+            self: (todo): write your description
+        """
         leave_loop = self.python_cmd(['python'])
         if not leave_loop: Mcmdproc.print_location(self.proc)
         return leave_loop

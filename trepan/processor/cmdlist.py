@@ -120,6 +120,11 @@ if __name__=='__main__':
     cmdproc.setup()
 
     def five():
+        """
+        Return a function that returns a list of the last call.
+
+        Args:
+        """
         return 5
     import os
     for cmd in (

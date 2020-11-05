@@ -23,10 +23,24 @@ DEFAULT_DEBUG = {'rules': False, 'transition': False, 'reduce': False,
 
 class LocationError(Exception):
     def __init__(self, text, text_cursor):
+        """
+        Set text cursor.
+
+        Args:
+            self: (todo): write your description
+            text: (str): write your description
+            text_cursor: (str): write your description
+        """
         self.text = text
         self.text_cursor = text_cursor
 
     def __str__(self):
+        """
+        Return the cursor
+
+        Args:
+            self: (todo): write your description
+        """
         return self.text + "\n" + self.text_cursor
 
 class LocationParser(GenericASTBuilder):
@@ -36,11 +50,28 @@ class LocationParser(GenericASTBuilder):
     """
 
     def __init__(self, start_nt, text, debug=None):
+        """
+        Initialize a debug.
+
+        Args:
+            self: (todo): write your description
+            start_nt: (str): write your description
+            text: (str): write your description
+            debug: (bool): write your description
+        """
         super(LocationParser, self).__init__(AST, start_nt, debug=DEFAULT_DEBUG)
         self.debug = debug
         self.text  = text
 
     def error(self, tokens, index):
+        """
+        Prints an error
+
+        Args:
+            self: (todo): write your description
+            tokens: (str): write your description
+            index: (int): write your description
+        """
         token = tokens[index]
         if self.debug.get('local_print', False):
             print(self.text)
@@ -52,6 +83,13 @@ class LocationParser(GenericASTBuilder):
                          ' ' * (token.offset + len(str(token.value))) + '^')
 
     def nonterminal(self, nt, args):
+        """
+        Returns the nonterminal nonterminal nonterminal nonterminal.
+
+        Args:
+            self: (todo): write your description
+            nt: (int): write your description
+        """
         has_len = hasattr(args, '__len__')
 
         # collect = ('tokens',)
@@ -147,6 +185,19 @@ class LocationParser(GenericASTBuilder):
 
 def parse_location(start_symbol, text, out=sys.stdout,
                       show_tokens=False, parser_debug=DEFAULT_DEBUG):
+    """
+    Parse a location.
+
+    Args:
+        start_symbol: (str): write your description
+        text: (str): write your description
+        out: (array): write your description
+        sys: (todo): write your description
+        stdout: (todo): write your description
+        show_tokens: (bool): write your description
+        parser_debug: (todo): write your description
+        DEFAULT_DEBUG: (todo): write your description
+    """
     assert isinstance(text, str)
     tokens = LocationScanner().tokenize(text)
     if show_tokens:
@@ -164,17 +215,39 @@ def parse_location(start_symbol, text, out=sys.stdout,
     return parser.parse(tokens)
 
 def parse_bp_location(*args, **kwargs):
+    """
+    Parse the location
+
+    Args:
+    """
     return parse_location('bp_start', *args, **kwargs)
 
 def parse_range(*args, **kwargs):
+    """
+    Parse a range.
+
+    Args:
+    """
     return parse_location('range_start', *args, **kwargs)
 
 def parse_arange(*args, **kwargs):
+    """
+    Parse arange.
+
+    Args:
+    """
     return parse_location('arange_start', *args, **kwargs)
 
 if __name__ == '__main__':
 
     def doit(fn, line):
+        """
+        Do the code
+
+        Args:
+            fn: (todo): write your description
+            line: (str): write your description
+        """
         try:
             ast = fn(line, show_tokens=True)
             print(ast)

@@ -33,6 +33,12 @@ See also:
     min_abbrev = len('lis')  # Need at least "set lis"
 
     def run(self, args):
+        """
+        Run a command line arguments.
+
+        Args:
+            self: (todo): write your description
+        """
         Mcmdfns.run_set_int(self, ' '.join(args),
                             "The 'listsize' command requires a line count.",
                             0, None)

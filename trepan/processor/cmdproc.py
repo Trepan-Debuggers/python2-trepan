@@ -103,6 +103,13 @@ def run_hooks(obj, hooks, *args):
 
 
 def resolve_name(obj, command_name):
+    """
+    Resolves the name of a given name.
+
+    Args:
+        obj: (todo): write your description
+        command_name: (str): write your description
+    """
     if command_name.lower() not in obj.commands:
         if command_name in obj.aliases:
             command_name = obj.aliases[command_name]
@@ -302,6 +309,14 @@ DEFAULT_PROC_OPTS = {
 
 class CommandProcessor(Mprocessor.Processor):
     def __init__(self, core_obj, opts=None):
+        """
+        Initialize the module
+
+        Args:
+            self: (todo): write your description
+            core_obj: (todo): write your description
+            opts: (todo): write your description
+        """
         get_option = lambda key: Mmisc.option_set(opts, key, DEFAULT_PROC_OPTS)
         Mprocessor.Processor.__init__(self, core_obj)
 
@@ -377,17 +392,43 @@ class CommandProcessor(Mprocessor.Processor):
         return
 
     def add_remap_pat(self, pat, replace, clear_remap=True):
+        """
+        Add a pattern to remap.
+
+        Args:
+            self: (todo): write your description
+            pat: (str): write your description
+            replace: (bool): write your description
+            clear_remap: (todo): write your description
+        """
         pyficache.main.add_remap_pat(pat, replace, clear_remap)
         if clear_remap:
             self.file2file_remap = {}
             pyficache.file2file_remap = {}
 
     def _saferepr(self, str, maxwidth=None):
+        """
+        Return a representation of the object.
+
+        Args:
+            self: (todo): write your description
+            str: (todo): write your description
+            maxwidth: (int): write your description
+        """
         if maxwidth is None:
             maxwidth = self.debugger.settings["width"]
         return self._repr.repr(str)[:maxwidth]
 
     def add_preloop_hook(self, hook, position=-1, nodups=True):
+        """
+        Decorator to the hook.
+
+        Args:
+            self: (todo): write your description
+            hook: (todo): write your description
+            position: (todo): write your description
+            nodups: (todo): write your description
+        """
         if hook in self.preloop_hooks:
             return False
         self.preloop_hooks.insert(position, hook)
@@ -405,6 +446,13 @@ class CommandProcessor(Mprocessor.Processor):
         return filename
 
     def set_prompt(self, prompt="trepan2"):
+        """
+        Set prompt prompt
+
+        Args:
+            self: (todo): write your description
+            prompt: (todo): write your description
+        """
         if self.thread_name and self.thread_name != "MainThread":
             prompt += ":" + self.thread_name
             pass
@@ -478,6 +526,13 @@ class CommandProcessor(Mprocessor.Processor):
         return None  # Not reached
 
     def exec_line(self, line):
+        """
+        Execute a command line.
+
+        Args:
+            self: (todo): write your description
+            line: (str): write your description
+        """
         if self.curframe:
             local_vars = self.curframe.f_locals
             global_vars = self.curframe.f_globals
@@ -589,6 +644,14 @@ class CommandProcessor(Mprocessor.Processor):
         return default
 
     def getval(self, arg, locals=None):
+        """
+        Get the value of a variable.
+
+        Args:
+            self: (todo): write your description
+            arg: (str): write your description
+            locals: (todo): write your description
+        """
         if not locals:
             locals = self.curframe.f_locals
         try:
@@ -673,6 +736,12 @@ class CommandProcessor(Mprocessor.Processor):
         return run_hooks(self, self.postcmd_hooks)
 
     def process_command(self):
+        """
+        Processes commands
+
+        Args:
+            self: (todo): write your description
+        """
         # process command
         if len(self.cmd_queue) > 0:
             current_command = self.cmd_queue[0].strip()
@@ -783,6 +852,13 @@ class CommandProcessor(Mprocessor.Processor):
         return False
 
     def remove_preloop_hook(self, hook):
+        """
+        Remove a hook hook.
+
+        Args:
+            self: (todo): write your description
+            hook: (todo): write your description
+        """
         try:
             position = self.preloop_hooks.index(hook)
         except ValueError:
@@ -909,6 +985,13 @@ class CommandProcessor(Mprocessor.Processor):
             return self.populate_commands_pip(Mcommand)
 
     def populate_commands_pip(self, Mcommand):
+        """
+        Populate the commands.
+
+        Args:
+            self: (todo): write your description
+            Mcommand: (str): write your description
+        """
         cmd_instances = []
         eval_cmd_template = "command_mod.%s(self)"
         for mod_name in Mcommand.__dict__.keys():
@@ -954,6 +1037,13 @@ class CommandProcessor(Mprocessor.Processor):
         return cmd_instances
 
     def populate_commands_easy_install(self, Mcommand):
+        """
+        Populate the instances of the given class.
+
+        Args:
+            self: (todo): write your description
+            Mcommand: (str): write your description
+        """
         cmd_instances = []
 
         for mod_name in Mcommand.__modules__:

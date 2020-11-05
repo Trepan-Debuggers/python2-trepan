@@ -36,6 +36,12 @@ environment."""
     complete = Mcomplete.complete_identifier
 
     def run(self, args):
+        """
+        Run command.
+
+        Args:
+            self: (todo): write your description
+        """
         arg = ' '.join(args[1:])
         curframe = self.proc.curframe
         if not curframe:
@@ -97,6 +103,11 @@ if __name__ == '__main__':
     command = DebugCommand(cp)
 
     def test_fn():
+        """
+        Returns a function to see if a function that returns : attr.
+
+        Args:
+        """
         return 5
     command.run(['debug', 'test_fn()'])
     pass

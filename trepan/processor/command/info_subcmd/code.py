@@ -51,6 +51,13 @@ See also:
     short_help = '''Show detailed info about the Python code object'''
 
     def complete(self, prefix):
+        """
+        Complete a complete complete complete complete complete token.
+
+        Args:
+            self: (todo): write your description
+            prefix: (str): write your description
+        """
         proc_obj = self.proc
         low, high = Mframe.frame_low_high(proc_obj, None)
         ary = [str(low+i) for i in range(high-low+1)]
@@ -58,6 +65,12 @@ See also:
         return Mcomplete.complete_token(ary, prefix)
 
     def run(self, args):
+        """
+        Run the program.
+
+        Args:
+            self: (todo): write your description
+        """
         proc = self.proc
         frame = proc.curframe
         if not frame:

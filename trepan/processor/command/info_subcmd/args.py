@@ -34,6 +34,12 @@ See also:
     short_help = "Argument variables of the current stack frame"
 
     def run(self, args):
+        """
+        Run the program.
+
+        Args:
+            self: (todo): write your description
+        """
         if not self.proc.curframe:
             self.errmsg("No stack.")
             return False
@@ -73,6 +79,14 @@ if __name__ == '__main__':
     print(sub.run([]))
 
     def nest_me(sub, cp, b=1):
+        """
+        Return the current state of the given sub - frame.
+
+        Args:
+            sub: (array): write your description
+            cp: (array): write your description
+            b: (array): write your description
+        """
         cp.curframe = inspect.currentframe()
         print(sub.run([]))
         return

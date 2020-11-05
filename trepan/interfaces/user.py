@@ -40,6 +40,15 @@ class UserInterface(Minterface.DebuggerInterface):
     process as the debugged program."""
 
     def __init__(self, inp=None, out=None, opts={}):
+        """
+        Initialize the history.
+
+        Args:
+            self: (todo): write your description
+            inp: (int): write your description
+            out: (str): write your description
+            opts: (todo): write your description
+        """
 
         user_opts = DEFAULT_USER_SETTINGS.copy()
         user_opts.update(opts)
@@ -73,6 +82,12 @@ class UserInterface(Minterface.DebuggerInterface):
         return
 
     def user_write_history_file(self):
+        """
+        Write the history file to the user.
+
+        Args:
+            self: (todo): write your description
+        """
         try:
             write_history_file(self.histfile)
         except:
@@ -119,6 +134,13 @@ class UserInterface(Minterface.DebuggerInterface):
         return self.msg("%s%s" % (prefix, msg))
 
     def finalize(self, last_wishes=None):
+        """
+        Finalize the stream.
+
+        Args:
+            self: (todo): write your description
+            last_wishes: (str): write your description
+        """
         # This routine gets called multiple times.
         # We hard-code the close() function here.
         try:
@@ -131,11 +153,25 @@ class UserInterface(Minterface.DebuggerInterface):
         return
 
     def read_command(self, prompt=""):
+        """
+        Reads a command line.
+
+        Args:
+            self: (todo): write your description
+            prompt: (str): write your description
+        """
         line = self.readline(prompt)
         # Do something with history?
         return line
 
     def readline(self, prompt=""):
+        """
+        Read a line from the input buffer.
+
+        Args:
+            self: (todo): write your description
+            prompt: (todo): write your description
+        """
         if (
             hasattr(self.input, "use_raw")
             and not self.input.use_raw

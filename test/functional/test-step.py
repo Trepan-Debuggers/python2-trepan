@@ -13,6 +13,12 @@ class TestStep(unittest.TestCase):
     print("test ", __file__, "skipped")
 
     def test_step_same_level(self):
+        """
+        Determine the test level of the test.
+
+        Args:
+            self: (todo): write your description
+        """
         return
 
         # See that we can step with parameter which is the same as 'step 1'
@@ -31,6 +37,12 @@ class TestStep(unittest.TestCase):
 
     @unittest.skip("Need to fix")
     def test_step_computed_valued(self):
+        """
+        Runs the yamputed test.
+
+        Args:
+            self: (todo): write your description
+        """
         # See that we can step with a computed count value
         cmds = ['step 5-3', 'continue']
         d = strarray_setup(cmds)
@@ -53,6 +65,11 @@ class TestStep(unittest.TestCase):
         x = 5
 
         def foo():
+            """
+            Decorator to add the function to use this.
+
+            Args:
+            """
             return
         y = 6  # NOQA
         foo()
@@ -88,6 +105,11 @@ class TestStep(unittest.TestCase):
         x = 5  # NOQA
         try:
             def foo1():
+                """
+                Returns the two - dimensional integers.
+
+                Args:
+                """
                 y = 2  # NOQA
                 raise Exception
                 return
@@ -129,9 +151,21 @@ class TestStep(unittest.TestCase):
 
     @unittest.skip("Need to fix")
     def test_step_between_fn(self):
+        """
+        Generate a function to run.
+
+        Args:
+            self: (todo): write your description
+        """
 
         # Step into and out of a function
         def sqr(x):
+            """
+            Sqr ( x ) of x.
+
+            Args:
+                x: (array): write your description
+            """
             return x * x
         for cmds, out, eventset in (
             (['step', 'step', 'continue'],
@@ -160,12 +194,30 @@ class TestStep(unittest.TestCase):
 
     @unittest.skip("Need to fix")
     def test_step_in_exception(self):
+        """
+        Runs : meth : class : xcmd.
+
+        Args:
+            self: (todo): write your description
+        """
 
         def boom(x):
+            """
+            Returns true if x is a boolean value.
+
+            Args:
+                x: (int): write your description
+            """
             y = 0/x  # NOQA
             return
 
         def bad(x):
+            """
+            Badomposition.
+
+            Args:
+                x: (todo): write your description
+            """
             boom(x)
             return x * x
         cmds = ['step', 'step', 'step', 'step', 'step', 'step',

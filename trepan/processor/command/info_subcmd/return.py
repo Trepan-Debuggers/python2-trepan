@@ -31,6 +31,12 @@ statement."""
     short_help    = 'Show function return value'
 
     def run(self, args):
+        """
+        Run the event handler.
+
+        Args:
+            self: (todo): write your description
+        """
         # Not sure if this __return__ stuff works.
         # if '__return__' in self.proc.curframe.f_locals:
         #     val = self.proc.curframe.f_locals['__return__']

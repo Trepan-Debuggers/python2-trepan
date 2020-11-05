@@ -54,6 +54,12 @@ def yield_sphinx_only_markup(lines):
     regex_subs = [ (re.compile(regex, re.IGNORECASE), sub) for (regex, sub) in substs ]
 
     def clean_line(line):
+        """
+        Clean the line from the line.
+
+        Args:
+            line: (str): write your description
+        """
         try:
             for (regex, sub) in regex_subs:
                 line = regex.sub(sub, line)

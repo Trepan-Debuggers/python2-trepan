@@ -32,11 +32,26 @@ def signature(frame):
 class DisplayMgr:
     '''Manage a list of display expressions.'''
     def __init__(self):
+        """
+        Initialize the next list.
+
+        Args:
+            self: (todo): write your description
+        """
         self.next = 0
         self.list = []
         return
 
     def add(self, frame, arg, fmt=None):
+        """
+        Add a new frame.
+
+        Args:
+            self: (todo): write your description
+            frame: (int): write your description
+            arg: (int): write your description
+            fmt: (int): write your description
+        """
         if not frame:
             return None
         try:
@@ -86,6 +101,14 @@ Num Enb Expression""")
         return s
 
     def enable_disable(self, i, b_enable_disable):
+        """
+        Enable or disables
+
+        Args:
+            self: (todo): write your description
+            i: (todo): write your description
+            b_enable_disable: (bool): write your description
+        """
         for display in self.list:
             if i == display.number:
                 display.enabled = b_enable_disable
@@ -98,6 +121,16 @@ Num Enb Expression""")
 
 class Display:
     def __init__(self, frame, arg, fmt, number):
+        """
+        Initialize a new signature.
+
+        Args:
+            self: (todo): write your description
+            frame: (todo): write your description
+            arg: (todo): write your description
+            fmt: (str): write your description
+            number: (int): write your description
+        """
         self.signature = signature(frame)
         self.fmt = fmt
         self.arg = arg
@@ -106,6 +139,13 @@ class Display:
         return
 
     def to_s(self, frame):
+        """
+        Write the current frame to a string.
+
+        Args:
+            self: (todo): write your description
+            frame: (todo): write your description
+        """
         if not frame:
             return 'No symbol "' + self.arg + '" in current context.'
         try:

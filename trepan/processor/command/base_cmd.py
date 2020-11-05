@@ -38,6 +38,16 @@ class DebuggerCommand:
 
     @staticmethod
     def setup(l, category="misc", min_args=0, max_args=None, need_stack=False):
+        """
+        Sets the category
+
+        Args:
+            l: (float): write your description
+            category: (str): write your description
+            min_args: (todo): write your description
+            max_args: (int): write your description
+            need_stack: (bool): write your description
+        """
         l["name"] = l["__module__"].split(".")[-1]
         l["category"] = category
         l["min_args"] = min_args
@@ -125,6 +135,14 @@ class DebuggerCommand:
     pass
 
     def section(self, message, opts={}):
+        """
+        Print a message
+
+        Args:
+            self: (todo): write your description
+            message: (str): write your description
+            opts: (todo): write your description
+        """
         if "plain" != self.settings["highlight"]:
             message = colorize("bold", message)
         else:

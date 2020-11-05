@@ -18,6 +18,11 @@
 import os, pyficache, stat, sys
 
 def file_list():
+    """
+    Return a list of file
+
+    Args:
+    """
     return list(set(pyficache.cached_files() +
                     list(pyficache.file2file_remap.keys())))
 

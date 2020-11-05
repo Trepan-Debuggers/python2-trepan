@@ -20,17 +20,35 @@ LOG_MAX_MSG    = 8     # int(log(TCP_MAX_PACKET)) # big packet
 
 
 def pack_msg(msg):
+    """
+    Convert msg to msg.
+
+    Args:
+        msg: (str): write your description
+    """
     fmt = '%%0%dd' % LOG_MAX_MSG  # A funny way of writing: '%08d'
     return ( fmt % len(msg)) + msg
 
 
 def unpack_msg(buf):
+    """
+    Unpack a message from the buffer.
+
+    Args:
+        buf: (todo): write your description
+    """
     length  = int(buf[0:LOG_MAX_MSG])
     data = buf[LOG_MAX_MSG:LOG_MAX_MSG+length]
     buf = buf[LOG_MAX_MSG+length:]
     return buf, data
 
 def unpack_msg_segment(buf):
+    """
+    Parses a message from a buffer.
+
+    Args:
+        buf: (todo): write your description
+    """
     if len(buf) == 0:
         # Fake a quit
         return '', 'q', 1

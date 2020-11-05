@@ -83,6 +83,12 @@ See also:
     DebuggerCommand.setup(locals(), category="support", min_args=2)
 
     def run(self, args):
+        """
+        Run a command.
+
+        Args:
+            self: (todo): write your description
+        """
 
         cmd_name = args[1]
         cmd_argstr = self.proc.cmd_argstr[len(cmd_name) :].lstrip()

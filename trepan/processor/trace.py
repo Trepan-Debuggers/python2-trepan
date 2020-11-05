@@ -30,6 +30,14 @@ class PrintProcessor(Mprocessor.Processor):
     whether it wants any printed at all.
     """
     def __init__(self, debugger, opts=None):
+        """
+        Initialize the mprocessor.
+
+        Args:
+            self: (todo): write your description
+            debugger: (todo): write your description
+            opts: (todo): write your description
+        """
         Mprocessor.Processor.__init__(self, debugger)
         return
 

@@ -54,6 +54,13 @@ See also:
     short_help = '''Show detailed info about the current frame'''
 
     def complete(self, prefix):
+        """
+        Complete a complete complete complete complete complete token.
+
+        Args:
+            self: (todo): write your description
+            prefix: (str): write your description
+        """
         proc_obj = self.proc
         low, high = Mframe.frame_low_high(proc_obj, None)
         ary = [str(low+i) for i in range(high-low+1)]
@@ -61,6 +68,12 @@ See also:
         return Mcomplete.complete_token(ary, prefix)
 
     def run(self, args):
+        """
+        Run the command.
+
+        Args:
+            self: (todo): write your description
+        """
 
         # FIXME: should DRY this with code.py
         proc = self.proc

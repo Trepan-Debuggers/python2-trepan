@@ -6,6 +6,13 @@ import os, signal, time
 from trepan.api import debug; debug()
 
 def signal_handler(num, f):
+    """
+    Signal handler.
+
+    Args:
+        num: (int): write your description
+        f: (todo): write your description
+    """
     print 'signal %d received' % num
     return
 

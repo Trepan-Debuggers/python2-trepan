@@ -5,6 +5,12 @@ from fn_helper import compare_output, strarray_setup
 
 class TestBreak(unittest.TestCase):
     def test_break_on_function(self):
+        """
+        Test on on on on on command.
+
+        Args:
+            self: (todo): write your description
+        """
 
         return
         ##############################
@@ -17,6 +23,11 @@ class TestBreak(unittest.TestCase):
         ##############################
 
         def foo():
+            """
+            Prints the current working directory
+
+            Args:
+            """
             print('foo here')
             return
         foo()
@@ -32,6 +43,12 @@ class TestBreak(unittest.TestCase):
         return
 
     def test_break_on_os_function(self):
+        """
+        Test if os os os. os. os. os. os. os. os. os. os. os. os. os. os.
+
+        Args:
+            self: (todo): write your description
+        """
         # Try a break with a module.function name
         return
         import os

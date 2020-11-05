@@ -76,6 +76,12 @@ of a range.
     short_help    = 'List source code'
 
     def run(self, args):
+        """
+        Run the command line arguments.
+
+        Args:
+            self: (todo): write your description
+        """
         proc = self.proc
         dbg_obj  = self.core.debugger
         listsize = dbg_obj.settings['listsize']
@@ -177,6 +183,12 @@ if __name__ == '__main__':
 
     # FIXME: make sure the below is in a unit test
     def doit(cmd, args):
+        """
+        Run a command.
+
+        Args:
+            cmd: (str): write your description
+        """
         proc = cmd.proc
         proc.current_command = ' '.join(args)
         cmd.run(args)
@@ -208,6 +220,11 @@ if __name__ == '__main__':
     # doit(lcmd, ['list', '1000'])
 
     def foo():
+        """
+        Returns a list of all the integers
+
+        Args:
+        """
         return 'bar'
     # doit(lcmd, ['list', 'foo()'])
     # print('--' * 10)

@@ -30,6 +30,15 @@ class ScriptInterface(Minterface.DebuggerInterface):
         'verbose'        : False }
 
     def __init__(self, script_name, out=None, opts=None):
+        """
+        Initialize the script.
+
+        Args:
+            self: (todo): write your description
+            script_name: (str): write your description
+            out: (str): write your description
+            opts: (todo): write your description
+        """
         get_option = lambda key: Mmisc.option_set(opts, key,
                                                   self.DEFAULT_INIT_OPTS)
 
@@ -78,6 +87,13 @@ class ScriptInterface(Minterface.DebuggerInterface):
         return
 
     def finalize(self, last_wishes=None):
+        """
+        Finalize the stream.
+
+        Args:
+            self: (todo): write your description
+            last_wishes: (str): write your description
+        """
         # print exit annotation
         # save history
         self.close()

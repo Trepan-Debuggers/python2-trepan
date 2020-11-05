@@ -42,6 +42,12 @@ formatting.
     DebuggerCommand.setup(locals(), category="data", min_args=1)
 
     def run(self, args):
+        """
+        Evaluates command
+
+        Args:
+            self: (todo): write your description
+        """
         arg = " ".join(args[1:])
         val = self.proc.eval(arg)
         pp(val, self.settings["width"], self.msg_nocr, self.msg)

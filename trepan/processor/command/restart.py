@@ -41,6 +41,12 @@ See `quit`, `exit` or `kill` for termination commands."""
     short_help    = '(Hard) restart of program via execv()'
 
     def run(self, args):
+        """
+        Restarts the application.
+
+        Args:
+            self: (todo): write your description
+        """
         sys_argv = self.debugger.restart_argv()
         if sys_argv and len(sys_argv) > 0:
             confirmed = self.confirm('Restart (execv)', False)

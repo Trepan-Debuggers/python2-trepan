@@ -46,6 +46,14 @@ if __name__ == '__main__':
     command.run(['down'])
 
     def nest_me(cp, command, i):
+        """
+        Nest nest stack.
+
+        Args:
+            cp: (array): write your description
+            command: (str): write your description
+            i: (array): write your description
+        """
         if i > 1:
             cp.curframe = inspect.currentframe()
             cp.stack, cp.curindex = Mcmdproc.get_stack(cp.curframe, None, None,

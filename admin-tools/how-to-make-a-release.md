@@ -54,10 +54,10 @@
 # Make packages and tag
 
     $ . ./admin-tools/make-dist-older.sh
-	$ pyenv local 3.8.5 && twine check dist/trepan2-$VERSION* && pyenv local 2.7.18
-    $ git tag release-python-2.4-$VERSION
+	$ pyenv local 3.8.6 && twine check dist/trepan2-$__version__* && pyenv local 2.7.18
+    $ git tag release-python-2.4-$__version__
     $ . ./admin-tools/make-dist-newer.sh
-	$ pyenv local 3.8.5 &&  twine check dist/trepan2-$VERSION* && pyenv local 2.7.18
+	$ pyenv local 3.8.6 &&  twine check dist/trepan2-$__version__* && pyenv local 2.7.18
 
 
 # Check package on github

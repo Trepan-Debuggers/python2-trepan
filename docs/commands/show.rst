@@ -32,5 +32,6 @@ Show
    show/maxstring
    show/skip
    show/style
+   show/tempdir
    show/trace
    show/width

@@ -1,4 +1,4 @@
-# Copyright (C) 2008-2010, 2013-2020 Rocky Bernstein <rocky@gnu.org>
+# Copyright (C) 2008-2010, 2013-2018, 2021 Rocky Bernstein <rocky@gnu.org>
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -58,6 +58,7 @@ install_requires = [
     "pygments == 2.2.0",  # Later releases don't support Python 2.7
     "spark_parser >= 1.8.9, <1.9.0",
     "uncompyle6 >= 3.7.4",
+    "term-background >= 1.0.1",
     "tracer >= 0.3.2",
     "unittest2",
     "xdis >= 5.0.4",
@@ -90,16 +91,11 @@ def get_srcdir():
     return osp.realpath(filename)
 
 
-# VERSION.py sets variable VERSION.
+# trepan/version.py sets variable __version__.
 ns = {}
 exec(open(osp.join(get_srcdir(), "trepan", "version.py")).read(), ns)
-version = ns["VERSION"]
+version = ns["__version__"]
 web = "http://github.com/rocky/python2-trepan/"
-
-# VERSION.py sets variable VERSION.
-ns = {}
-exec(open(osp.join(get_srcdir(), "trepan", "version.py")).read(), ns)
-version = ns["VERSION"]
 
 # tracebacks in zip files are funky and not debuggable
 zip_safe = False

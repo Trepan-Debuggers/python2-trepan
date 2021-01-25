@@ -38,5 +38,6 @@ environment settings with the :ref:`show <show>` command.
    set/skip
    set/style
    set/substitute
+   set/tempdir
    set/trace
    set/width

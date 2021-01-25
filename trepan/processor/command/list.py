@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009, 2012-2018 Rocky Bernstein
+#   Copyright (C) 2009, 2012-2018, 2021 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -96,7 +96,7 @@ of a range.
             # Deparse the code object into a temp file and remap the line from code
             # into the corresponding line of the tempfile
             co = proc.curframe.f_code
-            temp_filename, name_for_code = deparse_and_cache(co, proc.errmsg)
+            temp_filename, name_for_code = deparse_and_cache(co, proc.errmsg, tempdir=self.settings["tempdir"])
             if temp_filename:
                 filename = temp_filename
                 show_marks = False

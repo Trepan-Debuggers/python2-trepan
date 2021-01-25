@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2008-2010, 2013-2018, 2020 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008-2010, 2013-2018, 2020-2021 Rocky Bernstein
+#   <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -13,7 +14,7 @@
 #
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import inspect, linecache, re, sys, shlex, tempfile, traceback, types
+import inspect, linecache, sys, shlex, tempfile, traceback, types
 import os.path as osp
 import pyficache
 from repr import Repr
@@ -191,6 +192,7 @@ def print_location(proc_obj):
         if "<string>" == filename and dbgr_obj.eval_string:
             remapped_file = filename
             filename = pyficache.unmap_file(filename)
+
             if '<string>' == filename:
                 # Yeah I know I should use mkstemp. But I don't now how
                 # to set the "name" attribute witht that.
@@ -203,7 +205,7 @@ def print_location(proc_obj):
                     pass
                 pyficache.remap_file(fd.name, '<string>')
                 remapped = cmdfns.source_tempfile_remap('eval_string',
-                                                        dbgr_obj.eval_string)
+
                 pyficache.remap_file(filename, remapped)
                 filename = remapped
                 lineno = pyficache.unmap_file_line(filename, lineno)
@@ -214,7 +216,7 @@ def print_location(proc_obj):
             filename = "<string: '%s'>" % source_text
             pass
         elif filename in proc_obj.file2file_remap:
-            remapped_file = self.file2file_remap[filename]
+            remapped_file = proc_obj.file2file_remap[filename]
         elif filename in pyficache.file2file_remap:
             remapped_file = pyficache.unmap_file(filename)
             # FIXME: a remapped_file shouldn't be the same as its unmapped version
@@ -244,7 +246,9 @@ def print_location(proc_obj):
                 # Deparse the code object into a temp file and remap the line from code
                 # into the corresponding line of the tempfile
                 co = proc_obj.curframe.f_code
-                temp_filename, name_for_code = deparse_and_cache(co, proc_obj.errmsg)
+                tempdir = proc_obj.settings("tempdir")
+                temp_filename, name_for_code = deparse_and_cache(co, proc_obj.errmsg,
+                                                                 tempdir=tempdir)
                 lineno = 1
                 # _, lineno = pyficache.unmap_file_line(temp_filename, lineno, True)
                 if temp_filename:
@@ -264,7 +268,8 @@ def print_location(proc_obj):
                     # FIXME: DRY code with version in cmdproc.py print_location
                     prefix = osp.basename(temp_name).split(".")[0]
                     fd = tempfile.NamedTemporaryFile(
-                        suffix=".py", prefix=prefix, delete=False
+                        suffix=".py", prefix=prefix, delete=False,
+                        dir=proc_obj.settings("tempdir"),
                     )
                     fd.write("".join(lines))
                     remapped_file = fd.name

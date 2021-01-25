@@ -29,8 +29,8 @@ from trepan.interfaces import bullwinkle as Mbullwinkle
 # The name of the debugger we are currently going by.
 __title__ = 'trepan'
 
-# VERSION.py sets variable VERSION.
-from trepan.VERSION import VERSION as __version__
+# trepan/version.py sets variable VERSION.
+from trepan.version import __version__
 
 
 def process_options(debugger_name, pkg_version, sys_argv, option_list=None):

@@ -14,7 +14,6 @@ deparse_cache = {}
 
 def deparse_and_cache(co, errmsg_fn, tempdir=None):
     # co = proc_obj.curframe.f_code
-    print("XXXX yo - rocky")
     out = StringIO()
     deparsed = deparse_cache.get(co, None)
     if not deparsed or not hasattr(deparsed, "source_linemap"):

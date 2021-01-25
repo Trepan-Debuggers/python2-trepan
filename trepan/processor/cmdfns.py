@@ -20,11 +20,10 @@ on/off setting value.
 import sys, tempfile
 
 
-def source_tempfile_remap(prefix, text):
-    print("Hi rocky!")
-    fd = tempfile.NamedTemporaryFile(
-        suffix=".py", prefix=prefix, delete=False, tempdir=None
-    )
+def source_tempfile_remap(prefix, text, tempdir=None):
+    fd = tempfile.NamedTemporaryFile(suffix=".py", prefix=prefix,
+                                     dir=tempdir,
+                                     delete=False)
     with fd:
         fd.write(bytes(text, "UTF-8"))
         fd.close()

@@ -27,7 +27,7 @@ class ShowTempdir(DebuggerSubcommand):
         if tempdir:
             self.msg("tempdir is %s." % tempdir)
         else:
-            self.msg("tempdir style not set; Python default is used.")
+            self.msg("tempdir not set; Python default is used.")
         return
 
     pass

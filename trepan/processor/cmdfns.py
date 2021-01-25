@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2013, 2015, 2017 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2013, 2015, 2017, 2021 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -17,13 +17,14 @@
 counts, to parse a string for an integer, or check a string for an
 on/off setting value.
 '''
-import os, sys, tempfile
-import pyficache
+import sys, tempfile
 
 def source_tempfile_remap(prefix, text):
+    print("Hi rocky!")
     fd = tempfile.NamedTemporaryFile(suffix='.py',
                                      prefix=prefix,
-                                     delete=False)
+                                     delete=False,
+                                     tempdir=None)
     with fd:
         fd.write(bytes(text, 'UTF-8'))
         fd.close()
@@ -42,26 +43,6 @@ def deparse_fn(code):
     except:
         raise
     return None
-
-def deparse_getline(code, filename, line_number, opts):
-    # Would love to figure out how to deparse the entire module
-    # but with all many-time rewritten import stuff, I still
-    # can't figure out how to get from "<frozen importlib>" to
-    # the module's code.
-    # So for now, we'll have to do this on a function by function
-    # bases. Fortunately pyficache has the ability to remap line
-    # numbers
-    text = deparse_fn(code)
-    if text:
-        prefix = os.path.basename(filename) + "_"
-        remapped_filename = source_tempfile_remap(prefix, text)
-        lines = text.split("\n")
-        first_line = code.co_firstlineno
-        pyficache.remap_file_lines(filename, remapped_filename,
-                                   range(first_line, first_line+len(lines)),
-                                   1)
-        return remapped_filename, pyficache.getline(filename, line_number, opts)
-    return None, None
 
 def get_an_int(errmsg, arg, msg_on_error, min_value=None, max_value=None):
     """Another get_int() routine, this one simpler and less stylized
@@ -207,28 +188,28 @@ def want_different_line(cmd, default):
 # Demo it
 if __name__ == '__main__':
     def errmsg(msg):
-        print "** ", msg
+        print("** ", msg)
         return
 
     def msg(m):
-        print m
-    print get_int(errmsg, '1+2')  # 3
-    print get_int(errmsg, None)  # 1
-    print get_an_int(errmsg, '6*1', '6*1 is okay')  # 6
-    print get_an_int(errmsg, '0', '0 is too small', 1)  # errmsg
-    print get_an_int(errmsg, '5+a', '5+a is no good')   # errmsg
+        print(m)
+    print(get_int(errmsg, '1+2'))  # 3
+    print(get_int(errmsg, None))  # 1
+    print(get_an_int(errmsg, '6*1', '6*1 is okay'))  # 6
+    print(get_an_int(errmsg, '0', '0 is too small', 1))  # errmsg
+    print(get_an_int(errmsg, '5+a', '5+a is no good'))   # errmsg
     try:
         get_int(errmsg, 'pi')
     except ValueError:
-        print "Good - 'pi' is not an integer"
+        print("Good - 'pi' is not an integer")
         pass
 
     import inspect
     curframe = inspect.currentframe()
 
-    print want_different_line("s+", False)
-    print want_different_line("s-", True)
-    print want_different_line("s", False)
-    print want_different_line("s", True)
-    print want_different_line("s", True)
+    print(want_different_line("s+", False))
+    print(want_different_line("s-", True))
+    print(want_different_line("s", False))
+    print(want_different_line("s", True))
+    print(want_different_line("s", True))
     pass

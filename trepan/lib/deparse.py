@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-'''Deparsing Routines'''
+"""Deparsing Routines"""
 
 import sys, tempfile
 from StringIO import StringIO
@@ -12,8 +12,9 @@ import pyficache
 
 deparse_cache = {}
 
-def deparse_and_cache(co, errmsg_fn):
+def deparse_and_cache(co, errmsg_fn, tempdir=None):
     # co = proc_obj.curframe.f_code
+    print("XXXX yo - rocky")
     out = StringIO()
     deparsed = deparse_cache.get(co, None)
     if not deparsed or not hasattr(deparsed, "source_linemap"):
@@ -36,6 +37,7 @@ def deparse_and_cache(co, errmsg_fn):
     name_for_code = sha1(co.co_code).hexdigest()[:6]
     prefix='deparsed-'
     fd = tempfile.NamedTemporaryFile(suffix='.py',
+                                     dir=tempdir,
                                      prefix=prefix)
     fd.write(text.encode('utf-8'))
     map_line = "\n\n# %s" % linemap

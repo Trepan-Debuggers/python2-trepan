@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: iso-8859-1 -*-
-#   Copyright (C) 2008-2010, 2013-2014, 2016-2017
+#   Copyright (C) 2008-2010, 2013-2014, 2016-2017, 2021
 #   Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
@@ -118,19 +118,20 @@ def main(dbg=None, sys_argv=list(sys.argv)):
                     raise IOError("Python file name embedded in code %s not found" % try_file)
             except:
                 try:
-                    from uncompyle6 import uncompyle_file
+                    from uncompyle6 import decompile_file
                 except ImportError:
                     print("%s: Compiled python file '%s', but uncompyle6 not found"
                         % (__title__, mainpyfile), file=sys.stderr)
                     sys.exit(1)
                     return
 
-                short_name = osp.basename(mainpyfile).strip('.pyc')
+                short_name = osp.basename(mainpyfile).strip(".pyc")
                 fd = tempfile.NamedTemporaryFile(suffix='.py',
                                                  prefix=short_name + "_",
+                                                 dir=dbg.settings["tempdir"],
                                                  delete=False)
                 try:
-                    uncompyle_file(mainpyfile, fd)
+                    decompile_file(mainpyfile, outstream=fd)
                     mainpyfile = fd.name
                     fd.close()
                 except:

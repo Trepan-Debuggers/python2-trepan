@@ -9,13 +9,12 @@ from trepan.processor.command.base_subcmd import DebuggerSubcommand
 class ShowTempdir(DebuggerSubcommand):
     """**show tempdir**
 
-Show the temporary directory usind in decompiled python files.
+    Show the temporary directory usind in decompiled python files.
 
-See also:
---------
+    See also:
+    --------
 
-`set tempdir`
-"""
+    `set tempdir`"""
 
     in_list = True
     min_abbrev = len("temp")
@@ -30,7 +29,9 @@ See also:
         else:
             self.msg("tempdir style not set; Python default is used.")
         return
+
     pass
+
 
 if __name__ == "__main__":
     from trepan.processor.command.set_subcmd import __demo_helper__ as Mhelper

@@ -3,6 +3,7 @@
 #
 
 import os
+
 # Our local modules
 from trepan.processor.command.base_subcmd import DebuggerSubcommand
 
@@ -10,21 +11,20 @@ from trepan.processor.command.base_subcmd import DebuggerSubcommand
 class SetTempdir(DebuggerSubcommand):
     """**set tempdir** *directory*
 
-Set the temporary directory for temporary decompiled python files.
+    Set the temporary directory for temporary decompiled python files.
 
-This is sometimes useful remote debugging where you might set up a
-common shared location available between the debugged process and
-the front end client.
-Examples:
----------
+    This is sometimes useful remote debugging where you might set up a
+    common shared location available between the debugged process and
+    the front end client.
+    Examples:
+    ---------
 
-    set tempdir /code/tmp  # /code is a shared directory
+        set tempdir /code/tmp  # /code is a shared directory
 
-See also:
---------
+    See also:
+    --------
 
-`show tempdir`
-"""
+    `show tempdir`"""
 
     in_list = True
     min_abbrev = len("temp")

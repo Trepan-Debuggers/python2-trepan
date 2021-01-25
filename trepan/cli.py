@@ -33,8 +33,7 @@ from trepan import misc as Mmisc
 # The name of the debugger we are currently going by.
 __title__ = "trepan2"
 
-# VERSION.py sets variable VERSION.
-from trepan.version import VERSION as __version__
+from trepan.version import __version__
 
 
 def main(dbg=None, sys_argv=list(sys.argv)):

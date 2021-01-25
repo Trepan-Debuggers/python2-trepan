@@ -21,8 +21,8 @@
 
 	$ emacs trepan/version.py
     $ source trepan/version.py
-    $ echo $VERSION
-    $ git commit -m"Get ready for release $VERSION" .
+    $ echo $__version__
+    $ git commit -m"Get ready for release $__version__" .
 
 # Update ChangeLog:
 
@@ -54,10 +54,10 @@
 # Make packages and tag
 
     $ . ./admin-tools/make-dist-older.sh
-	$ pyenv local 3.8.3 && twine check dist/trepan2-$VERSION* && pyenv local 2.7.18s
-    $ git tag release-python-2.4-$VERSION
+	$ pyenv local 3.8.3 && twine check dist/trepan2-$__version__* && pyenv local 2.7.18s
+    $ git tag release-python-2.4-$__version__
     $ . ./admin-tools/make-dist-newer.sh
-	$ pyenv local 3.8.3 &&  twine check dist/trepan2-$VERSION* && pyenv local 2.7.18
+	$ pyenv local 3.8.3 &&  twine check dist/trepan2-$__version__* && pyenv local 2.7.18
 
 
 # Check package on github
@@ -75,7 +75,7 @@ Goto https://github.com/rocky/python2-trepan/releases/new
 
 # Get on PyPy
 
-	$ pyenv local 3.6.10 && twine upload dist/trepan2-${VERSION}* && pyenv local 2.7.18
+	$ pyenv local 3.6.10 && twine upload dist/trepan2-${__version__}* && pyenv local 2.7.18
 # Push tags:
 
     $ git pull --tags
@@ -83,4 +83,4 @@ Goto https://github.com/rocky/python2-trepan/releases/new
 
 # Move dist files to uploaded
 
-	$ mv -v dist/trepan2-${VERSION}* dist/uploaded
+	$ mv -v dist/trepan2-${__version__}* dist/uploaded

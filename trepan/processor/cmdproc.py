@@ -23,7 +23,7 @@ from pygments.console import colorize
 
 from tracer import EVENT2SHORT
 
-from trepan import vprocessor as Mprocessor
+from trepan.vprocessor import Processor
 from trepan.lib import bytecode as Mbytecode
 from trepan import exception as Mexcept
 from trepan.lib import display as Mdisplay
@@ -177,9 +177,8 @@ def print_location(proc_obj):
     remapped_file = None
     source_text = None
     while i_stack >= 0:
-        frame_lineno = proc_obj.stack[i_stack]
+        frame, lineno = proc_obj.stack[i_stack]
         i_stack -= 1
-        frame, lineno = frame_lineno
 
         #         # Next check to see that local variable breadcrumb exists and
         #         # has the magic dynamic value.
@@ -236,8 +235,9 @@ def print_location(proc_obj):
                 # into the corresponding line of the tempfile
                 co = proc_obj.curframe.f_code
                 tempdir = proc_obj.settings("tempdir")
-                temp_filename, name_for_code = deparse_and_cache(co, proc_obj.errmsg,
-                                                                 tempdir=tempdir)
+                temp_filename, name_for_code = deparse_and_cache(
+                    co, proc_obj.errmsg, tempdir=tempdir
+                )
                 lineno = 1
                 # _, lineno = pyficache.unmap_file_line(temp_filename, lineno, True)
                 if temp_filename:
@@ -257,7 +257,9 @@ def print_location(proc_obj):
                     # FIXME: DRY code with version in cmdproc.py print_location
                     prefix = osp.basename(temp_name).split(".")[0]
                     fd = tempfile.NamedTemporaryFile(
-                        suffix=".py", prefix=prefix, delete=False,
+                        suffix=".py",
+                        prefix=prefix,
+                        delete=False,
                         dir=proc_obj.settings("tempdir"),
                     )
                     with fd:
@@ -265,6 +267,8 @@ def print_location(proc_obj):
                         remapped_file = fd.name
                         pyficache.remap_file(remapped_file, filename)
                     fd.close()
+                    intf_obj.msg("remapped file %s to %s" % (filename, remapped_file))
+
                     pass
                 line = linecache.getline(filename, lineno, proc_obj.curframe.f_globals)
             pass
@@ -305,10 +309,10 @@ DEFAULT_PROC_OPTS = {
 }
 
 
-class CommandProcessor(Mprocessor.Processor):
+class CommandProcessor(Processor):
     def __init__(self, core_obj, opts=None):
         get_option = lambda key: Mmisc.option_set(opts, key, DEFAULT_PROC_OPTS)
-        Mprocessor.Processor.__init__(self, core_obj)
+        Processor.__init__(self, core_obj)
 
         self.continue_running = False  # True if we should leave command loop
         self.event2short = dict(EVENT2SHORT)

@@ -3,7 +3,7 @@ trepan 1.2.3 2021-01-24
 
 * Add `set tempdir` and `show tempdir`. In remote debugging this is useful
 * eval?: add "and" and "or" by stripping out the final and/or
-* deal wit no style set
+* deal with no style set
 * use PyPI term-background package
 * fix bug in decompiling
 

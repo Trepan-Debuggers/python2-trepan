@@ -9,7 +9,7 @@ def run_debugger(testname, python_file, dbgr_opts='', args='',
     datadir   = os.path.join(srcdir, '..', 'data')
     progdir   = os.path.join(srcdir, '..', 'example')
     dbgrdir   = os.path.join(srcdir, '..', '..', 'trepan')
-    dbgr_short= "cli.py"
+    dbgr_short= "__main__.py"
     dbgr_path = os.path.join(dbgrdir, dbgr_short)
 
     if IS_PYPY:

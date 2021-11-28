@@ -1,5 +1,5 @@
 #!/bin/bash
-PACKAGE=uncompyle6
+PACKAGE=trepan2
 
 # FIXME put some of the below in a common routine
 function finish {
@@ -17,8 +17,8 @@ if ! source ./setup-python-2.4.sh ; then
 fi
 
 cd ..
-source $PACKAGE/version.py
-echo $VERSION
+source trepan/version.py
+echo $__version__
 
 for pyversion in $PYVERSIONS; do
     if ! pyenv local $pyversion ; then
@@ -33,7 +33,7 @@ done
 # Tarballs can get created from the above setup, so make sure to remove them since we want
 # the tarball from master.
 
-tarball=dist/${PACKAGE}-$VERSION-tar.gz
+tarball=dist/${PACKAGE}-$__version__-tar.gz
 if [[ -f $tarball ]]; then
-    rm -v dist/${PACKAGE}-$VERSION-tar.gz
+    rm -v dist/${PACKAGE}-$__version__-tar.gz
 fi

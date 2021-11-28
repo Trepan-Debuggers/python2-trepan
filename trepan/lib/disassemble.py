@@ -11,10 +11,9 @@ from xdis import (
     findlinestarts,
     get_instructions_bytes,
     get_opcode,
-    IS_PYPY,
-    PYTHON_VERSION,
 )
 from xdis.std import distb
+from xdis.version_info import IS_PYPY, PYTHON_VERSION_TRIPLE
 
 from trepan.lib.format import (
     Arrow,
@@ -112,7 +111,7 @@ def dis(
             if lasti == -1:
                 lasti = 0
             pass
-        opc = get_opcode(PYTHON_VERSION, IS_PYPY)
+        opc = get_opcode(PYTHON_VERSION_TRIPLE, IS_PYPY)
         x = x.f_code
         if include_header:
             header_lines = Bytecode(x, opc).info().split("\n")
@@ -215,7 +214,7 @@ def disassemble_string(msg, msg_nocr, source):
     return disassemble_bytes(msg, msg_nocr, _try_compile(source, "<dis>"))
 
 
-opc = get_opcode(PYTHON_VERSION, IS_PYPY)
+opc = get_opcode(PYTHON_VERSION_TRIPLE, IS_PYPY)
 
 
 def disassemble_bytes(

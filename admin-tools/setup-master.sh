@@ -1,5 +1,5 @@
 #!/bin/bash
-PYTHON_VERSION=2.7.15
+PYTHON_VERSION=2.7.18
 
 # FIXME put some of the below in a common routine
 function finish {

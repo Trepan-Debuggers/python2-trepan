@@ -28,6 +28,7 @@ from __pkginfo__ import (
     author,
     author_email,
     classifiers,
+    entry_points,
     install_requires,
     license,
     long_description,
@@ -35,7 +36,7 @@ from __pkginfo__ import (
     packages,
     py_modules,
     short_desc,
-    version,
+    __version__,
     web,
     zip_safe,
 )
@@ -62,12 +63,7 @@ setup(
         )
     ],
     description=short_desc,
-    entry_points={
-        "console_scripts": [
-            "trepan2  = trepan.cli:main",
-            "trepan2c  = trepan.client:main",
-        ]
-    },
+    entry_points=entry_points,
     install_requires=install_requires,
     license=license,
     long_description=long_description,
@@ -76,6 +72,6 @@ setup(
     packages=packages,
     test_suite="nose.collector",
     url=web,
-    version=version,
+    version=__version__,
     zip_safe=zip_safe,
 )

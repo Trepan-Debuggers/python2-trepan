@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2008-2009, 2013-2015, 2017 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008-2009, 2013-2015, 2017, 2021 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -13,10 +13,10 @@
 #
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
-'''Some singleton debugger methods that can be called without first
+"""Some singleton debugger methods that can be called without first
 creating a debugger object -- these methods will create a debugger object,
 if necessary, first.
-'''
+"""
 
 # The following routines could be done via something like the following
 # untested code:
@@ -185,7 +185,7 @@ trepan.debugger::
   >>> dbgr
   <trepan.debugger.Debugger instance at 0x2e25320>
 """
-    if Mdebugger.Debugger != type(Mdebugger.debugger_obj):
+    if isinstance(Mdebugger.Debugger, Mdebugger.debugger_obj):
         Mdebugger.debugger_obj = Mdebugger.Debugger(dbg_opts)
         Mdebugger.debugger_obj.core.add_ignore(debug, stop)
         pass
@@ -224,7 +224,7 @@ def stop(opts=None):
     return None
 
 # Demo it
-if __name__=='__main__':
+if __name__== "__main__":
     import tracer
 
     def foo(n):

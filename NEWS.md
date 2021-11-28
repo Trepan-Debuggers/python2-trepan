@@ -1,7 +1,12 @@
-trepan 1.2.4 2021-11-28
+trepan 1.2.5 2021-11-28
 =======================
 
 * Revise to use xdis 6.0.3
+
+trepan 1.2.4 2021-03-15
+=======================
+
+* One small fix was made to support newly-added set patsub
 
 trepan 1.2.3 2021-01-24
 =======================

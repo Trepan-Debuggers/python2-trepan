@@ -185,7 +185,7 @@ trepan.debugger::
   >>> dbgr
   <trepan.debugger.Debugger instance at 0x2e25320>
 """
-    if isinstance(Mdebugger.Debugger, Mdebugger.debugger_obj):
+    if Mdebugger.debugger_obj is None or isinstance(Mdebugger.Debugger, Mdebugger.debugger_obj):
         Mdebugger.debugger_obj = Mdebugger.Debugger(dbg_opts)
         Mdebugger.debugger_obj.core.add_ignore(debug, stop)
         pass

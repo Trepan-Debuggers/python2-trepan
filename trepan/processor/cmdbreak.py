@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-#  Copyright (C) 2009, 2010, 2015, 2017-2018 Rocky Bernstein
+#  Copyright (C) 2009, 2010, 2015, 2017-2018, 2022 Rocky Bernstein
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
 #  the Free Software Foundation, either version 3 of the License, or
@@ -36,7 +36,11 @@ def set_break(cmd_obj, func, filename, lineno, condition, temporary,
         filename = cmd_obj.core.canonic(filename)
         pass
     if func is None:
-        ok_linenos = pyficache.trace_line_numbers(filename)
+        try:
+            ok_linenos = pyficache.trace_line_numbers(filename)
+        except:
+            ok_linenos = None
+
         if not ok_linenos or lineno not in ok_linenos:
             part1 = ('File %s' % cmd_obj.core.filename(filename))
             msg = Mmisc.wrapped_lines(part1,
@@ -95,7 +99,12 @@ def parse_break_cmd(proc, args):
         location  = bp_expr.location
         condition = bp_expr.condition
 
-    location = resolve_location(proc, location)
+    try:
+        location = resolve_location(proc, location)
+    except ValueError as e:
+        proc.errmsg(str(e))
+        return INVALID_PARSE_BREAK
+
     if location:
         return location.method, location.path, location.line_number, condition
     else:

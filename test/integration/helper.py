@@ -40,8 +40,18 @@ def run_debugger(testname, python_file, dbgr_opts='', args='',
     fromdate  = time.ctime(os.stat(fromfile).st_mtime)
     tofile    = outfile
     todate    = time.ctime(os.stat(tofile).st_mtime)
-    with open(fromfile) as f: fromlines = f.readlines()
-    with open(tofile) as f: tolines = f.readlines()
+
+    f = open(fromfile)
+    try:
+        fromlines = f.readlines()
+    finally:
+        f.close()
+
+    f = open(tofile)
+    try:
+        tolines = f.readlines()
+    finally:
+        f.close()
 
     # Filter out last instruction. For example:
     # (gcd.py:11 @6): -> (gcd.py:11)
@@ -53,8 +63,11 @@ def run_debugger(testname, python_file, dbgr_opts='', args='',
         os.unlink(outfile)
         pass
     else:
-        with open(tofile, 'w') as out:
+        out = open(tofile, 'w')
+        try:
             out.writelines(tolines)
+        finally:
+            out.close()
             pass
         pass
     for line in diff:

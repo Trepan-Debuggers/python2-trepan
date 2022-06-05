@@ -87,11 +87,8 @@ See also:
                 "hpPto:O",
                 ["help", "parent", "pretty", "tree", "offset=", "offsets"],
             )
-        except GetoptError as err:
-            # print help information and exit:
-            self.errmsg(
-                str(err)
-            )  # will print something like "option -a not recognized"
+        except GetoptError:
+            self.errmsg("problem in getopt parsing %s" % args[1:])
             return
 
         show_parent = False

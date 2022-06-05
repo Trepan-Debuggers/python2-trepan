@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: iso-8859-1 -*-
-#   Copyright (C) 2008-2010, 2013-2014, 2016-2017, 2021
+#   Copyright (C) 2008-2010, 2013-2014, 2016-2017, 2021-2022
 #   Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
@@ -15,7 +15,8 @@
 #
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
-"""The command-line interface to the debugger.
+"""
+The command-line interface to the debugger.
 """
 import pyficache, os, sys, tempfile
 import os.path as osp

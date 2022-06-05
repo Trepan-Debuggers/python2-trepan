@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2008-2010, 2013-2018, 2020-2021 Rocky Bernstein
+#   Copyright (C) 2008-2010, 2013-2018, 2020-2022 Rocky Bernstein
 #   <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
@@ -260,10 +260,9 @@ def print_location(proc_obj):
                         suffix=".py", prefix=prefix, delete=False,
                         dir=proc_obj.settings("tempdir"),
                     )
-                    with fd:
-                        fd.write("".join(lines))
-                        remapped_file = fd.name
-                        pyficache.remap_file(remapped_file, filename)
+                    fd.write("".join(lines))
+                    remapped_file = fd.name
+                    pyficache.remap_file(remapped_file, filename)
                     fd.close()
                     pass
                 line = linecache.getline(filename, lineno, proc_obj.curframe.f_globals)

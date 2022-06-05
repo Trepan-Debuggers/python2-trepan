@@ -38,7 +38,7 @@ check: test-unit test-functional test-integration
 
 #: Run unit (white-box) tests
 test-unit:
-	$(PYTHON) ./setup.py nosetests
+	(cd test/unit && nosetests)
 
 #: Run unit (white-box) tests
 test-unit-short:

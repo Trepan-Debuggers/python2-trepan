@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2013, 2015, 2017, 2021 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2013, 2015, 2017, 2021-2022 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -19,15 +19,12 @@ on/off setting value.
 """
 import sys, tempfile
 
-
 def source_tempfile_remap(prefix, text, tempdir=None):
     fd = tempfile.NamedTemporaryFile(suffix=".py", prefix=prefix,
                                      dir=tempdir,
                                      delete=False)
-    with fd:
-        fd.write(bytes(text, "UTF-8"))
-        fd.close()
-        pass
+    fd.write(bytes(text, "UTF-8"))
+    fd.close()
     return fd.name
 
 

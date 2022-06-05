@@ -1,3 +1,9 @@
+trepan 1.2.8 2022-06-05
+=======================
+
+* Squelch traceback on break on unparsable file
+* Supporting trepan3k back to Python 2.4
+
 trepan 1.2.5 2021-11-28
 =======================
 

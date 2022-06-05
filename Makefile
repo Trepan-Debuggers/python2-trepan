@@ -31,7 +31,9 @@ check-short: test-unit-short test-functional-short test-integration-short
 
 # Check StructuredText long description formatting
 check-rst:
-	$(PYTHON) setup.py --long-description | ./rst2html.py > python2-trepan.html
+
+# check-rst:
+# 	$(PYTHON) setup.py --long-description | ./rst2html.py > python2-trepan.html
 
 #: Run all tests: unit, functional and integration verbosely
 check: test-unit test-functional test-integration

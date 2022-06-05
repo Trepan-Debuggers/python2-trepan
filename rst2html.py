@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python
 """
 Cleans-up Sphinx-only constructs (ie from README.rst),
 so that *PyPi* can format it properly.
@@ -10,7 +10,7 @@ To check for remaining errors, install ``sphinx`` and run::
 """
 
 import re
-import sys, io
+import sys
 
 
 def yield_sphinx_only_markup(lines):
@@ -57,7 +57,7 @@ def yield_sphinx_only_markup(lines):
         try:
             for (regex, sub) in regex_subs:
                 line = regex.sub(sub, line)
-        except Exception as ex:
+        except Exception(ex):
             print("ERROR: %s, (line(%s)"%(regex, sub))
             raise ex
 

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2015 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2015, 2022 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -98,8 +98,10 @@ See also:
         else:
             frame_num = proc.curindex
 
-        mess = 'Frame %d' % Mframe.frame_num(proc, frame_num) \
-          if frame_num is not None else 'Frame Info'
+        if frame_num is not None:
+            mess = "Frame Info"
+        else:
+            mess = "Frame %d" % Mframe.frame_num(proc, frame_num)
         self.section(mess)
         if hasattr(frame, 'f_restricted'):
             self.msg('  restricted execution: %s' % frame.f_restricted)

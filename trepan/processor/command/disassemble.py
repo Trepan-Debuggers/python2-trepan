@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2009, 2012-2018, 2020 Rocky Bernstein
+#  Copyright (C) 2009, 2012-2018, 2020, 2022 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -43,7 +43,10 @@ def cache_from_source(path, debug_override=None):
     If sys.implementation.cache_tag is None then NotImplementedError is raised.
 
     """
-    debug = not sys.flags.optimize if debug_override is None else debug_override
+    if debug_override is None:
+        debug = not sys.flags.optimize
+    else:
+        debug = debug_override
     if debug:
         suffixes = DEBUG_BYTECODE_SUFFIXES
     else:

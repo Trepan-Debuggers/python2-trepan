@@ -8,8 +8,6 @@ This is a debugger location along with:
  - a range or count for "list" commands
 """
 
-from __future__ import print_function
-
 import sys
 from spark_parser.ast import AST
 
@@ -178,11 +176,11 @@ if __name__ == '__main__':
         try:
             ast = fn(line, show_tokens=True)
             print(ast)
-        except ScannerError as e:
+        except ScannerError(e):
             print("Scanner error")
             print(e.text)
             print(e.text_cursor)
-        except LocationError as e:
+        except LocationError(e):
             print("Parser error at or near")
             print(e.text)
             print(e.text_cursor)

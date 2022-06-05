@@ -63,8 +63,8 @@ def run_eval(expression, debug_opts=None, start_opts=None, globals_=None,
         dbg.core.trace_hook_suspend = True
         if start_opts and 'tb_fn' in start_opts: tb_fn = start_opts['tb_fn']
         Mpost_mortem.uncaught_exception(dbg, tb_fn)
-    finally:
-        dbg.core.trace_hook_suspend = False
+
+    dbg.core.trace_hook_suspend = False
     return
 
 

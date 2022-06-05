@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-#  Copyright (C) 2009-2010, 2013-2015, 2017-2018 Rocky Bernstein
+#  Copyright (C) 2009-2010, 2013-2015, 2017-2018, 2022 Rocky Bernstein
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
 #  the Free Software Foundation, either version 3 of the License, or
@@ -75,7 +75,10 @@ See also:
     complete= Mcomplete.complete_break_linenumber
 
     def run(self, args):
-        force = True if args[0][-1] == '!' else False
+        if args[0][-1] == '!':
+            force = True
+        else:
+            force = False
         (func, filename, lineno,
          condition) = Mcmdbreak.parse_break_cmd(self.proc, args)
         if not (func == None and filename == None):

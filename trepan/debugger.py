@@ -171,9 +171,9 @@ class Debugger:
             retval = eval(expr, globals_, locals_)
         except DebuggerQuit:
             pass
-        finally:
-            pyficache.remove_remap_file('<string>')
-            self.core.stop()
+
+        pyficache.remove_remap_file('<string>')
+        self.core.stop()
         return retval
 
     def run_script(self, filename, start_opts=None, globals_=None,

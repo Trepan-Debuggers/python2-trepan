@@ -91,17 +91,37 @@ See also:
             frame_num = proc.curindex
             code = frame.f_code
 
-        mess = 'Code for Frame %d' % frame_num if frame_num is not None else 'Code Info'
+        if frame_num is not None:
+            mess = "Code for Frame %d" % frame_num
+        else:
+            mess = "Code Info"
         self.section(mess)
         self.msg("  name: %s" % code.co_name)
         self.msg("  number of arguments: %d" % code.co_argcount)
         self.msg("  number of locals: %d" % code.co_nlocals)
         self.msg("  maximum stack size %s" % code.co_stacksize)
         self.msg("  first line number: %s" % code.co_firstlineno)
-        self.msg("  is%s optimized" % ("" if (code.co_flags & 1) == 1 else " not"))
-        self.msg("  new local namespace? %s" % ("yes" if (code.co_flags & 2) == 1 else " no"))
-        self.msg("  has%s *args" % ("" if (code.co_flags & 4) == 1 else " no"))
-        self.msg("  has%s **args" % ("" if (code.co_flags & 8) == 1 else " no"))
+        self.msg("  is ")
+        if (code.co_flags & 1) == 1:
+            is_optimized = "optimized"
+        else:
+            is_optimized = "not optimized"
+        self.msg(is_optimized)
+        self.msg("  new local namespace? ")
+        if (code.co_flags & 2) == 1:
+            self.msg("yes")
+        else:
+            self.msg("no")
+        self.msg("  has *args ")
+        if (code.co_flags & 4) == 1:
+            self.msg("yes")
+        else:
+            self.msg("no")
+        self.msg("  has **args ")
+        if (code.co_flags & 8) == 1:
+            self.msg("yes")
+        else:
+            self.msg("no")
 
         maxwidth = self.settings['width'] // 2
         if sys.version_info[:2] < (2,7):

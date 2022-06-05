@@ -99,7 +99,7 @@ class TCPServer(DebuggerInOutBase):
                     self.inout.listen(1)
                     self.state = 'listening'
                     break
-                except socket.error as exc:
+                except socket.error(exc):
                     if exc.errno in [errno.EADDRINUSE, errno.EINVAL]:
                         self.inout.close()
                         self.inout = None

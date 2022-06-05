@@ -1,9 +1,8 @@
 """
 Simple SPARK-style scanner
-Copyright (c) 2017-2018 Rocky Bernstein
+Copyright (c) 2017-2018, 2022 Rocky Bernstein
 """
 
-from __future__ import print_function
 import re
 from spark_parser.scanner import GenericScanner
 from trepan.processor.parse.tok import Token
@@ -155,7 +154,7 @@ if __name__ == "__main__":
             for t in tokens:
                 print(t)
                 pass
-        except ScannerError as e:
+        except ScannerError(e):
             print("Lexical error at or around: ")
             print(e.text)
             print(e.text_cursor)

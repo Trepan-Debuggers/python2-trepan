@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2009, 2013, 2015, 2017-2018 Rocky Bernstein
+#  Copyright (C) 2009, 2013, 2015, 2017-2018, 2022 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -72,9 +72,9 @@ See also:
         try:
             opts, args = getopt(args[1:], "hfds",
                                 "help deparse full source".split())
-        except GetoptError as err:
+        except GetoptError:
             # print help information and exit:
-            print(str(err))  # will print something like "option -a not recognized"
+            print("problem in getopt parsing %s" % args[1:])
             return
 
         bt_opts = {'width': self.settings['width']}

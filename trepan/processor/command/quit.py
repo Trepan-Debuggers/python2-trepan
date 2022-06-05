@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2013, 2015 Rocky Bernstein
+#   Copyright (C) 2013, 2015, 2022 Rocky Bernstein
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -13,36 +13,42 @@
 #
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import os, threading
-import ctypes  # Calm down, this has become standard library since 2.5
+import os, sys, threading
+
+try:
+    import ctypes  # Calm down, this has become standard library since 2.5
+except ImportError:
+    def ctype_async_raise(thread_obj, exception):
+        raise ValueError("thread not supported in Python < 2.5")
+
+else:
+    def ctype_async_raise(thread_obj, exception):
+        found = False
+        target_tid = 0
+        for tid, tobj in threading._active.items():
+            if tobj is thread_obj:
+                found = True
+                target_tid = tid
+                break
+
+        if not found:
+            raise ValueError("Invalid thread object")
+
+        ret = ctypes.pythonapi.PyThreadState_SetAsyncExc(target_tid, ctypes.py_object(exception))
+        # ref: http://docs.python.org/c-api/init.html#PyThreadState_SetAsyncExc
+        if ret == 0:
+            raise Mexcept.DebuggerQuit
+        elif ret > 1:
+            # Huh? Why would we notify more than one threads?
+            # Because we punch a hole into C level interpreter.
+            # So it is better to clean up the mess.
+            ctypes.pythonapi.PyThreadState_SetAsyncExc(target_tid, 0)
+            raise SystemError("PyThreadState_SetAsyncExc failed")
+
 
 # Our local modules
 from trepan.processor.command import base_cmd as Mbase_cmd
 from trepan import exception as Mexcept
-
-def ctype_async_raise(thread_obj, exception):
-    found = False
-    target_tid = 0
-    for tid, tobj in threading._active.items():
-        if tobj is thread_obj:
-            found = True
-            target_tid = tid
-            break
-
-    if not found:
-        raise ValueError("Invalid thread object")
-
-    ret = ctypes.pythonapi.PyThreadState_SetAsyncExc(target_tid, ctypes.py_object(exception))
-    # ref: http://docs.python.org/c-api/init.html#PyThreadState_SetAsyncExc
-    if ret == 0:
-        raise Mexcept.DebuggerQuit
-    elif ret > 1:
-        # Huh? Why would we notify more than one threads?
-        # Because we punch a hole into C level interpreter.
-        # So it is better to clean up the mess.
-        ctypes.pythonapi.PyThreadState_SetAsyncExc(target_tid, 0)
-        raise SystemError("PyThreadState_SetAsyncExc failed")
-
 
 class QuitCommand(Mbase_cmd.DebuggerCommand):
     """**quit** [**unconditionally**]
@@ -90,11 +96,12 @@ See `exit` or `kill` for more forceful termination commands.
         """ quit command when several threads are involved. """
         threading_list = threading.enumerate()
         mythread =  threading.currentThread()
-        for t in threading_list:
-            if t != mythread:
-                ctype_async_raise(t, Mexcept.DebuggerQuit)
+        if sys.version_info >= (2, 5):
+            for t in threading_list:
+                if t != mythread:
+                    ctype_async_raise(t, Mexcept.DebuggerQuit)
+                    pass
                 pass
-            pass
         raise Mexcept.DebuggerQuit
 
     def run(self, args):

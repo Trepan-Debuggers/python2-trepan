@@ -1,6 +1,4 @@
-#  Copyright (c) 2017-2018 by Rocky Bernstein
-from __future__ import print_function
-
+#  Copyright (c) 2017-2018, 2022 by Rocky Bernstein
 from trepan.processor.parse.parser import (
     parse_bp_location, parse_range, parse_arange
     )
@@ -8,7 +6,11 @@ from trepan.processor.parse.parser import LocationError as PLocationError
 from trepan.processor.parse.scanner import ScannerError
 from spark_parser import GenericASTTraversal # , DEFAULT_DEBUG as PARSER_DEFAULT_DEBUG
 
-from collections import namedtuple
+try:
+    from collections import namedtuple
+except ImportError:
+    from xdis.namedtuple24 import namedtuple
+
 Location = namedtuple("Location", "path line_number is_address method")
 BPLocation = namedtuple("BPLocation", "location condition")
 ListRange = namedtuple("ListRange", "first last")
@@ -289,11 +291,11 @@ if __name__ == '__main__':
         try:
             result = fn(line)
             print(result)
-        except ScannerError as e:
+        except ScannerError(e):
             print("Scanner error")
             print(e.text)
             print(e.text_cursor)
-        except PLocationError as e:
+        except PLocationError(e):
             print("Parser error at or near")
             print(e.text)
             print(e.text_cursor)

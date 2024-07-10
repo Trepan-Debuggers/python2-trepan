@@ -23,7 +23,7 @@
 
 # Things that change more often go here.
 copyright = """
-Copyright (C) 2008-2010, 2013-2018, 2020-2022, 2004 Rocky Bernstein <rocky@gnu.org>.
+Copyright (C) 2008-2010, 2013-2018, 2020-2021, 2024 Rocky Bernstein <rocky@gnu.org>.
 """
 
 classifiers = [

@@ -23,7 +23,7 @@
 
 # Things that change more often go here.
 copyright = """
-Copyright (C) 2008-2010, 2013-2018, 2020-2022 Rocky Bernstein <rocky@gnu.org>.
+Copyright (C) 2008-2010, 2013-2018, 2020-2022, 2004 Rocky Bernstein <rocky@gnu.org>.
 """
 
 classifiers = [
@@ -96,12 +96,11 @@ install_requires = [
     "columnize >= 0.3.10",
     "nose>=1.0.0, <= 1.3.7",
     "pyficache >= 2.3.0",
-    "pygments == 2.2.0",  # Later releases don't support Python 2.7
+    "pygments == 1.4",  # Later releases don't support Python 2.7
     "spark_parser >= 1.8.9, <1.9.0",
     "uncompyle6 >= 3.7.4",
     "tracer >= 0.3.2",
-    "unittest2",
-    "xdis >= 6.0.3,<6.1.0",
+    "xdis >= 6.0.3,<6.2.0",
 ]
 license = "GPL3"
 mailing_list = "python-debugger@googlegroups.com"

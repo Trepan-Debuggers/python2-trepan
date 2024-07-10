@@ -1,4 +1,4 @@
-# Copyright (C) 2008-2010, 2013-2018, 2021 Rocky Bernstein <rocky@gnu.org>
+# Copyright (C) 2008-2010, 2013-2018, 2021, 2022 Rocky Bernstein <rocky@gnu.org>
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
 
 # Things that change more often go here.
 copyright = """
-Copyright (C) 2008-2010, 2013-2018, 2020-2021 Rocky Bernstein <rocky@gnu.org>.
+Copyright (C) 2008-2010, 2013-2018, 2020-2021, 2024 Rocky Bernstein <rocky@gnu.org>.
 """
 
 classifiers = [
@@ -70,7 +70,7 @@ install_requires = [
     "term-background >= 1.0.1",
     "tracer >= 0.3.2",
     "unittest2",
-    "xdis >= 6.0.3,<6.1.0",
+    "xdis >= 6.0.3,<6.2.0",
 ]
 license = "GPL3"
 mailing_list = "python-debugger@googlegroups.com"

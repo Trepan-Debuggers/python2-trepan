@@ -9,9 +9,14 @@ class GeneralTests(unittest.TestCase):
 
     def test_step(self):
         """Test stepping, set skip, set trace"""
-        result=Mhelper.run_debugger(testname='step',
-                                    dbgr_opts='--basename --highlight=plain',
-                                    python_file='gcd.py')
+        right_template = None
+        result = Mhelper.run_debugger(
+            testname="step",
+            dbgr_opts="--basename --highlight=plain",
+            python_file="gcd.py",
+            right_template=right_template,
+        )
+
         self.assertEqual(True, result, "debugger 'step' command comparision")
         return
     pass

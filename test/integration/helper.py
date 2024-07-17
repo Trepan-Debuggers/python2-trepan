@@ -1,40 +1,43 @@
-import difflib, os, re, sys, time
 from xdis import IS_PYPY
-
-srcdir = os.path.abspath(os.path.dirname(__file__))
+import difflib, os, re, sys, time
+import os.path as osp
+srcdir = osp.abspath(osp.dirname(__file__))
 
 
 def run_debugger(testname, python_file, dbgr_opts='', args='',
-                 outfile=None):
-    datadir   = os.path.join(srcdir, '..', 'data')
-    progdir   = os.path.join(srcdir, '..', 'example')
-    dbgrdir   = os.path.join(srcdir, '..', '..', 'trepan')
+                 outfile=None, right_template=None):
+    datadir   = osp.join(srcdir, '..', 'data')
+    progdir   = osp.join(srcdir, '..', 'example')
+    dbgrdir   = osp.join(srcdir, '..', '..', 'trepan')
     dbgr_short= "__main__.py"
-    dbgr_path = os.path.join(dbgrdir, dbgr_short)
+    dbgr_path = osp.join(dbgrdir, dbgr_short)
 
-    if IS_PYPY:
-        rightfile = os.path.join(datadir, "%s-pypy.right" % testname)
-    else:
-        rightfile = os.path.join(datadir, "%s.right" % testname)
+    if not right_template:
+        if IS_PYPY:
+            right_template = "%s-pypy.right"
+        else:
+            right_template = "%s.right"
 
-    sys.path.insert(0, os.path.join(srcdir, '..', '..'))
+    rightfile = osp.join(datadir, right_template % testname)
+
+    sys.path.insert(0, osp.join(srcdir, '..', '..'))
     os.environ['PYTHONPATH'] = os.pathsep.join(sys.path)
-    cmdfile     = os.path.join(datadir, "%s.cmd"   % testname)
-    outfile     = os.path.join(srcdir, "%s.out" % testname)
+    cmdfile     = osp.join(datadir, "%s.cmd"   % testname)
+    outfile     = osp.join(srcdir, "%s.out" % testname)
     if python_file:
-        programfile = os.path.join(progdir, python_file)
+        programfile = osp.join(progdir, python_file)
     else:
         programfile = ''
         pass
 
     outfile_opt = '--output=%s ' % outfile
 
-    if os.path.exists(outfile): os.unlink(outfile)
+    if osp.exists(outfile): os.unlink(outfile)
 
     cmd = "%s --command %s %s %s %s %s" % \
           (dbgr_path, cmdfile, outfile_opt, dbgr_opts, programfile, args)
 
-    print(cmd)
+    # print(cmd)
     os.system(cmd)
     fromfile  = rightfile
     fromdate  = time.ctime(os.stat(fromfile).st_mtime)

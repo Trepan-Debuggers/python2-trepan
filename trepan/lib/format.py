@@ -79,7 +79,10 @@ color_scheme[Name.Variable] = ("_black_", "_white_")
 color_scheme[Generic.Emph] = ("blue", "brightcyan")
 
 pygments_version_tuple = tuple([int(num) for num in pygments_version.split(".")[:2]])
-purple = "magenta" if pygments_version_tuple >= (2, 5) else "purple"
+if pygments_version_tuple >= (2, 5):
+    purple = "magenta"
+else:
+    purple = "purple"
 color_scheme[Token.Literal.String] = (purple, "yellow")
 
 # Assume pygments has fixed up the horrible atom colors
@@ -98,7 +101,10 @@ pyficache.light_terminal_formatter.colorscheme = color_scheme
 def format_token(ttype, token, colorscheme=color_scheme, highlight="light"):
     if "plain" == highlight:
         return token
-    is_dark_bg = 1 if DEBUGGER_SETTINGS["highlight"] == "dark" else 0
+    if DEBUGGER_SETTINGS["highlight"]:
+        is_dark_bg = 1
+    else:
+        is_dark_bg = 0
     color = colorscheme.get(ttype)
     if color:
         color = color[is_dark_bg]
@@ -199,7 +205,10 @@ class RSTTerminalFormatter(Formatter):
 
     def __init__(self, **options):
         Formatter.__init__(self, **options)
-        self.is_dark_bg = 1 if DEBUGGER_SETTINGS["highlight"] == "dark" else 0
+        if DEBUGGER_SETTINGS["highlight"] == "dark":
+            self.is_dark_bg = 1
+        else:
+            self.is_dark_bg = 0
         self.colorscheme = options.get("colorscheme", None) or color_scheme
         self.width = options.get("width", 80)
         self.verbatim = False

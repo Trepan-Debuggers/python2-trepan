@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2013, 2015, 2017, 2019, 2020 Rocky Bernstein <rocky@gnu.org>
+
+#   Copyright (C) 2013, 2015, 2017, 2019, 2020, 2023-2024
+#   Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -15,9 +17,11 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Pygments-related terminal formatting"""
 
-import re, sys
+import re
+import sys
+
 import pyficache
-from pygments import highlight, lex
+from pygments import highlight, lex, __version__ as pygments_version
 from pygments.console import ansiformat
 from pygments.filter import Filter
 from pygments.formatter import Formatter
@@ -34,26 +38,58 @@ from pygments.token import (
     String,
     Token,
 )
-from pygments.util import get_choice_opt
 
+from trepan.lib.default import DEBUGGER_SETTINGS
 
-# Set up my own color scheme with some addtional definitions
+# Set up my own color scheme with some additional definitions.
 color_scheme = TERMINAL_COLORS.copy()
+# color_scheme = {
+#     Token:              ('',            ''),
+#     Comment:            ('gray',   'brightblack'),
+#     Comment.Preproc:    ('cyan',        'brightcyan'),
+#     Keyword:            ('blue',    'brightblue'),
+#     Keyword.Type:       ('cyan',        'brightcyan'),
+#     Operator.Word:      ('magenta',      'brightmagenta'),
+#     Name.Builtin:       ('cyan',        'brightcyan'),
+#     Name.Function:      ('green',   'brightgreen'),
+#     Name.Namespace:     ('_cyan_',      '_brightcyan_'),
+#     Name.Class:         ('_green_', '_brightgreen_'),
+#     Name.Exception:     ('cyan',        'brightcyan'),
+#     Name.Decorator:     ('brightblack',    'gray'),
+#     Name.Variable:      ('red',     'brightred'),
+#     Name.Constant:      ('red',     'brightred'),
+#     Name.Attribute:     ('cyan',        'brightcyan'),
+#     Name.Tag:           ('brightblue',        'brightblue'),
+#     String:             ('gray',       'yellow'),
+#     Number:             ('blue',    'brightblue'),
+#     Generic.Deleted:    ('brightred',        'brightred'),
+#     Generic.Inserted:   ('green',  'brightgreen'),
+#     Generic.Heading:    ('**',         '**'),
+#     Generic.Subheading: ('*magenta*',   '*brightmagenta*'),
+#     Generic.Prompt:     ('**',         '**'),
+#     Generic.Error:      ('brightred',        'brightred'),
+# }
+
+
 color_scheme[Generic.Strong] = ("*black*", "*white*")
 color_scheme[Name.Variable] = ("_black_", "_white_")
 
 color_scheme[Generic.Strong] = ("*black*", "*white*")
 color_scheme[Name.Variable] = ("_black_", "_white_")
-color_scheme[Generic.Emph] = color_scheme[Comment.Preproc]
+color_scheme[Generic.Emph] = ("blue", "brightcyan")
+
+pygments_version_tuple = tuple([int(num) for num in pygments_version.split(".")[:2]])
+purple = "magenta" if pygments_version_tuple >= (2, 5) else "purple"
+color_scheme[Token.Literal.String] = (purple, "yellow")
 
 # Assume pygments has fixed up the horrible atom colors
-## FIXME: change some horrible colors under atom dark
-## this is a hack until I get general way to do colorstyle setting
-## color_scheme[Token.Comment]  = ('darkgray', 'white')
-## color_scheme[Token.Keyword]  = ('darkblue', 'green')
-## color_scheme[Token.Number]  = ('darkblue', 'blue')
-## color_scheme[Keyword]  = ('darkblue', 'turquoise')
-## color_scheme[Number]  = ('darkblue', 'green')
+# FIXME: change some horrible colors under atom dark
+# this is a hack until I get general way to do colorstyle setting
+# color_scheme[Token.Comment]  = ('darkgray', 'white')
+# color_scheme[Token.Keyword]  = ('darkblue', 'green')
+# color_scheme[Token.Number]  = ('darkblue', 'blue')
+# color_scheme[Keyword]  = ('darkblue', 'turquoise')
+# color_scheme[Number]  = ('darkblue', 'green')
 
 pyficache.dark_terminal_formatter.colorscheme = color_scheme
 pyficache.light_terminal_formatter.colorscheme = color_scheme
@@ -62,11 +98,13 @@ pyficache.light_terminal_formatter.colorscheme = color_scheme
 def format_token(ttype, token, colorscheme=color_scheme, highlight="light"):
     if "plain" == highlight:
         return token
-    dark_bg = "dark" == highlight
-
+    is_dark_bg = 1 if DEBUGGER_SETTINGS["highlight"] == "dark" else 0
     color = colorscheme.get(ttype)
     if color:
-        color = color[dark_bg]
+        color = color[is_dark_bg]
+        if isinstance(token, tuple):
+            # have (token, start offset)
+            token = token[0]
         return ansiformat(color, token)
         pass
     return token
@@ -120,7 +158,7 @@ class RstFilter(Filter):
                 # That is remove:
                 # Header
                 # ------ <- remove this line
-                if last_was_heading_title and re.match(r"^(?:[=]|[-])+$", value):
+                if last_was_heading_title and re.match(r"^(?:=|-)+$", value):
                     value = ""
                     last_was_heading_title = ""
                 else:
@@ -154,15 +192,14 @@ class RSTTerminalFormatter(Formatter):
         A dictionary mapping token types to (lightbg, darkbg) color names or
         ``None`` (default: ``None`` = use builtin colorscheme).
     """
+
     name = "Terminal"
     aliases = ["terminal", "console"]
     filenames = []
 
     def __init__(self, **options):
         Formatter.__init__(self, **options)
-        self.darkbg = (
-            get_choice_opt(options, "bg", ["light", "dark"], "light") != "dark"
-        )
+        self.is_dark_bg = 1 if DEBUGGER_SETTINGS["highlight"] == "dark" else 0
         self.colorscheme = options.get("colorscheme", None) or color_scheme
         self.width = options.get("width", 80)
         self.verbatim = False
@@ -197,7 +234,7 @@ class RSTTerminalFormatter(Formatter):
         # color
         if self.__class__ != MonoRSTTerminalFormatter:
             cs = self.colorscheme.get(Verbatim)
-            color = cs[self.darkbg]
+            color = cs[self.is_dark_bg]
         else:
             color = None
             pass
@@ -220,7 +257,7 @@ class RSTTerminalFormatter(Formatter):
         # print '%r' % text
         # from trepan.api import debug
         # if u' or ' == text: debug()
-        if text == u'::' and ttype == Token.Literal.String.Escape:
+        if text == u'::' and ttype == Token.Literal.String:
             self.verbatim = "colon-verbatim"
             return
         elif (
@@ -229,14 +266,14 @@ class RSTTerminalFormatter(Formatter):
             self.write_nl()
             self.last_was_nl = True
             return
-        elif self.verbatim == 'colon-verbatim' and ttype == Token.Text and text == '\n':
+        elif self.verbatim == "colon-verbatim" and ttype == Token.Text and text == "\n":
             self.write_nl()
             self.last_was_nl = False
             return
         last_last_nl = self.last_was_nl
-        if text == '':
+        if text == "":
             pass
-        elif text[-1] == '\n':
+        elif text[-1] == "\n":
             if self.last_was_nl:
                 self.write_nl()
                 self.write_nl()
@@ -244,19 +281,21 @@ class RSTTerminalFormatter(Formatter):
             elif self.verbatim:
                 self.write_verbatim(text)
                 self.column = 0
-                self.verbatim = len(text) >=2 and text[-2] == '\n'
+                self.verbatim = len(text) >= 2 and text[-2] == "\n"
                 self.last_was_nl = True
                 return
             else:
-                self.write(' ', color)
+                self.write(" ", color)
                 text = text[:-1]
                 pass
             self.last_was_nl = True
-            if '' == text: return
-            while text[-1] == '\n':
+            if "" == text:
+                return
+            while text[-1] == "\n":
                 self.write_nl()
                 text = text[:-1]
-                if '' == text: return
+                if "" == text:
+                    return
                 pass
             pass
         else:
@@ -264,8 +303,10 @@ class RSTTerminalFormatter(Formatter):
             pass
         self.in_list = False
         if last_last_nl:
-            if ' * ' == text[0:3]: self.in_list = True
-            elif '  ' == text[0:2]: self.verbatim = self.verbatim or True
+            if " * " == text[0:3]:
+                self.in_list = True
+            elif "  " == text[0:2]:
+                self.verbatim = self.verbatim or True
             pass
 
         # FIXME: there may be nested lists, tables and so on.
@@ -273,7 +314,10 @@ class RSTTerminalFormatter(Formatter):
             self.write_verbatim(text)
         elif self.in_list:
             # FIXME:
-            self.write(text, color,)
+            self.write(
+                text,
+                color,
+            )
         else:
             words = re.compile("[ \t]+").split(text)
             for word in words[:-1]:
@@ -305,7 +349,7 @@ class RSTTerminalFormatter(Formatter):
                 color = self.colorscheme.get(resolved_type)
                 pass
             if color:
-                color = color[self.darkbg]
+                color = color[self.is_dark_bg]
             self.reflow_text(text, ttype, color)
             pass
         return
@@ -339,7 +383,6 @@ class MonoTerminalFormatter(TerminalFormatter):
                 text = '"%s"' % text
                 pass
             elif ttype is Token.Generic.Emph:
-                type
                 text = "*%s*" % text
                 pass
             elif ttype is Token.Generic.Strong:
@@ -411,7 +454,6 @@ End of test.
     show_it(test_string, rst_tf, 30)
 
     text = """**break** [*location*] [if *condition*]]
-
 With a line number argument, set a break there in the current file.
 With a function name, set a break at first executable line of that
 function.  Without argument, set a breakpoint at current location.  If

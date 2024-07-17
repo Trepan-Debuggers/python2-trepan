@@ -15,17 +15,17 @@ class GeneralTests(unittest.TestCase):
 
         vers_info = sys.version_info[0:2]
         if vers_info <= (2, 4):
-            rightfile = osp.join(datadir, "macro-2.4.right")
+            rightfile = osp.join(datadir, "%s-2.4.right")
         elif vers_info == (2, 5):
-            rightfile = osp.join(datadir, "macro-2.5.right")
+            rightfile = osp.join(datadir, "%s-2.5.right")
         else:
-            rightfile = osp.join(datadir, "macro.right")
+            rightfile = osp.join(datadir, "%s.right")
 
         result = Mhelper.run_debugger(testname='macro',
                                       dbgr_opts='--basename ' +
                                       '--highlight=plain --nx',
                                       python_file='gcd.py',
-                                      rightfile=rightfile)
+                                      right_template=rightfile)
         self.assertEqual(True, result, "debugger 'macro' command comparision")
         return
     pass

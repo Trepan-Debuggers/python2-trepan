@@ -1,32 +1,29 @@
 #!/usr/bin/env python
 "General integration tests"
-import sys, unittest
-import os.path as osp
+import unittest
 
 import helper as Mhelper
+from xdis import PYTHON_VERSION_TRIPLE
 
 
 class GeneralTests(unittest.TestCase):
-
     def test_macro(self):
         """Test set/show highlight"""
-
-        srcdir = osp.abspath(osp.dirname(__file__))
-        datadir   = osp.join(srcdir, '..', 'data')
-
-        if sys.version_info[0:2] <= (2, 4):
-            rightfile = osp.join(datadir, "highlight-2.4.right")
+        if PYTHON_VERSION_TRIPLE >= (3, 8):
+            right_template = "%s-38.right"
         else:
-            rightfile = osp.join(datadir, "highlight.right")
-
-        result = Mhelper.run_debugger(testname='highlight',
-                                      dbgr_opts='--basename ' +
-                                      '--highlight=plain --nx',
-                                      python_file='gcd.py',
-                                      rightfile=rightfile)
+            right_template = None
+        result = Mhelper.run_debugger(
+            testname="highlight",
+            dbgr_opts="--basename " + "--highlight=plain --nx",
+            python_file="gcd.py",
+            right_template=right_template,
+        )
         self.assertEqual(True, result, "'highlight' command comparision")
         return
+
     pass
+
 
 if __name__ == "__main__":
     unittest.main()

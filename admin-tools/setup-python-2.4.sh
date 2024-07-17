@@ -19,16 +19,9 @@ if [[ $0 == $bs ]] ; then
 fi
 mydir=$(dirname $bs)
 fulldir=$(readlink -f $mydir)
-<<<<<<< Updated upstream
-(cd $fulldir/.. &&  checkout_version python-spark &&  checkout_version python-filecache &&
- checkout_version python-xdis python-2.4-to-2.7 && checkout_version python-uncompyle6)
-=======
-cd $fulldir/..
 checkout_version python-spark && \
 checkout_version python-filecache && \
 checkout_version python-xdis && \
 checkout_version python-uncompyle6 && \
-git checkout python-2.4-2.7 &&  pyenv local $PYTHON_VERSION && git pull
->>>>>>> Stashed changes
+git checkout python-2.4-to-2.7 &&  pyenv local $PYTHON_VERSION && git pull
 cd $owd
-git checkout python-2.4-2.7 &&  pyenv local $PYTHON_VERSION && git pull

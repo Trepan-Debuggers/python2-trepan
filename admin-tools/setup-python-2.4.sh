@@ -23,5 +23,5 @@ checkout_version python-spark && \
 checkout_version python-filecache && \
 checkout_version python-xdis && \
 checkout_version python-uncompyle6 && \
-git checkout python-2.4-to-2.7 &&  pyenv local $PYTHON_VERSION && git pull
+git checkout python-2.4 &&  pyenv local $PYTHON_VERSION && git pull
 cd $owd

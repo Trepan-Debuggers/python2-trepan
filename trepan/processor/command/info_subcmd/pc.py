@@ -23,17 +23,21 @@ from trepan.lib.disassemble import disassemble_bytes
 from trepan.misc import wrapped_lines
 
 
+# FIXME: this could be combined with trepan-xpy's `info pc`, but that
+# requires a running program whereas where we just use f_lasti.
+# What we have here is more flexible in the presence of exceptions.
+# trepan3k would have to be looked over to see if it too would
+# work.
 class InfoPC(DebuggerSubcommand):
     """**info pc**
 
-List the current program counter or bytecode offset,
-and disassemble the instructions around that.
+    List the current program counter or bytecode offset,
+    and disassemble the instructions around that.
 
-See also:
----------
+    See also:
+    ---------
 
-`info line`, `info program`
-"""
+    `info line`, `info program`"""
 
     min_abbrev = 2  # Need at least info 'pc'
     max_args = 0
@@ -55,11 +59,11 @@ See also:
                 disassemble_bytes(
                     self.msg,
                     self.msg_nocr,
-                    code = co_code,
-                    lasti = offset,
-                    cur_line = line_no,
-                    start_line = line_no - 1,
-                    end_line = line_no + 1,
+                    code=co_code,
+                    lasti=offset,
+                    cur_line=line_no,
+                    start_line=line_no - 1,
+                    end_line=line_no + 1,
                     varnames=code.co_varnames,
                     names=code.co_names,
                     constants=code.co_consts,
@@ -67,7 +71,6 @@ See also:
                     freevars=code.co_freevars,
                     linestarts=dict(findlinestarts(code)),
                     end_offset=offset + 10,
-                    opc=proc.vm.opc,
                 )
                 pass
             pass
@@ -88,6 +91,7 @@ See also:
 
 if __name__ == "__main__":
     from trepan.processor.command import mock, info as Minfo
+
     d, cp = mock.dbg_setup()
     i = Minfo.InfoCommand(cp)
     sub = InfoPC(i)

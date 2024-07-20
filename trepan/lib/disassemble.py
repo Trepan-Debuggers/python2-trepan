@@ -101,12 +101,6 @@ def dis(
         section("Disassembly of %s: %s" % (x, mess))
         x = x.func_code
         sectioned = True
-    elif inspect.isgenerator(x):
-        section("Disassembly of %s: %s" % (x, mess))
-        frame = x.gi_frame
-        lasti = frame.f_last_i
-        x = x.gi_code
-        sectioned = True
     elif inspect.isframe(x):
         section("Disassembly of %s: %s" % (x, mess))
         sectioned = True

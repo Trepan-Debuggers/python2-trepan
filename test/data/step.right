@@ -1,5 +1,5 @@
 (gcd.py:10):
--> 10 [38;5;186m"""[39m
+-> 10 [38;5;166m"""[39m
 Set basename (short filenames) in debugger output is on.
 Set event tracing is on.
 Set stopping before def or class statements is off.
@@ -7,18 +7,18 @@ Set confirmation of potentially dangerous operations is off.
 line - gcd.py:10
 line - gcd.py:11
 (gcd.py:11):
--- 11 [38;5;197mimport[39m[38;5;15m [39m[38;5;15msys[39m
- 11  ->	[38;5;197mimport[39m[38;5;15m [39m[38;5;15msys[39m
+-- 11 [38;5;28;01mimport[39;00m [38;5;31;01msys[39;00m
+ 11  ->	[38;5;28;01mimport[39;00m [38;5;31;01msys[39;00m
 Set stopping before def or class statements is on.
 line - gcd.py:13
 line - gcd.py:26
 line - gcd.py:40
 (gcd.py:40):
--- 40 [38;5;81mif[39m[38;5;15m [39m[38;5;15m__name__[39m[38;5;197m==[39m[38;5;186m'[39m[38;5;186m__main__[39m[38;5;186m'[39m[38;5;15m:[39m
- 40  ->	[38;5;81mif[39m[38;5;15m [39m[38;5;15m__name__[39m[38;5;197m==[39m[38;5;186m'[39m[38;5;186m__main__[39m[38;5;186m'[39m[38;5;15m:[39m
+-- 40 [38;5;28;01mif[39;00m __name__[38;5;236m==[39m[48;5;15m'[49m[48;5;15m__main__[49m[48;5;15m'[49m:
+ 40  ->	[38;5;28;01mif[39;00m __name__[38;5;236m==[39m[48;5;15m'[49m[48;5;15m__main__[49m[48;5;15m'[49m:
 Set stopping before def or class statements is off.
 line - gcd.py:41
 (gcd.py:41):
--- 41 [38;5;15m    [39m[38;5;15mcheck_args[39m[38;5;15m([39m[38;5;15m)[39m
- 41  ->	[38;5;15m    [39m[38;5;15mcheck_args[39m[38;5;15m([39m[38;5;15m)[39m
+-- 41     check_args()
+ 41  ->	    check_args()
 trepan2: That's all, folks...

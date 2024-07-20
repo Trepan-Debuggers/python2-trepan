@@ -19,7 +19,8 @@ if [[ $0 == $bs ]] ; then
 fi
 mydir=$(dirname $bs)
 fulldir=$(readlink -f $mydir)
-checkout_version python-spark && \
+cd $fulldir/..
+checkout_version python-spark python-2.4 && \
 checkout_version python-filecache python-2.4-to-2.7 && \
 checkout_version python-xdis python-2.4-to-2.7 && \
 checkout_version python-uncompyle6 python-2.4-to-2.7 && \

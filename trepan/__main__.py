@@ -85,10 +85,10 @@ def main(dbg=None, sys_argv=list(sys.argv)):
             mainpyfile = whence_file(mainpyfile)
             is_readable = readable(mainpyfile)
             if is_readable is None:
-                print("%s: Python script file '{mainpyfile}' does not exist" % __title__)
+                print("%s: Python script file '%s' does not exist" % (__title__, mainpyfile))
                 sys.exit(1)
             elif not is_readable:
-                print("%s: Can't read Python script file '{mainpyfile}'" % __title__)
+                print("%s: Can't read Python script file '%s'" % (__title__, mainpyfile))
                 sys.exit(1)
                 return
 

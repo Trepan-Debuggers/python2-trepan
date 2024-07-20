@@ -27,7 +27,7 @@ from term_background import is_dark_background
 width = computed_displaywidth()
 is_dark_bg = is_dark_background()
 if is_dark_bg:
-    default_style = "zenburn"
+    default_style = "monokai"
     highlight = "dark"
 
 else:

@@ -3,21 +3,25 @@
 # FIXME: see if we can use more of Lib/dis in Python3
 """Disassembly Routines"""
 
-import inspect, sys, types
+import inspect
+import sys
+import types
 
+from pygments.token import Comment
 from xdis import (
+    IS_PYPY,
     Bytecode,
     findlabels,
     findlinestarts,
     get_instructions_bytes,
     get_opcode,
 )
+from xdis.instruction import Instruction
 from xdis.std import distb
-from xdis.version_info import IS_PYPY, PYTHON_VERSION_TRIPLE
+from xdis.version_info import PYTHON_VERSION_TRIPLE
 
 from trepan.lib.format import (
     Arrow,
-    Comment,
     Details,
     Hex,
     Integer,
@@ -32,10 +36,10 @@ _have_code = (types.MethodType, types.FunctionType, types.CodeType, type)
 
 def _try_compile(source, name):
     """Attempts to compile the given source, first as an expression and
-       then as a statement if the first approach fails.
+    then as a statement if the first approach fails.
 
-       Utility function to accept strings in functions that otherwise
-       expect code objects
+    Utility function to accept strings in functions that otherwise
+    expect code objects
     """
     try:
         c = compile(source, name, "eval")
@@ -153,7 +157,6 @@ def dis(
         return disassemble(
             msg,
             msg_nocr,
-            section,
             x,
             lasti=lasti,
             start_line=start_line,
@@ -165,7 +168,11 @@ def dis(
             asm_format=asm_format,
         )
     elif isinstance(x, str):  # Source code
-        return disassemble_string(msg, msg_nocr, x,)
+        return disassemble_string(
+            msg,
+            msg_nocr,
+            x,
+        )
     else:
         errmsg("Don't know how to disassemble %s objects." % type(x).__name__)
     return None, None
@@ -174,7 +181,6 @@ def dis(
 def disassemble(
     msg,
     msg_nocr,
-    section,
     co,
     lasti=-1,
     start_line=-1,
@@ -250,7 +256,9 @@ def disassemble_bytes(
 
     labels = findlabels(code, opc)
 
-    null_print = lambda x: None
+    def null_print(x):
+        return None
+
     if start_line > cur_line:
         msg_nocr = null_print
         msg = null_print
@@ -315,7 +323,7 @@ def disassemble_bytes(
             msg_nocr(format_token(Hex, "%02x" % instr.opcode, highlight=highlight))
             if instr.inst_size == 1:
                 # Not 3.6 or later
-                msg_nocr(" " * 5)
+                msg_nocr(" " * (2 * 3))
             if instr.inst_size == 2:
                 # Must by Python 3.6 or later
                 msg_nocr(" ")
@@ -352,13 +360,20 @@ def disassemble_bytes(
                     hasattr(opc, "opcode_extended_fmt")
                     and opc.opname[op] in opc.opcode_extended_fmt
                 ):
-                    new_repr = opc.opcode_extended_fmt[opc.opname[op]](
+                    tos_str, start_offset = opc.opcode_extended_fmt[opc.opname[op]](
                         opc, list(reversed(instructions))
                     )
-                    if new_repr:
-                        argrepr = new_repr
+                    if start_offset is not None:
+                        argrepr = tos_str
+                        new_instruction = list(instructions[-1])
+                        new_instruction[-2] = tos_str
+                        new_instruction[-1] = start_offset
+                        del instructions[-1]
+                        instructions.append(Instruction(*new_instruction))
+
                 pass
         elif asm_format in ("extended", "extended-bytes"):
+            # Note: instr.arg is also None
             op = instr.opcode
             if (
                 hasattr(opc, "opcode_extended_fmt")
@@ -369,7 +384,7 @@ def disassemble_bytes(
                 )
                 if new_repr:
                     argrepr = new_repr
-        if argrepr is None:
+        if argrepr is None or argrepr == "":
             if instr.arg is not None:
                 msg(format_token(Integer, str(instr.arg), highlight=highlight))
             else:
@@ -378,9 +393,7 @@ def disassemble_bytes(
             pass
         else:
             # Column: Opcode argument details
-            msg_nocr(format_token(Symbol, "(", highlight=highlight))
-            msg_nocr(format_token(Details, argrepr, highlight=highlight))
-            msg(format_token(Symbol, ")", highlight=highlight))
+            msg(format_token(Details, argrepr, highlight=highlight))
         pass
 
     return code, offset
@@ -393,17 +406,21 @@ if __name__ == "__main__":
         print(msg_str)
         return
 
+
     def msg_nocr(msg_str):
         sys.stdout.write(msg_str)
         return
+
 
     def errmsg(msg_str):
         msg("*** " + msg_str)
         return
 
+
     def section(msg_str):
         msg("=== " + msg_str + " ===")
         return
+
 
     curframe = inspect.currentframe()
     # dis(msg, msg_nocr, errmsg, section, curframe,
@@ -413,7 +430,8 @@ if __name__ == "__main__":
     # dis(msg, msg_nocr, errmsg, section, curframe,
     #     start_offset=10, end_offset=20, highlight='dark')
     print("-" * 40)
-    for asm_format in ("std", "extended", "bytes", "extended-bytes"):
+    # for asm_format in ("std", "extended", "bytes", "extended-bytes"):
+    for asm_format in ("extended", "bytes", "extended-bytes"):
         print("Format is", asm_format)
         dis(msg, msg_nocr, section, errmsg, disassemble, asm_format=asm_format)
         print("=" * 30)

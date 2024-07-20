@@ -27,14 +27,12 @@ from term_background import is_dark_background
 width = computed_displaywidth()
 is_dark_bg = is_dark_background()
 if is_dark_bg:
-    default_style = "colorful"
+    default_style = "monokai"
     highlight = "dark"
 
 else:
     default_style = "tango"
     highlight = "light"
-default_style = "monokai" if is_dark_bg else "tango"
->>>>>>> master
 
 # Below are the default debugger settings. The debugger object version
 # of this may change. A setting is something a user may want to

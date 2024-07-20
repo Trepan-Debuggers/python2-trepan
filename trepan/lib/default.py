@@ -33,6 +33,8 @@ if is_dark_bg:
 else:
     default_style = "tango"
     highlight = "light"
+default_style = "monokai" if is_dark_bg else "tango"
+>>>>>>> master
 
 # Below are the default debugger settings. The debugger object version
 # of this may change. A setting is something a user may want to

@@ -12,7 +12,7 @@ class GeneralTests(unittest.TestCase):
         right_template = None
         result = Mhelper.run_debugger(
             testname="step",
-            dbgr_opts="--basename --highlight=plain",
+            dbgr_opts="--basename --highlight=plain --nx",
             python_file="gcd.py",
             right_template=right_template,
         )

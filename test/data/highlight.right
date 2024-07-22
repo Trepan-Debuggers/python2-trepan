@@ -1,4 +1,4 @@
-(gcd.py:10): <module>
+(gcd.py:10):
 -> 10 [38;5;94m"""[39m
 Set basename (short filenames) in debugger output is on.
 Set event tracing is on.

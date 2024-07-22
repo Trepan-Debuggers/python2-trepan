@@ -35,5 +35,5 @@ done
 
 tarball=dist/${PACKAGE}-$__version__-tar.gz
 if [[ -f $tarball ]]; then
-    rm -v dist/${PACKAGE}-$__version__-tar.gz
+    rm -v dist/${PACKAGE}_24-$__version__-tar.gz
 fi

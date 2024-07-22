@@ -1,3 +1,10 @@
+trepan 1.2.9 2022-07-22
+=======================
+
+* track xdis api changes and uncompyle6 improvements
+* Add set asmfmt for showing assembly format
+* Better conformance with trepan3k
+
 trepan 1.2.8 2022-06-05
 =======================
 

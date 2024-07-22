@@ -33,7 +33,8 @@ done
 # Tarballs can get created from the above setup, so make sure to remove them since we want
 # the tarball from master.
 
-tarball=dist/${PACKAGE}-$__version__-tar.gz
+python ./setup.py sdist
+tarball=dist/${PACKAGE}-$__version__.tar.gz
 if [[ -f $tarball ]]; then
-    rm -v dist/${PACKAGE}_24-$__version__-tar.gz
+    mv -v $tarball dist/${PACKAGE}_24-$__version__.tar.gz
 fi

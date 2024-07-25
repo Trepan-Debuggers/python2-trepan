@@ -27,5 +27,5 @@ checkout_version python-filecache python-2.4-to-2.7 && \
 checkout_version python-xdis python-2.4-to-2.7 && \
 checkout_version python-uncompyle6 python-2.4-to-2.7 && \
     git checkout master && pyenv local $PYTHON_VERSION && git pull
-remake -c clean-pyc
+remake -c clean_pyc
 finish

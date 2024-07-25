@@ -39,10 +39,6 @@ def is_compiled_py(filename):
 READABLE_MASK = stat.S_IRUSR | stat.S_IRGRP | stat.S_IROTH
 EXECUTABLE_MASK = stat.S_IXOTH | stat.S_IXGRP | stat.S_IXUSR
 
->>>>>>> master
-
-READABLE_MASK = (stat.S_IRUSR | stat.S_IRGRP | stat.S_IROTH)
-
 
 def executable(path):
     """Test whether a path exists and is readable.  Returns None for

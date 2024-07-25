@@ -5,7 +5,7 @@ PACKAGE=trepan2
 function finish {
   cd $make_dist_older_owd
 }
-make_dist_owd=$(pwd)
+make_dist_older_owd=$(pwd)
 trap finish EXIT
 
 cd $(dirname ${BASH_SOURCE[0]})

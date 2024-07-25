@@ -30,10 +30,11 @@ if necessary, first.
 #    return function
 #
 # But this a bit cumbersome and perhaps overkill for the 2 or so
-# functions below.  (It also doesn't work once we add the exception handling
+# functions below.  It also doesn't work once we add the exception handling
 # we see below. So for now, we'll live with the code duplication.
 
 import sys
+from typing import Callable, Optional
 
 from trepan import debugger as Mdebugger, post_mortem as Mpost_mortem
 
@@ -53,13 +54,13 @@ def run_eval(
     tb_fn=None,
 ):
     """Evaluate the expression (given as a string) under debugger
-    control starting with the statement subsequent to the place that
+    control starting with the statement after the place that
     this appears in your program.
 
     This is a wrapper to Debugger.run_eval(), so see that.
 
     When run_eval() returns, it returns the value of the expression.
-    Otherwise this function is similar to run().
+    Otherwise, this function is similar to run().
     """
 
     dbg = Mdebugger.Debugger(opts=debug_opts)
@@ -79,7 +80,7 @@ def run_eval(
 
 def run_call(func, debug_opts=None, start_opts=None, *args, **kwds):
     """Call the function (a function or method object, not a string)
-    with the given arguments starting with the statement subsequent to
+    with the given arguments starting with the statement after
     the place that this appears in your program.
 
     When run_call() returns, it returns whatever the function call
@@ -135,9 +136,11 @@ def debug(dbg_opts=None, start_opts=None, post_mortem=True, step_ignore=1, level
     step_ignore : how many line events to ignore after the
     debug() call. 0 means don't even wait for the debug() call to finish.
 
-    param dbg_opts : is an optional "options" dictionary that gets fed
-    trepan.Debugger(); `start_opts' are the optional "options"
-    dictionary that gets fed to trepan.Debugger.core.start().
+    dbg_opts: is an optional "options" dictionary that gets fed
+              trepan.Debugger(); `
+    start_opts: are the optional "options" dictionary that gets fed to
+                trepan.Debugger.core.start().
+    post_mortem: start debugger in post-mortem mode.
 
     Use like this:
 
@@ -151,8 +154,15 @@ def debug(dbg_opts=None, start_opts=None, post_mortem=True, step_ignore=1, level
         # Below is code you want to use the debugger to do things.
         ....  # more Python code
         # If you get to a place in the program where you aren't going
-        # want to debug any more, but want to remove debugger trace overhead:
+        # want to debug anymore, but want to remove debugger trace overhead:
         trepan.api.stop()
+
+    Parameter "level" specifies how many stack frames go back. Usually it will be
+    the default 0. But sometimes though there may be calls in setup to the debugger
+    that you may want to skip.
+
+    Parameter "step_ignore" specifies how many line events to ignore after the
+    debug() call. 0 means don't even wait for the debug() call to finish.
 
     In situations where you want an immediate stop in the "debug" call
     rather than the statement following it ("pass" above), add parameter
@@ -163,7 +173,7 @@ def debug(dbg_opts=None, start_opts=None, post_mortem=True, step_ignore=1, level
         trepan.api.debug(step_ignore=0)
         # ... as before
 
-    Module variable _debugger_obj_ from module trepan.debugger is used as
+    Module variable _debugger_obj_ from module ``trepan.debugger`` is used as
     the debugger instance variable; it can be subsequently used to change
     settings or alter behavior. It should be of type Debugger (found in
     module trepan). If not, it will get changed to that type::

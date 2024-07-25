@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2008-2009, 2013, 2015-2017
+#   Copyright (C) 2008-2009, 2013, 2015-2017, 2023-2024
 #   Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
@@ -15,20 +15,44 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Things related to file/module status"""
-import os, pyficache, stat, sys
+import os
+import stat
+import sys
+
+import pyficache
+
 
 def file_list():
-    return list(set(pyficache.cached_files() +
-                    list(pyficache.file2file_remap.keys())))
+    return list(set(pyficache.cached_files() + list(pyficache.file2file_remap.keys())))
 
 def is_compiled_py(filename):
     """
     Given a file name, return True if the suffix is pyo or pyc (an
     optimized bytecode file).
     """
-    return True if filename[-4:].lower() in ('.pyc', '.pyo') else False
+    return True if filename[-4:].lower() in (".pyc", ".pyo") else False
+
+
+READABLE_MASK = stat.S_IRUSR | stat.S_IRGRP | stat.S_IROTH
+EXECUTABLE_MASK = stat.S_IXOTH | stat.S_IXGRP | stat.S_IXUSR
+
 
 READABLE_MASK = (stat.S_IRUSR | stat.S_IRGRP | stat.S_IROTH)
+
+
+def executable(path):
+    """Test whether a path exists and is readable.  Returns None for
+    broken symbolic links or a failing stat() and False if
+    the file exists but does not have read permission. True is returned
+    if the file is readable."""
+    try:
+        st = os.stat(path)
+        if 0 == st.st_mode & READABLE_MASK:
+            return False
+        return 0 != st.st_mode & EXECUTABLE_MASK
+    except os.error:
+        return None
+    return True
 
 
 def readable(path):
@@ -58,8 +82,8 @@ def lookupmodule(name):
     if readable(f):
         return (None, f)
     root, ext = os.path.splitext(name)
-    if ext == '':
-        name = name + '.py'
+    if ext == "":
+        name = name + ".py"
         pass
     if os.path.isabs(name):
         return (None, name)
@@ -80,7 +104,7 @@ def parse_position(errmsg, arg):
     Parse arg as [filename|module:]lineno
     Make sure it works for C:\foo\bar.py:12
     """
-    colon = arg.rfind(':')
+    colon = arg.rfind(":")
     if colon >= 0:
         filename = arg[:colon].rstrip()
         m, f = lookupmodule(filename)
@@ -89,7 +113,7 @@ def parse_position(errmsg, arg):
             return (None, None, None)
         else:
             filename = pyficache.resolve_name_to_path(f)
-            arg = arg[colon+1:].lstrip()
+            arg = arg[colon + 1 :].lstrip()
             pass
         try:
             lineno = int(arg)
@@ -99,8 +123,9 @@ def parse_position(errmsg, arg):
         return (None, filename, lineno)
     return (None, None, None)
 
+
 # Demo it
-if __name__=='__main__':
+if __name__ == "__main__":
     import tempfile
     print('readable("fdafsa"): %s' % readable('fdafdsa'))
     for mode, can_read in [(stat.S_IRUSR, True), (stat.S_IWUSR, False)]:

@@ -137,7 +137,9 @@ def start_client(connection_opts):
             break
         else:
             print("!! Weird status code received '%s'" % control)
-            print(remote_msg,)
+            print(
+                remote_msg,
+            )
             pass
         pass
     intf.close()

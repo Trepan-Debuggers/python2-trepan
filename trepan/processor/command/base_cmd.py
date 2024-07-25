@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2009-2010, 2012-2013, 2015 Rocky Bernstein
+#
+#  Copyright (C) 2009-2010, 2012-2013, 2015, 2021, 2023-2024
+#  Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -20,12 +22,12 @@ and commands.py needs to take care to avoid instantiating this class
 and storing it as a list of known debugger commands.
 """
 
-NotImplementedMessage = "This method must be overriden in a subclass"
-
 import columnize
 from pygments.console import colorize
 
-from trepan.lib import format as Mformat
+from trepan.lib.format import rst_text
+
+NotImplementedMessage = "This method must be overridden in a subclass"
 
 __all__ = ["DebuggerCommand"]
 
@@ -37,12 +39,12 @@ class DebuggerCommand:
     category = "misc"
 
     @staticmethod
-    def setup(l, category="misc", min_args=0, max_args=None, need_stack=False):
-        l["name"] = l["__module__"].split(".")[-1]
-        l["category"] = category
-        l["min_args"] = min_args
-        l["max_args"] = max_args
-        l["need_stack"] = need_stack
+    def setup(local_dict, category="misc", min_args=0, max_args=None, need_stack=False):
+        local_dict["name"] = local_dict["__module__"].split(".")[-1]
+        local_dict["category"] = category
+        local_dict["min_args"] = min_args
+        local_dict["max_args"] = max_args
+        local_dict["need_stack"] = need_stack
         return
 
     def __init__(self, proc):
@@ -71,17 +73,17 @@ class DebuggerCommand:
         return columnize.columnize(commands, displaywidth=width, lineprefix="    ")
 
     def confirm(self, msg, default=False):
-        """ Convenience short-hand for self.debugger.intf[-1].confirm """
+        """Convenience short-hand for self.debugger.intf[-1].confirm"""
         return self.debugger.intf[-1].confirm(msg, default)
 
     # Note for errmsg, msg, and msg_nocr we don't want to simply make
     # an assignment of method names like self.msg = self.debugger.intf.msg,
     # because we want to allow the interface (intf) to change
     # dynamically. That is, the value of self.debugger may change
-    # in the course of the program and if we made such an method assignemnt
+    # in the course of the program and if we made such an method assignment
     # we wouldn't pick up that change in our self.msg
     def errmsg(self, msg, opts={}):
-        """ Convenience short-hand for self.debugger.intf[-1].errmsg """
+        """Convenience short-hand for self.debugger.intf[-1].errmsg"""
         try:
             return self.debugger.intf[-1].errmsg(msg)
         except EOFError:
@@ -90,7 +92,7 @@ class DebuggerCommand:
         return None
 
     def msg(self, msg, opts={}):
-        """ Convenience short-hand for self.debugger.intf[-1].msg """
+        """Convenience short-hand for self.debugger.intf[-1].msg"""
         try:
             return self.debugger.intf[-1].msg(msg)
         except EOFError:
@@ -99,9 +101,9 @@ class DebuggerCommand:
         return None
 
     def msg_nocr(self, msg, opts={}):
-        """ Convenience short-hand for self.debugger.intf[-1].msg_nocr """
+        """Convenience short-hand for self.debugger.intf[-1].msg_nocr"""
         try:
-            return self.debugger.intf[-1].msg_nocr(msg)
+            return self.debugger.intf[-1].msg_nocr(msg[:1000])
         except EOFError:
             # FIXME: what do we do here?
             pass
@@ -109,7 +111,8 @@ class DebuggerCommand:
 
     def rst_msg(self, text, opts={}):
         """Convert ReStructuredText and run through msg()"""
-        text = Mformat.rst_text(
+        # FIXME: rst_text should pass color style
+        text = rst_text(
             text,
             "plain" == self.debugger.settings["highlight"],
             self.debugger.settings["width"],
@@ -117,7 +120,7 @@ class DebuggerCommand:
         return self.msg(text)
 
     def run(self, args):
-        """ The method that implements the debugger command.
+        """The method that implements the debugger command.
         Help on the command comes from the docstring of this method.
         """
         raise NotImplementedError(NotImplementedMessage)

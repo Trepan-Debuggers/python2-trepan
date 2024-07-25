@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2009, 2012-2013, 2015 Rocky Bernstein
+#
+#    Copyright (C) 2009, 2012-2013, 2015, 2020, 2023-2024
+#    Rocky Bernstein
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -15,92 +17,94 @@
 #    along with this program; if not, write to the Free Software
 #    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 #    02110-1301 USA.
-import glob, os, re
+import glob
+import os.path as osp
+import re
+
+from trepan.lib.complete import complete_token, complete_token_filtered
+from trepan.misc import wrapped_lines
+from trepan.processor import cmdproc as Mcmdproc
 
 # Our local modules
-from trepan.processor.command import base_cmd as Mbase_cmd
-from trepan.processor import cmdproc as Mcmdproc
-from trepan.lib import complete as Mcomplete
-from trepan import misc as Mmisc
-
+from trepan.processor.command.base_cmd import DebuggerCommand
 
 categories = {
-    'breakpoints' : 'Making the program stop at certain points',
-    'data'        : 'Examining data',
-    'files'       : 'Specifying and examining files',
-    'running'     : 'Running the program',
-    'status'      : 'Status inquiries',
-    'support'     : 'Support facilities',
-    'stack'       : 'Examining the call stack',
-    'syntax'      : 'Debugger command syntax'
-    }
+    "breakpoints": "Making the program stop at certain points",
+    "data": "Examining data",
+    "files": "Specifying and examining files",
+    "running": "Running the program",
+    "status": "Status inquiries",
+    "support": "Support facilities",
+    "stack": "Examining the call stack",
+    "syntax": "Debugger command syntax",
+}
 
-class HelpCommand(Mbase_cmd.DebuggerCommand):
+
+class HelpCommand(DebuggerCommand):
     """**help** [*command* [*subcommand*]|*expression*]
 
-Without argument, print the list of available debugger commands.
+    Without argument, print the list of available debugger commands.
 
-When an argument is given, it is first checked to see if it is command
-name.
+    When an argument is given, it is first checked to see if it is command
+    name.
 
-If the argument is an expression or object name, you get the same
-help that you would get inside a Python shell running the built-in
-*help()* command.
+    If the argument is an expression or object name, you get the same
+    help that you would get inside a Python shell running the built-in
+    *help()* command.
 
-If the environment variable *$PAGER* is defined, the file is
-piped through that command.  You'll notice this only for long help
-output.
+    If the environment variable *$PAGER* is defined, the file is
+    piped through that command.  You'll notice this only for long help
+    output.
 
-Some commands like `info`, `set`, and `show` can accept an
-additional subcommand to give help just about that particular
-subcommand. For example `help info line` give help about the
-info line command.
+    Some commands like `info`, `set`, and `show` can accept an
+    additional subcommand to give help just about that particular
+    subcommand. For example `help info line` give help about the
+    info line command.
 
-See also:
----------
+    See also:
+    ---------
 
-`examine` and `whatis`.
-"""
-    aliases       = ('?',)
-    category      = 'support'
-    min_args      = 0
-    max_args      = None
-    name          = os.path.basename(__file__).split('.')[0]
-    need_stack    = False
-    short_help    = 'Print commands or give help for command(s)'
-    HELP_DIR      = os.path.join(os.path.dirname(__file__), 'help')
-    RST_EXTENSION = '.rst'
+    `examine` and `whatis`."""
+
+    aliases = ("?",)
+    short_help = "Print commands or give help for command(s)"
+    HELP_DIR = osp.join(osp.dirname(__file__), "help")
+    RST_EXTENSION = ".rst"
+
+    DebuggerCommand.setup(
+        locals(),
+        category="support",
+    )
 
     def complete(self, prefix):
         proc_obj = self.proc
-        matches = Mcomplete.complete_token(list(categories.keys())
-                                           + ['*', 'all'] +
-                                           list(proc_obj.commands.keys()),
-                                           prefix)
-        aliases = Mcomplete.complete_token_filtered(proc_obj.aliases, prefix,
-                                                    matches)
+        matches = complete_token(
+            list(categories.keys()) + ["*", "all"] + list(proc_obj.commands.keys()),
+            prefix,
+        )
+        aliases = complete_token_filtered(proc_obj.aliases, prefix, matches)
         return sorted(matches + aliases)
 
     def run(self, args):
         # It does not make much sense to repeat the last help
         # command. Also, given that 'help' uses PAGER, the you may
         # enter an extra CR which would rerun the (long) help command.
-        self.proc.last_command=''
+        self.proc.last_command = ""
 
         if len(args) > 1:
             cmd_name = args[1]
-            if cmd_name == '*':
+            if cmd_name == "*":
                 self.section("List of all debugger commands:")
                 m = self.columnize_commands(list(self.proc.commands.keys()))
                 self.msg_nocr(m)
                 return
-            elif cmd_name == 'aliases':
+            elif cmd_name == "aliases":
                 self.show_aliases()
                 return
-            elif cmd_name == 'macros':
+            elif cmd_name == "macros":
                 self.show_macros()
                 return
-            elif cmd_name == 'syntax':
+            elif cmd_name == "syntax":
                 self.show_command_syntax(args)
                 return
             elif cmd_name in list(categories.keys()):
@@ -110,25 +114,31 @@ See also:
             command_name = Mcmdproc.resolve_name(self.proc, cmd_name)
             if command_name:
                 instance = self.proc.commands[command_name]
-                if hasattr(instance, 'help'):
+                if hasattr(instance, "help"):
                     return instance.help(args)
                 else:
                     doc = instance.__doc__ or instance.run.__doc__
-                    doc = doc.rstrip('\n')
+                    doc = doc.rstrip("\n")
                     self.rst_msg(doc.rstrip("\n"))
-                    aliases = [key for key in self.proc.aliases
-                               if command_name == self.proc.aliases[key]]
+                    aliases = [
+                        key
+                        for key in self.proc.aliases
+                        if command_name == self.proc.aliases[key]
+                    ]
                     if len(aliases) > 0:
-                        self.msg('')
-                        msg = Mmisc.wrapped_lines('Aliases:',
-                                                  ', '.join(aliases) + '.',
-                                                  self.settings['width'])
+                        self.msg("")
+                        msg = wrapped_lines(
+                            "Aliases:", ", ".join(aliases) + ".", self.settings["width"]
+                        )
                         self.msg(msg)
                         pass
                     pass
             else:
-                cmds = [cmd for cmd in list(self.proc.commands.keys())
-                        if re.match('^' + cmd_name, cmd) ]
+                cmds = [
+                    cmd
+                    for cmd in list(self.proc.commands.keys())
+                    if re.match("^" + cmd_name, cmd)
+                ]
                 if cmds is None:
                     self.errmsg("No commands found matching /^%s/. "
                                 "Try \"help\"." % cmd_name)
@@ -166,7 +176,7 @@ Type `help` *regexp* for the list of commands matching /^#{*regexp*}/
 Type `help` *category* `*` for the list of all commands in category *category*
 Type `help` followed by command name for full documentation.
 """
-        for line in re.compile('\n').split(final_msg.rstrip('\n')):
+        for line in re.compile("\n").split(final_msg.rstrip("\n")):
             self.rst_msg(line)
             pass
         return
@@ -175,7 +185,7 @@ Type `help` followed by command name for full documentation.
         """Show short help for all commands in `category'."""
         n2cmd = self.proc.commands
         names = list(n2cmd.keys())
-        if len(args) == 1 and args[0] == '*':
+        if len(args) == 1 and args[0] == "*":
             self.section("Commands in class %s:" % category)
             cmds = [cmd for cmd in names if category == n2cmd[cmd].category]
             cmds.sort()
@@ -192,18 +202,17 @@ Type `help` followed by command name for full documentation.
         return
 
     def syntax_files(self):
-        path = os.path.join(self.HELP_DIR, ("*%s" % self.RST_EXTENSION))
+        path = osp.join(self.HELP_DIR, ("*%s" % self.RST_EXTENSION))
         files = glob.glob(path)
-        return [os.path.basename(name).split('.')[0] for
-                name in files]
+        return [osp.basename(name).split(".")[0] for name in files]
 
     def show_aliases(self):
-        self.section('All alias names:')
+        self.section("All alias names:")
         m = self.columnize_commands(list(sorted(self.proc.aliases.keys())))
         self.msg_nocr(m)
 
     def show_macros(self):
-        self.section('All macro names:')
+        self.section("All macro names:")
         m = self.columnize_commands(list(sorted(self.proc.macros.keys())))
         self.msg_nocr(m)
 
@@ -211,9 +220,9 @@ Type `help` followed by command name for full documentation.
         self.syntax_summary_help = {}
         self.syntax_help = {}
         for name in self.syntax_files():
-            path = os.path.join(self.HELP_DIR, "%s%s" %
+            path = osp.join(self.HELP_DIR, "%s%s" %
                                 (name, self.RST_EXTENSION))
-            self.syntax_help[name] = ''.join(open(path).
+            self.syntax_help[name] = "".join(open(path).
                                              readlines())
             self.syntax_summary_help[name] = open(path).\
                                              readline().strip()
@@ -221,10 +230,10 @@ Type `help` followed by command name for full documentation.
         return
 
     def show_command_syntax(self, args):
-        if not hasattr(self, 'syntax_summary_help'):
+        if not hasattr(self, "syntax_summary_help"):
             self.init_syntax_summary_help()
             pass
-        if len(args) == 2 or len(args) == 3 and args[2] == '*':
+        if len(args) == 2 or len(args) == 3 and args[2] == "*":
             self.section("List of syntax help")
             for name, help in self.syntax_summary_help.items():
                 self.msg("  %-8s -- %s" % (name, help))
@@ -238,28 +247,29 @@ Type `help` followed by command name for full documentation.
                 pass
             pass
         return
+
     pass
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     from trepan.processor.command import mock
     d, cp = mock.dbg_setup()
     command = HelpCommand(cp)
-    # print('-' * 20)
-    # command.run(['help'])
-    # print('-' * 20)
-    # command.run(['help', '*'])
-    # print('-' * 20)
-    # command.run(['help', 'quit'])
-    # print('-' * 20)
-    # command.run(['help', 'stack'])
-    # print('-' * 20)
-    # command.run(['help', 'breakpoints'])
-    # print('-' * 20)
-    # command.run(['help', 'breakpoints', '*'])
-    # print('-' * 20)
-    # command.run(['help', 'c.*'])
-    # print('-' * 20)
-    command.show_command_syntax(['help', 'syntax'])
-    command.show_command_syntax(['help', 'syntax', 'command'])
+    print("-" * 20)
+    command.run(["help"])
+    print("-" * 20)
+    command.run(["help", "*"])
+    print("-" * 20)
+    command.run(["help", "quit"])
+    # print("-" * 20)
+    # command.run(["help", "stack"])
+    # print("-" * 20)
+    # command.run(["help", "breakpoints"])
+    print("-" * 20)
+    command.run(["help", "breakpoints", "*"])
+    print("-" * 20)
+    # command.run(["help", "c.*"])
+    # print("-" * 20)
+    command.show_command_syntax(["help", "syntax"])
+    command.show_command_syntax(["help", "syntax", "command"])
     pass

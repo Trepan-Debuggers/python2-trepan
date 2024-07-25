@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2009, 2013, 2015, 2020 Rocky Bernstein
+#  Copyright (C) 2009, 2013, 2015, 2020, 2024 Rocky Bernstein
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -23,17 +23,16 @@ from trepan.processor.complete import complete_identifier
 class PrettyPrintCommand(DebuggerCommand):
     """**pp** *expression*
 
-Pretty-print the value of the expression.
+    Pretty-print the value of the expression.
 
-Simple arrays are shown columnized horizontally. Other values are printed
-via *pprint.pformat()*.
+    Simple arrays are shown columnized horizontally. Other values are printed
+    via *pprint.pformat()*.
 
-See also:
----------
+    See also:
+    ---------
 
-`pr` and `examine` for commands which do more in the way of
-formatting.
-"""
+    `pr` and `examine` for commands which do more in the way of
+    formatting."""
 
     short_help = "Pretty print value of expression EXP"
 
@@ -61,7 +60,7 @@ if __name__ == "__main__":
     command.run(["pp", "me"])
     me = list(range(100))
     command.run(["pp", "me"])
-    import sys
+    import sys  # noqa
 
     command.run(["pp", "sys.modules.keys()"])
     me = "fooled you"

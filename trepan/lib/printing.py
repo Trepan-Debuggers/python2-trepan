@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
-#  Copyright (C) 2007-2010, 2015 Rocky Bernstein
-
+#
+#  Copyright (C) 2007-2010, 2015, 2020, 2023-2024
+#  Rocky Bernstein
+#
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
 #  the Free Software Foundation, either version 3 of the License, or
@@ -14,7 +16,8 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import inspect, types
+import inspect
+import types
 
 
 def print_dict(s, obj, title):
@@ -51,12 +54,12 @@ def print_obj(arg, frame, format=None, short=False):
         else:
             obj = eval(arg, frame.f_globals, frame.f_locals)
             pass
-    except:
+    except Exception:
         return 'No symbol "' + arg + '" in current context.'
     # format and print
     what = arg
     if format:
-        what = format + ' ' + arg
+        what = format + " " + arg
         obj = printf(obj, format)
     s = '%s = %s' % (what, obj)
     if not short:
@@ -64,14 +67,14 @@ def print_obj(arg, frame, format=None, short=False):
         if callable(obj):
             argspec = print_argspec(obj, arg)
             if argspec:
-                s += ':\n\t'
+                s += ":\n\t"
                 if inspect.isclass(obj):
-                    s += 'Class constructor information:\n\t'
+                    s += "Class constructor information:\n\t"
                     obj = obj.__init__
                 elif isinstance(obj, types.InstanceType):
                     obj = obj.__call__
                     pass
-                s+= argspec
+                s += argspec
             pass
 
         # Try to list the members of a class.
@@ -83,17 +86,34 @@ def print_obj(arg, frame, format=None, short=False):
             pass
     return s
 
-pconvert = {'c': chr, 'x': hex, 'o': oct, 'f': float, 's': str}
-twos = ('0000', '0001', '0010', '0011', '0100', '0101', '0110', '0111',
-        '1000', '1001', '1010', '1011', '1100', '1101', '1110', '1111')
+
+pconvert = {"c": chr, "x": hex, "o": oct, "f": float, "s": str}
+twos = (
+    "0000",
+    "0001",
+    "0010",
+    "0011",
+    "0100",
+    "0101",
+    "0110",
+    "0111",
+    "1000",
+    "1001",
+    "1010",
+    "1011",
+    "1100",
+    "1101",
+    "1110",
+    "1111",
+)
 
 
 def printf(val, fmt):
     global pconvert, twos
     if not fmt:
-        fmt = ' '  # not 't' nor in pconvert
+        fmt = " "  # not 't' nor in pconvert
     # Strip leading '/'
-    if fmt[0] == '/':
+    if fmt[0] == "/":
         fmt = fmt[1:]
     f = fmt[0]
     if f in pconvert.keys():
@@ -102,33 +122,37 @@ def printf(val, fmt):
         except:
             return str(val)
     # binary (t is from 'twos')
-    if f == 't':
+    if f == "t":
         try:
-            res = ''
+            res = ""
             while val:
-                res = twos[val & 0xf] + res
+                res = twos[val & 0xF] + res
                 val = val >> 4
             return res
-        except:
+        except Exception:
             return str(val)
     return str(val)
 
-if __name__ == '__main__':
-    print(print_dict('', globals(), 'my globals'))
-    print('-' * 40)
-    print(print_obj('print_obj', None))
-    print('-' * 30)
-    print(print_obj('Exception', None))
-    print('-' * 30)
-    print(print_argspec('Exception', None))
+
+if __name__ == "__main__":
+    print(print_dict("", globals(), "my globals"))
+    print("-" * 40)
+    print(print_obj("print_obj", None))
+    print("-" * 30)
+    print(print_obj("Exception", None))
+    print("-" * 30)
+    print(print_argspec("Exception", None))
 
     class Foo:
-        def __init__(self, bar=None): pass
+        def __init__(self, bar=None):
+            pass
+
         pass
-    print(print_obj('Foo.__init__', None))
-    print('-' * 30)
-    print(print_argspec(Foo.__init__, '__init__'))
-    assert printf(31, "/o") == '037'
-    assert printf(31, "/t") == '00011111'
-    assert printf(33, "/c") == '!'
-    assert printf(33, "/x") == '0x21'
+
+    print(print_obj("Foo.__init__", None))
+    print("-" * 30)
+    print(print_argspec(Foo.__init__, "__init__"))
+    assert printf(31, "/o") == "037"
+    assert printf(31, "/t") == "00011111"
+    assert printf(33, "/c") == "!"
+    assert printf(33, "/x") == "0x21"

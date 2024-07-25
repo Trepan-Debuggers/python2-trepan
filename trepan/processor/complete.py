@@ -35,7 +35,7 @@ def complete_token_filtered(aliases, prefix, expanded):
 def completer(self, str, state, last_token=''):
     next_blank_pos, token = Mcomplete.next_token(str, 0)
     if len(token) == 0 and not 0 == len(last_token):
-        return ['', None]
+        return ["", None]
     match_pairs = Mcomplete.complete_token_with_next(self.commands, token)
     match_hash = {}
     for pair in match_pairs:
@@ -67,7 +67,7 @@ def completer(self, str, state, last_token=''):
             pass
         pass
 
-    if len(match_pairs) > 1:
+    if len(match_pairs) !=1:
         # FIXME: figure out what to do here.
         # Matched multiple items in the middle of the string
         # We can't handle this so do nothing.

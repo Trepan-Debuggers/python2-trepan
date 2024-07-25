@@ -57,7 +57,7 @@ class RestartCommand(Mbase_cmd.DebuggerCommand):
         # Not sure if we need --env. But for now we'll try it.
         try:
             opts, args = getopt(args[1:], "hep", "help env python".split())
-        except GetoptError as err:
+        except GetoptError(err):
             # print help information and exit:
             print(str(err))  # will print something like "option -a not recognized"
             return
@@ -83,7 +83,10 @@ class RestartCommand(Mbase_cmd.DebuggerCommand):
                     self.errmsg('File "%s" is not marked executable.' % program_file)
                     return
 
-            exec_suffix = "e" if restart_options["env"] else ""
+            if restart_options["env"]:
+                exec_suffix = "e"
+            else:
+                exec_suffix =  ""
             confirmed = self.confirm("Restart (execvp%s)" % exec_suffix, False)
             if confirmed:
                 if restart_options["python"]:

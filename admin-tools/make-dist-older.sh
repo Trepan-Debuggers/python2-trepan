@@ -3,9 +3,9 @@ PACKAGE=trepan2
 
 # FIXME put some of the below in a common routine
 function finish {
-  cd $owd
+  cd $make_dist_older_owd
 }
-owd=$(pwd)
+make_dist_owd=$(pwd)
 trap finish EXIT
 
 cd $(dirname ${BASH_SOURCE[0]})
@@ -38,3 +38,4 @@ tarball=dist/${PACKAGE}-$__version__.tar.gz
 if [[ -f $tarball ]]; then
     mv -v $tarball dist/${PACKAGE}_24-$__version__.tar.gz
 fi
+finish

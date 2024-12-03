@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #   Copyright (C) 2009-2010, 2013-2015, 2017 Rocky Bernstein
-#
+#n
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
 #   the Free Software Foundation, either version 3 of the License, or
@@ -17,7 +17,9 @@
 demonstrating how the command works.'''
 
 import sys
+import tracer.tracefilter
 from trepan.lib import breakpoint, default
+
 
 class MockIO:
     def readline(self, prompt='', add_to_history=False):
@@ -77,15 +79,12 @@ class MockProcessor:
         return
     pass
 
-# External Egg packages
-import tracefilter
-
 class MockDebuggerCore:
     def __init__(self, debugger):
         self.debugger       = debugger
-        self.execution_status = 'Pre-execution'
+        self.execution_status = "Pre-execution"
         self.filename_cache  = {}
-        self.ignore_filter  = tracefilter.TraceFilter([])
+        self.ignore_filter  = tracer.tracefilter.TraceFilter([])
         self.bpmgr          = breakpoint.BreakpointManager()
         self.processor      = MockProcessor(self)
         self.step_ignore    = -1

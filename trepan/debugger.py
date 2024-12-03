@@ -41,7 +41,8 @@ import trepan.lib.sighandler as Msig
 import sys, types
 
 # External Egg packages
-import tracer, tracefilter, pyficache
+from tracer import tracefilter
+import pyficache
 
 debugger_obj = None
 

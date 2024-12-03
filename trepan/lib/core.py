@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2008-2010, 2013-2015, 2017 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008-2010, 2013-2015, 2017, 2024 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -23,32 +23,37 @@ handling what to do when an event is triggered."""
 
 
 # Common Python packages
-import os, sys, threading
+import os
+import os.path as osp
+import sys
+import threading
 
-# External Egg packages
-import pyficache, tracer
+# External packages
+import pyficache
+import tracer
 
 # Our local modules
-from trepan.lib import breakpoint, default, stack as Mstack
+from trepan.lib import breakpoint, default
+from trepan.lib.stack import count_frames
 from trepan import misc as Mmisc
-from trepan import clifns as Mclifns
-from trepan.processor import trace as Mtrace, cmdproc as Mcmdproc
+from trepan.clifns import search_file
+from trepan.processor.cmdproc import CommandProcessor
+from trepan.processor.trace import PrintProcessor
 
 
 class DebuggerCore:
 
     DEFAULT_INIT_OPTS = {
-        'processor'   : None,
-
+        "processor": None,
         # How many step events to skip before
         # entering event processor? Zero (0) means stop at the next one.
         # A negative number indicates no eventual stopping.
-        'step_ignore' : 0,
-        'ignore_filter': None,  # But see debugger.py
-        }
+        "step_ignore": 0,
+        "ignore_filter": None,  # But see debugger.py
+    }
 
     def __init__(self, debugger, opts=None):
-        """ Create a debugger object. But depending on the value of
+        """Create a debugger object. But depending on the value of
         key 'start' inside hash `opts', we may or may not initially
         start tracing events (i.e. enter the debugger).
 
@@ -76,7 +81,7 @@ class DebuggerCore:
         self.event           = None
 
         # Is debugged program currently under execution?
-        self.execution_status = 'Pre-execution'
+        self.execution_status = "Pre-execution"
 
         # main_dirname is the directory where the script resides.
         # Filenames in co_filename are often relative to this.
@@ -86,7 +91,7 @@ class DebuggerCore:
         self.processor = get_option('processor')
         proc_opts      = get_option('proc_opts')
         if not self.processor:
-            self.processor   = Mcmdproc.CommandProcessor(self, opts=proc_opts)
+            self.processor   = CommandProcessor(self, opts=proc_opts)
         elif self.processor == 'bullwinkle':
             self.processor   = Mbwproc.BWProcessor(self, opts=proc_opts)
             pass
@@ -115,7 +120,7 @@ class DebuggerCore:
         # 'finish', 'step', or 'exception'.
         self.stop_reason     = ''
 
-        self.trace_processor = Mtrace.PrintProcessor(self)
+        self.trace_processor = PrintProcessor(self)
 
         # What routines (keyed by f_code) will we not trace into?
         self.ignore_filter = get_option('ignore_filter')
@@ -126,7 +131,7 @@ class DebuggerCore:
         # debugging.
         self.trace_hook_suspend = False
 
-        self.until_condition = get_option('until_condition')
+        self.until_condition = get_option("until_condition")
 
         return
 
@@ -139,7 +144,7 @@ class DebuggerCore:
         return rc
 
     def canonic(self, filename):
-        """ Turns `filename' into its canonic representation and returns this
+        """Turns `filename' into its canonic representation and returns this
         string. This allows a user to refer to a given file in one of several
         equivalent ways.
 
@@ -161,20 +166,18 @@ class DebuggerCore:
                 # other than where the program resides. filename is
                 # relative to where the program resides. So make sure
                 # to use that.
-                canonic = os.path.abspath(os.path.join(self.main_dirname,
-                                                       filename))
+                canonic = osp.abspath(osp.join(self.main_dirname, filename))
             else:
-                canonic = os.path.abspath(filename)
+                canonic = osp.abspath(filename)
                 pass
-            if not os.path.isfile(canonic):
-                canonic = Mclifns.search_file(filename, self.search_path,
-                                              self.main_dirname)
+            if not osp.isfile(canonic):
+                canonic = search_file(filename, self.search_path, self.main_dirname)
                 # FIXME: is this is right for utter failure?
                 if not canonic:
                     self.filename_cache[filename] = filename
                     return filename
                 pass
-            canonic = os.path.realpath(os.path.normcase(canonic))
+            canonic = osp.realpath(osp.normcase(canonic))
             self.filename_cache[filename] = canonic
         canonic = pyficache.unmap_file(canonic)
 
@@ -182,7 +185,7 @@ class DebuggerCore:
 
     def canonic_filename(self, frame):
         """Picks out the file name from `frame' and returns its
-         canonic() value, a string."""
+        canonic() value, a string."""
         return self.canonic(frame.f_code.co_filename)
 
     def filename(self, filename=None):
@@ -193,18 +196,20 @@ class DebuggerCore:
                 filename = self.debugger.mainpyfile
             else:
                 return None
-        if self.debugger.settings['basename']:
-            return(os.path.basename(filename))
+        if self.debugger.settings["basename"]:
+            return osp.basename(filename)
         return filename
 
     def is_running(self):
-        return 'Running' == self.execution_status
+        return "Running" == self.execution_status
 
     def is_started(self):
-        '''Return True if debugging is in progress.'''
-        return (tracer.is_started() and
-                not self.trace_hook_suspend
-                and tracer.find_hook(self.trace_dispatch))
+        """Return True if debugging is in progress."""
+        return (
+            tracer.is_started()
+            and not self.trace_hook_suspend
+            and tracer.find_hook(self.trace_dispatch)
+        )
 
     def remove_ignore(self, frame_or_fn):
         """Remove `frame_or_fn' to the list of functions that are not to
@@ -212,7 +217,7 @@ class DebuggerCore:
         return self.ignore_filter.remove_include(frame_or_fn)
 
     def start(self, opts=None):
-        """ We've already created a debugger object, but here we start
+        """We've already created a debugger object, but here we start
         debugging in earnest. We can also turn off debugging (but have
         the hooks suspended or not) using 'stop'.
 
@@ -242,7 +247,7 @@ class DebuggerCore:
             elif not tracer.find_hook(self.trace_dispatch):
                 tracer.add_hook(self.trace_dispatch, add_hook_opts)
                 pass
-            self.execution_status = 'Running'
+            self.execution_status = "Running"
         finally:
             self.trace_hook_suspend = False
         return
@@ -255,7 +260,7 @@ class DebuggerCore:
             get_option = lambda key: Mmisc.option_set(options, key,
                                                       default.STOP_OPTS)
             args = [self.trace_dispatch]
-            remove = get_option('remove')
+            remove = get_option("remove")
             if remove:
                 args.append(remove)
                 pass
@@ -302,9 +307,8 @@ class DebuggerCore:
                 else:
                     msg = ''
                     pass
-                self.stop_reason = ("at %sline breakpoint %d" %
-                                    (msg, bp.number))
-                self.event = 'brkpt'
+                self.stop_reason = "at %sline breakpoint %d" % (msg, bp.number)
+                self.event = "brkpt"
                 return True
             else:
                 return False
@@ -317,7 +321,7 @@ class DebuggerCore:
         # condition evaluates to true.
         try:
             val = eval(self.until_condition, frame.f_globals, frame.f_locals)
-        except:
+        except Exception:
             # if eval fails, most conservative thing is to
             # stop on breakpoint regardless of ignore count.
             # Don't delete temporary, as another hint to user.
@@ -360,15 +364,19 @@ class DebuggerCore:
                     elif self.last_frame.f_back == frame:
                         self.last_level -= 1
                     else:
-                        self.last_level = Mstack.count_frames(frame)
+                        self.last_level = count_frames(frame)
                 else:
-                    self.last_level = Mstack.count_frames(frame)
+                    self.last_level = count_frames(frame)
                 self.last_frame = frame
                 pass
             if self.last_level > self.stop_level:
+                # print("is_stop_here(): last_level > stop_level")
                 return False
-            elif self.last_level == self.stop_level and \
-                    self.stop_on_finish and event in ['return', 'c_return']:
+            elif (
+                self.last_level == self.stop_level
+                and self.stop_on_finish
+                and event in ["return", "c_return"]
+            ):
                 self.stop_level = None
                 self.stop_reason = "in return for 'finish' command"
                 return True
@@ -376,9 +384,10 @@ class DebuggerCore:
 
         # Check for stepping
         if self._is_step_next_stop(event):
-            self.stop_reason = 'at a stepping statement'
+            self.stop_reason = "at a stepping statement"
             return True
 
+        # print("is_stop_here: no reason set to stop")
         return False
 
     def _is_step_next_stop(self, event):
@@ -392,13 +401,15 @@ class DebuggerCore:
         return False
 
     def set_next(self, frame, step_ignore=0, step_events=None):
-        "Sets to stop on the next event that happens in frame 'frame'."
-        self.step_events      = None  # Consider all events
-        self.stop_level       = Mstack.count_frames(frame)
-        self.last_level       = self.stop_level
-        self.last_frame       = frame
-        self.stop_on_finish   = False
-        self.step_ignore      = step_ignore
+        """Sets to stop on the next event that happens in frame `frame`.
+        an raises an exception return to a frame below `frame`
+        """
+        self.step_events = None  # Consider all events
+        self.stop_level = count_frames(frame)
+        self.last_level = self.stop_level
+        self.last_frame = frame
+        self.stop_on_finish = False
+        self.step_ignore = step_ignore
         return
 
     def trace_dispatch(self, frame, event, arg):

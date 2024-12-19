@@ -230,18 +230,18 @@ class DebuggerCore:
         #    sys.settrace(self._trace_dispatch)
         try:
             self.trace_hook_suspend = True
-            get_option = lambda key: option_set(opts, key, START_OPTS)
 
-            add_hook_opts = get_option('add_hook_opts')
+            def get_option(key):
+                return option_set(opts, key, START_OPTS)
+
+            add_hook_opts = get_option("add_hook_opts")
 
             # Has tracer been started?
-            if not tracer.is_started() or get_option('force'):
-                # FIXME: should filter out opts not for tracer
-
+            if not tracer.is_started() or get_option("force"):
                 tracer_start_opts = START_OPTS.copy()
                 if opts:
                     tracer_start_opts.update(opts.get('tracer_start', {}))
-                tracer_start_opts['trace_fn'] = self.trace_dispatch
+                tracer_start_opts['trace_func'] = self.trace_dispatch
                 tracer_start_opts['add_hook_opts'] = add_hook_opts
                 tracer.start(tracer_start_opts)
             elif not tracer.find_hook(self.trace_dispatch):

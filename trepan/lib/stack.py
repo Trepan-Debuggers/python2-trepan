@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2008-2010, 2013, 2015, 2017-2018, 2020 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008-2010, 2013, 2015, 2017-2018, 2020
+#   2024 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -15,13 +16,24 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """ Functions for working with Python frames"""
 
-import inspect, linecache, re
+import dis
+import inspect
+import linecache
+import os
+import re
 
+from repr import repr
 from trepan.lib import bytecode as Mbytecode, printing as Mprint
 from trepan.lib import format as Mformat
 from trepan.lib.deparse import deparse_offset
 from trepan.lib import pp as Mpp
 from trepan.processor.cmdfns import deparse_fn
+
+from xdis import IS_PYPY, get_opcode
+from xdis.version_info import PYTHON_VERSION_TRIPLE
+
+_re_pseudo_file = re.compile(r"^<.+>")
+
 
 format_token = Mformat.format_token
 
@@ -35,11 +47,6 @@ def count_frames(frame, count_start=0):
         count += 1
         frame = frame.f_back
     return count
-
-
-import repr as Mrepr
-
-_re_pseudo_file = re.compile(r"^<.+>")
 
 
 def deparse_source_from_code(code):
@@ -121,7 +128,7 @@ def format_stack_entry(
     if "__return__" in frame.f_locals:
         rv = frame.f_locals["__return__"]
         s += "->"
-        s += format_token(Mformat.Return, Mrepr.repr(rv), highlight=color)
+        s += format_token(Mformat.Return, repr(rv), highlight=color)
         pass
 
     if include_location:
@@ -174,8 +181,36 @@ def is_exec_stmt(frame):
     )
 
 
-import dis
+def check_path_with_frame(frame, path):
+    my_size = os.stat(path).st_size
+    fs_size, bc_size = frame2filesize(frame)
+    if bc_size and bc_size != my_size:
+        return False, "bytecode and local files mismatch"
+    if fs_size and fs_size != my_size:
+        return (
+            False,
+            (
+                "frame file size, %d bytes, and local file size, %d bytes, on file %s mismatch"
+                % (fs_size, my_size, path)
+            ),
+        )
+    return True, None
 
+
+def is_eval_or_exec_stmt(frame):
+    """Return "eval" or "exec" if we are inside an eval() or exec()
+    statement. None is returned if not.
+    """
+    if not hasattr(frame, "f_back"):
+        return None
+    back_frame = frame.f_back
+    func_name = get_call_function_name(back_frame)
+    if func_name and frame.f_code.co_filename == "<string>":
+        return func_name
+    return None
+
+
+opc = get_opcode(PYTHON_VERSION_TRIPLE, IS_PYPY)
 
 def get_call_function_name(frame):
     """If f_back is looking at a call function, return

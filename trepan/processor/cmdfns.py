@@ -25,7 +25,7 @@ def source_tempfile_remap(prefix, text, tempdir=None):
                                      dir=tempdir,
                                      delete=False)
     with fd:
-        fd.write(bytes(text, "UTF-8"))
+        fd.write(text)
         fd.close()
         pass
     return fd.name

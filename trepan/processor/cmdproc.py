@@ -20,7 +20,6 @@ import os.path as osp
 import pyficache
 import shlex
 import sys
-import tempfile
 import traceback
 import types
 from repr import Repr
@@ -29,17 +28,15 @@ from pygments.console import colorize
 
 from tracer import EVENT2SHORT
 
-from trepan import vprocessor as Mprocessor
-from trepan.lib import bytecode as Mbytecode
+from trepan.vprocessor import Processor
+from trepan.lib.bytecode import is_class_def, is_def_stmt
 from trepan import exception as Mexcept
 from trepan.lib import display as Mdisplay
 from trepan import misc as Mmisc
 from trepan.lib import file as Mfile
-from trepan.lib import stack as Mstack
 from trepan.lib import thred as Mthread
-from trepan.processor import complete as Mcomplete
-from trepan.processor.cmdfns import deparse_fn, source_tempfile_remap
-from trepan.lib.deparse import deparse_and_cache
+from trepan.processor.complete import completer
+from trepan.processor.printing import print_location
 
 # arg_split culled from ipython's routine
 def arg_split(s, posix=False):
@@ -80,7 +77,6 @@ def get_stack(f, t, botframe, proc_obj=None):
     def fn_is_ignored(f):
         return proc_obj.core.ignore_filter.is_excluded(f)
 
-
     exclude_frame = false_fn
     if proc_obj:
         settings = proc_obj.debugger.settings
@@ -109,12 +105,11 @@ def get_stack(f, t, botframe, proc_obj=None):
 
 
 def run_hooks(obj, hooks, *args):
-    """Run each function in `hooks' with args"""
-    for hook in hooks:
-        if hook(obj, *args):
-            return True
-        pass
-    return False
+    """Run each function in `hooks' with args
+    Returns True if a hook failed and so the caller should
+    leave its command loop.
+    """
+    return any((hook(obj, *args) for hook in hooks))
 
 
 def resolve_name(obj, command_name):
@@ -127,7 +122,7 @@ def resolve_name(obj, command_name):
         pass
     try:
         return command_name.lower()
-    except:
+    except Exception:
         return None
     return
 
@@ -171,145 +166,6 @@ def print_source_location_info(
     print_fn(mess)
     return
 
-
-def print_location(proc_obj):
-    """Show where we are. GUI's and front-end interfaces often
-    use this to update displays. So it is helpful to make sure
-    we give at least some place that's located in a file.
-    """
-    i_stack = proc_obj.curindex
-    if i_stack is None or proc_obj.stack is None:
-        return False
-    core_obj = proc_obj.core
-    dbgr_obj = proc_obj.debugger
-    intf_obj = dbgr_obj.intf[-1]
-
-    # Evaluation routines like "exec" don't show useful location
-    # info. In these cases, we will use the position before that in
-    # the stack.  Hence the looping below which in practices loops
-    # once and sometimes twice.
-    remapped_file = None
-    source_text = None
-    while i_stack >= 0:
-        frame_lineno = proc_obj.stack[i_stack]
-        i_stack -= 1
-        frame, lineno = frame_lineno
-
-        #         # Next check to see that local variable breadcrumb exists and
-        #         # has the magic dynamic value.
-        #         # If so, it's us and we don't normally show this.a
-        #         if 'breadcrumb' in frame.f_locals:
-        #             if self.run == frame.f_locals['breadcrumb']:
-        #                 break
-
-        filename = Mstack.frame2file(core_obj, frame, canonic=False)
-        if "<string>" == filename and dbgr_obj.eval_string:
-            remapped_file = filename
-            filename = pyficache.unmap_file(filename)
-            if "<string>" == filename:
-                remapped = source_tempfile_remap("eval_string", dbgr_obj.eval_string,
-                                                 tempdir=proc_obj.settings("tempdir"))
-                pyficache.remap_file(filename, remapped)
-                filename = remapped
-                lineno = pyficache.unmap_file_line(filename, lineno)
-                pass
-            pass
-        elif "<string>" == filename:
-            source_text = deparse_fn(frame.f_code)
-            filename = "<string: '%s'>" % source_text
-            pass
-        elif filename in proc_obj.file2file_remap:
-            remapped_file = proc_obj.file2file_remap[filename]
-        elif filename in pyficache.file2file_remap:
-            remapped_file = pyficache.unmap_file(filename)
-            # FIXME: a remapped_file shouldn't be the same as its unmapped version
-            if remapped_file == filename:
-                remapped_file = None
-                pass
-            pass
-        elif pyficache.main.remap_re_hash:
-            remapped_file = pyficache.remap_file_pat(filename, pyficache.main.remap_re_hash)
-
-        opts = {
-            "reload_on_change": proc_obj.settings("reload"),
-            "output": proc_obj.settings("highlight"),
-        }
-
-        if "style" in proc_obj.debugger.settings:
-            opts["style"] = proc_obj.settings("style")
-
-        pyficache.update_cache(filename)
-        line = pyficache.getline(filename, lineno, opts)
-        if not line:
-            if (
-                not source_text
-                and filename.startswith("<string: ")
-                and proc_obj.curframe.f_code
-            ):
-                # Deparse the code object into a temp file and remap the line from code
-                # into the corresponding line of the tempfile
-                co = proc_obj.curframe.f_code
-                tempdir = proc_obj.settings("tempdir")
-                temp_filename, name_for_code = deparse_and_cache(co, proc_obj.errmsg,
-                                                                 tempdir=tempdir)
-                lineno = 1
-                # _, lineno = pyficache.unmap_file_line(temp_filename, lineno, True)
-                if temp_filename:
-                    filename = temp_filename
-                pass
-
-            else:
-                # FIXME:
-                if source_text:
-                    lines = source_text.split("\n")
-                    temp_name = "string-"
-                else:
-                    # try with good ol linecache and consider fixing pyficache
-                    lines = linecache.getlines(filename)
-                    temp_name = filename
-                if lines:
-                    # FIXME: DRY code with version in cmdproc.py print_location
-                    prefix = osp.basename(temp_name).split(".")[0]
-                    fd = tempfile.NamedTemporaryFile(
-                        suffix=".py", prefix=prefix, delete=False,
-                        dir=proc_obj.settings("tempdir"),
-                    )
-                    with fd:
-                        fd.write("".join(lines))
-                        remapped_file = fd.name
-                        pyficache.remap_file(remapped_file, filename)
-                    fd.close()
-                    pass
-                line = linecache.getline(filename, lineno, proc_obj.curframe.f_globals)
-            pass
-
-        fn_name = frame.f_code.co_name
-        last_i = frame.f_lasti
-        print_source_location_info(
-            intf_obj.msg,
-            filename,
-            lineno,
-            fn_name,
-            remapped_file=remapped_file,
-            f_lasti=last_i,
-        )
-        if line and len(line.strip()) != 0:
-            if proc_obj.event:
-                print_source_line(
-                    intf_obj.msg, lineno, line, proc_obj.event2short[proc_obj.event]
-                )
-            pass
-        if "<string>" != filename:
-            break
-        pass
-
-    if proc_obj.event in ["return", "exception"]:
-        val = proc_obj.event_arg
-        intf_obj.msg("R=> %s" % proc_obj._saferepr(val))
-        pass
-    return True
-
-
 # Default settings for command processor method call
 DEFAULT_PROC_OPTS = {
     # A list of debugger initialization files to read on first command
@@ -319,12 +175,25 @@ DEFAULT_PROC_OPTS = {
 }
 
 
-class CommandProcessor(Mprocessor.Processor):
+class CommandProcessor(Processor):
     def __init__(self, core_obj, opts=None):
-        get_option = lambda key: Mmisc.option_set(opts, key, DEFAULT_PROC_OPTS)
-        Mprocessor.Processor.__init__(self, core_obj)
+        def get_option_fn(key):
+            return Mmisc.option_set(opts, key, DEFAULT_PROC_OPTS)
 
-        self.continue_running = False  # True if we should leave command loop
+        get_option = get_option_fn
+        self.core = core_obj
+        self.debugger = core_obj.debugger
+
+        self.aliases = {}
+        # "contine_running" is used by step/next/contine to signal breaking out of
+        # the command evaluation loop.
+        self.continue_running = False
+
+        # "fast_continue" is used if we should try to see if we can
+        # remove the debugger callback hook altogether. It is used by
+        # the "continue" command, but not stepping (step, next, finish).
+        self.fast_continue = False
+
         self.event2short = dict(EVENT2SHORT)
         self.event2short["signal"] = "?!"
         self.event2short["brkpt"] = "xx"
@@ -339,12 +208,10 @@ class CommandProcessor(Mprocessor.Processor):
         # command name before alias or macro resolution
         self.cmd_name = ""
         self.cmd_queue = []  # Queued debugger commands
-        self.completer = lambda text, state: Mcomplete.completer(self, text, state)
+        self.completer = lambda text, state: completer(self, text, state)
         self.current_command = ""  # Current command getting run
         self.debug_nest = 1
         self.display_mgr = Mdisplay.DisplayMgr()
-
-        self.file2file_remap = {}
         self.intf = core_obj.debugger.intf
         self.last_command = None  # Initially a no-op
         self.precmd_hooks = []
@@ -390,16 +257,11 @@ class CommandProcessor(Mprocessor.Processor):
         self.stack = []
         self.thread_name = None
         self.frame_thread_name = None
+
         initfile_list = get_option("initfile_list")
         for init_cmdfile in initfile_list:
             self.queue_startfile(init_cmdfile)
         return
-
-    def add_remap_pat(self, pat, replace, clear_remap=True):
-        pyficache.main.add_remap_pat(pat, replace, clear_remap)
-        if clear_remap:
-            self.file2file_remap = {}
-            pyficache.file2file_remap = {}
 
     def _saferepr(self, str, maxwidth=None):
         if maxwidth is None:
@@ -411,6 +273,12 @@ class CommandProcessor(Mprocessor.Processor):
             return False
         self.preloop_hooks.insert(position, hook)
         return True
+
+    def add_remap_pat(self, pat, replace, clear_remap=True):
+        pyficache.main.add_remap_pat(pat, replace, clear_remap)
+        if clear_remap:
+            self.file2file_remap = {}
+            pyficache.file2file_remap = {}
 
     # To be overridden in derived debuggers
     def defaultFile(self):
@@ -459,10 +327,10 @@ class CommandProcessor(Mprocessor.Processor):
             line = pyficache.getline(filename, lineno, opts)
         self.current_source_text = line
         if self.settings("skip") is not None:
-            if Mbytecode.is_def_stmt(line, frame):
-                return True
-            if Mbytecode.is_class_def(line, frame):
-                return True
+            if is_def_stmt(line, frame):
+                return self.event_processor
+            if is_class_def(line, frame):
+                return self.event_processor
             pass
         self.thread_name = Mthread.current_thread_name()
         self.frame_thread_name = self.thread_name
@@ -470,29 +338,35 @@ class CommandProcessor(Mprocessor.Processor):
         self.process_commands()
         if filename == "<string>":
             pyficache.remove_remap_file("<string>")
-        return True
+        return self.event_processor
 
     def forget(self):
-        """ Remove memory of state variables set in the command processor """
+        """Remove memory of state variables set in the command processor"""
+
+        # call frame stack.
         self.stack = []
+
+        # Current frame index in call frame stack; 0 is the oldest frame.
         self.curindex = 0
+
         self.curframe = None
         self.thread_name = None
         self.frame_thread_name = None
         return
 
-    def eval(self, arg):
+    def eval(self, arg, show_error=True):
         """Eval string arg in the current frame context."""
         try:
             return eval(arg, self.curframe.f_globals, self.curframe.f_locals)
-        except:
-            t, v = sys.exc_info()[:2]
+        except Exception:
+            t, _ = sys.exc_info()[:2]
             if isinstance(t, str):
                 exc_type_name = t
                 pass
             else:
                 exc_type_name = t.__name__
-            self.errmsg(str("%s: %s" % (exc_type_name, arg)))
+            if show_error:
+                self.errmsg(str("%s: %s" % (exc_type_name, arg)))
             raise
         return None  # Not reached
 

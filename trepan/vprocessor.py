@@ -27,9 +27,10 @@ class Processor:
     the events.
     """
 
-    def __init__(self, core_obj):
+    def __init__(self, core_obj, opts=None):
         self.core = core_obj
         self.debugger = core_obj.debugger
+        self.opts = opts
         return
 
     # Note for errmsg, msg, and msg_nocr we don't want to simply make

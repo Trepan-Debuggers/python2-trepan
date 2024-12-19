@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2008-2010, 2013-2018, 2020-2021 Rocky Bernstein
+#   Copyright (C) 2008-2010, 2013-2018, 2020-2021, 2024 Rocky Bernstein
 #   <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
@@ -14,9 +14,15 @@
 #
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import inspect, linecache, sys, shlex, tempfile, traceback, types
+import inspect
+import linecache
 import os.path as osp
 import pyficache
+import shlex
+import sys
+import tempfile
+import traceback
+import types
 from repr import Repr
 from pygments.console import colorize
 
@@ -67,11 +73,19 @@ def get_stack(f, t, botframe, proc_obj=None):
     that are really around may be excluded unless we are debugging the
     sebugger. Also we will add traceback frame on top if that
     exists."""
-    exclude_frame = lambda f: False
+
+    def false_fn(f):
+        return false_fn
+
+    def fn_is_ignored(f):
+        return proc_obj.core.ignore_filter.is_excluded(f)
+
+
+    exclude_frame = false_fn
     if proc_obj:
         settings = proc_obj.debugger.settings
         if not settings["dbg_trepan"]:
-            exclude_frame = lambda f: proc_obj.core.ignore_filter.is_included(f)
+            exclude_frame = fn_is_ignored
             pass
         pass
     stack = []

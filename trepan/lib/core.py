@@ -33,10 +33,11 @@ import pyficache
 import tracer
 
 # Our local modules
-from trepan.lib import breakpoint, default
-from trepan.lib.stack import count_frames
-from trepan import misc as Mmisc
 from trepan.clifns import search_file
+from trepan.lib.breakpoint import BreakpointManager
+from trepan.lib.default import START_OPTS, STOP_OPTS
+from trepan.lib.stack import count_frames
+from trepan.misc import option_set
 from trepan.processor.cmdproc import CommandProcessor
 from trepan.processor.trace import PrintProcessor
 
@@ -62,10 +63,10 @@ class DebuggerCore:
 
         import trepan.bwprocessor as Mbwproc
 
-        get_option       = lambda key: Mmisc.option_set(opts, key,
-                                                        self.DEFAULT_INIT_OPTS)
+        get_option       = lambda key: option_set(opts, key,
+                                                  self.DEFAULT_INIT_OPTS)
 
-        self.bpmgr           = breakpoint.BreakpointManager()
+        self.bpmgr           = BreakpointManager()
         self.current_bp      = None
         self.debugger        = debugger
 
@@ -139,7 +140,7 @@ class DebuggerCore:
         """Add `frame_or_fn' to the list of functions that are not to
         be debugged"""
         for frame_or_fn in frames_or_fns:
-            rc = self.ignore_filter.add_include(frame_or_fn)
+            rc = self.ignore_filter.add(frame_or_fn)
             pass
         return rc
 
@@ -229,8 +230,7 @@ class DebuggerCore:
         #    sys.settrace(self._trace_dispatch)
         try:
             self.trace_hook_suspend = True
-            get_option = lambda key: Mmisc.option_set(opts, key,
-                                                      default.START_OPTS)
+            get_option = lambda key: option_set(opts, key, START_OPTS)
 
             add_hook_opts = get_option('add_hook_opts')
 
@@ -238,7 +238,7 @@ class DebuggerCore:
             if not tracer.is_started() or get_option('force'):
                 # FIXME: should filter out opts not for tracer
 
-                tracer_start_opts = default.START_OPTS.copy()
+                tracer_start_opts = START_OPTS.copy()
                 if opts:
                     tracer_start_opts.update(opts.get('tracer_start', {}))
                 tracer_start_opts['trace_fn'] = self.trace_dispatch
@@ -257,8 +257,7 @@ class DebuggerCore:
         #    pdb.set_trace(None)
         try:
             self.trace_hook_suspend = True
-            get_option = lambda key: Mmisc.option_set(options, key,
-                                                      default.STOP_OPTS)
+            get_option = lambda key: option_set(options, key, STOP_OPTS)
             args = [self.trace_dispatch]
             remove = get_option("remove")
             if remove:
@@ -419,6 +418,47 @@ class DebuggerCore:
         different line). We could put that here, but since that seems
         processor-specific I think it best to distribute the checks.'''
 
+        # for debugging
+        # print("XXX+ trace dispatch:", frame.f_code.co_name, frame.f_lineno, event, arg)
+
+        # Check to see if are in a call but we should be stepping over the call
+        # using "next" of "finish". If so, then we can speed tracing by
+        # removing further tracing. Not though that we *also* must make sure
+        # that we don't have any breakpoint set, since we have to check
+        # for breakpoints in a kind of slow way of checking all events.
+
+        if (
+            event == "call"
+            and self.last_frame != frame
+            and len(self.bpmgr.bplist) == 0
+            and self.stop_level is not None
+            and self.stop_level < count_frames(frame)
+            and self.current_thread == threading.current_thread()
+        ):
+            # We are "finish"ing or "next"ing and should not be tracing into this call
+            # or any other calls from this. Return Nont to not trace further.
+            # print("""trace_dispatch: "finish"ing or "next"ing from call event""")
+            return None
+
+        self.event = event
+
+        # FIXME: Understand what's going on here better.
+        # When None gets returned, the frame's f_trace seems to get set
+        # to None. Somehow this is changing other frames when get passed
+        # to this routine which also have their f_trace set to None.
+        # This will disallow a command like "jump" from working properly,
+        # which will give a cryptic the message on setting f_lineno:
+        #   f_lineno can only be set by a trace function
+        if self.ignore_filter and self.ignore_filter.is_excluded(frame):
+            # print("trace_dispatch: ignore_filter", self.ignore_filter, frame, frame.f_lineno, event, arg) # for debugging
+            return self
+
+        if self.trace_hook_suspend:
+            # print("XXX trace_dispatch: hook suspended")
+            return None
+
+        # print("XXX+ trace dispatch", frame, frame.f_lineno, event, arg) # for debugging
+
         # For now we only allow one instance in a process
         # In Python 2.6 and beyond one can use "with threading.Lock():"
         try:
@@ -435,7 +475,7 @@ class DebuggerCore:
             # This will disallow a command like "jump" from working properly,
             # which will give a cryptic the message on setting f_lineno:
             #   f_lineno can only be set by a trace function
-            if self.ignore_filter and self.ignore_filter.is_included(frame):
+            if self.ignore_filter and self.ignore_filter.is_excluded(frame):
                 return True
 
             if self.debugger.settings['trace']:

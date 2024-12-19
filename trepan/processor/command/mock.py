@@ -18,6 +18,7 @@ demonstrating how the command works.'''
 
 import sys
 from trepan.lib import breakpoint, default
+from tracer import tracefilter
 
 class MockIO:
     def readline(self, prompt='', add_to_history=False):
@@ -78,7 +79,6 @@ class MockProcessor:
     pass
 
 # External Egg packages
-import tracefilter
 
 class MockDebuggerCore:
     def __init__(self, debugger):

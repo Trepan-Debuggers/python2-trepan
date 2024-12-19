@@ -34,7 +34,6 @@ if necessary, first.
 # we see below. So for now, we'll live with the code duplication.
 
 import sys
-from typing import Callable, Optional
 
 from trepan import debugger as Mdebugger, post_mortem as Mpost_mortem
 

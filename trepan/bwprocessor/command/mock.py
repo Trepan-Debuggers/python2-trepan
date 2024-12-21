@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2013 Rocky Bernstein
+#   Copyright (C) 2013, 2024 Rocky Bernstein
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -15,10 +15,13 @@
 #    along with this program; if not, write to the Free Software
 #    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 #    02110-1301 USA.
-''' Not a command. A stub class used by a command in its 'main' for
-demonstrating how the command works.'''
+"""Not a command. A stub class used by a command in its 'main' for
+demonstrating how the command works."""
 
-import os, sys
+import sys
+# External Egg packages
+from tracer import tracefilter
+
 
 from trepan.lib import breakpoint, default
 
@@ -77,9 +80,6 @@ class MockProcessor:
         self.intf[-1].errmsg('Undefined mock command: "%s' % cmd)
         return
     pass
-
-# External Egg packages
-import tracefilter
 
 class MockDebuggerCore:
     def __init__(self, debugger):

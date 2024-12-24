@@ -42,6 +42,7 @@ from pygments.token import (
 )
 
 from trepan.lib.default import DEBUGGER_SETTINGS
+from xdis.version_info import PYTHON_VERSION_TRIPLE
 
 # Set up my own color scheme with some additional definitions.
 color_scheme = TERMINAL_COLORS.copy()
@@ -93,8 +94,10 @@ color_scheme[Token.Literal.String] = (purple, "yellow")
 # color_scheme[Keyword]  = ('darkblue', 'turquoise')
 # color_scheme[Number]  = ('darkblue', 'green')
 
-pyficache.dark_terminal_formatter.colorscheme = color_scheme
-pyficache.light_terminal_formatter.colorscheme = color_scheme
+if PYTHON_VERSION_TRIPLE[:2] > (2, 6):
+    pyficache.dark_terminal_formatter.colorscheme = color_scheme
+    pyficache.light_terminal_formatter.colorscheme = color_scheme
+
 
 
 def format_token(token_type, token_value, style):

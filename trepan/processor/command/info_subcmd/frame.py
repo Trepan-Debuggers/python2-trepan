@@ -135,7 +135,6 @@ class InfoFrame(Mbase_subcmd.DebuggerSubcommand):
 
         if hasattr(frame, "f_restricted"):
             self.msg("  restricted execution: %s" % frame.f_restricted)
-        self.msg("  current line number: %d" % frame.f_lineno)
 
         line_number = frame.f_lineno
         code = frame.f_code

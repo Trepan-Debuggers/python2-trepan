@@ -61,7 +61,7 @@ def dis(
     start_line=-1,
     end_line=None,
     relative_pos=False,
-    highlight="light",
+    style="none",
     start_offset=0,
     end_offset=None,
     include_header=False,
@@ -162,7 +162,7 @@ def dis(
             start_line=start_line,
             end_line=end_line,
             relative_pos=relative_pos,
-            highlight=highlight,
+            style=style,
             start_offset=start_offset,
             end_offset=end_offset,
             asm_format=asm_format,
@@ -186,7 +186,7 @@ def disassemble(
     start_line=-1,
     end_line=None,
     relative_pos=False,
-    highlight="light",
+    style="none",
     start_offset=0,
     end_offset=None,
     asm_format="extended",
@@ -207,7 +207,7 @@ def disassemble(
         co.co_cellvars,
         co.co_freevars,
         dict(findlinestarts(co)),
-        highlight,
+        style,
         start_offset=start_offset,
         end_offset=end_offset,
         opc=opc,
@@ -238,7 +238,7 @@ def disassemble_bytes(
     cells=(),
     freevars=(),
     linestarts={},
-    highlight="light",
+    style="none",
     start_offset=0,
     end_offset=None,
     opc=opc,
@@ -292,7 +292,7 @@ def disassemble_bytes(
                 pass
             if (cur_line > end_line) or (end_offset and offset > end_offset):
                 break
-            msg_nocr(format_token(LineNumber, "%4d" % cur_line, highlight=highlight))
+            msg_nocr(format_token(LineNumber, "%4d" % cur_line, style=style))
             msg_nocr(" ")
         else:
             if start_offset and offset and start_offset <= offset:
@@ -303,13 +303,13 @@ def disassemble_bytes(
 
         # Column: Current instruction indicator
         if offset == lasti:
-            msg_nocr(format_token(Arrow, "-->", highlight=highlight))
+            msg_nocr(format_token(Arrow, "-->", style=style))
         else:
             msg_nocr("   ")
 
         # Column: Jump target marker
         if offset in labels:
-            msg_nocr(format_token(Arrow, ">>", highlight=highlight))
+            msg_nocr(format_token(Arrow, ">>", style=style))
         else:
             msg_nocr("  ")
 
@@ -319,8 +319,8 @@ def disassemble_bytes(
 
         # Column: Instruction bytes
         if asm_format in ("extended-bytes", "bytes"):
-            msg_nocr(format_token(Symbol, "|", highlight=highlight))
-            msg_nocr(format_token(Hex, "%02x" % instr.opcode, highlight=highlight))
+            msg_nocr(format_token(Symbol, "|", style=style))
+            msg_nocr(format_token(Hex, "%02x" % instr.opcode, style=style))
             if instr.inst_size == 1:
                 # Not 3.6 or later
                 msg_nocr(" " * (2 * 3))
@@ -330,23 +330,23 @@ def disassemble_bytes(
                 if instr.has_arg:
                     msg_nocr(
                         format_token(
-                            Hex, "%02x" % (instr.arg % 256), highlight=highlight
+                            Hex, "%02x" % (instr.arg % 256), style=style
                         )
                     )
                 else:
-                    msg_nocr(format_token(Hex, "00", highlight=highlight))
+                    msg_nocr(format_token(Hex, "00", style=style))
             elif instr.inst_size == 3:
                 # Not 3.6 or later
                 opbyte, operand_byte = divmod(instr.arg, 256)
-                msg_nocr(format_token(Hex, "%02x" % opbyte, highlight=highlight))
+                msg_nocr(format_token(Hex, "%02x" % opbyte, style=style))
                 msg_nocr(" ")
-                msg_nocr(format_token(Hex, "%02x" % operand_byte, highlight=highlight))
+                msg_nocr(format_token(Hex, "%02x" % operand_byte, style=style))
 
-            msg_nocr(format_token(Symbol, "|", highlight=highlight))
+            msg_nocr(format_token(Symbol, "|", style=style))
             msg_nocr(" ")
 
         # Column: Opcode name
-        msg_nocr(format_token(Opcode, instr.opname.ljust(20), highlight=highlight))
+        msg_nocr(format_token(Opcode, instr.opname.ljust(20), style=style))
         msg_nocr(" ")
 
         # Column: Opcode argument
@@ -386,14 +386,14 @@ def disassemble_bytes(
                     argrepr = new_repr
         if argrepr is None or argrepr == "":
             if instr.arg is not None:
-                msg(format_token(Integer, str(instr.arg), highlight=highlight))
+                msg(format_token(Integer, str(instr.arg), style=style))
             else:
                 msg("")
                 pass
             pass
         else:
             # Column: Opcode argument details
-            msg(format_token(Details, argrepr, highlight=highlight))
+            msg(format_token(Details, argrepr, style=style))
         pass
 
     return code, offset

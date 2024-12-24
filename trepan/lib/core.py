@@ -68,6 +68,7 @@ class DebuggerCore:
 
         self.bpmgr           = BreakpointManager()
         self.current_bp      = None
+        self.current_thread  = None
         self.debugger        = debugger
 
         # Threading lock ensures that we don't have other traced threads

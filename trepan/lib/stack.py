@@ -20,33 +20,80 @@ import dis
 import inspect
 import linecache
 import os
+import os.path as osp
 import re
-
 from repr import repr
-from trepan.lib import bytecode as Mbytecode, printing as Mprint
-from trepan.lib import format as Mformat
-from trepan.lib.deparse import deparse_offset
-from trepan.lib import pp as Mpp
-from trepan.processor.cmdfns import deparse_fn
 
+import xdis
 from xdis import IS_PYPY, get_opcode
 from xdis.version_info import PYTHON_VERSION_TRIPLE
 
-_re_pseudo_file = re.compile(r"^<.+>")
+from trepan.lib.bytecode import op_at_frame
+from trepan.lib.format import (
+    Arrow,
+    Filename,
+    Function,
+    LineNumber,
+    Return,
+    format_python,
+    format_token,
+)
+from trepan.lib.pp import pp
+from trepan.lib.printing import printf
+from trepan.processor.cmdfns import deparse_fn
 
+try:
+    from trepan.lib.deparse import deparse_offset
 
-format_token = Mformat.format_token
+    have_deparser = True
+except ImportError:
 
-_with_local_varname = re.compile(r"_\[[0-9+]\]")
+    def deparse_offset(code, name, list_i, _):
+        return None, None
+
+    have_deparser = False
+
+_with_local_varname = re.compile(r"_\[[0-9+]]")
 
 
 def count_frames(frame, count_start=0):
-    "Return a count of the number of frames"
+    """Return a count of the number of frames"""
     count = -count_start
     while frame:
         count += 1
         frame = frame.f_back
     return count
+
+
+_re_pseudo_file = re.compile(r"^<.+>")
+
+
+# Taken from 3.7 inspect.py. However instead of an object name, we
+# start with the filename. Also, oddly getsourcefile wasn't
+# stripping out __pycache__. Finally, we've adapted this
+# so that it works back to 3.0.
+#
+def getsourcefile(filename):
+    """Return the filename that can be used to locate an object's source.
+    Return None if no way can be identified to get the source.
+    """
+    all_bytecode_suffixes = (".pyc", ".pyo")
+    if any(filename.endswith(s) for s in all_bytecode_suffixes):
+        if osp.dirname(filename).endswith("__pycache__"):
+            filename = osp.join(
+                osp.dirname(osp.dirname(filename)), osp.basename(filename)
+            )
+        filename = osp.splitext(filename)[0] + ".py"
+    elif any(filename.endswith(s) for s in [".abi3.so", ".so"]):
+        return None
+    if osp.exists(filename):
+        return filename
+    # only return a non-existent filename if the module has a PEP 302 loader
+    if getattr(inspect.getmodule(object, filename), "__loader__", None) is not None:
+        return filename
+    # or it is in the linecache
+    if filename in linecache.cache:
+        return filename
 
 
 def deparse_source_from_code(code):
@@ -60,40 +107,52 @@ def deparse_source_from_code(code):
         if len(source_lines) > 1:
             source_text += "..."
         source_text = '"%s"' % source_text
-    except:
+    except Exception:
         pass
     return source_text
 
 
-def format_stack_entry(
-    dbg_obj, frame_lineno, lprefix=": ", include_location=True, color="plain"
-):
-    """Format and return a stack entry gdb-style.
-    Note: lprefix is not used. It is kept for compatibility.
+def format_function_name(frame, style):
     """
-    frame, lineno = frame_lineno
-    filename = frame2file(dbg_obj.core, frame)
-
-    s = ""
-    if frame.f_code.co_name:
+    Pick out the function name from ``frame`` and return both the name
+    and the name styled according to ``style``
+    """
+    exec_type = is_eval_or_exec_stmt(frame)
+    if exec_type is not None:
+        funcname = get_call_function_name(frame)
+        if funcname is None:
+            funcname = exec_type
+    elif frame.f_code.co_name:
         funcname = frame.f_code.co_name
     else:
-        funcname = "<lambda>"
+        funcname = get_call_function_name(frame)
+        # funcname = "<lambda>"
         pass
-    s = format_token(Mformat.Function, funcname, highlight=color)
+    if funcname is None:
+        return None, None
+    return funcname, format_token(Function, funcname, style=style)
 
+
+def format_function_and_parameters(frame, debugger, style):
+    """ """
+
+    funcname, s = format_function_name(frame, style)
     args, varargs, varkw, local_vars = inspect.getargvalues(frame)
-    if "<module>" == funcname and ([], None, None,) == (
+    if "<module>" == funcname and (
+        [],
+        None,
+        None,
+    ) == (
         args,
         varargs,
         varkw,
     ):
         is_module = True
-        if is_exec_stmt(frame):
-            fn_name = format_token(Mformat.Function, "exec", highlight=color)
+        if is_eval_or_exec_stmt(frame):
+            fn_name = format_token(Function, "exec", style=style)
             source_text = deparse_source_from_code(frame.f_code)
             s += " %s(%s)" % (
-                format_token(Mformat.Function, fn_name, highlight=color),
+                format_token(Function, fn_name, style=style),
                 source_text,
             )
         else:
@@ -102,33 +161,51 @@ def format_stack_entry(
                 source_text = deparse_source_from_code(frame.f_code)
                 if fn_name:
                     s += " %s(%s)" % (
-                        format_token(Mformat.Function, fn_name, highlight=color),
+                        format_token(Function, fn_name, style=style),
                         source_text,
                     )
             pass
     else:
         is_module = False
         try:
-            parms = inspect.formatargvalues(args, varargs, varkw, local_vars)
-        except:
+            params = inspect.formatargvalues(args, varargs, varkw, local_vars)
+            formatted_params = format_python(params, style=style)
+        except Exception:
             pass
         else:
-            maxargstrsize = dbg_obj.settings["maxargstrsize"]
-            if len(parms) >= maxargstrsize:
-                parms = "%s...)" % parms[0:maxargstrsize]
+            maxargstrsize = debugger.settings["maxargstrsize"]
+            if len(params) >= maxargstrsize:
+                params = "%s...)" % params[0:maxargstrsize]
+                formatted_params = format_python(params, style=style)
                 pass
-            s += parms
+            s += formatted_params
         pass
 
-    # Note: ddd can't handle wrapped stack entries (yet).
-    # The 35 is hoaky though. FIXME.
-    if len(s) >= 35:
-        s += "\n    "
+    return is_module, s
 
+
+def format_return_and_location(
+    frame,
+    line_number,
+    debugger,
+    is_module,
+    include_location,
+    style,
+):
+    """
+    Format the return value if frame is at a return, and the location
+    of frame if `include_location` is True; `is_module` indicates whether
+    frame is a module or not.
+
+    A formatted string is returned; `style` gives the formatting
+    style used.
+    """
+    filename = frame2file(debugger.core, frame)
+    s = ""
     if "__return__" in frame.f_locals:
         rv = frame.f_locals["__return__"]
         s += "->"
-        s += format_token(Mformat.Return, repr(rv), highlight=color)
+        s += format_token(Return, repr(rv), style=style)
         pass
 
     if include_location:
@@ -137,10 +214,10 @@ def format_stack_entry(
         if is_module:
             if filename == "<string>":
                 s += " in exec"
-            elif not is_exec_stmt(frame) and not is_pseudo_file:
+            elif not is_eval_or_exec_stmt(frame) and not is_pseudo_file:
                 s += " file"
         elif s == "?()":
-            if is_exec_stmt(frame):
+            if is_eval_or_exec_stmt(frame):
                 s = "in exec"
                 # exec_str = get_exec_string(frame.f_back)
                 # if exec_str != None:
@@ -159,9 +236,31 @@ def format_stack_entry(
         if add_quotes_around_file:
             filename = "'%s'" % filename
         s += " %s at line %s" % (
-            format_token(Mformat.Filename, filename, highlight=color),
-            format_token(Mformat.LineNumber, "%r" % lineno, highlight=color),
+            format_token(Filename, filename, style=style),
+            format_token(LineNumber, str(line_number), style=style),
         )
+
+    return s
+
+
+def format_stack_entry(
+    dbg_obj, frame_lineno, lprefix=": ", include_location=True, style="none"):
+    """Format and return a stack entry gdb-style.
+    Note: lprefix is not used. It is kept for compatibility.
+    """
+    frame, line_number = frame_lineno
+
+    is_module, s = format_function_and_parameters(frame, dbg_obj, style)
+    args, varargs, varkw, local_vars = inspect.getargvalues(frame)
+
+    # Note: ddd can't handle wrapped stack entries (yet).
+    # The 35 is hoaky though. FIXME.
+    if len(s) >= 35:
+        s += "\n    "
+
+    s += format_return_and_location(
+        frame, line_number, dbg_obj, is_module, include_location, style
+    )
     return s
 
 
@@ -172,13 +271,29 @@ def frame2file(core_obj, frame, canonic=True):
         return core_obj.filename(frame.f_code.co_filename)
 
 
-def is_exec_stmt(frame):
-    """Return True if we are looking at an exec statement"""
-    return (
-        hasattr(frame, "f_back")
-        and frame.f_back is not None
-        and Mbytecode.op_at_frame(frame.f_back) == "EXEC_STMT"
-    )
+def frame2filesize(frame):
+    if "__cached__" in frame.f_globals:
+        bc_path = frame.f_globals["__cached__"]
+    else:
+        bc_path = None
+    path = frame.f_globals["__file__"]
+    source_path = getsourcefile(path)
+    fs_size = os.stat(source_path).st_size
+    if bc_path:
+        (
+            version,
+            timestamp,
+            magic_int,
+            co,
+            is_pypy,
+            bc_source_size,
+            sip_hash,
+        ) = xdis.load_module(bc_path, fast_load=True, get_code=False)
+        return fs_size, bc_source_size
+    elif osp.exists(path):
+        return fs_size, None
+    else:
+        return None, None
 
 
 def check_path_with_frame(frame, path):
@@ -212,13 +327,14 @@ def is_eval_or_exec_stmt(frame):
 
 opc = get_opcode(PYTHON_VERSION_TRIPLE, IS_PYPY)
 
+
 def get_call_function_name(frame):
     """If f_back is looking at a call function, return
     the name for it. Otherwise return None"""
     f_back = frame.f_back
     if not f_back:
         return None
-    if "CALL_FUNCTION" != Mbytecode.op_at_frame(f_back):
+    if "CALL_FUNCTION" != op_at_frame(f_back):
         return None
 
     co = f_back.f_code
@@ -237,18 +353,71 @@ def get_call_function_name(frame):
         pass
     return None
 
+# def get_call_function_name(frame):
+#     """If f_back is looking at a call function, return
+#     the name for it. Otherwise, return None"""
 
-def print_stack_entry(proc_obj, i_stack, color="plain", opts={}):
+#     # FIXME we need to be able to go backwards in variable-offset code
+#     # for this to work
+#     return None
+
+#     if not frame:
+#         return None
+#     # FIXME: also handle CALL_EX, CALL_FUNCTION_KW, CALL_FUNCTION_KW_EX?
+#     if op_at_frame(frame) not in ("CALL_FUNCTION", "CALL"):
+#         return None
+
+#     co = frame.f_code
+#     code = co.co_code
+#     # labels     = dis.findlabels(code)
+#     linestarts = dict(dis.findlinestarts(co))
+#     offset = frame.f_lasti
+#     last_LOAD_offset = -1
+#     while offset >= 0:
+#         opcode = code[offset]
+#         if opname[ord(opcode)] in ("LOAD_NAME", "LOAD_GLOBAL"):
+#             last_LOAD_offset = offset
+#         if offset in linestarts:
+#             break
+#         offset -= 2
+#         pass
+
+#     if last_LOAD_offset != -1:
+#         offset = last_LOAD_offset + 1
+#         arg = ord(code[offset])
+
+#         # FIXME: Calculate arg value with EXTENDED_ARG
+#         extended_arg = 0
+#         extended_arg_offset = last_LOAD_offset - 2
+#         opcode = code[extended_arg_offset]
+#         while extended_arg_offset >= 0 and opcode == opc.EXTENDED_ARG:
+#             extended_arg_offset -= 2
+#             opcode = code[extended_arg_offset]
+
+#         while extended_arg_offset >= 0 and opcode == opc.EXTENDED_ARG:
+#             extended_arg_offset += 1
+#             extended_arg += code[extended_arg_offset] << 256
+#             extended_arg_offset += 1
+#             opcode = code[extended_arg_offset]
+
+#         arg += extended_arg
+#         if arg < len(co.co_names):
+#             return co.co_names[arg]
+#     return None
+
+
+def print_stack_entry(proc_obj, i_stack, style="none", opts={}):
     frame_lineno = proc_obj.stack[len(proc_obj.stack) - i_stack - 1]
     frame, lineno = frame_lineno
     intf = proc_obj.intf[-1]
+    name = "??"
     if frame is proc_obj.curframe:
-        intf.msg_nocr(format_token(Mformat.Arrow, "->", highlight=color))
+        intf.msg_nocr(format_token(Arrow, "->", style=style))
     else:
         intf.msg_nocr("##")
     intf.msg(
         "%d %s"
-        % (i_stack, format_stack_entry(proc_obj.debugger, frame_lineno, color=color))
+        % (i_stack, format_stack_entry(proc_obj.debugger, frame_lineno, style=style))
     )
     if opts.get("source", False):
         filename = frame2file(proc_obj.core, frame)
@@ -262,13 +431,16 @@ def print_stack_entry(proc_obj, i_stack, color="plain", opts={}):
             last_i = 0
         else:
             last_i = frame.f_lasti
-        deparsed, nodeInfo = deparse_offset(frame.f_code, name, last_i, None)
+
         if name == "<module>":
-            name == "module"
-        if nodeInfo:
-            extractInfo = deparsed.extract_node_info(nodeInfo)
-            intf.msg(extractInfo.selectedLine)
-            intf.msg(extractInfo.markerLine)
+            name = "module"
+
+        if have_deparser:
+            deparsed, node_info = deparse_offset(frame.f_code, name, last_i, None)
+            if node_info:
+                extract_info = deparsed.extract_node_info(node_info)
+                intf.msg(extract_info.selectedLine)
+                intf.msg(extract_info.markerLine)
         pass
     if opts.get("full", False):
         names = list(frame.f_locals.keys())
@@ -279,28 +451,28 @@ def print_stack_entry(proc_obj, i_stack, color="plain", opts={}):
                 val = proc_obj.getval(name, frame.f_locals)
                 pass
             width = opts.get("width", 80)
-            Mpp.pp(val, width, intf.msg_nocr, intf.msg, prefix="%s =" % name)
+            pp(val, width, intf.msg_nocr, intf.msg, prefix="%s =" % name)
             pass
 
-        deparsed, nodeInfo = deparse_offset(frame.f_code, name, frame.f_lasti, None)
+        deparsed, node_info = deparse_offset(frame.f_code, name, frame.f_lasti, None)
         if name == "<module>":
-            name == "module"
-        if nodeInfo:
-            extractInfo = deparsed.extract_node_info(nodeInfo)
-            intf.msg(extractInfo.selectedLine)
-            intf.msg(extractInfo.markerLine)
+            name = "module"
+        if node_info:
+            extract_info = deparsed.extract_node_info(node_info)
+            intf.msg(extract_info.selectedLine)
+            intf.msg(extract_info.markerLine)
         pass
 
 
-def print_stack_trace(proc_obj, count=None, color="plain", opts={}):
-    "Print count entries of the stack trace"
+def print_stack_trace(proc_obj, count=None, style="none", opts={}):
+    "Print ``count`` entries of the stack trace"
     if count is None:
         n = len(proc_obj.stack)
     else:
         n = min(len(proc_obj.stack), count)
     try:
         for i in range(n):
-            print_stack_entry(proc_obj, i, color=color, opts=opts)
+            print_stack_entry(proc_obj, i, style=style, opts=opts)
     except KeyboardInterrupt:
         pass
     return
@@ -325,7 +497,7 @@ def print_dict(s, obj, title):
 
 
 def eval_print_obj(arg, frame, format=None, short=False):
-    """Return a string representation of an object """
+    """Return a string representation of an object"""
     try:
         if not frame:
             # ?? Should we have set up a dummy globals
@@ -334,18 +506,18 @@ def eval_print_obj(arg, frame, format=None, short=False):
         else:
             val = eval(arg, frame.f_globals, frame.f_locals)
             pass
-    except:
+    except Exception:
         return 'No symbol "' + arg + '" in current context.'
 
     return print_obj(arg, val, format, short)
 
 
 def print_obj(arg, val, format=None, short=False):
-    """Return a string representation of an object """
+    """Return a string representation of an object"""
     what = arg
     if format:
         what = format + " " + arg
-        val = Mprint.printf(val, format)
+        val = printf(val, format)
         pass
     s = "%s = %s" % (what, val)
     if not short:
@@ -382,47 +554,64 @@ if __name__ == "__main__":
         pass
 
     frame = inspect.currentframe()
-    m = MockDebugger()
-    print(
-        format_stack_entry(
-            m,
-            (
-                frame,
-                10,
-            ),
-        )
+    # print(frame2filesize(frame))
+    pyc_file = osp.join(
+        osp.dirname(__file__), "__pycache__", osp.basename(__file__)[:-3] + ".pyc"
     )
-    print(
-        format_stack_entry(
-            m,
-            (
-                frame,
-                10,
-            ),
-            color="dark",
-        )
-    )
-    print("frame count: %d" % count_frames(frame))
-    print("frame count: %d" % count_frames(frame.f_back))
-    print("frame count: %d" % count_frames(frame, 1))
-    print("def statement: x=5?: %s" % repr(Mbytecode.is_def_stmt("x=5", frame)))
-    # Not a "def" statement because frame is wrong spot
-    print(Mbytecode.is_def_stmt("def foo():", frame))
+    # print(pyc_file, getsourcefile(pyc_file))
 
-    def sqr(x):
-        x * x
+    from trepan.debugger import Debugger
+    m = MockDebugger()
+
+    # For testing print_stack_entry()
+
+    dd = Debugger()
+    my_frame = inspect.currentframe()
+    dd.core.processor.stack = [(my_frame, 100)]
+    dd.core.processor.curframe = my_frame
+    # print_stack_entry(dd.core.processor, 0, "fruity")
+
+    # print(format_stack_entry(m, (frame, 10,)))
+    print(
+        format_stack_entry(
+            m,
+            (
+                frame,
+                10,
+            ),
+            style="tango",
+        )
+    )
+    # print("frame count: %d" % count_frames(frame))
+    # print("frame count: %d" % count_frames(frame.f_back))
+    # print("frame count: %d" % count_frames(frame, 1))
+    # print("def statement: x=5?: %s" % repr(is_def_stmt("x=5", frame)))
+    # # Not a "def" statement because frame is wrong spot
+    # print(is_def_stmt("def foo():", frame))
+
+    # def sqr(x):
+    #     x * x
 
     def fn(x):
         frame = inspect.currentframe()
+        eval_str = is_eval_or_exec_stmt(frame.f_back)
+        if eval_str:
+            print("Caller is %s stmt" % eval_str)
+            print(format_stack_entry(dd, (frame.f_back, frame.f_back.f_code.co_firstlineno)))
+
+        _, mess = format_function_and_parameters(frame, dd, style="tango")
+        print(mess)
         print(get_call_function_name(frame))
         return
 
     print("=" * 30)
+    fn(5)
     eval("fn(5)")
-    print("=" * 30)
-    print(print_obj("fn", fn))
-    print("=" * 30)
-    print(print_obj("len", len))
-    print("=" * 30)
-    print(print_obj("MockDebugger", MockDebugger))
+    exec("fn(5)")
+    # print("=" * 30)
+    # print(print_obj("fn", fn))
+    # print("=" * 30)
+    # print(print_obj("len", len))
+    # print("=" * 30)
+    # print(print_obj("MockDebugger", MockDebugger))
     pass

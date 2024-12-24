@@ -105,6 +105,7 @@ class TestCompletion(unittest.TestCase):
                 # ['help br', ['break', 'breakpoints']],
             ]:
                 got = self.run_complete(line)
+
                 self.assertEqual(
                     expect_completion,
                     got,

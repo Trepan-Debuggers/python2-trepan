@@ -21,13 +21,15 @@ import re
 import sys
 
 import pyficache
-from pygments import highlight, lex, __version__ as pygments_version
+from pygments import format, highlight, lex, __version__ as pygments_version
+import re
+
 from pygments.console import ansiformat
 from pygments.filter import Filter
 from pygments.formatter import Formatter
-from pygments.formatters import TerminalFormatter
+from pygments.formatters import Terminal256Formatter, TerminalFormatter
 from pygments.formatters.terminal import TERMINAL_COLORS
-from pygments.lexers import RstLexer
+from pygments.lexers import PythonLexer, RstLexer
 from pygments.token import (
     Comment,
     Generic,
@@ -95,19 +97,15 @@ pyficache.dark_terminal_formatter.colorscheme = color_scheme
 pyficache.light_terminal_formatter.colorscheme = color_scheme
 
 
-def format_token(ttype, token, colorscheme=color_scheme, highlight="light"):
-    if "plain" == highlight:
-        return token
-    is_dark_bg = 1 if DEBUGGER_SETTINGS["highlight"] == "dark" else 0
-    color = colorscheme.get(ttype)
-    if color:
-        color = color[is_dark_bg]
-        if isinstance(token, tuple):
-            # have (token, start offset)
-            token = token[0]
-        return ansiformat(color, token)
-        pass
-    return token
+def format_token(token_type, token_value, style):
+    """
+    Decorate ``token_value`` with coloring matching `token_type` and return
+    the resulting string.
+    """
+    if style == "none" or style is None:
+        return token_value
+    terminal_256_formatter = Terminal256Formatter(style=style)
+    return format([[token_type, token_value]], terminal_256_formatter)
 
 
 Arrow = Name.Variable
@@ -402,7 +400,17 @@ rst_filt = RstFilter()
 rst_lex.add_filter(rst_filt)
 color_tf = RSTTerminalFormatter(colorscheme=color_scheme)
 mono_tf = MonoRSTTerminalFormatter()
+python_lexer = PythonLexer()
 
+
+def format_python(python_str, style):
+    """Add terminial formatting for a Python string
+    ``python_str``, using pygments style ``style``.
+    """
+    if style is None:
+        return python_str
+    terminal_formatter = Terminal256Formatter(style=style)
+    return highlight(python_str, python_lexer, terminal_formatter)
 
 def rst_text(text, mono, width=80):
     if mono:

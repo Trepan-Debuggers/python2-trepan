@@ -29,7 +29,6 @@ An Emacs interface is available via realgud_.
    entry-exit
    syntax
    commands
-   modules
    manpages
 
 Indices and tables

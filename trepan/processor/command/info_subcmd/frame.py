@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2015 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2015, 2023-2024 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -15,53 +15,60 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import inspect
+
+from pyficache import getline, highlight_string
+
 # Our local modules
 from trepan.processor.command import base_subcmd as Mbase_subcmd
-from trepan.lib import complete as Mcomplete
+from trepan.lib.complete import complete_token
+from trepan.lib.disassemble import opc
+from trepan.lib.format import Function, Keyword, format_token
+from trepan.lib.stack import format_function_name
+from trepan.lib.thred import current_thread_name
 from trepan.processor import frame as Mframe
+from trepan.processor.printing import format_code, format_frame
 
 
 class InfoFrame(Mbase_subcmd.DebuggerSubcommand):
     """**info frame** [-v] [ *frame-number* | *frame-object* ]
 
-Show the detailed information for *frame-number* or the current frame if
-*frame-number* is not specified. You can also give a frame object instead of
-a frame number
+    Show the detailed information for *frame-number* or the current frame if
+    *frame-number* is not specified. You can also give a frame object instead of
+    a frame number
 
-Specific information includes:
+    Specific information includes:
 
-* the frame number (if not an object)
+    * the frame number (if not an object)
 
-* the source-code line number that this frame is stopped in
+    * the source-code line number that this frame is stopped in
 
-* the last instruction executed; -1 if the program are before the first
-instruction
+    * the last instruction executed; -1 if the program are before the first
+    instruction
 
-* a function that tracing this frame or `None`
+    * a function that tracing this frame or `None`
 
-* Whether the frame is in restricted execution
+    * Whether the frame is in restricted execution
 
-If `-v` is given we show builtin and global names the frame sees.
+    If `-v` is given we show builtin and global names the frame sees.
 
-See also:
----------
+    See also:
+    ---------
 
-`info locals`, `info globals`, `info args`"""
+    `info locals`, `info globals`, `info args`"""
 
     min_abbrev = 2
-    max_args = 2
+    max_args = 3
     need_stack = True
-    short_help = '''Show detailed info about the current frame'''
+    short_help = """Show detailed info about the current frame"""
 
     def complete(self, prefix):
         proc_obj = self.proc
         low, high = Mframe.frame_low_high(proc_obj, None)
-        ary = [str(low+i) for i in range(high-low+1)]
+        ary = [str(low + i) for i in range(high - low + 1)]
         # FIXME: add in Thread names
-        return Mcomplete.complete_token(ary, prefix)
+        return complete_token(ary, prefix)
 
     def run(self, args):
-
         # FIXME: should DRY this with code.py
         proc = self.proc
         frame = proc.curframe
@@ -69,64 +76,129 @@ See also:
             self.errmsg("No frame selected.")
             return False
 
-        show_lists = False
-        if len(args) >= 1 and args[0] == '-v':
+        is_verbose = False
+        if len(args) >= 1 and args[0] == "-v":
             args.pop(0)
-            show_lists = True
+            is_verbose = True
 
+        style = self.settings["style"]
         frame_num = None
         if len(args) == 1:
             try:
                 frame_num = int(args[0])
                 i_stack = len(proc.stack)
-                if frame_num < -i_stack or frame_num > i_stack-1:
-                    self.errmsg(('a frame number number has to be in the range %d to %d.' +
-                                 ' Got: %d (%s).') % (-i_stack, i_stack-1,
-                                                      frame_num, args[0]))
+                if frame_num < -i_stack or frame_num > i_stack - 1:
+                    self.errmsg(
+                        (
+                            "a frame number number has to be in the range %d to %d."
+                            + " Got: %d (%s)."
+                        )
+                        % (-i_stack, i_stack - 1, frame_num, args[0])
+                    )
                     return False
                 frame = proc.stack[frame_num][0]
-            except:
+            except Exception:
                 try:
                     frame = eval(args[0], frame.f_globals, frame.f_locals)
-                except:
-                    self.errmsg('%s is not a evaluable as a frame object or frame number.' %
-                                 args[0])
+                except Exception:
+                    self.errmsg(
+                        "%s is not a evaluable as a frame object or frame number."
+                        % args[0]
+                    )
                     return False
                 if not inspect.isframe(frame):
-                    self.errmsg('%s is not a frame object' % frame)
+                    self.errmsg("%s is not a frame object" % frame)
                 pass
         else:
             frame_num = proc.curindex
 
-        mess = 'Frame %d' % Mframe.frame_num(proc, frame_num) \
-          if frame_num is not None else 'Frame Info'
+        mess = (
+            ("Frame %s" % Mframe.frame_num(proc, frame_num))
+            if frame_num is not None and proc.stack is not None
+            else "Frame Info"
+        )
         self.section(mess)
-        if hasattr(frame, 'f_restricted'):
-            self.msg('  restricted execution: %s' % frame.f_restricted)
-        self.msg('  current line number: %d' % frame.f_lineno)
-        self.msg('  last instruction: %d' % frame.f_lasti)
-        self.msg('  code: %s' % frame.f_code)
-        self.msg('  previous frame: %s' % frame.f_back)
-        if frame.f_exc_type:
-            self.msg('  exception type: %s' % frame.f_exc_type)
-            self.msg('  exception value: %s'% frame.f_exc_value)
-        self.msg('  tracing function: %s' % frame.f_trace)
 
-        if show_lists:
-            for name, field in [('Globals', 'f_globals'),
-                                ('Builtins', 'f_builtins'),
-                                ]:
-                vals = getattr(frame, field).keys()
+        function_name, formatted_func_name = format_function_name(frame, style=style)
+        if function_name is None:
+            formatted_func_name = "??"
+        f_args, f_varargs, f_keywords, f_locals = inspect.getargvalues(frame)
+        self.msg("  function name: %s" % formatted_func_name)
+        func_args = inspect.formatargvalues(f_args, f_varargs, f_keywords, f_locals)
+        formatted_func_signature = highlight_string(func_args, style=style).strip()
+        self.msg("  function args: %s" % formatted_func_signature)
+
+        formatted_thread_name = format_token(Function, current_thread_name(), style=style)
+        self.msg("  thread: %s" % formatted_thread_name)
+        # signature = highlight_string(inspect.signature(frame))
+        # self.msg(f"  signature : {signature}")
+
+        if hasattr(frame, "f_restricted"):
+            self.msg("  restricted execution: %s" % frame.f_restricted)
+        self.msg("  current line number: %d" % frame.f_lineno)
+
+        line_number = frame.f_lineno
+        code = frame.f_code
+        file_path = code.co_filename
+
+        line_text = getline(file_path, line_number, {"style": style})
+        if line_text is None:
+            self.msg("  current line number: %s" % frame.f_lineno)
+        else:
+            formatted_text = highlight_string(line_text.strip(), style=style)
+            self.msg("  current line number: %s: %s" % (frame.f_lineno, formatted_text))
+
+        f_lasti = frame.f_lasti
+        if f_lasti >= 0:
+            opname = opc.opname[code.co_code[f_lasti]]
+            opname_formatted = format_token(Keyword, opname, style=style)
+            self.msg("  instruction offset and opname: %d %s" % (frame.f_lasti, opname_formatted))
+            self.msg("  code: %s" % format_code(code, style))
+        else:
+            self.msg("  instruction offset: %s" % frame.f_lasti)
+
+        self.msg("  code: %s" % format_code(code, style))
+
+        if frame.f_back:
+            self.msg("  previous frame: %s" % format_frame(frame.f_back, style=style))
+        else:
+            self.msg("  no previous frame")
+        self.msg("  tracing function: %s" % frame.f_trace)
+        if hasattr(frame, "f_trace_opcodes"):
+            self.msg_nocr(
+                "  tracing opcodes: %s" % highlight_string(str(frame.f_trace_opcodes), style=style)
+            )
+        if hasattr(frame, "f_trace_lines"):
+            self.msg(
+                "  tracing lines: %s" % highlight_string(str(frame.f_trace_lines), style=style)
+            )
+
+        if is_verbose:
+            for name, field in [
+                ("Globals", "f_globals"),
+                ("Builtins", "f_builtins"),
+            ]:
+                # FIXME: not sure this is quite right.
+                # For now we'll strip out values that start with the option
+                # prefix "-".
+                vals = [
+                    field
+                    for field in getattr(frame, field).keys()
+                    if not field.startswith("-")
+                ]
                 if vals:
                     self.section(name)
                     m = self.columnize_commands(vals)
                     self.msg_nocr(m)
 
         return False
+
     pass
 
-if __name__ == '__main__':
-    from trepan.processor.command import mock, info as Minfo
+
+if __name__ == "__main__":
+    from trepan.processor.command import info as Minfo, mock
+
     d, cp = mock.dbg_setup()
     cp.setup()
     i = Minfo.InfoCommand(cp)

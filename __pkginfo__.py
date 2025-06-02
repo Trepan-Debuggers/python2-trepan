@@ -65,7 +65,7 @@ install_requires = [
     "nose>=1.0.0, <= 1.3.7",
     "pyficache >= 2.3.0",
     "pygments > 1.9",  # Later releases don't support Python 2.7
-    "spark_parser >= 1.8.9, <1.9.0",
+    "spark_parser >= 1.8.9, <1.9.2",
     "uncompyle6 >= 3.9.2",
     "term-background >= 1.0.1",
     "tracer >= 0.3.2",

@@ -16,5 +16,6 @@ function checkout_finish {
     cd $trepan2_owd
     git checkout $branch && pyenv local $PYTHON_VERSION && git pull
     rc=$?
+    make clean
     return $rc
 }

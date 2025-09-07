@@ -26,9 +26,6 @@ test: check
 #: Same as "check"
 nosetests: check
 
-#: Run all tests: unit, functional and integration
-check-short: test-unit-short test-functional-short test-integration-short
-
 # Check StructuredText long description formatting
 check-rst:
 

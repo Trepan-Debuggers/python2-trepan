@@ -8,8 +8,7 @@ trepan_merge_24_owd=$(pwd)
 mydir=$(dirname $bs)
 cd $mydir/..
 pyenv local $PYTHON_VERSION
-cd $(dirname ${BASH_SOURCE[0]})
-if . ./setup-python-2.4.sh; then
+if . ./admin-tools/setup-python-2.4.sh; then
     git merge master
 fi
 cd $trepan_merge_24_owd

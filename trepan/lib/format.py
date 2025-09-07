@@ -21,13 +21,15 @@ import re
 import sys
 
 import pyficache
-from pygments import highlight, lex, __version__ as pygments_version
+from pygments import format, highlight, lex, __version__ as pygments_version
+import re
+
 from pygments.console import ansiformat
 from pygments.filter import Filter
 from pygments.formatter import Formatter
-from pygments.formatters import TerminalFormatter
+from pygments.formatters import Terminal256Formatter, TerminalFormatter
 from pygments.formatters.terminal import TERMINAL_COLORS
-from pygments.lexers import RstLexer
+from pygments.lexers import PythonLexer, RstLexer
 from pygments.token import (
     Comment,
     Generic,
@@ -40,6 +42,7 @@ from pygments.token import (
 )
 
 from trepan.lib.default import DEBUGGER_SETTINGS
+from xdis.version_info import PYTHON_VERSION_TRIPLE
 
 # Set up my own color scheme with some additional definitions.
 color_scheme = TERMINAL_COLORS.copy()
@@ -94,8 +97,9 @@ color_scheme[Token.Literal.String] = (purple, "yellow")
 # color_scheme[Keyword]  = ('darkblue', 'turquoise')
 # color_scheme[Number]  = ('darkblue', 'green')
 
-pyficache.dark_terminal_formatter.colorscheme = color_scheme
-pyficache.light_terminal_formatter.colorscheme = color_scheme
+if PYTHON_VERSION_TRIPLE[:2] > (2, 6):
+    pyficache.dark_terminal_formatter.colorscheme = color_scheme
+    pyficache.light_terminal_formatter.colorscheme = color_scheme
 
 
 def format_token(ttype, token, colorscheme=color_scheme, highlight="light"):
@@ -411,7 +415,17 @@ rst_filt = RstFilter()
 rst_lex.add_filter(rst_filt)
 color_tf = RSTTerminalFormatter(colorscheme=color_scheme)
 mono_tf = MonoRSTTerminalFormatter()
+python_lexer = PythonLexer()
 
+
+def format_python(python_str, style):
+    """Add terminial formatting for a Python string
+    ``python_str``, using pygments style ``style``.
+    """
+    if style is None:
+        return python_str
+    terminal_formatter = Terminal256Formatter(style=style)
+    return highlight(python_str, python_lexer, terminal_formatter)
 
 def rst_text(text, mono, width=80):
     if mono:

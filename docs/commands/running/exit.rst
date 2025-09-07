@@ -1,8 +1,8 @@
 .. index:: exit
-.. _exit:
 
 Exit
 ----
+
 **exit** [*exitcode*]
 
 Hard exit of the debugged program.

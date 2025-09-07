@@ -1,4 +1,4 @@
-# Copyright (C) 2008-2010, 2013-2018, 2021-2022, 2024 Rocky Bernstein <rocky@gnu.org>
+# Copyright (C) 2008-2010, 2013-2018, 2021-2022, 2024-2025 Rocky Bernstein <rocky@gnu.org>
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
 
 # Things that change more often go here.
 copyright = """
-Copyright (C) 2008-2010, 2013-2018, 2020-2021, 2024 Rocky Bernstein <rocky@gnu.org>.
+Copyright (C) 2008-2010, 2013-2018, 2020-2021, 2024-2025 Rocky Bernstein <rocky@gnu.org>.
 """
 
 classifiers = [
@@ -97,7 +97,7 @@ install_requires = [
     "nose>=1.0.0, <= 1.3.7",
     "pyficache >= 2.3.0",
     "pygments == 1.4",  # Later releases don't support Python 2.4
-    "spark_parser >= 1.8.9, <1.9.0",
+    "spark_parser >= 1.8.9, <1.9.2",
     "uncompyle6 >= 3.9.2",
     "tracer >= 0.3.2",
     "xdis >= 6.1.1,<6.2.0",

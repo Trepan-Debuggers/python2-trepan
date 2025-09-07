@@ -172,7 +172,7 @@ class BWProcessor(Mprocessor.Processor):
     def defaultFile(self):
         """Produce a reasonable default."""
         filename = self.curframe.f_code.co_filename
-        # Consider using is_exec_stmt(). I just don't understand
+        # Consider using is_eval_or_exec_stmt(). I just don't understand
         # the conditions under which the below test is true.
         if filename == '<string>' and self.debugger.mainpyfile:
             filename = self.debugger.mainpyfile

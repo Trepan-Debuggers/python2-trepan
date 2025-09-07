@@ -6,7 +6,10 @@ Abstract
 ========
 
 This is a gdb-like debugger for Python. It is a rewrite of *pdb* from
-the ground up.
+the ground up. I was disappointed with the flakiness, imprecision, and
+poor quality of coding, modularity, and level of documentation when I
+first looked at *pdb*. Since Python 2.x is no longer supported, debuggers
+for this code will never improve either.
 
 A command-line interface (CLI) is provided as well as an remote access
 interface over TCP/IP.
@@ -14,8 +17,8 @@ interface over TCP/IP.
 See the Tutorial_ for how to use. See ipython-trepan_ for using this
 in *ipython* or an *ipython notebook*.
 
-This package is for Python 2.6 and 2.7. See trepan3k_ for the same code modified to work with Python 3.
-For Python before 2.4, use pydb_ .
+This package is for Python 2.6 and 2.7. See trepan3k_ Python 3 code
+which this code tries to track.
 
 Features
 ========

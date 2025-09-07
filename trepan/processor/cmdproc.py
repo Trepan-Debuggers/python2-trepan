@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2008-2010, 2013-2018, 2020-2022 Rocky Bernstein
+#   Copyright (C) 2008-2010, 2013-2018, 2020-2021, 2024-2025 Rocky Bernstein
 #   <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
@@ -14,26 +14,29 @@
 #
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import inspect, linecache, sys, shlex, tempfile, traceback, types
+import inspect
+import linecache
 import os.path as osp
 import pyficache
+import shlex
+import sys
+import traceback
+import types
 from repr import Repr
 from pygments.console import colorize
 
 
 from tracer import EVENT2SHORT
 
-from trepan import vprocessor as Mprocessor
-from trepan.lib import bytecode as Mbytecode
+from trepan.vprocessor import Processor
+from trepan.lib.bytecode import is_class_def, is_def_stmt
 from trepan import exception as Mexcept
 from trepan.lib import display as Mdisplay
 from trepan import misc as Mmisc
 from trepan.lib import file as Mfile
-from trepan.lib import stack as Mstack
 from trepan.lib import thred as Mthread
-from trepan.processor import complete as Mcomplete
-from trepan.processor.cmdfns import deparse_fn, source_tempfile_remap
-from trepan.lib.deparse import deparse_and_cache
+from trepan.processor.complete import completer
+from trepan.processor.printing import print_location
 
 # arg_split culled from ipython's routine
 def arg_split(s, posix=False):
@@ -67,7 +70,14 @@ def get_stack(f, t, botframe, proc_obj=None):
     that are really around may be excluded unless we are debugging the
     sebugger. Also we will add traceback frame on top if that
     exists."""
-    exclude_frame = lambda f: False
+
+    def false_fn(f):
+        return false_fn
+
+    def fn_is_ignored(f):
+        return proc_obj.core.ignore_filter.is_excluded(f)
+
+    exclude_frame = false_fn
     if proc_obj:
         settings = proc_obj.debugger.settings
         if not settings["dbg_trepan"]:
@@ -95,12 +105,11 @@ def get_stack(f, t, botframe, proc_obj=None):
 
 
 def run_hooks(obj, hooks, *args):
-    """Run each function in `hooks' with args"""
-    for hook in hooks:
-        if hook(obj, *args):
-            return True
-        pass
-    return False
+    """Run each function in `hooks' with args
+    Returns True if a hook failed and so the caller should
+    leave its command loop.
+    """
+    return any((hook(obj, *args) for hook in hooks))
 
 
 def resolve_name(obj, command_name):
@@ -113,7 +122,7 @@ def resolve_name(obj, command_name):
         pass
     try:
         return command_name.lower()
-    except:
+    except Exception:
         return None
     return
 
@@ -156,7 +165,6 @@ def print_source_location_info(
         pass
     print_fn(mess)
     return
-
 
 def print_location(proc_obj):
     """Show where we are. GUI's and front-end interfaces often
@@ -295,6 +303,8 @@ def print_location(proc_obj):
     return True
 
 
+=======
+>>>>>>> master
 # Default settings for command processor method call
 DEFAULT_PROC_OPTS = {
     # A list of debugger initialization files to read on first command
@@ -304,12 +314,25 @@ DEFAULT_PROC_OPTS = {
 }
 
 
-class CommandProcessor(Mprocessor.Processor):
+class CommandProcessor(Processor):
     def __init__(self, core_obj, opts=None):
-        get_option = lambda key: Mmisc.option_set(opts, key, DEFAULT_PROC_OPTS)
-        Mprocessor.Processor.__init__(self, core_obj)
+        def get_option_fn(key):
+            return Mmisc.option_set(opts, key, DEFAULT_PROC_OPTS)
 
-        self.continue_running = False  # True if we should leave command loop
+        get_option = get_option_fn
+        self.core = core_obj
+        self.debugger = core_obj.debugger
+
+        self.aliases = {}
+        # "contine_running" is used by step/next/contine to signal breaking out of
+        # the command evaluation loop.
+        self.continue_running = False
+
+        # "fast_continue" is used if we should try to see if we can
+        # remove the debugger callback hook altogether. It is used by
+        # the "continue" command, but not stepping (step, next, finish).
+        self.fast_continue = False
+
         self.event2short = dict(EVENT2SHORT)
         self.event2short["signal"] = "?!"
         self.event2short["brkpt"] = "xx"
@@ -324,12 +347,10 @@ class CommandProcessor(Mprocessor.Processor):
         # command name before alias or macro resolution
         self.cmd_name = ""
         self.cmd_queue = []  # Queued debugger commands
-        self.completer = lambda text, state: Mcomplete.completer(self, text, state)
+        self.completer = lambda text, state: completer(self, text, state)
         self.current_command = ""  # Current command getting run
         self.debug_nest = 1
         self.display_mgr = Mdisplay.DisplayMgr()
-
-        self.file2file_remap = {}
         self.intf = core_obj.debugger.intf
         self.last_command = None  # Initially a no-op
         self.precmd_hooks = []
@@ -375,16 +396,11 @@ class CommandProcessor(Mprocessor.Processor):
         self.stack = []
         self.thread_name = None
         self.frame_thread_name = None
+
         initfile_list = get_option("initfile_list")
         for init_cmdfile in initfile_list:
             self.queue_startfile(init_cmdfile)
         return
-
-    def add_remap_pat(self, pat, replace, clear_remap=True):
-        pyficache.main.add_remap_pat(pat, replace, clear_remap)
-        if clear_remap:
-            self.file2file_remap = {}
-            pyficache.file2file_remap = {}
 
     def _saferepr(self, str, maxwidth=None):
         if maxwidth is None:
@@ -397,11 +413,17 @@ class CommandProcessor(Mprocessor.Processor):
         self.preloop_hooks.insert(position, hook)
         return True
 
+    def add_remap_pat(self, pat, replace, clear_remap=True):
+        pyficache.main.add_remap_pat(pat, replace, clear_remap)
+        if clear_remap:
+            self.file2file_remap = {}
+            pyficache.file2file_remap = {}
+
     # To be overridden in derived debuggers
     def defaultFile(self):
         """Produce a reasonable default."""
         filename = self.curframe.f_code.co_filename
-        # Consider using is_exec_stmt(). I just don't understand
+        # Consider using is_eval_or exec_stmt(). I just don't understand
         # the conditions under which the below test is true.
         if filename == "<string>" and self.debugger.mainpyfile:
             filename = self.debugger.mainpyfile
@@ -444,10 +466,10 @@ class CommandProcessor(Mprocessor.Processor):
             line = pyficache.getline(filename, lineno, opts)
         self.current_source_text = line
         if self.settings("skip") is not None:
-            if Mbytecode.is_def_stmt(line, frame):
-                return True
-            if Mbytecode.is_class_def(line, frame):
-                return True
+            if is_def_stmt(line, frame):
+                return self.event_processor
+            if is_class_def(line, frame):
+                return self.event_processor
             pass
         self.thread_name = Mthread.current_thread_name()
         self.frame_thread_name = self.thread_name
@@ -455,29 +477,35 @@ class CommandProcessor(Mprocessor.Processor):
         self.process_commands()
         if filename == "<string>":
             pyficache.remove_remap_file("<string>")
-        return True
+        return self.event_processor
 
     def forget(self):
-        """ Remove memory of state variables set in the command processor """
+        """Remove memory of state variables set in the command processor"""
+
+        # call frame stack.
         self.stack = []
+
+        # Current frame index in call frame stack; 0 is the oldest frame.
         self.curindex = 0
+
         self.curframe = None
         self.thread_name = None
         self.frame_thread_name = None
         return
 
-    def eval(self, arg):
+    def eval(self, arg, show_error=True):
         """Eval string arg in the current frame context."""
         try:
             return eval(arg, self.curframe.f_globals, self.curframe.f_locals)
-        except:
-            t, v = sys.exc_info()[:2]
+        except Exception:
+            t, _ = sys.exc_info()[:2]
             if isinstance(t, str):
                 exc_type_name = t
                 pass
             else:
                 exc_type_name = t.__name__
-            self.errmsg(str("%s: %s" % (exc_type_name, arg)))
+            if show_error:
+                self.errmsg(str("%s: %s" % (exc_type_name, arg)))
             raise
         return None  # Not reached
 

@@ -26,9 +26,9 @@ class TestStack(unittest.TestCase):
             expect = 'startTest'
             pass
         self.assertEqual(expect, Mstack.get_call_function_name(f))
-        self.assertFalse(Mstack.is_exec_stmt(f))
+        self.assertFalse(Mstack.is_eval_or_exec_stmt(f))
         self.result = False
-        exec("self.result = Mstack.is_exec_stmt(inspect.currentframe())")
+        exec("self.result = Mstack.is_eval_or_exec_stmt(inspect.currentframe())")
         self.assertTrue(self.result)
         return
 

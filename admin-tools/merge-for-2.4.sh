@@ -10,10 +10,6 @@ cd $mydir/..
 pyenv local $PYTHON_VERSION
 cd $(dirname ${BASH_SOURCE[0]})
 if . ./setup-python-2.4.sh; then
-    git merge python-master
-=======
-if . ./admin-tools/setup-python-2.4.sh; then
     git merge master
->>>>>>> master
 fi
 cd $trepan_merge_24_owd

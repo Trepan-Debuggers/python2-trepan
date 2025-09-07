@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   Copyright (C) 2008-2010, 2013-2015, 2017, 2022 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008-2010, 2013-2015, 2017, 2022, 2025 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -38,13 +38,13 @@ from trepan.misc import option_set
 import trepan.lib.sighandler as Msig
 
 # Common Python packages
-import sys, types
+import sys
+import types
 
 # External Egg packages
 import pyficache
 import tracer
 from tracer import tracefilter
->>>>>>> master
 
 debugger_obj = None
 
@@ -238,7 +238,7 @@ class Debugger:
     # Note: has to come after functions listed in ignore_filter.
     DEFAULT_INIT_OPTS = {
         # What routines will we not trace into?
-        'ignore_filter': tracefilter.TraceFilter(
+        "ignore_filter": tracefilter.TraceFilter(
             [tracer.start, tracer.stop,
              run_eval, run_call, run_eval, run_script]),
 

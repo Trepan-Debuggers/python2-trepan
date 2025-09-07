@@ -112,7 +112,7 @@ def deparse_source_from_code(code):
     return source_text
 
 
-def format_function_name(frame, style):
+def format_function_name(frame):
     """
     Pick out the function name from ``frame`` and return both the name
     and the name styled according to ``style``
@@ -130,7 +130,7 @@ def format_function_name(frame, style):
         pass
     if funcname is None:
         return None, None
-    return funcname, format_token(Function, funcname, style=style)
+    return funcname, format_token(Function, funcname)
 
 
 def format_function_and_parameters(frame, debugger, style):
@@ -149,10 +149,10 @@ def format_function_and_parameters(frame, debugger, style):
     ):
         is_module = True
         if is_eval_or_exec_stmt(frame):
-            fn_name = format_token(Function, "exec", style=style)
+            fn_name = format_token(Function, "exec")
             source_text = deparse_source_from_code(frame.f_code)
             s += " %s(%s)" % (
-                format_token(Function, fn_name, style=style),
+                format_token(Function, fn_name),
                 source_text,
             )
         else:
@@ -161,7 +161,7 @@ def format_function_and_parameters(frame, debugger, style):
                 source_text = deparse_source_from_code(frame.f_code)
                 if fn_name:
                     s += " %s(%s)" % (
-                        format_token(Function, fn_name, style=style),
+                        format_token(Function, fn_name),
                         source_text,
                     )
             pass
@@ -169,14 +169,14 @@ def format_function_and_parameters(frame, debugger, style):
         is_module = False
         try:
             params = inspect.formatargvalues(args, varargs, varkw, local_vars)
-            formatted_params = format_python(params, style=style)
+            formatted_params = format_python(params)
         except Exception:
             pass
         else:
             maxargstrsize = debugger.settings["maxargstrsize"]
             if len(params) >= maxargstrsize:
                 params = "%s...)" % params[0:maxargstrsize]
-                formatted_params = format_python(params, style=style)
+                formatted_params = format_python(params)
                 pass
             s += formatted_params
         pass
@@ -205,7 +205,7 @@ def format_return_and_location(
     if "__return__" in frame.f_locals:
         rv = frame.f_locals["__return__"]
         s += "->"
-        s += format_token(Return, repr(rv), style=style)
+        s += format_token(Return, repr(rv))
         pass
 
     if include_location:
@@ -236,8 +236,8 @@ def format_return_and_location(
         if add_quotes_around_file:
             filename = "'%s'" % filename
         s += " %s at line %s" % (
-            format_token(Filename, filename, style=style),
-            format_token(LineNumber, str(line_number), style=style),
+            format_token(Filename, filename),
+            format_token(LineNumber, str(line_number)),
         )
 
     return s
@@ -331,6 +331,8 @@ opc = get_opcode(PYTHON_VERSION_TRIPLE, IS_PYPY)
 def get_call_function_name(frame):
     """If f_back is looking at a call function, return
     the name for it. Otherwise return None"""
+    if not hasattr(frame, "f_back"):
+        return None
     f_back = frame.f_back
     if not f_back:
         return None
@@ -412,12 +414,12 @@ def print_stack_entry(proc_obj, i_stack, style="none", opts={}):
     intf = proc_obj.intf[-1]
     name = "??"
     if frame is proc_obj.curframe:
-        intf.msg_nocr(format_token(Arrow, "->", style=style))
+        intf.msg_nocr(format_token(Arrow, "->"))
     else:
         intf.msg_nocr("##")
     intf.msg(
         "%d %s"
-        % (i_stack, format_stack_entry(proc_obj.debugger, frame_lineno, style=style))
+        % (i_stack, format_stack_entry(proc_obj.debugger, frame_lineno))
     )
     if opts.get("source", False):
         filename = frame2file(proc_obj.core, frame)
@@ -472,7 +474,7 @@ def print_stack_trace(proc_obj, count=None, style="none", opts={}):
         n = min(len(proc_obj.stack), count)
     try:
         for i in range(n):
-            print_stack_entry(proc_obj, i, style=style, opts=opts)
+            print_stack_entry(proc_obj, i, opts=opts)
     except KeyboardInterrupt:
         pass
     return

@@ -286,7 +286,7 @@ def disassemble_bytes(
                 pass
             if (cur_line > end_line) or (end_offset and offset > end_offset):
                 break
-            msg_nocr(format_token(LineNumber, "%4d" % cur_line, style=style))
+            msg_nocr(format_token(LineNumber, "%4d" % cur_line))
             msg_nocr(" ")
         else:
             if start_offset and offset and start_offset <= offset:
@@ -297,13 +297,13 @@ def disassemble_bytes(
 
         # Column: Current instruction indicator
         if offset == lasti:
-            msg_nocr(format_token(Arrow, "-->", style=style))
+            msg_nocr(format_token(Arrow, "-->"))
         else:
             msg_nocr("   ")
 
         # Column: Jump target marker
         if offset in labels:
-            msg_nocr(format_token(Arrow, ">>", style=style))
+            msg_nocr(format_token(Arrow, ">>"))
         else:
             msg_nocr("  ")
 
@@ -340,7 +340,7 @@ def disassemble_bytes(
             msg_nocr(" ")
 
         # Column: Opcode name
-        msg_nocr(format_token(Opcode, instr.opname.ljust(20), style=style))
+        msg_nocr(format_token(Opcode, instr.opname.ljust(20)))
         msg_nocr(" ")
 
         # Column: Opcode argument
@@ -380,14 +380,14 @@ def disassemble_bytes(
                     argrepr = new_repr
         if argrepr is None or argrepr == "":
             if instr.arg is not None:
-                msg(format_token(Integer, str(instr.arg), style=style))
+                msg(format_token(Integer, str(instr.arg)))
             else:
                 msg("")
                 pass
             pass
         else:
             # Column: Opcode argument details
-            msg(format_token(Details, argrepr, style=style))
+            msg(format_token(Details, argrepr))
         pass
 
     return code, offset

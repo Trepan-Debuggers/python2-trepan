@@ -14,7 +14,8 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import inspect, sys
+import inspect
+import sys
 import os.path as osp
 
 # Our local modules
@@ -54,12 +55,7 @@ def cache_from_source(path, debug_override=None):
         pass
     head, tail = osp.split(path)
     base_filename, sep, _ = tail.partition(".")
-    if not hasattr(sys, "implementation"):
-        # Python <= 3.2
-        raise NotImplementedError("No sys.implementation")
-    tag = sys.implementation.cache_tag
-    if tag is None:
-        raise NotImplementedError("sys.implementation.cache_tag is None")
+    tag = "."
     filename = "".join([base_filename, sep, tag, suffixes[0]])
     if head.endswith(_PYCACHE):
         return osp.join(head, filename)

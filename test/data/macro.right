@@ -1,34 +1,34 @@
-(gcd.py:10):
--> 10 [38;5;166m"""[39m
+(gcd.py:10): <module>
+-> 10 """
 Set basename (short filenames) in debugger output is on.
 Set event tracing is on.
 Set stopping before def or class statements is off.
 No macros defined.
 Macro "foo" defined.
-  5    	[38;5;166mnot have a 'return' statement.[39m
-  6    	
-  7    	[38;5;166mcheck_args() raises an uncaught exception when given the wrong number[39m
-  8    	[38;5;166mof parameters.[39m
-  9    	
- 10  ->	[38;5;166m"""[39m
- 11    	[38;5;28;01mimport[39;00m [38;5;31;01msys[39;00m
- 12    	
- 13    	[38;5;28;01mdef[39;00m [38;5;25;01mcheck_args[39;00m():
- 14    	    [38;5;28;01mif[39;00m [38;5;22mlen[39m(sys[38;5;236m.[39margv) [38;5;236m!=[39m [38;5;20;01m3[39;00m:
+  5    	not have a 'return' statement.
+  6
+  7    	check_args() raises an uncaught exception when given the wrong number
+  8    	of parameters.
+  9
+ 10  ->	"""
+ 11    	import sys
+ 12
+ 13    	def check_args():
+ 14    	    if len(sys.argv) != 3:
 foo
 
 Macro "bar" defined.
-  1    	[38;5;244m#!/usr/bin/python[39m
-  2    	[38;5;166m"""Greatest Common Divisor[39m
-  3    	
-  4    	[38;5;166mSome characterstics of this program used for testing check_args() does[39m
-  5    	[38;5;166mnot have a 'return' statement.[39m
-  6    	
-  7    	[38;5;166mcheck_args() raises an uncaught exception when given the wrong number[39m
-  8    	[38;5;166mof parameters.[39m
-  9    	
- 10  ->	[38;5;166m"""[39m
- 11    	[38;5;28;01mimport[39;00m [38;5;31;01msys[39;00m
+  1    	#!/usr/bin/python
+  2    	"""Greatest Common Divisor
+  3
+  4    	Some characterstics of this program used for testing check_args() does
+  5    	not have a 'return' statement.
+  6
+  7    	check_args() raises an uncaught exception when given the wrong number
+  8    	of parameters.
+  9
+ 10  ->	"""
+ 11    	import sys
     bar  foo
 
 bar:

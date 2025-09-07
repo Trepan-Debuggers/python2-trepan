@@ -52,10 +52,10 @@ def format_code(code_object, style):
     Format according to "style" a Python code object. The
     formatted string is returned.
     """
-    formatted_line = format_token(LineNumber, str(code_object.co_firstlineno), style=style)
-    formatted_id = format_token(Hex, hex(id(code_object)), style=style)
-    formatted_name = format_token(Symbol, code_object.co_name, style=style)
-    formatted_filename = format_token(Filename, code_object.co_filename, style=style)
+    formatted_line = format_token(LineNumber, str(code_object.co_firstlineno))
+    formatted_id = format_token(Hex, hex(id(code_object)))
+    formatted_name = format_token(Symbol, code_object.co_name)
+    formatted_filename = format_token(Filename, code_object.co_filename)
     return (
         ("<code object %s at %s " % (formatted_name, formatted_id)) +
         ("file %s, line %s>" % (formatted_filename, formatted_line))
@@ -67,9 +67,9 @@ def format_frame(frame_object, style):
     Format according to "style" a Python frame object. The
     formatted string is returned.
     """
-    formatted_line = format_token(LineNumber, str(frame_object.f_lineno), style=style)
-    formatted_id = format_token(Hex, hex(id(frame_object)), style=style)
-    formatted_filename = format_token(Filename, frame_object.f_code.co_filename, style=style)
+    formatted_line = format_token(LineNumber, str(frame_object.f_lineno))
+    formatted_id = format_token(Hex, hex(id(frame_object)))
+    formatted_filename = format_token(Filename, frame_object.f_code.co_filename)
     return (
         ("<frame at %s " % formatted_id) +
         ("file %s, line %s>" % (formatted_filename, formatted_line))

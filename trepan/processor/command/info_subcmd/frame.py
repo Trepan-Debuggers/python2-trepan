@@ -129,16 +129,16 @@ class InfoFrame(Mbase_subcmd.DebuggerSubcommand):
             self.msg('  exception value: %s'% frame.f_exc_value)
         self.msg('  tracing function: %s' % frame.f_trace)
 
-        function_name, formatted_func_name = format_function_name(frame, style=style)
+        function_name, formatted_func_name = format_function_name(frame)
         if function_name is None:
             formatted_func_name = "??"
         f_args, f_varargs, f_keywords, f_locals = inspect.getargvalues(frame)
         self.msg("  function name: %s" % formatted_func_name)
         func_args = inspect.formatargvalues(f_args, f_varargs, f_keywords, f_locals)
-        formatted_func_signature = highlight_string(func_args, style=style).strip()
+        formatted_func_signature = highlight_string(func_args).strip()
         self.msg("  function args: %s" % formatted_func_signature)
 
-        formatted_thread_name = format_token(Function, current_thread_name(), style=style)
+        formatted_thread_name = format_token(Function, current_thread_name())
         self.msg("  thread: %s" % formatted_thread_name)
         # signature = highlight_string(inspect.signature(frame))
         # self.msg(f"  signature : {signature}")
@@ -154,13 +154,13 @@ class InfoFrame(Mbase_subcmd.DebuggerSubcommand):
         if line_text is None:
             self.msg("  current line number: %s" % frame.f_lineno)
         else:
-            formatted_text = highlight_string(line_text.strip(), style=style)
+            formatted_text = highlight_string(line_text.strip())
             self.msg("  current line number: %s: %s" % (frame.f_lineno, formatted_text))
 
         f_lasti = frame.f_lasti
         if f_lasti >= 0:
             opname = opc.opname[ord(code.co_code[f_lasti])]
-            opname_formatted = format_token(Keyword, opname, style=style)
+            opname_formatted = format_token(Keyword, opname)
             self.msg("  instruction offset and opname: %d %s" % (frame.f_lasti, opname_formatted))
             self.msg("  code: %s" % format_code(code, style))
         else:
@@ -169,17 +169,17 @@ class InfoFrame(Mbase_subcmd.DebuggerSubcommand):
         self.msg("  code: %s" % format_code(code, style))
 
         if frame.f_back:
-            self.msg("  previous frame: %s" % format_frame(frame.f_back, style=style))
+            self.msg("  previous frame: %s" % format_frame(frame.f_back))
         else:
             self.msg("  no previous frame")
         self.msg("  tracing function: %s" % frame.f_trace)
         if hasattr(frame, "f_trace_opcodes"):
             self.msg_nocr(
-                "  tracing opcodes: %s" % highlight_string(str(frame.f_trace_opcodes), style=style)
+                "  tracing opcodes: %s" % highlight_string(str(frame.f_trace_opcodes))
             )
         if hasattr(frame, "f_trace_lines"):
             self.msg(
-                "  tracing lines: %s" % highlight_string(str(frame.f_trace_lines), style=style)
+                "  tracing lines: %s" % highlight_string(str(frame.f_trace_lines))
             )
 
         if is_verbose:

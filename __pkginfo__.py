@@ -1,4 +1,4 @@
-# Copyright (C) 2008-2010, 2013-2018, 2021, 2022 Rocky Bernstein <rocky@gnu.org>
+# Copyright (C) 2008-2010, 2013-2018, 2021, 2022, 2025 Rocky Bernstein <rocky@gnu.org>
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -64,7 +64,7 @@ install_requires = [
     "columnize >= 0.3.10",
     "nose>=1.0.0, <= 1.3.7",
     "pyficache >= 2.3.0",
-    "pygments > 1.9",  # Later releases don't support Python 2.7
+    "pygments == 2.2.0",  # Later releases don't support Python 2.7
     "spark_parser >= 1.8.9, <1.9.2",
     "uncompyle6 >= 3.9.2",
     "term-background >= 1.0.1",

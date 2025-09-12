@@ -7,9 +7,9 @@ if [[ $0 == $bs ]] ; then
     exit 1
 fi
 
-mydir=$(dirname $bs)
 trepan2_owd=$(pwd)
-. ./checkout_common.sh
+mydir=$(dirname $bs)
+. ./admin-tools/checkout_common.sh
 cd $mydir/..
 (cd $mydir/../../../rocky  && \
      setup_version python-uncompyle6 python-2.4 && \
@@ -18,5 +18,6 @@ cd $mydir/..
      setup_version shell-term-background python-2.4 && \
      setup_version pytracer python-2.4 && \
      setup_version pycolumnize python-2.4 \
-)
+    )
+set +xv
 checkout_finish python-2.4-to-2.5

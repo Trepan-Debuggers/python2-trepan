@@ -8,7 +8,9 @@ from code as much as possible. The customizable information really comes
 from file __pkginfo__.py.
 """
 
-import os, sys
+import os
+import sys
+from setuptools import setup
 
 if not ((2, 4) <= sys.version_info[0:2] < (3, 0)):
     mess = "Only Python Versions 2.4 to 2.7 are supported in this package."
@@ -42,7 +44,6 @@ from __pkginfo__ import (
 )
 
 __import__("pkg_resources")
-from setuptools import setup
 
 setup(
     author=author,
